@@ -1,4 +1,5 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { createClient } from '@supabase/supabase-js'
 import type { Meal } from '@/types'
 
 interface GeneratePlanResponse {
@@ -11,6 +12,33 @@ export async function POST(request: Request) {
     const profile = await request.json()
 
     const favoriteMeals: Meal[] = profile.favoriteMeals || []
+
+    // Fetch taste profile for personalization
+    let tasteProfileSection = ''
+    if (profile.userId) {
+      const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      )
+      const { data: tasteProfile } = await supabase
+        .from('taste_profiles')
+        .select('*')
+        .eq('user_id', profile.userId)
+        .single()
+
+      if (tasteProfile && tasteProfile.total_signals >= 3) {
+        const cuisineScores: Record<string, number> = tasteProfile.cuisine_scores ?? {}
+        const sorted = Object.entries(cuisineScores).sort((a, b) => (b[1] as number) - (a[1] as number))
+        const preferred = sorted.filter(([, s]) => (s as number) > 0).map(([c]) => c)
+        const avoided = sorted.filter(([, s]) => (s as number) < -1).map(([c]) => c)
+        const avoidedProteins: string[] = tasteProfile.avoided_proteins ?? []
+        const lines: string[] = []
+        if (preferred.length) lines.push(`Preferred cuisines: ${preferred.join(', ')}`)
+        if (avoided.length) lines.push(`Cuisines to avoid: ${avoided.join(', ')}`)
+        if (avoidedProteins.length) lines.push(`Avoided proteins: ${avoidedProteins.join(', ')}`)
+        if (lines.length) tasteProfileSection = `\nLearned user preferences (from past behavior):\n${lines.join('\n')}\n`
+      }
+    }
     let favoritesSection = ''
 
     if (favoriteMeals.length > 0) {
@@ -29,7 +57,7 @@ User profile:
 - Max cook time per dinner: ${profile.maxCookTime} minutes
 - Cuisine preference: ${profile.cuisinePreference}
 - Dietary needs: ${profile.dietaryNeeds.length > 0 ? profile.dietaryNeeds.join(', ') : 'none'}
-${favoritesSection}
+${favoritesSection}${tasteProfileSection}
 Requirements:
 - Each meal must be completable in ${profile.maxCookTime} minutes or less
 - Total grocery cost must stay within ${profile.weeklyBudget}
@@ -43,6 +71,8 @@ Return ONLY valid JSON with this exact structure, no markdown:
     {
       "day": "Monday",
       "name": "string",
+ "cuisine": "Italian",
+      "protein": "chicken",
       "cookTime": 25,
       "prepTime": 10,
       "servings": ${profile.familySize},

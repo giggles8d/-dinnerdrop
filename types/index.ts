@@ -19,6 +19,8 @@ export interface Meal {
   ingredients: Ingredient[]
   steps: string[]
   prepTime: number
+cuisine?: string      // e.g. "Italian", "Mexican"
+  protein?: string      // e.g. "chicken", "beef", "tofu"
 }
 
 export interface Ingredient {

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowLeft, Clock, Heart, RefreshCw, Users } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
+import { recordMealSignal } from '@/lib/taste-profile'
 import type { Meal } from '@/types'
 
 function HeroImage({ mealName }: { mealName: string }) {
@@ -83,6 +84,13 @@ export default function RecipePage() {
         .eq('user_id', user.id)
         .eq('meal_name', meal.name)
       setIsFavorite(false)
+      await recordMealSignal({
+        event_type: 'unfavorited',
+        meal_name: meal.name,
+        cuisine: meal.cuisine,
+        protein: meal.protein,
+        cook_time: meal.cookTime,
+      })
     } else {
       await supabase.from('favorites').insert({
         user_id: user.id,
@@ -90,6 +98,13 @@ export default function RecipePage() {
         meal_data: meal,
       })
       setIsFavorite(true)
+      await recordMealSignal({
+        event_type: 'favorited',
+        meal_name: meal.name,
+        cuisine: meal.cuisine,
+        protein: meal.protein,
+        cook_time: meal.cookTime,
+      })
     }
   }
 
@@ -128,6 +143,16 @@ export default function RecipePage() {
 
       if (data.meal) {
         const newMeal = data.meal as Meal
+
+        await recordMealSignal({
+          event_type: 'swapped_away',
+          meal_name: meal.name,
+          cuisine: meal.cuisine,
+          protein: meal.protein,
+          cook_time: meal.cookTime,
+          swapped_to_cuisine: newMeal.cuisine,
+        })
+
         localStorage.setItem(`meal-${id}`, JSON.stringify(newMeal))
 
         const storedMeals = localStorage.getItem('current-meals')

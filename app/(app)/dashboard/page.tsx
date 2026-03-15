@@ -4,6 +4,7 @@ import { Suspense, useCallback, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
+import { recordMealSignal } from '@/lib/taste-profile'
 import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
 import type { Meal } from '@/types'
@@ -129,6 +130,13 @@ function DashboardContent() {
         next.delete(meal.name)
         return next
       })
+await recordMealSignal({
+        event_type: 'unfavorited',
+        meal_name: meal.name,
+        cuisine: meal.cuisine,
+        protein: meal.protein,
+        cook_time: meal.cookTime,
+      })
     } else {
       await supabase.from('favorites').insert({
         user_id: user.id,
@@ -137,6 +145,13 @@ function DashboardContent() {
       })
 
       setFavoriteNames(prev => new Set(prev).add(meal.name))
+await recordMealSignal({
+        event_type: 'favorited',
+        meal_name: meal.name,
+        cuisine: meal.cuisine,
+        protein: meal.protein,
+        cook_time: meal.cookTime,
+      })
     }
   }
 
@@ -178,6 +193,7 @@ function DashboardContent() {
           cuisinePreference: profile.cuisine_preference,
           dietaryNeeds: profile.dietary_needs || [],
           favoriteMeals,
+          userId: user.id,
         }),
       })
 
