@@ -112,20 +112,21 @@ export default function GroceryListPage() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-heading font-bold text-foreground">
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Grocery list</p>
+          <h1 className="text-4xl font-heading font-bold text-foreground">
             Your grocery list
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-muted-foreground mt-2">
             Everything you need for this week&apos;s dinners
           </p>
         </div>
 
         <GroceryList groceryList={groceryList} />
 
-        <div className="mt-8 p-4 rounded-lg border border-border bg-card">
+        <div className="mt-8 p-5 rounded-xl bg-foreground">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-foreground">Estimated total</span>
-            <span className="text-lg font-semibold text-foreground">
+            <span className="text-sm font-medium text-primary-foreground/60">Estimated total</span>
+            <span className="text-2xl font-heading font-bold text-primary-foreground">
               ${totalCost.toFixed(2)}
             </span>
           </div>

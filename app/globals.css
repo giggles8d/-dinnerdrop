@@ -1,43 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
 @layer base {
   :root {
-    --background: 40 33% 96%;
-    --foreground: 220 15% 18%;
-
+    --background: 0 0% 100%;
+    --foreground: 150 30% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 18%;
-
+    --card-foreground: 150 30% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 18%;
-
-    --primary: 16 65% 45%;
+    --popover-foreground: 150 30% 12%;
+    --primary: 150 54% 23%;
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 40 20% 90%;
-    --secondary-foreground: 220 15% 18%;
-
-    --muted: 40 15% 92%;
-    --muted-foreground: 220 10% 45%;
-
-    --accent: 16 65% 45%;
-    --accent-foreground: 0 0% 100%;
-
+    --secondary: 138 20% 94%;
+    --secondary-foreground: 150 30% 12%;
+    --muted: 138 15% 95%;
+    --muted-foreground: 140 12% 42%;
+    --accent: 38 78% 56%;
+    --accent-foreground: 150 30% 12%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
-    --border: 40 15% 85%;
-    --input: 40 15% 85%;
-    --ring: 16 65% 45%;
-
-    --radius: 0.5rem;
+    --border: 138 20% 88%;
+    --input: 138 20% 88%;
+    --ring: 150 54% 23%;
+    --radius: 0.625rem;
   }
 }
-
 @layer base {
   * {
     @apply border-border;

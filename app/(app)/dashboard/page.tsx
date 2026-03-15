@@ -257,19 +257,22 @@ await recordMealSignal({
           </Link>
         )}
 
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-start justify-between mb-8 pb-6 border-b border-border">
           <div>
-            <h1 className="text-3xl font-heading font-bold text-foreground">
+            <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">
+              Weekly meal plan
+            </p>
+            <h1 className="text-4xl font-heading font-bold text-foreground leading-tight">
               This week&apos;s dinners
             </h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-2">
               5 meals planned around your budget and preferences
             </p>
           </div>
           <button
             onClick={generatePlan}
             disabled={loading}
-            className="px-5 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
+            className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
           >
             {loading
               ? 'Generating...'
@@ -308,7 +311,7 @@ await recordMealSignal({
                     }}
                   />
                 </div>
-                <span className="text-lg font-semibold text-foreground">
+                <span className="text-2xl font-heading font-bold text-foreground">
                   ${totalCost.toFixed(2)}
                 </span>
               </div>
@@ -317,7 +320,7 @@ await recordMealSignal({
             <div className="mt-6 text-center">
               <Link
                 href="/grocery-list"
-                className="inline-block px-8 py-3 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
+                className="inline-block px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-sm"
               >
                 Build my grocery list &rarr;
               </Link>

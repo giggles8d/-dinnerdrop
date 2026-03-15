@@ -1,5 +1,4 @@
 'use client'
-
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Heart, UtensilsCrossed, ShoppingCart, Package } from 'lucide-react'
@@ -13,12 +12,12 @@ const links = [
 
 export default function Nav() {
   const pathname = usePathname()
-
   return (
-    <nav className="border-b border-border bg-card">
-      <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-14">
-        <Link href="/dashboard" className="font-heading font-bold text-lg text-foreground">
-          DinnerDrop
+    <nav className="border-b border-border bg-white">
+      <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-accent mt-0.5" />
+          <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
         </Link>
         <div className="flex items-center gap-1">
           {links.map(({ href, label, icon: Icon }) => {
@@ -27,9 +26,9 @@ export default function Nav() {
               <Link
                 key={href}
                 href={href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-primary/10 text-primary'
+                    ? 'bg-secondary text-primary'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                 }`}
               >
