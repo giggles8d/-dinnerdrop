@@ -233,26 +233,20 @@ await recordMealSignal({
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Subscription banner */}
-        {!isSubscribed && (
+        {!isSubscribed && planCount > 0 && (
           <Link
             href="/subscribe"
-            className="flex items-center gap-3 mb-6 p-4 rounded-lg border border-primary/30 bg-primary/5 hover:bg-primary/10 transition-colors"
+            className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-foreground text-primary-foreground hover:bg-foreground/90 transition-colors"
           >
-            <div className="flex-shrink-0 w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-primary" />
+            <div className="flex items-center gap-3">
+              <Sparkles className="w-5 h-5 text-accent flex-shrink-0" />
+              <div>
+                <p className="text-sm font-semibold">Unlock unlimited meal plans</p>
+                <p className="text-xs text-primary-foreground/60 mt-0.5">$9/month · Cancel anytime · 7-day free trial</p>
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground">
-                Start your free trial to generate unlimited meal plans
-              </p>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                {planCount === 0
-                  ? 'Try one plan free, then $9/month for unlimited plans.'
-                  : 'You\u2019ve used your free plan. Upgrade to keep generating.'}
-              </p>
-            </div>
-            <span className="flex-shrink-0 text-xs font-medium text-primary">
-              Upgrade &rarr;
+            <span className="text-xs font-semibold text-accent flex-shrink-0">
+              Start free trial &rarr;
             </span>
           </Link>
         )}

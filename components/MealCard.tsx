@@ -1,5 +1,4 @@
 'use client'
-
 import Link from 'next/link'
 import { Heart } from 'lucide-react'
 import MealCardImage from './MealCardImage'
@@ -21,11 +20,10 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite }: MealCar
   }
 
   return (
-    <div className="rounded-lg border border-border bg-card hover:shadow-md transition-shadow overflow-hidden">
+    <div className="rounded-xl border border-border bg-card hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden group">
       <Link href={`/recipe/${getMealId(meal)}`} onClick={handleClick} className="block">
         <MealCardImage mealName={meal.name} dayLabel={meal.day} />
       </Link>
-
       <div className="relative">
         {onToggleFavorite && (
           <button
@@ -51,7 +49,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite }: MealCar
           onClick={handleClick}
           className="block p-4 space-y-2"
         >
-          <h3 className="text-base font-heading font-semibold text-card-foreground leading-tight pr-8">
+          <h3 className="text-base font-heading font-semibold text-card-foreground leading-tight pr-8 group-hover:text-primary transition-colors">
             {meal.name}
           </h3>
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -59,7 +57,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite }: MealCar
             <span>&middot;</span>
             <span>{meal.servings} servings</span>
           </div>
-          <div className="inline-block rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
+          <div className="inline-block rounded-full bg-secondary text-primary px-3 py-1 text-xs font-semibold border border-primary/20">
             ${meal.estimatedCost.toFixed(2)}
           </div>
         </Link>
