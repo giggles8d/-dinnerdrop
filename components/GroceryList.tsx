@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react'
 import type { GroceryCategory, GroceryItem } from '@/types'
 
@@ -17,6 +16,16 @@ const CATEGORY_ORDER: GroceryCategory[] = [
   'Beverages',
 ]
 
+const CATEGORY_EMOJI: Record<GroceryCategory, string> = {
+  'Produce': '🥦',
+  'Meat & Seafood': '🥩',
+  'Dairy & Eggs': '🥛',
+  'Pantry & Dry Goods': '🫙',
+  'Frozen': '❄️',
+  'Bakery': '🍞',
+  'Beverages': '🧃',
+}
+
 export default function GroceryList({ groceryList }: GroceryListProps) {
   const [checked, setChecked] = useState<Set<string>>(new Set())
 
@@ -33,39 +42,59 @@ export default function GroceryList({ groceryList }: GroceryListProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {CATEGORY_ORDER.map((category) => {
         const items = groceryList[category]
         if (!items || items.length === 0) return null
+        const checkedCount = items.filter((_, i) => checked.has(`${category}-${i}`)).length
 
         return (
           <div key={category}>
-            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-              {category}
-            </h3>
-            <ul className="space-y-2">
+            <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-primary/20">
+              <div className="flex items-center gap-2">
+                <span className="text-base">{CATEGORY_EMOJI[category]}</span>
+                <h3 className="text-xs font-bold text-primary uppercase tracking-widest">
+                  {category}
+                </h3>
+              </div>
+              {checkedCount > 0 && (
+                <span className="text-xs font-medium text-muted-foreground">
+                  {checkedCount}/{items.length}
+                </span>
+              )}
+            </div>
+            <ul className="space-y-1">
               {items.map((item, i) => {
                 const key = `${category}-${i}`
                 const isChecked = checked.has(key)
-
                 return (
-                  <li key={key} className="flex items-center gap-3">
-                    <button
-                      onClick={() => toggleItem(key)}
-                      className={`w-5 h-5 rounded border flex-shrink-0 flex items-center justify-center transition-colors ${
-                        isChecked
-                          ? 'bg-primary border-primary text-primary-foreground'
-                          : 'border-input hover:border-primary/50'
-                      }`}
-                    >
+                  <li
+                    key={key}
+                    onClick={() => toggleItem(key)}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors ${
+                      isChecked ? 'bg-muted/50' : 'hover:bg-muted/30'
+                    }`}
+                  >
+                    <div className={`w-5 h-5 rounded-md border-2 flex-shrink-0 flex items-center justify-center transition-all ${
+                      isChecked
+                        ? 'bg-primary border-primary'
+                        : 'border-border hover:border-primary/50'
+                    }`}>
                       {isChecked && (
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                       )}
-                    </button>
-                    <span className={`text-sm ${isChecked ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
-                      {item.quantity} {item.unit} {item.name}
+                    </div>
+                    <span className={`text-sm flex-1 transition-colors ${
+                      isChecked ? 'line-through text-muted-foreground' : 'text-foreground'
+                    }`}>
+                      {item.name}
+                    </span>
+                    <span className={`text-xs font-medium transition-colors ${
+                      isChecked ? 'text-muted-foreground/50' : 'text-muted-foreground'
+                    }`}>
+                      {item.quantity} {item.unit}
                     </span>
                   </li>
                 )
