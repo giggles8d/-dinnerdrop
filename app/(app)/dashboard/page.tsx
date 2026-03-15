@@ -163,6 +163,10 @@ await recordMealSignal({
 
     setLoading(true)
 
+    if (hasGenerated) {
+      await recordMealSignal({ event_type: 'regenerated_week' })
+    }
+
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
