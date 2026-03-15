@@ -33,8 +33,30 @@ export default function GroceryListPage() {
 
     setTotalCost(plan.total_estimated_cost || 0)
 
+    // Fetch pantry items for subtraction
+    const { data: pantryItems } = await supabase
+      .from('pantry_items')
+      .select('name')
+      .eq('user_id', user.id)
+
+    const pantryNames = new Set(
+      (pantryItems || []).map(p => p.name.toLowerCase().trim())
+    )
+
+    function subtractPantry(list: GroceryListData): GroceryListData {
+      if (pantryNames.size === 0) return list
+      const result: Partial<GroceryListData> = {}
+      for (const category in list) {
+        const cat = category as GroceryCategory
+        result[cat] = list[cat].filter(
+          item => !pantryNames.has(item.name.toLowerCase().trim())
+        )
+      }
+      return result as GroceryListData
+    }
+
     if (plan.grocery_list && Object.keys(plan.grocery_list).length > 0) {
-      setGroceryList(plan.grocery_list as GroceryListData)
+      setGroceryList(subtractPantry(plan.grocery_list as GroceryListData))
       setLoading(false)
       return
     }
