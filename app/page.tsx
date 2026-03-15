@@ -16,30 +16,46 @@ export default function LandingPage() {
           </div>
         </div>
       </header>
-      {/* Hero */}
-      <section className="container mx-auto px-4 py-20 max-w-4xl text-center">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-bold text-foreground leading-tight">
-          Five weeknight dinners.
-          <br />
-          One grocery run.
-        </h1>
-        <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Tell us your budget and we&apos;ll plan your week, build your grocery list,
-          and send it straight to Instacart.
-        </p>
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href="/signup"
-            className="px-8 py-3 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
-          >
-            Get my free meal plan &rarr;
-          </Link>
-          <a
-            href="#how-it-works"
-            className="text-muted-foreground hover:text-foreground transition-colors font-medium"
-          >
-            See how it works &darr;
-          </a>
+            <section className="container mx-auto px-4 pt-20 pb-16 max-w-5xl">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 bg-secondary text-primary text-xs font-bold px-3 py-1.5 rounded-full border border-primary/20 mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
+            AI meal planning + Instacart in one tap
+          </div>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-heading font-bold text-foreground leading-tight mb-6">
+            Dinner,<br />handled.
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-xl leading-relaxed mb-10">
+            Five budget-friendly weeknight dinners, planned by AI, groceries sent straight to Instacart. Under 30 minutes every night.
+          </p>
+          <div className="flex flex-col sm:flex-row items-start gap-3">
+            <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-colors shadow-sm">
+              Get my free meal plan &rarr;
+            </Link>
+            <a href="#how-it-works" className="px-8 py-4 rounded-xl border-2 border-border text-foreground font-semibold text-base hover:bg-muted transition-colors">
+              See how it works
+            </a>
+          </div>
+          <p className="text-xs text-muted-foreground mt-4">No credit card required &middot; First plan is free</p>
+        </div>
+      </section>
+
+      <section className="border-y border-border bg-secondary">
+        <div className="container mx-auto px-4 max-w-5xl py-6">
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <p className="text-2xl font-heading font-bold text-primary">2,000+</p>
+              <p className="text-xs text-muted-foreground mt-0.5">families planning weekly</p>
+            </div>
+            <div>
+              <p className="text-2xl font-heading font-bold text-primary">$47</p>
+              <p className="text-xs text-muted-foreground mt-0.5">avg weekly grocery savings</p>
+            </div>
+            <div>
+              <p className="text-2xl font-heading font-bold text-primary">28 min</p>
+              <p className="text-xs text-muted-foreground mt-0.5">avg cook time per meal</p>
+            </div>
+          </div>
         </div>
       </section>
 
