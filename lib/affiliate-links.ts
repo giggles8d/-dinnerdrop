@@ -5,9 +5,9 @@ export function getStoreSearchUrl(storeName: string, searchTerm: string): string
   const encoded = encodeURIComponent(searchTerm);
   switch (storeName) {
     case 'Walmart':
-      return `https://www.walmart.com/search?q=${encoded}&affilsrc=api&veh=aff&wmlspartner=WALMART_AFFILIATE_ID`;
+      return `https://www.walmart.com/search?q=${encoded}&affilsrc=api&veh=aff&wmlspartner=REPLACE_WITH_WALMART_AFFILIATE_ID`;
     case 'Amazon Fresh':
-      return `https://www.amazon.com/s?k=${encoded}&i=amazonfresh&tag=AMAZON_AFFILIATE_TAG`;
+      return `https://www.amazon.com/s?k=${encoded}&i=amazonfresh&tag=REPLACE_WITH_AMAZON_ASSOCIATE_TAG`;
     case 'Instacart':
       return `https://www.instacart.com/store/search_v3/term?term=${encoded}`;
     case 'Target':
@@ -22,9 +22,9 @@ export function getStoreSearchUrl(storeName: string, searchTerm: string): string
 export function getStoreHomepageUrl(storeName: string): string {
   switch (storeName) {
     case 'Walmart':
-      return 'https://www.walmart.com/?affilsrc=api&veh=aff&wmlspartner=WALMART_AFFILIATE_ID';
+      return 'https://www.walmart.com/?affilsrc=api&veh=aff&wmlspartner=REPLACE_WITH_WALMART_AFFILIATE_ID';
     case 'Amazon Fresh':
-      return 'https://www.amazon.com/fresh?tag=AMAZON_AFFILIATE_TAG';
+      return 'https://www.amazon.com/fresh?tag=REPLACE_WITH_AMAZON_ASSOCIATE_TAG';
     case 'Instacart':
       return 'https://www.instacart.com/';
     case 'Target':

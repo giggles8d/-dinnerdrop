@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DinnerDrop — Five weeknight dinners. One grocery run.",
-  description: "Smart weekly dinner planner that generates personalized 5-dinner meal plans and pushes the grocery list to Instacart.",
+  description: "Smart weekly dinner planner that generates personalized 5-dinner meal plans and sends your grocery list to your favorite store in one tap.",
 };
 
 export default function RootLayout({

@@ -62,5 +62,5 @@ export interface MealPlan {
   meals: Meal[]
   groceryList: Record<GroceryCategory, GroceryItem[]>
   totalEstimatedCost: number
-  instacartLink?: string
+  storeLink?: string
 }
