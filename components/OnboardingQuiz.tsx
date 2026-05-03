@@ -65,11 +65,14 @@ const STEPS = [
     ],
   },
   {
-    question: 'Where do you buy groceries?',
+    question: 'Where do you usually shop for groceries?',
     field: 'preferredStore' as const,
     options: [
-      { label: 'Instacart', value: 'instacart' },
-      { label: 'Kroger', value: 'kroger' },
+      { label: 'Walmart', value: 'Walmart' },
+      { label: 'Amazon Fresh', value: 'Amazon Fresh' },
+      { label: 'Instacart', value: 'Instacart' },
+      { label: 'Target', value: 'Target' },
+      { label: 'Kroger', value: 'Kroger' },
     ],
   },
 ]
@@ -91,7 +94,7 @@ export default function OnboardingQuiz() {
     maxCookTime: 30,
     cuisinePreference: [],
     dietaryNeeds: [],
-    preferredStore: 'instacart',
+    preferredStore: 'Instacart',
   })
   const [loading, setLoading] = useState(false)
   const router = useRouter()

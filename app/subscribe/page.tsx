@@ -1,18 +1,30 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Check, Clock, ShoppingCart, Sparkles, TrendingDown } from 'lucide-react'
 
-export default function SubscribePage() {
+function SubscribeContent() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [couponCode, setCouponCode] = useState('')
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const coupon = searchParams.get('coupon')
+    if (coupon) setCouponCode(coupon)
+  }, [searchParams])
 
   async function handleCheckout() {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch('/api/stripe/create-checkout-session', { method: 'POST' })
+      const res = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ couponCode: couponCode || undefined }),
+      })
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url
@@ -56,7 +68,7 @@ export default function SubscribePage() {
               Dinner, handled.<br />Every week.
             </h1>
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-              Stop staring at the fridge at 5pm. DinnerDrop plans your week, builds your grocery list, and sends it straight to Instacart.
+              Stop staring at the fridge at 5pm. DinnerDrop plans your week, builds your grocery list, and sends it straight to your favorite store.
             </p>
 
             <div className="space-y-5">
@@ -74,7 +86,7 @@ export default function SubscribePage() {
                   <ShoppingCart className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">One tap to Instacart</p>
+                  <p className="font-semibold text-foreground text-sm">One tap to your grocery store</p>
                   <p className="text-sm text-muted-foreground mt-0.5">Your full grocery list, deduplicated and organized, sent straight to your cart.</p>
                 </div>
               </div>
@@ -116,7 +128,7 @@ export default function SubscribePage() {
                 {[
                   'Unlimited weekly meal plans',
                   'AI personalization that improves weekly',
-                  'One-tap Instacart grocery push',
+                  'One-tap grocery store handoff',
                   'Pantry tracker with photo scan',
                   'Meal swap anytime',
                   'Cancel anytime',
@@ -155,5 +167,13 @@ export default function SubscribePage() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function SubscribePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <SubscribeContent />
+    </Suspense>
   )
 }

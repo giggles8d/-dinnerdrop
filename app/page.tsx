@@ -11,22 +11,26 @@ export default function LandingPage() {
             <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
           </div>
           <div className="flex items-center gap-3">
+            <Link href="/beta" className="px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Beta</Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
             <Link href="/signup" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Try free</Link>
           </div>
         </div>
       </header>
+      <a href="/beta" className="block text-center py-2 text-sm font-medium" style={{backgroundColor:'#e8a838',color:'#1a5c38'}}>
+        🎉 Beta: First 100 families get 6 months free &rarr; Claim your spot
+      </a>
             <section className="container mx-auto px-4 pt-20 pb-16 max-w-5xl">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-secondary text-primary text-xs font-bold px-3 py-1.5 rounded-full border border-primary/20 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
-            AI meal planning + Instacart in one tap
+            AI meal planning + grocery handoff in one tap
           </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-heading font-bold text-foreground leading-tight mb-6">
             Dinner,<br />handled.
           </h1>
           <p className="text-xl text-muted-foreground max-w-xl leading-relaxed mb-10">
-            Five budget-friendly weeknight dinners, planned by AI, groceries sent straight to Instacart. Under 30 minutes every night.
+            Five budget-friendly weeknight dinners, planned by AI, groceries sent straight to your favorite store. Under 30 minutes every night.
           </p>
           <div className="flex flex-col sm:flex-row items-start gap-3">
             <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-colors shadow-sm">
@@ -68,7 +72,7 @@ export default function LandingPage() {
           {[
             { step: '01', title: 'Tell us about your family', description: 'Budget, family size, dietary needs, how much time you have to cook. Takes 2 minutes.' },
             { step: '02', title: 'Get 5 personalized dinners', description: 'AI builds a full week of budget-friendly meals your family will actually eat.' },
-            { step: '03', title: 'One tap to Instacart', description: 'Your full grocery list, organized and deduplicated, sent straight to your cart for delivery or pickup.' },
+            { step: '03', title: 'One tap to your grocery store', description: 'Your full grocery list, organized and deduplicated, sent straight to your cart for delivery or pickup.' },
           ].map((item) => (
             <div key={item.step} className="space-y-4">
               <p className="text-4xl font-heading font-bold text-primary/20">{item.step}</p>
@@ -86,7 +90,7 @@ export default function LandingPage() {
             {[
               { quote: 'DinnerDrop cut our grocery bill by 30%. The meal plans are actually things my kids will eat.', name: 'Sarah M.', detail: 'Family of 4' },
               { quote: 'I used to spend 45 minutes just deciding what to cook. Now it takes zero minutes.', name: 'James L.', detail: 'Family of 2' },
-              { quote: 'The Instacart integration is a game changer. Sunday planning takes 5 minutes now.', name: 'Priya K.', detail: 'Family of 3' },
+              { quote: 'The grocery handoff is a game changer. Sunday planning takes 5 minutes now.', name: 'Priya K.', detail: 'Family of 3' },
             ].map((t) => (
               <div key={t.name} className="bg-white p-6 rounded-2xl border border-border space-y-4">
                 <p className="text-sm text-foreground leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
@@ -139,7 +143,7 @@ export default function LandingPage() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>Weekly meal plans</li>
                 <li>5 dinners per plan</li>
-                <li>Instacart cart push</li>
+                <li>store handoff</li>
                 <li>Budget optimization</li>
               </ul>
               <Link
