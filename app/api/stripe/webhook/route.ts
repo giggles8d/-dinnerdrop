@@ -47,9 +47,11 @@ export async function POST(request: NextRequest) {
       const customerId = session.customer as string
 
       if (customerId) {
+        // New checkout creates a trialing subscription — set trialing, not active.
+        // The customer.subscription.updated event will handle active status when trial converts.
         await supabase
           .from('profiles')
-          .update({ subscription_status: 'active' })
+          .update({ subscription_status: 'trialing' })
           .eq('stripe_customer_id', customerId)
       }
       break
@@ -58,9 +60,18 @@ export async function POST(request: NextRequest) {
     case 'customer.subscription.updated': {
       const subscription = event.data.object as Stripe.Subscription
       const customerId = subscription.customer as string
-      const status = subscription.status === 'active' || subscription.status === 'trialing'
-        ? 'active'
-        : 'canceled'
+      // Preserve trialing vs active distinction so dashboard upgrade banner works correctly
+      const statusMap: Record<string, string> = {
+        active: 'active',
+        trialing: 'trialing',
+        past_due: 'past_due',
+        canceled: 'canceled',
+        unpaid: 'canceled',
+        incomplete: 'canceled',
+        incomplete_expired: 'canceled',
+        paused: 'canceled',
+      }
+      const status = statusMap[subscription.status] ?? 'canceled'
 
       await supabase
         .from('profiles')
