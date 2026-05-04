@@ -1,104 +1,127 @@
-# DinnerDrop Social Assets Brief
-**Created:** Day 1, Hour 11 — 2026-05-04
-**Status:** ACTION REQUIRED from Sarah (~20-25 min in Canva)
+# DinnerDrop Social & Brand Assets Brief
+**Created:** 2026-05-04 — Day 1, Hour 11
+**Status:** WAITING ON SARAH — Canva design required
 
 ---
 
-## CRITICAL FINDING: /public/ folder does not exist
+## Asset Audit Results
 
-The `/public/` folder is **missing from the repo entirely**. Both `og-image.png` and `logo.png` are referenced in code but do not exist:
+### MISSING (Critical — Blocks Ads and Social Sharing)
 
-- `app/layout.tsx` references `/og-image.png` for OpenGraph metadata
-- `app/beta/layout.tsx` references `/og-image.png` for beta page social sharing
+| Asset | Path | Referenced In | Impact |
+|-------|------|---------------|--------|
+| `og-image.png` | `/public/og-image.png` | `app/layout.tsx` (lines 10, 18), `app/beta/layout.tsx` (line 9) | **HIGH** — Every social share and ad link preview shows blank/broken image |
+| `logo.png` | `/public/logo.png` | Not yet referenced — needed for ads and brand kit | **MEDIUM** — Required for Google Display ads, Meta ad creative |
 
-**Impact:** Every social media share, Facebook/Twitter card preview, and ad link preview shows a broken/blank image. This blocks all ad campaigns from launching with proper creative.
+### EXISTS (Good)
 
-**Only confirmed image asset:** `favicon.ico` at `app/favicon.ico` (served correctly by Next.js App Router).
+| Asset | Path | Status |
+|-------|------|--------|
+| `favicon.ico` | `app/favicon.ico` | Exists, served automatically by Next.js App Router |
 
 ---
 
-## Deliverable 1: og-image.png (URGENT — blocks ad launch)
+## PRIORITY 1: OG Image (1200x630px)
 
-**Dimensions:** 1200 × 630 px (standard OpenGraph)
+**This is the preview image shown when someone shares dinnerdrop.app or clicks a Meta/Google ad.**
+**Without it, social previews and ad link previews are blank. This blocks all ad campaigns.**
+
+### Canva Brief — OG Image
+
 **File name:** `og-image.png`
-**Upload to:** `/public/og-image.png` in GitHub repo
+**Dimensions:** 1200 x 630 px (exact — Facebook/Twitter/LinkedIn standard)
+**Destination:** Upload to `/public/og-image.png` in the GitHub repo
 
-### Design Spec
-- **Background:** Forest green `#1a5c38` (solid fill)
-- **Headline:** "Dinner, handled." — white, bold serif or heavy sans-serif, ~80–100px, centered or left-aligned
-- **Subheadline:** "AI-powered weekly dinner planning for busy families" — white, lighter weight, ~32px
-- **Badge (top-right or bottom-right):** Gold `#e8a838` rounded pill — "7-Day Free Trial"
-- **Visual element:** Right side — simple phone mockup or meal card icon illustration (can use Canva stock)
-- **Logo/wordmark:** Bottom-left — "DinnerDrop" in gold `#e8a838`, small (40px), with a fork-dot icon if available
-- **Overall feel:** Clean, confident, premium. Not busy. Think Calm app meets food delivery.
+**Design Spec:**
+
+**Background:**
+- Solid fill: `#1a5c38` (DinnerDrop forest green)
+- Optional: Very subtle noise texture or diagonal grain for depth
+
+**Left Side (~55% of width):**
+- Small badge (optional): White rounded pill — "AI-powered" in gold `#e8a838`
+- Headline (large, white): **"Dinner, handled."**
+  - Font: Inter 800 or Playfair Display Bold
+  - Size: ~72-80pt equivalent
+  - Color: White `#ffffff`
+- Subhead below headline: "5 dinners planned. Grocery list ready. One tap."
+  - Font: Inter Regular or Medium
+  - Size: ~28-32pt
+  - Color: White at 80% opacity or `#c8e6c9`
+- Bottom badge: Gold `#e8a838` rounded rectangle — "7-Day Free Trial" in dark green, bold
+
+**Right Side (~45% of width):**
+- Stylized phone mockup OR illustrated plate/bowl in white/gold
+- OR: Simple icons (fork + phone + cart) arranged vertically
+- Canva search terms: "meal planning phone mockup" or "dinner plate minimal illustration"
+- Keep clean — white or gold illustration on green background only
+
+**DinnerDrop Wordmark (bottom-left corner):**
+- Gold dot `●` followed by "DinnerDrop" in white, Inter Bold, ~24pt
+- Matches the site header logo design
+
+**Overall feel:** Premium, clean, confident. Not busy.
 
 ---
 
-## Deliverable 2: logo.png (needed for ad account brand kits)
+## PRIORITY 2: Square Logo (512x512px)
 
-**Dimensions:** 512 × 512 px (square, for Google/Meta ad accounts)
+**Needed for:** Google Ads (required), Meta ad accounts, brand kit.
+
+### Canva Brief — Square Logo
+
 **File name:** `logo.png`
-**Upload to:** `/public/logo.png` in GitHub repo
+**Dimensions:** 512 x 512 px
+**Background:** Transparent OR solid forest green `#1a5c38`
 
-### Design Spec
-- **Background:** Forest green `#1a5c38` (square, can have slight rounded corners)
-- **Mark:** Gold `#e8a838` stylized "D" with a small fork or drop element — or just clean wordmark "DD"
-- **Style:** Simple, legible at small sizes. Must look good as a 32px favicon equivalent.
-- **Avoid:** Gradients, drop shadows, thin lines that won't hold at small sizes
-
----
-
-## Deliverable 3: Meta Ad Creative 1 — Problem-Aware (1080 × 1080 px)
-
-**File name:** `meta-ad-problem-aware.png`
-**Use:** Facebook/Instagram feed ad — Problem-Aware variant
-
-### Design Spec
-- **Background:** Off-white or very light warm gray
-- **Headline text (large, dark):** "Still googling 'what's for dinner' at 5pm?"
-- **Sub-copy (smaller):** "DinnerDrop plans your whole week in 30 seconds."
-- **CTA bar (bottom, forest green):** "Join the Free Beta →" in white
-- **Visual:** Stressed parent emoji or abstract clock illustration (Canva stock OK)
+**Design:**
+- Center: A stylized "D" or fork/plate icon in gold `#e8a838`
+- OR: The gold dot `●` from the site header, large, centered on green background
+- Below icon: "DinnerDrop" wordmark in white, Inter Bold
+- Must read clearly at 32x32px thumbnail size — keep it extremely simple
 
 ---
 
-## Deliverable 4: Meta Ad Creative 2 — Benefit-Led (1080 × 1080 px)
+## PRIORITY 3: Meta Ad Creative Images (1080x1080px square)
 
-**File name:** `meta-ad-benefit-led.png`
-**Use:** Facebook/Instagram feed ad — Benefit-Led variant
+**After OG image is done. 3 variants for Facebook/Instagram feed ads.**
 
-### Design Spec
-- **Background:** Forest green `#1a5c38`
-- **Headline (white, large):** "5 dinners. 30 seconds. Done."
-- **Sub-copy (gold):** "AI picks the meals. One tap sends the groceries to your cart."
-- **Visual:** Phone mockup showing meal plan screen (use Canva phone frame + screenshot)
-- **Bottom badge (white pill):** "Free 6-Month Beta — 100 Spots"
+### Variant 1: Problem-Aware
+- Background: Warm kitchen stock photo (busy mom, 6pm, cluttered counter) — dark overlay ~50%
+- Text: "Sound familiar?" (white italic, 36pt) + "Sunday. No plan. Everyone's hungry." (white bold, 48pt)
+- Bottom bar: Gold `#e8a838` strip — "DinnerDrop fixes this in 30 seconds →"
 
----
+### Variant 2: Benefit-Led
+- Background: Clean flat-lay of 5 meal cards on forest green `#1a5c38`
+- Text: "5 dinners. Planned." (white, large, bold) + "AI-powered. Groceries included." (white, smaller)
+- DinnerDrop wordmark bottom-right corner
 
-## Deliverable 5: Meta Ad Creative 3 — Urgency/Scarcity (1080 × 1080 px)
-
-**File name:** `meta-ad-urgency.png`
-**Use:** Facebook/Instagram feed ad — Scarcity variant
-
-### Design Spec
-- **Background:** Dark charcoal `#1a1a1a`
-- **Headline (white):** "97 beta spots left."
-- **Sub-copy (gold `#e8a838`):** "6 months free. No credit card. Cancel anytime."
-- **CTA pill (forest green):** "Claim Your Spot →"
-- **Counter element:** Large "97" number in white with "spots remaining" below in smaller text
+### Variant 3: Urgency/Scarcity
+- Background: Forest green `#1a5c38` solid
+- Center: Gold number — "97 spots left" (very large, `#e8a838`)
+- Below: "6 months free. Beta program closes soon." (white)
+- Bottom: White rounded pill CTA — "Get your spot →"
 
 ---
 
-## Sarah's Upload Instructions
+## What Sarah Needs to Do
 
-1. Open Canva (canva.com)
-2. Create each design using the specs above
-3. Download each as PNG
-4. Go to: https://github.com/giggles8d/-dinnerdrop
-5. Click "Add file" → "Upload files"
-6. Create a folder named `public` and upload all files into it
-   - Or use the path: `/public/og-image.png` when uploading
-7. Commit with message: `assets: add og-image, logo, and meta ad creatives`
+1. Open Canva (canva.com) — create a Custom Size design: 1200 x 630 px
+2. Build the OG image using the brief above (~10 min)
+3. Download as PNG, name it `og-image.png`
+4. Go to GitHub: https://github.com/giggles8d/-dinnerdrop
+5. Create a `public/` folder in the repo root, upload `og-image.png`
+6. Repeat for `logo.png` (512x512px, ~5 min)
+7. Meta ad creatives can wait until Day 3 (ad account setup)
 
-**Verify after upload:** https://dinnerdrop.vercel.app/og-image.png should display the image (give Vercel 2–3 min to redeploy).
+**Estimated Sarah time: ~20-25 minutes total**
+**Unblocks: All social sharing previews + every ad campaign**
+
+---
+
+## Technical Notes
+
+- Next.js App Router serves `/public/` files at the root URL automatically
+- After upload, verify at: `https://dinnerdrop.vercel.app/og-image.png`
+- Facebook sharing debugger (clears cache): https://developers.facebook.com/tools/debug/
+- Twitter card validator: https://cards-dev.twitter.com/validator
