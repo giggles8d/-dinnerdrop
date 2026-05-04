@@ -1,0 +1,118 @@
+# DinnerDrop Midnight Status Checkpoint
+**Date:** 2026-05-04 08:08 UTC (Day 1 → Day 2 transition)
+**Run:** Day 1, Hour 12 — Automated status review
+
+---
+
+## Site Health
+
+| Check | Result |
+|-------|--------|
+| https://dinnerdrop.vercel.app | UNVERIFIABLE — egress blocked from Cowork sandbox |
+| https://dinnerdrop.app | UNVERIFIABLE — egress blocked from Cowork sandbox |
+| /api/stripe/beta-spots | UNVERIFIABLE — egress blocked from Cowork sandbox |
+
+**Note:** Direct site health checks have been blocked by cowork-egress-allowed list throughout Day 1.
+This is a known sandbox limitation. Site was deploying successfully per Vercel during Day 1 Hour 1 build.
+Last confirmed build: PASS (commit f84de67, 31 pages, zero TypeScript errors).
+
+**Recommended action for Sarah:** Manually visit https://dinnerdrop.vercel.app to confirm it loads.
+
+---
+
+## GitHub Commit Status — Day 1
+
+| Commit | Hour | Description | Status |
+|--------|------|-------------|--------|
+| f84de67 | H1 | Day 1 audit — 4 bugs fixed, beta-spots route fixed | ✅ PUSHED |
+| 8ca8216 | H2 | SEO metadata, sitemap.ts, robots.ts | ✅ PUSHED |
+| b468706 | H3 | Viewport export, favicon meta, font preconnect | ✅ PUSHED |
+| cd66015 | H5 | Beta page layout, How it works, FAQ | ✅ PUSHED |
+| 798a2d4 | H6 | Ad copy v1 — 5 Meta, 5 Google, 3 display | ✅ PUSHED |
+| 6dd49bc | H7 | Keyword research v1 — 20 keywords, 3 ad groups | ✅ PUSHED |
+| f782149 | H8 | Email sequence v1 — 3 trial-to-paid emails | ✅ PUSHED |
+| 25aae04 | H9 | Community research — Reddit/Facebook targets | ✅ PUSHED |
+| e0862b4 | H10 | Community post drafts v1 — 3 Reddit, 2 Facebook | ✅ PUSHED |
+| H11 | H11 | Social assets brief | ⚠️ RECOVERED — was reported but not pushed; committed now |
+
+**Total Day 1 commits:** 9 code/content commits + 1 recovered
+
+---
+
+## docs/ Folder Contents (as of this checkpoint)
+
+- `ad-copy-v1.md` — 5 Meta ad variants, 5 Google headlines, 3 display descriptions
+- `community-posts-v1.md` — 3 Reddit + 2 Facebook posts, A/B variants
+- `community-targets.md` — 6 Reddit subs + Facebook groups, karma warmup guide
+- `email-sequence-v1.md` — 3 trial-to-paid emails (Day 3/6/7)
+- `keyword-research-v1.md` — 20 keywords, 3 ad groups, competitor analysis
+- `operating-schedule.md` — Full 7-day operating plan
+- `social-assets-brief.md` — OG image audit + Canva design briefs ← NEW (H11 recovery)
+- `midnight-checkpoint.md` — This file ← NEW (H12)
+
+---
+
+## Day 1 Summary: What Was Built
+
+### Code Changes (Hours 1–5)
+- Fixed critical bug: `/api/stripe/beta-spots` was failing to prerender (static route issue)
+- Fixed stale metadata: "Instacart" reference removed from layout description
+- Added proper SEO metadata, OpenGraph tags, sitemap, robots.txt
+- Added explicit viewport export (required for Next.js 13 App Router)
+- Added font preconnect headers for LCP improvement
+- Enhanced /beta page: layout metadata, 3-step How It Works, FAQ section
+
+### Content Created (Hours 6–11)
+- **Ad copy:** 5 Meta ad variants (Problem-Aware, Benefit-Led, Scarcity, Identity, Direct Value), 5 Google Search headlines, 3 Display descriptions
+- **Keyword research:** 20 target keywords, 3 Google ad groups, negative keyword list, CPC estimates
+- **Email sequence:** 3 trial-to-paid emails with subject lines, copy, A/B variants, trigger logic
+- **Community research:** Reddit and Facebook group landscape, posting rules, karma requirements
+- **Community posts:** 5 deployment-ready posts with A/B variants and posting checklist
+- **Social assets brief:** Full Canva design spec for og-image.png, logo.png, 3 Meta ad creatives
+
+---
+
+## Open Issues / Blockers
+
+1. **CRITICAL — og-image.png and logo.png missing** (blocks ad launch)
+   - `/public/` folder doesn't exist in repo
+   - Sarah must create in Canva and upload (~20 min)
+   - Full brief: docs/social-assets-brief.md
+
+2. **BETA100 Stripe coupon not yet confirmed**
+   - All community posts reference this coupon
+   - Sarah must create it before any posts go live
+
+3. **Legal pages have stale Instacart references**
+   - Terms of Service sections 3 and 5
+   - Privacy Policy section 3
+   - These are legal docs — Sarah must update
+
+4. **Meta Business Manager account not yet created**
+   - Day 3 prerequisite
+   - Sarah must create (auth gate)
+
+5. **Google Ads account not yet created**
+   - Day 3 prerequisite
+   - Sarah must create (auth gate)
+
+---
+
+## Day 2 Preview (next scheduled session)
+
+Day 2 focuses entirely on ad infrastructure setup and research:
+- Meta Business Manager setup guide
+- Facebook Page content prep
+- Instagram profile prep
+- Meta audience research (3 audience profiles for A/B)
+- Meta campaign structure brief
+- Google Ads account setup guide
+- Google Search + Display campaign structure
+- Ad copy consolidation + UTM strategy
+- Landing page A/B variant
+- Ad spend authorization package for Sarah
+
+**Next scheduled task:** Day 2, Hour 1 — Meta Business Manager Research
+
+---
+*Checkpoint generated by DinnerDrop Operating Manager — automated run*
