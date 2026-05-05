@@ -22,6 +22,7 @@ function DashboardContent() {
   const [totalCost, setTotalCost] = useState(0)
   const [budget, setBudget] = useState('$100')
   const [loading, setLoading] = useState(false)
+  const [initialLoading, setInitialLoading] = useState(true)
   const [hasGenerated, setHasGenerated] = useState(false)
   const [favoriteNames, setFavoriteNames] = useState<Set<string>>(new Set())
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
@@ -35,7 +36,7 @@ function DashboardContent() {
 
   const loadExistingPlan = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setLoading(false); return }
+    if (!user) { setLoading(false); setInitialLoading(false); return }
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -48,6 +49,7 @@ function DashboardContent() {
       setSubscriptionStatus(profile.subscription_status || 'free')
 
       if (!profile.onboarding_complete) {
+        setInitialLoading(false)
         router.push('/onboarding')
         return
       }
@@ -87,6 +89,7 @@ function DashboardContent() {
       .eq('user_id', user.id)
 
     setPlanCount(count ?? 0)
+    setInitialLoading(false)
   }, [supabase, router])
 
   useEffect(() => {
@@ -156,6 +159,10 @@ await recordMealSignal({
   }
 
   async function generatePlan() {
+    if (subscriptionStatus === 'past_due') {
+      await handleUpdatePayment()
+      return
+    }
     if (!canGenerate) {
       router.push('/subscribe')
       return
@@ -168,7 +175,7 @@ await recordMealSignal({
     }
 
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setLoading(false); return }
+    if (!user) { setLoading(false); setInitialLoading(false); return }
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -296,10 +303,12 @@ await recordMealSignal({
           </div>
           <button
             onClick={generatePlan}
-            disabled={loading}
+            disabled={loading || initialLoading}
             className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
           >
-            {loading
+            {initialLoading
+              ? 'Loading...'
+              : loading
               ? 'Generating...'
               : !canGenerate
                 ? 'Upgrade to generate'
@@ -311,7 +320,7 @@ await recordMealSignal({
 
         <MealGrid
           meals={meals}
-          loading={loading}
+          loading={initialLoading || loading}
           favoriteNames={favoriteNames}
           onToggleFavorite={toggleFavorite}
         />
