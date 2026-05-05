@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Heart } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
+import { recordMealSignal } from '@/lib/taste-profile'
 import type { Meal } from '@/types'
 
 interface FavoriteRow {
@@ -25,7 +26,7 @@ export default function FavoritesPage() {
 
   const loadFavorites = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) { setLoading(false); return }
 
     const { data } = await supabase
       .from('favorites')
@@ -46,8 +47,18 @@ export default function FavoritesPage() {
   async function removeFavorite(e: React.MouseEvent, id: string) {
     e.preventDefault()
     e.stopPropagation()
+    const fav = favorites.find(f => f.id === id)
     await supabase.from('favorites').delete().eq('id', id)
     setFavorites(prev => prev.filter(f => f.id !== id))
+    if (fav) {
+      await recordMealSignal({
+        event_type: 'unfavorited',
+        meal_name: fav.meal_data.name,
+        cuisine: fav.meal_data.cuisine,
+        protein: fav.meal_data.protein,
+        cook_time: fav.meal_data.cookTime,
+      })
+    }
   }
 
   if (loading) {
