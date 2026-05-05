@@ -1,3 +1,4 @@
+import { createClient } from '@supabase/supabase-js'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
 
@@ -7,7 +8,24 @@ interface SwapMealResponse {
 
 export async function POST(request: Request) {
   try {
-    const { currentMeal, profile } = await request.json()
+    const { currentMeal, profile, userId } = await request.json()
+
+    // Auth gate: reject unauthenticated callers to protect Claude API credits
+    if (!userId || typeof userId !== 'string') {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+    const { data: profileRow } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', userId)
+      .single()
+    if (!profileRow) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
 
     const prompt = `You are a meal planning assistant for DinnerDrop. The user wants to swap out a meal from their weekly plan.
 

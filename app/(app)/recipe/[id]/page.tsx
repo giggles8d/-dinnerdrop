@@ -128,6 +128,7 @@ export default function RecipePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          userId: user.id,
           currentMeal: meal,
           profile: {
             familySize: profile.family_size,
