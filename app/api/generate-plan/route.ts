@@ -149,7 +149,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
           // Retry once with stronger prompt emphasis
           const retryText = await generateWithClaude(
             prompt + '\n\nCRITICAL: The previous response violated dietary restrictions. Try again. Absolutely no ' +
-            [...blockedCategories].join(' or ') + ' ingredients.',
+            Array.from(blockedCategories).join(' or ') + ' ingredients.',
             4000
           )
           const retryData = parseClaudeJSON<GeneratePlanResponse>(retryText)

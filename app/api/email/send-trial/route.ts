@@ -1,3 +1,4 @@
+import React from 'react'
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
 import { render } from '@react-email/render'
@@ -5,11 +6,11 @@ import TrialDay3 from '@/emails/TrialDay3'
 import TrialDay6 from '@/emails/TrialDay6'
 import TrialDay7 from '@/emails/TrialDay7'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() { return new Resend(process.env.RESEND_API_KEY) }
 
 type EmailNumber = 1 | 2 | 3
 
-const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: any }> = {
+const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: React.FC<{ firstName?: string; unsubscribeUrl: string; nextBillingDate?: string }> }> = {
   1: { subject: 'How are your dinners going this week? 🍽️', Template: TrialDay3 },
   2: { subject: 'One day left in your free trial', Template: TrialDay6 },
   3: { subject: 'Your DinnerDrop trial ends tonight', Template: TrialDay7 },
@@ -38,14 +39,14 @@ export async function POST(request: NextRequest) {
   const unsubscribeUrl = `https://dinnerdrop.app/unsubscribe?uid=${userId}`
 
   const html = await render(
-    config.Template({
+    React.createElement(config.Template, {
       firstName: firstName || 'there',
       unsubscribeUrl,
       nextBillingDate: nextBillingDate || 'one week from today',
     })
   )
 
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',
     to: userEmail,
     subject: config.subject,
