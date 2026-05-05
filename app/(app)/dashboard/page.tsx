@@ -35,7 +35,7 @@ function DashboardContent() {
 
   const loadExistingPlan = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) { setLoading(false); return }
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -168,7 +168,7 @@ await recordMealSignal({
     }
 
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) { setLoading(false); return }
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -176,7 +176,7 @@ await recordMealSignal({
       .eq('id', user.id)
       .single()
 
-    if (!profile) return
+    if (!profile) { setLoading(false); return }
 
     // Fetch favorite meals to include in generation
     const { data: favorites } = await supabase
