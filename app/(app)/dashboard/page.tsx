@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Sparkles } from 'lucide-react'
+import { AlertCircle, Sparkles } from 'lucide-react'
 import { recordMealSignal } from '@/lib/taste-profile'
 import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
@@ -229,11 +229,42 @@ await recordMealSignal({
     }
   }
 
+  async function handleUpdatePayment() {
+    try {
+      const res = await fetch('/api/stripe/customer-portal', { method: 'POST' })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (err) {
+      console.error('Failed to open billing portal:', err)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Subscription banner */}
-        {!isSubscribed && planCount > 0 && (
+        {/* Past due payment banner */}
+        {subscriptionStatus === 'past_due' && (
+          <div className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-red-50 border border-red-200">
+            <div className="flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-semibold text-red-800">Payment issue — your plan is paused</p>
+                <p className="text-xs text-red-600 mt-0.5">Update your payment method to restore access</p>
+              </div>
+            </div>
+            <button
+              onClick={handleUpdatePayment}
+              className="text-xs font-semibold text-red-700 hover:text-red-900 flex-shrink-0 underline"
+            >
+              Update payment &rarr;
+            </button>
+          </div>
+        )}
+
+        {/* Subscription upgrade banner — shown only for free users, not past_due */}
+        {!isSubscribed && subscriptionStatus !== 'past_due' && planCount > 0 && (
           <Link
             href="/subscribe"
             className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-foreground text-primary-foreground hover:bg-foreground/90 transition-colors"
