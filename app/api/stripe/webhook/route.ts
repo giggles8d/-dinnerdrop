@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
+import { Resend } from 'resend'
+import { render } from '@react-email/render'
+import WelcomeBeta from '@/emails/WelcomeBeta'
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -60,6 +63,38 @@ export async function POST(request: NextRequest) {
             trial_ends_at: trialEnds.toISOString(),
           })
           .eq('stripe_customer_id', customerId)
+
+        // Send welcome email to new beta user (graceful — skips if RESEND_API_KEY not set)
+        if (process.env.RESEND_API_KEY) {
+          try {
+            const resend = new Resend(process.env.RESEND_API_KEY)
+            const customerEmail = session.customer_details?.email
+            const customerName = session.customer_details?.name ?? ''
+            const firstName = customerName.split(' ')[0] || 'there'
+            const trialEndFormatted = trialEnds.toLocaleDateString('en-US', {
+              month: 'long', day: 'numeric', year: 'numeric',
+            })
+            if (customerEmail) {
+              const html = await render(
+                WelcomeBeta({ firstName, trialEndsDate: trialEndFormatted })
+              )
+              await resend.emails.send({
+                from: process.env.RESEND_FROM_EMAIL ?? 'DinnerDrop <info@dinnerdrop.app>',
+                to: customerEmail,
+                subject: 'Welcome to DinnerDrop — you\'re in 🎉',
+                html,
+                headers: {
+                  'List-Unsubscribe': '<https://dinnerdrop.app/unsubscribe?email=' + encodeURIComponent(customerEmail) + '>',
+                },
+              })
+              console.log('Welcome email sent to ' + customerEmail)
+            }
+          } catch (emailErr) {
+            console.error('Welcome email send failed:', emailErr)
+          }
+        } else {
+          console.log('RESEND_API_KEY not set — skipping welcome email')
+        }
       }
       break
     }

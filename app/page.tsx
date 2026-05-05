@@ -33,8 +33,8 @@ export default function LandingPage() {
             Five budget-friendly weeknight dinners, planned by AI, groceries sent straight to your favorite store. Under 30 minutes every night.
           </p>
           <div className="flex flex-col sm:flex-row items-start gap-3">
-            <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-colors shadow-sm">
-              Get my free meal plan &rarr;
+            <Link href="/beta" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-colors shadow-sm">
+              Claim my 6 months free &rarr;
             </Link>
             <a href="#how-it-works" className="px-8 py-4 rounded-xl border-2 border-border text-foreground font-semibold text-base hover:bg-muted transition-colors">
               See how it works
@@ -48,8 +48,8 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 max-w-5xl py-6">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-2xl font-heading font-bold text-primary">2,000+</p>
-              <p className="text-xs text-muted-foreground mt-0.5">families planning weekly</p>
+              <p className="text-2xl font-heading font-bold text-primary">100</p>
+              <p className="text-xs text-muted-foreground mt-0.5">beta spots — 6 months free</p>
             </div>
             <div>
               <p className="text-2xl font-heading font-bold text-primary">$47</p>
@@ -161,8 +161,8 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 py-16 max-w-5xl text-center">
           <h2 className="text-4xl font-heading font-bold text-primary-foreground mb-4">Stop staring at the fridge.</h2>
           <p className="text-primary-foreground/60 mb-8 text-lg">Your first meal plan is completely free.</p>
-          <Link href="/signup" className="inline-block px-10 py-4 rounded-xl bg-accent text-foreground font-bold text-base hover:bg-accent/90 transition-colors">
-            Get my free meal plan &rarr;
+          <Link href="/beta" className="inline-block px-10 py-4 rounded-xl bg-accent text-foreground font-bold text-base hover:bg-accent/90 transition-colors">
+            Claim 6 months free &rarr;
           </Link>
         </div>
       </section>
