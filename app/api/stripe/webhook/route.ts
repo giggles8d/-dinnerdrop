@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 import { render } from '@react-email/render'
 import WelcomeBeta from '@/emails/WelcomeBeta'
+import PaymentFailed from '@/emails/PaymentFailed'
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -143,17 +144,46 @@ export async function POST(request: NextRequest) {
 
     case 'invoice.payment_failed': {
       // Triggered when a subscription renewal charge fails.
-      // Sets status to past_due so the app can show a payment update banner.
-      // The email dunning sequence (future sprint) will also key off this status.
+      // Sets status to past_due so the dashboard can show a payment update banner.
       const invoice = event.data.object as Stripe.Invoice
       const customerId = invoice.customer as string
 
       if (customerId) {
-        await supabase
+        // 1. Update DB status to past_due
+        const { data: profile } = await supabase
           .from('profiles')
           .update({ subscription_status: 'past_due' })
           .eq('stripe_customer_id', customerId)
+          .select('email, full_name')
+          .single()
+
         console.log(`Payment failed for customer ${customerId} — set past_due`)
+
+        // 2. Send dunning email (graceful — skips if RESEND_API_KEY not set)
+        if (process.env.RESEND_API_KEY && profile?.email) {
+          try {
+            const resend = new Resend(process.env.RESEND_API_KEY)
+            const firstName = (profile.full_name ?? '').split(' ')[0] || 'there'
+            const html = await render(
+              PaymentFailed({
+                firstName,
+                updatePaymentUrl: 'https://dinnerdrop.app/account',
+              })
+            )
+            await resend.emails.send({
+              from: process.env.RESEND_FROM_EMAIL ?? 'DinnerDrop <info@dinnerdrop.app>',
+              to: profile.email,
+              subject: 'Action needed: update your DinnerDrop payment method',
+              html,
+              headers: {
+                'List-Unsubscribe': `<https://dinnerdrop.app/unsubscribe?email=${encodeURIComponent(profile.email)}>`,
+              },
+            })
+            console.log(`Dunning email sent to ${profile.email}`)
+          } catch (emailErr) {
+            console.error('Dunning email send failed:', emailErr)
+          }
+        }
       }
       break
     }
