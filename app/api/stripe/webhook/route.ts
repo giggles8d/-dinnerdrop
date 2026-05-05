@@ -49,11 +49,10 @@ export async function POST(request: NextRequest) {
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session
       const customerId = session.customer as string
+      const customerEmail = session.customer_details?.email
+      const customerName = session.customer_details?.name ?? ''
 
       if (customerId) {
-        // New checkout creates a trialing subscription — set trialing, not active.
-        // trial_starts_at = now; trial_ends_at = 7 days from now (standard trial period).
-        // customer.subscription.updated will update trial_ends_at with the exact Stripe timestamp.
         const now = new Date()
         const trialEnds = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
         await supabase
@@ -65,12 +64,10 @@ export async function POST(request: NextRequest) {
           })
           .eq('stripe_customer_id', customerId)
 
-        // Send welcome email to new beta user (graceful — skips if RESEND_API_KEY not set)
         if (process.env.RESEND_API_KEY) {
+          // Welcome email to new beta user
           try {
             const resend = new Resend(process.env.RESEND_API_KEY)
-            const customerEmail = session.customer_details?.email
-            const customerName = session.customer_details?.name ?? ''
             const firstName = customerName.split(' ')[0] || 'there'
             const trialEndFormatted = trialEnds.toLocaleDateString('en-US', {
               month: 'long', day: 'numeric', year: 'numeric',
@@ -82,7 +79,7 @@ export async function POST(request: NextRequest) {
               await resend.emails.send({
                 from: process.env.RESEND_FROM_EMAIL ?? 'DinnerDrop <info@dinnerdrop.app>',
                 to: customerEmail,
-                subject: 'Welcome to DinnerDrop — you\'re in 🎉',
+                subject: "Welcome to DinnerDrop — you're in",
                 html,
                 headers: {
                   'List-Unsubscribe': '<https://dinnerdrop.app/unsubscribe?email=' + encodeURIComponent(customerEmail) + '>',
@@ -93,46 +90,45 @@ export async function POST(request: NextRequest) {
           } catch (emailErr) {
             console.error('Welcome email send failed:', emailErr)
           }
+
+          // Admin notification to Sarah
+          if (customerEmail) {
+            try {
+              const resendAdmin = new Resend(process.env.RESEND_API_KEY)
+              let spotsRemaining = 100
+              try {
+                const coupon = await stripe.coupons.retrieve('BETA100')
+                spotsRemaining = 100 - (coupon.times_redeemed || 0)
+              } catch { /* coupon may not exist yet */ }
+              const signupTime = new Date().toLocaleString('en-US', {
+                timeZone: 'America/New_York',
+                month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true,
+              })
+              const spotsColor = spotsRemaining < 20 ? '#dc2626' : '#1a5c38'
+              await resendAdmin.emails.send({
+                from: process.env.RESEND_FROM_EMAIL ?? 'DinnerDrop <info@dinnerdrop.app>',
+                to: 'info@dinnerdrop.app',
+                subject: `New beta signup: ${customerEmail} (${spotsRemaining} spots left)`,
+                html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:24px">
+                  <h2 style="color:#1a5c38;margin-top:0">New Beta Signup!</h2>
+                  <p style="font-size:15px;color:#333">A new user just joined DinnerDrop beta.</p>
+                  <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:14px">
+                    <tr><td style="padding:10px 8px;color:#666;font-weight:600;width:130px">Name</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${customerName || '(not provided)'}</td></tr>
+                    <tr style="background:#fafafa"><td style="padding:10px 8px;color:#666;font-weight:600">Email</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${customerEmail}</td></tr>
+                    <tr><td style="padding:10px 8px;color:#666;font-weight:600">Signed up</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${signupTime} EST</td></tr>
+                    <tr style="background:#fafafa"><td style="padding:10px 8px;color:#666;font-weight:600">Spots left</td><td style="padding:10px 8px;color:${spotsColor};font-weight:700;font-size:16px">${spotsRemaining} / 100</td></tr>
+                  </table>
+                  <p><a href="https://dashboard.stripe.com/customers" style="background:#1a5c38;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;display:inline-block;font-size:14px">View in Stripe</a></p>
+                  <p style="color:#999;font-size:11px;margin-top:24px">DinnerDrop automated notification</p>
+                </div>`,
+              })
+              console.log(`[webhook] Admin notification sent for beta signup: ${customerEmail}`)
+            } catch (adminNotifyErr) {
+              console.error('[webhook] Admin notification email failed:', adminNotifyErr)
+            }
+          }
         } else {
-          console.log('RESEND_API_KEY not set — skipping welcome email')
-        }
-      }
-
-      // Notify Sarah of new beta signup (admin notification to info@dinnerdrop.app)
-      if (process.env.RESEND_API_KEY && customerEmail) {
-        try {
-          const resendAdmin = new Resend(process.env.RESEND_API_KEY)
-          let spotsRemaining = 100
-          try {
-            const coupon = await stripe.coupons.retrieve('BETA100')
-            spotsRemaining = 100 - (coupon.times_redeemed || 0)
-          } catch { /* coupon may not exist yet — use 100 as default */ }
-
-          const signupTime = new Date().toLocaleString('en-US', {
-            timeZone: 'America/New_York',
-            month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true,
-          })
-          const spotsColor = spotsRemaining < 20 ? '#dc2626' : '#1a5c38'
-          await resendAdmin.emails.send({
-            from: process.env.RESEND_FROM_EMAIL ?? 'DinnerDrop <info@dinnerdrop.app>',
-            to: 'info@dinnerdrop.app',
-            subject: `🎉 New beta signup: ${customerEmail} (${spotsRemaining} spots left)`,
-            html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:24px">
-              <h2 style="color:#1a5c38;margin-top:0">🎉 New Beta Signup!</h2>
-              <p style="font-size:15px;color:#333">A new user just joined DinnerDrop beta.</p>
-              <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:14px">
-                <tr><td style="padding:10px 8px;color:#666;font-weight:600;width:130px">Name</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${customerName || '(not provided)'}</td></tr>
-                <tr style="background:#fafafa"><td style="padding:10px 8px;color:#666;font-weight:600">Email</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${customerEmail}</td></tr>
-                <tr><td style="padding:10px 8px;color:#666;font-weight:600">Signed up</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${signupTime} EST</td></tr>
-                <tr style="background:#fafafa"><td style="padding:10px 8px;color:#666;font-weight:600">Spots left</td><td style="padding:10px 8px;color:${spotsColor};font-weight:700;font-size:16px">${spotsRemaining} / 100</td></tr>
-              </table>
-              <p><a href="https://dashboard.stripe.com/customers" style="background:#1a5c38;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;display:inline-block;font-size:14px">View in Stripe →</a></p>
-              <p style="color:#999;font-size:11px;margin-top:24px">DinnerDrop automated notification</p>
-            </div>`,
-          })
-          console.log(`[webhook] Admin notification sent for beta signup: ${customerEmail}`)
-        } catch (adminNotifyErr) {
-          console.error('[webhook] Admin notification email failed:', adminNotifyErr)
+          console.log('RESEND_API_KEY not set — skipping emails')
         }
       }
       break
@@ -181,13 +177,10 @@ export async function POST(request: NextRequest) {
     }
 
     case 'invoice.payment_failed': {
-      // Triggered when a subscription renewal charge fails.
-      // Sets status to past_due so the dashboard can show a payment update banner.
       const invoice = event.data.object as Stripe.Invoice
       const customerId = invoice.customer as string
 
       if (customerId) {
-        // 1. Update DB status to past_due
         const { data: profile } = await supabase
           .from('profiles')
           .update({ subscription_status: 'past_due' })
@@ -197,7 +190,6 @@ export async function POST(request: NextRequest) {
 
         console.log(`Payment failed for customer ${customerId} — set past_due`)
 
-        // 2. Send dunning email (graceful — skips if RESEND_API_KEY not set)
         if (process.env.RESEND_API_KEY && profile?.email) {
           try {
             const resend = new Resend(process.env.RESEND_API_KEY)
