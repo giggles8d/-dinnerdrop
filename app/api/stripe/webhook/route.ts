@@ -97,6 +97,44 @@ export async function POST(request: NextRequest) {
           console.log('RESEND_API_KEY not set — skipping welcome email')
         }
       }
+
+      // Notify Sarah of new beta signup (admin notification to info@dinnerdrop.app)
+      if (process.env.RESEND_API_KEY && customerEmail) {
+        try {
+          const resendAdmin = new Resend(process.env.RESEND_API_KEY)
+          let spotsRemaining = 100
+          try {
+            const coupon = await stripe.coupons.retrieve('BETA100')
+            spotsRemaining = 100 - (coupon.times_redeemed || 0)
+          } catch { /* coupon may not exist yet — use 100 as default */ }
+
+          const signupTime = new Date().toLocaleString('en-US', {
+            timeZone: 'America/New_York',
+            month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true,
+          })
+          const spotsColor = spotsRemaining < 20 ? '#dc2626' : '#1a5c38'
+          await resendAdmin.emails.send({
+            from: process.env.RESEND_FROM_EMAIL ?? 'DinnerDrop <info@dinnerdrop.app>',
+            to: 'info@dinnerdrop.app',
+            subject: `🎉 New beta signup: ${customerEmail} (${spotsRemaining} spots left)`,
+            html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:24px">
+              <h2 style="color:#1a5c38;margin-top:0">🎉 New Beta Signup!</h2>
+              <p style="font-size:15px;color:#333">A new user just joined DinnerDrop beta.</p>
+              <table style="width:100%;border-collapse:collapse;margin:16px 0;font-size:14px">
+                <tr><td style="padding:10px 8px;color:#666;font-weight:600;width:130px">Name</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${customerName || '(not provided)'}</td></tr>
+                <tr style="background:#fafafa"><td style="padding:10px 8px;color:#666;font-weight:600">Email</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${customerEmail}</td></tr>
+                <tr><td style="padding:10px 8px;color:#666;font-weight:600">Signed up</td><td style="padding:10px 8px;border-bottom:1px solid #f0f0f0">${signupTime} EST</td></tr>
+                <tr style="background:#fafafa"><td style="padding:10px 8px;color:#666;font-weight:600">Spots left</td><td style="padding:10px 8px;color:${spotsColor};font-weight:700;font-size:16px">${spotsRemaining} / 100</td></tr>
+              </table>
+              <p><a href="https://dashboard.stripe.com/customers" style="background:#1a5c38;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;display:inline-block;font-size:14px">View in Stripe →</a></p>
+              <p style="color:#999;font-size:11px;margin-top:24px">DinnerDrop automated notification</p>
+            </div>`,
+          })
+          console.log(`[webhook] Admin notification sent for beta signup: ${customerEmail}`)
+        } catch (adminNotifyErr) {
+          console.error('[webhook] Admin notification email failed:', adminNotifyErr)
+        }
+      }
       break
     }
 

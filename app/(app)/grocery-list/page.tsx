@@ -87,7 +87,7 @@ export default function GroceryListPage() {
       const res = await fetch('/api/generate-list', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ meals: plan.meals as Meal[] }),
+        body: JSON.stringify({ meals: plan.meals as Meal[], userId: user.id }),
       })
 
       const data = await res.json()

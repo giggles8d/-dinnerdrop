@@ -1,11 +1,29 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { createClient } from '@supabase/supabase-js'
 import type { GroceryCategory, GroceryItem } from '@/types'
 
 type GroceryListResponse = Record<GroceryCategory, GroceryItem[]>
 
 export async function POST(request: Request) {
   try {
-    const { meals } = await request.json()
+    const { meals, userId } = await request.json()
+
+    // Auth gate — validate userId to prevent unauthorized Claude API credit usage
+    if (!userId) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('id', userId)
+      .single()
+    if (!profile) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
 
     // Validate input — reject empty or malformed requests to protect AI API credits
     if (!Array.isArray(meals) || meals.length === 0) {
