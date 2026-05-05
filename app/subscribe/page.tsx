@@ -114,10 +114,25 @@ function SubscribeContent() {
           {/* Right: pricing card */}
           <div className="lg:sticky lg:top-8">
             <div className="rounded-2xl border-2 border-primary bg-white p-8 shadow-sm">
+              {couponCode === 'BETA100' && (
+                <div className="mb-6 -mt-2 -mx-2 px-4 py-3 rounded-xl text-sm font-semibold text-center" style={{backgroundColor:'#dcfce7',color:'#166534',border:'1px solid #bbf7d0'}}>
+                  🎉 Beta coupon applied — 6 months completely free
+                </div>
+              )}
               <div className="mb-6">
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-5xl font-heading font-bold text-foreground">$9</span>
-                  <span className="text-muted-foreground text-lg">/month</span>
+                  {couponCode === 'BETA100' ? (
+                    <>
+                      <span className="text-5xl font-heading font-bold text-foreground line-through text-muted-foreground text-3xl">$9</span>
+                      <span className="text-5xl font-heading font-bold ml-2" style={{color:'#166534'}}>$0</span>
+                      <span className="text-muted-foreground text-lg">/mo for 6 months</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-5xl font-heading font-bold text-foreground">$9</span>
+                      <span className="text-muted-foreground text-lg">/month</span>
+                    </>
+                  )}
                 </div>
                 <div className="inline-block bg-secondary text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 mt-2">
                   7-day free trial — no charge today
@@ -147,7 +162,7 @@ function SubscribeContent() {
                 disabled={loading}
                 className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
               >
-                {loading ? 'Redirecting to checkout...' : 'Start my free trial →'}
+                {loading ? 'Redirecting to checkout...' : couponCode === 'BETA100' ? 'Claim my 6 months free →' : 'Start my free trial →'}
               </button>
 
               {error && (

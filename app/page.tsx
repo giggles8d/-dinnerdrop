@@ -4,6 +4,9 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
 
+      <a href="/beta" className="block text-center py-2 text-sm font-medium" style={{backgroundColor:'#e8a838',color:'#1a5c38'}}>
+        🎉 Beta: First 100 families get 6 months free &rarr; Claim your spot
+      </a>
       <header className="border-b border-border bg-white sticky top-0 z-10">
         <div className="container mx-auto px-4 max-w-5xl flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
@@ -17,9 +20,6 @@ export default function LandingPage() {
           </div>
         </div>
       </header>
-      <a href="/beta" className="block text-center py-2 text-sm font-medium" style={{backgroundColor:'#e8a838',color:'#1a5c38'}}>
-        🎉 Beta: First 100 families get 6 months free &rarr; Claim your spot
-      </a>
             <section className="container mx-auto px-4 pt-20 pb-16 max-w-5xl">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-secondary text-primary text-xs font-bold px-3 py-1.5 rounded-full border border-primary/20 mb-6">

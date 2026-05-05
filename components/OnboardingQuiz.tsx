@@ -94,7 +94,7 @@ export default function OnboardingQuiz() {
     maxCookTime: 30,
     cuisinePreference: [],
     dietaryNeeds: [],
-    preferredStore: 'Instacart',
+    preferredStore: '',
   })
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -134,8 +134,11 @@ export default function OnboardingQuiz() {
     return answers[field] === value
   }
 
+  const [submitError, setSubmitError] = useState('')
+
   async function handleSubmit() {
     setLoading(true)
+    setSubmitError('')
 
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
@@ -164,6 +167,7 @@ export default function OnboardingQuiz() {
 
     if (error) {
       console.error('Error saving profile:', error)
+      setSubmitError('Something went wrong saving your preferences. Please try again.')
       setLoading(false)
       return
     }
@@ -233,13 +237,18 @@ export default function OnboardingQuiz() {
           )}
 
           {isLastStep && (
-            <button
-              onClick={handleSubmit}
-              disabled={loading}
-              className="px-6 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
-            >
-              {loading ? 'Saving...' : 'Get my meal plan'}
-            </button>
+            <div className="flex flex-col items-end gap-2">
+              {submitError && (
+                <p className="text-sm text-destructive text-right">{submitError}</p>
+              )}
+              <button
+                onClick={handleSubmit}
+                disabled={loading}
+                className="px-6 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
+              >
+                {loading ? 'Saving...' : 'Get my meal plan'}
+              </button>
+            </div>
           )}
         </div>
       </div>
