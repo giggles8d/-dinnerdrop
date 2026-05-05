@@ -114,7 +114,16 @@ Research Sentry free tier, Vercel Analytics (built-in), LogRocket. Document how 
 ### HOUR 20 — Landing Page Conversion Optimization | STATUS: SCHEDULED
 Read app/page.tsx fully. Count CTAs, check social proof, check beta banner prominence. Implement 2 highest-impact copy/UX improvements via Python str.replace. Build and commit.
 
-### HOUR 21 — Pricing Page Review | STATUS: SCHEDULED
+### HOUR 21 — Pricing Page Review | STATUS: COMPLETE
+**Commit:** fce4e1f (subscribe page BETA100 coupon badge — green banner, $0/mo display, CTA copy change)
+
+### HOUR 21b — Stripe Customer Portal | STATUS: COMPLETE
+**Commit:** 280c996
+- Created app/api/stripe/customer-portal/route.ts — POST endpoint, auth-gated, creates portal session, returns URL
+- Created app/(app)/account/page.tsx — auto-redirects to Stripe portal; error state with back link
+- Patched dashboard: past_due banner (AlertCircle, red styling), handleUpdatePayment(), upgrade banner excludes past_due
+
+### HOUR 22 — Ad Account Setup Checklist | STATUS: COMPLETE
 Read app/subscribe/page.tsx. Verify coupon=BETA100 flows to checkout. Ensure trial period is clearly communicated. Add "No credit card required for first 7 days" if missing. Make "6 months free" messaging prominent when coupon active.
 
 ### HOUR 22 — Ad Account Setup Checklist | STATUS: SCHEDULED
