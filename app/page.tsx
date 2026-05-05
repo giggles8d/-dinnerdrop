@@ -143,7 +143,7 @@ export default function LandingPage() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>Weekly meal plans</li>
                 <li>5 dinners per plan</li>
-                <li>store handoff</li>
+                <li>One-tap grocery cart handoff</li>
                 <li>Budget optimization</li>
               </ul>
               <Link

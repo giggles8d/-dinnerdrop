@@ -105,6 +105,23 @@ export async function POST(request: NextRequest) {
         .eq('stripe_customer_id', customerId)
       break
     }
+
+    case 'invoice.payment_failed': {
+      // Triggered when a subscription renewal charge fails.
+      // Sets status to past_due so the app can show a payment update banner.
+      // The email dunning sequence (future sprint) will also key off this status.
+      const invoice = event.data.object as Stripe.Invoice
+      const customerId = invoice.customer as string
+
+      if (customerId) {
+        await supabase
+          .from('profiles')
+          .update({ subscription_status: 'past_due' })
+          .eq('stripe_customer_id', customerId)
+        console.log(`Payment failed for customer ${customerId} — set past_due`)
+      }
+      break
+    }
   }
 
   return NextResponse.json({ received: true })
