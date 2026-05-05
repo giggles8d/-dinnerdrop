@@ -21,7 +21,10 @@
     "react-dom": "^18",
     "stripe": "^20.4.1",
     "tailwind-merge": "^3.5.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "resend": "^3.2.0",
+    "@react-email/components": "^0.0.26",
+    "@react-email/render": "^0.0.17"
   },
   "devDependencies": {
     "@types/node": "^20",
