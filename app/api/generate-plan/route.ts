@@ -14,6 +14,8 @@ const DIETARY_CHECKS: Record<string, { label: string; blocked: string[] }> = {
   'gluten-free': { label: 'gluten-free', blocked: [] }, // handled in prompt; no reliable category signal
   'dairy-free': { label: 'dairy-free', blocked: ['Dairy & Eggs'] },
   'nut-free': { label: 'nut-free', blocked: [] }, // handled in prompt
+  keto: { label: 'keto', blocked: [] }, // no category signal; enforced via prompt
+  halal: { label: 'halal', blocked: [] }, // no category signal; enforced via prompt
 }
 
 export async function POST(request: Request) {

@@ -142,6 +142,7 @@ export default function OnboardingQuiz() {
 
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
+      setLoading(false)
       router.push('/login')
       return
     }
@@ -243,7 +244,7 @@ export default function OnboardingQuiz() {
               )}
               <button
                 onClick={handleSubmit}
-                disabled={loading}
+                disabled={loading || !answers.preferredStore}
                 className="px-6 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
                 {loading ? 'Saving...' : 'Get my meal plan'}
