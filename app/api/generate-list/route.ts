@@ -7,7 +7,18 @@ export async function POST(request: Request) {
   try {
     const { meals } = await request.json()
 
-    const allIngredients = meals.flatMap((meal: { ingredients: unknown[] }) => meal.ingredients)
+    // Validate input — reject empty or malformed requests to protect AI API credits
+    if (!Array.isArray(meals) || meals.length === 0) {
+      return Response.json({ error: 'meals must be a non-empty array' }, { status: 400 })
+    }
+
+    const allIngredients = meals.flatMap((meal: { ingredients: unknown[] }) =>
+      Array.isArray(meal.ingredients) ? meal.ingredients : []
+    )
+
+    if (allIngredients.length === 0) {
+      return Response.json({ error: 'No ingredients found in meals' }, { status: 400 })
+    }
 
     const prompt = `You are a grocery list optimizer. Take this list of ingredients from 5 dinner recipes and:
 1. Combine duplicates (e.g., 3 recipes need chicken → one line item with total quantity)

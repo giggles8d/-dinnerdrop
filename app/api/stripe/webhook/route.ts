@@ -48,10 +48,17 @@ export async function POST(request: NextRequest) {
 
       if (customerId) {
         // New checkout creates a trialing subscription — set trialing, not active.
-        // The customer.subscription.updated event will handle active status when trial converts.
+        // trial_starts_at = now; trial_ends_at = 7 days from now (standard trial period).
+        // customer.subscription.updated will update trial_ends_at with the exact Stripe timestamp.
+        const now = new Date()
+        const trialEnds = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
         await supabase
           .from('profiles')
-          .update({ subscription_status: 'trialing' })
+          .update({
+            subscription_status: 'trialing',
+            trial_starts_at: now.toISOString(),
+            trial_ends_at: trialEnds.toISOString(),
+          })
           .eq('stripe_customer_id', customerId)
       }
       break
@@ -73,9 +80,17 @@ export async function POST(request: NextRequest) {
       }
       const status = statusMap[subscription.status] ?? 'canceled'
 
+      // Sync exact trial_ends_at from Stripe (overrides the estimate set at checkout)
+      const trialEndAt = subscription.trial_end
+        ? new Date(subscription.trial_end * 1000).toISOString()
+        : null
+
       await supabase
         .from('profiles')
-        .update({ subscription_status: status })
+        .update({
+          subscription_status: status,
+          ...(trialEndAt !== null && { trial_ends_at: trialEndAt }),
+        })
         .eq('stripe_customer_id', customerId)
       break
     }
