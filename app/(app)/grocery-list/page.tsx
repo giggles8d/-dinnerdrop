@@ -13,6 +13,7 @@ export default function GroceryListPage() {
   const [groceryList, setGroceryList] = useState<GroceryListData | null>(null)
   const [totalCost, setTotalCost] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [generateError, setGenerateError] = useState(false)
   const [preferredStore, setPreferredStore] = useState('Instacart')
   const [krogerConnected, setKrogerConnected] = useState(false)
   const [krogerLoading, setKrogerLoading] = useState(false)
@@ -90,6 +91,13 @@ export default function GroceryListPage() {
         body: JSON.stringify({ meals: plan.meals as Meal[], userId: user.id }),
       })
 
+      if (!res.ok) {
+        console.error('Error generating grocery list — status:', res.status)
+        setGenerateError(true)
+        setLoading(false)
+        return
+      }
+
       const data = await res.json()
       setGroceryList(subtractPantry(data))
 
@@ -99,6 +107,7 @@ export default function GroceryListPage() {
         .eq('id', plan.id)
     } catch (error) {
       console.error('Error generating grocery list:', error)
+      setGenerateError(true)
     } finally {
       setLoading(false)
     }
@@ -159,6 +168,23 @@ export default function GroceryListPage() {
         <div className="text-center space-y-3">
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-muted-foreground">Building your grocery list...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (generateError) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4 max-w-sm px-4">
+          <p className="text-foreground font-medium">Couldn&apos;t build your grocery list</p>
+          <p className="text-muted-foreground text-sm">Something went wrong generating your list. Try again from your dashboard.</p>
+          <a
+            href="/dashboard"
+            className="inline-block px-6 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+          >
+            Back to dashboard
+          </a>
         </div>
       </div>
     )
