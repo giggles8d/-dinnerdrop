@@ -5,9 +5,11 @@ export function getStoreSearchUrl(storeName: string, searchTerm: string): string
   const encoded = encodeURIComponent(searchTerm);
   switch (storeName) {
     case 'Walmart':
-      return `https://www.walmart.com/search?q=${encoded}&affilsrc=api&veh=aff&wmlspartner=REPLACE_WITH_WALMART_AFFILIATE_ID`;
+      // TODO: Add Walmart affiliate ID once Impact.com approved
+      return `https://www.walmart.com/search?q=${encoded}`;
     case 'Amazon Fresh':
-      return `https://www.amazon.com/s?k=${encoded}&i=amazonfresh&tag=REPLACE_WITH_AMAZON_ASSOCIATE_TAG`;
+      // TODO: Add Amazon Associates tag once approved
+      return `https://www.amazon.com/s?k=${encoded}&i=amazonfresh`;
     case 'Instacart':
       return `https://www.instacart.com/products/search?q=${encoded}`;
     case 'Target':

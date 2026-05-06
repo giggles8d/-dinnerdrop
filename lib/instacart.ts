@@ -38,7 +38,7 @@ export async function createInstacartLink(items: GroceryItem[]): Promise<{ link:
   if (!response.ok) {
     const firstItem = items[0]?.searchTerm || 'groceries'
     return {
-      link: `https://www.instacart.com/store/search_v3/term?term=${encodeURIComponent(firstItem)}`,
+      link: `https://www.instacart.com/products/search?q=${encodeURIComponent(firstItem)}`,
       fallback: true,
     }
   }

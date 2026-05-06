@@ -26,6 +26,7 @@ const SCORE_WEIGHTS: Record<InteractionEventType, number> = {
 }
 
 export async function recordMealSignal(signal: MealSignal) {
+  try {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return
@@ -72,6 +73,9 @@ export async function recordMealSignal(signal: MealSignal) {
     total_signals: totalSignals,
     updated_at: new Date().toISOString(),
   }, { onConflict: 'user_id' })
+  } catch {
+    // Taste profile updates are best-effort; never crash the caller
+  }
 }
 
 export async function getTasteProfileForPrompt(userId: string): Promise<string> {
