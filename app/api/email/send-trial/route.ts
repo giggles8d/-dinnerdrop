@@ -17,6 +17,10 @@ const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: React.FC<{ 
 }
 
 export async function POST(request: NextRequest) {
+  if (!process.env.RESEND_API_KEY) {
+    console.log('[email/send-trial] RESEND_API_KEY not configured — skipping')
+    return NextResponse.json({ skipped: true, reason: 'RESEND_API_KEY not configured' }, { status: 200 })
+  }
   const authHeader = request.headers.get('x-cron-secret')
   if (authHeader !== process.env.CRON_SECRET) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

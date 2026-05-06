@@ -4,6 +4,10 @@ import { NextRequest, NextResponse } from 'next/server'
 // Called by Vercel Cron daily at 10:00 AM EST (14:00 UTC)
 // Schedule defined in vercel.json: "0 14 * * *"
 export async function GET(request: NextRequest) {
+  if (!process.env.RESEND_API_KEY) {
+    console.log('[cron/email-sequences] RESEND_API_KEY not configured — skipping batch')
+    return NextResponse.json({ skipped: true, reason: 'RESEND_API_KEY not configured', sent: 0, failed: 0 }, { status: 200 })
+  }
   const authHeader = request.headers.get('authorization')
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -30,6 +34,7 @@ export async function GET(request: NextRequest) {
       .from('profiles')
       .select('id, email, full_name, trial_starts_at, email_sequence_sent, subscription_status')
       .eq('subscription_status', 'trialing')
+      .not('email_unsubscribed', 'eq', true)
       .gte('trial_starts_at', `${dateStr}T00:00:00Z`)
       .lt('trial_starts_at', `${dateStr}T23:59:59Z`)
 
