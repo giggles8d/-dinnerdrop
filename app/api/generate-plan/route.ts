@@ -2,6 +2,9 @@ import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { createClient } from '@supabase/supabase-js'
 import type { Meal } from '@/types'
 
+// Extend serverless timeout — AI generation needs up to 55s
+export const maxDuration = 60
+
 interface GeneratePlanResponse {
   meals: Meal[]
   totalEstimatedCost: number
@@ -11,18 +14,17 @@ interface GeneratePlanResponse {
 const DIETARY_CHECKS: Record<string, { label: string; blocked: string[] }> = {
   vegetarian: { label: 'vegetarian', blocked: ['Meat & Seafood'] },
   vegan: { label: 'vegan', blocked: ['Meat & Seafood', 'Dairy & Eggs'] },
-  'gluten-free': { label: 'gluten-free', blocked: [] }, // handled in prompt; no reliable category signal
+  'gluten-free': { label: 'gluten-free', blocked: [] },
   'dairy-free': { label: 'dairy-free', blocked: ['Dairy & Eggs'] },
-  'nut-free': { label: 'nut-free', blocked: [] }, // handled in prompt
-  keto: { label: 'keto', blocked: [] }, // no category signal; enforced via prompt
-  halal: { label: 'halal', blocked: [] }, // no category signal; enforced via prompt
+  'nut-free': { label: 'nut-free', blocked: [] },
+  keto: { label: 'keto', blocked: [] },
+  halal: { label: 'halal', blocked: [] },
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
 
-    // ── Auth gate: userId is required and must match a real profile ──
     if (!body.userId || typeof body.userId !== 'string') {
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
@@ -42,7 +44,6 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // ── Null-safe profile field extraction ──
     const profile = {
       userId: body.userId as string,
       familySize: Number(body.familySize) > 0 ? Number(body.familySize) : 4,
@@ -83,7 +84,6 @@ IMPORTANT: Include 1-2 of these favorites in the plan. Use them exactly as named
 `
     }
 
-    // Build dietary restriction instructions for the prompt
     const dietaryInstructions = profile.dietaryNeeds.length > 0
       ? `STRICT dietary requirements — every meal MUST comply:\n${profile.dietaryNeeds.map(d => `- ${d}`).join('\n')}\nDo NOT include any ingredients that violate these restrictions.`
       : ''
@@ -127,18 +127,21 @@ Return ONLY valid JSON with this exact structure, no markdown:
 }`
 
     const text = await generateWithClaude(prompt, 4000)
-    const planData = parseClaudeJSON<GeneratePlanResponse>(text)
+    let planData: GeneratePlanResponse
+    try {
+      planData = parseClaudeJSON<GeneratePlanResponse>(text)
+    } catch {
+      console.error('Failed to parse Claude response:', text.slice(0, 200))
+      return Response.json({ error: 'AI returned an unexpected format. Please try again.' }, { status: 500 })
+    }
 
-    // ── Dietary validation (category-based check for supported restriction types) ──
     if (profile.dietaryNeeds.length > 0) {
       const needs = profile.dietaryNeeds.map((n: string) => n.toLowerCase())
       const blockedCategories = new Set<string>()
 
       for (const need of needs) {
         const check = DIETARY_CHECKS[need]
-        if (check) {
-          check.blocked.forEach(cat => blockedCategories.add(cat))
-        }
+        if (check) check.blocked.forEach(cat => blockedCategories.add(cat))
       }
 
       if (blockedCategories.size > 0) {
@@ -146,7 +149,6 @@ Return ONLY valid JSON with this exact structure, no markdown:
           meal.ingredients.some(i => blockedCategories.has(i.category))
         )
         if (hasViolation) {
-          // Retry once with stronger prompt emphasis
           const retryText = await generateWithClaude(
             prompt + '\n\nCRITICAL: The previous response violated dietary restrictions. Try again. Absolutely no ' +
             Array.from(blockedCategories).join(' or ') + ' ingredients.',

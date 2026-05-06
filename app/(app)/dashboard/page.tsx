@@ -37,74 +37,58 @@ function DashboardContent() {
   const canGenerate = isSubscribed || planCount === 0
 
   const loadExistingPlan = useCallback(async () => {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setLoading(false); setInitialLoading(false); return }
-
     try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single()
+      // Fetch profile first (need onboarding_complete before proceeding)
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single()
 
-    if (profile) {
-      setBudget(profile.weekly_budget)
-      setSubscriptionStatus(profile.subscription_status || 'free')
+      if (profile) {
+        setBudget(profile.weekly_budget)
+        setSubscriptionStatus(profile.subscription_status || 'free')
 
-      if (!profile.onboarding_complete) {
-        setInitialLoading(false)
-        router.push('/onboarding')
-        return
-      }
-    }
-
-    // Load favorites
-    const { data: favorites } = await supabase
-      .from('favorites')
-      .select('meal_name')
-      .eq('user_id', user.id)
-
-    if (favorites) {
-      setFavoriteNames(new Set(favorites.map(f => f.meal_name)))
-    }
-
-    // Load most recent meal plan
-    const { data: plan } = await supabase
-      .from('meal_plans')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single()
-
-    if (plan) {
-      const planMeals = plan.meals as Meal[]
-      setMeals(planMeals)
-      setTotalCost(plan.total_estimated_cost || 0)
-      setHasGenerated(true)
-      localStorage.setItem('current-meals', JSON.stringify(planMeals))
-
-      // Staleness check: flag if plan is from a previous week
-      if (plan.week_start) {
-        const planWeekStart = new Date(plan.week_start)
-        const today = new Date()
-        // Calculate this week's Monday (ISO week: Mon=0)
-        const thisMonday = new Date(today)
-        thisMonday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
-        thisMonday.setHours(0, 0, 0, 0)
-        if (planWeekStart < thisMonday) {
-          setIsPlanStale(true)
+        if (!profile.onboarding_complete) {
+          router.push('/onboarding')
+          return
         }
       }
-    }
 
-    // Count total plans generated
-    const { count } = await supabase
-      .from('meal_plans')
-      .select('id', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-      setPlanCount(count ?? 0)
+      // Run remaining queries in parallel — no dependency between them
+      const [favoritesRes, planRes, countRes] = await Promise.all([
+        supabase.from('favorites').select('meal_name').eq('user_id', user.id),
+        supabase.from('meal_plans').select('*').eq('user_id', user.id)
+          .order('created_at', { ascending: false }).limit(1).single(),
+        supabase.from('meal_plans').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+      ])
+
+      if (favoritesRes.data) {
+        setFavoriteNames(new Set(favoritesRes.data.map(f => f.meal_name)))
+      }
+
+      const plan = planRes.data
+      if (plan) {
+        const planMeals = plan.meals as Meal[]
+        setMeals(planMeals)
+        setTotalCost(plan.total_estimated_cost || 0)
+        setHasGenerated(true)
+        localStorage.setItem('current-meals', JSON.stringify(planMeals))
+
+        if (plan.week_start) {
+          const planWeekStart = new Date(plan.week_start)
+          const today = new Date()
+          const thisMonday = new Date(today)
+          thisMonday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
+          thisMonday.setHours(0, 0, 0, 0)
+          if (planWeekStart < thisMonday) setIsPlanStale(true)
+        }
+      }
+
+      setPlanCount(countRes.count ?? 0)
     } catch (err) {
       console.error('Dashboard load error:', err)
     } finally {
@@ -153,7 +137,7 @@ function DashboardContent() {
         next.delete(meal.name)
         return next
       })
-await recordMealSignal({
+      await recordMealSignal({
         event_type: 'unfavorited',
         meal_name: meal.name,
         cuisine: meal.cuisine,
@@ -168,7 +152,7 @@ await recordMealSignal({
       })
 
       setFavoriteNames(prev => new Set(prev).add(meal.name))
-await recordMealSignal({
+      await recordMealSignal({
         event_type: 'favorited',
         meal_name: meal.name,
         cuisine: meal.cuisine,
@@ -195,26 +179,21 @@ await recordMealSignal({
       await recordMealSignal({ event_type: 'regenerated_week' })
     }
 
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setLoading(false); setInitialLoading(false); return }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single()
-
-    if (!profile) { setLoading(false); return }
-
-    // Fetch favorite meals to include in generation
-    const { data: favorites } = await supabase
-      .from('favorites')
-      .select('meal_data')
-      .eq('user_id', user.id)
-
-    const favoriteMeals = favorites?.map(f => f.meal_data as Meal) || []
-
     try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+
+      // Fetch profile + favorites in parallel
+      const [profileRes, favoritesRes] = await Promise.all([
+        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase.from('favorites').select('meal_data').eq('user_id', user.id),
+      ])
+
+      const profile = profileRes.data
+      if (!profile) { setGenerateError('Could not load your profile. Please refresh.'); return }
+
+      const favoriteMeals = favoritesRes.data?.map(f => f.meal_data as Meal) || []
+
       const res = await fetch('/api/generate-plan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -231,10 +210,15 @@ await recordMealSignal({
 
       const data = await res.json()
 
+      if (!res.ok || data.error) {
+        throw new Error(data.error || `Server error ${res.status}`)
+      }
+
       if (data.meals) {
         setMeals(data.meals)
         setTotalCost(data.totalEstimatedCost)
         setHasGenerated(true)
+        setIsPlanStale(false)
         setPlanCount(prev => prev + 1)
         localStorage.setItem('current-meals', JSON.stringify(data.meals))
 
@@ -252,7 +236,9 @@ await recordMealSignal({
       }
     } catch (error) {
       console.error('Error generating plan:', error)
-      setGenerateError('Something went wrong generating your plan. Please try again.')
+      setGenerateError(
+        error instanceof Error ? error.message : 'Something went wrong. Please try again.'
+      )
     } finally {
       setLoading(false)
     }
@@ -292,7 +278,7 @@ await recordMealSignal({
           </div>
         )}
 
-        {/* Subscription upgrade banner — shown only for free users, not past_due */}
+        {/* Subscription upgrade banner */}
         {!isSubscribed && subscriptionStatus !== 'past_due' && planCount > 0 && (
           <Link
             href="/subscribe"
@@ -311,7 +297,7 @@ await recordMealSignal({
           </Link>
         )}
 
-        {/* Stale plan nudge — shown when loaded plan is from a previous week */}
+        {/* Stale plan nudge */}
         {isPlanStale && hasGenerated && !loading && !initialLoading && (
           <div className="mb-5 flex items-center justify-between px-4 py-3 rounded-lg bg-accent/10 border border-accent/30">
             <p className="text-sm text-foreground/70">
@@ -334,6 +320,7 @@ await recordMealSignal({
             <button onClick={() => setGenerateError('')} className="text-xs font-semibold text-destructive ml-4 hover:underline">Dismiss</button>
           </div>
         )}
+
         <div className="flex items-start justify-between mb-8 pb-6 border-b border-border">
           <div>
             <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">
