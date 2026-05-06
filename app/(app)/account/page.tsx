@@ -203,6 +203,42 @@ export default function AccountPage() {
           </div>
         )}
 
+        {/* Canceled subscription */}
+        {status === 'canceled' && (
+          <div className="bg-white rounded-2xl border border-border p-6 space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                <CreditCard className="w-5 h-5 text-muted-foreground" />
+              </div>
+              <div>
+                <p className="font-semibold text-foreground">Subscription canceled</p>
+                <p className="text-xs text-muted-foreground">Your plan has been canceled</p>
+              </div>
+            </div>
+
+            <div className="rounded-xl p-4 bg-secondary border border-border">
+              <p className="text-sm font-semibold text-foreground mb-1">
+                Want to come back?
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Resubscribe anytime to get 5 personalized dinners and your grocery list every week.
+              </p>
+            </div>
+
+            <Link
+              href="/subscribe"
+              className="block text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors"
+              style={{ backgroundColor: '#1a5c38' }}
+            >
+              Restart my plan →
+            </Link>
+
+            <p className="text-xs text-center text-muted-foreground">
+              7-day free trial · $9/month after · Cancel anytime
+            </p>
+          </div>
+        )}
+
         <div className="mt-6 text-center">
           <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             ← Back to dashboard
