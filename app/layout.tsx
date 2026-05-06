@@ -40,6 +40,38 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "DinnerDrop",
+              "applicationCategory": "LifestyleApplication",
+              "operatingSystem": "Web",
+              "url": "https://dinnerdrop.app",
+              "description": "AI-powered weekly dinner planning for busy families. Get 5 personalized meals and a one-tap grocery list in seconds.",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "description": "6-month free beta offer — no credit card required"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "47"
+              },
+              "featureList": [
+                "AI meal planning personalized for your family",
+                "One-tap grocery list generation",
+                "Instacart, Walmart, Amazon Fresh, Kroger integration",
+                "Picky-eater friendly meal swapping",
+                "Weekly budget tracking"
+              ]
+            })
+          }}
+        />
       </head>
       <body className="antialiased">
         {children}

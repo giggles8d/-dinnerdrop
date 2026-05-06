@@ -1,1 +1,24 @@
-²ø0‰Ûa
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1a5c38"/>
+  <!-- Gold accent bar at top -->
+  <rect width="1200" height="8" fill="#e8a838"/>
+  <!-- Gold accent bar at bottom -->
+  <rect y="622" width="1200" height="8" fill="#e8a838"/>
+  <!-- Brand name -->
+  <text x="600" y="190" font-family="Georgia, serif" font-size="52" font-weight="bold"
+        fill="#e8a838" text-anchor="middle" letter-spacing="4">DinnerDrop</text>
+  <!-- Main headline -->
+  <text x="600" y="300" font-family="Georgia, serif" font-size="88" font-weight="bold"
+        fill="#ffffff" text-anchor="middle">Dinner, handled.</text>
+  <!-- Subheadline -->
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="36"
+        fill="#a7f3d0" text-anchor="middle">AI meal planning for busy families</text>
+  <!-- Benefit line -->
+  <text x="600" y="450" font-family="Arial, sans-serif" font-size="28"
+        fill="#d1fae5" text-anchor="middle">5 meals + grocery list in one tap</text>
+  <!-- Beta badge -->
+  <rect x="450" y="490" width="300" height="56" rx="28" fill="#e8a838"/>
+  <text x="600" y="525" font-family="Arial, sans-serif" font-size="22" font-weight="bold"
+        fill="#1a5c38" text-anchor="middle">6 months free â€” join beta</text>
+</svg>
