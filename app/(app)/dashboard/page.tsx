@@ -40,6 +40,8 @@ function DashboardContent() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setLoading(false); setInitialLoading(false); return }
 
+    try {
+
     const { data: profile } = await supabase
       .from('profiles')
       .select('*')
@@ -102,9 +104,12 @@ function DashboardContent() {
       .from('meal_plans')
       .select('id', { count: 'exact', head: true })
       .eq('user_id', user.id)
-
-    setPlanCount(count ?? 0)
-    setInitialLoading(false)
+      setPlanCount(count ?? 0)
+    } catch (err) {
+      console.error('Dashboard load error:', err)
+    } finally {
+      setInitialLoading(false)
+    }
   }, [supabase, router])
 
   useEffect(() => {
