@@ -1,9 +1,0 @@
-fix: grocery list error state — API failure showed wrong "no plan" message
-
-Previously, if /api/generate-list failed (network error or non-200 response),
-the page would silently swallow the error and fall through to the "No meal plan
-found" screen — misleading because the user DOES have a plan. Added:
-- generateError state tracking
-- res.ok check on fetch response (non-200 now sets error state)
-- catch block sets generateError on network failure
-- Dedicated error UI with "Back to dashboard" link
