@@ -102,6 +102,28 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* Features */}
+      <section className="container mx-auto px-4 py-16 max-w-5xl">
+        <p className="text-xs font-bold text-primary uppercase tracking-widest mb-4">What you get</p>
+        <h2 className="text-3xl font-heading font-bold text-foreground mb-12 max-w-lg leading-tight">
+          Everything a busy family needs. Nothing you don&apos;t.
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { icon: '🧠', title: 'AI meal planning', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },
+            { icon: '🛒', title: 'One-tap grocery handoff', description: 'Your full shopping list sent directly to Instacart, Walmart, Amazon Fresh, or Kroger — ready to check out.' },
+            { icon: '👨‍👩‍👧', title: 'Picky-eater friendly', description: "Swap any meal you don't love in one tap. DinnerDrop learns your family's tastes over time." },
+            { icon: '💵', title: 'Budget optimization', description: 'Set your weekly food budget. Every plan is built to hit your number — no surprises at checkout.' },
+          ].map((f) => (
+            <div key={f.title} className="p-5 rounded-2xl border border-border bg-secondary space-y-3">
+              <span className="text-2xl">{f.icon}</span>
+              <h3 className="font-heading font-semibold text-foreground">{f.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="bg-secondary border-y border-border">
         <div className="container mx-auto px-4 py-16 max-w-5xl">
           <p className="text-xs font-bold text-primary uppercase tracking-widest mb-10">What families say</p>
@@ -161,14 +183,10 @@ export default async function LandingPage() {
                 <li>5 dinners per plan</li>
                 <li>Grocery list (no cart push)</li>
               </ul>
-              <Link
-                href="/beta"
-                className="block text-center px-4 py-2 rounded-md border border-input text-foreground font-medium hover:bg-muted transition-colors"
-              >
+              <Link href="/beta" className="block text-center px-4 py-2 rounded-md border border-input text-foreground font-medium hover:bg-muted transition-colors">
                 Get started
               </Link>
             </div>
-
             <div className="p-6 rounded-lg border-2 border-primary bg-background space-y-4 relative">
               <div className="absolute -top-3 left-6 px-3 py-0.5 bg-primary text-primary-foreground text-xs font-medium rounded-full">
                 Most popular
@@ -190,10 +208,7 @@ export default async function LandingPage() {
                 <li>One-tap grocery cart handoff</li>
                 <li>Budget optimization</li>
               </ul>
-              <Link
-                href="/subscribe?coupon=BETA100"
-                className="block text-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
-              >
+              <Link href="/subscribe?coupon=BETA100" className="block text-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors">
                 Claim beta — 6 months free &rarr;
               </Link>
             </div>
