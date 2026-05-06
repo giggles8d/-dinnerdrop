@@ -135,7 +135,7 @@ function SubscribeContent() {
                   )}
                 </div>
                 <div className="inline-block bg-secondary text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 mt-2">
-                  7-day free trial — no charge today
+                  {couponCode === 'BETA100' ? 'Beta offer: 6 months completely free' : '7-day free trial — no charge today'}
                 </div>
               </div>
 
