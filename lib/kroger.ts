@@ -7,8 +7,11 @@ export async function getClientCredentialsToken(): Promise<string> {
     return clientToken.accessToken
   }
 
-  const clientId = process.env.KROGER_CLIENT_ID!
-  const clientSecret = process.env.KROGER_CLIENT_SECRET!
+  const clientId = process.env.KROGER_CLIENT_ID
+  const clientSecret = process.env.KROGER_CLIENT_SECRET
+  if (!clientId || !clientSecret) {
+    throw new Error('Kroger credentials not configured')
+  }
   const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
 
   const res = await fetch('https://api.kroger.com/v1/connect/oauth2/token', {
@@ -38,8 +41,11 @@ export async function exchangeCodeForTokens(code: string): Promise<{
   refresh_token: string
   expires_in: number
 }> {
-  const clientId = process.env.KROGER_CLIENT_ID!
-  const clientSecret = process.env.KROGER_CLIENT_SECRET!
+  const clientId = process.env.KROGER_CLIENT_ID
+  const clientSecret = process.env.KROGER_CLIENT_SECRET
+  if (!clientId || !clientSecret) {
+    throw new Error('Kroger credentials not configured')
+  }
   const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
   const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'}/auth/kroger/callback`
 
@@ -111,4 +117,36 @@ export async function addItemsToCart(
   })
 
   return res.ok
+}
+
+export async function refreshKrogerToken(refreshToken: string): Promise<{
+  access_token: string
+  refresh_token: string
+  expires_in: number
+}> {
+  const clientId = process.env.KROGER_CLIENT_ID
+  const clientSecret = process.env.KROGER_CLIENT_SECRET
+  if (!clientId || !clientSecret) {
+    throw new Error('Kroger credentials not configured')
+  }
+  const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
+
+  const res = await fetch('https://api.kroger.com/v1/connect/oauth2/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${credentials}`,
+    },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+    }).toString(),
+  })
+
+  if (!res.ok) {
+    const text = await res.text()
+    throw new Error(`Kroger token refresh failed: ${res.status} ${text}`)
+  }
+
+  return res.json()
 }

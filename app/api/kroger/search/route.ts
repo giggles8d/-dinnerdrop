@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getClientCredentialsToken, searchProduct } from '@/lib/kroger'
 
 export async function POST(request: NextRequest) {
   try {
+    const supabase = createServerSupabaseClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const { query } = await request.json()
 
     if (!query) {
