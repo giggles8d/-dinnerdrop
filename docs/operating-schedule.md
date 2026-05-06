@@ -287,3 +287,39 @@ Compile and send full Day 2 summary to info@dinnerdrop.app. Include: all ad camp
 5. **Authorize ad spend** — Review docs/ad-spend-authorization.md when ready (Day 2 Hour 17)
 
 6. **Missing image assets** — og-image.png and logo.png needed (see Canva brief when created in Hour 11)
+
+
+---
+
+## DAY 5 — May 6, 2026
+
+### HOUR 1 (12:08 UTC) — A/B Test Activation + Landing Page Nav Fix | STATUS: COMPLETE
+**Commit:** 068bf9b
+
+**Backlog audit:** All Sarah blockers unchanged (migrations 004+005, Stripe BETA100 coupon, Resend,
+Vercel Analytics, Meta BM, Google Ads, Canva assets). No new Sarah completions detected.
+
+**Site health:** dinnerdrop.vercel.app → HTTP 403 (egress blocked in sandbox — known limitation).
+Beta spots: 100/100 (no signups yet; BETA100 coupon not yet created in Stripe blocks conversions).
+
+**Work executed:**
+
+**Fix 1 — Nav "Try free" button:** `app/page.tsx` nav CTA was linking to `/signup` instead of `/beta`.
+Any visitor clicking "Try free" in the header was landing on the generic signup page and missing
+the beta offer entirely. Fixed to `/beta`.
+
+**Fix 2 — Pricing "Get started" free tier:** Same file, pricing section free tier CTA also linked
+to `/signup`. Changed to `/beta` to funnel all landing page traffic through the beta offer page.
+
+**Fix 3 — A/B test middleware:** `middleware.ts` now routes 50% of `/beta` visitors to `/beta-v2`
+via `NextResponse.rewrite`. Variant is sticky via `dd_ab_beta` cookie (30-day TTL, sameSite: lax).
+- Control (50%): original /beta page (scarcity-focused, spots counter prominent)
+- Variant (50%): /beta-v2 page (benefit-led headline, "5 dinners planned in 30 seconds" angle)
+- Decision metric: which page drives more /subscribe?coupon=BETA100 clicks
+- Decision checkpoint: after first 200 visitors or 7 days, whichever comes first
+
+**Repo pulled:** dinnerdrop_work was behind origin/main — pulled 15 commits (262cecf through 078a807f).
+Latest features landed: account page with trial countdown, subscribe social proof, beta page improvements,
+meal history page, Instacart/Kroger auth guards, lib audit.
+
+**Next hour:** Monitor Vercel build for 068bf9b. If build passes, A/B test is live. Write Day 5 report.
