@@ -136,7 +136,7 @@ function SubscribeContent() {
                 <div className="flex items-baseline gap-1 mb-1">
                   {couponCode === 'BETA100' ? (
                     <>
-                      <span className="text-5xl font-heading font-bold text-foreground line-through text-muted-foreground text-3xl">$9</span>
+                      <span className="text-3xl font-heading font-bold text-muted-foreground line-through">$9</span>
                       <span className="text-5xl font-heading font-bold ml-2" style={{color:'#166534'}}>$0</span>
                       <span className="text-muted-foreground text-lg">/mo for 6 months</span>
                     </>

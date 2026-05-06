@@ -34,7 +34,7 @@ export default function AccountPage() {
       setProfile(data as Profile)
       setLoading(false)
 
-      // Auto-redirect active/past_due users straight to portal � same as before
+      // Auto-redirect active/past_due users straight to portal — same as before
       const status = data?.subscription_status
       if (status === 'active' || status === 'past_due') {
         openPortal()
@@ -74,7 +74,7 @@ export default function AccountPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground text-sm">Loading your account�</p>
+          <p className="text-muted-foreground text-sm">Loading your account&hellip;</p>
         </div>
       </div>
     )
@@ -84,13 +84,13 @@ export default function AccountPage() {
   const daysLeft = getTrialDaysRemaining()
   const firstName = profile?.full_name?.split(' ')[0] ?? 'there'
 
-  // active/past_due ? portal redirect is fired in useEffect; show spinner while it happens
+  // active/past_due — portal redirect is fired in useEffect; show spinner while it happens
   if (status === 'active' || status === 'past_due') {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground text-sm">Opening billing portal�</p>
+          <p className="text-muted-foreground text-sm">Opening billing portal&hellip;</p>
         </div>
       </div>
     )
@@ -129,13 +129,13 @@ export default function AccountPage() {
                 {daysLeft > 30
                   ? `${daysLeft} days remaining in your beta`
                   : daysLeft > 7
-                  ? `${daysLeft} days left � you�re locked in!`
+                  ? `${daysLeft} days left — you’re locked in!`
                   : daysLeft > 0
                   ? `${daysLeft} day${daysLeft === 1 ? '' : 's'} left in your trial`
                   : 'Your trial ends today'}
               </p>
               <p className="text-xs" style={{ color: '#166534' }}>
-                We�ll email you 7 days before billing starts. Cancel anytime.
+                We&apos;ll email you 7 days before billing starts. Cancel anytime.
               </p>
             </div>
 
@@ -161,7 +161,7 @@ export default function AccountPage() {
                 className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
               >
                 <CreditCard className="w-4 h-4" />
-                {portalLoading ? 'Opening�' : 'Manage billing ?'}
+                {portalLoading ? 'Opening…' : 'Manage billing →'}
               </button>
             </div>
           </div>
@@ -182,10 +182,10 @@ export default function AccountPage() {
 
             <div className="rounded-xl p-4 bg-secondary border border-border">
               <p className="text-sm font-semibold text-foreground mb-1">
-                ?? Beta spots still available
+                🎉 Beta spots still available
               </p>
               <p className="text-xs text-muted-foreground">
-                First 100 families get 6 months completely free � no credit card required.
+                First 100 families get 6 months completely free — no credit card required.
               </p>
             </div>
 
@@ -194,18 +194,18 @@ export default function AccountPage() {
               className="block text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors"
               style={{ backgroundColor: '#1a5c38' }}
             >
-              Claim 6 months free ?
+              Claim 6 months free →
             </Link>
 
             <p className="text-xs text-center text-muted-foreground">
-              $0 today � No credit card � Cancel anytime
+              $0 today — No credit card — Cancel anytime
             </p>
           </div>
         )}
 
         <div className="mt-6 text-center">
           <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            ? Back to dashboard
+            ← Back to dashboard
           </Link>
         </div>
       </div>
