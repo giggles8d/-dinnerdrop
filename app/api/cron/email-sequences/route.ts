@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
 
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SITE_URL}/api/email/send-trial`,
+          `${process.env.NEXT_PUBLIC_APP_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dinnerdrop.vercel.app'}/api/email/send-trial`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'x-cron-secret': process.env.CRON_SECRET! },
