@@ -1,6 +1,15 @@
 import Link from 'next/link'
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  let spotsRemaining = 100
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://dinnerdrop.vercel.app'
+    const res = await fetch(`${baseUrl}/api/stripe/beta-spots`, { cache: 'no-store' })
+    if (res.ok) {
+      const data = await res.json()
+      spotsRemaining = Number(data.spotsRemaining) || 100
+    }
+  } catch {}
   return (
     <div className="min-h-screen bg-white">
 
@@ -41,6 +50,16 @@ export default function LandingPage() {
             </a>
           </div>
           <p className="text-xs text-muted-foreground mt-4">No credit card required &middot; First plan is free</p>
+          <div className="mt-6 flex items-start gap-3">
+            <div className="flex -space-x-2 flex-shrink-0">
+              {['S','J','P'].map(initial => (
+                <div key={initial} className="w-7 h-7 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">{initial}</div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground leading-snug max-w-xs pt-1">
+              <span className="font-semibold text-foreground">Early families love it</span> &mdash; &ldquo;I used to spend 45 minutes deciding what to cook. Now it&apos;s zero.&rdquo; &mdash; James L.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -48,8 +67,8 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 max-w-5xl py-6">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-2xl font-heading font-bold text-primary">100</p>
-              <p className="text-xs text-muted-foreground mt-0.5">beta spots — 6 months free</p>
+              <p className="text-2xl font-heading font-bold text-primary">{spotsRemaining}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">beta spots left — 6 months free</p>
             </div>
             <div>
               <p className="text-2xl font-heading font-bold text-primary">$47</p>
@@ -107,6 +126,24 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Urgency bar */}
+      <section className="border-y" style={{backgroundColor:'#fffbeb',borderColor:'#fde68a'}}>
+        <div className="container mx-auto px-4 py-5 max-w-4xl text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse" />
+            <p className="text-sm font-semibold" style={{color:'#92400e'}}>
+              {spotsRemaining} of 100 beta spots still available &mdash; 6 months completely free
+            </p>
+          </div>
+          <div className="w-full max-w-xs mx-auto rounded-full h-1.5 mb-3" style={{backgroundColor:'#fde68a'}}>
+            <div className="h-1.5 rounded-full" style={{backgroundColor:'#f59e0b',width:`${Math.max(2, 100 - spotsRemaining)}%`}} />
+          </div>
+          <Link href="/beta" className="text-xs font-bold underline underline-offset-2" style={{color:'#b45309'}}>
+            Claim your spot before they&apos;re gone &rarr;
+          </Link>
+        </div>
+      </section>
+
       {/* Pricing */}
       <section className="bg-card border-y border-border">
         <div className="container mx-auto px-4 py-16 max-w-4xl">
@@ -137,9 +174,16 @@ export default function LandingPage() {
                 Most popular
               </div>
               <h3 className="font-heading font-semibold text-foreground">Basic</h3>
-              <p className="text-3xl font-bold text-foreground">
-                $9<span className="text-sm font-normal text-muted-foreground">/mo</span>
-              </p>
+              <div>
+                <p className="text-3xl font-bold text-foreground">
+                  <span className="line-through text-muted-foreground">$9</span>
+                  <span className="ml-2" style={{color:'#1a5c38'}}>$0</span>
+                  <span className="text-sm font-normal text-muted-foreground">/mo</span>
+                </p>
+                <p className="text-xs font-semibold mt-0.5" style={{color:'#1a5c38'}}>
+                  🎉 Beta offer: free for your first 6 months
+                </p>
+              </div>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>Weekly meal plans</li>
                 <li>5 dinners per plan</li>
@@ -150,7 +194,7 @@ export default function LandingPage() {
                 href="/subscribe?coupon=BETA100"
                 className="block text-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
-                Start free trial
+                Claim beta — 6 months free &rarr;
               </Link>
             </div>
           </div>
