@@ -28,6 +28,7 @@ export default function PantryPage() {
   const [addingScanned, setAddingScanned] = useState(false)
   const [scannedItems, setScannedItems] = useState<ScannedItem[]>([])
   const [showScanned, setShowScanned] = useState(false)
+  const [scanError, setScanError] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
 
@@ -83,6 +84,7 @@ export default function PantryPage() {
 
     setScanning(true)
     setShowScanned(false)
+    setScanError(false)
 
     const reader = new FileReader()
     reader.onload = async () => {
@@ -104,6 +106,7 @@ export default function PantryPage() {
         }
       } catch (err) {
         console.error('Scan error:', err)
+        setScanError(true)
       } finally {
         setScanning(false)
         if (fileInputRef.current) fileInputRef.current.value = ''
@@ -208,6 +211,11 @@ export default function PantryPage() {
           </div>
         )}
 
+        {scanError && (
+          <div className="mb-4 p-3 rounded-lg border border-destructive/30 bg-destructive/10 text-sm text-destructive">
+            Couldn&apos;t read that photo — try a clearer image or add items manually below.
+          </div>
+        )}
         {/* Manual add */}
         <div className="mb-6 p-4 rounded-lg border border-border bg-card">
           <h2 className="text-sm font-medium text-foreground mb-3">Add item manually</h2>

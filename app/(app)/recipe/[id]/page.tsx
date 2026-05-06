@@ -45,9 +45,11 @@ export default function RecipePage() {
   const id = params.id as string
 
   const [meal, setMeal] = useState<Meal | null>(null)
+  const [mealLoading, setMealLoading] = useState(true)
   const [isFavorite, setIsFavorite] = useState(false)
   const [favoriting, setFavoriting] = useState(false)
   const [swapping, setSwapping] = useState(false)
+  const [swapError, setSwapError] = useState(false)
   const supabase = createClient()
 
   const checkFavorite = useCallback(async (mealName: string) => {
@@ -71,6 +73,7 @@ export default function RecipePage() {
       setMeal(parsed)
       checkFavorite(parsed.name)
     }
+    setMealLoading(false)
   }, [id, checkFavorite])
 
   async function toggleFavorite() {
@@ -114,6 +117,7 @@ export default function RecipePage() {
   async function handleSwap() {
     if (!meal) return
     setSwapping(true)
+    setSwapError(false)
 
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setSwapping(false); return }
@@ -189,9 +193,18 @@ export default function RecipePage() {
       }
     } catch (error) {
       console.error('Error swapping meal:', error)
+      setSwapError(true)
     } finally {
       setSwapping(false)
     }
+  }
+
+  if (mealLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
   }
 
   if (!meal) {
@@ -199,10 +212,7 @@ export default function RecipePage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-3">
           <p className="text-foreground font-medium">Meal not found</p>
-          <Link
-            href="/dashboard"
-            className="text-primary hover:underline text-sm"
-          >
+          <Link href="/dashboard" className="text-primary hover:underline text-sm">
             Back to meal plan
           </Link>
         </div>
@@ -313,9 +323,16 @@ export default function RecipePage() {
             <RefreshCw className={`w-4 h-4 ${swapping ? 'animate-spin' : ''}`} />
             {swapping ? 'Finding a new meal...' : 'Swap this meal'}
           </button>
-          <p className="text-xs text-muted-foreground mt-2">
-            Replace this meal with a similar alternative.
-          </p>
+          {swapError && (
+            <p className="text-xs text-destructive mt-2">
+              Couldn&apos;t swap this meal — please try again.
+            </p>
+          )}
+          {!swapError && (
+            <p className="text-xs text-muted-foreground mt-2">
+              Replace this meal with a similar alternative.
+            </p>
+          )}
         </div>
       </div>
     </div>
