@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { Suspense, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 
 const STEPS = [
@@ -86,7 +86,7 @@ interface Answers {
   preferredStore: string
 }
 
-export default function OnboardingQuiz() {
+function OnboardingQuizInner() {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Answers>({
     familySize: 2,
@@ -98,6 +98,8 @@ export default function OnboardingQuiz() {
   })
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const nextUrl = searchParams.get('next') || null
   const supabase = createClient()
 
   const currentStep = STEPS[step]
@@ -173,7 +175,8 @@ export default function OnboardingQuiz() {
       return
     }
 
-    router.push('/dashboard')
+    const destination = nextUrl && nextUrl.startsWith('/') ? nextUrl : '/dashboard'
+    router.push(destination)
     router.refresh()
   }
 
@@ -254,5 +257,13 @@ export default function OnboardingQuiz() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function OnboardingQuiz() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
+      <OnboardingQuizInner />
+    </Suspense>
   )
 }

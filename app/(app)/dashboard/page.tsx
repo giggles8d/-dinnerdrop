@@ -25,6 +25,7 @@ function DashboardContent() {
   const [initialLoading, setInitialLoading] = useState(true)
   const [hasGenerated, setHasGenerated] = useState(false)
   const [isPlanStale, setIsPlanStale] = useState(false)
+  const [generateError, setGenerateError] = useState('')
   const [favoriteNames, setFavoriteNames] = useState<Set<string>>(new Set())
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
   const [planCount, setPlanCount] = useState(0)
@@ -183,6 +184,7 @@ await recordMealSignal({
     }
 
     setLoading(true)
+    setGenerateError('')
 
     if (hasGenerated) {
       await recordMealSignal({ event_type: 'regenerated_week' })
@@ -233,7 +235,7 @@ await recordMealSignal({
 
         const today = new Date()
         const monday = new Date(today)
-        monday.setDate(today.getDate() - today.getDay() + 1)
+        monday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
 
         await supabase.from('meal_plans').insert({
           user_id: user.id,
@@ -245,6 +247,7 @@ await recordMealSignal({
       }
     } catch (error) {
       console.error('Error generating plan:', error)
+      setGenerateError('Something went wrong generating your plan. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -316,6 +319,14 @@ await recordMealSignal({
             >
               Refresh plan &rarr;
             </button>
+          </div>
+        )}
+
+        {/* Generate error banner */}
+        {generateError && (
+          <div className="mb-5 flex items-center justify-between px-4 py-3 rounded-lg bg-destructive/10 border border-destructive/30">
+            <p className="text-sm text-destructive">{generateError}</p>
+            <button onClick={() => setGenerateError('')} className="text-xs font-semibold text-destructive ml-4 hover:underline">Dismiss</button>
           </div>
         )}
         <div className="flex items-start justify-between mb-8 pb-6 border-b border-border">
