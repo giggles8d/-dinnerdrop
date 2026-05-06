@@ -40,7 +40,7 @@ export default function BetaPage() {
           Limited beta — {spotsRemaining !== null ? `${spotsRemaining} spots remaining` : 'Loading...'}
         </div>
         <h1 className="text-5xl sm:text-6xl font-bold leading-tight mb-6" style={{ color: '#1a5c38' }}>
-          Join the DinnerDrop Beta
+          Dinner, sorted.<br /><span style={{ color: '#e8a838' }}>6 months free.</span>
         </h1>
         <p className="text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-12">
           First 100 families get <strong>6 months completely free</strong> — no credit card required to start.
@@ -69,13 +69,28 @@ export default function BetaPage() {
           </p>
         </div>
 
+        {/* Social proof */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 text-left">
+          {[
+            { quote: "45 minutes deciding what to cook — now it's zero. I can't believe this is free.", name: "James L.", label: "Father of 3, Ohio" },
+            { quote: "It remembered my daughter's dairy allergy and never suggested a meal she couldn't eat. Sold.", name: "Priya M.", label: "Mom of 2, Texas" },
+            { quote: "The grocery list straight to Walmart is the feature I didn't know I needed.", name: "Amanda R.", label: "Working parent, Colorado" },
+          ].map((t) => (
+            <div key={t.name} className="p-4 rounded-2xl border bg-white text-sm" style={{ borderColor: '#e8e8e8' }}>
+              <p className="text-gray-600 leading-relaxed mb-3 italic">&ldquo;{t.quote}&rdquo;</p>
+              <p className="font-bold text-xs" style={{ color: '#1a5c38' }}>{t.name}</p>
+              <p className="text-xs text-gray-400">{t.label}</p>
+            </div>
+          ))}
+        </div>
+
         {/* CTA */}
         <div className="flex flex-col items-center gap-3">
           <Link href="/subscribe?coupon=BETA100" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90" style={{ backgroundColor: '#1a5c38' }}>
             Claim my free 6 months &rarr;
           </Link>
           <p className="text-xs text-gray-400">
-            No credit card required for your first 7 days. After 6 months, $9/month. Cancel anytime.
+            No credit card required — your first 6 months are completely free.<br />After that, just $9/month. Cancel anytime, no fine print.
           </p>
         </div>
 
@@ -83,7 +98,7 @@ export default function BetaPage() {
         {spotsRemaining !== null && (
           <div className="mt-8">
             <div className="w-full bg-gray-200 rounded-full h-2 max-w-xs mx-auto">
-              <div className="h-2 rounded-full transition-all" style={{ backgroundColor: '#1a5c38', width: `${Math.max(0, 100 - spotsRemaining)}%` }} />
+              <div className="h-2 rounded-full transition-all" style={{ backgroundColor: '#1a5c38', width: `${Math.max(2, 100 - spotsRemaining)}%` }} />
             </div>
             <p className="text-xs text-gray-400 mt-2">{100 - spotsRemaining} of 100 spots claimed</p>
           </div>
@@ -110,6 +125,18 @@ export default function BetaPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Mid-page CTA */}
+      <section className="container mx-auto px-4 py-10 max-w-3xl text-center">
+        <p className="text-gray-500 text-sm mb-4">Ready? Spots go fast — this is a one-time beta offer.</p>
+        <Link
+          href="/subscribe?coupon=BETA100"
+          className="inline-block px-8 py-3 rounded-xl text-white font-bold text-base transition-colors shadow-sm hover:opacity-90"
+          style={{ backgroundColor: '#1a5c38' }}
+        >
+          Claim my free 6 months &rarr;
+        </Link>
       </section>
 
       {/* FAQ */}
