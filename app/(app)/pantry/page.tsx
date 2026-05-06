@@ -25,6 +25,7 @@ export default function PantryPage() {
   const [adding, setAdding] = useState(false)
   const [newItem, setNewItem] = useState({ name: '', quantity: '', unit: '' })
   const [scanning, setScanning] = useState(false)
+  const [addingScanned, setAddingScanned] = useState(false)
   const [scannedItems, setScannedItems] = useState<ScannedItem[]>([])
   const [showScanned, setShowScanned] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -32,7 +33,7 @@ export default function PantryPage() {
 
   const loadItems = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) { setLoading(false); return }
 
     const { data } = await supabase
       .from('pantry_items')
@@ -70,7 +71,9 @@ export default function PantryPage() {
   }
 
   async function removeItem(id: string) {
-    await supabase.from('pantry_items').delete().eq('id', id)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    await supabase.from('pantry_items').delete().eq('id', id).eq('user_id', user.id)
     setItems(prev => prev.filter(i => i.id !== id))
   }
 
@@ -85,12 +88,14 @@ export default function PantryPage() {
     reader.onload = async () => {
       const base64 = (reader.result as string).split(',')[1]
       const mediaType = file.type
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) { setScanning(false); return }
 
       try {
         const res = await fetch('/api/scan-pantry', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageBase64: base64, mediaType }),
+          body: JSON.stringify({ imageBase64: base64, mediaType, userId: user.id }),
         })
         const data = await res.json()
         if (data.items) {
@@ -101,6 +106,7 @@ export default function PantryPage() {
         console.error('Scan error:', err)
       } finally {
         setScanning(false)
+        if (fileInputRef.current) fileInputRef.current.value = ''
       }
     }
     reader.readAsDataURL(file)
@@ -109,7 +115,7 @@ export default function PantryPage() {
   async function addScannedItems() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
-
+    setAddingScanned(true)
     const selected = scannedItems.filter(i => i.selected)
     const inserts = selected.map(i => ({
       user_id: user.id,
@@ -124,6 +130,7 @@ export default function PantryPage() {
       setShowScanned(false)
       setScannedItems([])
     }
+    setAddingScanned(false)
   }
 
   return (
@@ -186,9 +193,10 @@ export default function PantryPage() {
             <div className="flex gap-2">
               <button
                 onClick={addScannedItems}
-                className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+                disabled={addingScanned}
+                className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
-                Add selected
+                {addingScanned ? 'Adding...' : 'Add selected'}
               </button>
               <button
                 onClick={() => { setShowScanned(false); setScannedItems([]) }}
