@@ -5,7 +5,14 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/(app)/", "/(auth)/"],
+      disallow: [
+        "/api/",
+        "/(app)/",
+        "/(auth)/",
+        "/unsubscribe",
+        "/beta-v2",
+        "/auth/",
+      ],
     },
     sitemap: "https://dinnerdrop.app/sitemap.xml",
   };
