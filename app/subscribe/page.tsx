@@ -111,8 +111,21 @@ function SubscribeContent() {
             </div>
           </div>
 
-          {/* Right: pricing card */}
+          {/* Right: social proof + pricing card */}
           <div className="lg:sticky lg:top-8">
+            {/* Social proof */}
+            <div className="space-y-3 mb-6">
+              {[
+                { quote: "45 minutes deciding what to cook every night — now zero.", name: "James L.", location: "Ohio" },
+                { quote: "My kids actually eat what DinnerDrop picks. That alone is worth $9/month.", name: "Priya M.", location: "Texas" },
+                { quote: "I saved $60 on groceries in the first two weeks just from the overlapping ingredients.", name: "Amanda R.", location: "Colorado" },
+              ].map((t) => (
+                <div key={t.name} className="rounded-xl border border-border bg-secondary/40 px-4 py-3">
+                  <p className="text-sm text-foreground leading-snug">&ldquo;{t.quote}&rdquo;</p>
+                  <p className="text-xs text-muted-foreground mt-1.5 font-medium">{t.name} &middot; {t.location}</p>
+                </div>
+              ))}
+            </div>
             <div className="rounded-2xl border-2 border-primary bg-white p-8 shadow-sm">
               {couponCode === 'BETA100' && (
                 <div className="mb-6 -mt-2 -mx-2 px-4 py-3 rounded-xl text-sm font-semibold text-center" style={{backgroundColor:'#dcfce7',color:'#166534',border:'1px solid #bbf7d0'}}>
@@ -138,6 +151,11 @@ function SubscribeContent() {
                   {couponCode === 'BETA100' ? 'Beta offer: 6 months completely free' : '7-day free trial — no charge today'}
                 </div>
               </div>
+                {couponCode === 'BETA100' && (
+                  <p className="text-xs text-muted-foreground mt-3 text-center">
+                    After 6 months, just $9/month. We&apos;ll email you 7 days before billing starts &mdash; cancel anytime.
+                  </p>
+                )}
 
               <ul className="space-y-3 mb-8">
                 {[
@@ -168,6 +186,12 @@ function SubscribeContent() {
               {error && (
                 <p className="mt-3 text-sm text-destructive text-center">{error}</p>
               )}
+
+              <p className="text-xs text-muted-foreground text-center mt-3 font-medium">
+                {couponCode === 'BETA100'
+                  ? "You’ll be redirected to a $0 checkout — no card required today."
+                  : "You’ll be redirected to Stripe’s secure checkout. Your 7-day trial starts immediately."}
+              </p>
 
               <p className="text-xs text-muted-foreground text-center mt-4">
                 Secure payment by Stripe · Cancel anytime · No commitments
