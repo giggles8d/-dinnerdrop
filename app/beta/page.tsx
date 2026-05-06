@@ -121,7 +121,7 @@ export default function BetaPage() {
           {[
             {
               q: "Do I need a credit card?",
-              a: "No. The beta is completely free for 6 months — no credit card required to get started. We'll ask for payment info only when your beta period ends, and you'll have full control to cancel before then.",
+              a: "No card required to start — Stripe processes a $0 checkout so no payment is collected for 6 months. We'll email you a reminder before your beta ends so you can add a payment method or cancel, with no surprises.",
             },
             {
               q: "What happens after 6 months?",

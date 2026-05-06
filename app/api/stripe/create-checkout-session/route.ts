@@ -63,8 +63,11 @@ export async function POST(req: NextRequest) {
 
     if (couponCode) {
       sessionParams.discounts = [{ coupon: couponCode }]
-      // When using discounts, trial_period_days must be removed
+      // Coupon replaces the 7-day trial (BETA100 = 6 months free)
+      // payment_method_collection: 'if_required' means no card needed upfront for $0 beta
+      // We email users before month 7 to add a payment method
       delete sessionParams.subscription_data
+      sessionParams.payment_method_collection = 'if_required'
     }
 
     const session = await stripe.checkout.sessions.create(sessionParams)
