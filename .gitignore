@@ -37,3 +37,10 @@ next-env.d.ts
 
 # cowork temp files
 commit_msg.txt
+ 
+# session scripts  
+*.bat  
+cleanup*.js  
+fix_*.js  
+check_*.js  
+_commit_*.txt 
