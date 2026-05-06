@@ -1,7 +1,34 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
+// A/B test: route 50% of /beta traffic to /beta-v2
+// Cookie "dd_ab_beta" keeps each visitor in the same variant (30-day TTL)
+function getBetaVariant(request: NextRequest): 'control' | 'variant' {
+  const existing = request.cookies.get('dd_ab_beta')
+  if (existing) return existing.value as 'control' | 'variant'
+  return Math.random() < 0.5 ? 'variant' : 'control'
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // A/B test: /beta -> 50% see /beta-v2, variant sticky via cookie
+  if (pathname === '/beta') {
+    const variant = getBetaVariant(request)
+    if (variant === 'variant') {
+      const rewriteUrl = request.nextUrl.clone()
+      rewriteUrl.pathname = '/beta-v2'
+      const res = NextResponse.rewrite(rewriteUrl)
+      if (!request.cookies.get('dd_ab_beta')) {
+        res.cookies.set('dd_ab_beta', 'variant', { maxAge: 30 * 24 * 60 * 60, path: '/', sameSite: 'lax' })
+      }
+      return res
+    }
+    if (!request.cookies.get('dd_ab_beta')) {
+      const res = NextResponse.next()
+      res.cookies.set('dd_ab_beta', 'control', { maxAge: 30 * 24 * 60 * 60, path: '/', sameSite: 'lax' })
+      return res
+    }
+  }
 
   const protectedPaths = ['/dashboard', '/grocery-list', '/favorites', '/recipe', '/onboarding', '/pantry']
   const isProtectedRoute = protectedPaths.some(path => pathname.startsWith(path))

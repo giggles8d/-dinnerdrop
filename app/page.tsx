@@ -25,7 +25,7 @@ export default async function LandingPage() {
           <div className="flex items-center gap-3">
             <Link href="/beta" className="px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Beta</Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
-            <Link href="/signup" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Try free</Link>
+            <Link href="/beta" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Try free</Link>
           </div>
         </div>
       </header>
@@ -162,7 +162,7 @@ export default async function LandingPage() {
                 <li>Grocery list (no cart push)</li>
               </ul>
               <Link
-                href="/signup"
+                href="/beta"
                 className="block text-center px-4 py-2 rounded-md border border-input text-foreground font-medium hover:bg-muted transition-colors"
               >
                 Get started
