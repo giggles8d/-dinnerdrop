@@ -24,6 +24,7 @@ function DashboardContent() {
   const [loading, setLoading] = useState(false)
   const [initialLoading, setInitialLoading] = useState(true)
   const [hasGenerated, setHasGenerated] = useState(false)
+  const [isPlanStale, setIsPlanStale] = useState(false)
   const [favoriteNames, setFavoriteNames] = useState<Set<string>>(new Set())
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
   const [planCount, setPlanCount] = useState(0)
@@ -80,6 +81,19 @@ function DashboardContent() {
       setTotalCost(plan.total_estimated_cost || 0)
       setHasGenerated(true)
       localStorage.setItem('current-meals', JSON.stringify(planMeals))
+
+      // Staleness check: flag if plan is from a previous week
+      if (plan.week_start) {
+        const planWeekStart = new Date(plan.week_start)
+        const today = new Date()
+        // Calculate this week's Monday (ISO week: Mon=0)
+        const thisMonday = new Date(today)
+        thisMonday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
+        thisMonday.setHours(0, 0, 0, 0)
+        if (planWeekStart < thisMonday) {
+          setIsPlanStale(true)
+        }
+      }
     }
 
     // Count total plans generated
@@ -289,6 +303,21 @@ await recordMealSignal({
           </Link>
         )}
 
+        {/* Stale plan nudge — shown when loaded plan is from a previous week */}
+        {isPlanStale && hasGenerated && !loading && !initialLoading && (
+          <div className="mb-5 flex items-center justify-between px-4 py-3 rounded-lg bg-accent/10 border border-accent/30">
+            <p className="text-sm text-foreground/70">
+              Your plan is from last week — ready for a fresh one?
+            </p>
+            <button
+              onClick={generatePlan}
+              disabled={loading}
+              className="text-xs font-semibold text-primary hover:text-primary/80 underline flex-shrink-0 ml-4"
+            >
+              Refresh plan &rarr;
+            </button>
+          </div>
+        )}
         <div className="flex items-start justify-between mb-8 pb-6 border-b border-border">
           <div>
             <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">

@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { Heart } from 'lucide-react'
+import { Heart, RefreshCw } from 'lucide-react'
 import MealCardImage from './MealCardImage'
 import type { Meal } from '@/types'
 
@@ -25,6 +25,16 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite }: MealCar
         <MealCardImage mealName={meal.name} dayLabel={meal.day} />
       </Link>
       <div className="relative">
+        {/* Swap affordance — top-left, revealed on card hover */}
+        <Link
+          href={`/recipe/${getMealId(meal)}`}
+          onClick={handleClick}
+          className="absolute top-3 left-3 p-1.5 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-all z-10 opacity-0 group-hover:opacity-100"
+          aria-label="Swap this meal"
+          title="Click to swap this meal"
+        >
+          <RefreshCw className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors" />
+        </Link>
         {onToggleFavorite && (
           <button
             onClick={(e) => {
