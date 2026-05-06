@@ -1,0 +1,1 @@
+chore: remove session fix scripts from repo root
