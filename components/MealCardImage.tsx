@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
 
 interface MealCardImageProps {
@@ -11,14 +12,16 @@ export default function MealCardImage({ mealName, dayLabel }: MealCardImageProps
   const { photo, loading } = useUnsplashPhoto(mealName)
 
   return (
-    <div className="relative h-[200px] w-full">
+    <div className="relative h-[200px] w-full overflow-hidden">
       {loading ? (
         <div className="absolute inset-0 bg-muted animate-pulse" />
       ) : photo ? (
-        <img
+        <Image
           src={photo.url}
           alt={photo.alt}
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
         />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-950 dark:to-orange-900" />

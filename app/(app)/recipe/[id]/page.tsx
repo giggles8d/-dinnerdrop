@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Clock, Heart, RefreshCw, Users } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
@@ -18,10 +19,13 @@ function HeroImage({ mealName }: { mealName: string }) {
         <div className="absolute inset-0 bg-muted animate-pulse" />
       ) : photo ? (
         <>
-          <img
+          <Image
             src={photo.url}
             alt={photo.alt}
-            className="absolute inset-0 w-full h-full object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, 800px"
+            className="object-cover"
+            priority
           />
           <a
             href={`${photo.credit.link}?utm_source=dinnerdrop&utm_medium=referral`}
