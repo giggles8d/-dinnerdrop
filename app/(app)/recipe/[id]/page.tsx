@@ -46,6 +46,7 @@ export default function RecipePage() {
 
   const [meal, setMeal] = useState<Meal | null>(null)
   const [isFavorite, setIsFavorite] = useState(false)
+  const [favoriting, setFavoriting] = useState(false)
   const [swapping, setSwapping] = useState(false)
   const supabase = createClient()
 
@@ -73,9 +74,10 @@ export default function RecipePage() {
   }, [id, checkFavorite])
 
   async function toggleFavorite() {
-    if (!meal) return
+    if (!meal || favoriting) return
+    setFavoriting(true)
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) { setFavoriting(false); return }
 
     if (isFavorite) {
       await supabase
@@ -106,6 +108,7 @@ export default function RecipePage() {
         cook_time: meal.cookTime,
       })
     }
+    setFavoriting(false)
   }
 
   async function handleSwap() {
@@ -234,7 +237,8 @@ export default function RecipePage() {
           </div>
           <button
             onClick={toggleFavorite}
-            className="p-2 rounded-full hover:bg-muted transition-colors flex-shrink-0"
+            disabled={favoriting}
+            className="p-2 rounded-full hover:bg-muted transition-colors flex-shrink-0 disabled:opacity-50"
             aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           >
             <Heart

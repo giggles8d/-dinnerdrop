@@ -21,7 +21,7 @@ export default function GroceryListPage() {
 
   const loadGroceryList = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) { setLoading(false); return }
 
     // Load profile for preferred store
     const { data: profile } = await supabase
@@ -91,7 +91,7 @@ export default function GroceryListPage() {
       })
 
       const data = await res.json()
-      setGroceryList(data)
+      setGroceryList(subtractPantry(data))
 
       await supabase
         .from('meal_plans')

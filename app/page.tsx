@@ -147,7 +147,7 @@ export default function LandingPage() {
                 <li>Budget optimization</li>
               </ul>
               <Link
-                href="/signup"
+                href="/subscribe?coupon=BETA100"
                 className="block text-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
                 Start free trial
