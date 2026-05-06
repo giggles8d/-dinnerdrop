@@ -13,7 +13,8 @@ interface MealPlanRecord {
   total_estimated_cost: number
 }
 
-function formatWeekOf(dateStr: string): string {
+function formatWeekOf(dateStr: string | null | undefined): string {
+  if (!dateStr) return 'Unknown week'
   const date = new Date(dateStr + 'T00:00:00')
   return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
 }

@@ -25,6 +25,12 @@ function SubscribeContent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ couponCode: couponCode || undefined }),
       })
+      if (res.status === 401) {
+        // Not logged in — redirect to signup, then back here with coupon preserved
+        const dest = '/subscribe' + (couponCode ? '?coupon=' + couponCode : '')
+        window.location.href = '/signup?redirect=' + encodeURIComponent(dest)
+        return
+      }
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url

@@ -26,7 +26,7 @@ export default function BetaPage() {
             <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors">
               Sign in
             </Link>
-            <Link href="/subscribe" className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-colors" style={{ backgroundColor: '#1a5c38' }}>
+            <Link href="/subscribe?coupon=BETA100" className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-colors" style={{ backgroundColor: '#1a5c38' }}>
               Try free
             </Link>
           </div>
