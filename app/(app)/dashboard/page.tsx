@@ -281,14 +281,14 @@ function DashboardContent() {
         {/* Subscription upgrade banner */}
         {!isSubscribed && subscriptionStatus !== 'past_due' && planCount > 0 && (
           <Link
-            href="/subscribe"
+            href="/subscribe?coupon=BETA100"
             className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-foreground text-primary-foreground hover:bg-foreground/90 transition-colors"
           >
             <div className="flex items-center gap-3">
               <Sparkles className="w-5 h-5 text-accent flex-shrink-0" />
               <div>
                 <p className="text-sm font-semibold">Unlock unlimited meal plans</p>
-                <p className="text-xs text-primary-foreground/60 mt-0.5">$9/month · Cancel anytime · 7-day free trial</p>
+                <p className="text-xs text-primary-foreground/60 mt-0.5">Beta offer — 6 months free · No credit card today</p>
               </div>
             </div>
             <span className="text-xs font-semibold text-accent flex-shrink-0">
@@ -390,6 +390,19 @@ function DashboardContent() {
               >
                 Build my grocery list &rarr;
               </Link>
+              <div className="mt-6 p-4 rounded-xl border border-accent/30 bg-accent/5 text-center">
+                <p className="text-sm font-semibold text-foreground mb-1">Know someone who dreads the dinner question?</p>
+                <p className="text-xs text-muted-foreground mb-3">Share DinnerDrop — they get 6 months free too</p>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText('https://dinnerdrop.app/beta')
+                    alert('Link copied! Share it — they get 6 months free.')
+                  }}
+                  className="px-5 py-2 rounded-lg border border-accent text-accent text-xs font-semibold hover:bg-accent/10 transition-colors"
+                >
+                  Copy beta invite link
+                </button>
+              </div>
             </div>
           </>
         )}

@@ -127,6 +127,29 @@ export async function POST(request: NextRequest) {
               console.error('[webhook] Admin notification email failed:', adminNotifyErr)
             }
           }
+          // Spots milestone notification
+          try {
+            const milestones = [75, 50, 25, 10, 5, 1]
+            const milestone = milestones.find(m => spotsRemaining === m)
+            if (milestone !== undefined && process.env.RESEND_API_KEY) {
+              const resendMilestone = new Resend(process.env.RESEND_API_KEY)
+              const urgency = milestone <= 10 ? '🚨 URGENT: ' : milestone <= 25 ? '⚠️ ' : '🎉 '
+              await resendMilestone.emails.send({
+                from: process.env.RESEND_FROM_EMAIL ?? 'DinnerDrop <info@dinnerdrop.app>',
+                to: 'info@dinnerdrop.app',
+                subject: `${urgency}DinnerDrop beta: ${spotsRemaining} spots remaining`,
+                html: `<div style="font-family:sans-serif;max-width:520px;padding:24px">
+                  <h2 style="color:${spotsRemaining <= 10 ? '#dc2626' : '#1a5c38'}">${urgency}Beta milestone hit: ${spotsRemaining} spots left</h2>
+                  <p>DinnerDrop just hit the ${milestone}-spot milestone. ${100 - spotsRemaining} of 100 beta spots are now claimed.</p>
+                  ${spotsRemaining <= 10 ? '<p><strong>Action: Consider creating BETA200 coupon or adding a waitlist CTA.</strong></p>' : ''}
+                  <p><a href="https://dashboard.stripe.com/coupons" style="background:#1a5c38;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;display:inline-block">View in Stripe</a></p>
+                </div>`,
+              })
+              console.log(`[webhook] Milestone notification sent: ${spotsRemaining} spots remaining`)
+            }
+          } catch (milestoneErr) {
+            console.error('[webhook] Milestone notification failed:', milestoneErr)
+          }
         } else {
           console.log('RESEND_API_KEY not set — skipping emails')
         }
