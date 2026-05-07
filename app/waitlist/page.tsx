@@ -3,11 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-export const metadata = {
-  title: 'Join the Waitlist — DinnerDrop',
-  description: 'All 100 beta spots are claimed. Join the waitlist to be first when more open.',
-}
-
 export default function WaitlistPage() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')

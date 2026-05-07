@@ -124,7 +124,7 @@ export default function WelcomeBeta({
           {/* Footer */}
           <Section style={footerSection}>
             <Text style={footerText}>
-              Your beta access is confirmed and locked in. No credit card required.
+              Your beta access is confirmed and locked in. You won't be charged for 6 months.
             </Text>
             <Text style={footerText}>
               <Link href="https://dinnerdrop.app/dashboard" style={footerLink}>
