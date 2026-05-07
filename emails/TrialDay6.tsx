@@ -42,7 +42,7 @@ export default function TrialDay6({
               Keep all of it for $9/month — that's less than one takeout order.
             </Text>
             <Section style={ctaSection}>
-              <Button style={primaryButton} href="https://dinnerdrop.app/subscribe">
+              <Button style={primaryButton} href="https://dinnerdrop.app/subscribe?utm_source=email&utm_medium=email&utm_campaign=trial_day6">
                 Upgrade to full access →
               </Button>
             </Section>
@@ -59,7 +59,7 @@ export default function TrialDay6({
             </Text>
             <Text style={paragraph}>At $9/month, that's <strong>$0.30 per day</strong> to have dinner handled.</Text>
             <Section style={ctaSection}>
-              <Button style={secondaryButton} href="https://dinnerdrop.app/subscribe">
+              <Button style={secondaryButton} href="https://dinnerdrop.app/subscribe?utm_source=email&utm_medium=email&utm_campaign=trial_day6">
                 Continue my subscription →
               </Button>
             </Section>
@@ -69,7 +69,7 @@ export default function TrialDay6({
           </Section>
           <Section style={footerSection}>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app" style={footerLink}>Manage your account</Link>
+              <Link href="https://dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
               {' · '}
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
             </Text>

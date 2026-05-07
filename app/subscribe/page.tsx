@@ -195,7 +195,7 @@ function SubscribeContent() {
 
               <p className="text-xs text-muted-foreground text-center mt-3 font-medium">
                 {couponCode === 'BETA100'
-                  ? "You’ll be redirected to a $0 checkout — no card required today."
+                  ? "You'll enter your card at Stripe checkout — no charge for 6 months. We'll email you before billing starts."
                   : "You’ll be redirected to Stripe’s secure checkout. Your 7-day trial starts immediately."}
               </p>
 

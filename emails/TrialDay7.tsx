@@ -32,7 +32,7 @@ export default function TrialDay7({
             </Text>
             <Text style={upgradeStatement}>Upgrade now and keep everything — $9/month, cancel anytime.</Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/subscribe">Complete my upgrade now →</Button>
+              <Button style={button} href="https://dinnerdrop.app/subscribe?utm_source=email&utm_medium=email&utm_campaign=trial_day7">Complete my upgrade now →</Button>
             </Section>
             <Hr style={hr} />
             <Section style={fenceSection}>
@@ -56,7 +56,7 @@ export default function TrialDay7({
             <Text style={benefitItem}>→ New plans every week, never the same twice</Text>
             <Text style={benefitItem}>→ Priority support</Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/subscribe">Upgrade before my trial expires →</Button>
+              <Button style={button} href="https://dinnerdrop.app/subscribe?utm_source=email&utm_medium=email&utm_campaign=trial_day7">Upgrade before my trial expires →</Button>
             </Section>
             <Hr style={hr} />
             <Text style={paragraph}>
@@ -70,7 +70,7 @@ export default function TrialDay7({
           </Section>
           <Section style={footerSection}>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app" style={footerLink}>Manage your account</Link>
+              <Link href="https://dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
               {' · '}
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
             </Text>

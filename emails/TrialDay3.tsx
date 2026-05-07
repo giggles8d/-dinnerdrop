@@ -60,7 +60,7 @@ export default function TrialDay3({
           </Section>
           <Section style={footerSection}>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app" style={footerLink}>Manage your account</Link>
+              <Link href="https://dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
               {' · '}
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
             </Text>
