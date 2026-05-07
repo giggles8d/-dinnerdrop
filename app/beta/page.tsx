@@ -1,15 +1,22 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function BetaPage() {
   const [spotsRemaining, setSpotsRemaining] = useState<number | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     fetch('/api/stripe/beta-spots')
       .then((res) => res.json())
-      .then((data) => setSpotsRemaining(data.spotsRemaining))
+      .then((data) => {
+        setSpotsRemaining(data.spotsRemaining)
+        if (data.spotsRemaining === 0) {
+          router.replace('/waitlist')
+        }
+      })
       .catch(() => setSpotsRemaining(100))
   }, [])
 

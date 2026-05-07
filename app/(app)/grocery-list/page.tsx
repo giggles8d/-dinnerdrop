@@ -196,6 +196,12 @@ export default function GroceryListPage() {
         <div className="text-center space-y-3">
           <p className="text-foreground font-medium">No meal plan found</p>
           <p className="text-muted-foreground">Generate a meal plan first from your dashboard.</p>
+          <a
+            href="/dashboard"
+            className="inline-block mt-2 px-6 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+          >
+            Go to dashboard
+          </a>
         </div>
       </div>
     )
