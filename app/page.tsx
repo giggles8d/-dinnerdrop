@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default async function LandingPage() {
   let spotsRemaining = 100
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://dinnerdrop.vercel.app'
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://dinnerdrop.app'
     const res = await fetch(`${baseUrl}/api/stripe/beta-spots`, { cache: 'no-store' })
     if (res.ok) {
       const data = await res.json()

@@ -4,13 +4,14 @@ import { NextRequest, NextResponse } from 'next/server'
 // Called by Vercel Cron daily at 10:00 AM EST (14:00 UTC)
 // Schedule defined in vercel.json: "0 14 * * *"
 export async function GET(request: NextRequest) {
-  if (!process.env.RESEND_API_KEY) {
-    console.log('[cron/email-sequences] RESEND_API_KEY not configured — skipping batch')
-    return NextResponse.json({ skipped: true, reason: 'RESEND_API_KEY not configured', sent: 0, failed: 0 }, { status: 200 })
-  }
+  // Auth check FIRST — do not reveal RESEND_API_KEY config status to unauthenticated callers
   const authHeader = request.headers.get('authorization')
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  if (!process.env.RESEND_API_KEY) {
+    console.log('[cron/email-sequences] RESEND_API_KEY not configured — skipping batch')
+    return NextResponse.json({ skipped: true, reason: 'RESEND_API_KEY not configured', sent: 0, failed: 0 }, { status: 200 })
   }
 
   const supabase = createClient(
@@ -52,7 +53,7 @@ export async function GET(request: NextRequest) {
 
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_APP_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dinnerdrop.vercel.app'}/api/email/send-trial`,
+          `${process.env.NEXT_PUBLIC_APP_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dinnerdrop.app'}/api/email/send-trial`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'x-cron-secret': process.env.CRON_SECRET! },
