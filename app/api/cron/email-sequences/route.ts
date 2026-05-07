@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
     const { data: users, error: queryError } = await supabase
       .from('profiles')
-      .select('id, email, full_name, trial_starts_at, email_sequence_sent, subscription_status')
+      .select('id, email, full_name, trial_starts_at, email_sequence_sent, subscription_status, is_beta_member')
       .eq('subscription_status', 'trialing')
       .not('email_unsubscribed', 'eq', true)
       .gte('trial_starts_at', `${dateStr}T00:00:00Z`)
@@ -48,6 +48,9 @@ export async function GET(request: NextRequest) {
       const sentEmails: number[] = user.email_sequence_sent || []
       if (sentEmails.includes(emailNumber)) continue
       if (user.subscription_status === 'active') continue
+      // Beta members (BETA100) get 6 months free — skip Day 6 & 7 trial-end urgency emails
+      // They only receive Day 3 (email 1) which is feature education, not conversion urgency
+      if (user.is_beta_member && emailNumber >= 2) continue
 
       const firstName = user.full_name ? user.full_name.split(' ')[0] : undefined
 

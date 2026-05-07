@@ -55,12 +55,18 @@ export async function POST(request: NextRequest) {
       if (customerId) {
         const now = new Date()
         const trialEnds = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
+        // Detect BETA100 coupon usage — beta members get 6 months free and should NOT
+        // receive the standard Day 6/7 trial-end urgency emails (would alarm them)
+        const isBetaMember = session.total_details?.breakdown?.discounts?.some(
+          (d: { coupon?: { id?: string } }) => d.coupon?.id === 'BETA100'
+        ) ?? false
         await supabase
           .from('profiles')
           .update({
             subscription_status: 'trialing',
             trial_starts_at: now.toISOString(),
             trial_ends_at: trialEnds.toISOString(),
+            is_beta_member: isBetaMember,
           })
           .eq('stripe_customer_id', customerId)
 
