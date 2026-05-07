@@ -350,6 +350,22 @@ function DashboardContent() {
           </button>
         </div>
 
+                {!hasGenerated && !initialLoading && (
+          <div className="mb-8 p-6 rounded-2xl border border-accent/30 bg-accent/5 text-center">
+            <div className="text-3xl mb-3">&#127858;</div>
+            <h2 className="text-xl font-heading font-bold text-foreground mb-2">Welcome to DinnerDrop!</h2>
+            <p className="text-muted-foreground text-sm max-w-md mx-auto mb-4">
+              Your family&apos;s personal dinner planner is ready. Tap &ldquo;Generate my plan&rdquo; above to get your first 5 AI-planned dinners — personalized to your budget, cook time, and tastes.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-muted-foreground">
+              <span className="flex items-center gap-1">&#10003; 5 personalized dinners</span>
+              <span className="hidden sm:block">·</span>
+              <span className="flex items-center gap-1">&#10003; Budget-tracked grocery list</span>
+              <span className="hidden sm:block">·</span>
+              <span className="flex items-center gap-1">&#10003; One-tap store handoff</span>
+            </div>
+          </div>
+        )}
         <MealGrid
           meals={meals}
           loading={initialLoading || loading}
