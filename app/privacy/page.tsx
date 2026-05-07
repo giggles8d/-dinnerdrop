@@ -5,6 +5,13 @@ import { ArrowLeft } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'Privacy Policy — DinnerDrop',
   description: 'DinnerDrop privacy policy — how we collect, use, and protect your data.',
+  openGraph: {
+    title: 'Privacy Policy — DinnerDrop',
+    description: 'DinnerDrop privacy policy — how we collect, use, and protect your data.',
+    url: 'https://dinnerdrop.app/privacy',
+    siteName: 'DinnerDrop',
+    type: 'website',
+  },
 }
 
 export default function PrivacyPage() {

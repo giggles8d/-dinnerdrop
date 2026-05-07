@@ -5,6 +5,13 @@ import { ArrowLeft } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'Terms of Service — DinnerDrop',
   description: 'DinnerDrop terms of service and user agreement.',
+  openGraph: {
+    title: 'Terms of Service — DinnerDrop',
+    description: 'DinnerDrop terms of service and user agreement.',
+    url: 'https://dinnerdrop.app/terms',
+    siteName: 'DinnerDrop',
+    type: 'website',
+  },
 }
 
 export default function TermsPage() {
