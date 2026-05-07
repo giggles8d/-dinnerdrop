@@ -71,7 +71,9 @@ export async function POST(request: NextRequest) {
           .eq('stripe_customer_id', customerId)
 
         if (process.env.RESEND_API_KEY) {
-          // Welcome email to new beta user
+          // Welcome email — only sent to beta members (WelcomeBeta has beta-specific content)
+          // Non-beta trial users are covered by the Day 3 email sequence
+          if (isBetaMember) {
           try {
             const resend = new Resend(process.env.RESEND_API_KEY)
             const firstName = customerName.split(' ')[0] || 'there'
@@ -97,6 +99,7 @@ export async function POST(request: NextRequest) {
             console.error('Welcome email send failed:', emailErr)
           }
 
+          } // end isBetaMember welcome email gate
           // Admin notification to Sarah
           if (customerEmail) {
             try {
