@@ -100,15 +100,15 @@ export async function POST(request: NextRequest) {
           }
 
           } // end isBetaMember welcome email gate
-          // Admin notification to Sarah
+          // Admin notification to Sarah — spotsRemaining hoisted so milestone block can access it
+          let spotsRemaining = 100
+          try {
+            const coupon = await stripe.coupons.retrieve('BETA100')
+            spotsRemaining = 100 - (coupon.times_redeemed || 0)
+          } catch { /* coupon may not exist yet */ }
           if (customerEmail) {
             try {
               const resendAdmin = new Resend(process.env.RESEND_API_KEY)
-              let spotsRemaining = 100
-              try {
-                const coupon = await stripe.coupons.retrieve('BETA100')
-                spotsRemaining = 100 - (coupon.times_redeemed || 0)
-              } catch { /* coupon may not exist yet */ }
               const signupTime = new Date().toLocaleString('en-US', {
                 timeZone: 'America/New_York',
                 month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true,
