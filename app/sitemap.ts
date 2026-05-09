@@ -1,43 +1,59 @@
-import { MetadataRoute } from "next";
+import { MetadataRoute } from 'next'
+import { BLOG_POSTS } from '@/lib/blog-posts'
+
+const BASE = 'https://dinnerdrop.app'
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const blogEntries: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: `${BASE}/blog/${post.slug}`,
+    lastModified: new Date(post.publishDate),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
   return [
     {
-      url: "https://dinnerdrop.app/",
+      url: `${BASE}/`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: "https://dinnerdrop.app/beta",
+      url: `${BASE}/beta`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: "https://dinnerdrop.app/subscribe",
+      url: `${BASE}/subscribe`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: "https://dinnerdrop.app/terms",
+      url: `${BASE}/blog`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
+    ...blogEntries,
     {
-      url: "https://dinnerdrop.app/privacy",
+      url: `${BASE}/waitlist`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-  
-    {
-      url: `${base}/waitlist`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: 'monthly',
       priority: 0.6,
-    }
-  ];
+    },
+    {
+      url: `${BASE}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${BASE}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+  ]
 }
