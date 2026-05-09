@@ -65,7 +65,7 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 
 ### POST 3 -- "HelloFresh alternative cheaper"
 **Title:** "We Tried HelloFresh, Then Switched to AI Meal Planning -- Here's What We Saved"
-**File:** docs/blog-post-3.md
+**File:** docs/blog-post-3.md — **STATUS: DRAFT DONE (2026-05-09)**
 **Word count target:** 1,600-2,000
 **CTA:** /beta -- 6-month free offer
 **Angle:** Cost comparison (HelloFresh $12-$15/meal vs. DinnerDrop $9/month + store ingredients).
