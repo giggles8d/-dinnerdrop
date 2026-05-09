@@ -114,8 +114,8 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 |------|------|---------------|--------|
 | Week 2 | Post 1 -- Decision Fatigue | May 12 | DRAFT DONE |
 | Week 2 | Post 2 -- Best Apps Roundup | May 14 | DRAFT DONE |
-| Week 3 | Post 3 -- HelloFresh Alt | May 19 | Pending |
-| Week 3 | Post 4 -- Plan a Week Tutorial | May 21 | Pending |
+| Week 3 | Post 3 -- HelloFresh Alt | May 19 | DRAFT DONE |
+| Week 3 | Post 4 -- Plan a Week Tutorial | May 21 | DRAFT DONE |
 | Week 4 | Post 5 -- Picky Eater | May 26 | Pending |
 | Week 4 | Post 6 -- Save $1,200 | May 28 | Pending |
 | Month 2 | Posts 7-10 | June | Pending |

@@ -341,6 +341,128 @@ For most families, switching from HelloFresh to an AI meal planner saves **$1,30
 
 [Claim a free beta spot →](https://dinnerdrop.app/beta)`,
   },
+  {
+    slug: 'how-to-plan-a-week-of-dinners',
+    title: 'How to Plan a Week of Dinners in 30 Seconds (AI Does the Heavy Lifting)',
+    description:
+      'Stop spending 45 minutes planning dinners every Sunday. AI meal planners generate a full week of family dinners — tailored to your dietary needs and family size — in under 30 seconds.',
+    publishedAt: '2026-05-21',
+    readingTime: '7 min',
+    content: `## How to Plan a Week of Dinners in 30 Seconds (AI Does the Heavy Lifting)
+
+Every Sunday, millions of parents sit down to do the same mental labor: stare at a blank week, try to remember what's already in the fridge, flip through recipes, cross-reference everyone's preferences, and build a grocery list from scratch.
+
+It takes 45 minutes on a good week. Two hours on a chaotic one.
+
+There's a shorter way. AI meal planners can generate a full week of dinners — five meals, tailored to your family size and dietary needs, with a complete grocery list — in under 30 seconds.
+
+Here's exactly how it works, and why it's replacing the Sunday planning session for thousands of families.
+
+---
+
+## Why Traditional Meal Planning Takes So Long
+
+Planning a week of dinners sounds simple. In practice, it involves remembering what you've already made (and whether anyone complained), checking what's expiring before you shop, cross-referencing dietary restrictions across every family member, estimating quantities for your household size, building a grocery list from scratch organized by store section, and finding something everyone will actually eat.
+
+Each step is a micro-decision. Researchers at Cornell found that adults make over 200 food-related decisions per day. The Sunday planning session front-loads a week's worth of them into one exhausting block.
+
+The result: most families eventually give up on structured planning and default to the same five rotation meals, takeout, or the 5pm "what's for dinner?" panic.
+
+---
+
+## The Old Way vs. The 30-Second Way
+
+**Traditional planning (average time: 45–90 minutes)**
+
+1. Open a notes app or pull out a blank calendar
+2. Think through 5 different dinners without repeating last week
+3. Check each recipe to confirm you have the pantry staples
+4. Verify the recipe works for everyone's dietary needs
+5. Calculate quantities for your family size
+6. Build a grocery list manually, item by item
+7. Organize the list so you're not zigzagging the store
+
+**AI meal planning (average time: 30 seconds)**
+
+1. Open DinnerDrop
+2. Confirm your family size and dietary preferences (set once, saved forever)
+3. Tap "Generate my week"
+4. Get 5 meals + a complete grocery list, organized by store section
+
+---
+
+## How to Plan a Week of Dinners with AI: Step by Step
+
+Here's exactly what happens when you generate a week of meals in [DinnerDrop](https://dinnerdrop.app/beta).
+
+### Step 1: Set Your Family Profile (One Time Only)
+
+A quick onboarding quiz asks how many people you're feeding, your dietary restrictions (gluten-free, dairy-free, vegetarian, vegan, nut-free, keto, halal), your max weeknight cook time (15, 30, or 45 minutes), and which grocery store you use.
+
+This profile is saved permanently. You set it once. Every future generation uses it automatically.
+
+### Step 2: Tap "Generate My Week"
+
+One button. The AI considers your family size and portion quantities, every dietary restriction, variety across proteins and cuisine styles, weeknight-friendly cook times, and seasonal ingredient availability.
+
+Within 8–12 seconds, you have five dinner options for the week.
+
+### Step 3: Swap Anything You Don't Like
+
+If one of the five meals doesn't work, tap swap. The AI replaces it with a new option that still fits your profile. Most families make zero swaps — the AI learns your preferences over time.
+
+### Step 4: Get the Grocery List
+
+Tap "Build grocery list." You get every ingredient for all five meals, quantities calculated for your exact family size, items organized by store section (produce, proteins, pantry, dairy, frozen), and a one-tap handoff to Instacart, Walmart Grocery, or Amazon Fresh.
+
+---
+
+## What a Full Week Actually Looks Like
+
+A typical week for a family of four, 30-minute max cook time, one dairy-free member:
+
+| Day | Meal | Cook Time |
+|-----|------|-----------|
+| Monday | Sheet pan lemon herb chicken + roasted broccoli | 28 min |
+| Tuesday | Ground turkey tacos with avocado + corn salsa | 20 min |
+| Wednesday | Shrimp stir-fry with rice noodles + snap peas | 22 min |
+| Thursday | One-pot pasta with turkey sausage + spinach | 25 min |
+| Friday | Honey garlic salmon + roasted sweet potatoes | 30 min |
+
+Grocery list: 31 items. Organized by section. Estimated cost at Walmart: $87 for the week — under $4.40 per person per dinner.
+
+---
+
+## Why the Grocery List Changes Everything
+
+The grocery list is where most meal planning systems break down. DinnerDrop's list consolidates ingredients across all five meals (if three recipes use olive oil, you see one quantity, not three line items), organizes everything by store section so you shop in one logical pass, and links directly to your grocery store for a one-tap handoff.
+
+Fewer store trips. Less food wasted. No mid-week emergency runs for a forgotten onion.
+
+---
+
+## The Time Math
+
+| Task | Traditional | With DinnerDrop |
+|------|-------------|-----------------|
+| Choose 5 meals | 20–40 min | 8 seconds |
+| Check dietary needs | 10–15 min | 0 min (saved in profile) |
+| Build grocery list | 15–20 min | 12 seconds |
+| Organize by section | 5–10 min | 0 min (auto-organized) |
+| **Total** | **50–85 min** | **~30 seconds** |
+
+For families who do this every week, that's 43–73 hours of planning time per year. Reclaimed.
+
+---
+
+## Get Your First Week Free
+
+DinnerDrop is in beta. The first 100 families get **6 months completely free**.
+
+Setup takes 3 minutes. Your first week of dinners is ready in 30 seconds.
+
+[Claim a free beta spot →](https://dinnerdrop.app/beta)`,
+  },
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
