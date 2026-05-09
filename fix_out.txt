@@ -1,0 +1,6 @@
+bodyStart: 1658 bottomIdx: 3507
+middleBody first 100: "\r\n\r\n    const { data: profile } = await supabase\r\n      .from('profiles')\r\n      .select('*')\r\n     "
+Has try/catch: true
+Has finally: true
+setInitialLoading in finally: true
+File length: 14405
