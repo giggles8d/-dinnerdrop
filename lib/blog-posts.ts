@@ -1880,7 +1880,165 @@ Plan five and leave two nights as intentional flex nights — leftovers, eating 
 
 The system that makes family dinners sustainable is simple: a fixed rotation of meals your family genuinely likes, planned once per week, with a grocery list that matches the plan. The 16 recipes above are the raw material. The weekly planning habit — whether you do it manually on Sunday or use [DinnerDrop](https://dinnerdrop.app/beta) to automate it — is what makes those recipes actually useful week after week.
 `,
-  },]
+  },
+  {
+    slug: 'healthy-family-dinners',
+    title: "25 Healthy Family Dinners Everyone Will Actually Eat (30 Minutes or Less)",
+    description:
+      "Healthy family dinners don't have to mean separate meals or standoffs at the table. " +
+      "Here are 25 nutritionist-approved dinners under 30 minutes that kids and adults both enjoy.",
+    publishDate: '2026-07-21',
+    readingTimeMinutes: 7,
+    primaryKeyword: 'healthy family dinners',
+    content: `Getting a healthy dinner on the table when you have three different opinions, two picky eaters, and forty minutes on a Tuesday night is genuinely hard.
+
+The good news: healthy family dinners don't require gourmet skill, expensive ingredients, or separate meals for adults and kids. They require the right recipe bank — ones that are nutrient-dense but also actually taste good to people under the age of twelve.
+
+These 25 dinners are the ones families keep coming back to. Under 30 minutes, made with standard grocery store ingredients, and nutritionist-approved without tasting like "health food."
+
+## What Makes a Dinner Actually Healthy (Without Being Boring)
+
+Before the list: a quick framework. A healthy family dinner hits three markers:
+
+**1. Protein + fiber at every meal.** Protein and fiber slow digestion and keep kids full past 8pm. A dinner with only pasta and butter fails this test. Pasta with ground turkey and a vegetable doesn't.
+
+**2. Real ingredients, not "health food" ingredients.** You don't need quinoa or spiralized zucchini. Chicken thighs, black beans, sweet potato, and brown rice are all whole foods that kids actually recognize and eat.
+
+**3. Flexibility within the meal.** The most successful healthy family dinners are modular — a grain, a protein, a vegetable, a sauce — so picky eaters can assemble their own version without you cooking four meals.
+
+With that in mind, here are 25 dinners that check all three boxes.
+
+## The 25 Healthy Family Dinners
+
+### Sheet Pan Meals (Set It and Walk Away)
+
+**1. Sheet Pan Chicken Thighs with Roasted Broccoli**
+Season bone-in thighs with olive oil, garlic, paprika, salt. Roast at 425F for 35 minutes alongside broccoli florets. The rendered chicken fat bastes the broccoli — kids who "hate broccoli" routinely eat it this way. 280 calories per serving, 32g protein.
+
+**2. Sheet Pan Sausage and Vegetables**
+Italian turkey sausage, bell peppers, zucchini, onion, olive oil, Italian seasoning. One pan, 25 minutes, virtually no prep. Serve over polenta or in a hoagie roll. Works for kids who won't touch "mixed" food because every component is visible and separate.
+
+**3. Sheet Pan Salmon with Asparagus**
+Salmon fillets, asparagus spears, lemon slices, dill, olive oil. 18-20 minutes at 400F. Rich in omega-3s. The lemon and dill remove any "fishy" smell that causes kid resistance. Pair with rice from a rice cooker started before the salmon goes in.
+
+**4. Sheet Pan Turkey Meatballs with Zucchini**
+Form meatballs from ground turkey, egg, breadcrumbs, Parmesan, garlic. Roast at 400F for 20 minutes alongside halved zucchini. Serve with marinara for dipping. Kids dip everything — this is the hack.
+
+### 20-Minute Stir Fries
+
+**5. Chicken and Broccoli Stir Fry**
+Thin-sliced chicken breast, broccoli, garlic, ginger, soy sauce, a little cornstarch, sesame oil. Better than takeout, ready in 18 minutes. Serve over brown rice. This is the easiest entry point for families new to weeknight stir fries.
+
+**6. Beef and Snap Pea Stir Fry**
+Lean ground beef or thin-sliced flank steak, snap peas, carrots, garlic-ginger sauce. Quick-cooking proteins keep this under 20 minutes flat. Ground beef version works better for younger kids (easier to chew).
+
+**7. Shrimp Fried Rice**
+Frozen shrimp (thawed), day-old rice, peas and carrots, eggs, soy sauce, sesame oil. 15 minutes. Fried rice is one of the most reliable kid-approved meals — it looks familiar, it's mild, and the eggs add protein without being obvious. Day-old rice is key; fresh rice gets mushy.
+
+**8. Tofu and Vegetable Stir Fry**
+Extra-firm tofu pressed and cubed, mixed vegetables (broccoli, snap peas, bell pepper), garlic sauce. For families with vegetarians and omnivores at the same table: cook the tofu stir fry in one pan, add chicken to a second pan. Same sauce, same vegetables, everyone's fed.
+
+### Pasta Nights (Actually Nutritious)
+
+**9. Turkey Bolognese**
+Ground turkey replaces beef: less saturated fat, same richness when simmered with crushed tomatoes, onion, garlic, and a splash of milk (milk is the bolognese secret — it tenderizes the meat). Serve over whole wheat pasta or regular pasta, your call. The turkey version is nearly indistinguishable to kids.
+
+**10. Pasta with White Beans and Spinach**
+A pantry meal: canned white beans, garlic, olive oil, chicken broth, baby spinach wilted into the sauce, Parmesan. 20 minutes, high in fiber and protein, and it genuinely tastes good. Add red pepper flakes for adults after serving.
+
+**11. Baked Ziti with Hidden Vegetables**
+Whole wheat ziti, ground turkey, jarred marinara, ricotta, mozzarella, and finely diced zucchini stirred into the sauce (invisible once baked). Assemble in 15 minutes, bake for 25. A comfort food classic that carries a full serving of vegetables per portion.
+
+**12. Lemon Ricotta Pasta with Peas**
+Pasta, whole-milk ricotta, lemon zest, frozen peas, Parmesan. No cooking beyond boiling pasta. Toss everything together while hot. Ready in 12 minutes. Not traditional, but incredibly rich-tasting and kid-tested.
+
+### Taco and Bowl Nights (The Modular Approach)
+
+**13. Ground Turkey Tacos**
+A family dinner staple for a reason. Season ground turkey with cumin, chili powder, garlic powder, salt. Warm corn tortillas. Set out: shredded cheese, salsa, sour cream, shredded lettuce, avocado. Everyone builds their own. One recipe, five different plates — the cleanest solution for picky eaters.
+
+**14. Black Bean Burrito Bowls**
+Brown rice, seasoned black beans, corn, salsa, shredded cheese, sour cream, avocado. No meat required, but add grilled chicken for those who want it. High fiber, high protein, 20 minutes with canned beans. The bowl format means kids can exclude what they don't want.
+
+**15. Salmon Poke Bowls (Simplified)**
+Canned or cooked salmon, rice, edamame, cucumber, shredded carrots, soy-sesame sauce. The bowl format makes fish more approachable. Edamame is one of the most protein-dense finger foods for kids.
+
+**16. Chicken Fajita Bowls**
+Marinate chicken strips in lime juice, cumin, chili powder, garlic. Cook 6 minutes per side. Add sliced bell peppers to the same pan for the last 3 minutes. Serve over rice with guacamole. Same protein as a restaurant fajita, fraction of the sodium.
+
+### Soups and Stews (One-Pot, High Nutrition)
+
+**17. White Chicken Chili**
+Shredded rotisserie chicken, canned white beans, green chiles, chicken broth, cumin, oregano, a splash of cream cheese for body. 20 minutes start to finish. High protein, high fiber, warming. Serve with cornbread or tortilla chips.
+
+**18. Lentil Soup**
+Red lentils, diced tomatoes, carrots, celery, cumin, coriander, lemon. Under $8 for a full pot. The red lentils dissolve as they cook, creating a thick soup with no identifiable lentil texture — which is why kids who "don't like lentils" routinely eat this.
+
+**19. Chicken Tortilla Soup**
+Rotisserie chicken, canned diced tomatoes, black beans, corn, chicken broth, cumin, chili powder. 15 minutes active. Serve with tortilla strips, cheese, sour cream bar-style so everyone customizes.
+
+**20. Turkey and Vegetable Soup**
+Ground turkey browned in a pot, then add: diced carrots, celery, onion, zucchini, canned diced tomatoes, chicken broth, Italian seasoning. 25 minutes. Serve with crusty bread. Makes even better leftovers the next day — make a double batch.
+
+### Quick Protein and Vegetable Plates
+
+**21. Baked Chicken Breast with Sweet Potato**
+Season chicken breasts with olive oil, garlic powder, onion powder, paprika, salt. Microwave-bake sweet potatoes while chicken roasts. Steam broccoli. Three components, 30 minutes, high protein and complex carb.
+
+**22. Honey Garlic Salmon**
+Mix honey, minced garlic, soy sauce, olive oil. Brush over salmon. Pan-sear 4 minutes per side. The honey caramelizes into a glaze that kids find approachable even if they're normally suspicious of fish. Serve with rice and any steamed vegetable.
+
+**23. Turkey Lettuce Wraps**
+Ground turkey, water chestnuts, diced mushrooms, hoisin sauce, soy sauce, ginger, garlic. Served in butter lettuce cups. Works because it's interactive — kids assemble their own wraps. Mushrooms and water chestnuts add texture and nutrition without announcing themselves.
+
+**24. Stuffed Bell Peppers**
+Halved bell peppers filled with ground turkey, cooked rice, diced tomatoes, cheese, Italian seasoning. Bake at 375F for 25 minutes. Visually impressive, nutritionally complete. The bell pepper gets soft and sweet when roasted — even pepper-skeptic kids usually eat this.
+
+**25. Chicken Sausage and Vegetable Skillet**
+Sliced chicken sausage (lower fat than pork), bell peppers, onion, zucchini, garlic, Italian seasoning. One pan, 20 minutes. Serve over polenta, pasta, or crusty bread. Chicken sausage already comes seasoned — this is one of the lowest-effort dinners on the list.
+
+## Building a Healthy Family Dinner Rotation
+
+The 25 meals above are most useful as a rotation, not a one-time list. Here's how to build a system that sticks:
+
+**Week structure that works:**
+- Monday: Sheet pan meal (minimal cleanup on a tough day)
+- Tuesday: Stir fry or skillet (fastest dinner of the week)
+- Wednesday: Pasta night (comfort meal midweek)
+- Thursday: Taco or bowl night (modular, everyone's happy)
+- Friday: Soup or leftovers flex night
+
+**The planning step that makes the difference:** Decide all five dinners on Sunday before anyone is hungry or tired. Sunday-morning you has the mental bandwidth to think about nutrition, variety, and what's already in the fridge. Tuesday-at-5pm you does not.
+
+**The grocery list problem:** Planning meals and separately figuring out what to buy is where most families lose 20-30 minutes per week. The most efficient approach is generating the grocery list from the meal plan at the same time — so every ingredient maps to a specific recipe and nothing is guessed at the store.
+
+## Frequently Asked Questions
+
+**How do I get kids to try new healthy foods?**
+Repeated exposure is the evidence-backed answer. Put the new food on the plate alongside a familiar "safe" food, don't comment on whether they eat the new item, and keep putting it there over multiple weeks. Studies show it takes 10-15 exposures before a child accepts a new food — most parents give up after 2 or 3 tries.
+
+**What are the healthiest quick-cooking proteins?**
+Ground turkey and chicken breast cook in under 15 minutes and offer the best protein-to-calorie ratio of common proteins. Canned white beans and lentils are the fastest plant-based options. Shrimp cooks in 3-4 minutes and is high in protein with minimal fat.
+
+**How many nights per week should we eat fish?**
+The American Heart Association recommends two servings of fatty fish per week. Salmon, sardines, and trout are the richest sources of omega-3s. One salmon dinner and one tuna salad lunch is a practical way to hit the target without it feeling repetitive.
+
+**Can healthy family dinners really be done in under 30 minutes?**
+Yes — with prep discipline. The time variable isn't cooking, it's deciding. The 30 minutes assumes you've already decided what to make and have the ingredients. The planning decision is what takes time when made at 5pm on the fly. Do it Sunday and 30 minutes is realistic any weeknight.
+
+**How do I balance nutrition with what kids will actually eat?**
+The most sustainable approach is nutritional upgrading rather than replacement. Turkey instead of beef in bolognese. Whole wheat pasta instead of regular. Hidden vegetables in sauces. Sheet-roasted broccoli instead of steamed. The flavor profile stays familiar; the nutritional value improves without a fight.
+
+---
+
+Healthy family dinners become sustainable when you stop treating "healthy" as a separate category from "what the family will eat." The 25 meals above are proof that those two categories overlap more than most families realize.
+
+The other piece is the planning habit. Deciding all five dinners on Sunday — and building the grocery list at the same time — removes 95% of the friction that makes eating healthy as a family feel impossible by Wednesday.
+
+If you want to skip the Sunday planning session entirely, [DinnerDrop](https://dinnerdrop.app/beta) generates a full week of personalized family dinners in 30 seconds — tailored to your family's dietary needs, preferred stores, and cook time tolerance. The beta is free for 6 months.
+`,
+  },
+]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)

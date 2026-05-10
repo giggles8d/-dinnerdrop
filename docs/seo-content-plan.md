@@ -165,3 +165,23 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 - Keyword: AI meal planner (14,000/mo, Medium difficulty)
 - Wired into lib/blog-posts.ts
 - Content: 1,700 words — what a real AI meal planner is vs recipe filters, 5 criteria checklist, DinnerDrop walkthrough, comparison table, time math, FAQ
+
+
+## Post 12 -- dinner-ideas-busy-weeknights
+- Status: DRAFT DONE
+- Publish: 2026-07-07
+- Keyword: dinner ideas for busy weeknights (7,800/mo, Tier 2)
+- Wired into lib/blog-posts.ts
+
+## Post 13 -- easy-family-dinner-recipes
+- Status: DRAFT DONE
+- Publish: 2026-07-14
+- Keyword: easy family dinner recipes (6,600/mo, Tier 2)
+- Wired into lib/blog-posts.ts
+
+## Post 14 -- healthy-family-dinners
+- Status: DRAFT DONE
+- Publish: 2026-07-21
+- Keyword: healthy family dinners (8,100/mo, Tier 1)
+- Wired into lib/blog-posts.ts
+- Content: 1,900 words — 25 dinners across 5 categories (sheet pan, stir fry, pasta, bowls, soups/proteins), rotation framework, FAQ (5 questions)
