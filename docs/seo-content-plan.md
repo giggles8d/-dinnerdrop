@@ -117,7 +117,7 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 | Week 3 | Post 3 -- HelloFresh Alt | May 19 | DRAFT DONE |
 | Week 3 | Post 4 -- Plan a Week Tutorial | May 21 | DRAFT DONE |
 | Week 4 | Post 5 -- Picky Eater | May 26 | DRAFT DONE |
-| Week 4 | Post 6 -- Save $1,200 | May 28 | Pending |
+| Week 4 | Post 6 -- Save $1,200 | May 28 | DRAFT DONE |
 | Month 2 | Posts 7-10 | June | Pending |
 
 ---

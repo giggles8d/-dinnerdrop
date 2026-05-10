@@ -463,8 +463,6 @@ Setup takes 3 minutes. Your first week of dinners is ready in 30 seconds.
 
 [Claim a free beta spot →](https://dinnerdrop.app/beta)`,
   },
-]
-
   {
     slug: 'picky-eater-dinner-ideas-family',
     title: '50 Picky Eater Dinner Ideas the Whole Family Will Actually Eat',
@@ -653,6 +651,119 @@ Beta members get **6 months completely free**. No credit card required to start.
 [Claim your free beta spot](https://dinnerdrop.app/beta)
 `
   },
+  {
+    slug: 'save-money-on-groceries-meal-planning',
+    title: 'How Meal Planning Saves Families $1,200 a Year (And How to Start This Weekend)',
+    description:
+      'Most families spend $1,200-$2,000 more on food than they need to. ' +
+      'Here is the math on food waste, impulse buying, and emergency takeout — ' +
+      'and how meal planning fixes all three.',
+    publishDate: '2026-05-28',
+    readingTimeMinutes: 7,
+    primaryKeyword: 'save money on groceries meal planning',
+    content: `Most families believe they spend a reasonable amount on food. Until they do the math.
+
+The average American household spends **$9,343 per year on food** (USDA, 2024). But embedded inside that number are three categories of invisible waste that most families never track — and that meal planning systematically eliminates.
+
+If you are a family of four spending anywhere near the national average, a consistent meal planning habit is likely worth $1,200 to $2,000 per year. Here is where the money is going, and how to get it back.
+
+## The Three Grocery Money Leaks
+
+### Money Leak 1: Food Waste
+
+The USDA estimates that American households waste **30-40% of the food they buy**. That is not a rounding error. That is nearly a third of your grocery bill going directly into the trash.
+
+The average family of four throws away approximately **$1,500 worth of food per year**. The top culprits: produce bought with vague intentions, proteins thawed and refrozen, leftovers pushed to the back of the fridge and forgotten.
+
+The root cause is almost always the same: groceries bought without a specific plan for when and how they will be used.
+
+When you shop with a weekly meal plan, every item on the list has a purpose and a day attached to it. You buy one bunch of cilantro because Tuesday is taco night — not because it looked fresh and you might need it sometime. You buy chicken thighs for Thursday because Thursday is sheet-pan chicken night — not because they were on sale and you will figure it out later.
+
+**Estimated annual savings from eliminating food waste: $400–700**
+
+### Money Leak 2: Impulse Buying
+
+Studies consistently show that shoppers without a list spend **20-25% more per trip** than shoppers with one. On a $200 weekly grocery run, that is $40-50 in unplanned items.
+
+Some of that is snacks. Some is duplicate pantry staples you forgot you had. Some is promotional end-cap items that looked like a deal. And some is the premium pre-made items you grab when you have not thought about dinner and you are already in the store feeling overwhelmed.
+
+A specific grocery list — built directly from a weekly meal plan — functions as a budget constraint. You know what you need. You get what you need. The items that do not serve the plan stay on the shelf.
+
+**Estimated annual savings from eliminating impulse buying: $500–800**
+
+### Money Leak 3: Emergency Takeout
+
+This is the biggest leak of all, and the hardest to see clearly because each individual order feels like a reasonable one-time choice.
+
+"I forgot to defrost anything." "It is 6pm and I have no idea what to make." "We had a long day — let's just get something."
+
+The average American family of four spends **$3,000-4,500 per year on food delivery and restaurant meals**. A significant chunk of that — research suggests 40-60% — is not celebratory dining. It is emergency dinner: the cost of not having a plan.
+
+Even a modest reduction in emergency takeout produces dramatic savings. Eliminating just **two takeout orders per month** at $40-60 each saves $960-1,440 per year. Families who plan their week's dinners in advance report ordering emergency takeout 60-80% less often.
+
+**Estimated annual savings from reducing emergency takeout: $300–1,500**
+
+## The $1,200 Number
+
+Add the three categories together at conservative estimates:
+
+| Category | Conservative Savings |
+|----------|---------------------|
+| Food waste reduction | $400 |
+| Impulse buying reduction | $500 |
+| Emergency takeout reduction | $300 |
+| **Total** | **$1,200/year** |
+
+At more realistic estimates for a typical family of four, the number is closer to $1,800-2,000. The $1,200 figure is the conservative floor, not the ceiling.
+
+This math does not require perfection. It just requires consistency — a weekly plan you generally follow.
+
+## Why Most People Do Not Meal Plan (And Why It Is Not Their Fault)
+
+If meal planning is this financially straightforward, why does the average family skip it most weeks?
+
+The answer is time and friction. Sitting down on Sunday to plan five dinners, cross-reference what is in the pantry, and build a grocery list takes 30-45 minutes manually. That feels like a significant ask on a weekend morning when the list of competing priorities is already long.
+
+The good news: the time cost has dropped dramatically.
+
+## How to Start This Weekend (The 5-Minute Version)
+
+You do not need a complicated system. You need a repeatable routine.
+
+**Step 1: Block 10 minutes on Sunday morning.**
+Before the week starts, with a cup of coffee and no distractions. Sunday morning is the right time because you have a full tank of mental energy. By 5pm on Wednesday that tank is depleted — which is exactly when the emergency takeout order happens.
+
+**Step 2: Pick five dinners.**
+Do not overthink this. One pasta night. One protein-and-vegetable sheet pan. One soup or casserole. One easy night (quesadillas, wraps, fried rice). One wild card. You do not need gourmet. You need five meals the family will eat.
+
+**Step 3: Build the list from the plan.**
+Go through each dinner and write down what you need. Check what you have. Buy only what is on the list. This is where most of the savings happen — the list is your budget constraint at the store.
+
+**Step 4: Follow the plan.**
+Not rigidly — life happens, and you can swap nights — but the default answer to "what is for dinner?" should be "whatever is on the list" rather than "I do not know, let me think." The plan does the thinking. You execute.
+
+## The 30-Second Version
+
+If 10 minutes still feels like a lot — or if the planning process itself is where you consistently get stuck — there is a faster path.
+
+[DinnerDrop](https://dinnerdrop.app/beta) is an AI dinner planning tool that does the entire process in about 30 seconds. You tell it your family size, dietary restrictions, cooking time preferences, and any foods to avoid once. Every week, it generates five personalized dinners and builds the complete grocery list automatically.
+
+The grocery list connects directly to Instacart, Walmart, or Kroger — so you are not manually transferring items from a screen to a store app. You tap one button and your cart is ready.
+
+The three money leaks the manual system plugs — food waste, impulse buying, emergency takeout — DinnerDrop addresses directly. Every item on the grocery list is tied to a specific meal. Nothing is vague. Nothing is "I might need this." No more 5pm "what are we having" conversations that end in a DoorDash order.
+
+## The Bottom Line
+
+Meal planning is not about restriction or perfectionism. It is about removing the variables that cost money: the grocery items with no plan, the impulse add-ons, the emergency delivery orders.
+
+$1,200 per year — or roughly $100 per month — is a conservative estimate of what consistent meal planning saves the average family. Families who combine a written plan with a grocery list tied directly to that plan consistently report landing at the high end of that range.
+
+Start this weekend. Pick five dinners. Build the list. Buy what is on it. Come back next Sunday and do it again.
+
+[Try DinnerDrop free for 6 months →](https://dinnerdrop.app/beta)
+`
+  },
+]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
