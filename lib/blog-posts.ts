@@ -3431,6 +3431,230 @@ The decision of which chicken dinner to make is the bottleneck. [DinnerDrop](htt
 [Start your free 7-day trial at dinnerdrop.app/beta](https://dinnerdrop.app/beta)
     `,
   },
+
+  {
+    slug: 'easy-dinner-recipes',
+    title: 'Easy Dinner Recipes: 40 Weeknight Meals the Whole Family Will Actually Eat',
+    description:
+      'Skip the complicated cookbooks. These 40 easy dinner recipes come together fast, use simple ingredients, and get eaten — not picked at. Sorted by protein so you can grab what you need tonight.',
+    publishDate: '2026-09-15',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'easy dinner recipes',
+    content: `
+## The Real Definition of an Easy Dinner Recipe
+
+Easy does not mean flavorless. It means: ready in 45 minutes or less, ingredients you can buy at any grocery store, and steps a tired adult can follow after a full workday.
+
+That rules out most food blog recipes that call "easy" anything with a 20-item ingredient list or three hours in the oven. The recipes in this list are genuinely weeknight-friendly — short ingredient lists, fast prep, and reliable results.
+
+They are sorted by protein so you can look at what is in your fridge tonight and find something in under a minute.
+
+---
+
+## Easy Chicken Dinner Recipes
+
+Chicken is the most versatile weeknight protein. These recipes use boneless thighs or breasts and come together in 30 minutes or less.
+
+### 1. Sheet Pan Lemon Herb Chicken
+Toss chicken thighs with olive oil, lemon zest, garlic, and dried herbs. Roast at 425F for 25 minutes with any vegetable that was going soft in your fridge. One pan, no monitoring required.
+
+### 2. Chicken Stir Fry
+Slice chicken breast thin, cook in a hot pan for 6 minutes, add frozen vegetables, pour in soy sauce and a spoonful of peanut butter thinned with water. Serve over rice. Dinner in 20 minutes.
+
+### 3. Baked Chicken Thighs
+Season chicken thighs with salt, pepper, garlic powder, and paprika. Bake at 400F for 35 minutes. No searing, no flipping. The skin crisps on its own.
+
+### 4. Chicken Tacos
+Cook chicken breast in a skillet with taco seasoning and a splash of water for 8 minutes. Shred with two forks. Serve in flour tortillas with shredded cheese and sour cream.
+
+### 5. Honey Garlic Chicken
+Mix honey, soy sauce, and minced garlic in a small bowl. Cook chicken thighs in a skillet, pour the sauce in during the last 5 minutes. Serve over rice.
+
+### 6. Chicken and Rice Casserole
+Combine uncooked rice, chicken broth, cream of mushroom soup, and raw chicken in a baking dish. Cover tightly with foil. Bake at 350F for 90 minutes. Everything cooks together with zero monitoring.
+
+### 7. Greek Chicken
+Marinate chicken in lemon juice, olive oil, garlic, and oregano for 15 minutes. Grill or bake. Serve with cucumber slices and pita.
+
+### 8. Chicken Fried Rice
+Cook chicken in oil, push to the side, scramble eggs in the same pan, add cold rice and frozen peas, splash in soy sauce. Ten minutes of cooking.
+
+---
+
+## Easy Ground Beef Dinner Recipes
+
+Ground beef thaws fast, cooks fast, and gets eaten without negotiation.
+
+### 9. Classic Spaghetti
+Brown ground beef with garlic and onion, pour in a jar of marinara, simmer for 10 minutes. Boil pasta. The benchmark weeknight meal for a reason.
+
+### 10. Beef Tacos
+Brown ground beef, drain fat, add taco seasoning and water, simmer 3 minutes. The whole family builds their own. Fastest guaranteed dinner.
+
+### 11. Hamburger Helper Style Skillet
+Brown beef in a large skillet. Add chicken broth, uncooked macaroni, canned diced tomatoes, and shredded cheese. Cover and simmer 12 minutes. One pan, no separate pot.
+
+### 12. Beef and Broccoli
+Cook beef in a hot pan, add broccoli florets and a sauce of soy sauce, oyster sauce, and cornstarch. Five minutes once the pan is hot.
+
+### 13. Stuffed Peppers
+Hollow out bell peppers, fill with browned ground beef mixed with rice and canned tomatoes, top with cheese, bake at 375F for 25 minutes.
+
+### 14. Beef Quesadillas
+Cook ground beef with taco seasoning. Spread on a tortilla, add cheese, fold, cook in a dry skillet 2 minutes per side.
+
+### 15. Chili
+Brown beef with onion and garlic, add two cans of kidney beans, one can of diced tomatoes, and chili powder. Simmer for 20 minutes minimum.
+
+### 16. Beef Fried Rice
+Brown ground beef, push to the side, scramble eggs, add cold rice and soy sauce. Dinner from leftover rice in 12 minutes.
+
+---
+
+## Easy Pasta Dinner Recipes
+
+### 17. Garlic Butter Pasta
+Cook pasta, reserve a cup of pasta water, toss with butter, minced garlic, and pasta water to create a sauce. Add parmesan. Ready in 20 minutes.
+
+### 18. Pasta Primavera
+Saute any vegetables you have in olive oil, add cooked pasta, toss with olive oil, parmesan, and pasta water.
+
+### 19. Baked Ziti
+Mix cooked ziti with marinara sauce, ricotta, and mozzarella in a baking dish. Bake at 375F for 20 minutes until bubbly.
+
+### 20. Mac and Cheese from Scratch
+Make a roux with butter and flour, whisk in milk, melt in shredded cheddar, toss with cooked macaroni. Better than the box, 25 minutes.
+
+### 21. Pesto Pasta with Chicken
+Cook pasta, cube rotisserie chicken, toss with store-bought pesto. Dinner in the time it takes to boil water.
+
+---
+
+## Easy Pork Dinner Recipes
+
+### 22. Pan-Seared Pork Chops
+Season with salt and pepper, cook in a hot cast iron pan for 4 minutes per side, let rest for 3 minutes.
+
+### 23. Pork Tenderloin
+Season a 1-pound tenderloin with garlic powder, rosemary, salt, and pepper. Sear in an oven-safe pan, roast at 425F for 15-18 minutes. Slice and serve.
+
+### 24. Pulled Pork (Slow Cooker)
+Place pork shoulder in slow cooker with BBQ sauce and a cup of chicken broth. Cook on low for 8 hours. Shred with forks. Zero active cooking time.
+
+### 25. Pork Fried Rice
+Same method as chicken fried rice using diced leftover pork. Best use of leftovers in 15 minutes.
+
+---
+
+## Easy Seafood Dinner Recipes
+
+### 26. Baked Salmon
+Place salmon fillets on a foil-lined baking sheet. Brush with olive oil, season with salt, pepper, and garlic. Bake at 400F for 12-15 minutes. The foil goes in the trash.
+
+### 27. Shrimp Scampi
+Cook thawed shrimp in butter and garlic for 3 minutes. Add white wine or chicken broth and a squeeze of lemon. Toss with pasta.
+
+### 28. Fish Tacos
+Season white fish with cumin and chili powder, pan-fry for 3 minutes per side, flake into corn tortillas with shredded cabbage and sour cream.
+
+### 29. Tuna Noodle Casserole
+Mix canned tuna, cream of mushroom soup, frozen peas, and cooked egg noodles in a baking dish. Top with crushed crackers. Bake at 375F for 20 minutes.
+
+---
+
+## Easy Meatless Dinner Recipes
+
+### 30. Black Bean Quesadillas
+Mash canned black beans with cumin and garlic powder. Spread on a tortilla with shredded cheese, fold, and cook in a skillet. Protein-rich, five-minute dinner.
+
+### 31. Vegetable Curry
+Saute onion and garlic, add canned coconut milk, a tablespoon of curry powder, and any vegetables cut into chunks. Simmer for 15 minutes. Serve over rice.
+
+### 32. Egg Fried Rice
+Scramble three eggs in a hot pan, add cold rice and soy sauce. Ready in 8 minutes.
+
+### 33. Loaded Baked Potatoes
+Bake potatoes in the microwave for 8 minutes. Top with shredded cheese, sour cream, broccoli, and bacon bits. Under $10 for four people.
+
+### 34. Veggie Stir Fry
+Any combination of broccoli, snap peas, bell peppers, and carrots cooked in a hot pan with soy sauce, garlic, and ginger. Serve over rice.
+
+---
+
+## Easy Soup and Stew Recipes
+
+### 35. Tomato Soup
+Saute garlic in butter, add two cans of crushed tomatoes and a cup of chicken broth, simmer for 10 minutes, blend smooth, stir in heavy cream. Better than canned, 20 minutes.
+
+### 36. Chicken Noodle Soup
+Simmer chicken broth with diced carrots, celery, and onion for 15 minutes. Add egg noodles and shredded rotisserie chicken.
+
+### 37. White Bean and Sausage Soup
+Brown sliced sausage in a pot, add chicken broth, two cans of white beans, and a bag of fresh spinach. Simmer for 15 minutes.
+
+### 38. Beef Stew (Instant Pot)
+Combine cubed beef, diced potatoes, carrots, beef broth, and a tablespoon of tomato paste in an Instant Pot. Pressure cook for 35 minutes.
+
+---
+
+## Easy Casserole Recipes
+
+### 39. Chicken and Rice Casserole (Set and Forget)
+Raw chicken, uncooked rice, cream soup, and broth in a covered baking dish at 350F for 90 minutes. No monitoring required.
+
+### 40. Enchilada Casserole
+Layer corn tortillas, browned ground beef with taco seasoning, canned enchilada sauce, and shredded cheese. Repeat layers. Bake at 375F for 25 minutes.
+
+---
+
+## How to Build a Weekly Rotation of Easy Dinners
+
+The problem most families run into is not a shortage of easy recipes. It is deciding which recipe to make on which night every single week.
+
+A better system is to match recipes to your schedule:
+
+- **Monday:** One-pot or slow cooker recipe
+- **Tuesday:** 30-minute skillet dinner
+- **Wednesday:** Sheet pan recipe
+- **Thursday:** Pasta night
+- **Friday:** Casserole or leftovers
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds this rotation for you automatically. Answer five questions about your family's preferences and schedule, and it generates five dinners for the week plus a complete grocery list. The decision is made in under 30 seconds.
+
+[Try it free for 7 days -- no credit card required.](https://dinnerdrop.app/beta)
+
+---
+
+## Frequently Asked Questions
+
+**What makes a dinner recipe actually easy?**
+Ready in 45 minutes or less, ingredients available at any grocery store, and steps that can be followed when you are tired.
+
+**What are the easiest proteins to cook for weeknight dinners?**
+Ground beef and boneless chicken thighs. Ground beef cooks in under 10 minutes and works in tacos, pasta, stir fry, and casseroles.
+
+**How do I make weeknight dinners faster?**
+Batch prep on Sunday. Dice onions and peppers once, cook a pot of rice, marinate proteins. Having components ready cuts 10-15 minutes from every weeknight meal.
+
+**What are the best pantry staples for easy dinners?**
+Canned tomatoes, chicken and beef broth, canned beans, pasta, rice, soy sauce, olive oil, garlic powder, and paprika.
+
+**How do I get picky eaters to try new recipes?**
+Serve new recipes alongside one guaranteed safe food. Reduce pressure by not making the new food the only option.
+
+---
+
+## The Bottom Line
+
+Easy dinner recipes are a sustainable approach to feeding a family on weeknights when time and mental energy are limited.
+
+The 40 recipes above cover every protein, every major cooking method, and every weeknight scenario from "I have 15 minutes" to "I need to set it and forget it." Find 5 to 7 that your family eats and rotate through them.
+
+[DinnerDrop](https://dinnerdrop.app/beta) does the rotation for you. Five personalized weeknight dinners built around your family's preferences, with a grocery list sent to your store. Dinner decided in 30 seconds.
+
+[Start your free 7-day trial at dinnerdrop.app/beta](https://dinnerdrop.app/beta)
+    `,
+  },
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
