@@ -1720,7 +1720,167 @@ The best weeknight dinner system is the one you'll actually use. Start with 5-7 
 [**DinnerDrop automates the weekly planning step →**](https://dinnerdrop.app/beta)
 `,
   },
-]
+
+  {
+    slug: 'easy-family-dinner-recipes',
+    title: 'Easy Family Dinner Recipes: 16 Crowd-Pleasers Everyone Will Actually Eat',
+    description: 'Easy family dinner recipes that work for picky eaters, busy weeknights, and real grocery budgets. 16 tested meals with shopping tips and a planning shortcut.',
+    publishDate: '2026-07-14',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'easy family dinner recipes',
+    content: `
+The hardest part about family dinner isn't the cooking — it's finding something that works for everyone at the table. One kid won't eat anything with sauce. Another refuses vegetables. Your partner wants something more interesting than chicken again. You have 30 minutes and you're already tired.
+
+This is a list of easy family dinner recipes that have consistently survived that gauntlet. No exotic ingredients, no techniques that require YouTube tutorials, no meals that produce three different "I'm not eating that" reactions at the table.
+
+---
+
+## What Makes a Recipe Actually Work for Families
+
+Before the list: here's the filter that got applied to every recipe here.
+
+**It has to work for picky eaters.** The best family meals have an element of modularity — a base that's safe, with toppings or sides that people can customize. Tacos, grain bowls, and pasta with sauce on the side all work because everyone builds their own plate.
+
+**It has to be realistic to make after work.** Prep time matters. Anything with 30+ minutes of active chopping or six dirty pans didn't make this list.
+
+**It has to scale.** A recipe that works for two doesn't always work for five. The meals below work with standard family portions without requiring you to do math.
+
+**It can't require ingredients you have to hunt for.** Everything here can be found at a regular grocery store without a specialty trip.
+
+---
+
+## Easy Family Dinner Recipes: The Full List
+
+### 1. Sheet Pan Chicken Thighs with Roasted Vegetables
+
+Bone-in, skin-on chicken thighs on a sheet pan with whatever vegetables your family will actually eat — potatoes, broccoli, carrots, bell peppers. Season with olive oil, garlic powder, salt, pepper, paprika. Roast at 425°F for 35-40 minutes.
+
+The fat from the chicken bastes the vegetables as it cooks. Cleanup is one pan. Kids who won't eat vegetables sometimes tolerate them when they're caramelized and sitting next to chicken they do like.
+
+### 2. Ground Turkey Taco Bowl
+
+Brown ground turkey with cumin, chili powder, garlic, and salt. Serve over rice with whatever toppings your family will tolerate — shredded cheese, sour cream, salsa, corn, black beans. Picky eaters get rice and meat. Everyone else builds a real bowl.
+
+This is the modularity principle in action. Nobody is complaining about what's in their bowl because they made their own bowl.
+
+### 3. Pasta with Meat Sauce
+
+The universally acceptable family dinner. Brown ground beef or Italian sausage, add a jar of marinara (pick one your family likes and buy it in bulk), simmer 10 minutes. Cook pasta. Done.
+
+The upgrade: use Italian sausage instead of ground beef, add a parmesan rind to the sauce while it simmers, finish with fresh basil if you have it. The base recipe takes 25 minutes. The upgraded version takes 27 minutes.
+
+### 4. Quesadillas with Beans and Cheese
+
+Flour tortillas, shredded cheese, canned black beans (drained). That's it for a basic version. Add chicken, corn, and a little cumin for a complete meal. Cook on medium heat until crispy, about 3 minutes per side.
+
+Quesadillas are the 10-minute emergency dinner that doesn't feel like an emergency. They're also infinitely configurable — each family member can get a different filling if you're dealing with a particularly divided table.
+
+### 5. Baked Salmon with Rice and Broccoli
+
+Season salmon fillets with olive oil, salt, pepper, and lemon. Bake at 400°F for 12-15 minutes while rice cooks and broccoli roasts or steams. This is the fast weeknight meal that also happens to be legitimately healthy.
+
+The trick with kids: serve the salmon simply, without complicated sauces. A small bowl of teriyaki or honey mustard on the side for dipping makes it more approachable.
+
+### 6. Slow Cooker Pulled Chicken
+
+Put chicken breasts in the slow cooker with barbecue sauce and a little chicken broth. Cook on low 6-8 hours (or high 3-4 hours). Shred with two forks. Serve on buns, over rice, in quesadillas, or in tacos.
+
+This recipe is valuable precisely because it produces a flexible protein that can become three different meals. Make a large batch on Sunday and use it throughout the week.
+
+### 7. Egg Fried Rice
+
+Day-old rice (this is important — fresh rice is too wet), eggs, frozen peas and carrots, soy sauce, sesame oil, green onions. The whole thing takes 15 minutes once you have the rice.
+
+This is the best use for leftover rice. If your family regularly eats rice with other meals, keep the leftover rice specifically for this. It's substantially better than fresh rice for fried rice applications.
+
+### 8. Turkey and Vegetable Stir Fry
+
+Ground turkey or thinly sliced chicken with broccoli, snap peas, and bell peppers. Sauce: equal parts soy sauce and honey, a little garlic and ginger, cornstarch to thicken. Serve over rice or noodles.
+
+Takes 20 minutes once the prep is done. The sauce formula is flexible — you can add chili flakes for adults, leave them out for kids.
+
+### 9. Chili
+
+Ground beef or turkey, canned kidney beans, canned diced tomatoes, onion, garlic, chili powder, cumin, salt. Brown the meat, add everything else, simmer for 20 minutes. Serve with shredded cheese, sour cream, and cornbread if you have time.
+
+Chili scales well, reheats well, and can be made in a slow cooker (dump everything in the morning, it's ready at dinner). It's also a recipe where leftovers are better than the original.
+
+### 10. Baked Mac and Cheese
+
+Make a basic béchamel (butter, flour, milk), add shredded cheddar (sharp gives the best flavor), cook pasta to al dente, combine, pour into a baking dish, bake at 375°F for 20 minutes. Add breadcrumbs on top if you want a crust.
+
+This is materially better than box mac and cheese and takes about 45 minutes total. It's a good candidate for a Sunday meal that produces leftovers for a weeknight.
+
+### 11. Chicken Quesadillas
+
+Cooked chicken (rotisserie chicken works perfectly here), shredded Mexican cheese blend, flour tortillas. Optional: sautéed onions and peppers inside. Cook until crispy, cut into wedges, serve with sour cream, guacamole, or salsa.
+
+Rotisserie chicken is one of the best weeknight shortcuts available. A $7-9 chicken from the grocery store produces enough meat for two dinners if you use it efficiently — quesadillas one night, chicken tacos or soup another.
+
+### 12. One-Pot Chicken and Rice
+
+Chicken thighs seared in a Dutch oven or heavy pot, removed briefly while you soften onions and garlic, then added back with chicken broth, rice, and frozen peas. Cover and cook 20 minutes. Everything cooks in one pot, the rice absorbs the chicken fat and broth, and cleanup is minimal.
+
+### 13. Beef and Broccoli
+
+Thinly sliced flank steak, broccoli florets, the same sauce formula as the stir fry above (soy sauce, honey, garlic, ginger, cornstarch). The key is slicing the beef thin and cooking it on very high heat for a short time — it turns tough if you cook it slowly. Serve over rice.
+
+### 14. Homemade Pizza Night
+
+Pizza dough (store-bought, from the refrigerated section or frozen), jarred pizza sauce, shredded mozzarella, and whatever toppings your family wants. Bake at 475°F on the lowest rack for 10-12 minutes.
+
+The value of pizza night extends beyond the meal itself — it's a dinner where kids can participate in making their own food, which dramatically reduces complaints about what's on the plate. It's also fast once you get the process down.
+
+### 15. Black Bean Tacos
+
+Canned black beans seasoned with cumin, chili powder, garlic, and lime juice. Serve in corn or flour tortillas with shredded cabbage, avocado, salsa, and sour cream. Add a fried egg on top for extra protein.
+
+This is a meatless dinner that works because black beans are filling and the taco format is familiar. Good for Tuesday when you've had meat-heavy dinners Monday through Wednesday.
+
+### 16. Baked Potato Bar
+
+Bake potatoes at 400°F for 45-60 minutes (or microwave for 8-10 minutes for a weeknight shortcut). Set out toppings: shredded cheese, sour cream, chili (see recipe 9), broccoli, bacon bits, green onions.
+
+This format works for families because everyone builds their own plate from the same set of ingredients. The main "dish" is neutral, the customization is unlimited, and cleanup is minimal.
+
+---
+
+## How to Turn This List Into a Working Weekly System
+
+Having 16 recipes is only useful if you have a method for using them. Most families default to the same 5-6 meals because they're easy to remember, not because they're the best options.
+
+**Build a rotation list.** Write down 10-12 of the recipes from above that your family will actually eat. This becomes your rotation. You're not starting from scratch every week — you're pulling from the list.
+
+**Plan once per week, not daily.** Daily dinner decisions create decision fatigue and increase the probability of ordering takeout when you're tired. A 10-minute Sunday planning session that maps 5 dinners to 5 weeknights eliminates every daily decision.
+
+**Align meals to schedule.** Monday after a full workday is different from Friday when everyone's exhausted. Put the slow cooker meal on Tuesday. Save the 45-minute meal for Wednesday when schedules are lighter. Put quesadillas on Friday.
+
+**Use a tool to handle the planning.** [DinnerDrop](https://dinnerdrop.app) generates a personalized weekly dinner plan and grocery list in about 30 seconds — based on your family's size, dietary restrictions, and how much time you want to spend cooking each night. You review the plan, approve it, and send the grocery list to your store. The decisions are handled before the week starts.
+
+---
+
+## Frequently Asked Questions
+
+**What are the easiest family dinners for beginners?**
+Sheet pan chicken thighs, pasta with meat sauce, quesadillas, and chili are the most forgiving recipes for less experienced cooks. All have a wide margin for error and don't require precise timing.
+
+**How do I get kids to eat more variety?**
+The most effective approach is repeated exposure without pressure — put new foods on the plate alongside safe foods, don't comment on whether they eat the new item, and keep putting it there over multiple weeks. Offering new foods in familiar formats (tacos, pizza, pasta) also reduces resistance.
+
+**What can I make with chicken that isn't boring?**
+The channel that opens up the most variety is changing the sauce or seasoning rather than the cooking method. The same chicken thighs become completely different meals with Italian seasoning versus Mexican seasoning versus a teriyaki glaze. You don't need new protein — you need new flavor profiles.
+
+**How do I handle a family with very different dietary preferences?**
+Modular meals (tacos, grain bowls, stir fry served with components separate, pizza with different toppings) are the most practical solution. Everyone starts from the same base; everyone customizes their own plate. You're cooking one meal, not four.
+
+**How many dinners should I plan each week?**
+Plan five and leave two nights as intentional flex nights — leftovers, eating out, or a simple fallback meal like eggs and toast. Trying to plan all seven nights creates rigidity that breaks down the first time something changes.
+
+---
+
+The system that makes family dinners sustainable is simple: a fixed rotation of meals your family genuinely likes, planned once per week, with a grocery list that matches the plan. The 16 recipes above are the raw material. The weekly planning habit — whether you do it manually on Sunday or use [DinnerDrop](https://dinnerdrop.app/beta) to automate it — is what makes those recipes actually useful week after week.
+`,
+  },]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
