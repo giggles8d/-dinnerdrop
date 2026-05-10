@@ -1199,6 +1199,206 @@ The DinnerDrop beta won't last. 100 spots. Once they're gone, the $9/month price
 `,
   },
 
+
+  {
+    slug: 'weekly-dinner-ideas-for-families',
+    title: '4 Weeks of Weekly Dinner Ideas for Families (All Under 30 Minutes)',
+    description:
+      'Stop reinventing dinner every week. Here are 28 family-tested dinner ideas organized ' +
+      'into 4 ready-to-use weekly meal plans your whole family will actually eat.',
+    publishDate: '2026-06-23',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'weekly dinner ideas for families',
+    content: `Running out of dinner ideas is one of those problems that sounds trivial until you're living it.
+
+It's Tuesday. You've already made pasta twice this week. Everyone's bored. You type "dinner ideas" into Google and get a wall of recipes that require ingredients you don't have and 90 minutes you definitely don't have.
+
+Here's what you actually need: four weeks of dinners, already planned, that your family will eat without a battle -- and that you can pull together on a weeknight without losing your mind.
+
+That's what this is.
+
+## How to Use This List
+
+Each week below is a complete 5-dinner plan. Monday through Friday, one meal per night. All meals are designed around:
+
+- 5 main ingredients or fewer (pantry staples don't count: oil, salt, pepper, garlic)
+- 30 minutes or less of active cooking time
+- Real-family approved -- nothing too exotic, nothing requiring a culinary degree
+- Budget-friendly -- averaging $6-10 per meal for a family of 4
+
+You can run these weeks in any order, repeat favorites, or swap individual meals as needed.
+
+---
+
+## Week 1: The Solid Foundation
+
+**Monday -- Sheet Pan Chicken Thighs with Roasted Broccoli**
+Toss bone-in chicken thighs and broccoli florets with olive oil, garlic powder, salt, and pepper. Roast at 425F for 25-28 minutes. One pan, almost zero cleanup.
+
+Why families love it: Crispy skin wins over even the pickiest eaters. Broccoli gets slightly charred and actually tastes good.
+
+**Tuesday -- Ground Turkey Tacos**
+Brown ground turkey with taco seasoning, add a splash of water, simmer 5 minutes. Set out shells, cheese, sour cream, salsa. Everyone builds their own. Dinner in 15 minutes.
+
+Why families love it: Build-your-own meals eliminate 90% of picky-eater complaints. Kids eat what they want, parents don't negotiate.
+
+**Wednesday -- Spaghetti with Meat Sauce**
+Brown ground beef, drain fat, add a jar of marinara. Simmer while pasta cooks. Total active time: 20 minutes.
+
+Why families love it: Every kid eats pasta. It's not exciting -- it's reliable, and reliability has enormous value midweek.
+
+**Thursday -- Baked Salmon with Rice**
+Season salmon fillets with soy sauce, a little honey, and garlic. Bake at 400F for 12-15 minutes. Serve over rice.
+
+Why families love it: Feels fancier than it is. Kids who don't like fish often eat salmon. Quick and high-protein.
+
+**Friday -- Homemade Pizza Night**
+Store-bought pizza dough or naan flatbreads, jarred sauce, shredded mozzarella, toppings of choice. Bake at 450F for 10-12 minutes.
+
+Why families love it: Pizza Friday is a ritual. Customization means everyone's happy, no negotiations.
+
+---
+
+## Week 2: The Crowd-Pleasers
+
+**Monday -- Slow Cooker Pulled Pork Sliders**
+Set it up Sunday night or before school: pork shoulder, BBQ sauce, apple cider vinegar, onion powder. Cook on low 6-8 hours. Shred and serve on slider buns.
+
+Why families love it: Almost zero active effort. The smell when you walk in the door is incredible. Kids ask for seconds.
+
+**Tuesday -- Chicken Quesadillas**
+Shredded rotisserie chicken, shredded cheese, large flour tortillas. Cook in a skillet 3-4 minutes per side. Serve with salsa, guac, or sour cream.
+
+Why families love it: Ten-minute dinner that feels like a treat. Rotisserie chicken is one of the best weeknight shortcuts in existence.
+
+**Wednesday -- Beef and Broccoli Stir-Fry**
+Thinly sliced beef, broccoli, soy sauce, oyster sauce, sesame oil, cornstarch slurry. 15 minutes start to finish. Serve over rice.
+
+Why families love it: Tastes like takeout at a fraction of the price. Broccoli in sauce format gets eaten.
+
+**Thursday -- Loaded Baked Potatoes**
+Bake potatoes in the oven or microwave. Set out toppings: cheese, sour cream, butter, canned chili, broccoli, bacon bits. Everyone builds their own.
+
+Why families love it: Another build-your-own meal with zero complaints. Hearty enough that nobody goes hungry.
+
+**Friday -- Teriyaki Chicken Bowls**
+Teriyaki sauce (bottled is fine), boneless chicken thighs cooked in a skillet, rice, steamed edamame or frozen stir-fry vegetables. Assemble in bowls.
+
+Why families love it: Bowl meals are inherently customizable. Sweet teriyaki flavor is almost universally liked by kids.
+
+---
+
+## Week 3: The Quick-Turnaround Week
+
+For weeks when everyone's schedule is extra full.
+
+**Monday -- Rotisserie Chicken and Caesar Salad**
+Buy a rotisserie chicken. Buy a bag of romaine, Caesar dressing, croutons, parmesan. 5-minute dinner. There's no shame in it.
+
+Why families love it: Sometimes dinner just needs to happen. This is the no-cook backup that never fails.
+
+**Tuesday -- Scrambled Eggs and Toast**
+Breakfast for dinner. 10 minutes. Eggs, butter, toast, cheese, diced veggies. One of those meals kids actually get excited about.
+
+Why families love it: The novelty of breakfast at dinner makes it feel special. Cheap, fast, universally eaten.
+
+**Wednesday -- Pasta with Butter and Parmesan**
+Boil pasta, drain, toss with butter and parmesan. Add rotisserie chicken for protein if needed.
+
+Why families love it: Even the pickiest eaters eat this. No exceptions.
+
+**Thursday -- Bean and Cheese Burritos**
+Canned refried beans warmed in a pan, shredded cheese, flour tortillas, sour cream. Add rice if you have it. 15-minute dinner that's filling and cheap.
+
+Why families love it: Plant-based protein, satisfying, quick. Kids eat burritos.
+
+**Friday -- Frozen Pizza and Salad**
+Upgrade a frozen pizza with extra toppings. Add a bagged salad on the side. Dinner done.
+
+Why families love it: End of a long week. Nobody has the energy. This is the right call.
+
+---
+
+## Week 4: The Slightly More Ambitious Week
+
+**Monday -- Chicken Tikka Masala with Jarred Sauce**
+Dice and cook chicken breast, add jarred tikka masala sauce, simmer 10 minutes. Serve over rice with naan. Total time: 25 minutes.
+
+Why families love it: Feels restaurant-quality. Kids who try it usually like the mild, creamy sauce. Expands the family palate with minimal effort.
+
+**Tuesday -- Turkey Meatball Subs**
+Frozen turkey meatballs heated in marinara, hoagie rolls, provolone cheese. Broil 3-4 minutes. Serve with a side salad.
+
+Why families love it: Handheld meals are always a hit. No silverware means kids are immediately more interested.
+
+**Wednesday -- Salmon Patties with Roasted Potatoes**
+Canned salmon, breadcrumbs, egg, lemon, garlic. Form into patties, pan-fry 3-4 minutes per side. Cube potatoes and roast at 400F for 25 minutes (start those first).
+
+Why families love it: Canned salmon is surprisingly good when seasoned well. Roasted potatoes are something everyone eats.
+
+**Thursday -- One-Pot Chicken and Rice**
+Chicken thighs browned in a pot, add rice, chicken broth, garlic, onion, herbs. Cover and simmer 20-25 minutes. One pot, one cleanup.
+
+Why families love it: Comfort food. The rice absorbs all the chicken flavor. Even picky eaters tend to eat this.
+
+**Friday -- Build-Your-Own Nachos**
+Sheet pan with tortilla chips, canned black beans, shredded cheese. Bake at 375F until cheese melts. Set out sour cream, salsa, jalapenos, guac. Dinner in 15 minutes.
+
+Why families love it: Nachos for dinner. That's the whole appeal.
+
+---
+
+## The Grocery Reality Check
+
+These 28 dinners rely on a handful of staple ingredients. If your pantry has these, most meals come together from memory:
+
+- Proteins: Chicken thighs, ground beef or turkey, canned salmon, eggs, canned beans
+- Carbs: Pasta, rice, flour tortillas, slider buns, potatoes
+- Produce: Broccoli, garlic, onions, whatever's in season and cheap
+- Pantry: Soy sauce, BBQ sauce, marinara, taco seasoning, olive oil, chicken broth
+
+With these in the house, you're never actually out of dinner options. You just need to pick which combination you're using tonight.
+
+## Why Meal Planning Works (And Where It Usually Breaks Down)
+
+The reason most families don't meal plan consistently isn't laziness -- it's that the planning itself takes too long.
+
+Sitting down on Sunday to browse recipes, build a list, cross-check your pantry, and organize everything by store section takes 45-60 minutes. Do that every week for a year and you've spent the equivalent of a full 40-hour work week just on meal planning.
+
+The families that stick with meal planning long-term either have a rigid rotation (the same 10 meals cycling forever) or use a tool that does the thinking for them.
+
+DinnerDrop is built for the second group. Tell it your family size, weekly budget, dietary restrictions, and how much time you want to spend cooking each night. It generates 5 personalized dinner ideas and builds your grocery list automatically -- organized by store section, with quantities calculated for your family. The whole process takes about 30 seconds.
+
+Beta members (first 100 families) get the app free for 6 months, including one-tap grocery handoff to Instacart, Walmart, or Amazon Fresh.
+
+Try DinnerDrop free: /beta
+
+---
+
+## Frequently Asked Questions
+
+**Can I swap meals within a week?**
+Absolutely. These are suggestions, not rules. If your family hates salmon, swap it for something from a different week.
+
+**What if my kids have dietary restrictions?**
+All 28 meals above can be adapted. Most can go dairy-free, gluten-free, or vegetarian with simple swaps. DinnerDrop builds your plan around restrictions automatically.
+
+**Is it really possible to cook a full dinner in 30 minutes?**
+Yes -- with the right meals. Everything above has been tested by real families on real weeknights.
+
+**How do I stop falling back on the same 3 meals every week?**
+The problem is usually decision paralysis, not lack of options. When you have a plan on paper, the decision is already made.
+
+## The Bottom Line
+
+Four weeks of dinner ideas won't solve every weeknight forever. But it gives you a starting point -- 28 meals that work, that real families eat, that you can pull together on a Tuesday when everyone's tired and hungry.
+
+Use these weeks as your rotation. Swap in your own favorites. Retire the ones that don't land.
+
+And when you're ready to stop building the plan yourself every week -- let an AI do it for you.
+
+Try DinnerDrop free for 7 days at /beta, or grab a 6-month free beta spot while they're still available.`,
+  },
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
