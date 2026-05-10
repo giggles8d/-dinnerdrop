@@ -2385,6 +2385,162 @@ Every dinner on this list has been specifically selected for under-30-minute act
 Thirty minutes is enough time for a real dinner. The variable isn't your cooking speed — it's how long the decision takes. Solve the decision problem and the cooking problem takes care of itself.
 `,
   },
+  {
+    slug: 'cheap-dinner-ideas',
+    title: 'Cheap Dinner Ideas: 25 Family Meals Under $10 That Everyone Will Actually Eat',
+    description: 'Twenty-five cheap dinner ideas that cost under $10 for a family of four — organized by protein so you can find something fast based on what you already have.',
+    publishDate: '2026-08-04',
+    readingTimeMinutes: 7,
+    primaryKeyword: 'cheap dinner ideas',
+    content: `
+# Cheap Dinner Ideas: 25 Family Meals Under $10 That Everyone Will Actually Eat
+
+Cheap dinners have a reputation problem. The phrase conjures up sad bowls of plain pasta or canned soup eaten out of obligation. That reputation is wrong, and it mostly exists because cheap dinners are usually presented as a sacrifice rather than as a category of food that is genuinely good.
+
+Most of the world's best cooking is cheap cooking. Tacos, pasta e fagioli, fried rice, shakshuka, dal — these are inexpensive because the ingredients are inexpensive, not because anyone cut corners. The goal is meals that happen to be affordable, not meals that taste affordable.
+
+This list is 25 dinners a family of four can eat for under $10 total. Prices assume shopping at Walmart or a similar large grocery chain. All 25 are weeknight-realistic — under 30 minutes of active cooking.
+
+---
+
+## Bean and Legume Dinners
+
+Beans are the most underused budget protein in most American kitchens. A can of black beans costs under $1.50 and provides the same protein as a chicken breast. Dried beans cost even less.
+
+**1. Black Bean Tacos**
+Seasoned black beans (cumin, chili powder, garlic, smoked paprika) in corn tortillas with shredded cabbage, salsa, and sour cream. Total cost for four: about $4. Better than most restaurant tacos at three times the price.
+
+**2. Pasta e Fagioli**
+White beans and pasta in a tomato-and-rosemary broth. Brown garlic and onion in olive oil, add canned white beans, canned crushed tomatoes, broth, and small pasta. 20 minutes. This is the original Italian peasant food — cheap because it was cheap, not because it was bad.
+
+**3. Dal (Red Lentil Soup)**
+Red lentils dissolve completely when cooked, so they require no soaking and the texture is smooth enough for most picky eaters. Saute onion, garlic, ginger. Add cumin, turmeric, coriander. Add red lentils and vegetable broth. Simmer 20 minutes. Serve over rice. Cost for four: about $3.50.
+
+**4. Chickpea Curry**
+Canned chickpeas in a tomato-coconut milk sauce with curry powder, garlic, and ginger. Serve over rice. One of the fastest curries to make because canned chickpeas need no cooking time — just warming through in the sauce. Total cost: about $5.
+
+**5. Bean and Cheese Burritos**
+Canned pinto or black beans (seasoned with cumin, garlic powder, salt), shredded cheddar, rice, salsa, sour cream in large flour tortillas. The assembled version costs a fraction of frozen burritos and tastes better. Build a batch on Sunday for easy weeknight reheating.
+
+**6. White Bean and Kale Soup**
+White beans, canned diced tomatoes, vegetable or chicken broth, kale, garlic, Italian seasoning. Everything in one pot, 20 minutes. Dense with protein and fiber. Serve with whatever bread is on hand.
+
+---
+
+## Egg Dinners
+
+Eggs are the cheapest complete protein available. A dozen eggs costs under $3. Egg-based dinners are cheap because eggs are cheap, and they're fast because eggs cook in minutes.
+
+**7. Shakshuka**
+Eggs poached directly in spiced tomato sauce. Saute garlic, onion, red pepper in olive oil. Add canned crushed tomatoes, cumin, paprika, red pepper flakes. Simmer 10 minutes. Create wells in the sauce and crack eggs in. Cover and cook 6-8 minutes. Serve with pita or crusty bread. Cost for four: about $4.
+
+**8. Fried Rice with Egg**
+Day-old rice (the key to non-sticky fried rice), eggs, soy sauce, sesame oil, garlic, green onion, and whatever vegetables are in the fridge. Total active cooking time: 12 minutes. This is the dinner that turns leftover rice from an afterthought into a plan.
+
+**9. Frittata**
+Eggs, cheese, and whatever vegetables and leftover protein need to be used. Saute vegetables in an oven-safe skillet, pour in beaten eggs, cook on the stovetop until the edges set, finish under the broiler for 3-4 minutes. Dinner from near-empty fridge ingredients.
+
+**10. Breakfast Burritos for Dinner**
+Scrambled eggs, black beans, shredded cheese, salsa, sour cream in flour tortillas. The beans stretch the protein and add fiber. Fast, filling, reliably liked by children.
+
+---
+
+## Ground Beef and Turkey Dinners
+
+Ground beef is the most versatile budget meat. At $3-4 per pound, one pound feeds a family of four with room for sides. Ground turkey runs slightly cheaper and works in any recipe calling for ground beef.
+
+**11. Beef Taco Night**
+One pound of ground beef seasoned with taco spice, corn or flour tortillas, shredded cheese, lettuce, salsa, sour cream. Total cost for four: about $7.
+
+**12. Spaghetti Bolognese**
+Ground beef, onion, garlic, canned crushed tomatoes, dried herbs, pasta. Simmer the sauce while the pasta boils — 30 minutes total. Cost for four: about $6.
+
+**13. Stuffed Peppers (Budget Version)**
+Bell peppers stuffed with ground beef, cooked rice, canned diced tomatoes, and cheese. Bake 25 minutes. Bell peppers cost about $1 each; green are cheapest. The filling stretches one pound of meat across four large peppers.
+
+**14. Cheeseburger Casserole**
+Ground beef, macaroni pasta, canned diced tomatoes, beef broth, cheddar cheese. Everything cooked in one pot. The pasta absorbs the broth as it cooks. Popular with children because it tastes like a deconstructed cheeseburger.
+
+**15. Korean-Style Ground Beef Bowls**
+Ground beef cooked with soy sauce, brown sugar, sesame oil, garlic, ginger. Served over rice with a fried egg and shredded carrot. The sauce is savory-sweet in a way that most families find immediately likable. Cost for four: about $6.
+
+---
+
+## Chicken (Budget Cuts)
+
+Chicken thighs cost roughly half of what chicken breasts cost and are harder to overcook, which makes them the better choice for weeknight cooking. Bone-in thighs are cheapest; boneless thighs are nearly as affordable and faster to cook.
+
+**16. Sheet Pan Chicken Thighs and Vegetables**
+Bone-in chicken thighs, potatoes, and any vegetables tossed in olive oil, garlic, and herbs. One pan, one oven, 35 minutes. Active work time: 10 minutes.
+
+**17. Chicken Fried Rice**
+Diced chicken thighs cooked in a hot pan, then combined with day-old rice, eggs, soy sauce, and vegetables. Same method as egg fried rice — the chicken adds protein without adding significant cost.
+
+**18. Chicken Quesadillas**
+Shredded chicken, cheese, and salsa in flour tortillas. Cooked in a dry pan until golden. Quick to assemble, liked by almost everyone.
+
+**19. White Chicken Chili**
+Chicken thighs, canned white beans, chicken broth, canned green chiles, cumin, oregano, cream cheese. The cream cheese thickens the broth. 25 minutes. Cost for four: about $8.
+
+**20. One-Pan Chicken and Rice**
+Chicken thighs browned in olive oil, then simmered with rice, chicken broth, garlic, and paprika. Everything in one pan. The rice absorbs the cooking liquid and flavor from the chicken. 30 minutes.
+
+---
+
+## Pasta Dinners
+
+Pasta is the most reliable cheap dinner category. A pound costs under $2 and feeds four with a side.
+
+**21. Pasta Aglio e Olio**
+Spaghetti, garlic, olive oil, red pepper flakes, parsley, parmesan. Five ingredients, 15 minutes. The key is properly toasted (not burned) garlic in the olive oil.
+
+**22. Cacio e Pepe**
+Spaghetti, pecorino romano, black pepper. The starchy pasta water emulsifies with the cheese to create a sauce with no cream or butter needed. Costs about $3 for four servings.
+
+**23. Pasta with White Beans and Spinach**
+Small pasta, canned white beans, baby spinach, garlic, olive oil, parmesan, lemon. Everything in the pasta pot or one pan. 20 minutes. High protein from the beans.
+
+**24. One-Pot Pasta Primavera**
+Pasta cooked directly in vegetable broth with whatever vegetables are in the refrigerator. As the pasta cooks, the starch thickens the broth into a light sauce. No draining required.
+
+**25. Tomato and Tuna Pasta**
+Canned tuna, canned crushed tomatoes, garlic, capers, olive oil, pasta. Canned tuna runs about $1.50 and provides substantial protein. Total cost for four: about $5.
+
+---
+
+## How to Consistently Eat Well on a Tight Budget
+
+The meals above average about $5-7 for a family of four. Getting consistent about cheap eating requires a few habits beyond the recipes.
+
+**Keep the right pantry staples.** Nearly every dinner on this list draws from the same base: canned beans, canned tomatoes, pasta, rice, eggs, garlic, onion, olive oil, soy sauce, basic spices. If these are always stocked, you always have dinner options. Buying these in bulk when on sale reduces cost further.
+
+**Buy proteins at the right price.** The expensive part of most dinners is the protein. Eggs, canned beans, dried lentils, and ground beef are the cheapest proteins by calorie and by meal. Chicken thighs are cheaper than chicken breasts. A whole rotisserie chicken ($5-7) stretches across two or three dinners.
+
+**Plan before you shop.** Buying groceries without a plan leads to purchasing ingredients that don't combine into complete meals. A weekly dinner plan means every ingredient you buy has a purpose. Less waste, lower total spend.
+
+**Cook in batches.** Rice, beans, roasted vegetables, and cooked grains all reheat well. Making double quantities when you're already cooking means faster assembly later in the week.
+
+If you want the weekly planning done automatically: [DinnerDrop](https://dinnerdrop.app/beta) generates five personalized budget-friendly dinners in 30 seconds — tailored to your family size, dietary needs, preferred store, and weekly budget. It builds the grocery list and sends it directly to Walmart, Instacart, Amazon Fresh, or Kroger. The beta is free for 6 months.
+
+## Frequently Asked Questions
+
+**What is the cheapest dinner you can make for a family of four?**
+Dal (red lentil soup) over rice comes in around $3-4 for four people and is genuinely good. Black bean tacos and pasta aglio e olio are similarly cheap at about $4 each. These aren't compromise meals — they're meals where the ingredients happen to be inexpensive.
+
+**How do you make cheap dinners taste better?**
+The biggest lever is seasoning. Salt added at every stage of cooking (not just at the end) makes food taste more like itself. Browning onions and garlic before adding liquids adds depth. Acid (lemon juice or vinegar) added at the end brightens flavor. These techniques cost nothing.
+
+**Are cheap dinners actually filling?**
+Yes, if you include beans, lentils, eggs, or whole grains as part of the meal. The problem with cheap dinners that leave people hungry is usually insufficient protein or fiber, not insufficient calories. Beans are high in both.
+
+**Can you eat cheaply with dietary restrictions?**
+Most of the bean, lentil, and egg dinners on this list are naturally vegetarian or vegan. For gluten-free cooking, substitute rice for pasta and corn tortillas for flour. The core cheap ingredients — eggs, beans, lentils, rice — are compatible with most dietary restrictions.
+
+---
+
+Eating cheaply doesn't require eating badly. It requires knowing which ingredients are inexpensive by nature and having a collection of recipes that use them well. The 25 dinners on this list are that collection.
+`,
+  },
 
 ]
 
