@@ -4135,6 +4135,177 @@ DinnerDrop does it for you. Tell it your family size, dietary preferences, budge
 
 First 100 families get 6 months completely free. No credit card required to start.`,
   },
+  {
+    slug: 'chicken-breast-recipes',
+    title: 'Chicken Breast Recipes: 25 Easy Weeknight Dinners Your Family Will Actually Love',
+    description:
+      'Chicken breast gets a bad reputation for being dry and boring — but these 25 recipes prove otherwise. ' +
+      'Quick weeknight dinners, sheet pan meals, slow cooker shortcuts, and crowd-pleasers your family will request again.',
+    publishDate: '2026-10-13',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'chicken breast recipes',
+    content: `Chicken breast is one of the most-purchased proteins in America — and one of the most consistently disappointing dinners families make.
+
+Not because chicken breast is bad. Because most recipes treat it wrong.
+
+Chicken breast has almost no fat, which means it cooks faster than you think, dries out faster than you expect, and has very little flavor of its own. The recipes that work lean into those facts instead of fighting them.
+
+These 25 chicken breast recipes are built for weeknights: fast, practical, and actually good enough that your family will request them again. Organized by cooking method so you can pick based on what fits your schedule tonight.
+
+---
+
+## Quick Skillet Chicken Breast (20 Minutes or Less)
+
+### 1. Honey Garlic Chicken Breast
+Pound chicken breasts to even thickness — the single most important technique for juicy breast meat. Sear in a hot cast-iron skillet 4 minutes per side, then glaze with honey, minced garlic, soy sauce, and a splash of apple cider vinegar. Rest 5 minutes before slicing. Serve over rice or with roasted broccoli.
+
+### 2. Lemon Herb Chicken Breast
+Season generously with salt, garlic powder, and Italian seasoning. Sear in olive oil until golden, then deglaze with lemon juice and chicken broth, simmer 2 minutes. The pan sauce doubles as a light gravy. Serve with mashed potatoes or orzo.
+
+### 3. Chicken Piccata
+Thin-sliced chicken breast dredged in flour, pan-fried in butter and olive oil, finished with a lemon-caper sauce. Restaurant quality in under 20 minutes. Serve with pasta or sauteed spinach.
+
+### 4. Blackened Chicken Breast
+Rub with a mix of paprika, cayenne, garlic powder, onion powder, oregano, and thyme. Cook in a very hot cast-iron pan 3-4 minutes per side. Slice and serve over rice with black beans or alongside a Caesar salad.
+
+### 5. Chicken Stir-Fry with Broccoli
+Slice chicken breast thin (partially frozen makes this easier), marinate 10 minutes in soy sauce, cornstarch, and sesame oil. Stir-fry in batches in a very hot wok — do not crowd the pan. Add broccoli, bell pepper, and your stir-fry sauce. Done in under 15 minutes.
+
+### 6. Garlic Butter Chicken Breast
+Sear seasoned chicken breast in olive oil 5 minutes per side, then baste constantly with a garlic-butter-thyme mixture for the last 2 minutes. Basting with fat keeps breast meat moist. Serve immediately.
+
+---
+
+## Baked Chicken Breast (Hands-Off)
+
+### 7. Juicy Baked Chicken Breast (The Method)
+Preheat to 425°F. Brush with olive oil, season well, bake 18-22 minutes — pull at 160°F internal (carryover brings it to 165°F). Rest 5-10 minutes before slicing against the grain. Most "dry baked chicken" problems are really "overcooked chicken" problems. This method fixes that.
+
+### 8. Baked Caprese Chicken
+Top each breast with marinara, fresh mozzarella, and sliced tomatoes. Bake at 400°F for 22 minutes. Finish with fresh basil. Serve with pasta or crusty bread. Universally loved.
+
+### 9. Parmesan-Crusted Baked Chicken
+Coat chicken breasts in a mix of grated Parmesan, panko breadcrumbs, garlic powder, and Italian seasoning. Press firmly so it adheres. Bake at 425°F for 20-22 minutes until the crust is golden. The crust seals in moisture — noticeably juicier than plain baked breast.
+
+### 10. Baked Tuscan Chicken
+Top seasoned chicken breasts with a mixture of sun-dried tomatoes, baby spinach, and Italian herb cream cheese. Bake at 400°F for 25 minutes. Tastes elaborate; takes 5 minutes of prep.
+
+### 11. Sheet Pan Chicken Breast and Vegetables
+Arrange chicken breasts on a sheet pan surrounded by broccoli florets, bell peppers, and zucchini. Toss everything with olive oil, garlic, and Italian seasoning. Roast at 425°F for 22 minutes. One pan, complete dinner.
+
+### 12. Honey Dijon Baked Chicken
+Spread a mixture of Dijon mustard and honey over each breast before baking at 400°F for 22-25 minutes. The mustard forms a glossy crust and keeps the meat moist. One of the easiest "fancy-looking" preparations.
+
+---
+
+## Slow Cooker Chicken Breast
+
+### 13. Slow Cooker Salsa Chicken
+Add chicken breasts to the slow cooker, pour over a jar of your favorite salsa, cook on LOW 4-5 hours. Shred with two forks — it falls apart. Use in tacos, burrito bowls, quesadillas, or over rice. Two minutes of active work.
+
+### 14. Slow Cooker Ranch Chicken
+Place chicken in slow cooker, sprinkle with a packet of ranch seasoning, add 1/2 cup chicken broth. Cook LOW 4-5 hours. Shred and serve on sandwiches with provolone, or over mashed potatoes. Enough for multiple meals.
+
+### 15. Slow Cooker White Chicken Chili
+Chicken breasts, white beans, green chiles, chicken broth, cumin, and chili powder in the slow cooker. Cook LOW 5-6 hours, shred the chicken directly in the pot. Serve with sour cream, shredded cheese, and tortilla chips. A winter staple.
+
+### 16. Slow Cooker Chicken Breast with Potatoes
+Layer sliced potatoes in the bottom of the slow cooker, place seasoned chicken breasts on top, pour over chicken broth and a pat of butter. Cook LOW 5-6 hours. The potatoes absorb all the cooking liquid — no separate side dish needed.
+
+---
+
+## Pasta and Grain Bowl Chicken Breast
+
+### 17. Chicken Alfredo
+Sear thin chicken breast pieces in a skillet, set aside. In the same pan, make Alfredo: butter, garlic, heavy cream, Parmesan, salt, pepper. Toss with fettuccine, top with sliced chicken. Done in the time it takes to boil pasta.
+
+### 18. Chicken Pesto Pasta
+Marinate chicken in jarred pesto for 30 minutes, grill or bake. Slice and toss with pasta, more pesto, halved cherry tomatoes, and Parmesan. Works hot or cold. Great for meal prep.
+
+### 19. Chicken Caesar Grain Bowl
+Baked or grilled chicken breast sliced over farro or quinoa. Top with romaine, shaved Parmesan, croutons, and Caesar dressing. A meal-prep-friendly bowl that holds up all week if you store components separately.
+
+### 20. Chicken Burrito Bowls
+Slice seasoned chicken breast (or use slow cooker salsa chicken) over cilantro-lime rice, black beans, corn, pico de gallo, and guacamole. Better than Chipotle at a fraction of the cost.
+
+---
+
+## Crowd-Pleasing Chicken Breast (Picky-Eater Approved)
+
+### 21. Chicken Tacos
+Marinate chicken breast in cumin, chili powder, garlic powder, lime juice, and olive oil for at least 30 minutes. Grill or pan-sear 5-6 minutes per side. Rest, slice thin, and serve in warm corn tortillas with your family\u2019s preferred toppings.
+
+### 22. Chicken Quesadillas
+Thin-sliced or leftover chicken breast, shredded cheese, and whatever vegetables your kids tolerate. Cook in a dry skillet until the tortilla is golden and the cheese is fully melted. Slice into wedges. Ready in 10 minutes.
+
+### 23. Baked Chicken Tenders
+Cut chicken breasts into strips, dredge in buttermilk, coat in seasoned panko-Parmesan mixture. Bake at 425°F for 15-18 minutes on a wire rack. Serve with honey mustard, BBQ sauce, or ranch. Kids request these weekly.
+
+### 24. Greek Chicken Breast Pita
+Marinate in olive oil, lemon, garlic, oregano, and red wine vinegar overnight. Grill or pan-sear. Slice and serve in warm pita with tzatziki, cucumber, tomato, and red onion.
+
+### 25. Chicken Fried Rice
+Leftover or freshly-cooked chicken breast diced small. Stir-fry with day-old rice, eggs, frozen peas and carrots, soy sauce, and sesame oil. Done in 12 minutes. The best use of leftover chicken breast.
+
+---
+
+## The Technique That Changes Everything
+
+If one thing determines whether chicken breast is juicy or dry, it is internal temperature.
+
+Chicken breast is safe at 165°F. But if you pull it at 165°F, it is already overcooked on the outside by the time it reaches the table. Pull it at 160°F and rest 5 minutes — carryover cooking finishes the job.
+
+A $12 instant-read thermometer eliminates all the guesswork. Worth every dollar.
+
+**Second technique:** pound chicken breasts to even thickness before cooking. A breast that is 3/4 inch throughout cooks evenly. A breast that is 1 inch thick at the center and 1/4 inch at the tail will be dry on the thin end before the center is done.
+
+---
+
+## How to Build a Chicken Breast Rotation
+
+A simple weekly system:
+
+- **Monday:** Quick skillet (honey garlic, piccata, or lemon herb — dinner in 20 minutes)
+- **Tuesday:** Slow cooker (set in the morning, shred at dinner)
+- **Wednesday:** Pasta night (Alfredo, pesto pasta, or burrito bowl)
+- **Thursday:** Sheet pan (one pan, oven does the work)
+- **Friday:** Crowd-pleaser (tacos, quesadillas, or tenders — kids choose)
+
+Rotate through 25 recipes and you will not repeat for five weeks.
+
+**Meal prep:** Bake a batch of chicken breast using method 7 on Sunday. Refrigerate up to 4 days. Slice cold over salads, dice for fried rice, shred for quesadillas. The protein is ready — just assemble dinner.
+
+---
+
+## FAQ
+
+**How do I stop chicken breast from drying out?**
+Do not overcook it. Pull at 160°F internal, rest 5 minutes to reach 165°F. Also pound to even thickness before cooking so it cooks uniformly. Brining in salted water for 30 minutes before cooking also makes a significant difference.
+
+**How long should I bake chicken breast?**
+At 425°F, 18-22 minutes for a standard 6-8 oz breast. Always verify with a thermometer — oven temperatures vary and breast sizes vary more than the packaging suggests.
+
+**Can I use chicken thighs instead of chicken breast?**
+Yes, in most of these recipes. Thighs are more forgiving, harder to overcook, and have more flavor. They take slightly longer in the oven (25-30 minutes at 425°F). The main difference is higher fat content, which is irrelevant for most weeknight dinners.
+
+**What is the best way to season chicken breast?**
+Salt, garlic powder, and paprika is a reliable base. Add Italian seasoning for Mediterranean dishes, cumin and chili powder for Mexican-inspired meals, and lemon zest for anything bright. Season generously — lean chicken breast needs more seasoning than fattier cuts.
+
+**Can I meal prep chicken breast?**
+Yes. Bake a batch Sunday, refrigerate up to 4 days. Reheat gently with a damp paper towel over the top in the microwave to retain moisture, or slice cold and serve at room temperature in salads and grain bowls.
+
+---
+
+## Let AI Plan Your Chicken Dinners
+
+Knowing 25 chicken breast recipes is only half the problem. The other half is deciding which one to make on which night — and making sure you actually have the ingredients.
+
+DinnerDrop handles that automatically. Tell it your family size, how much time you have each night, dietary preferences, and budget. It generates a full personalized weekly dinner plan and sends the grocery list straight to Walmart, Instacart, Amazon Fresh, or Kroger.
+
+[Try DinnerDrop free for 7 days →](/beta)
+
+First 100 families get 6 months completely free. No credit card required to start.`,
+  },
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
