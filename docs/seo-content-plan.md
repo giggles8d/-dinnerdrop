@@ -143,3 +143,10 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 - Publish: 2026-06-09
 - Keyword: meal prep for beginners (40,500/mo, Medium difficulty)
 - Wired into lib/blog-posts.ts
+  
+  
+## Post 9 -- meal-planning-app-free  
+- Status: DRAFT DONE  
+- Publish: 2026-06-16  
+- Keyword: meal planning app free (16,000/mo, Medium difficulty)  
+- Wired into lib/blog-posts.ts 
