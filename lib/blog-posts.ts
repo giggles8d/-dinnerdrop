@@ -4310,7 +4310,7 @@ First 100 families get 6 months completely free. No credit card required to star
     slug: 'family-meal-prep',
     primaryKeyword: 'family meal prep',
     title: 'Family Meal Prep: The Complete Weekly System That Saves Hours (and Money)',
-    excerpt: 'A practical, repeatable family meal prep system — what to batch, when to do it, and how to turn 90 minutes on Sunday into fast dinners every night of the week.',
+    description: 'A practical, repeatable family meal prep system — what to batch, when to do it, and how to turn 90 minutes on Sunday into fast dinners every night of the week.',
     publishDate: '2026-10-20',
     readingTimeMinutes: 8,
     content: `
@@ -4486,6 +4486,240 @@ Same prep, three different plates - one child eats chicken and rice plain, anoth
 ---
 
 Let DinnerDrop build your weekly plan automatically - then Sunday prep becomes fast, focused, and worth it.
+
+[Start your free 7-day trial ->](/beta)
+
+No credit card required. First 100 families get 6 months completely free.`,
+  },
+  {
+    slug: 'instant-pot-dinner-ideas',
+    title: 'Instant Pot Dinner Ideas: 30 Easy Meals Your Family Will Actually Eat',
+    description: 'The best Instant Pot dinner ideas for busy families — quick weeknight meals, dump-and-go recipes, and one-pot dinners that go from frozen to table in under 30 minutes.',
+    publishDate: '2026-10-27',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'instant pot dinner ideas',
+    content: `
+## Why the Instant Pot Wins on Weeknights
+
+The Instant Pot is not a slow cooker. That distinction matters at 5pm.
+
+A slow cooker requires you to think about dinner at 8am. The Instant Pot requires you to think about dinner
+at 5pm — which is exactly when you are already standing in the kitchen, already tired, already fielding requests
+from the rest of your household.
+
+Frozen chicken breasts to tender shredded chicken: 25 minutes. Dry beans from scratch: 35 minutes.
+A pot roast that normally takes 4 hours in the oven: 60 minutes. A weeknight pasta with sauce: 8 minutes.
+
+The pressure cooking function cuts cook times by 60-70% compared to conventional methods. The sealed
+environment means you do not have to watch it, stir it, or adjust anything. Put in ingredients. Set the time.
+Walk away. Come back to dinner.
+
+This guide covers 30 Instant Pot dinner ideas organized by what your family actually eats on a regular
+Tuesday night — not what looks good on a food blog.
+
+---
+
+## Category 1: Chicken Dinners (10 Recipes)
+
+Chicken is the most forgiving protein in a pressure cooker. It is nearly impossible to undercook (the sealed
+environment guarantees safe internal temperature) and difficult to dry out when cooked in liquid.
+
+**1. Honey Garlic Chicken Thighs**
+Chicken thighs, honey, soy sauce, garlic, and a splash of rice vinegar. Pressure cook 12 minutes,
+quick release, reduce the sauce in Sauté mode for 3 minutes. Serve over rice. Every kid eats this.
+
+**2. Shredded Chicken Tacos**
+1.5 lbs chicken breasts, one jar of salsa, cumin, chili powder. 15 minutes high pressure, natural release
+10 minutes, shred with two forks. Makes 8-10 tacos. Freezes perfectly for next week.
+
+**3. Chicken Noodle Soup**
+Chicken breasts, carrots, celery, onion, chicken broth, egg noodles. 10 minutes high pressure,
+quick release, stir in noodles and simmer on Sauté 5 minutes. Better than anything from a can.
+
+**4. Butter Chicken**
+Chicken thighs, canned tomatoes, butter, cream, garam masala, ginger, garlic. 10 minutes high pressure.
+Blend the sauce smooth with an immersion blender. Serve over basmati rice. Restaurant flavor, 25 minutes total.
+
+**5. BBQ Pulled Chicken**
+Chicken thighs, BBQ sauce, garlic powder, onion powder, brown sugar. 20 minutes high pressure,
+natural release 10 minutes. Shred and serve on brioche buns with coleslaw.
+
+**6. Chicken and Rice (One Pot)**
+Rinsed white rice, chicken thighs seasoned with salt and garlic powder, chicken broth to cover rice.
+3 minutes high pressure, 10 minutes natural release. One pot, nothing to wash.
+
+**7. White Chicken Chili**
+Chicken breasts, white beans, green chiles, chicken broth, cumin, oregano, cream cheese added at the end.
+18 minutes high pressure. Top with sour cream and shredded Monterey Jack.
+
+**8. Salsa Verde Chicken**
+Chicken thighs, jarred salsa verde, cumin. 15 minutes high pressure, shred directly in the pot.
+Use for burrito bowls, tacos, or quesadillas. The meal prep version: double the batch.
+
+**9. Lemon Herb Chicken Breasts**
+Chicken breasts, chicken broth, lemon juice, garlic, Italian seasoning. 8 minutes high pressure,
+quick release. Slice and serve with roasted vegetables. The plainest option on the list — always useful.
+
+**10. Chicken Fried Rice**
+Day-old rice works best. Sauté diced carrots, peas, and onion in the pot. Add cooked shredded chicken,
+cold rice, soy sauce, sesame oil, and two scrambled eggs. Sauté mode throughout. 10 minutes active.
+
+---
+
+## Category 2: Ground Beef and Pork (7 Recipes)
+
+**11. Instant Pot Chili**
+Brown ground beef first in Sauté mode. Add diced onion, bell pepper, canned tomatoes, kidney beans,
+beef broth, and chili seasoning. 15 minutes high pressure. Best chili you can make in under 40 minutes total.
+
+**12. Sloppy Joes**
+Brown 1.5 lbs ground beef, drain. Add tomato sauce, ketchup, brown sugar, mustard, Worcestershire sauce,
+diced onion. 5 minutes high pressure. Serve on toasted hamburger buns. Kids eat this without complaint.
+
+**13. Pasta Bolognese**
+Brown ground beef and Italian sausage in Sauté mode. Add crushed tomatoes, beef broth, Italian seasoning.
+Pour dry penne on top — do not stir. 8 minutes high pressure, quick release, stir. One pot, done.
+
+**14. Meatball Soup**
+Frozen meatballs (no need to thaw), diced tomatoes, beef broth, chopped kale or spinach, small pasta,
+Italian seasoning. 8 minutes high pressure. Add the pasta result is perfectly cooked through.
+
+**15. Pulled Pork**
+Pork shoulder, dry rub (paprika, garlic powder, brown sugar, salt, pepper), apple cider vinegar.
+60 minutes high pressure, natural release 15 minutes. Shreds effortlessly. Makes enough for two meals.
+
+**16. Pork Carnitas**
+Pork shoulder or butt, orange juice, lime juice, cumin, oregano, garlic. 60 minutes high pressure.
+Shred, spread on a baking sheet, broil 5 minutes until edges crisp. The best Instant Pot recipe for tacos.
+
+**17. Beef Taco Meat**
+Brown ground beef in Sauté mode. Add packet taco seasoning and 1/2 cup water. Stir, 3 minutes high pressure.
+Fastest taco night setup. Add a can of refried beans directly from the can while the beef cooks.
+
+---
+
+## Category 3: Soups and Stews (7 Recipes)
+
+**18. Beef Stew**
+Chuck roast cut into 1-inch pieces, potatoes, carrots, onion, beef broth, tomato paste, Worcestershire,
+thyme. Sauté beef first, deglaze pot with broth. 35 minutes high pressure, natural release 15 minutes.
+
+**19. Potato Soup**
+Diced russet potatoes, chicken broth, diced onion, garlic, salt, pepper. 8 minutes high pressure, quick release.
+Blend half the soup, return to pot, add cream and shredded cheddar. Top with bacon bits and chives.
+
+**20. Lentil Soup**
+Red or green lentils (no soaking needed), diced tomatoes, carrots, onion, garlic, cumin, smoked paprika,
+vegetable broth. 15 minutes high pressure. Squeeze of lemon before serving.
+
+**21. Tomato Basil Soup**
+Canned crushed tomatoes, chicken or vegetable broth, onion, garlic, butter, heavy cream, fresh basil.
+10 minutes high pressure, blend smooth. Better than any store-bought version.
+
+**22. Minestrone**
+Canned diced tomatoes, white beans, zucchini, carrots, celery, onion, vegetable broth, small pasta,
+Italian seasoning. 6 minutes high pressure. Serve with Parmesan and crusty bread.
+
+**23. Black Bean Soup**
+Dried black beans (no soaking required in Instant Pot), onion, garlic, cumin, smoked paprika, chipotle
+pepper in adobo, chicken broth. 35 minutes high pressure. Top with sour cream and fresh cilantro.
+
+**24. French Onion Soup**
+Caramelize 4 sliced onions in Sauté mode (20 minutes — worth the wait). Add beef broth, thyme, bay leaf.
+5 minutes high pressure. Ladle into oven-safe bowls, top with baguette and Gruyère, broil until bubbly.
+
+---
+
+## Category 4: Pasta and Grains (6 Recipes)
+
+**25. Mac and Cheese**
+Dry elbow macaroni, water to cover, salt, butter. 4 minutes high pressure, quick release. Drain excess water
+if any. Stir in evaporated milk, shredded sharp cheddar, and cream cheese. Better than the box.
+
+**26. Pasta Primavera**
+Penne, chicken broth, diced zucchini, cherry tomatoes, garlic, Italian seasoning. Do not stir pasta in.
+6 minutes high pressure, quick release. Stir in Parmesan and fresh basil.
+
+**27. Risotto (No Stirring)**
+Arborio rice, chicken broth, onion, garlic, white wine, Parmesan. 6 minutes high pressure, quick release.
+Traditional risotto takes 30 minutes of constant stirring. This takes 6 minutes unattended.
+
+**28. Spanish Rice**
+Long grain white rice, canned diced tomatoes with green chiles, chicken broth, onion powder, cumin,
+garlic powder. 3 minutes high pressure, 10 minutes natural release. Perfect side for tacos or enchiladas.
+
+**29. Steel Cut Oats (Breakfast for Dinner)**
+Steel cut oats, water, salt, cinnamon, brown sugar. 3 minutes high pressure, 10 minutes natural release.
+Set out toppings: berries, maple syrup, sliced banana, peanut butter. Quick and genuinely filling.
+
+**30. Quinoa with Vegetables**
+Rinsed quinoa, vegetable broth, diced bell peppers, corn, black beans, cumin, chili powder. 1 minute
+high pressure, 10 minutes natural release. A complete protein-packed vegetarian dinner in one pot.
+
+---
+
+## The Instant Pot Rules That Actually Matter
+
+After 30 recipes, a few rules prevent 90% of Instant Pot failures:
+
+**The minimum liquid rule:** Always have at least 1 cup of liquid in the pot. Pressure requires steam.
+Without liquid, you get the burn warning and dinner does not happen.
+
+**Do not stir pasta into sauce:** Add dry pasta on top of liquid without stirring. Stirring distributes starch
+onto the heating element and triggers the burn warning.
+
+**Deglaze after browning:** After Sauté mode, any browned bits stuck to the bottom must be scraped up
+with a splash of broth before pressure cooking. Stuck bits = burn warning.
+
+**Natural release vs quick release:** Soups, stews, and beans benefit from natural release (the pressure
+drops slowly, allowing carryover cooking). Chicken breasts and vegetables benefit from quick release
+(stops cooking immediately, prevents overcooking).
+
+**The sealing ring:** If your Instant Pot smells like the last savory thing you cooked, the sealing ring
+has absorbed the odors. Keep a second ring for desserts. Wash the main ring in the top rack of the dishwasher.
+
+---
+
+## The Decision You Can Automate
+
+The Instant Pot solves the cooking part of weeknight dinner. It does not solve the deciding part.
+
+What sounds good? Does everyone eat this? Do we have the ingredients? Is this different from what we had
+on Monday?
+
+DinnerDrop handles that. Tell it your family size, dietary preferences, how much time you have, and
+it generates 5 personalized dinners in seconds — Instant Pot-friendly options included. The full grocery
+list goes straight to your preferred store.
+
+[Try DinnerDrop free for 7 days ->](/beta)
+
+First 100 families get 6 months completely free.
+
+---
+
+## FAQ
+
+**Can I put frozen chicken directly in the Instant Pot?**
+Yes. Add 5 minutes to the cook time for frozen chicken breasts or thighs. Always verify internal temperature
+reaches 165°F with a meat thermometer. The sealed environment still cooks it safely — it just needs extra time.
+
+**Why does my Instant Pot say "burn"?**
+Three causes: not enough liquid, a too-thick sauce on the bottom, or bits stuck from the Sauté step.
+Always deglaze after browning, use at least 1 cup of thin liquid, and add thick sauces on top of ingredients.
+
+**How do I know when to use quick release vs natural release?**
+Quick release: chicken breasts, vegetables, pasta, and anything you want to stop cooking immediately.
+Natural release: tough cuts like chuck roast and pork shoulder, beans, and grains. They need more rest time
+to finish cooking through gently.
+
+**Is the Instant Pot worth it for a family of 4?**
+Yes — specifically because of batch cooking. Shredded chicken or pulled pork made Sunday evening
+covers 2-3 dinners during the week. The 6-quart model handles meals for 4-6 people comfortably.
+
+---
+
+Put any of these 30 Instant Pot dinner ideas in your weekly rotation — and let DinnerDrop plan which
+five your family eats this week.
 
 [Start your free 7-day trial ->](/beta)
 
