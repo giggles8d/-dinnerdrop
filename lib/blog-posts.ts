@@ -1399,6 +1399,145 @@ And when you're ready to stop building the plan yourself every week -- let an AI
 
 Try DinnerDrop free for 7 days at /beta, or grab a 6-month free beta spot while they're still available.`,
   },
+    {
+    slug: "ai-meal-planner",
+    title: "The Best AI Meal Planner in 2026 (That Actually Learns Your Family)",
+    description: "Most apps marketed as AI meal planners are just recipe filters. Here's what a real AI meal planner does differently — and which one actually delivers for families.",
+    publishDate: "2026-06-30",
+    readingTime: "7 min",
+    content: `# The Best AI Meal Planner in 2026 (That Actually Learns Your Family)
+
+Most meal planning apps give you a list of recipes and call it a day. An AI meal planner is supposed to do more than that — it should learn your family's preferences, work within your budget, and hand you a grocery list you can actually use. The difference between the two is enormous in practice, and most apps marketed as "AI-powered" fall well short of what that label promises.
+
+Here's what a real AI meal planner looks like, what to look for in 2026, and which one actually delivers.
+
+---
+
+## What an AI Meal Planner Actually Is (vs. What Most Apps Call AI)
+
+Before we get into specifics, it's worth drawing a clear line.
+
+Most apps that call themselves "AI meal planners" are running basic recipe recommendation algorithms. You pick a few dietary tags, they filter a recipe database, and they show you a list. That's not AI — that's a search filter with better marketing.
+
+A genuine AI meal planner does something different: it takes inputs specific to *your family* and generates a plan that didn't exist before. Budget. Family size. How long you actually have to cook on a Tuesday night. Whether someone's lactose intolerant. Whether your kids will only eat pasta if it's not touching the sauce.
+
+The output should be personalized in a way that a generic recipe database can't replicate. And critically, it should get better the more you use it — learning what you swap out, what you actually cook versus skip, and adjusting future plans accordingly.
+
+---
+
+## The 5 Things a Real AI Meal Planner Must Do
+
+Before you pay for (or commit to) any AI meal planner, run it through this checklist:
+
+**1. Generate plans, not just filter recipes.** The AI should produce a weekly meal plan that was built for your specific household, not surface generic recipes that match some tags.
+
+**2. Handle your family's actual constraints.** Family size (quantities matter), dietary restrictions (not just "vegetarian" but also nut allergies and picky eaters), weekly budget, and realistic cook times per night.
+
+**3. Produce a consolidated grocery list.** A five-dinner plan means 30-50 ingredients. The AI should combine duplicate items across meals (you're not buying garlic five separate times), adjust quantities for your family size, and organize the list logically.
+
+**4. Connect to your grocery store.** The last mile — where most apps completely fail. Generating a list is nice. Sending that list directly to your Instacart cart or Walmart pickup order is what makes meal planning actually stick.
+
+**5. Learn from feedback.** When you swap out a meal or skip a recipe entirely, the app should note that and adjust future recommendations. Over time, plans should feel increasingly tailored to your family.
+
+---
+
+## How DinnerDrop Works
+
+DinnerDrop was built specifically around this framework. Here's the actual flow:
+
+**Step 1: Tell it about your family (2 minutes, one time)**
+When you first sign up, you answer a short onboarding quiz: family size, weekly food budget, dietary needs, preferred grocery store, and how much time you have to cook on an average weeknight. This takes about two minutes and only happens once.
+
+**Step 2: Generate your week (30 seconds)**
+Every week, you tap "Generate plan." The AI builds five weeknight dinners that fit your family's profile — budget-appropriate, store-appropriate, allergy-safe. You see the meals, cook times, and estimated cost before committing.
+
+**Step 3: Swap anything you don't want (one tap per swap)**
+Don't feel like salmon this week? Tap the swap button on any meal. DinnerDrop replaces it with an alternative that fits the same constraints and updates the grocery list automatically.
+
+**Step 4: Send to your grocery store (one tap)**
+Tap "Get groceries." Your complete, consolidated shopping list — every ingredient across all five meals, quantities scaled to your family size, duplicates merged — goes directly to your preferred store. Instacart, Walmart, Amazon Fresh, or Kroger.
+
+**Step 5: The plan gets smarter**
+Every swap, every completed meal, every week you use the app — the AI notes what worked and what didn't. Future plans start reflecting your actual preferences. Families who've used it for a month report plans that feel noticeably more dialed in than what they got on week one.
+
+---
+
+## How DinnerDrop Compares to Other "AI" Meal Planning Apps
+
+| Feature | DinnerDrop | Mealime | Plan to Eat | Whisk |
+|---------|-----------|---------|-------------|-------|
+| Generates plans from scratch | ✅ AI-generated | ❌ Recipe filters | ❌ Manual | ❌ Recipe saves |
+| Family-specific quantities | ✅ Scaled automatically | ✅ Limited | ✅ Manual | ❌ |
+| Weekly budget optimization | ✅ Built into generation | ❌ | ❌ | ❌ |
+| One-tap grocery store handoff | ✅ 4 stores | ❌ | ❌ | ✅ Limited |
+| Learns from feedback | ✅ Swap signals | ❌ | ❌ | ❌ |
+| Price | \$9/mo (beta: free) | Free–\$6/mo | \$6/mo | Free |
+
+The honest difference: Mealime and Plan to Eat are excellent recipe organizers. They're not AI meal planners in the full sense — they don't generate budgeted, family-specific, store-connected plans from scratch. Whisk gets close on the grocery handoff side but lacks the generation and learning components.
+
+---
+
+## What AI Meal Planning Actually Saves You
+
+The time math is compelling once you lay it out:
+
+**Without an AI meal planner:**
+- Deciding what to make this week: 15-20 min
+- Checking what you have vs. what you need: 10 min
+- Building a grocery list: 15 min
+- Forgetting things and making extra trips: 2x/week adds up
+- Total weekly planning overhead: 45-60 minutes minimum
+
+**With DinnerDrop:**
+- Generate plan: 30 seconds
+- Review and swap anything: 2-3 minutes
+- Grocery handoff: 1 tap, 30 seconds
+- Total weekly planning: under 5 minutes
+
+That's 40-55 minutes back every single week. Over a year, that's roughly 35-45 hours of your life returned — time that used to go into standing in front of the fridge trying to figure out what everyone will actually eat.
+
+---
+
+## Who Should Use an AI Meal Planner
+
+AI meal planning isn't for everyone. If you love cooking and treat recipe discovery as a hobby, an app like Paprika or Plan to Eat (where you curate your own collection) will feel more satisfying.
+
+But if your relationship with dinner is primarily logistical — you need to feed your family something reasonably healthy, reasonably fast, without blowing the grocery budget — an AI meal planner solves an actual problem.
+
+It's the right fit if:
+- You're making dinner for two or more people most nights
+- You spend more than 20 minutes/week deciding what to cook
+- You frequently do extra grocery trips for forgotten items
+- You feel like you're always eating the same 6 things on rotation
+- You want to cut your grocery bill but don't want to spend more time on it
+
+---
+
+## Frequently Asked Questions
+
+**Is AI meal planning the same as using ChatGPT for dinner ideas?**
+Not quite. Asking ChatGPT for dinner ideas is a one-off conversation — you get suggestions, but nothing connects to your grocery store, nothing tracks your preferences over time, and you're doing all the organizational work yourself. A purpose-built AI meal planner like DinnerDrop handles the full workflow: generation → grocery list → store handoff → feedback loop.
+
+**Does it actually learn, or is that just marketing?**
+DinnerDrop tracks every swap you make and every meal you complete versus skip. Over time, this data shapes what gets suggested — you'll see fewer meals you historically avoid and more in the style of what you consistently cook. It's real feedback-based personalization, not a marketing claim.
+
+**What if I have multiple dietary restrictions in one household?**
+That's exactly the use case DinnerDrop was designed for. You can specify multiple dietary needs during onboarding (gluten-free, dairy-free, nut-free, vegetarian, etc.) and the AI generates plans that work across all of them. You can also note specific family members with restrictions for more targeted swaps.
+
+**How accurate is the grocery list?**
+Very. Quantities are scaled to your family size and consolidated across all five meals. If three of your dinners use olive oil, you get one line item for the total amount you need — not three separate olive oil entries. The store integration sends this exact list to your cart with correct quantities.
+
+---
+
+## The Bottom Line
+
+Most "AI meal planners" are recipe apps with a marketing upgrade. A real AI meal planner generates a family-specific, budget-optimized, store-connected weekly plan that gets better every week you use it.
+
+If you want to try what that actually feels like, DinnerDrop is currently in beta — the first 100 families get six months completely free. No meal kit delivery prices. No commitment beyond what you eat.
+
+[**Claim your beta spot →**](https://dinnerdrop.app/beta)
+`,
+  },
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
