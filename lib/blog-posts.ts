@@ -4306,6 +4306,191 @@ DinnerDrop handles that automatically. Tell it your family size, how much time y
 
 First 100 families get 6 months completely free. No credit card required to start.`,
   },
+  {
+    slug: 'family-meal-prep',
+    primaryKeyword: 'family meal prep',
+    title: 'Family Meal Prep: The Complete Weekly System That Saves Hours (and Money)',
+    excerpt: 'A practical, repeatable family meal prep system — what to batch, when to do it, and how to turn 90 minutes on Sunday into fast dinners every night of the week.',
+    publishDate: '2026-10-20',
+    readingTimeMinutes: 8,
+    content: `
+## Why Most Family Meal Prep Advice Fails
+
+Every meal prep article says the same thing: cook on Sunday. Batch your proteins. Use your freezer.
+
+What they do not say is what to do when a five-year-old demands attention, a seven-year-old wants a snack,
+your partner is doing yard work, and you have exactly 90 minutes before the afternoon falls apart.
+
+Family meal prep is not solo meal prep. It has interruptions, picky eaters, a refrigerator full of condiments
+and no shelf space, and dinners that need to be edible by someone who will reject any green fleck they cannot identify.
+
+This guide is built for that reality.
+
+---
+
+## What to Actually Batch (and What to Skip)
+
+Most families prep too much and waste too much. The goal is not a full week of Tupperware stacked like Tetris.
+The goal is **dinner components that cut assembly time from 30 minutes to 10**.
+
+### Always worth prepping:
+
+**Protein**
+Batch-cook one or two proteins each week. Options that reheat without becoming rubbery:
+- Shredded chicken (slow cooker or Instant Pot — 4 lbs takes 3 hours passive)
+- Ground beef or turkey, browned and seasoned (10 minutes active)
+- Hard-boiled eggs (ready in 14 minutes, good 5 days refrigerated)
+- Baked salmon portions (20 minutes at 400°F, good 3 days)
+
+**Grains**
+Rice, farro, quinoa, or pasta cooked ahead cuts 20-30 minutes from every dinner.
+- White rice: 2 cups dry makes 4+ cups cooked, refrigerates 5 days
+- Pasta: cook slightly under al dente so it does not turn to mush when reheated
+
+**Washed, cut vegetables**
+- Bell peppers, broccoli, carrots, zucchini: cut and stored dry, good 4-5 days
+- Salad greens: washed and spun dry, stored with paper towel, good 4-5 days
+- Onions: dice 2-3 at once and refrigerate in an airtight container
+
+### Skip prepping:
+- Full assembled meals (they get soggy)
+- Potatoes (discolor and turn mushy)
+- Avocado (browns immediately)
+- Delicate fish like tilapia (dries out when reheated)
+
+---
+
+## The 90-Minute Sunday System
+
+This is the exact sequence, timed, for a family of 4.
+
+**Before you start:** Unload the dishwasher. You need clean containers and a clear workspace.
+
+**Minutes 0-5:** Put 3-4 lbs of chicken thighs in the slow cooker with broth, salt, garlic powder. Set to Low.
+
+**Minutes 5-10:** Measure 2 cups dry rice into a pot with 4 cups water. Bring to boil, simmer covered 18 minutes.
+
+**Minutes 10-35:** Cut all vegetables for the week: dice 2 onions, slice bell peppers, break broccoli into florets,
+mince 6 garlic cloves, slice carrots. Store each in separate containers or zip-lock bags.
+
+**Minutes 35-45:** Brown 1 lb ground beef or turkey in a skillet. Drain. Refrigerate.
+Usable for tacos, pasta sauce, grain bowls, or stuffed peppers.
+
+**Minutes 45-55:** If you want baked chicken for Thursday, season and put in oven at 425F for 22-25 minutes.
+
+**Minutes 55-75:** Pack and label everything. Rice is done. Pull chicken from oven. Everything into dated containers.
+
+**Minutes 75-90:** Shred slow cooker chicken with two forks. Portion into containers. Refrigerate.
+
+Total active time: approximately 60 minutes. Passive time: approximately 90 minutes.
+
+---
+
+## What 5 Dinners Look Like With This Prep
+
+**Monday - Chicken Rice Bowl:** Reheat shredded chicken and rice. Add roasted broccoli (10 min at 425F).
+Sauce with teriyaki or soy sauce and butter. Done in 12 minutes.
+
+**Tuesday - Ground Beef Tacos:** Reheat browned beef in a skillet with taco seasoning and 2 tbsp water.
+Warm tortillas. Set out toppings. Done in 8 minutes.
+
+**Wednesday - Chicken Stir-Fry:** Shredded chicken plus pre-cut bell peppers and broccoli in a hot skillet
+with soy sauce, garlic, and sesame oil. Serve over reheated rice. Done in 12 minutes.
+
+**Thursday - Pasta Night:** Pasta cooks in 10 minutes. Toss with jarred marinara plus pre-diced onion
+and any remaining browned beef. Garlic bread from a store-bought loaf.
+
+**Friday - Sheet Pan:** Pre-cut vegetables plus fresh chicken or sausage on a sheet pan.
+Season, 400F for 25 minutes. Minimal cleanup.
+
+Total active dinner time across the week: under 60 minutes.
+
+---
+
+## The Family Meal Prep Grocery System
+
+The solution is a standing grocery list that matches your prep system.
+
+**Proteins (rotate weekly):** Chicken thighs or breasts (4 lbs), ground beef or turkey (1-2 lbs), eggs (1 dozen)
+
+**Grains:** White or brown rice (buy a 10 lb bag), pasta (2 boxes)
+
+**Produce (cut Sunday):** Onions (3 lb bag), bell peppers (3-4), broccoli (2 crowns), carrots, garlic
+
+**Pantry staples:** Olive oil, soy sauce, chicken broth, taco seasoning, Italian seasoning, garlic powder,
+onion powder, salt, pepper. When these run out, they go back on the list immediately.
+
+---
+
+## Dealing With Picky Eaters
+
+The component system solves the "I prep it and nobody eats it" problem. When you batch components instead of
+full meals, picky eaters can still eat: rice with butter, chicken with ketchup, pasta with just Parmesan.
+The parents get the stir-fry. The kids get deconstructed components. Everyone eats from the same prep.
+
+Tips: Introduce new foods as a topping rather than the main meal. Keep one safe protein in every week's
+rotation. Never force the issue at dinner - a hungry kid will eat something from the components.
+
+---
+
+## Scaling Up: Meal Prep for Large Families (5+)
+
+- Double the rice: 4 cups dry makes 8+ cups cooked
+- Use a 7-8 quart slow cooker instead of a standard 6 quart
+- Two sheet pans simultaneously on different oven racks
+- Split prep: Sunday (proteins and grains), Wednesday (fresh vegetables for the second half of the week)
+
+A second mini-prep session midweek - 15 minutes to rewash greens, dice new produce, assess what needs using.
+
+---
+
+## The Prep You Can Skip Entirely
+
+The hardest part of family meal prep is not the chopping or the cooking. It is deciding what to make.
+
+Most families spend 15-20 minutes figuring out the plan before every Sunday prep session. What sounds good?
+What do the kids eat? What did we have last week? What is on sale? Is there enough variety?
+
+DinnerDrop eliminates that entire decision. Tell it your family size, dietary preferences, budget, and how much
+time you have each night. It generates 5 personalized dinners in seconds and sends the full grocery list
+straight to your preferred store (Walmart, Instacart, Amazon Fresh, or Kroger).
+
+[Try DinnerDrop free for 7 days ->](/beta)
+
+First 100 families get 6 months completely free.
+
+---
+
+## FAQ
+
+**How long does family meal prep take each week?**
+For most families of 4, plan 60-90 minutes of active time. With practice and a consistent shopping list,
+active prep time drops closer to 45 minutes.
+
+**What containers should I use for meal prep?**
+Glass containers with snap-on lids are ideal - safe for microwave, oven, and dishwasher.
+Pyrex and OXO make reliable sets. Wide shallow containers work better than tall ones for grains and vegetables.
+
+**How many days in advance can I prep?**
+Most prepped proteins and grains stay safe for 4-5 days refrigerated. Vegetables last 4-5 days uncooked and cut.
+Prep Sunday, covers through Thursday or Friday without quality issues.
+
+**Should I freeze meals or just refrigerate?**
+For weekly prep, refrigerating is simpler and maintains better texture. Freeze batch-cooked soups, chili,
+and pulled chicken for busy weeks. Label with the date, reheat from frozen via fridge the night before.
+
+**What if my family does not eat the same things?**
+Build around shared components. Rice, roasted vegetables, and a neutral protein cover most combinations.
+Same prep, three different plates - one child eats chicken and rice plain, another eats a stir-fry, parents eat it over salad.
+
+---
+
+Let DinnerDrop build your weekly plan automatically - then Sunday prep becomes fast, focused, and worth it.
+
+[Start your free 7-day trial ->](/beta)
+
+No credit card required. First 100 families get 6 months completely free.`,
+  },
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
