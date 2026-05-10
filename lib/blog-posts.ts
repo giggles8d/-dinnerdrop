@@ -3797,6 +3797,165 @@ The 40 recipes above cover every protein, every major cooking method, and every 
 <p>Two strategies: rotisserie chicken (use it in soups, stir-fries, grain bowls, and tacos in minutes) and a Sunday prep block of 20–30 minutes where you pre-chop vegetables and cook a grain like quinoa or brown rice. Those two habits cut active cook time significantly on weeknights.</p>
     `,
   },
+  {
+    slug: 'pasta-dinner-ideas',
+    title: '35 Pasta Dinner Ideas the Whole Family Will Actually Eat',
+    description:
+      '35 pasta dinner ideas your family will request on repeat — quick weeknight ' +
+      'pasta dishes, baked pasta casseroles, and creamy one-pot meals ready in 30 minutes.',
+    publishDate: '2026-09-29',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'pasta dinner ideas',
+    content: `
+<h2>Why Pasta Is the Best Weeknight Dinner Base</h2>
+<p>Pasta gets a bad reputation it doesn't deserve. It's fast, affordable, endlessly versatile, and — when paired with protein and vegetables — a complete meal in one pan. The real problem isn't pasta. It's running out of ideas and rotating through spaghetti and marinara every single week.</p>
+<p>These 35 pasta dinner ideas solve that. They span quick weeknight dishes, hearty baked casseroles, creamy one-pot meals, and lighter options that feel less heavy. Every one is family-tested and realistic for a Tuesday night.</p>
+<p><strong>DinnerDrop picks 5 pasta-friendly dinners for your family each week and builds the grocery list automatically. <a href="https://dinnerdrop.app/beta">Try it free for 7 days →</a></strong></p>
+
+<h2>Quick Pasta Dinners (Under 30 Minutes)</h2>
+
+<h3>1. Spaghetti Aglio e Olio</h3>
+<p>Cook spaghetti, reserve a cup of pasta water. Sauté thinly sliced garlic in olive oil until golden, add red pepper flakes, toss with pasta and pasta water to emulsify into a silky sauce. Top with parmesan and parsley. Four ingredients, twenty minutes, better than most restaurant pasta.</p>
+
+<h3>2. One-Pan Lemon Garlic Shrimp Pasta</h3>
+<p>Cook pasta, sauté shrimp in butter and garlic for 3 minutes, add lemon juice, pasta water, and a handful of baby spinach. Toss everything together. Ready in the time it takes to boil water. Light, bright, and impressive enough for guests.</p>
+
+<h3>3. Pasta Carbonara</h3>
+<p>Whisk eggs with grated pecorino and parmesan in a bowl. Cook pasta, fry diced pancetta or bacon until crispy, toss hot pasta with the egg mixture off heat (the residual heat cooks the eggs into a creamy sauce without scrambling). Black pepper, more cheese. Classic.</p>
+
+<h3>4. Tomato Basil Pasta</h3>
+<p>Sauté garlic in olive oil, add crushed San Marzano tomatoes, season with salt and a pinch of sugar. Simmer 10 minutes, toss with cooked rigatoni and fresh basil. Add a mozzarella ball torn over the top. Simple and reliably good.</p>
+
+<h3>5. Pesto Pasta with Rotisserie Chicken</h3>
+<p>Cook pasta, toss with store-bought basil pesto, shredded rotisserie chicken, halved cherry tomatoes, and a squeeze of lemon. Dinner in the time it takes to boil water. Store-bought pesto is not cheating — it's smart planning.</p>
+
+<h3>6. Cacio e Pepe</h3>
+<p>Two ingredients beyond pasta: pecorino romano and coarsely cracked black pepper. The technique is in the pasta water — add it slowly while tossing to create an emulsified sauce. Takes one batch to nail, then it's in permanent rotation.</p>
+
+<h3>7. Pasta Primavera</h3>
+<p>Sauté any combination of zucchini, bell peppers, cherry tomatoes, and asparagus in olive oil. Add cooked pasta, pasta water, and parmesan. A different dish every time based on what needs to be used up — great for reducing food waste.</p>
+
+<h3>8. Buttered Egg Noodles with Parmesan</h3>
+<p>Cook egg noodles, toss with butter, parmesan, and a little pasta water. Add sautéed mushrooms or a soft-boiled egg on top. The kids' version everyone at the table actually wants. Takes 12 minutes including boiling time.</p>
+
+<h3>9. Caprese Pasta</h3>
+<p>Toss cooked pasta with fresh mozzarella, halved cherry tomatoes, fresh basil, and a drizzle of good olive oil. No heat required after the pasta cooks. Serve warm or at room temperature — works for lunch the next day too.</p>
+
+<h3>10. Pasta with White Beans and Greens</h3>
+<p>Sauté garlic and red pepper flakes, add canned cannellini beans and a bunch of chopped kale or escarole. Add pasta and pasta water, finish with parmesan and lemon zest. A high-fiber, plant-forward dinner that costs under four dollars to make.</p>
+
+<h2>Creamy Pasta Dinners</h2>
+
+<h3>11. Chicken Alfredo</h3>
+<p>Cook fettuccine. Make a simple Alfredo sauce: butter, heavy cream, garlic, parmesan, salt. Add sliced pan-seared chicken breast. The homemade version takes 20 minutes and tastes dramatically better than the jar version. Kids will clean their plates.</p>
+
+<h3>12. Creamy Tuscan Salmon Pasta</h3>
+<p>Sear salmon fillets, flake into pieces. In the same pan, sauté garlic, add sun-dried tomatoes, spinach, and heavy cream. Toss with penne and the salmon. A restaurant-quality meal from one pan.</p>
+
+<h3>13. Bacon and Mushroom Pasta</h3>
+<p>Fry diced bacon until crispy, sauté sliced cremini mushrooms in the bacon fat, add a splash of white wine, then heavy cream. Season with thyme and parmesan. Toss with tagliatelle. Deep, savory, and done in 25 minutes.</p>
+
+<h3>14. Creamy Sausage and Pepper Pasta</h3>
+<p>Brown Italian sausage with sliced bell peppers and onion, add crushed tomatoes and a splash of heavy cream. Toss with rigatoni. The cream takes the edge off the acidity and makes everything coat the pasta better.</p>
+
+<h3>15. Tortellini in Cream Sauce</h3>
+<p>Use store-bought cheese tortellini — they cook in 3 minutes. Simmer heavy cream with garlic, parmesan, and a pinch of nutmeg for 5 minutes. Toss with cooked tortellini and peas. A whole dinner in 15 minutes from pantry ingredients.</p>
+
+<h3>16. One-Pot Creamy Chicken Pasta</h3>
+<p>Brown diced chicken in a large pot. Add garlic, chicken broth, and dry pasta directly into the pot. Cook until the pasta absorbs most of the liquid (about 10 minutes). Stir in cream cheese and parmesan until melted. Everything in one pot, minimal cleanup.</p>
+
+<h3>17. Lobster Mac and Cheese</h3>
+<p>Make a sharp cheddar bechamel, toss with cooked macaroni and chunks of cooked lobster meat (frozen works fine). Bake until golden. Technically a special occasion pasta, but simple enough for any night you want to feel fancy.</p>
+
+<h3>18. Creamy Roasted Red Pepper Pasta</h3>
+<p>Blend jarred roasted red peppers with garlic, olive oil, and cream cheese until smooth. Heat the sauce, toss with pasta and parmesan. A vibrant, slightly sweet pasta sauce that kids love and adults think is more sophisticated than it is to make.</p>
+
+<h2>Baked Pasta Dinners</h2>
+
+<h3>19. Classic Baked Ziti</h3>
+<p>Mix cooked ziti with marinara sauce, ricotta, and half the mozzarella. Pour into a baking dish, top with remaining mozzarella and parmesan. Bake at 375°F for 25 minutes until bubbly. Feeds six, reheats perfectly, one of the best meal-prep pasta dishes.</p>
+
+<h3>20. Lasagna Bolognese</h3>
+<p>Make a proper Bolognese (beef, pork, tomato, milk, long simmer) and layer with fresh pasta sheets and bechamel. Labor-intensive but makes enough for 8 servings and freezes beautifully. Worth the Sunday afternoon investment.</p>
+
+<h3>21. Baked Mac and Cheese</h3>
+<p>Make a bechamel with sharp cheddar, gruyere, and a pinch of cayenne. Toss with cooked elbow pasta, pour into a buttered dish, top with panko breadcrumbs and dots of butter. Bake at 375°F for 20 minutes. The crunchy top is non-negotiable.</p>
+
+<h3>22. Stuffed Shells</h3>
+<p>Cook jumbo pasta shells, fill with a mixture of ricotta, egg, spinach, and parmesan. Arrange in a baking dish over marinara, top with more sauce and mozzarella. Bake at 375°F for 25 minutes. Make a double batch and freeze half — it reheats from frozen perfectly.</p>
+
+<h3>23. Chicken and Broccoli Pasta Bake</h3>
+<p>Toss cooked penne with diced chicken, broccoli florets, and a creamy white sauce (bechamel with cheddar or parmesan). Top with breadcrumbs. Bake at 375°F for 20 minutes. A complete meal — protein, vegetable, carb — in one dish.</p>
+
+<h3>24. Baked Orzo with Feta and Tomatoes</h3>
+<p>Arrange cherry tomatoes and garlic in a baking dish, nestle in a block of feta, drizzle with olive oil. Roast at 400°F for 25 minutes. Smash the tomatoes and feta together, toss with cooked orzo and fresh basil. The TikTok pasta that actually earns its hype.</p>
+
+<h2>Meat Pasta Dinners</h2>
+
+<h3>25. Spaghetti and Meatballs</h3>
+<p>Make meatballs from a mix of beef and pork with breadcrumbs, egg, parmesan, and herbs. Brown in olive oil, finish in simmering marinara for 20 minutes. Serve over spaghetti with a lot of sauce. The Sunday dinner that works any night of the week.</p>
+
+<h3>26. Bolognese</h3>
+<p>A proper meat sauce: sauté beef and pork with onion, carrot, and celery. Add white wine, whole milk, and crushed tomatoes. Simmer at least 45 minutes (an hour is better). Serve over tagliatelle with parmesan. Low effort once you understand the method — mostly hands-off cooking time.</p>
+
+<h3>27. Sausage and Spinach Pasta</h3>
+<p>Brown crumbled Italian sausage with garlic. Add a can of diced tomatoes, wilted spinach, and pasta water. Toss with rigatoni and parmesan. One of the best quick pasta dinners for picky eaters — the spinach disappears into the sauce.</p>
+
+<h3>28. Ground Turkey Pasta with Vegetables</h3>
+<p>Brown ground turkey with onion and garlic. Add zucchini, diced tomatoes, and Italian herbs. Toss with pasta and a generous amount of parmesan. A lighter alternative to beef-based pasta sauces that doesn't feel like a compromise.</p>
+
+<h3>29. Chicken Marsala Pasta</h3>
+<p>Pound chicken cutlets thin, dredge in flour, pan-fry until golden. Make a Marsala wine and mushroom pan sauce. Serve sliced over fettuccine. An Italian-American restaurant classic that takes 30 minutes at home and impresses every time.</p>
+
+<h3>30. Pasta e Fagioli</h3>
+<p>Sauté onion, celery, and carrot (soffritto), add pancetta, cannellini beans, crushed tomatoes, and chicken broth. Add small pasta (ditalini) and simmer until tender. A thick, hearty, peasant dish that is one of the most satisfying pasta meals in Italian cooking.</p>
+
+<h2>Lighter Pasta Dinners</h2>
+
+<h3>31. Pasta with Clam Sauce (White)</h3>
+<p>Sauté garlic in olive oil, add white wine, then canned clams with their juice. Simmer 5 minutes, toss with linguine and parsley. A seafood pasta that is lighter than cream-based options and takes 20 minutes total.</p>
+
+<h3>32. Greek Pasta Salad (Served Warm)</h3>
+<p>Toss cooked penne with kalamata olives, cucumber, cherry tomatoes, red onion, feta, and a lemon-oregano vinaigrette. Serve warm or at room temperature. Works as a main or a side dish.</p>
+
+<h3>33. Pasta with Chickpeas and Tomato</h3>
+<p>Sauté garlic with canned chickpeas and crushed tomatoes. Season with cumin and smoked paprika. Toss with small pasta shapes. A complete plant-based protein pasta dinner that costs under three dollars a serving.</p>
+
+<h3>34. Zucchini Noodle Pasta (Half and Half)</h3>
+<p>Use half regular pasta, half spiralized zucchini. Toss with your sauce of choice. The zucchini absorbs the sauce and the texture difference disappears in the mix. Cuts the carbs by 40% without anyone feeling like they're eating diet food.</p>
+
+<h3>35. Pasta with Tuna and Capers</h3>
+<p>Sauté garlic in olive oil, add canned tuna (oil-packed, drained), capers, and halved cherry tomatoes. Toss with spaghetti and parsley. A Sicilian pantry pasta that is fast, filling, and made entirely from shelf-stable ingredients.</p>
+
+<h2>How to Build a Better Pasta Night Rotation</h2>
+<p>The problem with pasta night is that it defaults to one sauce. You have spaghetti and marinara Monday, then nothing else feels pasta-appropriate for weeks. The fix is categorizing your pasta nights by sauce type so you're rotating across different flavor profiles:</p>
+<ul>
+  <li><strong>Olive oil base</strong> (aglio e olio, pasta primavera, clam sauce)</li>
+  <li><strong>Tomato base</strong> (marinara, Bolognese, sausage and pepper)</li>
+  <li><strong>Cream base</strong> (Alfredo, carbonara, creamy Tuscan)</li>
+  <li><strong>Baked</strong> (ziti, stuffed shells, mac and cheese)</li>
+</ul>
+<p>One from each category across the month means 4 completely different pasta experiences — and you can swap shapes (spaghetti vs. rigatoni vs. penne) to keep it feeling fresh even with the same sauce.</p>
+<p><strong>DinnerDrop plans your family's week of dinners automatically — including pasta nights — with a grocery list ready in seconds. <a href="https://dinnerdrop.app/beta">Start your free 7-day trial →</a></strong></p>
+
+<h2>Frequently Asked Questions</h2>
+
+<h3>What pasta shapes work best for which sauces?</h3>
+<p>Long thin pasta (spaghetti, linguine) works best with light olive oil or seafood-based sauces. Short ridged shapes (rigatoni, penne) catch chunky meat sauces. Flat pasta (fettuccine, tagliatelle) holds up to heavy cream sauces like Alfredo and Bolognese. Tube shapes (ziti, shells) are built for baked pasta dishes. It's a guideline, not a rule — but it explains why some pasta dinners feel off even when the sauce is good.</p>
+
+<h3>How do I make pasta sauce without a jar?</h3>
+<p>The fastest homemade sauce is crushed tomatoes (San Marzano if you can find them) sautéed with garlic in olive oil for 10 minutes. Season with salt and a pinch of sugar, add fresh basil. It takes less time than going to the store for a jar and tastes better. From there, you can build in any direction.</p>
+
+<h3>Can I meal prep pasta dinners?</h3>
+<p>Baked pasta dishes (ziti, lasagna, stuffed shells) are the best for meal prep — they keep 4 days in the fridge and reheat well. Cream-based sauces can separate when reheated, so add a splash of cream or pasta water when warming. Fresh pasta sauces store separately from the pasta for the best texture on day two.</p>
+
+<h3>How do I stop pasta from getting sticky after cooking?</h3>
+<p>Two things: use enough water (at least 4 quarts per pound of pasta) so it has room to move, and never rinse the pasta after draining. Rinsing removes the starch coating that makes the sauce cling to the noodles. Toss immediately with your sauce, or toss with a drizzle of olive oil if you need to hold it briefly before serving.</p>
+
+<h3>What's the best pasta dinner for picky eaters?</h3>
+<p>Buttered noodles with parmesan is the gateway, but it's not a dead end. Once kids are used to pasta, you can add ingredients slowly — a mild tomato sauce, then small pieces of mild sausage, then very soft vegetables. Most picky eaters who reject casseroles and mixed dishes will eat pasta components when they can see and identify everything on the plate.</p>
+    `,
+  },
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
