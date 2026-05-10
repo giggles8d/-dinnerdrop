@@ -185,3 +185,16 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 - Keyword: healthy family dinners (8,100/mo, Tier 1)
 - Wired into lib/blog-posts.ts
 - Content: 1,900 words — 25 dinners across 5 categories (sheet pan, stir fry, pasta, bowls, soups/proteins), rotation framework, FAQ (5 questions)
+
+## Post 15 -- 30-minute-dinner-ideas
+- Status: DRAFT DONE
+- Publish: 2026-07-28
+- Keyword: 30 minute dinner ideas (~30,000/mo, Low-Medium difficulty)
+- Wired into lib/blog-posts.ts
+- Content: ~2,800 words — 50 quick 30-minute dinners across 8 categories (chicken, ground beef/turkey, pasta, seafood, pork, meatless, soups, eggs). Rotation framework, FAQ (4 questions), DinnerDrop /beta CTA.
+
+## Post 11 -- ai-meal-planner (RESTORED)
+- Note: Post 11 content was lost during build-fix commit 95b14e4 and has been restored to lib/blog-posts.ts
+- Publish: 2026-06-30
+- Keyword: AI meal planner (14,000/mo, Medium difficulty)
+

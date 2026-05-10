@@ -1542,6 +1542,118 @@ If you want to try what that actually feels like, DinnerDrop is currently in bet
 `,
   },
   {
+    slug: 'ai-meal-planner',
+    title: 'The Best AI Meal Planner in 2026 (That Actually Learns Your Family)',
+    description: 'Most apps marketed as AI meal planners are just recipe filters. Here\'s what a real AI meal planner does differently — and which one actually delivers for families.',
+    publishDate: '2026-06-30',
+    readingTimeMinutes: 7,
+    primaryKeyword: 'AI meal planner',
+    content: `
+# The Best AI Meal Planner in 2026 (That Actually Learns Your Family)
+
+Most meal planning apps give you a list of recipes and call it a day. An AI meal planner is supposed to do more than that — it should learn your family's preferences, work within your budget, and hand you a grocery list you can actually use. The difference between the two is enormous in practice, and most apps marketed as "AI-powered" fall well short of what that label promises.
+
+Here's what a real AI meal planner looks like, what to look for in 2026, and which one actually delivers.
+
+---
+
+## What an AI Meal Planner Actually Is (vs. What Most Apps Call AI)
+
+Most apps that call themselves "AI meal planners" are running basic recipe recommendation algorithms. You pick a few dietary tags, they filter a recipe database, and they show you a list. That's not AI — that's a search filter with better marketing.
+
+A genuine AI meal planner does something different: it takes inputs specific to your family and generates a plan that didn't exist before. Budget. Family size. How long you actually have to cook on a Tuesday night. Whether someone's lactose intolerant. Whether your kids will only eat pasta if it's not touching the sauce.
+
+The output should be personalized in a way that a generic recipe database can't replicate. And critically, it should get better the more you use it — learning what you swap out, what you actually cook versus skip, and adjusting future plans accordingly.
+
+---
+
+## The 5 Things a Real AI Meal Planner Must Do
+
+Before you pay for (or commit to) any AI meal planner, run it through this checklist:
+
+**1. Generate plans, not just filter recipes.** The AI should produce a weekly meal plan built for your specific household, not surface generic recipes matching some tags.
+
+**2. Handle your family's actual constraints.** Family size (quantities matter), dietary restrictions, weekly budget, and realistic cook times per night.
+
+**3. Produce a consolidated grocery list.** A five-dinner plan means 30–50 ingredients. The AI should combine duplicate items across meals, adjust quantities for your family size, and organize the list logically.
+
+**4. Connect to your grocery store.** Generating a list is nice. Sending that list directly to your Instacart cart or Walmart pickup order is what makes meal planning actually stick.
+
+**5. Learn from feedback.** When you swap out a meal or skip a recipe entirely, the app should note that and adjust future recommendations.
+
+---
+
+## How DinnerDrop Works
+
+DinnerDrop was built specifically around this framework:
+
+**Step 1: Tell it about your family (2 minutes, one time).** Onboarding quiz: family size, weekly food budget, dietary needs, preferred grocery store, and cook time tolerance. Happens once.
+
+**Step 2: Generate your week (30 seconds).** Tap "Generate plan." The AI builds five weeknight dinners that fit your profile — budget-appropriate, store-appropriate, allergy-safe.
+
+**Step 3: Swap anything you don't want (one tap per swap).** Don't feel like salmon this week? Tap swap. DinnerDrop replaces it with an alternative that fits the same constraints and updates the grocery list automatically.
+
+**Step 4: Send to your grocery store (one tap).** Your complete, consolidated shopping list — every ingredient across all five meals, quantities scaled to your family size, duplicates merged — goes directly to your preferred store.
+
+**Step 5: The plan gets smarter.** Every swap and completed meal is logged. Future plans reflect your actual preferences. Families who use it for a month report plans that feel noticeably more dialed in than week one.
+
+---
+
+## How DinnerDrop Compares to Other Meal Planning Apps
+
+| Feature | DinnerDrop | Mealime | Plan to Eat | Whisk |
+|---------|-----------|---------|-------------|-------|
+| Generates plans from scratch | AI-generated | Recipe filters | Manual | Recipe saves |
+| Family-specific quantities | Scaled auto | Limited | Manual | No |
+| Weekly budget optimization | Built in | No | No | No |
+| One-tap grocery store handoff | 4 stores | No | No | Limited |
+| Learns from feedback | Yes | No | No | No |
+| Price | $9/mo (beta: free) | Free–$6/mo | $6/mo | Free |
+
+The honest difference: Mealime and Plan to Eat are excellent recipe organizers. They don't generate budgeted, family-specific, store-connected plans from scratch.
+
+---
+
+## What AI Meal Planning Actually Saves You
+
+**Without an AI meal planner:**
+- Deciding what to make this week: 15–20 min
+- Checking what you have vs. need: 10 min
+- Building a grocery list: 15 min
+- Total weekly planning overhead: 45–60 minutes minimum
+
+**With DinnerDrop:**
+- Generate plan: 30 seconds
+- Review and swap: 2–3 minutes
+- Grocery handoff: 1 tap
+- Total weekly planning: under 5 minutes
+
+That's 40–55 minutes back every single week — roughly 35–45 hours a year returned to your life.
+
+---
+
+## Frequently Asked Questions
+
+**Is AI meal planning the same as using ChatGPT for dinner ideas?**
+Not quite. Asking ChatGPT for dinner ideas is a one-off conversation — nothing connects to your grocery store, nothing tracks preferences over time, and you're doing all the organizational work yourself. A purpose-built AI meal planner handles the full workflow: generation, grocery list, store handoff, feedback loop.
+
+**Does it actually learn, or is that just marketing?**
+DinnerDrop tracks every swap you make and every meal you complete versus skip. Over time, this data shapes what gets suggested. It's real feedback-based personalization.
+
+**What if I have multiple dietary restrictions in one household?**
+You can specify multiple dietary needs during onboarding (gluten-free, dairy-free, nut-free, vegetarian, etc.) and the AI generates plans that work across all of them.
+
+**How accurate is the grocery list?**
+Quantities are scaled to your family size and consolidated across all five meals. If three dinners use olive oil, you get one line item for the total amount — not three separate entries.
+
+---
+
+The bottom line: most "AI meal planners" are recipe apps with a marketing upgrade. A real AI meal planner generates a family-specific, budget-optimized, store-connected weekly plan that gets better every week you use it.
+
+DinnerDrop is currently in beta — the first 100 families get six months completely free. [Claim your beta spot →](https://dinnerdrop.app/beta)
+`,
+  },
+  {
     slug: 'dinner-ideas-busy-weeknights',
     title: 'The Best Dinner Ideas for Busy Weeknights (That Actually Work)',
     description:
@@ -2038,6 +2150,242 @@ The other piece is the planning habit. Deciding all five dinners on Sunday — a
 If you want to skip the Sunday planning session entirely, [DinnerDrop](https://dinnerdrop.app/beta) generates a full week of personalized family dinners in 30 seconds — tailored to your family's dietary needs, preferred stores, and cook time tolerance. The beta is free for 6 months.
 `,
   },
+  {
+    slug: '30-minute-dinner-ideas',
+    title: '50 Quick 30-Minute Dinner Ideas Your Family Will Actually Request Again',
+    description: 'Fifty fast dinner ideas that come together in 30 minutes or less — organized by category so you can find something for any night, any craving, any level of mental energy.',
+    publishDate: '2026-07-28',
+    readingTimeMinutes: 9,
+    primaryKeyword: '30 minute dinner ideas',
+    content: `
+# 50 Quick 30-Minute Dinner Ideas Your Family Will Actually Request Again
+
+The promise of a 30-minute dinner only works if you already know what you're making before 5pm hits. Otherwise, the 30 minutes starts with 15 minutes of "I don't know, what do you want?" — and by then the window is already gone.
+
+This list solves the deciding problem. Fifty dinners, organized so you can scan and land on something fast. Every one of them comes together in 30 minutes or less with standard grocery store ingredients. No specialty items, no hour-long prep, no recipes that technically say 30 minutes but require a culinary degree to pull off on a Tuesday.
+
+---
+
+## How to Use This List
+
+Scan the categories. Pick a protein category based on what you have or what sounds good. Find a specific dinner. Done. The deciding takes 90 seconds. The cooking takes 30 minutes.
+
+If you want to stop making this decision every week, [DinnerDrop](https://dinnerdrop.app/beta) generates five personalized family dinners in 30 seconds — with a complete grocery list automatically attached. The beta is free for 6 months.
+
+---
+
+## Chicken (The Reliable Backbone)
+
+**1. Sheet Pan Chicken Thighs with Broccoli and Potatoes**
+Season bone-in thighs with olive oil, garlic powder, paprika, salt, pepper. Add broccoli florets and cubed potatoes to the same pan. 425°F for 25 minutes. One pan, no hovering. The thighs stay juicy because they have more fat than breasts — harder to overcook.
+
+**2. Honey Garlic Chicken Stir Fry**
+Cube chicken breast. Cook in a hot pan with sesame oil 6 minutes. Add garlic, soy sauce, honey, a splash of rice vinegar. Toss in frozen broccoli and bell pepper strips. Serve over instant rice. 20 minutes total.
+
+**3. Chicken Quesadillas**
+Rotisserie chicken, shredded cheese, black beans, a few pickled jalapeños. Two tortillas per quesadilla, 3 minutes per side in a dry skillet. Cut into wedges. Add salsa and sour cream. The fastest dinner on this list when chicken is already cooked.
+
+**4. Creamy Tuscan Chicken**
+Chicken breasts in a skillet with sun-dried tomatoes, fresh spinach, garlic, heavy cream, parmesan. 20 minutes. Serve over pasta or crusty bread. Looks restaurant-quality. The cream sauce makes it feel like an occasion even on a Wednesday.
+
+**5. Chicken Fried Rice**
+Day-old rice works best. Scramble eggs in a hot wok or large skillet. Add rice, diced chicken (cooked or rotisserie), frozen peas, carrots, soy sauce, sesame oil. 15 minutes. Better than takeout, a third of the cost.
+
+**6. Buffalo Chicken Wraps**
+Rotisserie chicken tossed in buffalo sauce. Wrap in flour tortillas with shredded lettuce, diced celery, blue cheese or ranch dressing. Ready in 10 minutes. Works as dinner or lunch the next day.
+
+**7. Chicken Piccata**
+Pound chicken breasts thin. Dredge in flour, cook in butter and olive oil 3-4 minutes per side. Add chicken broth, capers, lemon juice to the pan. Sauce forms in 3 minutes while chicken rests. Serve with pasta. Elegant, fast, under 25 minutes.
+
+**8. Greek Chicken Bowls**
+Marinate chicken in olive oil, lemon, garlic, oregano (even 15 minutes works). Grill or pan-cook. Serve over rice or farro with cucumber, cherry tomatoes, kalamata olives, feta, tzatziki. Assembly-line format means everyone builds their own.
+
+**9. Chicken Tacos**
+Season ground or shredded chicken with cumin, chili powder, garlic powder, onion powder. Warm corn tortillas directly over a gas flame or in a dry skillet. Top with shredded cabbage, lime, salsa, cilantro. 20 minutes including prep.
+
+**10. Baked Parmesan Chicken Tenders**
+Dip chicken strips in egg, then panko breadcrumbs mixed with parmesan and garlic powder. Bake at 400°F for 20 minutes until golden. Kids eat these every time. Serve with marinara for dipping. Healthier than frying, crunchier than you'd expect from the oven.
+
+---
+
+## Ground Beef and Turkey (The Fastest Proteins)
+
+**11. Classic Beef Tacos**
+Brown ground beef with onion, garlic, taco seasoning. Hard or soft shells. The toppings are the event — set out shredded cheese, lettuce, tomato, sour cream, salsa, guacamole and let everyone build. 15 minutes.
+
+**12. Weeknight Bolognese**
+Brown ground beef or turkey with onion and garlic. Add a jar of marinara, simmer 10 minutes. Cook pasta in parallel. Combine. Finish with parmesan. The simmer time is flexible — 10 minutes is fine, 20 is better. Ready when the pasta is ready.
+
+**13. Korean Ground Beef Bowls**
+Brown ground beef. Add soy sauce, sesame oil, garlic, ginger, a pinch of brown sugar, red pepper flakes. Serve over white rice with a fried egg on top, sliced green onion, sesame seeds. 20 minutes. Deeply savory and one of the most-requested weeknight meals once a family tries it.
+
+**14. Stuffed Pepper Skillet**
+All the flavor of stuffed peppers without the baking time. Brown ground beef with diced bell peppers, onion, garlic. Add canned diced tomatoes, cooked rice, Italian seasoning. Simmer 10 minutes. Top with shredded mozzarella, cover until melted. One pan, 25 minutes.
+
+**15. Turkey Lettuce Wraps**
+Ground turkey with hoisin sauce, soy sauce, ginger, garlic, water chestnuts. Served in butter lettuce cups. Interactive and faster than most people expect — 20 minutes. Kids like assembling their own wraps.
+
+**16. Cheeseburger Pasta**
+Brown ground beef. Add beef broth, ketchup, mustard, Worcestershire, elbow macaroni, and enough water to cook the pasta in the same pan. Cook 12 minutes covered. Stir in shredded cheddar at the end. Tastes like a cheeseburger in pasta form.
+
+**17. Beef and Broccoli**
+Thin-sliced beef (sirloin or flank steak) marinated 10 minutes in soy sauce, cornstarch, baking soda. Stir fry in batches. Remove. Cook broccoli in the same pan. Return beef, add sauce (soy sauce, oyster sauce, sesame oil, garlic, ginger). Serve over rice.
+
+**18. Ground Turkey Skillet with Zucchini**
+Brown turkey with diced onion. Add zucchini, canned diced tomatoes, garlic, Italian seasoning, a pinch of red pepper. Simmer 10 minutes. Serve in bowls with crusty bread or over pasta. Low-carb option on its own.
+
+**19. Smash Burgers**
+Make loose beef patties (80/20 fat ratio). Cast iron pan very hot. Press patties flat with a spatula when they hit the pan. Don't touch for 2 minutes. Flip once, add cheese, 30 seconds more. The crust that forms is why smash burgers taste better than regular burgers. 20 minutes for the full spread.
+
+**20. Taco Salad**
+Brown ground beef with taco seasoning. Layer over shredded romaine with black beans, corn, diced tomato, avocado, shredded cheese, crushed tortilla chips. Dress with salsa, sour cream, lime. Feels light and still satisfying. Assembly is the main job.
+
+---
+
+## Pasta (The Tuesday Night Fix)
+
+**21. Cacio e Pepe**
+Three ingredients: pasta, pecorino romano, black pepper. The technique is what matters — reserve pasta water, toss the cheese into the starchy water off the heat so it emulsifies instead of clumping. 20 minutes once you learn the method.
+
+**22. Pasta with Sausage and Peppers**
+Slice Italian sausage into rounds. Sauté with bell pepper strips and onion until caramelized. Toss with penne and a jar of marinara, finish with parmesan. 25 minutes. Satisfying and requires no chopping beyond the peppers.
+
+**23. Shrimp Scampi**
+Sauté shrimp in butter, olive oil, garlic, white wine (or chicken broth), lemon. Toss with linguine, parsley, parmesan. 15 minutes once the pasta is cooked. Restaurant-quality fast dinner.
+
+**24. One-Pot Mac and Cheese**
+Pasta, milk, broth, and butter all cooked together in a single pot. Stir in shredded cheddar and cream cheese at the end. Creamier than boxed, faster than baked, and one pot means one thing to clean. 20 minutes.
+
+**25. Pesto Pasta with Chicken**
+Cook pasta, toss with jarred or fresh pesto, add diced rotisserie chicken, halved cherry tomatoes, and a handful of spinach that wilts from the heat. Finish with pine nuts and parmesan if you have them. 15 minutes.
+
+---
+
+## Seafood (Faster Than Most People Think)
+
+**26. Garlic Butter Shrimp Tacos**
+Shrimp tossed in garlic butter, cumin, chili powder — 5 minutes in a hot skillet. Warm corn tortillas. Top with shredded purple cabbage, lime crema (sour cream + lime juice + garlic), sliced avocado. 20 minutes total.
+
+**27. Pan-Seared Salmon with Asparagus**
+Score salmon skin. Season with salt, pepper, garlic powder. Sear skin-side down in a hot oven-safe skillet 4 minutes, flip 2 minutes. Add asparagus to the same pan. 25 minutes including prep. The pan sauce from the salmon drippings handles the asparagus.
+
+**28. Shrimp Fried Rice**
+Same method as chicken fried rice (#5) but with shrimp. The shrimp cooks faster (2-3 minutes), which makes this the fastest fried rice version. Frozen shrimp thaws under cold water in 10 minutes.
+
+**29. Tuna Noodle Skillet**
+Egg noodles cooked and drained. In the same pan: canned tuna, cream of mushroom soup, frozen peas, a splash of milk. Toss together. Top with crushed crackers or breadcrumbs. 20 minutes. Childhood nostalgia with actual protein.
+
+**30. Teriyaki Salmon Bowls**
+Brush salmon with teriyaki sauce (bottled is fine). Bake at 400°F for 12 minutes. Serve over steamed rice with edamame, sliced cucumber, pickled ginger, sesame seeds. Set up as a build-your-own bowl. 25 minutes.
+
+---
+
+## Pork (Underrated Weeknight Option)
+
+**31. Pork Chops with Apples**
+Sear pork chops in butter 3 minutes per side. Remove. Cook sliced apples with brown sugar, cinnamon, a splash of cider vinegar in the same pan until soft. Return pork to warm through. 20 minutes. The sweet-savory combination works exceptionally well with kids.
+
+**32. Carnitas Tacos**
+Buy pre-made carnitas from the deli or rotisserie section. Warm in a pan until crisped on the edges. Corn tortillas, white onion, cilantro, salsa verde, lime. 10 minutes for dinner.
+
+**33. Pork Sausage and White Bean Stew**
+Sliced sausage, canned white beans, canned diced tomatoes, chicken broth, garlic, rosemary, spinach. One pot, 20 minutes. Thick enough to eat as a stew, serve with bread to mop the bottom.
+
+**34. Ham and Cheese Frittata**
+Diced ham, shredded cheddar, eggs, heavy cream, salt, pepper. Pour into an oven-safe skillet, cook on stove 5 minutes until edges set, finish in a 375°F oven 10 minutes. Slice like a pizza. Works for breakfast-for-dinner nights.
+
+**35. BBQ Pulled Pork Sandwiches**
+Buy pre-made pulled pork or use last night's leftovers. Warm with barbecue sauce. Brioche buns, coleslaw on top or on the side. 15 minutes if pork is already cooked. Served with a bag salad for a complete meal.
+
+---
+
+## Meatless (Faster Than You'd Expect)
+
+**36. Black Bean Tacos**
+Canned black beans seasoned with cumin, garlic powder, smoked paprika, lime. Warm corn tortillas. Top with shredded cheese, pickled jalapeños, avocado, salsa, cilantro. 15 minutes. Genuinely filling from the beans and fat from the avocado.
+
+**37. Caprese Pasta**
+Pasta tossed with fresh mozzarella, halved cherry tomatoes, torn basil, olive oil, balsamic glaze. Serve at room temperature or slightly warm. 15 minutes. No cooking beyond the pasta.
+
+**38. Chickpea Tikka Masala**
+Sauté onion, garlic, ginger. Add tikka masala spice blend, canned tomatoes, coconut milk, canned chickpeas. Simmer 15 minutes. Serve over basmati rice. The canned chickpeas mean no protein prep time.
+
+**39. Veggie Fried Rice**
+Same method as #5 but with a variety of vegetables — frozen peas, corn, carrots, edamame — plus scrambled eggs for protein. Faster than any version with meat because there's no protein to cook through.
+
+**40. Loaded Baked Potato Bar**
+Microwave or bake potatoes. Set out toppings: shredded cheese, sour cream, chili, broccoli, bacon bits, butter. Everyone builds their own. The potatoes are the event; the toppings are the dinner. 20 minutes if microwaving.
+
+---
+
+## Soups and Stews (Faster Than They Look)
+
+**41. Chicken Tortilla Soup**
+Rotisserie chicken, canned diced tomatoes, black beans, corn, chicken broth, cumin, chili powder, garlic. Simmer 15 minutes. Serve with tortilla strips, shredded cheese, sour cream. 20 minutes from pantry to table.
+
+**42. Quick Minestrone**
+Canned white beans, diced tomatoes, chicken or vegetable broth, zucchini, carrots, celery, pasta. Everything in one pot, simmer 20 minutes. Serve with parmesan and crusty bread. Better than it has any right to be from pantry staples.
+
+**43. Tomato Soup with Grilled Cheese**
+High-quality canned tomato soup (San Marzano tomatoes) with cream, basil, garlic. Grilled cheese on the side — the combination is complete. 15 minutes, comfort food density, zero stress.
+
+**44. White Chicken Chili**
+Shredded rotisserie chicken, canned white beans, green chiles, chicken broth, cumin, oregano, cream cheese. The cream cheese dissolves into the broth and thickens it. 20 minutes.
+
+**45. Lentil Soup**
+Red lentils (they dissolve — no soaking), canned diced tomatoes, carrots, cumin, coriander, turmeric, lemon juice. Simmer 25 minutes. High protein, high fiber, inexpensive. Red lentils work for picky eaters because they lose all visible lentil texture once cooked.
+
+---
+
+## Eggs (The Speed Round)
+
+**46. Shakshuka**
+Tomato sauce (canned crushed tomatoes, garlic, cumin, paprika, red pepper) simmered in a skillet. Crack eggs directly into the sauce. Cover and cook 5-8 minutes until whites set but yolks run. Serve with pita or crusty bread. 20 minutes.
+
+**47. Spanish Omelette (Tortilla)**
+Olive oil, sliced potatoes, onion cooked low and slow until soft. Beaten eggs poured over. Cook 5 minutes, flip with a plate. 25 minutes. Filling, protein-rich, inexpensive.
+
+**48. Fried Rice with Egg**
+The 15-minute version: eggs, day-old rice, soy sauce, sesame oil, green onion, whatever vegetables are in the fridge. Everything in one pan. Dinner from leftovers without it feeling like leftovers.
+
+**49. Breakfast Burritos**
+Scrambled eggs, sautéed bell peppers and onion, black beans, shredded cheese in a large flour tortilla. Wrap tightly, optional sear in the pan to crisp the outside. 15 minutes. High protein, endlessly variable based on what's in the fridge.
+
+**50. Egg Fried Udon**
+Udon noodles (pre-cooked from the refrigerator section), eggs, soy sauce, sesame oil, green onion, any leftover vegetable. Toss in a very hot pan 5 minutes. One of the fastest dinners on this list.
+
+---
+
+## The Real Problem With 30-Minute Dinners
+
+Most families can make any of these 50 dinners in 30 minutes. The failure point isn't the cooking — it's the deciding.
+
+The typical sequence looks like this: you get home at 5:30, open the fridge, feel overwhelmed, someone asks what's for dinner, you suggest something, it gets vetoed, you start over. By the time you land on a decision, it's 6pm and you've already lost the 30-minute window.
+
+The only real fix is to decide before hunger is in the room. Sunday planning — picking all five dinners for the week — takes 10 minutes when no one is hungry or tired. Tuesday-at-5pm planning takes 20 minutes minimum and produces worse decisions.
+
+If you want to skip the Sunday planning session entirely: [DinnerDrop](https://dinnerdrop.app/beta) generates a personalized week of dinners in 30 seconds. Tell it your family size, cook time tolerance, dietary needs, and preferred store. It builds the full meal plan and grocery list automatically. The beta is free for 6 months — no credit card required for 6 months.
+
+## Frequently Asked Questions
+
+**What's the fastest 30-minute dinner on this list?**
+The fastest realistic options with actual cooking are chicken quesadillas (#3), carnitas tacos (#32), and egg fried udon (#50) — all under 15 minutes if you have the ingredients. Shakshuka (#46) is close behind at 20 minutes and feels like a real meal.
+
+**How do I make 30-minute dinners actually stick as a habit?**
+Rotate the same 10-15 dinners. Novelty is the enemy of speed — the first time you make something takes longer. By the third or fourth time, your hands know the recipe and the 30 minutes is real. Pick favorites from this list and repeat them.
+
+**What do I need to keep stocked to make these work?**
+The pantry staples that unlock most of these: canned tomatoes, canned beans (black, white, chickpeas), chicken broth, soy sauce, rice, pasta, frozen shrimp, frozen vegetables. The fridge basics: eggs, garlic, onion, whatever fresh vegetables are in season. Most of these dinners are possible from this base.
+
+**Can you actually make 50 different dinners in 30 minutes?**
+Every dinner on this list has been specifically selected for under-30-minute actual cooking time (not including reading the recipe slowly for the first time). The 30-minute window assumes you've made the dinner at least once before and have the ingredients on hand.
+
+---
+
+Thirty minutes is enough time for a real dinner. The variable isn't your cooking speed — it's how long the decision takes. Solve the decision problem and the cooking problem takes care of itself.
+`,
+  },
+
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
