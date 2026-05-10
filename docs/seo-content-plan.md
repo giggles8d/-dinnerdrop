@@ -77,7 +77,7 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 
 ### POST 5 -- "picky eater dinner ideas family"
 **Title:** "50 Picky Eater Dinner Ideas the Whole Family Will Actually Eat"
-**File:** docs/blog-post-5.md | **Word count:** 1,800-2,200
+**File:** docs/blog-post-5.md | **STATUS: DRAFT DONE (2026-05-09)** | **Word count:** 2,300
 **CTA:** DinnerDrop dietary filters as the systematic solution
 **Angle:** Massive list post. CTA: "Let DinnerDrop generate a customized version for your family."
 
@@ -116,7 +116,7 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 | Week 2 | Post 2 -- Best Apps Roundup | May 14 | DRAFT DONE |
 | Week 3 | Post 3 -- HelloFresh Alt | May 19 | DRAFT DONE |
 | Week 3 | Post 4 -- Plan a Week Tutorial | May 21 | DRAFT DONE |
-| Week 4 | Post 5 -- Picky Eater | May 26 | Pending |
+| Week 4 | Post 5 -- Picky Eater | May 26 | DRAFT DONE |
 | Week 4 | Post 6 -- Save $1,200 | May 28 | Pending |
 | Month 2 | Posts 7-10 | June | Pending |
 
