@@ -129,3 +129,10 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 - SEO per post: Full metadata export (openGraph, twitter card, canonical URL)
 - Sitemap: Add /blog/* to app/sitemap.ts once live
 - Internal linking: Every post links to /beta CTA; posts cross-link as library grows
+
+
+## Post 7 -- ai-grocery-list-generator
+- Status: DRAFT DONE
+- Publish: 2026-06-02
+- Keyword: AI grocery list generator (7,200/mo)
+- Wired into lib/blog-posts.ts
