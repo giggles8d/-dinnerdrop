@@ -2687,6 +2687,169 @@ Eating cheaply doesn't require eating badly. It requires knowing which ingredien
   },
 
 
+  {
+    slug: 'dinner-ideas-for-two',
+    title: '35 Dinner Ideas for Two That Are Actually Worth Making (Not Just Leftovers)',
+    description:
+      'Cooking for two is its own challenge — most recipes feed six, portions are wrong, and produce goes to waste. ' +
+      'Here are 35 dinner ideas for two that scale right, taste great, and actually get weeknights done.',
+    publishDate: '2026-08-18',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'dinner ideas for two',
+    content: `Cooking for two should be simpler than cooking for a family of five. And in theory, it is. But in practice, it comes with its own friction points that nobody talks about.
+
+Most recipes feed four to six people. Half a head of cabbage sits in your fridge for two weeks. You buy a full bunch of cilantro and use three sprigs. Chicken thighs come in packs of eight. And by the end of the week, you're eating the same leftover pasta for the fourth time.
+
+This list fixes that. Thirty-five dinner ideas sized for two people, built around ingredients that don't go to waste, and varied enough that you won't burn out by Thursday.
+
+## Quick Weeknight Dinners for Two (30 Minutes or Less)
+
+These are the workhorses — fast, reliable, and good enough that you'll make them on rotation.
+
+**1. Lemon Garlic Shrimp Pasta**
+One pound of shrimp, a handful of pasta, butter, garlic, lemon, parsley. Comes together in 20 minutes. Feels like a restaurant meal.
+
+**2. Sheet Pan Chicken Thighs with Roasted Vegetables**
+Two bone-in thighs, whatever vegetables need to be used — bell peppers, zucchini, cherry tomatoes. One pan, 400F, 35 minutes. Almost no cleanup.
+
+**3. Smash Burgers**
+Two balls of 80/20 ground beef, smashed thin on a screaming hot cast iron. Two minutes per side. Better than anything you'd get at a drive-through.
+
+**4. Soy-Glazed Salmon**
+Two fillets, a quick marinade of soy sauce, honey, garlic, and ginger. Sear skin-side up in an oven-safe pan, flip, finish in the oven. Done in 15 minutes.
+
+**5. Steak Fajitas**
+One skirt or flank steak sliced thin after resting, served with sauteed peppers and onions. The whole thing takes 25 minutes if you prep while the steak rests.
+
+**6. Caprese Chicken**
+Two chicken breasts pounded thin, seared and topped with fresh mozzarella, tomatoes, and basil. Italian restaurant energy, grocery store budget.
+
+**7. Pork Fried Rice**
+Leftover rice (or microwave rice), two eggs, a handful of frozen peas, and whatever protein you have. One of the best fridge-cleanout meals in existence.
+
+**8. White Wine Mussels**
+A pound of mussels steams in a broth of white wine, garlic, and butter in under 10 minutes. Serve with crusty bread. Looks impressive, costs almost nothing.
+
+**9. Turkey Tacos**
+Half a pound of ground turkey cooks fast and goes further than beef. Season with cumin, chili powder, garlic, and oregano. Serve in corn tortillas with whatever toppings you have.
+
+**10. Pasta Aglio e Olio**
+Spaghetti, olive oil, garlic, red pepper flakes, parsley, Parmesan. Five ingredients. Fifteen minutes. One of the best pasta dishes in the world.
+
+## Date Night Dinners for Two
+
+These take a bit more effort but the result feels like a real occasion.
+
+**11. Pan-Seared Duck Breast**
+Score the fat, cook fat-side down on medium heat for 10-12 minutes to render, flip and sear for 3-4 more, rest for 5. Serve with a quick cherry or orange pan sauce.
+
+**12. Crab-Stuffed Mushrooms**
+Large portobello caps filled with crab, cream cheese, garlic, and breadcrumbs. Bake at 375F for 20 minutes.
+
+**13. Beef Tenderloin Medallions**
+Smaller and more affordable than a full roast, medallions cook in under 10 minutes per side. Finish with a red wine reduction or compound butter.
+
+**14. Lobster Ravioli with Brown Butter**
+Store-bought lobster ravioli tossed in browned butter with sage. Looks like you spent hours. Takes 15 minutes.
+
+**15. Honey Garlic Lamb Chops**
+Four small lamb chops marinated in honey, garlic, and rosemary, seared 3 minutes per side. Serve with roasted potatoes.
+
+**16. Scallop Risotto**
+Stir in warm broth slowly while searing scallops separately, add them at the end. The result justifies the effort.
+
+**17. Blackened Halibut with Mango Salsa**
+Coat halibut fillets in blackening spice, sear in a cast iron skillet until charred. Top with fresh mango salsa.
+
+**18. Pork Tenderloin with Apple Cider Glaze**
+One small pork tenderloin sears on the stovetop and finishes in the oven in 15 minutes. The apple cider glaze takes another 5.
+
+## Budget Dinners for Two
+
+**19. Black Bean Tacos**
+One can of black beans, seasoned and mashed slightly, served in corn tortillas with avocado and hot sauce. A filling dinner under $5 for two.
+
+**20. Frittata**
+Four to six eggs, whatever cheese you have, and any vegetables that need using. Cook stovetop until the edges set, finish under the broiler. Dinner in 15 minutes.
+
+**21. Lentil Soup**
+One cup of red lentils, one can of diced tomatoes, onion, garlic, cumin, and smoked paprika. Simmer 25 minutes. Protein-rich and extremely affordable.
+
+**22. Shakshuka**
+Eggs poached in spiced tomato sauce. One can of crushed tomatoes, one onion, garlic, and spices. Serve with pita. Vegetarian and very satisfying.
+
+**23. Chicken Thigh Stir Fry**
+Thighs are cheaper than breasts and stay juicier in a hot pan. Slice thin, cook with vegetables, finish with soy sauce, sesame oil, and ginger over rice.
+
+**24. Pasta e Fagioli**
+Italian bean and pasta soup. One can of cannellini beans, a handful of small pasta, canned tomatoes, broth, garlic. Thick, filling, and nearly free to make.
+
+**25. Bean and Cheese Quesadillas**
+Flour tortillas, refried beans, shredded cheese. Sear in a dry pan until crispy. Serve with sour cream and avocado.
+
+**26. Tuscan White Bean Skillet**
+Cannellini beans, canned tomatoes, garlic, spinach, and Italian sausage. Twenty minutes in one pan.
+
+**27. Egg Fried Rice**
+The ultimate leftover-rice meal. Cold rice fries better than fresh. Two eggs, soy sauce, sesame oil, scallions. A full dinner in 10 minutes.
+
+## Meal Prep Dinners for Two
+
+**28. Sheet Pan Sausage and Peppers**
+One pack of Italian sausage sliced and roasted with bell peppers and onions. Makes enough for dinner and lunch tomorrow.
+
+**29. Chicken and Rice Casserole**
+Two chicken thighs, one cup of rice, broth, onion, and garlic baked together. The rice absorbs all the chicken drippings. Better the next day.
+
+**30. Turkey Chili**
+Half a pound of ground turkey, one can each of kidney beans, diced tomatoes, and corn. Season with chili powder, cumin, and smoked paprika. Makes four servings — freeze half.
+
+**31. Salmon Grain Bowl**
+Cook a batch of farro or brown rice on Sunday. Roast two salmon fillets. Prep toppings — cucumber, edamame, avocado. Assemble in 5 minutes on busy nights.
+
+**32. Beef and Broccoli**
+Flank steak sliced thin, marinated in soy sauce and oyster sauce, stir-fried with broccoli. Better than takeout and faster to make.
+
+**33. Minestrone**
+A pot of vegetable and pasta soup that improves every day in the fridge. Zucchini, carrots, celery, canned tomatoes, white beans, and small pasta. Six servings, one pot.
+
+**34. Greek Chicken Bowls**
+Marinate chicken thighs in lemon, garlic, olive oil, and oregano. Grill or bake. Serve over rice with tzatziki, cucumber, and olives. Component prep makes this a 5-minute assembly dinner.
+
+**35. Veggie Curry with Chickpeas**
+One can of chickpeas, one can of coconut milk, curry paste, spinach, and diced sweet potato. Simmer 20 minutes. Serve over rice. The leftovers are better than the original.
+
+## The Cooking-for-Two Problem Nobody Talks About
+
+The real challenge with cooking for two isn't the recipes — it's the planning. Most groceries come in quantities sized for families: a full head of cabbage, eight chicken thighs, a 28-ounce can of tomatoes when you need 14 ounces.
+
+The workaround is planning meals that share ingredients throughout the week. If you buy a head of cabbage, plan a slaw, a stir fry, and a soup that all use it. If you buy cilantro, plan two or three meals before it wilts. That kind of coordinated planning is exactly what [DinnerDrop](https://dinnerdrop.app/beta) does automatically.
+
+Tell it your household size, dietary preferences, and how much time you have to cook each night, and it generates five matched dinners plus a complete, deduplicated grocery list in under 30 seconds. No more half-used produce going bad in the crisper drawer. [Try it free for 7 days.](https://dinnerdrop.app/beta)
+
+## Frequently Asked Questions
+
+<h3>What are the easiest dinners to make for two people?</h3>
+<p>Pasta dishes, stir fries, and sheet pan meals are the most reliable. They require minimal prep, cook fast, and are easy to scale to exactly two portions. Pasta aglio e olio, sheet pan chicken thighs, and any fried rice are consistently fast and foolproof.</p>
+
+<h3>How do I avoid leftovers when cooking for two?</h3>
+<p>Choose recipes that specifically scale to two portions — most standard recipes serve four to six, so halving is necessary. Proteins like shrimp, scallops, two chicken thighs, or a single steak naturally portion for two without waste.</p>
+
+<h3>What proteins are best for cooking for two?</h3>
+<p>Shrimp (measurable by count), chicken thighs (sold individually), salmon fillets, pork tenderloin (sized for two), and eggs are the most flexible for small households. Ground meat works well too — buy half a pound instead of a full pound.</p>
+
+<h3>How do I add variety when cooking for two?</h3>
+<p>Rotate across protein types each week: one chicken night, one fish night, one red meat night, one vegetarian night. Vary the cuisine within each protein type to keep things from feeling repetitive.</p>
+
+## The Bottom Line
+
+Pick five from this list. Build a week around them. Grocery shop for just those five meals.
+
+If planning is the hard part, [DinnerDrop](https://dinnerdrop.app/beta) handles it automatically — five personalized dinners and a complete grocery list sized for your household, built in under 30 seconds. Free for 7 days.
+    `,
+  },
+
+
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
