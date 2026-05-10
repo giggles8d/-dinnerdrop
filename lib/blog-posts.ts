@@ -346,8 +346,9 @@ For most families, switching from HelloFresh to an AI meal planner saves **$1,30
     title: 'How to Plan a Week of Dinners in 30 Seconds (AI Does the Heavy Lifting)',
     description:
       'Stop spending 45 minutes planning dinners every Sunday. AI meal planners generate a full week of family dinners — tailored to your dietary needs and family size — in under 30 seconds.',
-    publishedAt: '2026-05-21',
-    readingTime: '7 min',
+    publishDate: '2026-05-21',
+    readingTimeMinutes: 7,
+    primaryKeyword: 'how to plan a week of dinners',
     content: `## How to Plan a Week of Dinners in 30 Seconds (AI Does the Heavy Lifting)
 
 Every Sunday, millions of parents sit down to do the same mental labor: stare at a blank week, try to remember what's already in the fridge, flip through recipes, cross-reference everyone's preferences, and build a grocery list from scratch.
@@ -877,10 +878,11 @@ If that's what you're looking for, [DinnerDrop has a free 6-month beta](https://
 
   {
     slug: 'meal-prep-for-beginners',
+    primaryKeyword: 'meal prep for beginners',
     title: 'Meal Prep for Beginners: The Only Guide You Actually Need',
     description: 'Start meal prepping without the overwhelm. This beginner guide shows you exactly what to prep, when to prep it, and how AI dinner planning makes the whole system click.',
-    publishedAt: '2026-06-09',
-    readingTime: 7,
+    publishDate: '2026-06-09',
+    readingTimeMinutes: 7,
     content: `
 Most people try meal prep once, spend three hours on a Sunday making six identical containers
 of sad brown rice and grilled chicken, eat it twice, and never do it again.
@@ -1401,10 +1403,11 @@ Try DinnerDrop free for 7 days at /beta, or grab a 6-month free beta spot while 
   },
     {
     slug: "ai-meal-planner",
+    primaryKeyword: 'AI meal planner',
     title: "The Best AI Meal Planner in 2026 (That Actually Learns Your Family)",
     description: "Most apps marketed as AI meal planners are just recipe filters. Here's what a real AI meal planner does differently — and which one actually delivers for families.",
     publishDate: "2026-06-30",
-    readingTime: "7 min",
+    readingTimeMinutes: 7,
     content: `# The Best AI Meal Planner in 2026 (That Actually Learns Your Family)
 
 Most meal planning apps give you a list of recipes and call it a day. An AI meal planner is supposed to do more than that — it should learn your family's preferences, work within your budget, and hand you a grocery list you can actually use. The difference between the two is enormous in practice, and most apps marketed as "AI-powered" fall well short of what that label promises.

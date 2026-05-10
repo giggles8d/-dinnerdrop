@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
         // Detect BETA100 coupon usage — beta members get 6 months free and should NOT
         // receive the standard Day 6/7 trial-end urgency emails (would alarm them)
         const isBetaMember = session.total_details?.breakdown?.discounts?.some(
-          (d: { coupon?: { id?: string } }) => d.coupon?.id === 'BETA100'
+          (d) => (d as { discount?: { coupon?: { id?: string } }; coupon?: { id?: string } }).discount?.coupon?.id === 'BETA100'
         ) ?? false
         await supabase
           .from('profiles')

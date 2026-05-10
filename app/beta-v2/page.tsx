@@ -11,10 +11,12 @@ export default function BetaV2Page() {
   useEffect(() => {
     fetch('/api/stripe/beta-spots')
       .then((res) => res.json())
-      .then((data) => setSpotsRemaining(data.spotsRemaining)
+      .then((data) => {
+        setSpotsRemaining(data.spotsRemaining)
         if (data.spotsRemaining === 0) {
           router.replace('/waitlist')
-        })
+        }
+      })
       .catch(() => setSpotsRemaining(100))
   }, [])
 
