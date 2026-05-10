@@ -136,3 +136,10 @@ All posts link to DinnerDrop with a soft in-article CTA toward the beta offer.
 - Publish: 2026-06-02
 - Keyword: AI grocery list generator (7,200/mo)
 - Wired into lib/blog-posts.ts
+
+
+## Post 8 -- meal-prep-for-beginners
+- Status: DRAFT DONE
+- Publish: 2026-06-09
+- Keyword: meal prep for beginners (40,500/mo, Medium difficulty)
+- Wired into lib/blog-posts.ts
