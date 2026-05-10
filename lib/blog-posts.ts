@@ -1541,6 +1541,185 @@ If you want to try what that actually feels like, DinnerDrop is currently in bet
 [**Claim your beta spot →**](https://dinnerdrop.app/beta)
 `,
   },
+  {
+    slug: 'dinner-ideas-busy-weeknights',
+    title: 'The Best Dinner Ideas for Busy Weeknights (That Actually Work)',
+    description:
+      'Fast, realistic dinner ideas for busy weeknights when you have 30 minutes or less. No elaborate prep, no specialty ingredients — just dinners your family will eat.',
+    publishDate: '2026-07-07',
+    readingTimeMinutes: 7,
+    primaryKeyword: 'dinner ideas for busy weeknights',
+    content: `When you get home at 6:15pm with two hungry kids and zero mental energy, "dinner ideas" has a very specific definition. It means: fast, uses real food you already have, won't cause a dinner table mutiny, and won't leave you cleaning the kitchen until 8:30.
+
+This list is built for that reality — not for the version of weeknight cooking that involves mise en place and resting your proteins.
+
+## The Ground Rules for Real Weeknight Dinners
+
+Before the list: a few principles that make weeknight dinners actually work.
+
+**20–30 minutes is the real limit.** Anything that takes longer doesn't get made. It gets abandoned at 6:45 when someone orders pizza.
+
+**Pantry staples beat specialty ingredients every time.** The best weeknight meals use things you usually have: canned tomatoes, dried pasta, eggs, frozen protein, a block of cheese, whatever vegetables didn't get eaten last week.
+
+**"Good enough" beats "perfect."** A meal your family eats cheerfully at 6:45pm is infinitely better than a meal you're still cooking at 7:30pm and everyone is miserable about.
+
+**Variety fatigue is real.** If you eat the same rotation of 6 dinners every week, everyone (including you) loses interest. Building a wider rotation — 12 to 15 weeknight meals — prevents this without requiring restaurant-level effort.
+
+## The 15 Best Dinner Ideas for Busy Weeknights
+
+### 1. Sheet Pan Chicken Thighs + Whatever Vegetables
+
+**Time:** 30 minutes (mostly oven time)
+
+Toss bone-in chicken thighs with olive oil, salt, garlic powder, and paprika. Add any vegetables to the pan — broccoli, potatoes, zucchini, bell peppers, cherry tomatoes, green beans. Roast at 425°F for 25-28 minutes. One pan, zero supervision required.
+
+Why it works: The oven does the work while you're helping with homework or decompressing. The chicken renders its fat and essentially self-bastes.
+
+### 2. Pasta Aglio e Olio (Garlic Pasta)
+
+**Time:** 15 minutes
+
+Boil pasta. In the time it takes, mince 6 cloves of garlic and sauté in generous olive oil until golden — not burnt. Add red pepper flakes and parsley. Toss with pasta and pasta water. That's it.
+
+Why it works: The ingredients are always in your kitchen. The whole dish costs less than $3. Kids who claim to hate "spicy food" somehow always eat it.
+
+### 3. Quesadillas
+
+**Time:** 10 minutes
+
+Large flour tortilla, shredded cheese (any kind), and whatever protein you have — leftover chicken, canned black beans, rotisserie chicken, ground beef that's already cooked. Fold and pan-fry.
+
+Why it works: It's infinitely variable, kids reliably eat it, and the assembly takes 3 minutes. Add salsa and sour cream and it feels like an actual dinner.
+
+### 4. Fried Rice
+
+**Time:** 15 minutes (requires day-old rice)
+
+The catch: you need rice that was cooked yesterday. The fix: make extra rice whenever you cook it. Then weeknight fried rice is 15 minutes flat. Scramble eggs in a hot wok, add cold rice, soy sauce, sesame oil, frozen peas. Done.
+
+Why it works: It's the ultimate use-what's-in-the-fridge meal. Add any protein, any vegetable, any sauce combination.
+
+### 5. Tacos
+
+**Time:** 20 minutes
+
+Brown ground beef or turkey with taco seasoning. Warm tortillas. Put out the toppings and let everyone build their own.
+
+Why it works: Universal appeal + self-assembly = no short-order cooking. The bar for execution is low and the result is reliably good.
+
+### 6. Shakshuka (Eggs in Tomato Sauce)
+
+**Time:** 20 minutes
+
+Sauté onion and bell pepper, add a can of crushed tomatoes with cumin and paprika, crack eggs directly into the sauce, cover and simmer 8 minutes. Serve with bread or pita.
+
+Why it works: It looks impressive for how little effort it requires. Vegetarian, filling, and most kids who like eggs will eat it.
+
+### 7. Stir-Fry
+
+**Time:** 15 minutes
+
+High heat. Oil. Any protein cut small (chicken breast, shrimp, beef strips, tofu). Any crunchy vegetable (broccoli, snap peas, bell pepper, carrots, bok choy). Soy sauce, garlic, and a splash of sesame oil. Serve over rice.
+
+Why it works: Once you have the technique down (very hot pan, don't crowd it), stir-fry is faster than any takeout.
+
+### 8. Soup + Crusty Bread
+
+**Time:** 20-25 minutes
+
+The key is starting with store-bought broth. Sauté aromatics (onion, garlic, carrot, celery), add broth and whatever else you have — canned white beans, pasta, leftover chicken, frozen vegetables — and simmer. Pick up a loaf of bread on the way home.
+
+Why it works: Soup scales easily, most vegetables work, and bread turns it into a complete meal that feels more substantial than it is.
+
+### 9. Baked Salmon
+
+**Time:** 12 minutes
+
+Season salmon fillets with salt, pepper, and lemon. Bake at 400°F for 10-12 minutes. Done.
+
+Why it works: Fish is the fastest protein. If your family eats salmon, this is one of the fastest complete dinners you can make. Add frozen vegetables or a bag salad and you're done in 15 minutes total.
+
+### 10. Frittata
+
+**Time:** 20 minutes (oven required)
+
+Beat 6-8 eggs with salt and a splash of cream. Sauté any vegetables and protein in an oven-safe skillet. Pour eggs over the top. Cook on stove 2-3 minutes, then transfer to 375°F oven for 8 minutes until set.
+
+Why it works: It uses whatever's left in your fridge — vegetables that need to get used, leftover cheese, any cooked protein. It looks more intentional than scrambled eggs.
+
+### 11. Ground Beef Tacos → Taco Salad (Same Ingredients)
+
+**Time:** 20 minutes, serves two different nights
+
+This is the rotation hack: make a big batch of taco meat Monday. Monday is tacos. Wednesday is taco salad with the leftovers (tortilla chips, lettuce, the same meat, cheese, salsa). Two different meals, one cooking session.
+
+### 12. One-Pot Pasta
+
+**Time:** 20 minutes
+
+Add dry pasta to a pot with broth (not water), cherry tomatoes, spinach, garlic, and olive oil. Cook until the pasta absorbs the liquid. The starch from the pasta creates a creamy sauce. No draining required.
+
+Why it works: Minimal dishes, minimal cleanup, works with whatever you have. Add Italian sausage, shrimp, or chicken for protein.
+
+### 13. Loaded Baked Potatoes
+
+**Time:** 45 minutes (90% oven time) OR 8 minutes (microwave)
+
+If you have time: roast potatoes at 425°F for 45 minutes. If you don't: microwave for 8 minutes. Load with cheese, sour cream, chili from a can, leftover pulled chicken, broccoli — whatever you have.
+
+Why it works: Baked potatoes are infinitely customizable, filling, and beloved by children who are difficult about most foods.
+
+### 14. Noodle Bowls
+
+**Time:** 15 minutes
+
+Boil ramen noodles (or rice noodles, or lo mein). Mix a sauce of soy sauce, peanut butter, lime juice, sesame oil, and sriracha. Pour over noodles. Add whatever vegetables and protein you have.
+
+Why it works: The peanut sauce is extremely forgiving and very hard to mess up. Cold peanut noodles are also good leftover, which is a weeknight bonus.
+
+### 15. Smash Burgers
+
+**Time:** 15 minutes
+
+Form ground beef loosely into balls (don't pack tight). Get a cast iron pan smoking hot. Add balls, smash flat with a spatula. Season, flip once, add cheese. Toast buns 30 seconds.
+
+Why it works: The hard smash on high heat creates a crust that's genuinely better than a traditional burger. It takes less time than driving to get fast food.
+
+## The Bigger Problem: Coming Up With Ideas Every Week
+
+The list above solves tonight's problem. But the real weeknight dinner struggle isn't a shortage of recipes — it's having to generate the plan from scratch 52 times a year.
+
+Most families spend 15-30 minutes every week deciding what to cook, cross-referencing what's on sale, checking the fridge, trying to remember who has practice on Tuesday. That's a significant invisible tax.
+
+**The system that fixes this:** Plan five dinners on Sunday when you have a full cognitive tank, build the grocery list from the plan, and then execute rather than decide during the week.
+
+**The AI version:** [DinnerDrop](https://dinnerdrop.app) generates your weekly five-dinner plan and grocery list in about 30 seconds, personalized to your family's size, dietary needs, and how much time you want to spend cooking. You approve the plan, send the grocery list to your store, and cook during the week without making a single decision.
+
+For families where even Sunday planning feels like a task they can't reliably do, having the plan generated automatically removes the last friction point.
+
+---
+
+## Frequently Asked Questions
+
+**What's the fastest weeknight dinner that's not takeout?**
+Quesadillas (10 minutes) and pasta aglio e olio (15 minutes) are the fastest complete dinners. Both require only pantry staples and minimal cleanup.
+
+**What do I do when the kids refuse everything?**
+The most reliable strategy is one safe food at every meal (something you know they'll eat, like plain pasta or rice), plus the rest of the meal for everyone else. Over time, exposure breeds acceptance — most pickiness is developmental, not permanent.
+
+**How do I stop making the same 5 dinners every week?**
+Build a rotation of 12-15 meals instead of 5-6. Having more options means you're not eating the same thing every week. Write the list down (or use an app that tracks it for you) so you're not trying to remember it from scratch every Sunday.
+
+**Is meal prepping on Sunday worth it?**
+Meal prepping full meals (cooking 6 identical containers) is hard to sustain. But prepping components — cooked grains, cut vegetables, marinated proteins — dramatically speeds up weeknight cooking without requiring a 3-hour Sunday session. 20 minutes of Sunday prep can save 40 minutes across the week.
+
+---
+
+The best weeknight dinner system is the one you'll actually use. Start with 5-7 meals your family genuinely likes. Rotate them. Add 2-3 new ones every month. Keep a grocery list that reflects the plan. That's the whole system.
+
+[**DinnerDrop automates the weekly planning step →**](https://dinnerdrop.app/beta)
+`,
+  },
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
