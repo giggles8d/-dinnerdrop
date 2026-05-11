@@ -6552,6 +6552,172 @@ The 30 dinners above cover every picky-eater scenario: the child who only eats b
 
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
+  {
+    id: 39,
+    title: '30 Salmon Recipes for Easy Weeknight Dinners',
+    slug: 'salmon-recipes',
+    description: 'Simple salmon recipes for busy families. Sheet pan, glazed, baked, and skillet — 30 weeknight dinner ideas ready in 30 minutes or less, with a full grocery list in one tap.',
+    publishDate: '2027-01-12',
+    readingTimeMinutes: 9,
+    content: `# 30 Salmon Recipes for Easy Weeknight Dinners
+
+Salmon is the weeknight dinner protein most families underuse. It cooks faster than chicken, requires less prep than beef, and works with almost every flavor direction — Asian glazes, Mediterranean herbs, American comfort sauces, or nothing but salt, pepper, and lemon. A salmon fillet goes from raw to table in 12 to 15 minutes. Most of the 30 recipes below take 30 minutes total.
+
+The barrier is usually unfamiliarity: people who did not grow up cooking salmon are not sure how to tell when it is done or which methods work best. The answer is simple — salmon is done when it flakes easily at the thickest point and has changed from translucent to opaque throughout. A 6-ounce fillet at 400 degrees in the oven takes 12 to 15 minutes. In a skillet over medium-high heat, it takes 4 minutes per side. That is the whole technique.
+
+---
+
+## Sheet Pan Salmon
+
+**1. Lemon Herb Sheet Pan Salmon**
+Place 4 salmon fillets skin-side down on a foil-lined sheet pan. Drizzle with olive oil, season with salt, pepper, garlic powder, and dried oregano. Top each fillet with two thin lemon slices. Roast at 400 degrees for 12 to 14 minutes until flaky. Add asparagus or green beans to the same pan — toss in oil and season, and roast alongside the salmon. One pan, one oven, dinner in 20 minutes including prep.
+
+**2. Sheet Pan Teriyaki Salmon and Broccoli**
+Whisk soy sauce, honey, rice vinegar, sesame oil, and minced garlic. Pour half over salmon fillets on a sheet pan, reserving the rest. Add broccoli florets tossed in oil and salt. Roast at 425 degrees for 13 to 15 minutes. Drizzle reserved teriyaki glaze over everything before serving. Serve over white rice. This is the version of takeout teriyaki you can make in the time it takes to order delivery.
+
+**3. Cajun Sheet Pan Salmon and Potatoes**
+Toss baby potatoes with olive oil, garlic powder, paprika, salt, and pepper. Spread on a sheet pan and roast at 425 degrees for 15 minutes. Push potatoes to the sides, add salmon fillets, coat with Cajun seasoning and a thin coat of oil. Return to oven for 12 to 14 minutes. Add sliced bell peppers with the salmon for color and sweetness. Everything roasts at the same temperature — no timing adjustments required.
+
+**4. Honey Mustard Sheet Pan Salmon**
+Whisk Dijon mustard, honey, a small amount of olive oil, salt, and garlic powder. Coat salmon fillets generously. Arrange on a sheet pan with halved Brussels sprouts or sliced zucchini. Roast at 400 degrees for 14 to 16 minutes until salmon is cooked through and glaze is slightly caramelized. The Dijon cuts through the richness of the salmon and the honey provides a light crust.
+
+**5. Mediterranean Sheet Pan Salmon**
+Place salmon fillets on a sheet pan with cherry tomatoes, kalamata olives, and thinly sliced red onion. Drizzle everything with olive oil, season with salt, pepper, dried oregano, and a squeeze of lemon. Roast at 400 degrees for 13 to 15 minutes. Finish with fresh basil and crumbled feta. Serve with crusty bread or over orzo. This is the dinner that looks impressive with almost no effort.
+
+**6. Garlic Butter Sheet Pan Salmon and Green Beans**
+Melt butter with minced garlic, a pinch of red pepper flakes, and lemon zest. Arrange salmon fillets and fresh green beans on a sheet pan. Spoon garlic butter over both. Roast at 425 degrees for 12 to 14 minutes. The butter bastes the salmon as it cooks and gives the green beans a richness that makes them worth eating on their own. Finish with a squeeze of lemon and serve immediately.
+
+---
+
+## Glazed and Sauced Salmon
+
+**7. Soy Ginger Glazed Salmon**
+Combine soy sauce, fresh grated ginger, honey, garlic, and a splash of sesame oil in a small saucepan. Simmer 3 to 4 minutes until slightly thickened. Sear salmon fillets in a hot ovenproof skillet for 3 minutes, flip, spoon glaze over top, and transfer to a 400-degree oven for 6 to 8 more minutes. The glaze thickens and lacquers the top of the fillet. Serve over rice with steamed edamame.
+
+**8. Maple Dijon Glazed Salmon**
+Whisk maple syrup, Dijon mustard, a splash of apple cider vinegar, salt, and black pepper. Coat salmon fillets and marinate for 15 minutes if time allows, or proceed immediately. Bake at 400 degrees for 14 to 16 minutes, brushing with additional glaze halfway through. The maple caramelizes at the edges and the mustard keeps the flavor from being too sweet. One of the most accessible salmon preparations for people who think they do not like fish.
+
+**9. Teriyaki Salmon**
+Make teriyaki sauce: soy sauce, mirin, sake or dry sherry, sugar, and a cornstarch slurry. Cook salmon fillets in a nonstick skillet over medium-high heat 3 to 4 minutes per side. Remove fish, add sauce to the pan, and let it bubble and thicken for 2 minutes. Return fish to coat. Serve immediately over steamed rice. Making teriyaki sauce from scratch takes 3 minutes and tastes significantly better than bottled versions.
+
+**10. Brown Sugar Soy Salmon**
+Mix brown sugar, soy sauce, garlic, and a small amount of olive oil. Marinate salmon fillets for 20 to 30 minutes, or as little as 5 minutes in a pinch. Bake at 400 degrees for 14 to 15 minutes. The brown sugar forms a thin, slightly caramelized crust that contrasts with the savory soy. This is the salmon recipe that converts people who claim not to like salmon — the sweetness rounds out the fish flavor.
+
+**11. Creamy Dill Salmon**
+Sear salmon fillets in a skillet 3 to 4 minutes per side, remove, and set aside. In the same pan, add a splash of white wine or chicken broth, scraping up any brown bits. Add heavy cream, fresh dill, lemon juice, salt, and black pepper. Simmer until slightly thickened, return salmon to the pan, and spoon sauce over top for 1 to 2 minutes. Serve over egg noodles or mashed potatoes.
+
+**12. Spicy Sriracha Lime Salmon**
+Whisk sriracha, honey, soy sauce, lime juice, and garlic. Coat salmon fillets and bake at 400 degrees for 12 to 14 minutes, or broil the last 2 minutes for a slightly charred top. The heat from the sriracha is balanced by the honey and brightened by lime. Serve over cilantro lime rice with sliced avocado. This version works well for meal prep — the bold flavor holds up after reheating.
+
+---
+
+## One-Pan Skillet Salmon
+
+**13. Pan-Seared Salmon with Garlic Butter**
+Pat salmon fillets completely dry — this is the key to a good sear. Season with salt and pepper. Heat a skillet over medium-high until very hot. Add oil, then salmon skin-side up. Press lightly with a spatula for the first 30 seconds to prevent curling. Cook 4 minutes without moving, flip, add butter and garlic to the pan, and baste the salmon with the melting butter for 3 to 4 more minutes. The butter basting finishes the fish in fat rather than dry heat.
+
+**14. Salmon with Sun-Dried Tomato Cream Sauce**
+Sear salmon in a skillet, remove, and set aside. In the same pan, saute garlic and sun-dried tomatoes in the remaining oil for 2 minutes. Add chicken broth, heavy cream, Italian seasoning, salt, and a handful of baby spinach. Simmer until sauce thickens slightly and spinach wilts. Return salmon to the pan to warm through. Serve over pasta or rice. This one-pan method builds a restaurant-quality sauce from the fond left in the skillet.
+
+**15. Lemon Caper Salmon**
+Sear salmon fillets in butter over medium-high heat, 4 minutes per side, and remove. In the same pan, add more butter, minced garlic, capers, lemon juice, and lemon zest. Cook 1 minute until fragrant. Pour the pan sauce over the salmon. This is a simplified weeknight version of a classic French pan sauce — the capers provide the acidity and salt that balance the richness of the butter and fish.
+
+**16. Asian-Style Salmon Stir Fry Bowl**
+Cut salmon into 1-inch cubes. Toss with soy sauce, sesame oil, and a pinch of cornstarch. Sear in a very hot wok or skillet 2 to 3 minutes, stirring gently to avoid breaking the fish. Remove, stir fry sliced bell peppers, snap peas, and shredded carrots in the same wok. Return salmon, add remaining sauce, toss gently. Serve over rice. Salmon cubes cook faster than chicken pieces and hold up well in a stir fry format.
+
+**17. Salmon Tacos**
+Season salmon with cumin, chili powder, garlic powder, salt, and a squeeze of lime. Cook in a lightly oiled skillet over medium-high heat 3 to 4 minutes per side. Flake into large chunks. Warm corn or flour tortillas. Serve salmon in tortillas with shredded cabbage, sliced avocado, crema or sour cream, and a lime wedge. Salmon tacos come together in 15 minutes total and convert households that only do ground beef tacos.
+
+**18. Salmon Fried Rice**
+Cook salmon, flake into large pieces, and set aside. In a wok or large skillet, heat oil over high heat. Add cold cooked rice, pressing flat against the pan and not stirring for 1 to 2 minutes to develop a crust. Scramble in 2 eggs, add soy sauce, sesame oil, sliced scallions, and frozen peas. Fold in flaked salmon at the end. Cold leftover rice works best — freshly cooked rice produces mushy fried rice. This is an excellent use for leftover salmon from a previous dinner.
+
+---
+
+## Baked Salmon
+
+**19. Simple Baked Salmon**
+The most reliable basic preparation: place salmon fillets skin-side down on a foil-lined baking sheet. Season with salt, pepper, and olive oil. Bake at 400 degrees for 12 to 15 minutes depending on thickness. The salmon is done when it flakes easily at the thickest part and a thermometer reads 125 to 130 degrees for medium or 145 degrees for fully cooked. Squeeze lemon over top before serving. Master this and every other preparation follows naturally.
+
+**20. Parmesan Herb Crusted Salmon**
+Mix panko breadcrumbs, grated parmesan, chopped fresh parsley, garlic, and olive oil. Press the mixture onto the top of each salmon fillet. Bake at 400 degrees for 14 to 16 minutes until the crust is golden and the salmon flakes easily. The parmesan crust adds texture, salt, and richness that makes this version feel more substantial. Good for serving to guests who expect something more complex.
+
+**21. Miso Glazed Salmon**
+Whisk white miso paste, mirin, sake or dry sherry, sugar, and a small amount of soy sauce. Coat salmon fillets thoroughly and marinate in the refrigerator for at least 30 minutes, up to overnight. Wipe off excess marinade and bake at 400 degrees for 12 to 14 minutes, or broil for the last 2 minutes for caramelization. Miso-glazed salmon is one of the most flavorful preparations with the least active cooking — most of the work happens during the marinade.
+
+**22. Stuffed Salmon with Spinach and Cream Cheese**
+Butterfly thick salmon fillets by cutting a pocket lengthwise without slicing through. Mix softened cream cheese, thawed squeezed spinach, garlic, salt, and lemon zest. Fill each pocket with the mixture and secure with a toothpick. Bake at 375 degrees for 20 to 22 minutes. The filling keeps the salmon moist from the inside and adds enough substance to make this a complete dinner without any sides beyond a simple salad.
+
+**23. Everything Bagel Salmon**
+Coat salmon fillets with a thin layer of cream cheese. Press everything bagel seasoning generously onto the top. Bake at 400 degrees for 14 to 16 minutes. The cream cheese keeps the seasoning in place and adds a slight richness. The sesame seeds, poppy seeds, onion, and garlic toast during baking and create a genuinely compelling crust. This preparation takes 5 minutes of actual work.
+
+**24. Herb and Walnut Crusted Salmon**
+Pulse walnuts, fresh parsley, garlic, olive oil, lemon zest, and salt in a food processor until coarsely chopped — not paste. Press onto the top of each salmon fillet. Bake at 400 degrees for 14 to 15 minutes. The walnuts toast during baking and provide a nutty crust that complements the richness of the salmon. Serve with roasted vegetables and a lemon wedge. This is a dinner that looks more involved than it actually is.
+
+---
+
+## Quick 20-Minute Salmon
+
+**25. Air Fryer Salmon**
+Season salmon fillets with olive oil, salt, pepper, and garlic powder. Place in the air fryer basket skin-side down. Cook at 400 degrees for 10 to 12 minutes, depending on thickness. The salmon comes out with a slightly crisped exterior and moist interior. Works with any seasoning combination: Cajun, Italian, lemon herb, or teriyaki. Air fryer salmon is the fastest path to a properly cooked fillet with no pan to clean.
+
+**26. Broiled Salmon with Herb Butter**
+Mix softened butter with chopped fresh dill, chives, garlic, lemon zest, and salt. Place salmon on a foil-lined broiler pan. Spread herb butter across the top of each fillet. Broil 5 to 6 inches from the element for 8 to 10 minutes, depending on thickness — no flipping required. Watch closely after 7 minutes. The butter bastes the fillet as it melts and the broiler crisps the edges. This is the fastest fully cooked salmon method available in a standard oven.
+
+**27. Salmon Burgers**
+Mix canned or fresh cooked salmon with breadcrumbs, an egg, Dijon mustard, chopped green onion, garlic, salt, and pepper. Form into patties and cook in a skillet with oil over medium-high heat, 4 minutes per side. Serve on toasted buns with lettuce, tomato, and a sriracha mayo. Canned salmon makes this a genuine 15-minute dinner with no fish-handling anxiety — the patty format also appeals to households where whole fillets are rejected.
+
+**28. Salmon and Veggie Foil Packets**
+Tear sheets of foil large enough to fold into a sealed packet. Place a salmon fillet in the center with sliced zucchini, cherry tomatoes, and thin lemon slices. Drizzle with olive oil, season with salt, pepper, and herbs. Fold and seal the packet tightly. Grill over medium-high heat for 12 to 14 minutes, or bake at 400 degrees for 15 to 18 minutes. Foil packets produce incredibly moist salmon because the steam cooks the fish gently from all sides. Cleanup is a single foil sheet per person.
+
+**29. Salmon Power Bowl**
+Cook a salmon fillet using any method — baked, pan-seared, or air fryer. Flake over a bowl of cooked quinoa or brown rice. Add sliced avocado, shredded red cabbage, cucumber, edamame, and a drizzle of tahini or soy-sesame dressing. This is a meal prep-friendly format: cook the salmon and grains on Sunday, assemble bowls through the week with different toppings. Protein, complex carbohydrates, and vegetables in a single bowl in under 20 minutes.
+
+**30. 15-Minute Poached Salmon**
+Bring a shallow pan of water to a gentle simmer with a few lemon slices, a bay leaf, salt, and peppercorns. Add salmon fillets, cover, and cook at a bare simmer for 8 to 10 minutes until opaque throughout. Remove gently with a slotted spatula. Serve over salad greens with a cucumber dill sauce, or over mashed potatoes. Poached salmon is the most forgiving preparation — the gentle heat makes overcooking nearly impossible, and it produces a silky, mild texture that appeals to people sensitive to strong fish flavors.
+
+---
+
+## The Weeknight Salmon Strategy
+
+The biggest mistake people make with salmon is buying it once, preparing it one way, and deciding whether they like it based on that single experience. Salmon flavor varies significantly by preparation: broiled with Cajun seasoning tastes nothing like poached with dill, and baked with miso tastes nothing like pan-seared with garlic butter. If one preparation does not land, a different one usually will.
+
+A few practical principles for keeping salmon on the weekly rotation:
+
+**Skin-on fillets are more forgiving.** The skin acts as a buffer against direct heat and makes it nearly impossible to overcook the flesh from the bottom. If you are pan-searing, always start skin-side down. The skin can be removed before eating if desired.
+
+**Frozen salmon is as good as fresh for most preparations.** Individually vacuum-sealed frozen portions defrost overnight in the refrigerator and are frequently better quality than the fish sitting in a grocery case for several days. Keep a bag in the freezer for weeknights when you have not planned ahead.
+
+**Thickness determines cook time, not weight.** A 1-inch thick salmon fillet at 400 degrees takes 12 to 15 minutes regardless of whether it weighs 4 ounces or 8 ounces. Adjust time based on your fillet's thickest point, not the recipe's stated weight.
+
+**Build a rotation of 5 to 6 preparations your household accepts.** Rotate them through the month, and salmon becomes as routine as chicken. The initial learning curve is the entire barrier — once a few methods are familiar, weeknight salmon is genuinely low-effort.
+
+---
+
+## Frequently Asked Questions
+
+**How do I know when salmon is done?**
+Salmon is done when it flakes easily at the thickest part when pressed with a fork, and the flesh has changed from translucent to opaque. An instant-read thermometer should read 125 to 130 degrees for medium or 145 degrees for fully cooked. Most people prefer 125 to 130 degrees — it produces a moist, silky texture. At 145 degrees, salmon can be dry if the fillet is thin.
+
+**What is the easiest way to cook salmon?**
+Baking at 400 degrees on a foil-lined sheet pan. Season with salt, pepper, and olive oil, bake 12 to 15 minutes depending on thickness. No flipping, no monitoring, and the foil means no cleanup. Once you have the basic bake down, glazes, herbs, and crust variations add variety without changing the core method.
+
+**Can I cook salmon from frozen?**
+Yes. Rinse the frozen fillet under cold water for 1 minute to remove ice crystals, pat dry, season, and bake at 400 degrees for 20 to 25 minutes. The result is slightly less crisp than thawed salmon but fully cooked. Add 8 to 10 minutes to any oven recipe when starting from frozen.
+
+**How long does cooked salmon keep in the refrigerator?**
+3 to 4 days, tightly covered. Cooked salmon reheats well at low heat — 275 degrees for 10 minutes — or flaked cold over salads, rice bowls, or in salmon patties. The flaked format is the most versatile for leftovers: it works in fried rice, tacos, grain bowls, and pasta.
+
+**Is salmon healthy for weekly dinners?**
+Salmon is among the most nutritionally dense proteins available for everyday cooking. A 6-ounce fillet contains approximately 34 grams of protein, significant omega-3 fatty acids, vitamin D, and B12. Eating salmon twice weekly is the dietary recommendation most associated with cardiovascular benefit in the research literature. At 8 to 12 dollars per pound, it is comparable in cost to quality chicken breasts and considerably less expensive than beef for equivalent protein yield.
+
+---
+
+The 30 salmon recipes above cover every weeknight scenario: fast 15-minute dinners, hands-off baked preparations, sheet pan meals, and flavorful glazed fillets that work for guests. None of them require specialty equipment or ingredients outside a standard grocery run.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your weekly meal plan around salmon, chicken, beef, or any mix of proteins — then generates the complete grocery list in one tap. The beta is free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
