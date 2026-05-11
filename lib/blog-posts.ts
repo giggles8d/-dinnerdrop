@@ -5671,6 +5671,203 @@ The part that breaks keto fastest: standing in the kitchen at 5pm with nothing p
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
 
+  {
+    slug: 'taco-dinner-ideas',
+    title: "30 Taco Dinner Ideas the Whole Family Will Actually Eat",
+    description:
+      "30 taco dinner ideas your family will request again — ground beef, chicken, shrimp, " +
+      "vegetarian, and slow cooker variations with tips for feeding picky eaters and big families.",
+    publishDate: '2026-12-08',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'taco dinner ideas',
+    content: `Tacos are the most forgiving dinner format in existence. One protein, one tortilla, toppings on the side — and suddenly every picky eater at the table gets to build exactly what they want. No special orders. No cooking four different things. Just controlled chaos that somehow produces a meal everyone finishes.
+
+The trick is getting out of the ground beef + hard shell rut. There are 30 variations below, from five-minute skillet situations to slow cooker versions that cook themselves. Most use ingredients you already have.
+
+---
+
+## Why Taco Night Works (and How to Make It Work Better)
+
+Tacos win on weeknights because of the modular format. The protein is the only thing you actually have to cook. Everything else — cheese, salsa, sour cream, lettuce, avocado — goes in bowls on the table and family members self-serve. You cook one thing. Six people build six different plates.
+
+For picky eaters: plain protein in a tortilla with cheese is always an option. You don't have to negotiate about toppings they won't eat anyway.
+
+For big families: protein scales linearly. Double the ground beef, same pan, five extra minutes. The toppings spread further because people use different amounts.
+
+For meal prep: taco protein stores well for four days in the fridge. Make extra on Sunday, reheat in a pan Tuesday night. Dinner is done in ten minutes.
+
+---
+
+## Category 1: Ground Beef Tacos (8 Variations)
+
+Ground beef is the fastest and most economical taco protein. Eight variations that don't all taste the same.
+
+**1. Classic Seasoned Beef Tacos**
+Brown 1 lb ground beef with diced onion and garlic. Drain fat. Add a taco seasoning packet (or 2 tsp cumin, 1 tsp chili powder, 1 tsp smoked paprika, 1/2 tsp garlic powder, salt). Add 1/4 cup water, simmer two minutes. Flour or corn tortillas. Every topping in the house.
+
+**2. Birria-Style Ground Beef Tacos**
+Brown ground beef with onion. Add guajillo chili powder, cumin, oregano, cinnamon, tomato paste, beef broth, apple cider vinegar. Simmer 15 minutes until saucy. Dip tortilla in the braising liquid, fry in a dry pan, fill with beef and melted cheese. Served with broth for dipping. Takes 30 minutes with ground beef instead of short ribs — 90% of the flavor.
+
+**3. Korean-Inspired Ground Beef Tacos**
+Brown ground beef with garlic and ginger. Add soy sauce, sesame oil, brown sugar, gochujang (start with 1 tsp). Serve in flour tortillas with shredded cabbage, sliced cucumber, cilantro, and sriracha mayo (sriracha + mayo, equal parts). The sweet-spicy-savory profile changes the whole taco context.
+
+**4. Breakfast-for-Dinner Taco**
+Brown ground beef or sausage with onion and bell pepper. Add beaten eggs directly to the pan, scramble together. Serve in small flour tortillas with shredded cheese, salsa, and sour cream. Fastest taco on the list. Kids eat these for breakfast, lunch, or dinner without complaint.
+
+**5. Tex-Mex Beef and Bean Tacos**
+Brown ground beef, add a can of drained pinto or black beans, canned diced tomatoes with chiles (Rotel), cumin, chili powder. Simmer until thickened. The beans stretch one pound of beef to feed six. Hearty and filling — actually improves with standing time.
+
+**6. Sloppy Taco (Ground Beef Tostadas)**
+Make the beef saucy: add ketchup, Worcestershire, brown sugar, mustard, and beef broth to seasoned ground beef. Cook down until thick. Spoon onto crispy tostadas (store-bought or baked corn tortillas) with shredded lettuce, tomato, and shredded cheddar. Messy on purpose.
+
+**7. Smash Burger Tacos**
+Press small balls of ground beef thin onto a hot cast iron pan. Season with salt and pepper. Cook 2-3 minutes each side. Add a slice of American cheese to melt. Serve in small flour tortillas with shredded lettuce, sliced onion, pickles, ketchup, and mustard. All the smash burger flavor in taco form.
+
+**8. Taco Stuffed Bell Peppers (Deconstructed)**
+Cook seasoned ground beef with onion, tomatoes, corn, and black beans. Halve and seed bell peppers. Fill peppers with beef mixture, top with shredded cheese, bake at 375F for 20 minutes. Serve with tortillas on the side. The pepper becomes the taco shell and the tortillas are optional scoops.
+
+---
+
+## Category 2: Chicken Tacos (7 Variations)
+
+Chicken tacos require slightly more planning but most can be done in under 30 minutes.
+
+**9. Shredded Chicken Tacos (Rotisserie Shortcut)**
+Pull meat off a rotisserie chicken. Heat in a pan with salsa verde or red enchilada sauce. Serve in warm corn tortillas with diced white onion, cilantro, lime, and avocado. This is the fastest shredded chicken taco on the list.
+
+**10. Crispy Chicken Strip Tacos**
+Season thin chicken strips with cumin, chili powder, garlic powder, salt. Pan-fry in neutral oil until golden, about 3-4 minutes per side. Slice. Serve in flour tortillas with shredded cabbage, avocado, and chipotle crema (sour cream + chipotle in adobo + lime).
+
+**11. Slow Cooker Salsa Chicken Tacos**
+Place 4 chicken breasts in slow cooker. Pour one jar of salsa over the top. Cook on low 6 hours or high 3 hours. Shred with forks directly in the pot. Serve immediately or refrigerate for five days.
+
+**12. Lime Fajita Chicken Tacos**
+Slice chicken thighs thin. Cook in a hot pan with sliced bell peppers and onions. Season with lime juice, garlic, cumin, oregano, and salt aggressively while cooking. Serve in flour tortillas.
+
+**13. Buffalo Chicken Tacos**
+Cook chicken thighs or shred leftover rotisserie chicken. Toss with buffalo sauce (Frank's RedHot + butter). Serve in flour tortillas with blue cheese crumbles or dressing, shredded lettuce, and celery.
+
+**14. Teriyaki Chicken Tacos**
+Cook chicken thighs or breasts, glaze with teriyaki sauce. Slice. Serve in flour tortillas with shredded purple cabbage, sliced avocado, and sriracha mayo.
+
+**15. Chicken Tinga Tacos**
+Simmer shredded cooked chicken in a sauce of canned tomatoes, chipotle peppers in adobo, onion, garlic, oregano, and chicken broth. Serve in corn tortillas with crumbled cotija, diced white onion, cilantro.
+
+---
+
+## Category 3: Shrimp and Seafood Tacos (5 Variations)
+
+Shrimp cooks in 3-4 minutes. Seafood tacos are among the fastest dinners in this entire collection.
+
+**16. Lime Garlic Shrimp Tacos**
+Toss peeled shrimp with olive oil, garlic powder, cumin, paprika, salt, chili flakes. Cook in a hot pan 2 minutes per side until pink and slightly charred at edges. Serve in warm corn tortillas with shredded cabbage, avocado slices, and lime juice. Under 20 minutes start to finish.
+
+**17. Spicy Honey Shrimp Tacos**
+Season shrimp with chili powder, garlic powder, and salt. Cook hot and fast. Drizzle with honey, toss to coat, remove from heat immediately. Serve in flour tortillas with shredded purple cabbage, jalapeño slices, and crema.
+
+**18. Fish Tacos (Baked)**
+Pat white fish (tilapia, cod, mahi-mahi) dry. Brush with oil, season with cumin, chili powder, garlic powder, salt. Bake at 425F for 12-15 minutes until flaky. Break into pieces. Serve in corn tortillas with shredded cabbage, pico de gallo, and crema.
+
+**19. Cajun Shrimp Tacos**
+Season shrimp with Cajun seasoning. Cook in butter over high heat, 2 minutes per side. Serve in flour tortillas with corn salsa (frozen corn, red onion, lime, cilantro, jalapeño) and sour cream.
+
+**20. Blackened Salmon Tacos**
+Coat salmon fillets with blackening spice (smoked paprika, garlic powder, onion powder, thyme, cayenne, salt). Sear in a very hot cast iron pan 3-4 minutes per side. Break into pieces. Serve in corn tortillas with avocado, lime crema, and cucumber slices.
+
+---
+
+## Category 4: Vegetarian Tacos (5 Variations)
+
+Vegetarian tacos that are satisfying, not just salads in a tortilla.
+
+**21. Black Bean Tacos with Corn Salsa**
+Saute canned black beans with garlic, cumin, chili powder, smoked paprika, salt until slightly crispy at edges. Make quick corn salsa: frozen corn (thawed), red onion, jalapeño, cilantro, lime juice. Layer in warm corn tortillas, top with corn salsa, avocado, and crumbled cotija.
+
+**22. Crispy Chickpea Tacos**
+Drain and dry canned chickpeas. Toss with olive oil, cumin, chili powder, garlic powder, smoked paprika, salt. Roast at 425F for 25-30 minutes until very crispy. Serve in flour tortillas with shredded cabbage, tahini drizzle, and lemon.
+
+**23. Egg and Potato Tacos (Papas con Huevo)**
+Dice and pan-fry potatoes until golden and crispy. Add beaten eggs, scramble together. Season with salt, cumin, and chili powder. Serve in warm corn tortillas with salsa roja. Mexican breakfast taco format that works as a fast weeknight dinner.
+
+**24. Cauliflower Tinga Tacos**
+Roast cauliflower florets at 425F until charred at edges, about 25 minutes. Toss with tinga sauce (tomato + chipotle + onion + garlic). Serve in corn tortillas with pickled red onion and cotija. The char is what makes this work.
+
+**25. Sweet Potato and Black Bean Tacos**
+Roast diced sweet potato at 425F with olive oil, cumin, and chili powder, about 20-25 minutes. Warm black beans separately with garlic and cumin. Layer in flour tortillas with avocado, crumbled feta, and lime.
+
+---
+
+## Category 5: Slow Cooker and Braised Tacos (5 Variations)
+
+These cook themselves during the day and produce more flavorful results than quick-cook methods.
+
+**26. Slow Cooker Carnitas**
+Place a 3-lb pork shoulder in slow cooker with orange juice, lime juice, garlic, cumin, chili powder, oregano, salt. Cook on low 8 hours. Shred. Crisp in batches under the broiler for 5 minutes — this step is critical. Serve in corn tortillas with diced white onion, cilantro, salsa verde.
+
+**27. Slow Cooker Beef Barbacoa Tacos**
+Place a 3-lb beef chuck roast in slow cooker with chipotle peppers in adobo, beef broth, lime juice, garlic, cumin, cloves, oregano, salt. Cook on low 8 hours. Shred. Corn tortillas, diced onion, cilantro, lime.
+
+**28. Pulled Pork Tacos**
+Make slow cooker pulled pork (pork shoulder + BBQ sauce + chicken broth, low 8 hours) or use leftover pulled pork. Serve in flour tortillas with coleslaw (bagged mix + mayo + apple cider vinegar + sugar), pickled jalapeños, and extra BBQ sauce.
+
+**29. Slow Cooker Chicken Verde Tacos**
+Place chicken thighs in slow cooker with a jar of salsa verde, diced green chiles, cumin, garlic. Cook low 6 hours. Shred. Serve in corn tortillas with crumbled cotija, diced white onion, and avocado slices.
+
+**30. Short Rib Tacos (Weekend Project)**
+Season short ribs with salt and pepper. Sear in batches in a Dutch oven. Cook onion, garlic, chipotle, tomato paste, beef broth, red wine in same pot. Return ribs. Braise covered at 325F for 2.5-3 hours until falling off the bone. Shred. Serve in corn tortillas with quick pickled red onion (red onion + red wine vinegar + sugar + salt, 20-minute pickle).
+
+---
+
+## Feeding Picky Eaters on Taco Night
+
+The modular taco format is the best tool in the picky eater arsenal. The protein is the only non-negotiable. Everything else is optional.
+
+Serve all toppings in separate bowls. Even picky eaters can build a plain protein-and-cheese taco without protest. They see the full spread; they choose what goes on.
+
+For kids who won't eat the protein: a plain quesadilla uses the same tortilla, same cheese, same pan — cook it alongside in three minutes. You haven't made a separate dinner; you've made a simplified version of the same meal.
+
+---
+
+## Taco Night Efficiency Tips
+
+Warm corn tortillas in a dry pan 30 seconds per side, or wrap a stack in damp paper towels and microwave 45 seconds. Cold, stiff tortillas crack. Warm tortillas are a different food.
+
+Set out all toppings before the protein is done. If you're still prepping toppings when the protein is ready, things go cold.
+
+Every protein on this list stores well for 4 days in the fridge. The slow cooker versions taste better the next day. Cook once, eat twice.
+
+Leftover taco protein becomes a burrito bowl over rice, a quesadilla filling, a breakfast scramble with eggs, or a soup protein. Taco night creates dinner infrastructure for the rest of the week.
+
+---
+
+## Frequently Asked Questions
+
+**What are the best tortillas for tacos?**
+For corn, Mission Extra Thin or La Banderita are widely available and warm without cracking. For flour, uncooked tortillas (Tortilla Land is common) cooked fresh on a dry skillet are significantly better than pre-cooked shelf-stable versions.
+
+**How do I keep soft tortillas from drying out?**
+Warm them just before serving, not fifteen minutes early. Wrap stacks in foil and keep in a 200F oven if you need to hold them while cooking protein.
+
+**What is the most budget-friendly taco protein?**
+Ground beef (80/20) and bone-in chicken thighs are most economical. Beans extend either further — one pound of ground beef plus one can of beans feeds eight people. Eggs are the true budget option for breakfast taco nights.
+
+**Can I make taco protein ahead for a party?**
+Yes. Every protein on this list holds in the fridge (4 days) or a low oven (170F) for 2 hours. Set up a buffet-style taco bar: protein in a slow cooker on warm, all toppings in bowls, tortillas in foil. Guests assemble their own.
+
+**What goes well with tacos for a complete meal?**
+Mexican rice, refried beans, elote (Mexican street corn), or a simple green salad. The simplest option is chips and salsa alongside — the tortillas handle carbs, the protein handles the main, and chips fill the gap.
+
+---
+
+Tacos work for weeknights because the format absorbs variation. The protein changes, the toppings rotate, the tortilla style shifts — and it never feels repetitive the way eating the same pasta dish twice a week does.
+
+The only thing that makes taco night feel like a chore is deciding what kind to make while standing in the kitchen at 5pm. Having a plan removes the decision entirely.
+
+[DinnerDrop](https://dinnerdrop.app/beta) generates a personalized 5-dinner week plan in 30 seconds, including taco variations tailored to your family size, dietary preferences, and preferred grocery store. The beta is free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**\`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
