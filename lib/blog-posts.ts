@@ -4725,8 +4725,202 @@ five your family eats this week.
 
 No credit card required. First 100 families get 6 months completely free.`,
   },
-]
+  {
+    slug: 'sheet-pan-dinners',
+    title: 'Sheet Pan Dinners: 35 Easy One-Pan Meals the Whole Family Will Actually Eat',
+    description: 'Sheet pan dinners mean maximum flavor and minimal cleanup. Here are 35 easy one-pan meals with chicken, fish, beef, pork, and vegetables that come together fast on a single sheet pan.',
+    publishDate: '2026-11-03',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'sheet pan dinners',
+    content: `
+# Sheet Pan Dinners: 35 Easy One-Pan Meals the Whole Family Will Actually Eat
 
+Sheet pan dinners are the closest thing to a weeknight miracle. Toss everything on one pan, slide it into the oven, and come back to a complete meal. One pan in. One pan to wash. Done.
+
+The formula is simple: high heat (400-425 degrees F), cut everything to similar sizes so it cooks evenly, and do not crowd the pan or things steam instead of roast. Follow those three rules and you will get caramelized edges, tender centers, and deep roasted flavor every time.
+
+Here are 35 sheet pan dinners that work, organized by protein so you can plan around whatever is on sale this week.
+
+---
+
+## Chicken Sheet Pan Dinners (12 Recipes)
+
+**1. Sheet Pan Chicken Thighs with Roasted Vegetables**
+Bone-in, skin-on thighs roasted at 425 degrees F for 35-40 minutes alongside broccoli, bell peppers, and red onion. Season with olive oil, garlic powder, smoked paprika, salt, and pepper. The chicken fat bastes the vegetables as it renders. Serve over rice.
+
+**2. Honey Garlic Sheet Pan Chicken**
+Mix 3 tablespoons honey, 3 cloves minced garlic, 2 tablespoons soy sauce, and 1 tablespoon olive oil. Coat chicken thighs and surround with broccoli florets. Roast 400 degrees F for 30-35 minutes. The honey caramelizes into a glossy glaze that kids love.
+
+**3. Sheet Pan Chicken Fajitas**
+Slice chicken breasts into strips. Combine with sliced bell peppers and onion. Toss with fajita seasoning and olive oil. Roast 400 degrees F for 20-25 minutes. Serve in warm tortillas with sour cream, salsa, and shredded cheese. Faster than any restaurant.
+
+**4. Lemon Herb Sheet Pan Chicken**
+Bone-in chicken pieces with lemon slices, fresh thyme, rosemary, garlic cloves, and olive oil. Season generously. Roast 425 degrees F for 40 minutes. Add baby potatoes around the chicken for a complete meal. The lemon juice brightens everything at the end.
+
+**5. Sheet Pan BBQ Chicken and Sweet Potatoes**
+Coat chicken drumsticks in your favorite BBQ sauce. Surround with cubed sweet potatoes tossed in olive oil and cinnamon. Roast 400 degrees F for 40 minutes, brushing chicken with more sauce at the halfway mark. Sweet and smoky with zero stovetop work.
+
+**6. Sheet Pan Chicken Shawarma**
+Marinate chicken thighs in olive oil, lemon juice, cumin, coriander, turmeric, paprika, and garlic for 30 minutes or overnight. Roast 425 degrees F for 30 minutes with sliced onion. Slice thin and serve over rice or in pita with tzatziki and cucumber.
+
+**7. Parmesan-Crusted Sheet Pan Chicken**
+Brush chicken breasts with Dijon mustard, then coat in a mixture of grated Parmesan and panko breadcrumbs. Add asparagus spears to the pan. Roast 400 degrees F for 22-25 minutes until crust is golden. Impressive enough for guests, fast enough for Tuesdays.
+
+**8. Sheet Pan Teriyaki Chicken**
+Marinate chicken thighs in soy sauce, honey, rice vinegar, sesame oil, garlic, and ginger. Arrange on a pan with broccoli and snap peas. Roast 400 degrees F for 25-30 minutes. Drizzle reserved marinade (boiled first) over everything before serving with steamed rice.
+
+**9. Sheet Pan Chicken and Potatoes with Ranch Seasoning**
+Halved baby potatoes and chicken thighs tossed with olive oil and a packet of ranch seasoning. Roast 400 degrees F for 40 minutes. Simple, crowd-pleasing, and the whole pan smells incredible. Add green beans for the last 15 minutes.
+
+**10. Sheet Pan Caprese Chicken**
+Season chicken breasts and roast 400 degrees F for 20 minutes. Top each piece with fresh mozzarella and return to oven for 5 minutes until melted. Finish with fresh tomatoes, basil, and a drizzle of balsamic glaze. Restaurant-quality in 30 minutes total.
+
+**11. Sheet Pan Chicken Tikka**
+Marinate chicken in yogurt, lemon juice, tikka masala paste, and ginger-garlic paste overnight. Roast 450 degrees F for 25-30 minutes for charred edges. Add cauliflower florets to the pan for the last 20 minutes. Serve with naan and raita.
+
+**12. Sheet Pan Chicken Sausage with Peppers and Onions**
+Slice chicken sausage links and combine with sliced bell peppers, onion, and zucchini. Toss with olive oil, Italian seasoning, salt, and pepper. Roast 400 degrees F for 25 minutes. Serve in hoagie rolls or over polenta.
+
+---
+
+## Fish and Seafood Sheet Pan Dinners (7 Recipes)
+
+**13. Sheet Pan Salmon with Asparagus**
+Place salmon fillets on one side of the pan, asparagus on the other. Drizzle both with olive oil and season. Roast 400 degrees F for 12-15 minutes depending on thickness. Finish with lemon juice and fresh dill. The fastest complete dinner on this list.
+
+**14. Sheet Pan Garlic Butter Shrimp**
+Toss large shrimp with melted butter, minced garlic, lemon juice, and parsley. Spread on a pan with halved cherry tomatoes. Roast 400 degrees F for 8-10 minutes. Serve over linguine or crusty bread to soak up the garlic butter.
+
+**15. Sheet Pan Honey Sriracha Salmon**
+Mix 2 tablespoons honey, 1 tablespoon sriracha, 1 tablespoon soy sauce, and minced garlic. Coat salmon fillets and roast 400 degrees F for 12-14 minutes. Add broccoli to the pan. Sweet heat glaze with crispy edges.
+
+**16. Sheet Pan Fish Tacos**
+Coat white fish fillets in olive oil, chili powder, cumin, and lime juice. Roast 400 degrees F for 12-15 minutes. Flake and serve in corn tortillas with shredded cabbage, avocado, and lime crema. Far better than fried with a fraction of the mess.
+
+**17. Sheet Pan Lemon Herb Cod**
+Season cod fillets with olive oil, lemon zest, garlic, fresh parsley, and capers. Surround with cherry tomatoes and olives. Roast 400 degrees F for 12-15 minutes. Mediterranean flavors on the table in 25 minutes total.
+
+**18. Sheet Pan Shrimp Fajitas**
+Toss shrimp with fajita seasoning and olive oil. Combine with sliced peppers and onion. Roast 400 degrees F for 8-10 minutes. Faster than the chicken version. Serve with warm tortillas.
+
+**19. Sheet Pan Teriyaki Salmon with Bok Choy**
+Brush salmon with teriyaki sauce and roast 400 degrees F for 12 minutes. Halve bok choy lengthwise and add for the last 8 minutes, drizzled with sesame oil. Top with sesame seeds and sliced green onion over steamed jasmine rice.
+
+---
+
+## Beef and Pork Sheet Pan Dinners (9 Recipes)
+
+**20. Sheet Pan Flank Steak with Roasted Vegetables**
+Marinate flank steak in soy sauce, olive oil, garlic, and Worcestershire for 2 hours. Roast vegetables at 425 degrees F for 15 minutes while the steak broils 4-5 minutes per side. Rest the steak before slicing thin against the grain.
+
+**21. Sheet Pan Pork Tenderloin with Root Vegetables**
+Rub pork tenderloin with Dijon mustard, rosemary, thyme, and garlic. Surround with cubed carrots, parsnips, and sweet potatoes. Roast 400 degrees F for 25-30 minutes until internal temp hits 145 degrees F. Rest 5 minutes before slicing.
+
+**22. Sheet Pan Sausage, Potatoes, and Green Beans**
+Halve smoked sausage links. Combine with halved baby potatoes and fresh green beans. Toss with olive oil, garlic powder, onion powder, and Cajun seasoning. Roast 400 degrees F for 35 minutes, stirring halfway. Classic comfort food with near-zero prep.
+
+**23. Sheet Pan Pork Chops with Apples and Brussels Sprouts**
+Season bone-in pork chops and roast at 425 degrees F alongside halved Brussels sprouts and sliced apples tossed with olive oil, maple syrup, and cinnamon. Roast 20-25 minutes. The apple-Brussels combination converts skeptics.
+
+**24. Sheet Pan Steak and Potato Hash**
+Cube sirloin steak and toss with diced potatoes, bell pepper, and onion. Season with garlic powder, smoked paprika, salt, and pepper. Roast 425 degrees F for 25-30 minutes, tossing halfway. Top with a fried egg for breakfast-for-dinner.
+
+**25. Sheet Pan Italian Meatballs with Vegetables**
+Form meatballs with beef, breadcrumbs, egg, Parmesan, and Italian seasoning. Roast 400 degrees F for 20 minutes alongside zucchini and cherry tomatoes. Toss with warm marinara and serve over spaghetti or in sub rolls.
+
+**26. Sheet Pan Pork Belly Bites**
+Cut pork belly into 1-inch cubes. Toss with soy sauce, honey, garlic, and five-spice powder. Roast 400 degrees F for 30 minutes, then broil 3 minutes for crispy edges. Serve over jasmine rice with steamed bok choy.
+
+**27. Sheet Pan Cheesesteak Sandwiches**
+Thinly slice ribeye and toss with olive oil, salt, and pepper. Spread on a pan with sliced peppers and onion. Roast 425 degrees F for 15 minutes. Top with provolone slices, return to oven 2 minutes to melt, pile onto hoagie rolls.
+
+**28. Sheet Pan Ground Beef Tacos**
+Brown ground beef with taco seasoning, spread on a foil-lined sheet pan with black beans and corn. Broil 3-4 minutes to caramelize the edges. Serve in warm tortillas with cheese, salsa, sour cream, and avocado.
+
+---
+
+## Vegetarian Sheet Pan Dinners (7 Recipes)
+
+**29. Sheet Pan Roasted Vegetables with Chickpeas**
+Combine chickpeas, broccoli, sweet potato, red onion, and bell pepper. Toss with olive oil, smoked paprika, cumin, and garlic powder. Roast 425 degrees F for 30 minutes until edges are crispy. Serve over tahini-drizzled couscous or quinoa.
+
+**30. Sheet Pan Gnocchi with Tomatoes and Spinach**
+Spread store-bought gnocchi directly on a pan with no boiling needed. Add cherry tomatoes, garlic cloves, and a drizzle of olive oil. Roast 425 degrees F for 25 minutes until gnocchi is golden and tomatoes have burst. Toss in fresh spinach for the last 2 minutes and finish with Parmesan.
+
+**31. Sheet Pan Tofu with Broccoli and Sesame**
+Press extra-firm tofu dry and cube. Toss with soy sauce, sesame oil, and cornstarch for crispiness. Roast 425 degrees F for 25 minutes with broccoli florets added halfway. Drizzle with sweet chili sauce or peanut sauce before serving over rice.
+
+**32. Sheet Pan Flatbread Pizzas**
+Use store-bought flatbreads or naan as the base. Top with marinara, shredded mozzarella, and chosen toppings. Bake 425 degrees F for 10-12 minutes until cheese is bubbly and edges are golden. Make multiple varieties simultaneously in 15 minutes.
+
+**33. Sheet Pan Mediterranean Vegetables**
+Combine eggplant, zucchini, cherry tomatoes, red onion, and bell pepper with olive oil, oregano, and garlic. Roast 400 degrees F for 30 minutes until caramelized. Top with crumbled feta and fresh parsley. Serve over orzo or with warm pita bread.
+
+**34. Sheet Pan Baked Eggs with Roasted Tomatoes**
+Halve cherry tomatoes and roast with olive oil and garlic at 400 degrees F for 15 minutes until soft. Make wells in the tomatoes, crack eggs into the wells, and return to oven for 8-10 minutes until whites are set. Season with smoked paprika and fresh herbs. Serve with crusty bread.
+
+**35. Sheet Pan Caprese Quesadillas**
+Arrange flour tortillas on a sheet pan. Top with mozzarella, sliced tomatoes, and fresh basil. Fold in half and brush with olive oil. Bake 400 degrees F for 10-12 minutes, flipping halfway. Serve with marinara. Crispier than stovetop.
+
+---
+
+## The Sheet Pan Method That Makes Everything Work
+
+The difference between a great sheet pan dinner and a mediocre one comes down to three things.
+
+**Use high heat.** 400-425 degrees F is the sweet spot for caramelization. Lower temps steam your food instead of roasting it.
+
+**Do not crowd the pan.** Leave space between pieces. Crowded pans trap moisture and prevent browning. Use two pans if needed.
+
+**Cut to similar sizes.** Dense vegetables like sweet potatoes and carrots need more time than quick-cooking ones like broccoli or asparagus. Cut dense vegetables smaller, or add quick-cooking ones later in the cooking time.
+
+Bonus tip: line your pan with foil or parchment. Cleanup goes from 5 minutes to 30 seconds.
+
+---
+
+## A Five-Night Sheet Pan Rotation
+
+Rotate through protein categories so dinners feel different week to week even when the method is the same:
+
+- Monday: Chicken thighs or drumsticks, forgiving and affordable
+- Tuesday: Salmon or shrimp, fast and healthy, done in 15 minutes
+- Wednesday: Pork sausage or pork chops, hearty and crowd-pleasing
+- Thursday: Vegetarian option, chickpeas, tofu, or gnocchi
+- Friday: Steak or a splurge option
+
+A five-day rotation means you are never staring at the fridge at 5pm with no plan.
+
+---
+
+## Frequently Asked Questions
+
+**What temperature is best for sheet pan dinners?**
+400-425 degrees F works for almost everything. Use 400 degrees F for thicker proteins like pork loin or whole chicken pieces, and 425 degrees F for vegetables and thinner cuts that benefit from faster caramelization.
+
+**Can I prep sheet pan dinners ahead of time?**
+Yes. Cut and season everything up to 24 hours in advance and refrigerate. Pull the pan out while the oven preheats and roast as normal. Pat vegetables dry before roasting if they released moisture overnight.
+
+**Why are my vegetables not getting crispy?**
+Usually one of two problems: the pan is crowded, or you used too much oil. Vegetables need space to roast, not steam. Use about 1 tablespoon of oil per pound of vegetables.
+
+**How do I cook proteins and vegetables in the same time frame?**
+Start dense proteins first such as chicken thighs or pork, then add vegetables for the last 20-25 minutes. For fish and shrimp, add vegetables first and finish with the protein in the last 10-15 minutes.
+
+---
+
+## Stop Deciding What Is for Dinner Every Night
+
+Sheet pan dinners solve the cooking problem, but you still have to decide which one to make each night. After a long day, even that can feel like too much.
+
+DinnerDrop generates a full week of personalized dinners for your family in 30 seconds. Tell it your dietary preferences, your family size, and what stores you use, and it builds a complete meal plan with a grocery list ready to go.
+
+**[Get your free meal plan](https://dinnerdrop.app/beta)**
+
+Beta spots are limited. First 100 families get 6 months completely free.
+`,
+  },
+
+]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
 }
