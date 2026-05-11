@@ -8844,6 +8844,176 @@ Twenty-five chicken and rice recipes covering every method: one-pot, baked, frie
 **[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'instant-pot-chicken',
+    title: 'Instant Pot Chicken: 25 Recipes That Are Done in Under 30 Minutes',
+    description:
+      'The best Instant Pot chicken recipes — whole chicken, shredded chicken, soups, pasta, and more. ' +
+      'Every recipe is done in under 30 minutes with almost no prep.',
+    publishDate: '2027-04-20',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'instant pot chicken',
+    content: `Instant Pot chicken is the most-cooked protein in electric pressure cookers for a reason. Chicken goes from raw to fully cooked in 8 to 12 minutes under pressure, and the sealed environment keeps it moist in a way that stovetop and oven cooking often does not. The result is tender, pull-apart chicken that works for shredding, slicing, serving whole, or mixing into soups and pasta.
+
+These 25 recipes cover everything: shredded chicken for meal prep, whole chicken dinners, soups, creamy pasta, and weeknight favorites your family will request repeatedly.
+
+---
+
+## Shredded and Pulled Chicken
+
+**1. Basic Instant Pot Shredded Chicken**
+Place 2 pounds of boneless chicken breast or thighs in the Instant Pot. Add 1 cup chicken broth, 1 teaspoon garlic powder, 1 teaspoon onion powder, salt and pepper. Seal and cook on HIGH pressure for 10 minutes (breast) or 12 minutes (thighs). Natural release 5 minutes, then quick release. Remove chicken and shred with two forks. Return to pot and stir into the cooking liquid. Use for tacos, sandwiches, grain bowls, salads, and meal prep. Stores in the fridge 4 days, freezes 3 months.
+
+**2. Buffalo Shredded Chicken**
+Cook 2 pounds of chicken breast using the method above but add 1/2 cup of Frank's RedHot sauce to the broth before sealing. After shredding, stir in 2 tablespoons of butter and toss to coat. The sauce emulsifies with the cooking liquid and coats every strand. Serve on rolls with blue cheese and celery, in wraps, on baked potatoes, or over rice. This is the best freezer-friendly batch protein if your family likes heat.
+
+**3. BBQ Pulled Chicken**
+Use 2 pounds of bone-in chicken thighs for maximum flavor. Add 1/2 cup chicken broth and 1/2 cup your favorite BBQ sauce. Cook HIGH pressure 15 minutes, natural release 10 minutes. Remove chicken, discard bones and skin, shred the meat. Return to pot, add another 1/4 cup BBQ sauce, stir and warm on Saute mode 2 minutes. Serve on brioche buns with coleslaw. The bone-in thighs produce significantly more flavor than boneless for this application.
+
+**4. Honey Garlic Shredded Chicken**
+Combine 1/4 cup soy sauce, 3 tablespoons honey, 4 minced garlic cloves, 1 tablespoon rice vinegar, and 1/2 cup chicken broth. Add 2 pounds of chicken thighs. Cook HIGH pressure 12 minutes, quick release. Remove chicken, shred, return to pot. Switch to Saute mode and reduce the liquid 3 to 4 minutes until slightly thickened. Toss shredded chicken back in. Serve over white rice with sesame seeds and green onions. This is the weeknight bowl your kids will ask for on rotation.
+
+**5. Mexican Shredded Chicken (for Tacos and Burritos)**
+Combine 1 can diced tomatoes with green chiles, 1 teaspoon each cumin, chili powder, garlic powder, and onion powder, juice of 1 lime, and 1/2 cup chicken broth. Add 2 pounds chicken breast or thighs. Cook HIGH pressure 12 minutes, quick release. Shred directly in the pot and stir into the cooking liquid -- it absorbs everything. Use for tacos, burrito bowls, nachos, quesadillas, or stuffed peppers. The tomatoes and citrus keep the chicken from drying even if it sits in the fridge for several days.
+
+---
+
+## Whole Chicken
+
+**6. Instant Pot Whole Roasted Chicken**
+Pat a 3 to 4-pound whole chicken dry. Season liberally inside and out with 1 teaspoon each garlic powder, onion powder, paprika, salt, and pepper. Place the trivet in the Instant Pot with 1 cup chicken broth. Set the chicken on the trivet breast-side up. Cook HIGH pressure 6 minutes per pound (18 minutes for a 3-pound bird, 24 minutes for a 4-pound bird). Natural release 15 minutes. The skin will not be crispy from pressure cooking -- transfer to a 425-degree oven or air fryer and broil 5 minutes if you want color. The meat will be extremely moist and pulls cleanly from the bone.
+
+**7. Lemon Herb Whole Chicken**
+Follow the whole chicken method above but stuff the cavity with half a lemon, a head of garlic cut in half, and fresh rosemary sprigs. Rub the outside with 2 tablespoons softened butter mixed with lemon zest, thyme, and garlic salt. Use white wine instead of chicken broth in the pot. After pressure cooking and natural release, remove chicken, strain the cooking liquid, and use it as a pan sauce. This is a Sunday dinner that requires only 10 minutes of active work.
+
+**8. Salsa Verde Chicken**
+Place a 3 to 4-pound whole chicken on the trivet with 1 jar (16 oz) of store-bought salsa verde poured over it. Cook HIGH pressure 6 minutes per pound, natural release 15 minutes. The salsa verde keeps the chicken incredibly moist. Shred or carve, and serve with the cooking liquid poured over the top. Use leftovers for enchiladas, tacos, or grain bowls throughout the week.
+
+---
+
+## Soups and Stews
+
+**9. Instant Pot Chicken Noodle Soup**
+Saute diced onion, celery, and carrots in the Instant Pot on Saute mode until softened, about 4 minutes. Add 1 pound chicken breast, 6 cups chicken broth, 1 teaspoon garlic powder, thyme, salt, and pepper. Seal and cook HIGH pressure 10 minutes, quick release. Remove chicken, shred, return to pot. Switch to Saute and add 2 cups egg noodles. Cook uncovered 6 to 8 minutes until noodles are tender. Add shredded chicken back in, adjust seasoning, stir in fresh parsley. This is done in 35 minutes total and tastes like it simmered all day.
+
+**10. Creamy Chicken and Wild Rice Soup**
+Saute onion, celery, and garlic. Add 1 pound chicken breast, 1 cup uncooked wild rice blend, 4 cups chicken broth, 1 teaspoon thyme, salt, and pepper. Cook HIGH pressure 25 minutes (wild rice takes longer than white rice). Quick release. Remove chicken, shred. Stir in 1 cup heavy cream and 1 cup frozen corn. Switch to Saute mode and simmer 3 minutes. Return shredded chicken. The wild rice makes this thick, hearty, and restaurant-quality.
+
+**11. White Chicken Chili**
+Saute diced onion and garlic. Add 1.5 pounds chicken breast, 2 cans white beans (drained), 1 can diced green chiles, 2 cups chicken broth, 1 teaspoon each cumin, oregano, and garlic powder. Cook HIGH pressure 15 minutes, quick release. Remove chicken, shred, return to pot. Stir in 1/2 cup sour cream and juice of 1 lime. Serve with shredded Monterey Jack, sliced avocado, and tortilla strips. This is the soup that converts people who say they do not like chili.
+
+**12. Chicken Tortilla Soup**
+Add 1.5 pounds chicken breast, 1 can black beans (drained), 1 can corn (drained), 1 can diced tomatoes, 1 cup salsa, 2 cups chicken broth, 1 teaspoon each cumin and chili powder to the Instant Pot. Cook HIGH pressure 15 minutes, quick release. Remove chicken, shred, return to pot. Serve with crispy tortilla strips, shredded cheese, sour cream, and lime. The entire pot takes 5 minutes of prep.
+
+**13. Chicken and Dumplings**
+Saute onion, carrot, and celery. Add 1.5 pounds chicken thighs, 3 cups chicken broth, 1 teaspoon thyme, salt, and pepper. Cook HIGH pressure 12 minutes, quick release. Remove chicken, shred. Switch to Saute mode. Mix 1 cup biscuit mix with 1/3 cup milk to form a thick batter. Drop by spoonfuls into the simmering broth. Cover with a glass lid (not the pressure lid) and steam 12 minutes without lifting the lid. Return shredded chicken. The dumplings cook in the steam above the broth and turn out fluffy and tender.
+
+**14. Lemon Orzo Chicken Soup**
+Saute onion and garlic. Add 1 pound diced chicken breast, 5 cups chicken broth, 1 teaspoon oregano, salt, and pepper. Cook HIGH pressure 8 minutes, quick release. Switch to Saute mode, add 1 cup orzo and the zest and juice of 1 lemon. Cook uncovered 8 minutes until orzo is tender. Stir in 2 cups baby spinach until wilted. Finish with fresh dill and a drizzle of olive oil. This is a bright, Mediterranean-style soup that is different from the usual noodle soup rotation.
+
+---
+
+## Pasta
+
+**15. Instant Pot Chicken Pasta (Creamy Tuscan)**
+Saute diced chicken thighs in the Instant Pot until lightly browned. Add 3 cups chicken broth, 2 cups uncooked penne, 1/2 teaspoon each garlic powder and Italian seasoning. Make sure the pasta is submerged. Cook HIGH pressure 5 minutes, quick release. Stir in 1/2 cup sun-dried tomatoes, 1 cup heavy cream, and 2 cups baby spinach. Switch to Saute mode and stir 2 minutes until sauce thickens and spinach wilts. Add Parmesan. This is the pasta dish that surprises everyone who has never made pasta in a pressure cooker.
+
+**16. Chicken Alfredo**
+Place 1.5 pounds chicken breast in the Instant Pot with 3 cups chicken broth and 12 oz fettuccine broken in half. The pasta must be criss-crossed (not stacked in one direction) or it clumps together. Cook HIGH pressure 7 minutes, quick release immediately. Drain most of the liquid but leave about 1/2 cup. Stir in 1 cup heavy cream, 1.5 cups grated Parmesan, and 2 tablespoons butter over Saute mode until sauce is smooth and coating the noodles. Season with white pepper and nutmeg. This takes 20 minutes total including prep.
+
+**17. One-Pot Mac and Cheese with Chicken**
+Add 16 oz elbow macaroni, 4 cups chicken broth, 1 cup water, and 1 pound diced chicken breast to the Instant Pot. Stir. Cook HIGH pressure 4 minutes, quick release. Stir vigorously to break up any clumps. Add 1/2 cup cream cheese, 1/2 cup sour cream, 1 cup shredded cheddar, and 1/2 cup shredded Gruyere. Stir over Saute mode until completely smooth and creamy. Season with dry mustard and hot sauce. This serves 6 and is the best pressure-cooker mac and cheese method -- creamier than the stovetop version.
+
+---
+
+## Rice and Grain Bowls
+
+**18. Instant Pot Chicken and Rice**
+Saute diced onion and garlic 3 minutes. Add 1.5 pounds chicken thighs (boneless), 1.5 cups long-grain white rice, 2 cups chicken broth, 1 teaspoon cumin, salt, and pepper. Lock lid and cook HIGH pressure 8 minutes. Natural release 10 minutes. Fluff rice, shred or dice chicken, stir together. This is a complete one-pot dinner in 25 minutes. Add frozen peas after pressure cooking and stir them in -- they warm through without getting mushy.
+
+**19. Teriyaki Chicken and Rice Bowls**
+Combine 1/4 cup soy sauce, 2 tablespoons mirin, 2 tablespoons brown sugar, 1 tablespoon rice vinegar, and 1 teaspoon sesame oil. Add 1.5 pounds chicken thighs and the sauce to the Instant Pot with 1/2 cup water. Cook HIGH pressure 10 minutes, natural release 5 minutes. Remove chicken, slice or shred. Switch to Saute mode and reduce cooking liquid 3 to 4 minutes until slightly sticky. Serve chicken and sauce over steamed white rice with steamed broccoli and sesame seeds.
+
+**20. Chicken Burrito Bowls**
+Saute onion and garlic. Add 1.5 pounds chicken breast, 1 can black beans (drained), 1 cup white rice, 1 can diced tomatoes, 1 cup chicken broth, 1 teaspoon each cumin and chili powder. Cook HIGH pressure 8 minutes, quick release. Fluff and stir everything together -- the beans, rice, tomatoes, and chicken are all done in one pot. Top with sour cream, salsa, shredded cheese, and pickled jalapenos. This is the complete burrito bowl base that takes 10 minutes of active work.
+
+---
+
+## Other Weeknight Favorites
+
+**21. General Tso's Chicken**
+Brown 1.5 pounds diced chicken thighs in the Instant Pot on Saute mode. Whisk together 1/4 cup soy sauce, 3 tablespoons hoisin, 2 tablespoons rice vinegar, 2 tablespoons honey, 1 tablespoon chili garlic sauce, 2 minced garlic cloves, and 1/2 cup chicken broth. Pour over chicken. Cook HIGH pressure 8 minutes, quick release. Remove chicken. Switch to Saute mode. Stir 2 tablespoons cornstarch into 3 tablespoons cold water and whisk into the sauce. Simmer 2 minutes until glossy. Return chicken and toss. Serve over white rice with steamed broccoli.
+
+**22. Chicken Tikka Masala (Weeknight)**
+Saute diced onion, garlic, and ginger 3 minutes. Add 1.5 pounds chicken thighs, 1 can crushed tomatoes, 1/2 cup heavy cream, 2 teaspoons garam masala, 1 teaspoon turmeric, 1 teaspoon cumin, 1 teaspoon paprika, salt. Cook HIGH pressure 12 minutes, natural release 5 minutes. Stir, break up chicken slightly, add another 1/4 cup heavy cream. This is the takeout dish that takes 15 minutes of work and produces authentic-tasting results without a single specialized ingredient beyond the spices.
+
+**23. Chicken Cacciatore**
+Brown chicken thighs briefly on Saute mode. Remove. Saute onion, bell pepper, and garlic. Return chicken, add 1 can crushed tomatoes, 1/2 cup chicken broth, 1/4 cup dry white wine, 1 teaspoon Italian seasoning, and 1/2 cup sliced black olives. Cook HIGH pressure 15 minutes, natural release 10 minutes. The chicken should be fall-off-the-bone tender. Serve over pasta, polenta, or crusty bread. The pressure cooker compresses what is normally an hour-long braise into 30 minutes total.
+
+**24. Lemon Garlic Chicken Thighs**
+Season 6 bone-in, skin-on chicken thighs with salt, pepper, garlic powder, and paprika. Brown on Saute mode skin-side down 4 minutes per side -- this is the most important step, do not skip it. Remove thighs. Add 1 cup chicken broth, 6 minced garlic cloves, juice of 2 lemons, and fresh thyme. Return chicken skin-side up on the trivet. Cook HIGH pressure 12 minutes, natural release 5 minutes. The skin will not be crispy -- broil 5 minutes to finish if desired. The cooking liquid becomes a bright lemon garlic pan sauce.
+
+**25. Chicken and Vegetable Stew**
+Add 1.5 pounds chicken thighs, 3 diced Yukon Gold potatoes, 3 sliced carrots, 2 ribs celery, 1 diced onion, 2 cups chicken broth, 1 can diced tomatoes, 2 teaspoons thyme, and 1 bay leaf to the Instant Pot. Cook HIGH pressure 15 minutes, natural release 10 minutes. Remove chicken, shred, return to pot. Discard bay leaf. Stir in 1 tablespoon cornstarch dissolved in 2 tablespoons cold water and bring to a simmer on Saute mode until thickened. This is a complete meal with no sides required.
+
+---
+
+## Instant Pot Chicken: What You Need to Know
+
+**Minimum liquid requirement:** The Instant Pot needs at least 1 cup of liquid to build pressure. Broth is always better than water -- it adds flavor and prevents the burn notice. If a sauce is very thick (like BBQ sauce), thin it with 1/2 cup broth before sealing.
+
+**Breast versus thighs:** Chicken breast is easier to overcook in a pressure cooker than thighs. If using breast, reduce cook time by 2 minutes and use quick release rather than natural release. Thighs are more forgiving -- they stay moist even if slightly overcooked, and they produce more flavor in the cooking liquid.
+
+**Quick release versus natural release:** Quick release (opening the valve immediately) stops cooking instantly -- use it for breast, pasta, and anything you do not want to overcook. Natural release (letting pressure drop on its own) takes 10 to 15 minutes and continues cooking through residual heat -- use it for bone-in chicken, soups, and stews where more tenderness is the goal.
+
+**The burn notice:** The most common Instant Pot problem. It happens when thick sauce or starchy ingredients sit on the bottom and scorch before pressure builds. Fix: always add liquid to the pot first, never layer thick sauce directly on the bottom, deglaze after sauteing by scraping up any browned bits before sealing.
+
+**Stack, do not stir:** For recipes with pasta or rice, stir everything once to distribute, then do not stir again before sealing. Stirring activates starches unevenly and increases the chance of clumping or the burn notice.
+
+---
+
+## A 5-Night Instant Pot Chicken Rotation
+
+**Monday:** Basic Shredded Chicken (recipe 1) -- batch cook on Sunday, build bowls on Monday in 5 minutes
+**Tuesday:** Instant Pot Chicken Pasta (recipe 15) -- 20 minutes, one pot, no straining
+**Wednesday:** White Chicken Chili (recipe 11) -- 25 minutes, serve with cornbread
+**Thursday:** Teriyaki Chicken and Rice Bowls (recipe 19) -- 25 minutes, kid-friendly
+**Friday:** General Tso's Chicken (recipe 21) -- better than takeout, 30 minutes total
+
+---
+
+## Let DinnerDrop Build Your Plan
+
+Choosing which Instant Pot chicken recipe fits tonight -- based on what is in the fridge, how much time you have, and what everyone will eat -- is the hard part. [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner weekly plan in 30 seconds. Tell it your family size, dietary preferences, picky-eater constraints, and available time. It generates five dinners with a complete grocery list you shop from once. The beta is open now and free for 6 months.
+
+---
+
+## FAQ
+
+**How long does it take to cook chicken in the Instant Pot?**
+Boneless chicken breast or thighs cook in 8 to 12 minutes on HIGH pressure, plus 5 to 10 minutes of natural release. Bone-in chicken pieces take 12 to 18 minutes. A whole 3 to 4-pound chicken takes 18 to 24 minutes (6 minutes per pound). Add 10 to 15 minutes for the pot to reach pressure before the cook time even starts. Total time from sealing to serving is typically 25 to 40 minutes depending on the recipe.
+
+**Can you put frozen chicken in the Instant Pot?**
+Yes. Frozen boneless chicken breast or thighs cook on HIGH pressure in 12 to 15 minutes -- add 3 to 5 minutes to the fresh cook time. Do not put frozen chicken directly from the freezer into hot oil on Saute mode. Add it with the liquid from the start. Frozen chicken will not brown, so skip the searing step when cooking from frozen. The result is still moist and shreddable.
+
+**Why does my Instant Pot chicken come out dry?**
+Three most common causes: cooking chicken breast too long (use 8 to 10 minutes, not 15), using quick release for bone-in chicken (use natural release instead), and not enough liquid in the pot (minimum 1 cup broth). Switching from breast to thighs is the single biggest change that prevents dry chicken in a pressure cooker -- thighs are significantly more forgiving.
+
+**Do you need to brown chicken before pressure cooking?**
+No. Browning is optional and purely for flavor and texture. The pressure cooker will fully cook chicken without any browning step. If you want deeper flavor and a better texture, saute skin-on chicken pieces on Saute mode 3 to 4 minutes per side before pressure cooking. For shredded chicken recipes, soups, and bowls, skip browning -- it adds time without meaningfully changing the result.
+
+**How much liquid do you need for Instant Pot chicken?**
+Minimum 1 cup of liquid to build pressure safely. For most chicken breast or thigh recipes, 1 cup of chicken broth is correct. For soups and stews, follow the recipe liquid amount (typically 3 to 6 cups). For rice-and-chicken one-pot dishes, count the rice's absorption liquid as part of the total -- the standard ratio is 1:1.25 (rice to liquid) when pressure cooking. Never cook with less than 1 cup total liquid regardless of recipe type.
+
+---
+
+Twenty-five Instant Pot chicken recipes covering shredding, soups, pasta, whole chicken, and one-pot bowls -- all done in under 30 minutes of active time.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan in 30 seconds -- five meals with a complete grocery list, ready to shop. The beta is free for 6 months.
+
+**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
