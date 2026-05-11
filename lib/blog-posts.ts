@@ -7636,6 +7636,173 @@ Yes, but spread them out fully and add 5-10 extra minutes. They release moisture
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
 
+
+  {
+    slug: 'dinner-roll-recipe',
+    title: 'Easy Homemade Dinner Rolls: Soft, Fluffy, and Better Than Store-Bought',
+    description:
+      'Homemade dinner rolls are easier than you think. This guide covers the classic soft roll, ' +
+      'six flavored variations, a one-hour quick version, make-ahead overnight rolls, and troubleshooting ' +
+      'tips so every batch comes out perfectly golden and pull-apart soft.',
+    publishDate: '2027-02-23',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'dinner roll recipe',
+    content: `
+# Easy Homemade Dinner Rolls: Soft, Fluffy, and Better Than Store-Bought
+
+There is a reason homemade dinner rolls disappear from the basket before everything else hits the table. Soft, pillowy, golden on top, and warm all the way through -- a good dinner roll is its own reward. The good news: they are not complicated. If you can mix a bowl of dough and let it rise, you can make dinner rolls that will genuinely impress your family.
+
+This guide covers the classic soft dinner roll and a dozen variations -- from one-hour quick rolls to overnight make-ahead versions, from garlic herb to sweet honey butter. Every recipe below is designed for real weeknight and weekend baking.
+
+---
+
+## The Classic Soft Dinner Roll
+
+This is the recipe you want as your baseline. Yields 12 rolls.
+
+**Ingredients:**
+- 3 cups (360g) all-purpose flour
+- 2 1/4 tsp active dry yeast (1 packet)
+- 1 cup warm milk (110F)
+- 3 tbsp sugar
+- 1 tsp salt
+- 3 tbsp unsalted butter, softened
+- 1 egg
+
+**Instructions:**
+1. Dissolve yeast and sugar in warm milk. Let sit 5 minutes until foamy.
+2. Mix in egg and butter. Add flour and salt. Knead 8 minutes until smooth and slightly tacky.
+3. Cover and rise 1 hour in a warm place until dough doubles in size.
+4. Punch down, divide into 12 equal pieces. Shape into rounds. Place in greased 9x13 pan.
+5. Second rise: 30-40 minutes. Preheat oven to 375F.
+6. Brush tops with egg wash (1 egg + 1 tbsp water). Bake 18-22 minutes until golden.
+7. Brush immediately with melted butter. Serve warm.
+
+The classic roll delivers a soft, pull-apart crumb with a thin golden crust. The butter brush at the end adds shine and keeps them from drying out.
+
+---
+
+## Flavored Dinner Roll Variations
+
+### Garlic Herb Rolls
+Use the base recipe. Add to the dough: 3 minced garlic cloves, 1 tsp dried rosemary, 1 tsp dried thyme. Brush finished rolls with garlic butter (2 tbsp butter + 1 clove minced garlic, microwaved 30 seconds). Finish with flaky sea salt and fresh parsley. Pairs perfectly with pasta, roasted chicken, or soup nights.
+
+### Honey Butter Rolls
+Add 2 tbsp honey to the milk mixture. Use salted butter in the dough. After baking, mix 3 tbsp softened butter with 1 tbsp honey and a pinch of salt -- spread on rolls straight from the oven. These lean slightly sweet and work for both dinner and brunch tables.
+
+### Cheddar and Chive Rolls
+Fold 3/4 cup sharp shredded cheddar and 2 tbsp fresh chives into the dough after the first mix. Sprinkle extra cheddar on top before baking. The cheese creates pockets of melted richness inside and a slightly crispy top. Great alongside chili, soup, or BBQ nights.
+
+### Everything Bagel Rolls
+Standard base dough. Top rolls with everything bagel seasoning instead of egg wash -- press it lightly so it sticks. The sesame-poppy-onion-garlic combination makes these a crowd favorite for casual dinners. Great with cream cheese or alongside eggs for a dinner-as-breakfast night.
+
+### Parmesan and Black Pepper Rolls
+Add 1/2 cup finely grated Parmesan to the dough. Brush with olive oil before baking. Crack black pepper over tops generously. The Parmesan creates a slightly crisp exterior. Serve with Italian dishes, Caesar salad nights, or any pasta.
+
+### Rosemary Sea Salt Rolls
+Add 2 tbsp fresh chopped rosemary to dough. Brush with olive oil before baking, sprinkle flaky sea salt. Simple, aromatic, bakery-quality. These photograph beautifully and disappear just as fast.
+
+---
+
+## One-Hour Dinner Rolls (Quick Version)
+
+When you decide on rolls at 4pm for a 5:30 dinner, this is your recipe. Uses rapid-rise yeast to cut the timeline nearly in half.
+
+**Ingredients:**
+- 3 cups flour
+- 1 packet rapid-rise (instant) yeast
+- 1 cup warm water
+- 2 tbsp sugar
+- 1 tsp salt
+- 2 tbsp vegetable or olive oil
+
+**Instructions:**
+1. Mix rapid-rise yeast, sugar, and warm water. No proofing needed -- instant yeast goes straight in.
+2. Add oil, salt, and flour. Mix until shaggy, then knead 6 minutes.
+3. Divide immediately into 12 pieces. No first rise -- shape and place in greased pan.
+4. Cover with a damp towel. Rise 25-30 minutes in a warm oven (heat to 200F for 2 minutes, turn off -- residual heat creates a perfect proofing environment).
+5. Brush with egg wash. Bake at 400F for 15-18 minutes.
+6. Brush with butter. Serve immediately.
+
+One-hour rolls are about 85% as good as the classic. They rise slightly less and have a marginally chewier crumb. For weeknights, absolutely worth the shortcut.
+
+---
+
+## Make-Ahead Overnight Dinner Rolls
+
+The Thanksgiving and holiday strategy: do all the work the night before, bake fresh in the morning.
+
+1. Make dough using the classic recipe. Complete first rise.
+2. Punch down, shape into rolls, place in greased pan.
+3. Cover tightly with plastic wrap. Refrigerate overnight (8-16 hours).
+4. Remove from fridge 45-60 minutes before baking. Let come to room temperature and complete second rise.
+5. Bake as directed.
+
+Cold fermentation develops more complex flavor. The slow rise allows enzymes to break down starches, often producing more tender rolls than same-day versions. Many bakers who try this method never go back.
+
+---
+
+## Bread Machine Dinner Rolls
+
+If you have a bread machine, use the dough cycle to handle all the mixing and first rise automatically -- about 90 minutes hands-off.
+
+1. Add ingredients in manufacturer's order (usually liquids first, flour, yeast last).
+2. Run dough cycle. Machine mixes, kneads, and completes first rise.
+3. Remove dough, shape rolls, second rise 30 minutes, bake at 375F.
+
+Ideal for busy households -- the machine handles the labor-intensive part while you prep the rest of dinner.
+
+---
+
+## Dinner Roll Troubleshooting
+
+**Rolls came out dense:** Almost always a yeast problem. Check the expiration date. Check milk temperature -- above 120F kills yeast, below 100F does not activate it. The sweet spot is 105-115F.
+
+**Rolls did not rise:** Test yeast by proofing alone in warm water with a pinch of sugar. If no foam after 10 minutes, discard and use fresh yeast. If your kitchen is cold, use the warm oven trick: heat to 200F for 2 minutes, turn off, place covered dough inside.
+
+**Rolls are tough:** Over-kneading or too much flour. Add flour tablespoon by tablespoon until dough comes together. Properly kneaded dough is smooth and slightly tacky, not stiff.
+
+**Rolls too brown on bottom:** Your oven runs hot on the bottom. Use the middle rack. Place an empty baking sheet on the rack below to deflect heat.
+
+**Rolls dry the next day:** Store in an airtight container at room temperature -- not in the refrigerator (fridge dries out bread). Refresh day-old rolls: brush with water, heat at 300F for 5-8 minutes.
+
+---
+
+## Scaling for Groups
+
+When doubling or tripling, bake in multiple 9x13 pans rather than one large pan. Airflow between rolls matters. A single family dinner needs 8-10 rolls (1x recipe). A dinner party of 8 needs 16-20 rolls (1.5-2x). A Thanksgiving table for 20 needs 40+ rolls (3-4x). Overcrowded pans produce uneven baking and pale-sided rolls.
+
+---
+
+## Rolls to Match Every Dinner
+
+Garlic herb with pasta. Honey butter with roasted chicken. Cheddar chive with soup. Rosemary sea salt with a weekend roast. Classic rolls with everything else.
+
+Dinner rolls take about 15 minutes of actual active work. The rest is rise time. Start rolls when you start dinner prep and they come out of the oven right as everything else finishes.
+
+---
+
+## Frequently Asked Questions
+
+**Can I freeze dinner rolls?**
+Yes. Bake fully, cool completely, freeze in a zip bag up to 3 months. Reheat from frozen at 325F for 12-15 minutes. You can also freeze shaped unbaked rolls after second rise -- thaw overnight in fridge, bake directly.
+
+**What flour is best?**
+All-purpose flour produces soft, tender rolls. Bread flour produces chewier rolls with a slightly crispier crust. For whole wheat: substitute up to half the flour for a nuttier, denser result. Do not substitute more than 50% whole wheat without adjusting liquid.
+
+**Can I use dairy-free milk?**
+Yes. Oat milk and almond milk both work well. Avoid coconut milk (adds strong flavor). Use the same quantity and temperature as regular milk.
+
+**Why brush with butter after baking?**
+The butter brush immediately after baking adds flavor, creates a slight sheen, and softens the crust. Skip it and you get a crispier, drier crust. Include it and you get bakery-style glossy rolls. Always include it.
+
+---
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your full week of dinners -- including nights when homemade rolls are on the menu -- around your family's preferences, then generates the complete grocery list in one tap. The beta is free for 6 months for the first 100 families.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
