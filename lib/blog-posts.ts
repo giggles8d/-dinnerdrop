@@ -5476,6 +5476,201 @@ DinnerDrop solves that part. Tell it your family size, dietary needs, and prefer
 First 100 families get 6 months completely free. No credit card charged for 6 months.`,
   },
 
+
+  {
+    slug: 'keto-dinner-ideas',
+    title: "30 Keto Dinner Ideas the Whole Family Will Actually Eat",
+    description:
+      "Staying keto doesn't mean cooking two separate dinners. These 30 keto dinner ideas " +
+      "work for the whole family — high-protein, low-carb, and genuinely easy to make.",
+    publishDate: '2026-12-01',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'keto dinner ideas',
+    content: `Keto has a family dinner problem.
+
+You commit to low-carb eating. Your partner isn't keto. Your kids definitely aren't keto. And now you're trying to figure out how to make one dinner that everyone will eat — without running a restaurant.
+
+The good news: most of the best keto proteins (steak, chicken thighs, salmon, ground beef, bacon) are also the most flavorful foods your family already likes. The adjustment is mostly in the sides — swapping rice for cauliflower rice, pasta for zucchini noodles, bread for lettuce wraps.
+
+The 30 dinners below are built around that insight: high-protein, high-flavor bases that are naturally keto, with easy carb add-ons for family members who aren't tracking.
+
+## What Makes a Dinner Keto?
+
+The rough rule: keep net carbs under 50g per day (20g for strict keto). Net carbs = total carbs minus fiber.
+
+For dinner, aim for under 10-15g net carbs per meal. The practical shorthand:
+
+**Always keto:** Meat, fish, eggs, cheese, butter, olive oil, non-starchy vegetables (broccoli, zucchini, cauliflower, asparagus, green beans, peppers, spinach, mushrooms)
+
+**Not keto:** Bread, pasta, rice, potatoes, corn, beans, most fruit, anything with added sugar
+
+The template that works: protein + fat + non-starchy vegetable.
+
+## Category 1: Quick Skillet and Stir-Fry (8 Dinners)
+
+Ready in 20 minutes or less. These are the keto weeknight workhorses.
+
+**1. Garlic Butter Steak Bites with Zucchini**
+Sirloin cut into 1-inch cubes, seared in a cast iron with butter and garlic. Add sliced zucchini the last 3 minutes. Season with salt, pepper, fresh thyme. Tastes like a steakhouse dinner. Takes 15 minutes.
+
+**2. Chicken Thigh and Broccoli Stir-Fry**
+Boneless thighs cut into strips, cooked in sesame oil with garlic and ginger. Add broccoli florets and toss with coconut aminos (low-carb soy sauce substitute) and a splash of rice vinegar. Kids like this one without knowing it's keto.
+
+**3. Ground Turkey Cauliflower Rice Bowl**
+Brown ground turkey with onion, garlic, bell pepper. Season with cumin, chili powder, paprika. Serve over cauliflower rice. Top with shredded cheese, sour cream, avocado. Non-keto family members can have it over regular rice.
+
+**4. Shrimp Scampi with Zucchini Noodles**
+Shrimp sauteed with butter, garlic, white wine, lemon juice, red pepper flakes. Serve over spiralized zucchini (pat dry to prevent waterlogging). Ready in 12 minutes. Feels fancy. Genuinely low effort.
+
+**5. Sausage and Pepper Skillet**
+Sliced Italian sausage with bell peppers, onions, garlic in a large skillet. Finish with a splash of chicken broth to deglaze. Serve as-is or over cauliflower mash. Check the sausage label — some brands add sugar. 25 minutes total.
+
+**6. Egg Roll in a Bowl**
+Ground pork with shredded cabbage, shredded carrots (small amount), garlic, ginger, coconut aminos, sesame oil. Everything you like about egg rolls, none of the wrapper carbs. One of the most consistently popular keto weeknight dinners.
+
+**7. Pork Tenderloin with Green Beans**
+Season pork tenderloin with garlic powder, smoked paprika, salt. Sear in oven-safe pan, finish in 400F oven 15-18 minutes until 145F internal. Rest 5 minutes. Serve with sauteed green beans in butter with sliced almonds. Under 5g net carbs.
+
+**8. Cajun Salmon with Asparagus**
+Salmon fillets coated with Cajun seasoning. Pan-sear skin-side down 4 minutes, flip 3 minutes. Roast asparagus at 425F with olive oil, salt, lemon zest, 12 minutes. Complete dinner in 20 minutes.
+
+---
+
+## Category 2: Sheet Pan Dinners (6 Dinners)
+
+One pan, minimal cleanup. Let the oven do the work.
+
+**9. Lemon Herb Chicken Thighs with Broccoli**
+Bone-in chicken thighs with broccoli florets. Toss with olive oil, lemon juice, garlic powder, Italian herbs. 425F for 30-35 minutes. Chicken skin gets crispy. Broccoli chars at the edges.
+
+**10. Sheet Pan Steak Fajitas**
+Flank steak sliced thin with bell peppers and onions. Toss with olive oil, cumin, chili powder, garlic, lime juice. 425F for 12-15 minutes, then broil 2 minutes. Non-keto family wraps in flour tortillas. Keto eaters use lettuce cups or eat it as a bowl.
+
+**11. Garlic Parmesan Chicken and Zucchini**
+Chicken breasts pounded thin, coated in garlic butter and parmesan. Zucchini spears alongside, same pan. 400F for 22-25 minutes. Parmesan crust makes chicken taste like a restaurant dish. Under 6g net carbs.
+
+**12. Sheet Pan Salmon with Asparagus and Capers**
+Salmon fillets and asparagus spears on one pan. Drizzle with butter, garlic, capers, lemon slices. 400F for 12-14 minutes. The lemon and capers do all the flavor work.
+
+**13. Sheet Pan Sausage and Vegetables**
+Italian sausage links with bell peppers, zucchini, mushrooms, red onion. Olive oil, Italian seasoning, garlic. 400F for 25 minutes, turning once. Sausage juices flavor all the vegetables.
+
+**14. Turkey Meatballs with Roasted Brussels Sprouts**
+Turkey meatballs made with almond flour instead of breadcrumbs, parmesan, garlic, egg, Italian seasoning. Roast alongside Brussels sprouts tossed in olive oil. 400F for 20-22 minutes.
+
+---
+
+## Category 3: Slow Cooker (5 Dinners)
+
+Set in the morning, ready at dinner.
+
+**15. Pulled Pork over Cauliflower Rice**
+Pork shoulder with a sugar-free dry rub (smoked paprika, cumin, garlic powder, salt, chili powder). LOW 8-10 hours. Shred and serve over cauliflower rice with apple cider vinegar coleslaw. Non-keto family gets it on buns.
+
+**16. Tuscan Chicken**
+Chicken thighs with chicken broth, heavy cream, sun-dried tomatoes, spinach, garlic, parmesan, Italian seasoning. LOW 5-6 hours. The cream reduces into a genuinely restaurant-quality sauce. Serve with zucchini noodles or steamed broccoli.
+
+**17. Beef Short Ribs with Mushrooms**
+Short ribs with beef broth, garlic, fresh thyme, mushrooms, celery. LOW 8-10 hours. The collagen in the short ribs creates a silky braising liquid. Serve with cauliflower mash. Zero active effort after morning assembly.
+
+**18. Green Chile Chicken**
+Chicken breasts with canned green chiles, diced onion, garlic, cumin, chicken broth. LOW 6-8 hours, shred. Serve in lettuce cups with shredded cheese, sour cream, avocado. Non-keto family uses flour tortillas.
+
+**19. Creamy Chicken and Mushroom**
+Chicken thighs with sliced mushrooms, chicken broth, heavy cream, garlic, thyme, Dijon mustard. LOW 5-6 hours. The Dijon adds depth without adding carbs. Serve over cauliflower mash or steamed broccoli.
+
+---
+
+## Category 4: Soups and Stews (5 Dinners)
+
+Filling, low-carb, great for meal prep.
+
+**20. Chicken Zoodle Soup**
+Classic chicken soup — broth, celery, onion, garlic, thyme, bay leaf — with zucchini noodles instead of egg noodles. Rotisserie chicken pulled and added at the end. Ready in 30 minutes.
+
+**21. Beef and Vegetable Stew**
+Chuck roast cut into cubes with beef broth, celery, mushrooms, turnips (lower-carb than potatoes), diced tomatoes, thyme, garlic. Simmer 1.5-2 hours on low. Turnips hold their shape like potatoes without the carb count.
+
+**22. Taco Soup**
+Ground beef with diced tomatoes, beef broth, green chiles, taco seasoning, cream cheese. 30 minutes on the stove. Top with shredded cheddar, sour cream, avocado, jalapenos. Non-keto family adds tortilla chips. Under 8g net carbs per bowl without chips.
+
+**23. Broccoli Cheddar Soup**
+Broccoli florets in chicken broth with heavy cream, sharp cheddar, onion, garlic powder. Blend half to thicken without adding flour. Top with more cheddar and bacon bits. Naturally keto, completely crowd-pleasing.
+
+**24. Egg Drop Soup with Mushrooms**
+Chicken broth with beaten eggs drizzled in while stirring, sliced mushrooms, green onions, sesame oil, ginger, coconut aminos. Ready in 15 minutes. Works as a quick standalone dinner or alongside another protein.
+
+---
+
+## Category 5: Ground Beef Classics Made Keto (6 Dinners)
+
+Ground beef is the most versatile keto protein. These are family favorites, adapted.
+
+**25. Keto Stuffed Bell Peppers**
+Ground beef with diced tomatoes, garlic, Italian seasoning, parmesan — but use cauliflower rice inside the pepper instead of white rice. Bake at 375F for 30-35 minutes. Non-keto family can have cooked rice on the side.
+
+**26. Lettuce Wrap Tacos**
+Taco-seasoned ground beef in romaine or butter lettuce cups with all the usual toppings. Non-keto family uses flour tortillas. Check seasoning packets for added sugar, or make your own with cumin, chili powder, garlic powder, paprika, salt.
+
+**27. Keto Cheeseburger Casserole**
+Ground beef with diced onion, garlic, diced tomatoes, cream cheese, cheddar, mustard, pickle relish. Bake at 375F for 20 minutes until bubbly. All the cheeseburger flavor. One of the highest-satiety keto dinners.
+
+**28. Bolognese with Zucchini Noodles**
+Classic meat sauce — ground beef, crushed tomatoes, onion, celery, garlic, red wine, bay leaves — simmered 30-40 minutes. Serve over spiralized zucchini (salt and pat dry first). Non-keto family gets it over regular pasta with the same sauce.
+
+**29. Mexican Ground Beef Skillet**
+Ground beef with onion, bell pepper, garlic, diced tomatoes with chiles, cumin, chili powder, smoked paprika. Melt shredded cheddar directly in the pan. Serve with sour cream and avocado. Under 8g net carbs. One pan, under 30 minutes.
+
+**30. Dinner-Size Stuffed Mushrooms**
+Large portobello caps filled with Italian sausage (casings removed), cream cheese, parmesan, garlic, spinach. Bake at 375F for 20-25 minutes. Two large stuffed mushrooms is a complete dinner.
+
+---
+
+## Feeding a Non-Keto Family Without Cooking Two Dinners
+
+The most practical keto family dinner strategy is not finding meals the whole family will eat keto. It is designing modular dinners where the keto base is a complete meal — and carbs are served as optional sides.
+
+**The formula:**
+- Keto base: protein + vegetable (your complete plate)
+- Carb add-on served separately: rice, pasta, tortillas, bread (everyone else's plate)
+
+**Examples in practice:**
+- Chicken stir-fry over cauliflower rice for you, same stir-fry over white rice for everyone else
+- Taco meat in lettuce cups for you, same meat in flour tortillas for everyone else
+- Bolognese over zucchini noodles for you, same sauce over pasta for everyone else
+
+You cook one thing. The family eats it different ways. The extra logistics: cook the carb add-on separately while the main protein cooks. Five extra minutes, one extra pot.
+
+---
+
+## Frequently Asked Questions
+
+**How many carbs per day does keto actually require?**
+Standard keto is under 50g net carbs per day. Strict keto is under 20g. Net carbs = total carbs minus fiber. Most people targeting weight loss aim for 20-30g net carbs per day, though the exact number varies individually.
+
+**Can I eat dairy on keto?**
+Yes — full-fat dairy (cheese, butter, heavy cream, sour cream, cream cheese) is keto-friendly. Milk has about 12g carbs per cup and is generally limited on strict keto. Hard and semi-hard cheeses are the lowest-carb dairy options.
+
+**Is keto appropriate for kids?**
+The ketogenic diet has clinical history in children (originally developed as a treatment for childhood epilepsy), but children have different nutritional needs than adults. Pediatric keto is typically managed with a dietitian. The proteins and vegetables in these dinners are simply healthy food; the specific carb restriction is designed for adults.
+
+**What are the most budget-friendly keto proteins?**
+Ground beef (80/20 is most affordable), chicken thighs (significantly cheaper than breasts and more flavorful), eggs, canned tuna, pork shoulder, and sausage. Chicken thighs and ground beef are the practical backbone of budget keto.
+
+**What do I do when the rest of the family wants pasta night?**
+Make the sauce keto — bolognese, arrabiata, Alfredo, and marinara are all naturally low in carbs. Serve it over zucchini noodles for yourself, regular pasta for everyone else. The sauce is the most flavorful part anyway. This is one of the easiest long-term keto swaps.
+
+---
+
+Keto dinners work best when they stop feeling like a special diet and start feeling like normal food — which most of the 30 meals above genuinely are. The proteins are ones your family already likes. The vegetables go with everything. The adjustment is mostly swapping starchy carbs for lower-carb alternatives, which is less of a sacrifice than most people expect.
+
+The part that breaks keto fastest: standing in the kitchen at 5pm with nothing planned. A week of dinners decided on Sunday — with a grocery list built from that plan — removes 95% of the friction that makes eating keto feel unsustainable by Wednesday.
+
+[DinnerDrop](https://dinnerdrop.app/beta) generates a personalized weekly dinner plan in 30 seconds, including keto and dietary-specific options tailored to your family size, cook time tolerance, and preferred stores. The beta is free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
