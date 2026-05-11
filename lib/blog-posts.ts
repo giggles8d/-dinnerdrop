@@ -8690,6 +8690,160 @@ Twenty-five pork chop recipes from 15-minute skillet to all-day slow cooker. The
 **[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'chicken-and-rice-recipes',
+    title: '25 Chicken and Rice Recipes for Easy Weeknight Dinners',
+    description:
+      'From one-pot skillet meals to baked casseroles and fried rice bowls, ' +
+      'these chicken and rice recipes cover every weeknight scenario.',
+    publishDate: '2027-04-13',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'chicken and rice recipes',
+    content: `Chicken and rice is not a recipe — it is a category. There are at least a dozen fundamentally different ways to combine these two ingredients, and each one produces a completely different meal. This is 25 of the best, organized by method, so you can find the right one for tonight in under a minute.
+
+---
+
+## One-Pot and Skillet (7 Recipes)
+
+**1. Classic One-Pot Chicken and Rice**
+Season 4 bone-in chicken thighs with salt, pepper, garlic powder, and smoked paprika. Brown skin-side down in a large oven-safe skillet in 1 tablespoon oil over medium-high heat, 4 minutes. Flip, cook 2 minutes. Remove chicken. In same skillet, cook 1 diced onion and 3 garlic cloves until soft, 3 minutes. Add 1.5 cups long-grain white rice and stir to coat in the fat, 1 minute. Pour in 2.5 cups chicken broth and 1/2 cup diced tomatoes. Nestle chicken on top skin-side up. Cover tightly and bake at 375 degrees F for 35 minutes. Uncover last 5 minutes to crisp the skin. Every grain of rice absorbs the chicken drippings as it cooks — no separate pot needed.
+
+**2. Honey Garlic Chicken and Rice Skillet**
+Mix 3 tablespoons honey, 3 tablespoons soy sauce, 4 minced garlic cloves, and 1 teaspoon rice vinegar. Dice 1.5 lbs boneless chicken thighs into 1-inch pieces. Cook in oil over high heat, 5 minutes until golden. Pour sauce over chicken and cook 2 minutes until glazed. Push chicken to the sides. Add 1.5 cups rinsed jasmine rice to the center, stir briefly, add 2 cups chicken broth. Bring to a boil, reduce heat to low, cover, and cook 18 minutes. Fluff and fold chicken back through the rice. Garnish with sliced green onions and sesame seeds.
+
+**3. Lemon Herb Chicken and Rice**
+Brown 4 bone-in chicken thighs in an oven-safe pot, 3 minutes per side. Remove. Cook 1 diced shallot and 2 garlic cloves in the same pot, 2 minutes. Add 1.5 cups basmati rice, stir 1 minute. Add 2.5 cups chicken broth, juice of 1 lemon, 1 teaspoon dried thyme, and 1 teaspoon dried oregano. Return chicken on top. Cover and bake at 375 degrees F for 40 minutes. Squeeze additional lemon over everything before serving. The zest brightens the entire pot and balances the richness of the chicken fat.
+
+**4. Salsa Chicken Rice Bowls**
+Season 1.5 lbs boneless chicken thighs with cumin, chili powder, garlic powder, salt, and pepper. Cook in oil over medium-high heat, 4 to 5 minutes per side until cooked through. Rest 5 minutes, then slice. Cook 1.5 cups long-grain white rice separately with 1 cup chicken broth and 1 cup jarred salsa instead of plain water for built-in flavor. Serve chicken over rice with avocado, sour cream, shredded cheese, and lime. The salsa rice eliminates the need for any separate seasoning step.
+
+**5. Cajun Chicken and Rice**
+Mix 1 teaspoon paprika, 1/2 teaspoon cayenne, 1/2 teaspoon garlic powder, 1/2 teaspoon onion powder, 1/2 teaspoon dried thyme, salt, and pepper. Rub onto 1.5 lbs diced chicken thighs. Cook in a large skillet in oil over high heat until browned, 5 minutes. Add 1 diced green bell pepper, 1 diced celery stalk, and 1/2 diced onion. Cook 3 minutes. Add 1.5 cups white rice, 2.5 cups chicken broth, and 1 can diced tomatoes. Bring to a boil, reduce heat to low, cover, and cook 20 minutes. The holy trinity of Cajun cooking — bell pepper, celery, onion — makes this rice deeply savory.
+
+**6. Teriyaki Chicken Rice Bowl**
+Whisk 3 tablespoons soy sauce, 2 tablespoons mirin, 1 tablespoon sake or rice vinegar, and 1 tablespoon sugar. Slice 1.5 lbs chicken thighs into thin strips. Cook in oil over high heat, 3 minutes per side until nearly done. Pour teriyaki sauce over chicken and cook 2 to 3 minutes, turning to coat, until sauce thickens and glazes the chicken. Serve over steamed jasmine rice with steamed broccoli, sliced avocado, or shredded cabbage. The key to glossy teriyaki is high heat and allowing the sauce to reduce rather than just heat through.
+
+**7. Chicken and Rice Stir-Fry**
+Cook 1.5 cups jasmine rice and cool completely — day-old rice works best because it fries instead of steaming. Slice 1 lb chicken breast into thin strips and marinate in 2 tablespoons soy sauce and 1 tablespoon cornstarch for 10 minutes. Stir-fry chicken in very hot oil, 3 minutes. Add 2 cups frozen mixed vegetables and 3 minced garlic cloves. Add cooled rice, pressing it flat against the wok. Let it sit untouched for 1 minute to develop a lightly crispy bottom. Add 2 tablespoons soy sauce, 1 tablespoon sesame oil, and 2 scrambled eggs. Toss and serve with sriracha.
+
+---
+
+## Baked Chicken and Rice (6 Recipes)
+
+**8. Classic Baked Chicken and Rice Casserole**
+In a 9x13 baking dish, whisk together 2 cups chicken broth, 1 can cream of mushroom soup, 1 tablespoon onion powder, 1 teaspoon garlic powder, salt, and pepper. Stir in 1.5 cups uncooked long-grain white rice. Season 4 bone-in chicken pieces and place on top. Cover tightly with foil. Bake at 350 degrees F for 1 hour. Remove foil and bake 15 more minutes to brown the chicken. This is the casserole that has been feeding American families since the 1960s for good reason — it requires almost no active cooking time.
+
+**9. Cheesy Chicken and Rice Casserole**
+Stir together 1.5 cups cooked rice, 2 cups shredded cooked chicken, 1 cup sour cream, 1 can cream of chicken soup, 1.5 cups shredded cheddar cheese, 1/2 cup chicken broth, 1 teaspoon garlic powder, and 1/2 teaspoon onion powder. Pour into a greased 9x13 baking dish. Top with remaining 1/2 cup cheddar and 1/2 cup crushed Ritz crackers mixed with 2 tablespoons melted butter. Bake uncovered at 375 degrees F for 25 to 30 minutes until bubbling and golden. Kid-proof, freezer-friendly, and done in under 30 minutes of active prep.
+
+**10. Greek Baked Chicken Thighs with Lemon Rice**
+Marinate 4 bone-in chicken thighs in 3 tablespoons olive oil, juice of 1 lemon, 3 minced garlic cloves, 1 teaspoon dried oregano, 1 teaspoon dried thyme, salt, and pepper for at least 30 minutes. Arrange over 1.5 cups uncooked basmati rice mixed with 2.5 cups chicken broth and 1 cup halved cherry tomatoes in a deep baking dish. Bake covered at 375 degrees F for 40 minutes. Uncover and bake 15 more minutes. Finish with fresh parsley and crumbled feta. The chicken drippings perfume every grain of rice from above.
+
+**11. Ranch Baked Chicken and Rice**
+Mix 1 packet ranch seasoning with 2.5 cups chicken broth. In a greased baking dish, combine 1.5 cups uncooked long-grain rice with the broth mixture. Place 4 boneless chicken thighs on top. Sprinkle generously with additional ranch seasoning and black pepper. Cover tightly with foil. Bake at 375 degrees F for 50 minutes. Uncover and bake 10 minutes to caramelize the tops. Serve with a side salad. This is a go-to when you need dinner in the oven with 10 minutes of active work.
+
+**12. Chicken and Rice Stuffed Peppers**
+Mix 1.5 cups cooked white rice, 1.5 cups shredded cooked chicken, 1 cup salsa, 1 cup black beans drained, 1/2 cup corn, 1 teaspoon cumin, 1/2 teaspoon chili powder, salt, and 1/2 cup shredded Monterey Jack. Halve 4 bell peppers lengthwise and remove seeds. Fill each half with the chicken rice mixture. Top with remaining cheese. Bake at 375 degrees F for 25 to 30 minutes until peppers are tender and cheese is bubbly. Serve with sour cream and lime wedges.
+
+**13. Slow Roasted Chicken Thighs Over Rice**
+In a wide shallow oven-safe dish, combine 2 cups basmati rice, 3 cups chicken broth, 1 diced onion, 3 garlic cloves, 1 tablespoon olive oil, 1 teaspoon turmeric, salt, and pepper. Place 6 bone-in skin-on chicken thighs on top, skin-side up. Season with paprika, garlic powder, salt, and pepper. Do not cover. Roast at 350 degrees F for 75 to 80 minutes until the chicken skin is deeply golden and crispy and the rice has absorbed all the broth. The exposed chicken skin crisps while the rice steams below it — two things happening in one vessel.
+
+---
+
+## Soup and Stew (4 Recipes)
+
+**14. Chicken and Rice Soup**
+In a large pot, cook 1 diced onion, 3 diced carrots, 3 diced celery stalks, and 3 minced garlic cloves in butter over medium heat, 5 minutes. Add 8 cups chicken broth, 1.5 lbs raw chicken thighs whole, 1 teaspoon dried thyme, salt, and pepper. Simmer 20 minutes until chicken is cooked through. Remove chicken, shred it, discard bones. Return chicken to pot. Add 1 cup long-grain white rice and simmer 15 to 18 minutes until rice is just tender. Adjust seasoning. The shredding step after poaching produces more tender chicken than dicing raw chicken and cooking it in the soup.
+
+**15. Creamy Chicken and Rice Soup**
+Make the base from recipe 14, then stir in 1 cup heavy cream or 1 can evaporated milk in the last 5 minutes of cooking. The rice thickens the broth naturally as it cooks, and the cream transforms it into something that feels closer to pot pie filling — deeply comforting without any extra work.
+
+**16. White Chicken Chili with Rice**
+Cook 1 diced onion and 3 garlic cloves in oil in a large pot, 3 minutes. Add 2 cans drained white beans, 2 cans drained green chiles, 4 cups chicken broth, 1 teaspoon cumin, 1 teaspoon oregano, 1/2 teaspoon cayenne, and 1.5 cups cooked shredded chicken. Simmer 15 minutes. Stir in 1.5 cups cooked rice, 1/2 cup sour cream, and juice of 1 lime in the last 2 minutes. Serve with shredded cheese, cilantro, and tortilla chips. The rice makes this more filling than the classic chili version and gives it a heartier texture.
+
+**17. Chicken and Rice Congee**
+Rinse 1 cup jasmine rice twice. In a large pot, combine rice, 8 cups chicken broth, 1 tablespoon grated ginger, 3 minced garlic cloves, and 1.5 lbs bone-in chicken thighs. Bring to a boil, then reduce to a gentle simmer. Cook uncovered for 1 hour, stirring every 15 minutes, until rice breaks down into a thick creamy porridge. Remove chicken, shred it, return to pot. Season with salt and white pepper. Serve with sliced green onions, soft-boiled eggs, sesame oil drizzle, and chili oil. Congee reheats beautifully — make a full pot on Sunday and it serves as a fast weekday meal.
+
+---
+
+## International-Inspired (5 Recipes)
+
+**18. Arroz con Pollo**
+Season 4 bone-in chicken thighs with salt, pepper, and cumin. Brown in olive oil in a large Dutch oven, 3 minutes per side. Remove. Cook 1 diced onion, 1 diced green pepper, and 4 garlic cloves until soft, 4 minutes. Add 1.5 cups medium-grain rice and stir to coat, 2 minutes. Add 1 can diced tomatoes undrained, 1.5 cups chicken broth, 1 teaspoon cumin, 1 teaspoon dried oregano, 1/2 teaspoon turmeric, and 1/2 cup frozen peas. Nestle chicken back in. Cover and cook over medium-low heat 30 to 35 minutes until rice is cooked and chicken is through. The sofrito base — onion, pepper, garlic cooked down — makes this categorically different from a plain chicken-rice skillet.
+
+**19. Chicken Biryani Weeknight Version**
+Marinate 1.5 lbs chicken thighs in 1/2 cup plain yogurt, 1 tablespoon garam masala, 1 teaspoon turmeric, 1 teaspoon cumin, 1 teaspoon coriander, 3 minced garlic cloves, 1 tablespoon grated ginger, salt, and a pinch of cayenne for at least 30 minutes. Brown chicken in oil in a pot, 3 minutes per side. Remove. Cook 1 sliced onion until deep golden, 10 minutes. Add the marinated chicken and 1.5 cups basmati rice rinsed and soaked 15 minutes. Pour in 2.5 cups water. Season with salt. Bring to a boil, cover tightly, reduce to lowest heat, and cook 18 minutes. Let rest 10 minutes off heat before opening. Every grain stays separate because soaked and rinsed basmati releases far less starch than unsoaked rice.
+
+**20. Chicken Fried Rice Better than Takeout**
+Day-old or chilled rice is non-negotiable here. Cook 1 lb diced chicken thighs in a wok over high heat in 1 tablespoon oil, 4 minutes. Add 3 minced garlic cloves and 1 teaspoon grated ginger, 30 seconds. Push everything to the sides. Add 3 cups cold cooked jasmine rice, pressing flat against the pan. Cook 2 minutes without stirring to develop a slightly crispy bottom. Add 2 tablespoons soy sauce, 1 tablespoon oyster sauce, and 1 teaspoon sesame oil. Toss everything together. Push to sides again, scramble 2 eggs in the center, fold into rice. Finish with sliced green onions and chili oil.
+
+**21. Hainanese Chicken Rice**
+Rub 1 whole chicken or 4 bone-in thighs with salt and ginger. Blanch in boiling water 1 minute to tighten the skin, drain. In a large pot, simmer chicken in 8 cups water with 4 ginger slices, 3 garlic cloves, and 2 green onions until just cooked through — about 30 minutes for thighs. Remove and immediately transfer to an ice bath for 5 minutes to keep the skin silky. Reserve 3 cups broth. Cook 1.5 cups jasmine rice in the reserved chicken broth with 1 tablespoon chicken fat skimmed from broth and a pinch of salt. Slice chicken and serve over rice with ginger-scallion sauce: 3 minced green onions, 1 tablespoon grated ginger, pinch of salt, and 2 tablespoons hot sesame oil poured over the top.
+
+**22. Thai Basil Chicken Fried Rice**
+Cook 1.5 lbs ground or minced chicken in a wok over very high heat until browned, 4 minutes. Add 4 minced garlic cloves and 2 minced Thai or serrano chilies, 30 seconds. Add 1 tablespoon fish sauce, 1 tablespoon oyster sauce, 1 teaspoon soy sauce, and 1 teaspoon sugar. Stir to combine. Add 3 cups cold cooked jasmine rice and toss until rice is heated through and coated in the sauce. Turn off heat and stir in a large handful of fresh Thai basil leaves — they will wilt slightly from the residual heat. Top each bowl with a fried egg. The fish sauce is the step most home cooks skip — do not skip it.
+
+---
+
+## Slow Cooker and Meal Prep (3 Recipes)
+
+**23. Slow Cooker Chicken and Rice**
+Place 1.5 lbs boneless chicken thighs in a slow cooker. Add 1 can cream of chicken soup, 1 can chicken broth, 1 teaspoon garlic powder, 1/2 teaspoon onion powder, salt, and pepper. Cook on LOW 6 hours or HIGH 3 hours. Shred chicken directly in the cooker. Stir in 1.5 cups separately cooked white rice in the last 30 minutes on HIGH. Cook rice separately rather than adding it dry — slow cookers generate steam that makes dry-added rice gluey and unevenly cooked.
+
+**24. Chicken and Rice Meal Prep Bowls**
+Roast 8 boneless chicken thighs at 425 degrees F for 22 minutes with olive oil, garlic powder, paprika, salt, and pepper. Cook 3 cups jasmine rice. Roast 2 heads of broccoli in the same oven during the last 15 minutes. Slice chicken and divide across 5 meal prep containers with equal portions of rice and broccoli. Drizzle with soy-ginger sauce: 3 tablespoons soy sauce, 1 tablespoon honey, 1 tablespoon rice vinegar, 1 teaspoon sesame oil, 1 teaspoon grated ginger. Store sauce separately to add at eating time. Stays fresh refrigerated 4 days.
+
+**25. Chicken and Rice Freezer Burritos**
+Make the Cajun chicken rice from recipe 5 or the salsa bowls from recipe 4 in a large batch. Cool completely. Warm large flour tortillas, add 1/2 cup chicken rice mixture per burrito, fold tightly. Wrap individually in foil. Freeze up to 3 months. Reheat from frozen: foil in a 350-degree oven for 30 minutes, or unwrap and microwave on high 2 to 3 minutes, flipping once. Add shredded cheese, sour cream, and hot sauce after reheating. These are the meal prep that removes the need to cook dinner 2 or 3 nights per week.
+
+---
+
+## Getting the Rice Right Every Time
+
+Rice fails when home cooks use too much water, lift the lid to check on it, or skip the rest. The correct formula for long-grain white rice on the stovetop: 1 cup rice to 1.75 cups liquid. Bring to a boil uncovered, reduce to the lowest possible simmer, cover, and cook 18 minutes. Remove from heat. Leave the lid on for 5 more minutes. Then fluff with a fork. Do not stir, do not check, do not reduce the rest time.
+
+For fried rice specifically: use chilled or day-old rice. Freshly cooked rice is too moist and steams in the pan instead of frying. The starch firms up as the rice cools, which is what produces individual grains that brown properly in a hot pan.
+
+---
+
+## A 5-Night Rotation
+
+**Monday:** Honey Garlic Chicken and Rice Skillet (recipe 2) — 30 minutes, kid-friendly\n**Tuesday:** Classic Baked Chicken and Rice Casserole (recipe 8) — 10 minutes of prep, oven does the rest\n**Wednesday:** Chicken and Rice Soup (recipe 14) — warming, simple, one pot\n**Thursday:** Teriyaki Chicken Rice Bowl (recipe 6) — 25 minutes, customizable toppings\n**Friday:** Cheesy Chicken and Rice Casserole (recipe 9) — easy, crowd-pleasing, leftovers heat well
+
+---
+
+## Let DinnerDrop Plan Your Week
+
+Picking the right chicken and rice recipe for a given night — based on what you have in the fridge, how much time you have, and what everyone will actually eat — is harder than it sounds. [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner weekly plan in 30 seconds. Answer questions about family size, dietary preferences, picky eaters, and cooking time. It generates five dinners with a complete grocery list you shop from once. The beta is open now and free for 6 months.
+
+---
+
+## FAQ
+
+**What is the best cut of chicken for chicken and rice?**
+Bone-in, skin-on chicken thighs are the best cut for one-pot rice dishes. The bones and skin release fat and collagen that flavor the rice as it cooks. Boneless thighs are the best choice for quick skillet meals and bowls — they cook faster and stay moist. Chicken breast works in soups and casseroles where it will be shredded or mixed through sauce, but it dries out in high-heat skillet applications.
+
+**Do you cook the rice before adding it to a casserole?**
+For most classic baked casseroles like recipes 8 and 11, you add uncooked rice to the baking dish and let it absorb the broth in the oven — no pre-cooking required. Cover tightly with foil so the steam cannot escape. For cheesy casseroles like recipe 9 or stuffed peppers like recipe 12, use pre-cooked rice because the baking time is too short to cook raw rice through.
+
+**How do you keep chicken and rice from drying out?**
+Use chicken thighs instead of breast. Measure liquid carefully — 1.75 cups per cup of rice for stovetop, 2 cups for oven dishes because the oven evaporates more liquid. Cover tightly. Do not open the lid during cooking. Let rice rest off heat for 5 minutes before serving. If using chicken breast, pull it the moment it reaches 165 degrees F and do not let it sit in residual heat.
+
+**Can you freeze chicken and rice?**
+Yes. Cool completely before freezing. Freeze in individual portions for fastest reheating. Use within 3 months for best quality. Reheat in a covered pan with a splash of chicken broth or water to rehydrate the rice — microwave reheating works but produces drier results. Soups and congee freeze especially well. Fried rice does not freeze well because the eggs become rubbery.
+
+**What rice works best for chicken and rice recipes?**
+Long-grain white rice or jasmine works in almost all of these recipes. Basmati is best for biryani and fragrant one-pot dishes because each grain stays separate. Medium-grain rice is traditional for arroz con pollo. Short-grain rice works for congee because it breaks down intentionally. Avoid instant or parboiled rice in one-pot dishes — it cooks too fast and turns mushy before the chicken is done.
+
+---
+
+Twenty-five chicken and rice recipes covering every method: one-pot, baked, fried, soup, slow cooker, and international.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan in 30 seconds — five meals, complete grocery list, ready to shop. The beta is open now and free for 6 months.
+
+**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
