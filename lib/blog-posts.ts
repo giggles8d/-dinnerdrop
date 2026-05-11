@@ -5865,7 +5865,193 @@ The only thing that makes taco night feel like a chore is deciding what kind to 
 
 [DinnerDrop](https://dinnerdrop.app/beta) generates a personalized 5-dinner week plan in 30 seconds, including taco variations tailored to your family size, dietary preferences, and preferred grocery store. The beta is free for 6 months.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**\`,
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
+
+  {
+    slug: 'vegetarian-dinner-ideas',
+    title: '30 Vegetarian Dinner Ideas the Whole Family Will Actually Eat',
+    description:
+      '30 satisfying vegetarian dinner ideas the whole family will actually eat — meatless meals ' +
+      'packed with protein, flavor, and enough variety to keep weeknight dinners interesting.',
+    publishDate: '2026-11-24',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'vegetarian dinner ideas',
+    content: `The biggest complaint about vegetarian dinners is not that they taste bad. It is that they taste like compromise.
+
+A bowl of plain pasta. A salad that is not a meal. A veggie burger that disappoints everyone including the person who wanted it.
+
+The real problem is not vegetarian food. It is the wrong vegetarian food — meals designed around absence (no meat) instead of presence (bold flavors, satisfying textures, real protein). The 30 dinners below are built differently. Each one earns its place on a weeknight table by being good, not just good for a vegetarian dinner.
+
+Whether you are cooking for a fully meatless household, doing Meatless Monday, or feeding one vegetarian alongside meat-eaters, these meals work.
+
+---
+
+## Category 1: Quick Weeknight Vegetarian (8 Meals)
+
+These come together in 30 minutes or less. No soaking, no long simmers.
+
+**1. Black Bean Tacos**
+Drain and rinse two cans of black beans. Warm in a skillet with cumin, smoked paprika, garlic powder, salt, and a splash of water. Mash roughly so half the beans break down and thicken. Serve in warm corn tortillas with shredded cabbage, sour cream, pickled jalapenos, and lime. Ready in 15 minutes. Indistinguishable from a taco night with meat if the seasoning is right.
+
+**2. Shakshuka**
+Saute diced onion and red bell pepper in olive oil until soft. Add minced garlic, cumin, smoked paprika, cayenne, and a can of crushed tomatoes. Simmer 10 minutes. Make wells in the sauce with a spoon. Crack in 4 to 6 eggs. Cover and cook until whites are set but yolks are still runny, about 5 to 7 minutes. Serve directly from the pan with crusty bread or pita for dipping.
+
+**3. Veggie Fried Rice**
+This is the highest-return leftover meal in existence. Use day-old cooked rice (fresh rice makes it mushy). Scramble 3 eggs in a hot oiled pan, push to the side. Add the rice and spread flat — let it sit without stirring for 2 minutes so it crisps. Add soy sauce, sesame oil, any frozen vegetables, and the eggs. Toss everything together. Top with green onion and sriracha. Dinner in 15 minutes from cold rice.
+
+**4. Quesadillas with Refried Beans and Cheese**
+Spread a thick layer of refried beans on a flour tortilla. Top with shredded cheese. Fold in half. Cook in a dry skillet over medium heat until golden and crispy, about 2 to 3 minutes per side. Serve with sour cream, salsa, and guacamole. This is the meal that converts picky kids. Protein from beans and cheese is substantial.
+
+**5. Caprese Pasta**
+Cook pasta of any shape. While it cooks, halve a pint of cherry tomatoes and tear fresh mozzarella into chunks. Toss hot drained pasta with olive oil, the tomatoes, the mozzarella, fresh basil, salt, black pepper, and a splash of pasta water. The heat from the pasta slightly melts the cheese. Optional: balsamic glaze drizzled over the top. On the table in 20 minutes.
+
+**6. Vegetable Stir Fry with Tofu**
+Press extra-firm tofu between paper towels for 10 minutes. Cube and pan-fry in oil until golden, about 8 minutes. Remove. Stir fry broccoli, snap peas, bell pepper, and carrots in the same pan with garlic and ginger. Add the tofu back. Sauce: soy sauce, rice vinegar, honey, cornstarch, sesame oil, water. Pour over, toss until thickened. Serve over rice.
+
+**7. Egg Fried Noodles**
+Cook lo mein or udon noodles. While draining, scramble 3 eggs in a hot oiled wok. Add the noodles, soy sauce, sesame oil, oyster sauce (optional), green onions, and any vegetables you have. Toss over high heat for 2 to 3 minutes. 15-minute dinner that tastes like takeout.
+
+**8. Greek Chickpea Bowls**
+Drain and rinse canned chickpeas. Toss with olive oil, lemon zest, garlic, dried oregano, salt, and pepper. Roast at 425F for 20 minutes until slightly crispy. Serve over cooked couscous or farro with diced cucumber, halved cherry tomatoes, kalamata olives, crumbled feta, and a drizzle of tzatziki or tahini.
+
+---
+
+## Category 2: Pasta and Noodle Nights (6 Meals)
+
+Pasta is the easiest path to a vegetarian dinner that no one will object to.
+
+**9. Cacio e Pepe**
+Three ingredients: pasta, finely grated Pecorino Romano, and black pepper. Toast black pepper in a dry pan. Cook pasta, reserve pasta water. Add pepper to the pan with a splash of water, add drained pasta, and vigorously toss while adding grated cheese and more water until a creamy sauce forms. No cream. No butter. 20 minutes once you practice it once.
+
+**10. Pasta e Fagioli**
+Sweat diced onion, carrot, and celery in olive oil. Add garlic, tomato paste, two cans of crushed tomatoes and one can of cannellini beans. Add vegetable broth and simmer. Add small pasta shapes (ditalini, elbows) directly to the soup and cook until tender. Season generously. Finish with olive oil and grated Parmesan. Thick, hearty, complete on protein. Better the next day.
+
+**11. Baked Ziti**
+Cook ziti. Mix with marinara, ricotta, half the mozzarella, and seasoning. Spread in a baking dish. Top with remaining mozzarella and Parmesan. Bake at 375F for 25 minutes until bubbly and browned. Feeds six. For extra depth, let the marinara simmer with Italian seasoning for five minutes before mixing.
+
+**12. Peanut Noodles**
+Cook spaghetti or rice noodles. Sauce: peanut butter, soy sauce, rice vinegar, sesame oil, honey, sriracha, garlic, ginger, and warm water to thin. Toss with noodles, shredded cabbage, julienned carrots, sliced cucumber, and green onions. Top with crushed peanuts and cilantro. Serves cold or at room temperature. Holds for three days.
+
+**13. Mushroom Carbonara**
+Substitute sliced cremini or shiitake mushrooms for the pancetta in traditional carbonara. Cook mushrooms in olive oil until deeply browned. Whisk together egg yolks, whole egg, grated Pecorino, and black pepper. Cook pasta, reserve pasta water. Off heat, toss pasta with mushrooms, then the egg mixture and a splash of water. Toss continuously until sauce is creamy.
+
+**14. Roasted Red Pepper Pasta**
+Blend a jar of roasted red peppers with cream cheese, garlic, Parmesan, olive oil, salt, and red pepper flakes until smooth. Warm the sauce in the pasta cooking pan. Toss with cooked pasta and pasta water to thin. Silky, sweet, slightly smoky. On the table in 25 minutes.
+
+---
+
+## Category 3: Hearty Soups and Stews (5 Meals)
+
+These freeze well, feed a crowd, and get better overnight.
+
+**15. Lentil Soup**
+Sweat onion, carrot, and celery. Add garlic, cumin, coriander, turmeric, and smoked paprika. Add rinsed green or brown lentils, crushed tomatoes, and vegetable broth. Simmer 30 to 35 minutes. Finish with lemon juice. Lentils are the most protein-dense legume per serving. A pot serves six for under ten dollars.
+
+**16. White Bean and Kale Soup**
+Sweat onion and garlic in olive oil. Add diced tomatoes, vegetable broth, two cans of white beans, and a large bunch of rough-chopped kale. Simmer 15 to 20 minutes. Season generously. Finish with a drizzle of olive oil. Add a Parmesan rind during simmering for extra depth.
+
+**17. Tomato Soup with Grilled Cheese Dippers**
+Sweat onion and garlic. Add canned whole tomatoes, vegetable broth, a pinch of sugar, and dried basil. Simmer 20 minutes. Blend until smooth. Stir in heavy cream. Make grilled cheese sandwiches and cut into strips. The strips are the reason this gets requested again. Comfort food architecture at its most effective.
+
+**18. Vegetable Minestrone**
+Sweat onion, carrot, celery, and zucchini. Add garlic, Italian seasoning, tomato paste, crushed tomatoes, vegetable broth, and rinsed kidney beans. Simmer 20 minutes. Add small pasta shapes in the last 8 minutes. Season and serve with Parmesan. Every vegetable works in this. The proportions are forgiving.
+
+**19. Butternut Squash Soup**
+Roast cubed butternut squash at 400F until caramelized, about 30 minutes. Sweat onion and garlic. Add roasted squash, vegetable broth, and a pinch of nutmeg. Blend until smooth. Finish with a drizzle of maple syrup, a swirl of cream, and toasted pumpkin seeds. Pairs with crusty bread.
+
+---
+
+## Category 4: Sheet Pan and Oven Bakes (6 Meals)
+
+Hands-off cooking with high-heat flavor development. Cut things up, roast, eat.
+
+**20. Sheet Pan Gnocchi with Vegetables**
+Spread store-bought gnocchi directly on a sheet pan (no boiling). Add cherry tomatoes, zucchini, red onion, and bell pepper. Drizzle with olive oil, salt, Italian seasoning, and garlic powder. Roast at 425F for 25 minutes, tossing once at the halfway mark. The gnocchi turns crispy outside and pillowy inside. Top with fresh basil and Parmesan.
+
+**21. Roasted Vegetable Grain Bowl**
+Roast any combination of vegetables at 425F until caramelized: broccoli, sweet potato, red onion, chickpeas, zucchini, cauliflower. Cook a grain base: quinoa, farro, or brown rice. Build bowls with grain, roasted vegetables, and a sauce — tahini-lemon, green goddess dressing, or herbed yogurt.
+
+**22. Eggplant Parmesan**
+Slice eggplant, salt and let sit 20 minutes, pat dry. Bread in flour, egg, and Italian breadcrumbs. Pan-fry in olive oil until golden. Layer in a baking dish with marinara and mozzarella. Bake at 375F for 20 minutes. Leftovers make exceptional sandwiches.
+
+**23. Stuffed Bell Peppers**
+Halve bell peppers and remove seeds. Fill with cooked rice, sauteed mushrooms and onion, diced tomatoes, black beans, cumin, garlic powder, and shredded cheese. Place in a baking dish, add a splash of water, cover with foil. Bake at 375F for 35 minutes. Uncover, add more cheese, bake another 10 minutes.
+
+**24. Vegetarian Enchiladas**
+Saute diced onion, bell pepper, and black beans with cumin, chili powder, and garlic. Fill corn tortillas with the mixture and shredded cheese. Roll and place seam-down in a baking dish. Cover with enchilada sauce and more cheese. Bake at 375F for 25 minutes. Top with sour cream and cilantro.
+
+**25. Roasted Tomato Flatbreads**
+Halve cherry tomatoes and spread on store-bought flatbreads or naan. Drizzle with olive oil, salt, and dried oregano. Add sliced fresh mozzarella. Roast at 450F for 12 to 15 minutes until cheese is melted and tomatoes are jammy. Top with fresh basil and a drizzle of balsamic glaze. 20 minutes total.
+
+---
+
+## Category 5: Slow Cooker and Hands-Off (5 Meals)
+
+Start in the morning. Dinner is ready when you are.
+
+**26. Slow Cooker Vegetarian Chili**
+Combine in the slow cooker: two cans of kidney beans, one can of black beans, one can of diced tomatoes, one can of tomato sauce, diced onion, diced bell pepper, garlic, chili powder, cumin, smoked paprika, oregano, salt, and a cup of vegetable broth. Cook on low 6 to 8 hours. Top with sour cream, shredded cheese, and green onion.
+
+**27. Slow Cooker Lentil Curry**
+Combine red lentils, diced onion, minced garlic, minced ginger, canned crushed tomatoes, vegetable broth, coconut milk, curry powder, cumin, turmeric, and salt. Cook on low 6 to 8 hours. Red lentils dissolve into a thick, creamy dal. Serve over basmati rice with naan. Feeds four with leftovers for under twelve dollars.
+
+**28. Slow Cooker Black Bean Soup**
+Rinse dried black beans (no soaking needed in slow cooker). Combine with diced onion, garlic, diced green chiles, cumin, smoked paprika, oregano, bay leaves, and vegetable broth. Cook on low 8 hours. Remove bay leaves. Blend a third of the soup to thicken. Serve with sour cream, cilantro, diced avocado, and lime.
+
+**29. Slow Cooker Minestrone**
+Layer onion, garlic, celery, carrot, zucchini, canned diced tomatoes, canned kidney beans, vegetable broth, Italian seasoning, and tomato paste in the slow cooker. Cook on low 6 to 8 hours. Add small pasta shapes and turn to high for the final 20 minutes. Season and serve with Parmesan.
+
+**30. Slow Cooker Potato Leek Soup**
+Combine sliced leeks (white and light green parts only), diced Yukon Gold potatoes, garlic, vegetable broth, dried thyme, salt, and white pepper. Cook on low 6 to 7 hours. Blend until smooth with an immersion blender. Stir in heavy cream. Serve with crusty bread and a drizzle of olive oil.
+
+---
+
+## Making Vegetarian Meals Work for Picky Eaters
+
+The pattern that works: build the meal around something familiar, then make the vegetarian version of that familiar thing.
+
+Picky eaters accept tacos — make black bean tacos. Picky eaters accept pasta — make any pasta on this list. Picky eaters accept soup with bread — make the tomato soup with grilled cheese dippers. The frame matters as much as the ingredients. "We are having taco night" lands better than "we are having a meatless dinner."
+
+For families where one person is vegetarian and others are not: almost every slow cooker and sheet pan meal above can be served alongside a grilled chicken breast or piece of fish without requiring a separate dinner. The base is shared. The protein is the variable.
+
+---
+
+## Protein in Vegetarian Dinners
+
+The most common concern about vegetarian meals is protein. These are the sources doing the work above:
+
+Eggs (shakshuka, carbonara, fried rice, noodles): 6 to 8 grams per egg. Three eggs in a meal covers a quarter of an adult daily need.
+
+Legumes (lentils, black beans, chickpeas, white beans, kidney beans): 15 to 18 grams per cooked cup. The slow cooker lentil curry over rice is a nutritionally complete meal.
+
+Dairy (cheese, ricotta, yogurt, cream): Greek yogurt used in sauces and dressings adds 10 to 17 grams per serving.
+
+Tofu (stir fry): Firm tofu provides 10 grams per half-cup serving.
+
+---
+
+## Frequently Asked Questions
+
+**What are the easiest vegetarian dinners for beginners?**
+Start with shakshuka, black bean tacos, or veggie fried rice. All three use simple technique, minimal ingredients, and are ready in 15 to 20 minutes. They also work on skeptical meat-eaters because the flavors are bold rather than subtle.
+
+**How do I make vegetarian dinners filling enough?**
+The filling factor comes from protein and fat, not meat specifically. Build every plate with a protein source (legumes, eggs, cheese, tofu), a fat source (olive oil, cheese, avocado, nuts), and enough volume from complex carbohydrates.
+
+**Can I meal prep vegetarian dinners?**
+Yes, and vegetarian food tends to reheat better than meat. Lentil soup, chili, minestrone, and grain bowls all improve overnight. Pasta reheats with a splash of water in a covered pan.
+
+**Are these meals kid-friendly?**
+Most of them. The reliably kid-friendly options: quesadillas, pasta in any form, fried rice, tomato soup with grilled cheese dippers, and baked ziti. These are carb-forward meals that happen to have no meat — which is the distinction that matters at the dinner table.
+
+---
+
+Every family has a different threshold for how many meatless nights feel normal. The 30 dinners above work across that range because they are built around flavor, not restraint.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds personalized weekly dinner plans that account for dietary preferences including vegetarian, vegan, gluten-free, and dairy-free — and generates the grocery list automatically. The beta is free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
 
 ]
