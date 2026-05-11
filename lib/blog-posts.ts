@@ -4920,6 +4920,192 @@ Beta spots are limited. First 100 families get 6 months completely free.
 `,
   },
 
+  {
+    slug: 'air-fryer-dinner-ideas',
+    title: "Air Fryer Dinner Ideas: 30 Easy Meals Your Family Will Actually Eat",
+    description:
+      "30 air fryer dinner ideas that go beyond chicken nuggets. Quick weeknight meals, " +
+      "crispy proteins, and family-friendly favorites — all faster than the oven.",
+    publishDate: '2026-11-10',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'air fryer dinner ideas',
+    content: `The air fryer changed weeknight cooking for a lot of families, but most people are still using it for the same five things they learned in week one.
+
+If your air fryer is mostly making chicken nuggets and frozen fries, this list is going to change that.
+
+Below are 30 real dinner ideas that work in the air fryer — not just reheated snacks, but actual meals your family will request again. They are organized by protein, so you can grab whatever is thawed and find something that works tonight.
+
+## Why the Air Fryer Is Actually Good for Family Dinners
+
+The air fryer is not a gimmick, but it gets oversold on speed alone. The real advantage is what it does to texture. Chicken thighs come out with genuinely crispy skin. Fish stays moist inside without any breading falling off. Pork chops actually look and taste like something worth eating on a Tuesday.
+
+The secondary advantage is cleanup. One basket, no splatter, no sheet pan with stuck-on fond to scrub. For families who cook every night, that matters more than shaving eight minutes off cook time.
+
+A few things that make every air fryer dinner better:
+
+**Do not overcrowd the basket.** Air fryers work by circulating hot air around food. If the basket is packed, you are just steaming. Cook in batches if needed — the speed difference is minimal and the texture difference is significant.
+
+**Pat proteins completely dry before seasoning.** Moisture is the enemy of crispiness. Paper towels, thirty seconds, completely worth it.
+
+**Shake or flip halfway through.** Most proteins benefit from a flip at the halfway point. It is not optional for anything over an inch thick.
+
+**Use a light coat of oil.** A spray or a brush of oil on lean proteins and vegetables prevents drying out and improves browning. You need less than you think.
+
+---
+
+## Chicken Air Fryer Dinners
+
+### 1. Crispy Chicken Thighs
+Season bone-in thighs with garlic powder, smoked paprika, salt, and pepper. Air fry at 400°F for 22-25 minutes, flipping at 12 minutes. The skin crisps exactly like it does in a cast iron pan without heating the whole oven. Serve with roasted vegetables done in the same basket after.
+
+### 2. Chicken Parmesan
+Pound chicken breasts to even thickness, coat in breadcrumbs and parmesan, air fry at 375°F for 12-14 minutes. Top with marinara and mozzarella, return for 2 minutes until cheese melts. Faster than baking and crispier than pan frying.
+
+### 3. Honey Garlic Chicken Drumsticks
+Mix honey, soy sauce, garlic, and a little sriracha. Coat drumsticks and air fry at 380°F for 25 minutes, flipping halfway and basting once more at the flip. Kids eat these without argument. Make a double batch.
+
+### 4. Chicken Fajitas
+Slice chicken breast and bell peppers into strips. Season with cumin, chili powder, garlic powder, and lime. Air fry at 400°F for 12-14 minutes, shaking once. Everything caramelizes where it would just steam in a pan. Serve in warm tortillas.
+
+### 5. Ranch Chicken Tenders
+Coat chicken strips in a mixture of breadcrumbs and dry ranch seasoning. Spray with oil. Air fry at 390°F for 10-12 minutes, flipping once. Better than drive-through, done in 15 minutes total.
+
+### 6. Teriyaki Chicken Thighs
+Marinate boneless thighs in soy sauce, honey, ginger, and garlic for 20 minutes. Air fry at 380°F for 18-20 minutes, brushing with reserved marinade at the halfway flip. The edges char slightly in the best possible way.
+
+### 7. Lemon Herb Chicken Breast
+Pound chicken breasts, coat with olive oil, lemon zest, garlic, thyme, and oregano. Air fry at 375°F for 14-16 minutes depending on thickness. Internal temp 165°F. Resting two minutes before slicing keeps it juicy.
+
+### 8. Buffalo Chicken Wraps
+Air fry seasoned chicken strips at 390°F for 12 minutes. Toss in buffalo sauce. Stuff into flour tortillas with shredded lettuce, cheddar, and ranch. This comes together faster than calling in an order.
+
+---
+
+## Fish and Seafood Air Fryer Dinners
+
+### 9. Garlic Butter Salmon
+Season salmon fillets with garlic powder, salt, pepper, and a brush of butter or olive oil. Air fry at 400°F for 8-10 minutes depending on thickness. No flipping needed. Comes out with a lightly crusted exterior and flaky center. Serve with rice and a vegetable done in the same basket.
+
+### 10. Air Fryer Fish Tacos
+Season cod or tilapia with cumin, chili powder, garlic, and lime. Air fry at 400°F for 8-10 minutes. The fish stays moist, the edges get slightly crispy. Build tacos with slaw, avocado, and a squeeze of lime. Faster than any fish taco you have made before.
+
+### 11. Shrimp Fajitas
+Toss large shrimp with sliced peppers and onions in fajita seasoning and oil. Air fry at 400°F for 6-8 minutes, shaking once. Shrimp cook in minutes, peppers char at the edges. Serve in tortillas.
+
+### 12. Honey Sriracha Salmon
+Mix honey, sriracha, soy sauce, and a little rice vinegar. Brush over salmon. Air fry at 390°F for 9-11 minutes. The glaze caramelizes at the edges. Serve over rice or noodles.
+
+### 13. Lemon Herb Cod
+Coat cod in olive oil, lemon juice, garlic, and fresh parsley. Air fry at 400°F for 8-10 minutes. Mild enough for kids who are suspicious of fish, fast enough for any weeknight.
+
+### 14. Coconut Shrimp
+Coat large shrimp in egg, then in a breadcrumb and shredded coconut mixture. Air fry at 375°F for 8-10 minutes, flipping once. Serve with sweet chili sauce. Easier than it looks and better than restaurant versions.
+
+---
+
+## Beef and Pork Air Fryer Dinners
+
+### 15. Air Fryer Meatballs
+Mix ground beef with breadcrumbs, egg, parmesan, garlic, and Italian seasoning. Roll into balls, air fry at 380°F for 10-12 minutes, shaking once. Finish in marinara on the stovetop for two minutes. Serve over pasta or as a sub.
+
+### 16. Pork Chops
+Season bone-in or boneless pork chops with garlic powder, smoked paprika, and salt. Air fry at 400°F for 12-15 minutes depending on thickness, flipping halfway. Pull at 145°F internal temp. Rest for three minutes. Juicier than pan-fried with less supervision required.
+
+### 17. Beef Steak Bites
+Cut sirloin or ribeye into cubes, season generously with salt, pepper, garlic powder, and a little butter. Air fry at 400°F for 6-9 minutes depending on preferred doneness, shaking once. Better texture than pan-searing for smaller pieces.
+
+### 18. Taco-Seasoned Empanadas
+Brown ground beef with taco seasoning. Fill store-bought empanada discs or cut circles from refrigerated pie dough. Crimp edges, brush with egg wash, air fry at 375°F for 10-12 minutes until golden. Kids love these. Make a double batch on Sunday.
+
+### 19. Italian Sausage with Peppers and Onions
+Slice Italian sausages, bell peppers, and onion. Season with Italian herbs and oil. Air fry at 390°F for 15-18 minutes, shaking twice. Serve in hoagie rolls or over polenta.
+
+### 20. Pork Belly Bites
+Cut pork belly into one-inch cubes. Season with salt, pepper, and a touch of five spice or smoked paprika. Air fry at 400°F for 20-25 minutes, shaking every 7 minutes. The fat renders and the edges caramelize. Serve over rice with pickled vegetables.
+
+### 21. Cheeseburger Sliders
+Form small ground beef patties slightly larger than slider buns. Season with salt and pepper. Air fry at 375°F for 7-9 minutes, flip at 4 minutes, add cheese for the last minute. Serve on slider buns with whatever toppings the family wants.
+
+---
+
+## Vegetable and Meatless Air Fryer Dinners
+
+### 22. Crispy Chickpea Bowls
+Drain and dry chickpeas, toss with olive oil, cumin, smoked paprika, garlic powder, and salt. Air fry at 390°F for 15-18 minutes, shaking every 5 minutes until crispy. Serve over roasted sweet potato and greens with tahini dressing. High protein, no meat, and actually satisfying.
+
+### 23. Tofu with Broccoli and Sesame
+Press and cube extra-firm tofu. Toss with soy sauce, sesame oil, garlic, and cornstarch. Air fry at 400°F for 15 minutes, shaking once. In the last 5 minutes, add broccoli florets tossed in the same seasoning. Serve over rice.
+
+### 24. Black Bean Quesadillas
+Fill flour tortillas with black beans, corn, shredded cheese, and diced onion. Fold in half and spray with oil. Air fry at 375°F for 6-8 minutes, flipping once. Crispy, fast, and cheap. Serve with salsa and sour cream.
+
+---
+
+## Air Fryer Side Dishes That Finish the Meal
+
+The air fryer handles sides faster than the oven. Cook the protein first, then run vegetables through while everything rests.
+
+### 25. Crispy Broccoli
+Toss florets with olive oil, garlic, salt, and red pepper flakes. Air fry at 400°F for 8-10 minutes, shaking once. Slightly charred edges, nothing like steamed broccoli. Kids who normally refuse broccoli often eat this version.
+
+### 26. Crispy Potatoes
+Cube potatoes, toss with oil and seasoning, air fry at 400°F for 20-22 minutes, shaking twice. Crispy outside, fluffy inside. No par-boiling required.
+
+### 27. Asparagus
+Trim asparagus, coat with olive oil, salt, and lemon zest. Air fry at 400°F for 7-9 minutes. Done before the main course in most cases.
+
+### 28. Garlic Parmesan Green Beans
+Toss green beans with olive oil, garlic powder, and parmesan. Air fry at 380°F for 8-10 minutes, shaking once. Better texture than any other quick cooking method.
+
+### 29. Corn on the Cob
+Brush with butter and season with salt and pepper. Air fry at 400°F for 10-12 minutes, turning halfway. Slightly sweet, slightly charred. Works from fresh or frozen.
+
+### 30. Air Fryer Brussels Sprouts
+Halve sprouts, toss with olive oil, salt, and balsamic. Air fry at 380°F for 12-15 minutes, shaking once. Caramelized and slightly crispy — converts most Brussels sprout skeptics.
+
+---
+
+## A Five-Night Rotation Using Only the Air Fryer
+
+**Monday:** Crispy chicken thighs + air fryer broccoli — protein first, vegetables follow in the same basket
+**Tuesday:** Salmon with garlic butter + asparagus while the salmon rests
+**Wednesday:** Pork chops + crispy potatoes — staggered, potatoes go in first
+**Thursday:** Chicken fajitas — protein and peppers together in one basket, serve in tortillas
+**Friday:** Fish tacos — 10 minutes of cook time, minimal cleanup, fast enough for Friday exhaustion
+
+---
+
+## Frequently Asked Questions
+
+**What temperature do most air fryer dinners cook at?**
+Most proteins cook well at 375-400°F. Fish and shrimp run slightly lower at 375-390°F because they cook fast and dry out under high heat. Vegetables go at 400°F for maximum caramelization and crispiness.
+
+**Can I cook a full family dinner in the air fryer?**
+Yes, in sequence rather than all at once. Most family-sized air fryers hold enough protein for 4-5 people in one batch. Cook the protein, rest it while the vegetables go in. Total active time is usually 25-35 minutes for a complete dinner.
+
+**How do I prevent air fryer meals from drying out?**
+Pat proteins dry before seasoning to remove surface moisture, then apply a light coat of oil before cooking. Pull proteins two degrees below target internal temperature and let carryover cooking finish the job while they rest.
+
+**Do I need to preheat the air fryer?**
+A 3-minute preheat makes a noticeable difference on anything you want crispy — chicken skin, fish fillets, coated proteins. For vegetables and reheating, preheat is optional.
+
+---
+
+## The Part the Air Fryer Cannot Do
+
+The air fryer makes cooking faster and cleanup easier. It does not solve the decision that happens at 5:30pm when everyone is hungry and nobody knows what to make.
+
+Most families spend more time deciding what is for dinner than they spend cooking it. The air fryer cuts cook time down to 15-20 minutes for most of these meals — but you still have to pick one.
+
+DinnerDrop handles the decision. Tell it your family size, dietary needs, and which stores you use. It generates a full week of personalized dinners in 30 seconds, along with a complete grocery list organized by store section.
+
+Every dinner on this list works in the air fryer. DinnerDrop just tells you which one to make tonight.
+
+**[Get your free meal plan](https://dinnerdrop.app/beta)**
+
+Beta spots are limited. First 100 families get 6 months completely free.`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
