@@ -6553,12 +6553,12 @@ The 30 dinners above cover every picky-eater scenario: the child who only eats b
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
   {
-    id: 39,
     title: '30 Salmon Recipes for Easy Weeknight Dinners',
     slug: 'salmon-recipes',
     description: 'Simple salmon recipes for busy families. Sheet pan, glazed, baked, and skillet — 30 weeknight dinner ideas ready in 30 minutes or less, with a full grocery list in one tap.',
     publishDate: '2027-01-12',
     readingTimeMinutes: 9,
+    primaryKeyword: 'salmon recipes',
     content: `# 30 Salmon Recipes for Easy Weeknight Dinners
 
 Salmon is the weeknight dinner protein most families underuse. It cooks faster than chicken, requires less prep than beef, and works with almost every flavor direction — Asian glazes, Mediterranean herbs, American comfort sauces, or nothing but salt, pepper, and lemon. A salmon fillet goes from raw to table in 12 to 15 minutes. Most of the 30 recipes below take 30 minutes total.
@@ -6715,6 +6715,180 @@ Salmon is among the most nutritionally dense proteins available for everyday coo
 The 30 salmon recipes above cover every weeknight scenario: fast 15-minute dinners, hands-off baked preparations, sheet pan meals, and flavorful glazed fillets that work for guests. None of them require specialty equipment or ingredients outside a standard grocery run.
 
 [DinnerDrop](https://dinnerdrop.app/beta) builds your weekly meal plan around salmon, chicken, beef, or any mix of proteins — then generates the complete grocery list in one tap. The beta is free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
+  {
+    title: '30 Ground Turkey Recipes for Easy Weeknight Dinners',
+    slug: 'ground-turkey-recipes',
+    description: 'Thirty ground turkey recipes for busy families: Italian, Mexican, Asian, comfort food, and quick skillets. Budget-friendly, ready in 30 minutes, with a full grocery list in one tap.',
+    publishDate: '2027-01-19',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'ground turkey recipes',
+    content: `# 30 Ground Turkey Recipes for Easy Weeknight Dinners
+
+Ground turkey is one of the most underrated proteins in the grocery store. It costs less than beef, cooks faster than chicken thighs, and absorbs seasoning better than almost anything else in the meat case. The problem is that most cooks treat it as a direct beef substitute and end up with dry, flavorless results.
+
+This list fixes that. Thirty ground turkey recipes organized by cooking method and flavor profile — Italian, Mexican, Asian, comfort food, and everything in between. Every recipe works on a busy weeknight, most come together in under 30 minutes, and all of them taste like you meant to use turkey.
+
+**[DinnerDrop](https://dinnerdrop.app/beta) generates a complete weekly dinner plan using ground turkey and any other proteins you choose — plus the full grocery list — in one tap. Try it free for 6 months.**
+
+---
+
+## Why Ground Turkey Works (When You Cook It Right)
+
+The key to good ground turkey is fat and seasoning. Unlike beef, which has built-in intramuscular fat, turkey needs fat added to the pan or in the sauce. Use olive oil or butter, season generously, and never cook it past 165°F. Overcooked ground turkey is chalky — pull it off the heat while it still looks slightly pink in the center.
+
+Choose 93/7 ground turkey for everyday cooking. Extra-lean 99/1 works in soups and sauces where moisture comes from liquid, but it will dry out in burgers and skillet recipes. The extra fat in 93/7 is minimal — you are adding far less than a pound of beef would contain.
+
+---
+
+## Italian-Style Ground Turkey (6 Recipes)
+
+**1. Turkey Bolognese**
+Sauté ground turkey with onion, carrot, and celery until cooked through. Add crushed tomatoes, a splash of whole milk, salt, and a bay leaf. Simmer 20 minutes. The milk softens the acidity and makes the sauce coat pasta like a proper ragu. Serve over pappardelle or rigatoni.
+
+**2. Turkey Meatballs**
+Mix ground turkey with breadcrumbs, egg, parmesan, garlic, and Italian seasoning. Roll into 1.5-inch balls and bake at 400°F for 18 to 20 minutes. Finish in marinara for 5 minutes on the stovetop. Freeze the extra meatballs on a sheet pan before transferring to a bag — they reheat from frozen in 15 minutes in sauce.
+
+**3. Turkey Stuffed Shells**
+Cook jumbo pasta shells until just al dente. Brown ground turkey with onion and garlic, mix with ricotta, egg, and Italian seasoning. Fill the shells, arrange in a baking dish, top with marinara and mozzarella. Bake covered at 375°F for 25 minutes, uncovered for 10 more.
+
+**4. Turkey Lasagna**
+Standard lasagna construction with ground turkey meat sauce instead of beef. Brown turkey with onion, add crushed tomatoes and seasoning, layer with noodles, ricotta, and mozzarella. Bake covered 45 minutes, uncovered 15. Make on Sunday, eat through Wednesday.
+
+**5. Turkey and Spinach Stuffed Peppers**
+Halve bell peppers and remove seeds. Fill with a mixture of cooked ground turkey, cooked rice, marinara, and wilted spinach. Top with mozzarella. Bake at 375°F for 30 to 35 minutes. The peppers soften into the filling and the cheese browns on top.
+
+**6. Turkey Sausage Pasta**
+Buy mild Italian turkey sausage links, remove from casings, and brown in a skillet until caramelized. Add garlic, crushed red pepper, diced tomatoes, and a splash of pasta water. Toss with rigatoni or ziti. Fast, one-pan, and more flavorful than standard ground turkey because the sausage seasoning does the work.
+
+---
+
+## Mexican-Style Ground Turkey (6 Recipes)
+
+**7. Turkey Tacos**
+Season ground turkey with chili powder, cumin, garlic powder, oregano, salt, and a small amount of tomato paste. The tomato paste adds body and prevents the turkey from drying out. Serve in warm tortillas with shredded cabbage, cotija, salsa, and lime. Better than beef tacos if you season correctly.
+
+**8. Turkey Taco Bowls**
+Same seasoned turkey as tacos, served over cilantro rice with black beans, corn, shredded cheese, sour cream, and pico de gallo. Faster than assembling individual tacos and works well for meal prep — portion the turkey and rice separately, assemble at the table.
+
+**9. Turkey Enchiladas**
+Fill corn tortillas with seasoned ground turkey, roll tightly, and arrange in a baking dish. Cover with red or green enchilada sauce and shredded cheese. Bake at 375°F for 20 minutes until the sauce bubbles and the cheese melts. Finish with sour cream and cilantro.
+
+**10. Turkey Burrito Bowls**
+Cook ground turkey with taco seasoning. Serve over white or brown rice with pinto beans, grilled peppers and onions, guacamole, and hot sauce. Everything cooks in one skillet while the rice goes in a separate pot. Dinner in 25 minutes.
+
+**11. Turkey Stuffed Jalapeños**
+Halve jalapeños, remove seeds, fill with a mixture of cream cheese and seasoned ground turkey. Top with shredded cheddar. Bake at 400°F for 15 to 20 minutes until the filling is set and the tops are golden. Works as an appetizer or a main served over rice.
+
+**12. Turkey and Black Bean Chili**
+Brown ground turkey with onion, garlic, and chili seasoning. Add black beans, fire-roasted tomatoes, chicken broth, and cumin. Simmer 20 minutes. Top with cheese, sour cream, and green onions. One of the few ground turkey recipes that improves on day two as the flavors deepen.
+
+---
+
+## Asian-Inspired Ground Turkey (5 Recipes)
+
+**13. Turkey Lettuce Wraps**
+Brown ground turkey with garlic and ginger. Add hoisin sauce, soy sauce, rice vinegar, and diced water chestnuts. Serve in butter lettuce cups topped with shredded carrots and sliced green onions. Light, fast, and genuinely fun to eat — kids respond well to the build-your-own format.
+
+**14. Turkey Fried Rice**
+Cook ground turkey in a hot wok with sesame oil until browned. Push to the side, scramble 2 eggs, then add day-old rice and frozen peas. Season with soy sauce and oyster sauce. The key is day-old cold rice — fresh rice turns mushy. Make extra rice the day before specifically for this.
+
+**15. Korean Turkey Bowls**
+Season ground turkey with gochujang, soy sauce, sesame oil, garlic, and a small amount of brown sugar. Serve over steamed rice with cucumber slices, shredded carrots, and a soft-boiled egg. The gochujang heat is mild once cooked down and the sauce doubles as a dipping sauce.
+
+**16. Turkey Teriyaki**
+Brown ground turkey, drain, and add homemade teriyaki sauce (soy sauce, mirin, sake or dry sherry, and sugar reduced in the pan). Serve over rice with steamed broccoli. Better than the teriyaki chicken most families default to because the sauce coats every piece of meat.
+
+**17. Turkey Egg Roll Bowls**
+Brown ground turkey with ginger and garlic. Add a bag of coleslaw mix and soy sauce. Cook until the cabbage softens, about 4 minutes. Top with sesame oil, sliced green onions, and sriracha. All the flavor of an egg roll without the wrapper or frying. Ready in 15 minutes.
+
+---
+
+## Comfort Food Ground Turkey (7 Recipes)
+
+**18. Turkey Meatloaf**
+Mix ground turkey with egg, breadcrumbs, diced onion, Worcestershire, ketchup, garlic powder, and salt. Press into a loaf pan and top with a ketchup-brown sugar glaze. Bake at 350°F for 55 to 65 minutes until the internal temperature reaches 165°F. Let it rest 10 minutes before slicing — it holds together better.
+
+**19. Turkey Sloppy Joes**
+Brown ground turkey with onion and bell pepper. Add ketchup, tomato paste, brown sugar, mustard, Worcestershire, and a splash of apple cider vinegar. Simmer until thick, about 10 minutes. Serve on brioche buns. The sauce is what makes a sloppy joe — the turkey disappears into it.
+
+**20. Turkey Shepherd's Pie**
+Brown ground turkey with onion, carrots, and peas. Add beef or chicken stock, Worcestershire, and a tablespoon of tomato paste. Transfer to a baking dish, top with mashed potatoes, and bake at 400°F for 20 minutes until the potato top is golden. Comfort food that reheats well for lunch the next day.
+
+**21. Turkey Cheeseburgers**
+Mix ground turkey with Worcestershire, garlic powder, onion powder, and salt. Form into patties slightly larger than the bun — they shrink. Cook in a cast iron skillet on medium-high, 4 minutes per side. Add cheese in the last minute, cover to melt. Turkey burgers need a hot pan, not a grill, for the best crust.
+
+**22. Turkey and Rice Stuffed Cabbage Rolls**
+Blanch cabbage leaves until pliable. Fill with a mixture of raw ground turkey, cooked rice, onion, garlic, and egg. Roll tightly and pack into a baking dish. Pour tomato sauce over the top. Bake covered at 350°F for 75 minutes. Eastern European comfort food adapted for turkey — the long bake makes the cabbage silky and the filling tender.
+
+**23. Turkey Pot Pie**
+Make a standard pot pie filling — turkey with peas, carrots, onion, and a cream sauce thickened with flour. Pour into a baking dish, top with store-bought pie crust or puff pastry, brush with egg wash, and bake at 400°F for 30 to 35 minutes. The filling can be made ahead; the crust goes on just before baking.
+
+**24. Turkey Stroganoff**
+Brown ground turkey with onion and mushrooms. Add beef broth, Worcestershire, and a tablespoon of Dijon mustard. Simmer 5 minutes, remove from heat, stir in sour cream. Serve over egg noodles. Classic comfort food that comes together faster than traditional beef stroganoff without sacrificing any of the richness.
+
+---
+
+## Soups and Quick Dinners (6 Recipes)
+
+**25. Turkey and White Bean Soup**
+Brown ground turkey with garlic and rosemary. Add white beans, chicken broth, diced tomatoes, and chopped kale or spinach. Simmer 15 minutes. Finish with a squeeze of lemon juice. High-protein, high-fiber, ready in 30 minutes, and better the next day.
+
+**26. Turkey Vegetable Soup**
+Brown ground turkey, add diced carrots, celery, onion, potato, and diced tomatoes. Cover with chicken broth and simmer until vegetables are tender, about 20 minutes. Season with Italian herbs, salt, and pepper. Straightforward weeknight soup that works with whatever vegetables are in the crisper.
+
+**27. Turkey Zucchini Skillet**
+Brown ground turkey with garlic. Add diced zucchini, cherry tomatoes, Italian seasoning, and a splash of chicken broth. Cook until the zucchini is tender and the tomatoes have burst, about 8 minutes. Serve over pasta, rice, or with crusty bread. A 20-minute dinner that tastes like summer.
+
+**28. Turkey and Sweet Potato Skillet**
+Brown ground turkey with onion and smoked paprika. Add diced sweet potato and enough chicken broth to partially submerge. Cover and cook until the sweet potato is tender, about 12 minutes. Uncover and cook until the liquid reduces. Season with cumin and salt. One pan, done in 25 minutes.
+
+**29. Turkey Stuffed Zucchini Boats**
+Halve zucchini lengthwise, scoop out the centers. Fill with seasoned cooked ground turkey mixed with the scooped zucchini, tomato sauce, and Italian herbs. Top with mozzarella. Bake at 400°F for 20 to 25 minutes. Low-carb main course that works for adults; serve with pasta on the side for kids.
+
+**30. Turkey Flatbread Pizza**
+Brown ground turkey with Italian seasoning and garlic. Spread flatbreads with marinara, top with the turkey, mozzarella, and any vegetables on hand. Bake at 425°F for 10 to 12 minutes. Faster than a full pizza, works as a weeknight dinner, and kids can build their own.
+
+---
+
+## Ground Turkey Meal Planning Tips
+
+**Buy in bulk and freeze.** Ground turkey freezes well for up to 4 months. Buy 3 to 4 pounds when it is on sale, portion into 1-pound bags, and freeze. Thaw in the refrigerator overnight or in cold water for 45 minutes.
+
+**Season early.** Ground turkey absorbs seasoning better when you add it before cooking rather than after. Mix salt, pepper, and any dry spices into the raw meat before it hits the pan.
+
+**Don't overcrowd the pan.** Crowding causes steaming instead of browning. Cook in a single layer over medium-high heat and resist stirring for the first 3 to 4 minutes. Let it develop a crust.
+
+**Use fat.** Add a tablespoon of olive oil or butter to the pan before adding turkey. This compensates for the lower fat content and prevents sticking and drying out.
+
+**Build sauces around the fond.** The brown bits left in the pan after browning turkey are flavor. Deglaze with broth, wine, tomatoes, or sauce and scrape them up — that is the base of your sauce.
+
+---
+
+## FAQ
+
+**Is ground turkey healthier than ground beef?**
+93/7 ground turkey has approximately 170 calories and 8 grams of fat per 4-ounce serving compared to roughly 215 calories and 13 grams of fat for 80/20 ground beef. For everyday cooking, the practical difference is moderate. Ground turkey is lower in saturated fat, which matters if that is a dietary goal. In terms of protein, both deliver 22 to 24 grams per serving.
+
+**Why does my ground turkey taste bland?**
+Turkey has less inherent fat and flavor than beef. It requires more seasoning — roughly 30 to 40 percent more than you would use with beef — and benefits from bold sauces, umami ingredients like Worcestershire or soy sauce, and aromatics like garlic and onion. The seasoning is the meal.
+
+**Can I substitute ground turkey for ground beef in any recipe?**
+In sauced preparations (Bolognese, chili, taco filling, meatloaf), yes — direct substitution works well. In preparations where the meat is the feature with minimal sauce (smash burgers, plain meatballs), turkey requires additional fat and binders to match the texture. Add a tablespoon of olive oil per pound of turkey in those cases.
+
+**How do I keep ground turkey from drying out?**
+Cook to exactly 165°F internal temperature and no higher. Use a thermometer. At 175°F the meat is noticeably dry. Also avoid extra-lean (99/1) in anything other than soups and liquid-heavy braises.
+
+**What is the best way to thaw frozen ground turkey?**
+In the refrigerator overnight is best. For same-day cooking, seal the package in a zip bag, submerge in cold water, and change the water every 30 minutes. A 1-pound package thaws in 45 to 60 minutes this way. Do not thaw at room temperature.
+
+---
+
+Thirty ground turkey recipes cover every major weeknight category: Italian, Mexican, Asian, comfort food, soups, and one-pan skillets. The protein costs less than beef, cooks in 30 minutes or less, and handles bold seasoning better than any other everyday protein.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your week around ground turkey, chicken, salmon, or any combination of proteins — then builds the complete grocery list automatically. The beta is open now and free for 6 months.
 
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
