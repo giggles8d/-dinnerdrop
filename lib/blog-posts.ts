@@ -8316,6 +8316,217 @@ The hardest part of a 30-minute dinner is not the cooking. It is deciding what t
 **[Get your personalized weekly meal plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+
+  {
+    slug: "what-to-make-for-dinner",
+    title: "What to Make for Dinner: 40 Ideas When You Have No Idea What to Cook",
+    publishDate: "2027-03-23",
+    readingTimeMinutes: 11,
+    primaryKeyword: "what to make for dinner",
+    description: "No idea what to make for dinner tonight? These 40 easy dinner ideas cover chicken, beef, pasta, seafood, and vegetarian — organized by time, mood, and what you already have.",
+    content: `
+# What to Make for Dinner: 40 Ideas When You Have No Idea What to Cook
+
+It is 5pm and you have no idea what to make for dinner. The refrigerator is staring back at you. Everyone is hungry. You need an answer in the next 30 seconds or someone is ordering pizza.
+
+This list exists for exactly that moment. Forty dinner ideas organized four ways: by how much time you have, what protein is in the fridge, what mood you are in, and what you can make from pantry staples alone. Find your situation, get your answer, cook dinner.
+
+---
+
+## When You Have 20 Minutes or Less
+
+These are the fastest dinners in the list. All require minimal prep and mostly hands-off cooking.
+
+**1. Garlic Butter Shrimp and Rice**
+Cook 1 lb peeled shrimp in 3 tablespoons butter with 4 minced garlic cloves, 1 minute per side. Add juice of 1 lemon, red pepper flakes, and fresh parsley. Serve over instant rice or microwave rice pouches. From fridge to table in 15 minutes.
+
+**2. Egg Fried Rice**
+The best use of leftover rice. Scramble 4 eggs in a hot wok, push to the side. Add cold leftover rice, break up clumps over high heat. Add frozen peas and carrots, 3 tablespoons soy sauce, 1 tablespoon sesame oil, diced green onions. Toss everything together 2 minutes on high heat. Better than takeout and faster than delivery.
+
+**3. Black Bean Quesadillas**
+Mash 1 can black beans with cumin, chili powder, garlic powder, and salt. Spread on flour tortillas with shredded cheddar. Cook in a dry skillet 2 minutes per side until crispy. Serve with sour cream, salsa, and sliced avocado. Eight minutes total.
+
+**4. Pasta Aglio e Olio**
+Cook 12 oz spaghetti. In a large pan warm 6 tablespoons olive oil, add 6 thinly sliced garlic cloves and red pepper flakes on medium-low heat — let garlic turn golden, not brown. Add 1 cup pasta water and drained pasta, toss vigorously until sauce is silky. Finish with parsley and parmesan. The entire sauce takes 8 minutes.
+
+**5. Smash Burgers**
+Divide 1 lb 80/20 ground beef into 4 balls. Place on a screaming-hot cast iron, smash flat with a spatula, season heavily with salt and pepper. Cook 2 minutes, flip, add cheese, cook 1 minute. The smash creates crispy lacy edges that no thick burger achieves. Faster than any drive-through.
+
+**6. Tuna Pasta**
+Cook 12 oz rigatoni. Warm 4 tablespoons olive oil with 5 sliced garlic cloves and red pepper flakes. Add 2 cans good-quality tuna in olive oil (do not drain) and 1 can diced tomatoes. Simmer 5 minutes. Toss with pasta and parsley, top with toasted breadcrumbs. A pantry dinner that takes 18 minutes.
+
+---
+
+## When You Have 30 to 45 Minutes
+
+Enough time for a proper dinner with depth.
+
+**7. One-Pan Lemon Herb Chicken and Potatoes**
+Cut 1.5 lbs chicken thighs and baby potatoes in half, toss with olive oil, lemon zest, rosemary, garlic powder, salt, and pepper. Spread on a sheet pan, roast at 425F for 35 minutes. One pan, no stirring required.
+
+**8. Honey Garlic Chicken Thighs**
+Season bone-in thighs with salt and pepper. Sear skin-down in an oven-safe skillet 8 minutes until golden. Flip, pour over sauce: 3 tablespoons honey, 4 minced garlic cloves, 2 tablespoons soy sauce, 1 tablespoon apple cider vinegar. Transfer to 400F oven 20 minutes. Baste once. The skin stays crispy and the sauce reduces into something glossy.
+
+**9. Beef Tacos**
+Brown 1 lb ground beef with diced onion, drain. Add 2 teaspoons cumin, 1 teaspoon chili powder, 1 teaspoon garlic powder, 1/2 teaspoon smoked paprika, and 1/4 cup water. Simmer 5 minutes until saucy. Serve in warm corn tortillas with shredded cabbage, diced tomato, cheese, sour cream, and hot sauce. The seasoning blend from scratch beats any packet.
+
+**10. Chicken Stir-Fry with Broccoli**
+Slice 1.5 lbs chicken breast thin. Marinate 10 minutes in soy sauce, cornstarch, and sesame oil. Cook in batches in a hot wok, set aside. Stir-fry broccoli florets, sliced bell peppers, and snap peas 3 minutes. Return chicken. Sauce: 3 tablespoons soy sauce, 2 tablespoons oyster sauce, 1 tablespoon honey, 1 teaspoon grated ginger, 1 teaspoon cornstarch. Pour in, toss 1 minute. Serve over rice.
+
+**11. Creamy Tuscan Pasta**
+Cook 12 oz penne. In the same pot saute 3 minced garlic cloves in olive oil. Add 1 cup heavy cream, 1 cup chicken broth, and 1 can diced tomatoes, simmer 5 minutes. Add 2 cups spinach until wilted. Toss pasta in sauce, finish with parmesan and fresh basil. Deeply satisfying, done in 30 minutes.
+
+**12. Sausage and Vegetable Sheet Pan**
+Halve 1 lb smoked sausage links. Toss with cubed zucchini, bell peppers, red onion, and broccoli in olive oil, Italian seasoning, salt, and pepper. Spread on a sheet pan. Roast at 425F for 22 minutes, turning once. One pan dinner that tastes like more work than it is.
+
+**13. Shakshuka**
+Saute diced onion and bell pepper in olive oil 5 minutes. Add 3 minced garlic cloves, 1 tablespoon cumin, 1 teaspoon smoked paprika, and red pepper flakes, cook 1 minute. Add 2 cans diced tomatoes, season generously with salt. Simmer 10 minutes. Make 4 to 6 wells, crack in eggs, cover and simmer 5 to 8 minutes until whites are set. Serve with crusty bread.
+
+**14. Korean Ground Beef Bowls**
+Brown 1 lb ground beef, drain. Add 4 minced garlic cloves and 1 teaspoon grated ginger, cook 1 minute. Add sauce: 3 tablespoons soy sauce, 2 tablespoons brown sugar, 1 tablespoon sesame oil, and red pepper flakes. Toss and cook 2 minutes. Serve over steamed rice, top with sliced green onions, sesame seeds, and a drizzle of sriracha.
+
+**15. Salmon with Lemon Butter Caper Sauce**
+Season 4 salmon fillets with salt, pepper, and garlic powder. Sear in butter 4 minutes flesh-side down, flip 3 minutes. Remove salmon. In the same pan add 3 tablespoons butter, 2 tablespoons capers, juice of 1 lemon, and fresh parsley. Pour over salmon. Twenty-five minutes including the side dish.
+
+---
+
+## Chicken for Dinner
+
+When chicken is what you have but you are not sure what to do with it.
+
+**16. Buffalo Chicken Wraps**
+Toss 2 cups cooked shredded chicken (rotisserie works perfectly) with hot sauce and a tablespoon of melted butter. Warm flour tortillas. Fill with buffalo chicken, shredded romaine, diced celery, blue cheese or ranch dressing, and sliced avocado. Roll tight. Ten-minute dinner with zero cooking required if you have rotisserie chicken.
+
+**17. Tuscan White Bean Chicken**
+Sear 4 chicken thighs skin-down in olive oil 6 minutes until golden. Flip, push to the side. Add 5 minced garlic cloves, 1 can diced tomatoes, 1 can cannellini beans, 1 teaspoon Italian seasoning, and 2 cups baby spinach. Simmer covered 15 minutes. One pan, restaurant-level depth.
+
+**18. Chicken Fajitas**
+Slice 1.5 lbs chicken breast into strips, season with cumin, chili powder, garlic powder, smoked paprika, salt. Cook in a hot cast iron 4 minutes per side. Set aside, cook sliced bell peppers and onion in the same pan until charred. Return chicken, toss together. Serve in warm flour tortillas with guacamole, pico de gallo, and sour cream.
+
+**19. Chicken and Rice Soup**
+Saute diced onion, carrots, and celery in olive oil 4 minutes. Add 4 minced garlic cloves, cook 1 minute. Add 6 cups chicken broth, 1 cup long-grain rice, and 2 cups shredded cooked chicken. Simmer 18 minutes until rice is tender. Season with salt, pepper, and fresh parsley. Comforting and filling in under 35 minutes.
+
+**20. Crispy Baked Chicken Thighs**
+Toss bone-in thighs with olive oil, garlic powder, onion powder, smoked paprika, Italian seasoning, salt, and pepper. Arrange skin-up on a wire rack over a sheet pan. Roast at 425F for 35 to 40 minutes. The wire rack lifts the chicken so heat circulates under the skin. Crispier than pan-fried with zero babysitting.
+
+---
+
+## Pasta for Dinner
+
+Pasta is the correct answer when everyone needs to be fed immediately.
+
+**21. Cacio e Pepe**
+Cook 12 oz spaghetti in lightly salted water. Reserve 1.5 cups pasta water. In a large skillet combine 1 cup finely grated pecorino, 1/2 cup parmesan, and 2 teaspoons freshly cracked black pepper. Add 3/4 cup pasta water and mix into a paste. Add hot drained pasta, toss vigorously adding more water until sauce clings. Three ingredients, twenty minutes, extraordinary result.
+
+**22. Baked Ziti**
+Cook 1 lb ziti, drain. Mix with 24 oz marinara sauce, 1 lb browned Italian sausage, 1 cup ricotta, 1 teaspoon Italian seasoning, and salt. Pour into a baking dish. Top with 2 cups shredded mozzarella. Bake at 375F for 20 minutes until bubbling. The pasta finishes cooking in the oven and absorbs the sauce.
+
+**23. Pasta e Fagioli**
+Saute diced onion, carrots, and celery in olive oil 5 minutes. Add 4 minced garlic cloves and 1 teaspoon rosemary, cook 1 minute. Add 1 can crushed tomatoes, 2 cans cannellini beans, 4 cups chicken broth, and 1/2 cup small pasta like ditalini. Simmer 15 minutes. The beans break down and thicken the broth into something that eats like a meal.
+
+**24. Mac and Cheese from Scratch**
+Cook 1 lb elbow pasta. In a pot melt 4 tablespoons butter, whisk in 4 tablespoons flour, cook 1 minute. Add 2 cups whole milk and 1 cup chicken broth gradually, whisking until thick. Remove from heat, add 2 cups sharp cheddar and 1 cup gruyere. Season with mustard powder, garlic powder, cayenne, salt. Toss with pasta. Better than any box in 25 minutes.
+
+**25. Spaghetti Carbonara**
+Cook 12 oz spaghetti. Crisp 4 oz diced pancetta or thick-cut bacon in a large pan, remove from heat, let cool slightly. Whisk 4 egg yolks with 1 cup finely grated pecorino and plenty of cracked black pepper. Reserve 1.5 cups pasta water, drain pasta. Working quickly, add pasta to pancetta pan off heat, pour egg mixture over, toss vigorously adding pasta water in splashes until sauce is creamy and coats every strand.
+
+---
+
+## When You Only Have Pantry Ingredients
+
+These dinners require minimal fresh ingredients.
+
+**26. White Bean Soup**
+Saute diced onion, 4 minced garlic cloves, and rosemary in olive oil 3 minutes. Add 3 cans white beans, 4 cups chicken broth or water, 1 can diced tomatoes, salt, pepper, and red pepper flakes. Simmer 15 minutes. Blend 1 cup of the soup and stir back in for creaminess. Top with olive oil and parmesan. Built entirely from canned goods.
+
+**27. Fried Rice with Whatever Is in the Fridge**
+Leftover rice plus whatever vegetables are dying in the crisper plus eggs plus soy sauce equals dinner. The method: hot wok, high heat, cook protein first, add aromatics, add vegetables, add cold rice and break up clumps, season, add eggs back in. Ten to twelve minutes regardless of what goes in.
+
+**28. Bean and Cheese Burritos**
+Warm 2 cans black or pinto beans in a pot with cumin, chili powder, garlic powder, and a splash of water. Mash half the beans for texture. Warm large flour tortillas in a dry pan. Fill with beans, rice, shredded cheese, hot sauce. Roll tight and toast seam-side down in the pan 1 minute. Dinner from the pantry in 15 minutes.
+
+**29. Tomato Soup and Grilled Cheese**
+Saute diced onion and garlic in butter. Add 2 cans crushed tomatoes, 2 cups broth, and 1 teaspoon sugar. Simmer 15 minutes, blend smooth. Season with salt and a swirl of cream. Meanwhile make grilled cheese: thick-cut sourdough, sharp cheddar, butter. Cook on medium-low until golden on both sides and cheese is fully melted.
+
+**30. Lentil and Tomato Stew**
+Saute diced onion and 4 minced garlic cloves in olive oil. Add 1 teaspoon cumin, 1 teaspoon turmeric, and 1 teaspoon smoked paprika, cook 1 minute. Add 1.5 cups dry red lentils, 1 can diced tomatoes, and 4 cups broth. Simmer covered 20 minutes until lentils are completely tender. Season aggressively with salt and lemon juice.
+
+---
+
+## When You Need Comfort Food
+
+**31. Chicken Pot Pie Skillet**
+Melt 4 tablespoons butter in an oven-safe skillet. Add diced onion, carrots, and celery, cook 4 minutes. Stir in 4 tablespoons flour, cook 1 minute. Add 2 cups chicken broth and 1 cup milk gradually, whisking. Add 2 cups shredded rotisserie chicken, 1 cup frozen peas, thyme, salt, and pepper. Simmer 5 minutes. Top with store-bought biscuit dough, bake at 400F for 15 minutes.
+
+**32. Beef Stroganoff**
+Slice 1.5 lbs beef sirloin thin across the grain. Sear in batches in a very hot pan, set aside. Saute diced onion and sliced mushrooms in the same pan until golden. Add 1 tablespoon Worcestershire, 2 teaspoons Dijon, 1 cup beef broth, and simmer 3 minutes. Add 1 cup sour cream off heat, stir smooth. Return beef. Serve over egg noodles.
+
+**33. Loaded Baked Potato Soup**
+Microwave 4 large russet potatoes until tender, scoop out flesh. Saute diced onion and garlic in butter 3 minutes. Add potato flesh, 4 cups chicken broth, and mash to desired texture. Stir in 1 cup sour cream and 1 cup shredded cheddar. Season with salt and pepper. Top with crispy bacon, more cheese, and green onions.
+
+**34. Cheeseburger Casserole**
+Brown 1.5 lbs ground beef with diced onion, drain. Add 1 can diced tomatoes, 2 tablespoons ketchup, 1 tablespoon mustard, Worcestershire, garlic powder, salt. Simmer 5 minutes. Transfer to a baking dish, top with thick-sliced pickles and 2 cups shredded cheddar. Bake at 375F for 12 minutes. Every bite tastes like a cheeseburger.
+
+**35. French Onion Soup**
+Caramelize 4 large sliced onions in butter over medium-low heat for 30 minutes, stirring occasionally, until deep golden brown. Add 1/4 cup white wine and cook off 2 minutes. Add 5 cups beef broth, thyme, bay leaf, salt, and pepper. Simmer 10 minutes. Ladle into oven-safe bowls, top with toasted bread and gruyere. Broil 3 minutes until cheese bubbles.
+
+---
+
+## Vegetarian Dinners That Are Actually Filling
+
+**36. Caprese Gnocchi**
+Cook 1 lb gnocchi. In a skillet, blister 2 cups cherry tomatoes in olive oil until they burst, about 4 minutes. Add a pinch of sugar, salt, pepper. Add drained gnocchi and toss. Remove from heat, add sliced fresh mozzarella and large handful of basil. Drizzle with balsamic glaze. Fifteen-minute vegetarian dinner.
+
+**37. Vegetable Curry**
+Saute diced onion in oil 3 minutes. Add 3 minced garlic cloves and 2 teaspoons grated ginger, cook 1 minute. Add 3 tablespoons curry powder, stir 30 seconds. Add 1 can coconut milk, 1 can diced tomatoes, 1 cup vegetable broth, cubed sweet potato or chickpeas or both. Simmer 20 minutes until vegetables are tender. Serve over basmati rice with naan.
+
+**38. Pesto Pasta with Roasted Tomatoes**
+Roast 2 cups halved cherry tomatoes at 425F for 15 minutes. Cook 12 oz pasta, reserve pasta water. Toss pasta with 1/2 cup pesto, roasted tomatoes, and pasta water as needed. Top with fresh basil, toasted pine nuts, and parmesan. The roasted tomatoes collapse into sweet concentrated bursts through the pasta.
+
+**39. Mushroom Tacos**
+Slice 1.5 lbs portobello or cremini mushrooms thick. Cook in a very hot cast iron with olive oil, cumin, chili powder, smoked paprika, and garlic powder. Do not stir for 3 minutes so edges char. Add a splash of soy sauce in the final minute. Serve in warm corn tortillas with avocado, pickled red onion, cotija cheese, and cilantro.
+
+**40. Vegetable Fried Noodles**
+Cook 8 oz lo mein noodles or spaghetti. Stir-fry sliced cabbage, carrots, bell peppers, and snap peas in a hot wok. Add minced garlic and ginger, cook 30 seconds. Add noodles. Sauce: 3 tablespoons soy sauce, 1 tablespoon hoisin, 1 tablespoon sesame oil, 1 teaspoon brown sugar. Toss over high heat until coated and glossy.
+
+---
+
+## How to Stop Having This Problem Every Night
+
+The problem is not finding what to make for dinner tonight. The problem is having this exact conversation with yourself every night at 5pm when you are already tired and hungry.
+
+The fix is simple: decide what you are making for dinner on Sunday before the week starts, when you have mental energy and the grocery store is accessible. A five-night plan decided in advance eliminates the 5pm panic entirely.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds a personalized 5-meal plan for your family in about 30 seconds. You answer a few questions about your family size, dietary preferences, picky eaters, and how much time you want to spend cooking. It generates five dinners, organized by day, with a complete grocery list you can shop from once. The beta is open now and free for 6 months.
+
+---
+
+## FAQ
+
+**What should I make for dinner tonight when I have no motivation?**
+Start with time and protein. If you have 20 minutes and ground beef: Korean ground beef bowls (recipe 14) or beef tacos (recipe 9). If you have chicken: buffalo chicken wraps with rotisserie chicken (recipe 16) take 10 minutes with zero cooking. If you have nothing fresh: fried rice (recipe 27) or bean burritos (recipe 28) from pantry alone.
+
+**What are the easiest dinners to make when you are tired?**
+Sheet pan dinners require the least active cooking. One-pan lemon herb chicken and potatoes (recipe 7), sausage and vegetable sheet pan (recipe 12), and crispy baked chicken thighs (recipe 20) all go into the oven and come out done. You can sit down while they cook.
+
+**What can I make for dinner with chicken breast?**
+Chicken breast works in every category: stir-fry (recipe 10), fajitas (recipe 18), buffalo wraps (recipe 16), Tuscan white bean (recipe 17), and any pasta with chicken added. Slice thin and cook hot for best results.
+
+**What to make for dinner when you are bored of your usual meals?**
+Break out of the usual ruts with shakshuka (recipe 13), salmon with caper sauce (recipe 15), Korean ground beef bowls (recipe 14), cacio e pepe (recipe 21), or mushroom tacos (recipe 39). The ingredients are familiar but the flavor profiles are completely different.
+
+**What to make for dinner for picky eaters?**
+Smash burgers (recipe 5), beef tacos (recipe 9), mac and cheese from scratch (recipe 24), honey garlic chicken thighs (recipe 8), and loaded baked potato soup (recipe 33) have the highest family acceptance rate. All can be plated with components separated for picky eaters who do not want foods touching.
+
+---
+
+Forty dinners, every situation covered. The next time you are standing in front of the refrigerator at 5pm, you have a list.
+
+But the better solution is to never be in that position. A weekly plan decided on Sunday means Monday through Friday you open the fridge knowing exactly what you are making. [DinnerDrop](https://dinnerdrop.app/beta) builds that plan for you in 30 seconds — personalized to your family, your dietary needs, and your picky eaters. The beta is open now and free for 6 months.
+
+**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
