@@ -5106,6 +5106,178 @@ Every dinner on this list works in the air fryer. DinnerDrop just tells you whic
 Beta spots are limited. First 100 families get 6 months completely free.`,
   },
 
+  {
+    slug: 'shrimp-dinner-ideas',
+    title: '30 Shrimp Dinner Ideas the Whole Family Will Actually Eat',
+    description:
+      'Quick-cooking, budget-friendly, and endlessly adaptable — shrimp is the weeknight protein ' +
+      'that earns its place in every dinner rotation. 30 family-tested shrimp dinners to prove it.',
+    publishDate: '2026-11-17',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'shrimp dinner ideas',
+    content: `Shrimp is the closest thing weeknight cooking has to a cheat code.
+
+It cooks in 3-5 minutes. It picks up any flavor you throw at it. It works in pasta, tacos, rice bowls, soups, sheet pan dinners, and stir-fries. And a pound feeds a family of four.
+
+The problem isn't that shrimp is hard to cook. It's that most families don't have enough shrimp dinner ideas in their rotation to reach for it on a regular Tuesday.
+
+This list fixes that. 30 shrimp dinners across every format — fast skillets, sheet pan meals, pasta dishes, tacos and bowls, and soups that practically cook themselves.
+
+## Category 1: Quick Skillet Shrimp (8 Dinners)
+
+The skillet is where shrimp shines brightest. High heat, a couple of minutes per side, and a simple pan sauce.
+
+**1. Garlic Butter Shrimp**
+The classic for a reason. Shrimp seared in butter with six cloves of minced garlic, a splash of white wine, and a squeeze of lemon. Done in 8 minutes. Serve over pasta, rice, or crusty bread to catch the sauce.
+
+**2. Cajun Shrimp**
+Toss peeled shrimp in Cajun seasoning, smoked paprika, and garlic powder. Sear in a screaming-hot skillet with butter and oil. Add sliced andouille sausage if you have it. Serve over dirty rice or with cornbread.
+
+**3. Honey Garlic Shrimp**
+Marinate 20 minutes in honey, soy sauce, garlic, and a splash of rice vinegar. Sear in the marinade until it caramelizes into a sticky glaze. Serve over steamed rice with broccoli on the side. Kids eat this every time.
+
+**4. Shrimp Stir-Fry**
+High heat, wok or large skillet, shrimp with snap peas, bell peppers, and broccoli in a sauce of soy, oyster sauce, sesame oil, and ginger. 12 minutes including vegetable prep. Serve over rice.
+
+**5. Lemon Herb Shrimp**
+Shrimp in butter with fresh garlic, lemon zest, lemon juice, and whatever soft herbs you have — parsley, chives, basil. Light and fast. Excellent over angel hair pasta or orzo.
+
+**6. Buffalo Shrimp Bowls**
+Toss shrimp in buffalo sauce and cook in a skillet until caramelized at the edges. Serve over rice with shredded cabbage, diced celery, avocado, and a drizzle of ranch or blue cheese. Crowd-pleaser for game nights.
+
+**7. Teriyaki Shrimp**
+Shrimp cooked in homemade teriyaki sauce — soy, mirin, brown sugar, garlic, ginger — until the sauce reduces and coats every piece. Serve over jasmine rice with sesame seeds and sliced green onions.
+
+**8. Skillet Shrimp Fajitas**
+Slice bell peppers and onions thin. Cook in a screaming-hot cast iron until charred and soft. Add shrimp seasoned with cumin, chili powder, garlic powder, and lime. Serve in warm flour tortillas with sour cream, guac, and pico.
+
+## Category 2: Sheet Pan Shrimp (6 Dinners)
+
+One pan, high heat, everything roasted together. Cleanup is a sheet of foil.
+
+**9. Sheet Pan Shrimp and Vegetables**
+Large shrimp, zucchini, cherry tomatoes, and red onion tossed in olive oil, garlic powder, Italian seasoning, salt, and pepper. 400°F for 12 minutes. Finish with fresh basil and parmesan. Serve over orzo or with crusty bread.
+
+**10. Sheet Pan Shrimp Tacos**
+Shrimp tossed in cumin, chili powder, garlic, and lime zest. Roast at 425°F for 8-10 minutes until slightly charred at edges. Serve in corn tortillas with a quick mango salsa (diced mango, jalapeño, red onion, cilantro, lime).
+
+**11. Sheet Pan Cajun Shrimp and Sausage**
+Sliced andouille sausage, large shrimp, diced bell peppers, and corn kernels tossed in Cajun seasoning and olive oil. Roast at 400°F for 15 minutes. Everything cooks in one shot. Serve over rice or with crusty rolls.
+
+**12. Sheet Pan Garlic Parmesan Shrimp**
+Large shrimp tossed in melted butter, minced garlic, Italian breadcrumbs, and parmesan. Roast at 425°F for 8 minutes until coating is golden. Serve over pasta with marinara or alongside a Caesar salad.
+
+**13. Sheet Pan Shrimp Boil**
+Small red potatoes (par-cooked 10 minutes first), corn cut into rounds, kielbasa, and large shrimp tossed in Old Bay, butter, and garlic. Roast at 400°F for 15 minutes after adding shrimp. A full dinner on one pan with zero effort.
+
+**14. Sheet Pan Lemon Dill Shrimp with Asparagus**
+Shrimp and asparagus tossed in olive oil, lemon zest, garlic, and fresh dill. Roast at 400°F for 10-12 minutes. Light, clean, and impressive enough for company. Serve with rice pilaf or quinoa.
+
+## Category 3: Shrimp Pasta (6 Dinners)
+
+Shrimp cooks faster than pasta boils. Start the pasta water first and everything finishes together.
+
+**15. Shrimp Scampi**
+The Italian-American classic. Shrimp in a sauce of butter, garlic, white wine, lemon, and parsley over linguine. The sauce comes together in the time it takes the pasta to finish cooking. 20 minutes total.
+
+**16. Shrimp Alfredo**
+Creamy parmesan sauce with garlic and a hint of nutmeg, tossed with fettuccine and seared shrimp. Homemade Alfredo takes 8 minutes — just butter, cream, parmesan, garlic. Kids will eat this without argument.
+
+**17. Spicy Shrimp Pasta**
+Shrimp in a sauce of crushed tomatoes, heavy cream, garlic, red pepper flakes, and fresh basil. Spice level is adjustable. Serve over rigatoni or penne. This is the pasta adults in the house will request on repeat.
+
+**18. Shrimp Pesto Pasta**
+Seared shrimp tossed with store-bought basil pesto, al dente pasta, cherry tomatoes, and a handful of arugula. Cold or room temperature. 15 minutes. Works with whatever pasta shape you have.
+
+**19. Garlic Shrimp Orzo**
+Orzo cooked in chicken broth until absorbed, then tossed with seared garlic shrimp, spinach, sun-dried tomatoes, and parmesan. One pot, one skillet, 25 minutes. Feels more impressive than the effort involved.
+
+**20. Shrimp Fra Diavolo**
+Shrimp in a spicy tomato sauce — canned crushed tomatoes, garlic, red pepper flakes, white wine, fresh basil — served over spaghetti or linguine. Classic Italian-American heat. Pair with garlic bread.
+
+## Category 4: Shrimp Tacos, Rice Bowls, and Handheld Meals (5 Dinners)
+
+**21. Classic Shrimp Tacos**
+Shrimp seasoned with chili powder, cumin, garlic, and lime. Cooked in 3 minutes in a skillet. Serve in corn tortillas with cabbage slaw (shredded cabbage, lime, a pinch of sugar and salt), avocado, and chipotle mayo. This is the dinner that converts taco skeptics.
+
+**22. Shrimp Burrito Bowls**
+Rice, black beans, corn, shrimp (Cajun or lime-chili seasoned), sliced avocado, pico de gallo, sour cream. Assemble in bowls and let everyone customize. Like Chipotle, but faster and cheaper.
+
+**23. Shrimp Fried Rice**
+Day-old rice is better here — drier rice fries instead of steaming. Shrimp, frozen peas, carrots, and egg scrambled in sesame oil and soy sauce. Better than takeout in 15 minutes using leftover rice.
+
+**24. Coconut Shrimp with Mango Rice**
+Shrimp coated in shredded coconut and panko, pan-fried until golden. Serve with jasmine rice cooked with a little coconut milk and diced mango on the side. Feels vacation-worthy on a Wednesday.
+
+**25. Shrimp Quesadillas**
+Sauteed shrimp with garlic and cumin, mixed with pepper jack cheese and sliced peppers inside flour tortillas. Cook in a dry skillet until golden and melted. Serve with sour cream and guacamole. 15 minutes.
+
+## Category 5: Shrimp Soups and Stews (5 Dinners)
+
+Shrimp goes into soups at the very end — just 3 minutes before serving — so it stays tender.
+
+**26. Shrimp and Corn Chowder**
+Bacon, onion, potatoes, and corn cooked in chicken broth with a splash of cream until potatoes are tender. Shrimp added at the end and cooked just until pink. Finish with fresh thyme and a crack of black pepper. Comfort food in 30 minutes.
+
+**27. Thai Coconut Shrimp Soup**
+Coconut milk, chicken broth, red curry paste, fish sauce, lime juice, ginger, and lemongrass. Shrimp and mushrooms added at the end. Rice noodles or jasmine rice alongside. Restaurant-quality soup in 20 minutes from pantry staples.
+
+**28. Shrimp Tortilla Soup**
+Standard chicken tortilla soup base — canned tomatoes, beans, corn, chili powder, cumin, chicken broth — with shrimp swapped in for chicken. Faster because shrimp cooks in minutes. Top with crushed tortilla chips, sour cream, avocado, and lime.
+
+**29. Creole Shrimp Stew**
+Shrimp in a thick tomato-based sauce with the trinity (onion, celery, bell pepper), garlic, okra, and Creole seasoning. Serve over white rice. This is comfort food with depth — 35 minutes from start to finish.
+
+**30. Shrimp Gumbo (Weeknight Version)**
+A simplified gumbo: dark roux made quickly in the oven (butter and flour roasted at 400°F until dark brown), then cooked with the trinity, chicken broth, and sausage. Shrimp and frozen okra added at the end. Serve over rice with hot sauce. The real thing takes hours — this version takes 40 minutes and tastes like it shouldn't.
+
+---
+
+## How to Buy and Store Shrimp Like a Pro
+
+**Fresh vs. frozen:** Frozen is usually better. Most "fresh" shrimp at the counter was frozen and thawed. Buy frozen in the bag and thaw yourself — you know exactly how long it's been thawed.
+
+**Size:** For most of these recipes, large (26-30 count per pound) or extra-large (21-25 count) work best. Jumbo for grilling and sheet pan; medium for soups and fried rice.
+
+**Deveined and peeled:** Worth the extra $0.50/lb for weeknight cooking. Removes the prep step entirely.
+
+**How to thaw fast:** Put frozen shrimp in a colander under cold running water for 5-7 minutes. Done.
+
+**Doneness:** Shrimp are done when they curl into a loose C shape and turn pink and opaque. A tight O curl means overcooked. Pull them before the O appears.
+
+---
+
+## Frequently Asked Questions
+
+**How long does shrimp take to cook?**
+3-5 minutes in a hot skillet, 8-10 minutes in the oven at 400-425°F, 3 minutes in simmering soup. The most common mistake is cooking it too long — shrimp goes from perfect to rubbery in under a minute.
+
+**Can I use frozen shrimp without thawing?**
+You can add frozen shrimp directly to soups and stews where liquid is involved. For skillet and sheet pan recipes, thaw first for better searing and even cooking.
+
+**What's the best size shrimp for pasta?**
+Large (26-30 count) or extra-large (21-25 count). They have enough substance to stand up to sauce and pasta without getting lost. Colossal shrimp in pasta is unwieldy; small shrimp disappear.
+
+**Is shrimp healthy for families?**
+Shrimp is high in protein (20g per 3 oz), low in calories (~85 per 3 oz), and contains selenium, iodine, and B12. The fat content is very low. The main consideration is sodium in pre-seasoned or pre-marinated shrimp — season fresh when possible.
+
+---
+
+## The Part That's Still Hard
+
+Shrimp cooks fast. That's not the bottleneck.
+
+The bottleneck is standing at the grocery store on Sunday trying to remember what your family will actually eat this week — which of these 30 ideas would work with your schedule, your picky eater, the dietary restriction your partner mentioned, and whatever is already in the pantry.
+
+DinnerDrop handles that part. Tell it your family size, what your household eats and avoids, and which stores you prefer. It generates five personalized dinners for the week in 30 seconds and builds a grocery list organized by store section.
+
+Every recipe on this list can be in your rotation. DinnerDrop just picks the right five for this week.
+
+**[Get your free meal plan at DinnerDrop](https://dinnerdrop.app/beta)**
+
+Beta spots are limited. First 100 families get 6 months completely free.`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
