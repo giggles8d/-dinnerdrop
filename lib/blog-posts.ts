@@ -5874,7 +5874,7 @@ The only thing that makes taco night feel like a chore is deciding what kind to 
     description:
       '30 satisfying vegetarian dinner ideas the whole family will actually eat — meatless meals ' +
       'packed with protein, flavor, and enough variety to keep weeknight dinners interesting.',
-    publishDate: '2026-11-24',
+    publishDate: '2026-12-15',
     readingTimeMinutes: 8,
     primaryKeyword: 'vegetarian dinner ideas',
     content: `The biggest complaint about vegetarian dinners is not that they taste bad. It is that they taste like compromise.
@@ -6050,6 +6050,177 @@ Most of them. The reliably kid-friendly options: quesadillas, pasta in any form,
 Every family has a different threshold for how many meatless nights feel normal. The 30 dinners above work across that range because they are built around flavor, not restraint.
 
 [DinnerDrop](https://dinnerdrop.app/beta) builds personalized weekly dinner plans that account for dietary preferences including vegetarian, vegan, gluten-free, and dairy-free — and generates the grocery list automatically. The beta is free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
+
+  {
+    slug: 'casserole-recipes',
+    title: 'Casserole Recipes: 30 Easy Family Dinners That Basically Make Themselves',
+    description:
+      '30 easy casserole recipes the whole family will eat — chicken, beef, pasta, and ' +
+      'veggie options with make-ahead tips and freezer instructions included.',
+    publishDate: '2026-12-22',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'casserole recipes',
+    content: `The appeal of a casserole is entirely practical: one pan, one oven, one round of cleanup. You assemble everything in a baking dish, slide it into the oven, and walk away. Dinner is ready when you are.
+
+The reputation — dry, heavy, mid-century — undersells what a casserole actually is. A casserole is any dish where ingredients bake together until flavors meld and the top gets a crust. That structure works for chicken, ground beef, pasta, vegetables, and even breakfast. The 30 recipes below are built around that principle with modern ingredients and real weeknight timelines.
+
+Most take 10 to 20 minutes of active prep. The oven does the rest.
+
+---
+
+## Chicken Casseroles
+
+**1. Classic Chicken and Rice Casserole**
+Combine cooked shredded chicken with long-grain white rice, cream of chicken soup, chicken broth, onion powder, garlic powder, salt, and pepper in a 9x13 baking dish. Stir to combine. Dot with butter. Cover tightly with foil and bake at 350°F for 45 minutes. Uncover for the final 10 minutes to brown the top. The rice cooks in the broth during baking — no pre-cooking required.
+
+**2. Chicken Broccoli Rice Casserole**
+Stir together cooked chicken, fresh or frozen broccoli florets, cooked white rice, cream of mushroom soup, sour cream, chicken broth, garlic powder, and shredded cheddar. Pour into a greased 9x13 dish. Top with additional cheddar and crushed Ritz crackers. Bake at 375°F for 30 to 35 minutes until bubbly and golden.
+**3. Chicken Enchilada Casserole**
+Layer flour tortilla strips, shredded cooked chicken, black beans, corn, and enchilada sauce in a 9x13 dish. Repeat layers. Top with shredded Mexican cheese blend. Cover and bake at 375°F for 25 minutes. Uncover and bake 10 more minutes until cheese is melted and edges bubble. Serve with sour cream, salsa, and cilantro.
+
+**4. Buffalo Chicken Casserole**
+Toss cooked shredded chicken with buffalo sauce and cream cheese. Combine with cooked pasta (penne or rotini), ranch dressing, and shredded mozzarella. Pour into a greased baking dish. Top with more mozzarella and crumbled blue cheese. Bake at 375°F for 25 to 30 minutes until bubbly. Garnish with sliced green onions.
+
+**5. Chicken Cordon Bleu Casserole**
+Layer cubed cooked chicken and thinly sliced deli ham in a greased 9x13 dish. Whisk together cream of chicken soup, sour cream, Dijon mustard, garlic powder, and Swiss cheese for the sauce. Pour over the chicken and ham. Top with crushed Ritz crackers mixed with melted butter. Bake at 375°F for 30 minutes until golden and bubbling.
+
+**6. Chicken Pot Pie Casserole**
+Cook diced onion, celery, and carrot in butter until soft. Whisk in flour, then slowly add chicken broth and milk to make a thick sauce. Season with thyme, salt, and pepper. Fold in cooked cubed chicken and frozen peas. Pour into a 9x13 dish. Top with store-bought pie crust or biscuit dough. Bake at 400°F for 25 to 30 minutes until crust is golden.
+
+**7. Salsa Chicken Casserole**
+Arrange boneless chicken thighs in a 9x13 dish. Pour one jar of salsa over the top. Scatter black beans, corn, and sliced bell pepper around the chicken. Season with cumin and chili powder. Bake at 375°F for 40 minutes. Top with shredded cheddar for the final 5 minutes. Serve over rice or with warm tortillas.
+
+**8. Creamy Chicken Noodle Casserole**
+Cook egg noodles al dente. Saute onion and celery in butter. Combine noodles, chicken, vegetables, cream of chicken soup, chicken broth, sour cream, frozen peas, and cheddar. Pour into a greased baking dish. Top with crushed crackers and bake at 350°F for 35 minutes until bubbly.
+
+---
+
+## Ground Beef Casseroles
+
+**9. Classic Hamburger Casserole**
+Brown ground beef with onion and garlic. Drain fat. Stir in tomato sauce, diced tomatoes, Italian seasoning, salt, and pepper. Combine with cooked egg noodles and half the shredded cheddar. Pour into a 9x13 dish. Top with remaining cheese. Bake at 350°F for 30 minutes. Simple, filling, and genuinely satisfying.
+
+**10. Tater Tot Casserole**
+Brown ground beef with onion. Season with garlic powder, salt, and pepper. Drain and spread in a 9x13 dish. Mix cream of mushroom soup with milk and pour over beef. Top with frozen tater tots in an even layer. Bake at 375°F for 45 to 50 minutes until tots are golden and crispy. Add shredded cheddar for the final 5 minutes.
+**11. Mexican Beef Casserole**
+Brown ground beef with onion, garlic, taco seasoning, and a splash of water. Layer with cooked rice, black beans, corn, diced green chiles, and enchilada sauce in a 9x13 dish. Top with shredded Mexican cheese and crushed tortilla chips. Bake at 375°F for 25 minutes until heated through and cheese is melted.
+
+**12. Ground Turkey Sweet Potato Casserole**
+Brown ground turkey with onion, garlic, cumin, chili powder, and salt. Stir in diced sweet potato, black beans, diced tomatoes, and chicken broth. Pour into a baking dish. Top with shredded pepper jack cheese. Bake at 375°F for 40 minutes until sweet potato is tender. A higher-protein, lower-carb option that works equally well with beef.
+
+**13. Cheeseburger Casserole**
+Brown ground beef with onion and garlic. Stir in ketchup, mustard, Worcestershire sauce, and beef broth. Combine with cooked elbow macaroni and shredded cheddar. Pour into a greased 9x13 dish. Top with more cheddar and sliced pickles. Bake at 350°F for 25 minutes. Tastes like a cheeseburger in casserole form — which is exactly what it is.
+
+**14. Tamale Casserole**
+Brown ground beef with onion, garlic, chili powder, cumin, and canned corn. Stir in enchilada sauce and black beans. Pour into a 9x13 dish. Mix cornbread batter (from a box or scratch) and spread over the top. Bake at 400°F for 20 to 25 minutes until cornbread is cooked through and golden. The cornbread steams slightly over the filling.
+
+**15. Shepherd's Pie Casserole**
+Brown ground beef or lamb with onion, carrot, peas, Worcestershire sauce, beef broth, and tomato paste. Season with thyme, salt, and pepper. Pour into a 9x13 dish. Top with smooth mashed potatoes. Drag a fork across the top to create ridges. Bake at 400°F for 25 to 30 minutes until the potato peaks are golden.
+
+---
+
+## Pasta Casseroles
+
+**16. Classic Baked Ziti**
+Cook ziti al dente. Combine with jarred marinara, ricotta, half the mozzarella, Parmesan, an egg, garlic powder, Italian seasoning, salt, and pepper. Pour into a greased 9x13 dish. Top with remaining mozzarella. Cover with foil and bake at 375°F for 25 minutes. Uncover and bake 15 more minutes until cheese is golden and edges bubble.
+
+**17. Million Dollar Baked Ziti**
+The upgrade: mix ricotta with cream cheese, sour cream, and Parmesan for the filling. Layer ziti, meat sauce (ground beef + marinara), the cream cheese mixture, and mozzarella. Repeat layers. Bake covered at 375°F for 30 minutes, uncovered for 15. Richer than classic baked ziti — worth the extra step.
+
+**18. Pasta Bake with Italian Sausage**
+Brown Italian sausage (removed from casings) with onion and garlic. Add diced tomatoes and marinara. Combine with rigatoni, mozzarella, and Parmesan. Pour into a baking dish. Top with torn fresh basil and more mozzarella. Bake at 375°F for 30 minutes until bubbly. Italian sausage carries enough seasoning that this needs almost no additional spices.
+**19. Mac and Cheese Casserole**
+Make a cheese sauce: melt butter, whisk in flour, cook one minute, then slowly add whole milk and cook until thickened. Stir in sharp cheddar, Gruyere, mustard powder, cayenne, salt, and pepper. Combine with cooked elbow macaroni and pour into a baking dish. Top with panko breadcrumbs tossed in melted butter. Bake at 375°F for 25 to 30 minutes until topping is golden.
+
+**20. Lazy Lasagna Casserole**
+All the flavor of lasagna without the layer-building. Brown ground beef with onion and garlic, add marinara. Cook lasagna noodles and break them into rough thirds. Combine noodles, meat sauce, ricotta, Parmesan, and mozzarella in a 9x13 dish. Mix gently. Top with more mozzarella. Bake at 375°F for 30 minutes. Serve with garlic bread.
+
+**21. Pasta Primavera Casserole**
+Toss penne with roasted zucchini, bell pepper, cherry tomatoes, and red onion. Combine with jarred alfredo sauce thinned with pasta water, fresh basil, and Parmesan. Pour into a greased baking dish. Top with mozzarella. Bake at 375°F for 25 minutes. A vegetable-heavy pasta casserole that works as a side or a meatless main.
+
+---
+
+## Vegetable and Meatless Casseroles
+
+**22. Spinach Artichoke Casserole**
+Combine thawed and squeezed frozen spinach, drained canned artichoke hearts, cream cheese, sour cream, mayonnaise, Parmesan, garlic, and mozzarella. Season with salt and pepper. Pour into a greased baking dish. Top with more Parmesan and bake at 375°F for 25 to 30 minutes until bubbly and golden. Serve with crusty bread as a main or side.
+
+**23. Green Bean Casserole (Full Meal Version)**
+Extend the classic: add rotisserie chicken and canned chickpeas to the traditional green bean, cream of mushroom, and French fried onion combination. Bake at 350°F for 30 minutes until bubbling. The protein additions make this a complete dinner rather than a side dish.
+
+**24. Sweet Potato Black Bean Casserole**
+Layer cooked and cubed sweet potatoes with black beans, corn, diced red onion, and a cumin-lime sauce (Greek yogurt, lime juice, cumin, garlic). Top with shredded pepper jack and pepitas. Bake at 375°F for 30 minutes. Nutritionally dense and colorful — works as a standalone vegetarian meal.
+
+**25. Broccoli Cheese Casserole**
+Combine fresh or frozen broccoli florets with cheddar cheese sauce (butter, flour, milk, sharp cheddar), egg, and diced onion. Pour into a greased baking dish. Top with crushed crackers and additional cheddar. Bake at 350°F for 35 to 40 minutes until set and golden. Works as a vegetarian main or a hearty side.
+
+**26. Mediterranean Vegetable Casserole**
+Layer sliced eggplant, zucchini, and tomatoes in a baking dish. Drizzle each layer with olive oil and season with garlic, dried oregano, thyme, salt, and pepper. Top with crumbled feta cheese. Cover and bake at 375°F for 40 minutes. Uncover for the final 15 minutes to brown the top. Serve with crusty bread or over rice.
+
+---
+
+## Breakfast Casseroles
+
+**27. Classic Egg and Sausage Breakfast Casserole**
+Brown breakfast sausage and crumble. Layer in a 9x13 dish with cubed day-old bread, shredded cheddar, and sausage. Whisk together eggs, milk, Dijon mustard, salt, and pepper. Pour over the bread mixture. Cover and refrigerate overnight. Bake at 350°F for 45 to 50 minutes until puffed and golden. The best make-ahead option on this list.
+
+**28. Hashbrown Egg Casserole**
+Press frozen shredded hashbrowns into a greased 9x13 dish. Bake at 425°F for 15 minutes to crisp. Whisk together eggs, milk, diced bell pepper, onion, shredded cheddar, salt, and pepper. Pour over the hashbrowns. Reduce oven to 350°F and bake 35 to 40 minutes until eggs are set. Cut into squares. Feeds six adults easily.
+
+**29. French Toast Casserole**
+Cube brioche or challah and spread in a greased 9x13 dish. Whisk together eggs, whole milk, heavy cream, vanilla, cinnamon, nutmeg, and brown sugar. Pour over the bread and press gently to absorb. Cover and refrigerate overnight. Bake at 350°F for 45 to 55 minutes until puffed and golden. Serve with maple syrup and powdered sugar.
+
+**30. Veggie Egg Casserole**
+Saute diced onion, bell pepper, mushrooms, and spinach in olive oil until soft. Season with garlic powder, Italian seasoning, salt, and pepper. Combine with whisked eggs and crumbled feta. Pour into a greased 9x13 dish. Bake at 350°F for 30 to 35 minutes until eggs are fully set. A high-protein meatless breakfast that reheats well all week.
+---
+
+## Make-Ahead and Freezer Strategy
+
+Casseroles are the most make-ahead-friendly category of weeknight cooking. Two approaches:
+
+**Assemble the night before:** Build the casserole through the topping step, cover tightly with plastic wrap or foil, and refrigerate up to 24 hours. When baking from cold, add 10 to 15 minutes to the bake time. Remove the plastic before adding foil or baking uncovered.
+
+**Freeze after baking:** Cool the casserole completely (this is important — condensation from a hot casserole creates ice crystals that affect texture). Wrap tightly in plastic wrap, then a layer of heavy-duty foil. Label with the date, dish name, and reheating instructions. Freeze up to 3 months.
+
+To reheat from frozen: thaw overnight in the refrigerator. Bake covered at 350°F until heated through — roughly 45 to 60 minutes depending on the casserole. Add any fresh toppings (cheese, crackers, breadcrumbs) during the last 10 minutes.
+
+The breakfast casseroles (recipes 27 through 30) freeze especially well because egg-based dishes reheat without drying out as long as the initial bake didn't overcook them.
+
+---
+
+## The Casserole Pan Question
+
+Most of these recipes use a standard 9x13 inch baking dish. Glass dishes run slightly cooler than ceramic or metal — if using glass, add 5 minutes and check for bubbling at the edges as your doneness cue. Ceramic dishes retain heat well but heat unevenly, so rotate halfway through baking if your oven has hot spots.
+
+For casseroles that need browning (tater tots, breadcrumb toppings, potato crusts), a metal baking pan will give better crust than glass.
+
+---
+
+## Frequently Asked Questions
+
+**What temperature do you bake most casseroles?**
+Most casseroles bake at 350°F to 375°F. Lower temperatures (325°F) are used when the goal is gentle, even cooking without drying out the protein. Higher temperatures (400°F to 425°F) are used when you want a crust — tater tots, potato-topped shepherd's pie, or biscuit-topped pot pies. When in doubt, 375°F is a safe default.
+
+**Can you freeze an unbaked casserole?**
+Yes, with one exception: casseroles topped with potato (mashed potatoes, tater tots) do not freeze well unbaked because the potato texture degrades. For all other casseroles, assemble, cool any cooked components, cover tightly, and freeze. Thaw completely in the refrigerator before baking. Add toppings like breadcrumbs or cheese immediately before baking, not before freezing.
+
+**How do you keep a casserole from drying out?**
+Three strategies: (1) Cover with foil for most of the bake time and uncover only for browning at the end. (2) Make sure there is enough liquid in the recipe — cream-based sauces, broth, or canned soup create steam inside the dish during baking. (3) Do not overbake. A casserole is done when the center is heated through and the edges bubble. A few extra minutes past that point dries out the protein.
+
+**How long does leftover casserole last in the refrigerator?**
+Most casseroles last 3 to 4 days covered in the refrigerator. Egg-based casseroles should be eaten within 3 days. Pasta casseroles reheat best with a splash of water or broth added before covering. Meat-based casseroles reheat cleanly at 350°F in a covered dish until warmed through (about 20 to 25 minutes), or by the slice in a microwave.
+
+**Can I substitute the cream of mushroom soup?**
+Yes. Make a simple substitute: melt 3 tablespoons butter, whisk in 3 tablespoons flour, cook 1 minute. Add 1.5 cups milk or broth slowly, whisking until smooth and thick. Season with salt, pepper, garlic powder, and onion powder. This equals one can of condensed soup. For mushroom flavor, saute diced mushrooms in the butter before adding flour.
+
+---
+
+The 30 casseroles above cover every scenario: quick weeknight assembly, make-ahead prep, freezer stocking, protein variety, and meatless options. Each one improves the next day after the flavors have had time to settle.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds personalized weekly dinner plans based on your family's preferences — including casserole-style comfort food — and generates the grocery list automatically. The beta is free for 6 months.
 
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
