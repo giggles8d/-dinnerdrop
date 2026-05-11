@@ -7286,6 +7286,157 @@ Forty chicken thigh recipes — 8 per cooking method — gives you the flexibili
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
 
+  {
+    title: 'Air Fryer Chicken Thighs: 25 Crispy, Juicy Recipes Ready in 25 Minutes',
+    slug: 'air-fryer-chicken-thighs',
+    description: 'Twenty-five air fryer chicken thigh recipes — bone-in, boneless, glazed, marinated, and spice-rubbed. Crispy skin, juicy meat, ready in 25 minutes with barely any cleanup.',
+    publishDate: '2027-02-09',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'air fryer chicken thighs',
+    content: `# Air Fryer Chicken Thighs: 25 Crispy, Juicy Recipes Ready in 25 Minutes
+
+Air fryer chicken thighs solve the problem that every other cooking method creates: getting crispy skin without standing over a skillet full of hot oil, or waiting 40 minutes for the oven to do the same job. Bone-in thighs take 24 to 26 minutes at 400°F. Boneless thighs take 18 to 20 minutes at 380°F. Both come out with a crackling exterior and meat that stays moist because chicken thighs have enough fat to withstand the circulating heat without drying out.
+
+**Want DinnerDrop to plan a full week of air fryer dinners automatically?** [Claim your free 6-month beta access here](https://dinnerdrop.app/beta).
+
+---
+
+## Why the Air Fryer Makes Chicken Thighs Better Than the Oven
+
+The air fryer circulates hot air at high speed around the food. For chicken thighs, this means the skin crisps in the same time it takes the meat to cook through — you don't have to choose between crispy exterior and juicy interior the way you do in a standard oven.
+
+Compared to oven-roasted thighs, air fryer thighs cook in half the time (24 minutes vs. 40 to 42 minutes for bone-in), produce crispier skin without broiling, require no preheating time beyond 2 to 3 minutes, and generate almost no splatter cleanup.
+
+The tradeoff is batch size — most air fryers fit 4 to 6 thighs in a single layer. For families of 5 or more, cook in two batches and keep the first batch warm in a 200°F oven while the second cooks.
+
+---
+
+## Air Fryer Chicken Thigh Basics
+
+Bone-in, skin-on thighs cook at 400°F for 24 to 26 minutes, flipped once halfway. Boneless, skinless thighs cook at 380°F for 18 to 20 minutes, also flipped once. Always verify internal temperature reaches 165°F minimum — cook bone-in to 175°F for the best pull-apart texture.
+
+Pat thighs dry before seasoning. Surface moisture prevents crispy skin. A light brush or spray of oil helps seasoning adhere and adds crispiness. Single layer only — overlapping thighs steam instead of roast.
+
+---
+
+## 25 Air Fryer Chicken Thigh Recipes
+
+### Classic Preparations (1–5)
+
+**1. Basic Crispy Bone-In Thighs**
+Pat 4 bone-in thighs dry, brush with 1 teaspoon olive oil each, season with salt, pepper, garlic powder, and smoked paprika. Air fry at 400°F for 12 minutes, flip, cook 12 to 14 more minutes. Skin should be deep golden and completely crispy. Rest 5 minutes before serving.
+
+**2. Garlic Herb Bone-In Thighs**
+Combine 2 tablespoons olive oil, 4 minced garlic cloves, 1 teaspoon each dried thyme, rosemary, and oregano, salt, and pepper. Rub under and over skin of 4 bone-in thighs. Marinate 30 minutes. Air fry at 400°F for 24 to 26 minutes, flipping once. The herbs toast into a fragrant, herb-crusted exterior.
+
+**3. Simple Boneless Thighs**
+Season 4 boneless skinless thighs with salt, pepper, garlic powder, and onion powder. Air fry at 380°F for 9 minutes per side. Rest 3 minutes. Slice for tacos, serve whole with rice, or chop into salads. Total active time under 5 minutes.
+
+**4. Lemon Pepper Thighs**
+Coat 4 boneless thighs with 2 teaspoons lemon pepper seasoning, 1 teaspoon garlic powder, and 1/2 teaspoon salt. Air fry at 380°F for 18 to 20 minutes, flipping once. Finish with fresh lemon juice immediately after removing from the fryer.
+
+**5. Salt and Pepper Crispy Thighs**
+Pat 4 bone-in thighs completely dry — spend 60 seconds on this. Season with 1 teaspoon kosher salt and 1/2 teaspoon cracked black pepper per thigh. No oil needed. Air fry at 400°F for 26 minutes, flipping at 13 minutes. Proves that great air fryer chicken requires no marinade.
+
+---
+
+### Glazed and Sauced Recipes (6–10)
+
+**6. Honey Garlic Glazed Thighs**
+Whisk 3 tablespoons honey, 2 tablespoons soy sauce, 3 minced garlic cloves, and 1 teaspoon rice vinegar. Season 4 boneless thighs with salt and pepper. Air fry at 380°F for 16 minutes flipping once. Brush half the glaze on, cook 2 more minutes. Flip, brush remaining glaze, cook 2 final minutes. The glaze caramelizes into a sticky, lacquered finish. Serve over white rice.
+
+**7. BBQ Chicken Thighs**
+Season 4 bone-in thighs with salt, pepper, and garlic powder. Air fry at 400°F for 20 minutes, flipping once. Brush both sides with BBQ sauce. Cook 4 to 6 more minutes until caramelized. Watch carefully — BBQ sauce burns quickly. Serve with coleslaw and corn.
+
+**8. Teriyaki Thighs**
+Marinate 4 boneless thighs in 3 tablespoons soy sauce, 2 tablespoons mirin, 1 tablespoon sake, and 1 tablespoon brown sugar for 30 minutes. Pat dry before air frying. Air fry at 380°F for 18 to 20 minutes. Brush with boiled reserved marinade in the last 3 minutes. Serve over rice with sesame seeds.
+
+**9. Honey Mustard Glazed Thighs**
+Combine 2 tablespoons Dijon mustard, 2 tablespoons honey, 1 tablespoon olive oil, and 1 teaspoon garlic powder. Coat 4 boneless thighs. Air fry at 380°F for 18 minutes, flipping once. The mustard forms a golden crust that locks in moisture.
+
+**10. Maple Soy Thighs**
+Mix 2 tablespoons maple syrup, 2 tablespoons soy sauce, 1 teaspoon sesame oil, and 1 teaspoon garlic powder. Marinate 4 boneless thighs for 20 minutes. Air fry at 380°F for 16 minutes, flipping once. Brush reserved marinade in the last 2 minutes. The maple caramelizes faster than honey — watch carefully.
+
+---
+
+### Spice Rubs and International Flavors (11–17)
+
+**11. Cajun Spice Thighs**
+Mix 1 teaspoon each: paprika, garlic powder, onion powder, oregano, thyme, cayenne. Add 1/2 teaspoon black pepper and 1 teaspoon salt. Coat 4 bone-in thighs with 1 tablespoon oil and rub. Air fry at 400°F for 24 to 26 minutes, flipping once. Serve with rice and beans.
+
+**12. Mediterranean Thighs**
+Season 4 bone-in thighs with 1 teaspoon each dried oregano, garlic powder, paprika, and 1/2 teaspoon cumin plus lemon zest. Brush with olive oil. Air fry at 400°F for 24 minutes, flipping once. Serve with tzatziki and pita.
+
+**13. Korean Gochujang Thighs**
+Mix 2 tablespoons gochujang, 1 tablespoon soy sauce, 1 tablespoon sesame oil, 1 tablespoon honey, and 2 minced garlic cloves. Marinate 4 boneless thighs 30 minutes. Pat dry. Air fry at 380°F for 18 minutes, flipping once. Serve over rice with kimchi and green onions.
+
+**14. Jerk Chicken Thighs**
+Blend 2 tablespoons soy sauce, 1 tablespoon brown sugar, 1 teaspoon allspice, 1/2 teaspoon cinnamon, 1/2 teaspoon cayenne, 3 garlic cloves, and 2 green onions. Marinate 4 bone-in thighs at least 2 hours. Air fry at 400°F for 24 to 26 minutes, flipping once. The jerk marinade caramelizes into a charred, aromatic exterior. Serve with rice and fried plantains.
+
+**15. Italian Herb Thighs**
+Season 4 boneless thighs with 1 teaspoon Italian seasoning, 1 teaspoon garlic powder, 1/2 teaspoon onion powder, salt, pepper, and olive oil. Air fry at 380°F for 18 to 20 minutes. Serve over pasta or Caesar salad.
+
+**16. Tandoori-Inspired Thighs**
+Mix 3 tablespoons plain yogurt, 1 tablespoon olive oil, 1 teaspoon each cumin, coriander, turmeric, paprika, garlic powder, and ginger. Coat 4 boneless thighs. Marinate 1 to 4 hours. Scrape off excess yogurt before air frying. Air fry at 380°F for 20 minutes, flipping once. Serve with naan and cucumber raita.
+
+**17. Taco-Seasoned Thighs**
+Season 4 boneless thighs with 2 tablespoons taco seasoning and cooking spray. Air fry at 380°F for 18 to 20 minutes. Rest 5 minutes, slice thin. Use in tacos, burrito bowls, quesadillas, or nachos.
+
+---
+
+### Family-Friendly Comfort Recipes (18–22)
+
+**18. Ranch-Seasoned Thighs**
+Coat 4 boneless thighs with 2 tablespoons ranch seasoning mix and 1 teaspoon olive oil. Air fry at 380°F for 18 to 20 minutes, flipping once. The ranch crisps into a savory, tangy crust. Picky eaters approve this one on first bite.
+
+**19. Parmesan-Crusted Thighs**
+Mix 1/4 cup grated Parmesan, 1 teaspoon garlic powder, and 1 teaspoon Italian seasoning. Brush 4 boneless thighs with olive oil, press Parmesan mixture onto both sides firmly. Air fry at 375°F for 18 minutes, flipping gently. The cheese melts into a golden, nutty crust. Serve with marinara for dipping.
+
+**20. Honey Sriracha Thighs**
+Whisk 2 tablespoons honey, 1 tablespoon sriracha, and 1 tablespoon soy sauce. Season 4 boneless thighs with salt. Air fry at 380°F for 16 minutes, flipping once. Brush with sauce. Cook 2 to 3 more minutes until sticky and caramelized. Adjust sriracha for heat preference.
+
+**21. Buffalo Thighs**
+Season 4 boneless thighs with garlic powder, salt, and pepper. Air fry at 380°F for 18 minutes, flipping once. Toss immediately in 3 tablespoons Buffalo sauce while hot. Serve with celery and blue cheese dressing.
+
+**22. Brown Sugar Garlic Thighs**
+Combine 2 tablespoons brown sugar, 1 teaspoon garlic powder, 1 teaspoon smoked paprika, 1/2 teaspoon salt, and 1/4 teaspoon pepper. Rub over 4 bone-in thighs coated lightly in oil. Air fry at 400°F for 24 to 26 minutes, flipping once. The brown sugar caramelizes into a lacquered, slightly sweet crust. Serve with mashed potatoes and green beans.
+
+---
+
+### Meal Prep and Batch Cook Recipes (23–25)
+
+**23. Lemon Herb Meal Prep Thighs**
+Season 6 boneless thighs with lemon zest, 1 teaspoon garlic powder, 1 teaspoon dried thyme, 1 teaspoon oregano, olive oil, salt, and pepper. Cook in two batches at 380°F for 18 to 20 minutes each. Slice and portion into containers with grain and roasted vegetables. Keeps 4 days refrigerated. The lemon herb flavor pairs with any cuisine throughout the week.
+
+**24. Smoky Paprika Batch Thighs**
+Coat 6 boneless thighs with 1 tablespoon smoked paprika, 1 teaspoon cumin, 1 teaspoon garlic powder, 1/2 teaspoon onion powder, salt, and 1 tablespoon olive oil. Air fry in batches at 380°F for 18 to 20 minutes. Use throughout the week: sliced cold in salads, reheated for breakfast with eggs, or served over rice with a different sauce each night. Smoky paprika works across every cuisine.
+
+**25. Five-Spice Glazed Thighs**
+Combine 1 teaspoon Chinese five-spice powder, 1 teaspoon garlic powder, 1/2 teaspoon ginger powder, 1 tablespoon soy sauce, and 1 tablespoon honey. Marinate 4 boneless thighs 30 minutes. Air fry at 380°F for 18 minutes, flipping once. Brush remaining marinade in the last 2 minutes. Serve over steamed bok choy and jasmine rice.
+
+---
+
+## Air Fryer Chicken Thigh FAQ
+
+**How long do air fryer chicken thighs take?**
+Bone-in thighs take 24 to 26 minutes at 400°F. Boneless thighs take 18 to 20 minutes at 380°F. Both require flipping once at the halfway point. Always verify with an instant-read thermometer — 165°F minimum, 175°F for the best bone-in texture.
+
+**Do I need to flip chicken thighs in the air fryer?**
+Yes. Flipping once halfway through ensures even crisping on both sides and prevents the bottom from steaming in collected juices.
+
+**Can I cook frozen chicken thighs in the air fryer?**
+Yes. Air fry frozen boneless thighs at 380°F for 25 to 28 minutes, flipping once at 15 minutes. Bone-in frozen thighs need 35 to 38 minutes at 400°F. Thawed thighs produce better crispiness — freeze moisture prevents the initial searing.
+
+**What temperature should air fryer chicken thighs reach?**
+The USDA minimum is 165°F at the thickest point, away from the bone. For bone-in thighs, cook to 175°F — the collagen converts to gelatin in this range, producing the tender, pull-apart texture that makes dark meat worth eating.
+
+---
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your full weekly dinner plan around your family's preferences — including air fryer nights — and generates a complete grocery list in one tap. The beta is open now and free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
