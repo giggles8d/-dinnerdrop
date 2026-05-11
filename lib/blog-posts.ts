@@ -5278,6 +5278,204 @@ Every recipe on this list can be in your rotation. DinnerDrop just picks the rig
 Beta spots are limited. First 100 families get 6 months completely free.`,
   },
 
+  {
+    slug: 'slow-cooker-chicken',
+    title: 'Slow Cooker Chicken: 30 Easy Dinners That Cook While You Work',
+    description:
+      'Slow cooker chicken recipes that go in the morning and come out perfect at dinner. ' +
+      '30 family-friendly meals from weeknight classics to crowd-pleasers — minimal prep, maximum flavor.',
+    publishDate: '2026-11-24',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'slow cooker chicken',
+    content: `Slow cooker chicken is the closest thing to a free dinner. You prep for 10 minutes in the morning, set it, and come home to a meal that's been cooking for 8 hours. The house smells incredible. Everyone is impressed. You did almost nothing.
+
+The problem isn't finding slow cooker chicken recipes — it's finding ones that actually work. Ones that don't turn out watery, flavorless, or with the texture of wet tissue paper. After enough trial and error, the differences become clear.
+
+Here's what works. 30 dinners organized by what you're in the mood for.
+
+---
+
+## The 3 Rules That Make Slow Cooker Chicken Actually Good
+
+**Rule 1: Skip the boneless skinless breast if you want flavor.**
+Chicken thighs hold up dramatically better to long cooking times. They stay moist, they absorb seasoning, and they shred beautifully. If you must use breast, cook on HIGH for 3-4 hours instead of LOW for 8 — less time means less drying out.
+
+**Rule 2: Don't add too much liquid.**
+Slow cookers trap steam, so everything you put in stays. A recipe that calls for 2 cups of broth will end up with 3 cups of liquid by the end. Start with less than you think you need. For most braises and sauces, half a cup is enough.
+
+**Rule 3: Season twice — at the start and at the end.**
+Long cooking mellows spices. The seasoning you add in the morning will be gentler by evening. Taste before serving and adjust — a pinch of salt, a squeeze of lemon, a splash of hot sauce. That last adjustment makes the whole dish.
+
+---
+
+## Category 1: Shredded Chicken Classics (8 Dinners)
+
+These dinners all follow the same basic logic: chicken goes in with seasoning and liquid, cooks all day, you shred it, you serve it. Endlessly versatile.
+
+**1. Slow Cooker Pulled Chicken**
+Chicken thighs, your favorite BBQ sauce, a splash of apple cider vinegar, garlic powder, and onion powder. Cook on LOW 6-8 hours. Shred with two forks directly in the slow cooker and stir into the sauce. Serve on brioche buns with coleslaw. Better than most restaurant versions.
+
+**2. Chicken Tacos**
+Thighs with a packet of taco seasoning, half a cup of chicken broth, and a can of diced green chiles. LOW 6-8 hours, shred, serve in warm tortillas with all the toppings. A pound and a half of chicken feeds six people in tacos. Leftovers make excellent quesadillas or burrito bowls the next day.
+
+**3. Chicken Burrito Bowls**
+Same as the taco recipe above, served over rice with black beans, corn, pico de gallo, guacamole, and sour cream. If you set rice to cook when you get home (20 minutes), dinner is on the table in 25 minutes total. This is the slow cooker as a weeknight superpower.
+
+**4. Salsa Chicken**
+Chicken thighs, one jar of your favorite salsa, and a packet of ranch dressing mix. LOW 6-8 hours. Shred and serve over rice, in tacos, on nachos, or in quesadillas. The ranch balances the acidity of the salsa in a way that makes everyone ask what you did differently. Nothing. You did almost nothing.
+
+**5. Buffalo Chicken**
+Thighs with a cup of Frank's RedHot, two tablespoons of butter, and garlic powder. LOW 6-8 hours, shred, toss in the sauce. Serve on slider buns with blue cheese dressing and celery sticks. Also excellent on pizza, in wraps, or stuffed into baked potatoes.
+
+**6. Italian Pulled Chicken**
+Thighs with a jar of marinara, Italian seasoning, garlic, and red pepper flakes. LOW 6-8 hours, shred, serve over pasta or in hoagie rolls with mozzarella melted on top under the broiler. Feels like Sunday dinner on a Wednesday.
+
+**7. Honey Garlic Chicken**
+Thighs with honey, soy sauce, minced garlic, and a splash of rice vinegar. LOW 5-6 hours — watch this one after 7 hours because of the sugar in the honey. Shred and serve over steamed rice with broccoli. The sauce is extraordinary.
+
+**8. Teriyaki Chicken**
+Thighs with teriyaki sauce, a little brown sugar, minced ginger, and garlic. LOW 6-8 hours, shred, thicken the sauce on the stovetop if you want it glazed. Serve over jasmine rice with steamed edamame. Better than takeout at a fraction of the price.
+
+---
+
+## Category 2: Whole Pieces — Set It and Forget It (6 Dinners)
+
+These meals use whole thighs, drumsticks, or bone-in pieces and come out falling-off-the-bone tender.
+
+**9. Lemon Herb Chicken Thighs**
+Bone-in thighs seasoned with salt, pepper, garlic powder, dried thyme, and rosemary. Add half a cup of chicken broth and the juice of one lemon. LOW 6-8 hours. The meat falls off the bone. Serve with roasted potatoes and steamed green beans. This is a proper dinner.
+
+**10. Garlic Butter Chicken Thighs**
+Bone-in thighs with four tablespoons of butter, eight cloves of garlic, half a cup of chicken broth, and a squeeze of lemon. LOW 6-8 hours. The garlic melts into the butter and becomes almost sweet. Serve over mashed potatoes with the pan drippings spooned over the top.
+
+**11. Barbecue Drumsticks**
+Drumsticks seasoned with salt, pepper, and garlic powder, then covered in BBQ sauce. LOW 5-6 hours. Run under the broiler for 5-8 minutes after cooking for color and char. Serve with corn on the cob and potato salad. Kids eat drumsticks without complaint. This is valuable intelligence.
+
+**12. Chicken with Peppers and Onions**
+Thighs layered over sliced bell peppers, onions, and garlic with Italian seasoning. No added liquid needed — the vegetables release enough. LOW 6-8 hours. Serve in hoagie rolls for chicken sandwiches or over rice.
+
+**13. Adobo Chicken**
+Bone-in thighs with soy sauce, white vinegar, bay leaves, garlic, and black pepper. The vinegar and soy create a brine that tenderizes and flavors deeply. LOW 6-8 hours. Serve over white rice with the braising liquid spooned over. One of the best slow cooker chicken dinners on this list.
+
+**14. Brown Sugar and Balsamic Chicken**
+Thighs with balsamic vinegar, brown sugar, garlic, and Dijon mustard. LOW 5-6 hours. The balsamic becomes a glossy reduction that coats the chicken. Serve with roasted vegetables or over polenta.
+
+---
+
+## Category 3: Soups and Stews (8 Dinners)
+
+The slow cooker is genuinely great for soup. Everything goes in together, you don't watch anything, and the result is better than stovetop because flavors meld for hours.
+
+**15. Slow Cooker Chicken Noodle Soup**
+Bone-in thighs, diced carrots, celery, onion, minced garlic, chicken broth, thyme, salt, and pepper. LOW 6-8 hours. Remove chicken, shred, return meat to pot. Cook egg noodles separately and add to bowls at serving. This is the soup that fixes everything.
+
+**16. White Chicken Chili**
+Chicken thighs, white beans, green chiles, chicken broth, cumin, chili powder, onion, and garlic. LOW 6-8 hours. Shred chicken, stir in cream cheese and a can of corn during the last 30 minutes. Serve with cornbread, sour cream, and shredded cheddar.
+
+**17. Chicken Tortilla Soup**
+Chicken thighs, black beans, corn, diced tomatoes, chicken broth, cumin, chili powder, and lime juice. LOW 6-8 hours, shred chicken. Serve topped with crushed tortilla chips, sour cream, avocado, and shredded cheese. Makes enough for dinner plus lunch the next day.
+
+**18. Creamy Chicken and Wild Rice Soup**
+Chicken thighs, wild rice, diced carrots, celery, onion, chicken broth, thyme, and garlic. LOW 6-8 hours. Shred chicken. Stir in heavy cream during the last 20 minutes. Wild rice holds up to long cooking better than white rice.
+
+**19. Chicken and Potato Soup**
+Thighs, diced Yukon Gold potatoes, onion, garlic, chicken broth, and smoked paprika. LOW 6-8 hours, shred chicken. Stir in sour cream and top with chives and cheddar. Loaded baked potato soup with chicken — a complete meal.
+
+**20. Thai Peanut Chicken Soup**
+Chicken thighs, chicken broth, coconut milk, peanut butter, red curry paste, fish sauce, lime juice, and ginger. LOW 6 hours. Shred chicken, serve over rice noodles with bean sprouts, crushed peanuts, and cilantro. Tastes like a restaurant dish you'd pay $16 for.
+
+**21. Chicken Minestrone**
+Chicken thighs, diced tomatoes, white beans, diced carrots, celery, zucchini, chicken broth, Italian seasoning, and garlic. LOW 6-8 hours. Shred chicken, add small pasta during the last 30 minutes. Serve with crusty bread and Parmesan.
+
+**22. Chicken Pozole Verde**
+Chicken thighs, tomatillos, green chiles, hominy, chicken broth, cumin, and oregano. LOW 7-8 hours, shred chicken. Serve with shredded cabbage, radishes, lime, dried oregano, and tortilla chips. Complex flavor with almost no active effort.
+
+---
+
+## Category 4: Pasta and Grain Dishes (5 Dinners)
+
+The chicken does the heavy lifting in the slow cooker. Cook pasta separately at the end.
+
+**23. Slow Cooker Chicken Marsala**
+Chicken thighs with sliced mushrooms, marsala wine, chicken broth, garlic, and thyme. LOW 5-6 hours. Whisk cornstarch into the sauce to thicken, return chicken. Serve over egg noodles or mashed potatoes.
+
+**24. Chicken Cacciatore**
+Thighs with crushed tomatoes, sliced bell peppers, onion, garlic, capers, olives, and Italian herbs. LOW 6-8 hours. Serve over rigatoni or polenta. A serious dish — rustic Italian braised chicken done while you're at work.
+
+**25. Tuscan Chicken**
+Chicken thighs with sun-dried tomatoes, garlic, Italian seasoning, and half a cup of chicken broth. LOW 5-6 hours. Stir in heavy cream and baby spinach until wilted. Serve over pasta or with crusty bread.
+
+**26. Chicken Stroganoff**
+Thighs with mushrooms, onion, garlic, chicken broth, Worcestershire sauce, and Dijon. LOW 6-7 hours, shred chicken. Stir in sour cream during the last 30 minutes (don't boil after adding). Serve over egg noodles.
+
+**27. Chicken Tikka Masala (Weeknight Version)**
+Chicken thighs with crushed tomatoes, coconut milk, tikka masala spice blend, garlic, and ginger. LOW 6-7 hours. Serve over basmati rice with naan. Not identical to restaurant tikka masala, but genuinely good and significantly cheaper.
+
+---
+
+## Category 5: Crowd-Pleasers for Families (3 Dinners)
+
+Big batches, kid-friendly flavors, food that disappears fast.
+
+**28. Chicken and Dumplings**
+Chicken thighs with diced carrots, celery, onion, chicken broth, cream of chicken soup, thyme, and garlic. LOW 6-8 hours, shred chicken. Mix 1 cup Bisquick with one-third cup milk, drop tablespoons on top of the liquid, cook on HIGH uncovered 20-25 minutes until dumplings are cooked through. Comfort food at its most efficient.
+
+**29. Cheesy Chicken and Rice Casserole**
+Chicken thighs with long-grain white rice, chicken broth, cream of mushroom soup, garlic powder, and onion powder. HIGH 3-4 hours. Stir in shredded cheddar before serving. One pot, kids eat it without protest, leftovers reheat well.
+
+**30. Slow Cooker Chicken Fajita Filling**
+Chicken thighs with sliced bell peppers, onions, fajita seasoning, lime juice, and a quarter cup of chicken broth. LOW 5-6 hours, shred. Serve in warm flour tortillas with guacamole, sour cream, and salsa. Feeds six people easily — let everyone build their own for interactive dinner.
+
+---
+
+## The Batch Momentum Strategy
+
+The real power of slow cooker chicken isn't just convenience — it's batch momentum.
+
+When you have leftover shredded chicken, you don't need another recipe:
+- Tacos Sunday night
+- Quesadillas Monday
+- Chicken fried rice Tuesday
+- Chicken salad sandwiches Wednesday
+
+That's four dinners from one slow cooker session. Make double the salsa chicken or pulled chicken on Sunday. You're done before Wednesday.
+
+It works best when you know your family's actual preferences — what your picky eater will eat, what gets ignored, what gets requested again. Building a rotation around those facts is the whole game.
+
+---
+
+## Frequently Asked Questions
+
+**Can I cook frozen chicken in the slow cooker?**
+The USDA recommends against it — frozen chicken spends too long in the bacterial growth temperature range (40-140°F) on its way to a safe internal temp. Always thaw first. Refrigerator overnight or cold running water for 1-2 hours.
+
+**How long does slow cooker chicken keep?**
+Refrigerated in an airtight container, 3-4 days. Frozen, 3-4 months. Shredded chicken freezes particularly well — freeze in 2-cup portions for easy weeknight use.
+
+**Can I cook on HIGH instead of LOW?**
+Yes. Most recipes: HIGH 3-4 hours instead of LOW 6-8. HIGH works if you're home. LOW is more forgiving for longer windows and breaks down collagen more completely for tender results.
+
+**Do I need to brown the chicken first?**
+No — browning adds color that the slow cooker can't replicate. For shredded chicken dishes, it doesn't matter. If you have a spare two minutes per side in a skillet, do it. If not, skip it. Both are dinner.
+
+**Why does my slow cooker chicken turn out watery?**
+Too much liquid added, or vegetables releasing water you didn't account for. Start with a quarter to half cup of liquid in most recipes. Tomatoes, onions, and mushrooms release significant liquid during cooking.
+
+---
+
+## The Dinner Planning Problem the Slow Cooker Doesn't Solve
+
+Slow cooker chicken handles the cooking time problem. You still have to figure out which five dinners your family will actually eat this week — working around your picky eater, what's in the pantry, your schedule Wednesday versus Thursday, and which grocery stores you're hitting.
+
+That's the decision fatigue that hits at 5pm when you haven't planned. The slow cooker is ready. You're not sure what to put in it.
+
+DinnerDrop solves that part. Tell it your family size, dietary needs, and preferred stores. It generates five personalized dinner plans in 30 seconds and builds a grocery list organized by store section. Pick from your slow cooker rotation or let it pick for you. Either way, dinner is handled before you leave the house in the morning.
+
+**[Get your free week at DinnerDrop](https://dinnerdrop.app/beta)**
+
+First 100 families get 6 months completely free. No credit card charged for 6 months.`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
