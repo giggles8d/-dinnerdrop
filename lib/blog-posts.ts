@@ -7066,6 +7066,226 @@ Thirty baked chicken thigh recipes cover every weeknight situation: quick glazed
 
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
+  {
+    title: 'Chicken Thigh Recipes: 40 Easy Dinners Your Family Will Actually Love',
+    slug: 'chicken-thigh-recipes',
+    description: 'Forty chicken thigh recipes covering every cooking method — stovetop, oven, slow cooker, Instant Pot, air fryer, and grill. Budget-friendly, family-tested, most under 40 minutes.',
+    publishDate: '2027-02-02',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'chicken thigh recipes',
+    content: `# Chicken Thigh Recipes: 40 Easy Dinners Your Family Will Actually Love
+
+Chicken thighs are the most versatile protein in the grocery store. They are cheaper than chicken breasts, harder to overcook, and more flavorful in every cooking method. A boneless skinless thigh takes 6 minutes per side in a hot skillet. A bone-in thigh braises for 45 minutes in a slow cooker with almost no effort. This guide covers 40 chicken thigh recipes across every method your kitchen uses — stovetop, oven, slow cooker, Instant Pot, air fryer, and grill.
+
+**Want DinnerDrop to plan a full week of chicken thigh dinners automatically?** [Claim your free 6-month beta access here](https://dinnerdrop.app/beta).
+
+---
+
+## Why Chicken Thighs Beat Chicken Breasts for Weeknight Cooking
+
+Chicken thighs have roughly 15% fat content compared to 3% for breasts. That fat margin means thighs stay juicy even when slightly overcooked — the window between done and dry is 20 to 25 degrees instead of 5. They cost 30 to 50 percent less per pound than boneless skinless breasts and consistently produce better leftovers because the fat prevents the meat from drying out when reheated.
+
+For families cooking four or five nights per week, thighs are the practical choice. They work in every cuisine, take marinades and sauces better than breasts, and the dark meat flavor stands up to bold seasoning without disappearing.
+
+---
+
+## Stovetop Chicken Thigh Recipes (8 Recipes)
+
+**1. Classic Pan-Seared Chicken Thighs**
+Pat boneless skinless thighs completely dry. Season generously with salt, pepper, and garlic powder. Heat a cast-iron or stainless skillet over medium-high heat until very hot — a drop of water should evaporate immediately. Add 1 tablespoon oil. Lay thighs smooth-side down. Do not touch them for 6 minutes. Flip and cook 5 to 6 minutes more until the internal temperature reaches 165°F. The dry surface and hot pan create a deeply browned crust. Rest 3 minutes before cutting. This is the foundational technique — every other stovetop recipe builds on it.
+
+**2. Garlic Butter Chicken Thighs**
+Sear boneless thighs using the method above. When the second side is nearly done, add 3 tablespoons butter, 4 minced garlic cloves, and fresh thyme to the pan. Tilt the pan and spoon the foaming butter over the thighs continuously for 90 seconds. The butter basting adds richness and the garlic perfumes the meat. Finish with a squeeze of lemon. Serve over mashed potatoes or egg noodles with the pan drippings poured over everything.
+
+**3. Lemon Herb Chicken Thighs**
+Season thighs with dried oregano, dried thyme, garlic powder, salt, and pepper. Sear 6 minutes per side. Remove thighs. Deglaze the pan with 1/3 cup chicken broth and 3 tablespoons lemon juice, scraping up the browned bits. Simmer the sauce until slightly reduced. Return thighs to the pan for 2 minutes. The deglazing turns the fond (the stuck browned bits) into instant sauce with no additional ingredients needed.
+
+**4. Honey Garlic Chicken Thighs**
+Mix 3 tablespoons honey, 3 tablespoons soy sauce, 4 minced garlic cloves, and 1 teaspoon rice vinegar. Sear thighs until cooked through. Pour the honey garlic sauce over the thighs in the pan and cook 2 minutes, turning the thighs to coat as the sauce thickens and glazes. The sugars in the honey caramelize quickly — watch closely so it does not burn. Serve over rice. This is the fastest crowd-pleasing chicken thigh recipe for a reason.
+
+**5. Mushroom Cream Sauce Chicken Thighs**
+Sear thighs and set aside. In the same pan, cook 8 oz sliced mushrooms until golden, 5 to 6 minutes. Add 2 minced garlic cloves, cook 1 minute. Pour in 1/2 cup chicken broth, scrape the pan. Add 1/2 cup heavy cream and 1 teaspoon Dijon mustard. Simmer 3 minutes until slightly thickened. Return thighs and any accumulated juices to the pan. Cook 2 minutes. The sauce is rich without being fussy. Egg noodles or crusty bread for serving.
+
+**6. Skillet Chicken Marsala**
+Pound boneless thighs to even thickness. Dredge lightly in flour seasoned with salt and pepper. Sear in butter and oil until golden, 5 minutes per side. Remove. Cook 8 oz sliced cremini mushrooms in the same pan. Add 1/2 cup Marsala wine and let it reduce by half. Add 1/4 cup chicken broth and 2 tablespoons butter. Return thighs to the pan. Simmer 3 minutes. Thighs are more forgiving than the traditional veal and hold up to the braising sauce without falling apart.
+
+**7. Spicy Coconut Chicken Thighs**
+Sear thighs until cooked through. Remove. In the same pan, cook 1 diced onion until soft. Add 2 tablespoons red curry paste and cook 1 minute. Pour in 1 can (14 oz) coconut milk and bring to a simmer. Return thighs to the pan and cook in the sauce 5 minutes. Finish with lime juice and fresh cilantro. Serve over jasmine rice. The coconut milk tames the heat — use 1 tablespoon curry paste for mild, 3 tablespoons for hot.
+
+**8. Greek Lemon Chicken Thighs**
+Season thighs with dried oregano, garlic powder, onion powder, salt, and pepper. Sear in olive oil. Deglaze the pan with 1/4 cup white wine and 3 tablespoons lemon juice. Add 1/4 cup chicken broth and a handful of pitted kalamata olives. Return thighs, cover, and cook on medium-low 8 minutes until cooked through. Finish with fresh parsley and crumbled feta. The olives and lemon create a briny, acidic sauce that works as a complete meal over orzo or couscous.
+
+---
+
+## Oven Chicken Thigh Recipes (8 Recipes)
+
+**9. Crispy Sheet Pan Chicken Thighs with Potatoes**
+Toss bone-in skin-on thighs with olive oil, garlic powder, smoked paprika, salt, and pepper. Place on a rimmed sheet pan. Surround with halved baby potatoes tossed in the same seasoning. Roast at 425°F for 40 to 45 minutes, moving the potatoes once at 25 minutes. The chicken fat renders and bastes the potatoes as it drips. Crispy skin, tender potatoes, one pan, minimal cleanup.
+
+**10. Sheet Pan Chicken Thighs with Broccoli**
+Season bone-in thighs and roast at 425°F for 25 minutes. Add broccoli florets tossed with olive oil, salt, and pepper to the pan. Continue roasting 15 to 18 minutes more. The broccoli edges char slightly during the last few minutes, which is what you want — charred broccoli is far more flavorful than steamed broccoli. Serve with rice and lemon wedges.
+
+**11. Baked Honey Mustard Chicken Thighs**
+Whisk 2 tablespoons Dijon mustard, 2 tablespoons whole-grain mustard, 2 tablespoons honey, 1 tablespoon olive oil, and 1 teaspoon apple cider vinegar. Coat boneless thighs completely and marinate 15 minutes (or overnight). Bake on a wire rack at 400°F for 25 to 28 minutes. The mustard coating creates a tangy crust. Serve with roasted sweet potatoes or a simple green salad.
+
+**12. Mediterranean Baked Chicken Thighs**
+Arrange bone-in thighs in a baking dish. Surround with cherry tomatoes, sliced bell peppers, sliced red onion, and kalamata olives. Drizzle everything with olive oil and season with dried oregano, garlic powder, salt, and pepper. Roast at 400°F for 45 minutes. The vegetables release their juices and create a brothy sauce at the bottom of the dish. Serve with crusty bread to soak it up.
+
+**13. BBQ Baked Chicken Thighs**
+Season bone-in thighs with salt, pepper, garlic powder, and smoked paprika. Bake uncovered at 400°F for 30 minutes. Brush generously with your favorite barbecue sauce. Return to the oven for 12 to 15 minutes more until the sauce caramelizes and the skin is sticky. The initial unsauced bake renders the fat and crisps the skin — the sauce goes on late so it does not burn.
+
+**14. Italian Herb Baked Chicken Thighs**
+Mix olive oil, dried basil, dried oregano, garlic powder, onion powder, red pepper flakes, salt, and pepper. Rub all over bone-in thighs. Add 1 cup marinara sauce to a baking dish. Nestle the thighs skin-side up in the sauce. Bake at 400°F for 45 minutes until the skin is browned and the sauce is bubbling. The sauce becomes a natural side dish — serve over pasta with Parmesan.
+
+**15. Teriyaki Baked Chicken Thighs**
+Make teriyaki sauce: 1/4 cup soy sauce, 2 tablespoons mirin, 1 tablespoon sugar, 1 teaspoon sesame oil, 2 minced garlic cloves, 1 teaspoon grated ginger. Simmer 3 minutes. Marinate boneless thighs in half the sauce for 30 minutes. Bake at 400°F for 22 to 25 minutes, brushing with remaining sauce at 15 minutes. Finish under the broiler 2 minutes for caramelization. Serve over steamed rice with sesame seeds and sliced scallions.
+
+**16. Chicken Thigh Casserole with Rice**
+Spread 1.5 cups uncooked long-grain rice in a 9x13 baking dish. Pour 3 cups chicken broth over the rice. Place seasoned bone-in thighs on top, skin-side up. Scatter diced onion, sliced mushrooms, and minced garlic around the thighs. Cover tightly with foil and bake at 375°F for 55 minutes. Remove foil and bake 15 more minutes to crisp the skin. The rice absorbs all the chicken juices and broth, cooking in the fat that drips from the thighs. Every grain is flavored.
+
+---
+
+## Slow Cooker Chicken Thigh Recipes (6 Recipes)
+
+**17. Slow Cooker Garlic Chicken Thighs**
+Place bone-in thighs in the slow cooker. Combine 6 minced garlic cloves, 1/2 cup chicken broth, 2 tablespoons soy sauce, 1 tablespoon olive oil, and 1 teaspoon dried thyme. Pour over the chicken. Cook on LOW for 6 to 7 hours or HIGH for 3 to 4 hours. The meat will be fall-off-the-bone tender. If you want browned skin, transfer to a broiler-safe pan and broil 5 minutes. Shred the meat and stir it into the cooking liquid for serving over rice.
+
+**18. Slow Cooker Salsa Chicken**
+Place boneless thighs in the slow cooker. Cover completely with 2 cups salsa — store-bought is fine. Add 1 packet taco seasoning and 1/2 cup chicken broth. Cook on LOW for 6 to 8 hours. Shred with two forks directly in the slow cooker. The meat absorbs all the salsa flavor and produces its own sauce. Use for tacos, burrito bowls, quesadillas, nachos, or baked potatoes. One slow cooker session produces 4 to 5 meals.
+
+**19. Slow Cooker Chicken Thighs with Vegetables**
+Layer diced potatoes, carrots, and celery in the bottom of the slow cooker. Place seasoned bone-in thighs on top. Mix 1 cup chicken broth, 1 packet dry onion soup mix, 1 tablespoon Worcestershire sauce. Pour over everything. Cook on LOW for 7 to 8 hours. The vegetables cook in the chicken drippings and become deeply flavored. No browning step required — this is truly put-it-in-and-walk-away cooking.
+
+**20. Slow Cooker Buffalo Chicken Thighs**
+Place boneless thighs in the slow cooker. Pour over 1/2 cup buffalo sauce, 2 tablespoons butter (cut into pieces), and 1/4 cup chicken broth. Cook on LOW for 5 to 6 hours. Shred and stir into the buffalo sauce. Use for sandwiches, wraps, pizza, or stuffed baked potatoes. Serve with blue cheese or ranch dressing. If the sauce is too thin after cooking, simmer the cooking liquid in a saucepan for 5 minutes to concentrate it.
+
+**21. Slow Cooker Chicken Thigh Soup**
+Add boneless thighs, 4 cups chicken broth, diced carrots, celery, onion, garlic, dried thyme, salt, and pepper to the slow cooker. Cook on LOW for 7 hours. Remove thighs and shred. Add 1 cup egg noodles or rice to the slow cooker, replace the shredded chicken, and cook on HIGH for 20 minutes until pasta is tender. Finish with fresh parsley. The thighs produce a richer broth than breasts, making this a deeply satisfying soup with minimal active time.
+
+**22. Slow Cooker Honey Garlic Chicken Thighs**
+Whisk 1/3 cup honey, 3 tablespoons soy sauce, 4 minced garlic cloves, 1 tablespoon ketchup, and 1/2 teaspoon red pepper flakes. Place boneless thighs in the slow cooker and pour sauce over them. Cook on LOW for 5 to 6 hours. Remove thighs. Whisk 2 tablespoons cornstarch with 2 tablespoons cold water and stir into the cooking liquid. Cook on HIGH for 15 minutes until the sauce thickens to a glaze. Pour over the thighs and serve over rice with broccoli.
+
+---
+
+## Instant Pot Chicken Thigh Recipes (4 Recipes)
+
+**23. Instant Pot Chicken Thighs (Basic)**
+Add 1 cup chicken broth to the Instant Pot. Place a trivet inside. Place bone-in or boneless thighs on the trivet. Seal the lid and set to Manual/Pressure Cook on HIGH: 10 minutes for boneless, 15 minutes for bone-in. Natural release 5 minutes, then quick release. Internal temperature should be 165°F or above. Use for meal prep — pressure cooking produces uniformly juicy thighs every time. Shred, slice, or serve whole.
+
+**24. Instant Pot Honey Garlic Chicken Thighs**
+Use the Sauté function to brown boneless thighs in oil, 3 minutes per side. Remove. Deglaze with 1/4 cup chicken broth. Add thighs back. Combine 3 tablespoons honey, 2 tablespoons soy sauce, 3 minced garlic cloves, and pour over the chicken. Seal and pressure cook on HIGH for 8 minutes. Quick release. Remove thighs. Sauté the sauce until thickened, 3 to 5 minutes. Return thighs and coat in sauce. Serve over rice.
+
+**25. Instant Pot Chicken Thigh and Rice**
+Sauté diced onion and garlic in the Instant Pot. Add 1.5 cups long-grain white rice and stir 1 minute. Add 2 cups chicken broth and 1/2 teaspoon salt. Place seasoned boneless thighs directly on top of the rice. Seal and pressure cook on HIGH for 10 minutes. Natural release 10 minutes, then quick release. The rice cooks in the chicken drippings, producing a one-pot meal. Fluff the rice and shred or slice the chicken.
+
+**26. Instant Pot Chicken Tikka Masala**
+Sauté diced onion until golden. Add garlic, ginger, and 2 tablespoons tikka masala spice paste. Cook 1 minute. Add boneless thighs cut into chunks, 1 cup crushed tomatoes, and 1/2 cup chicken broth. Seal and pressure cook on HIGH for 8 minutes. Quick release. Stir in 1/2 cup heavy cream or coconut milk. Simmer on Sauté until sauce thickens, 5 minutes. Serve over basmati rice with naan. Instant Pot tikka masala is ready in under 30 minutes with restaurant-level depth.
+
+---
+
+## Air Fryer Chicken Thigh Recipes (6 Recipes)
+
+**27. Air Fryer Crispy Chicken Thighs (Basic)**
+Pat bone-in skin-on thighs completely dry. Rub with olive oil, garlic powder, onion powder, smoked paprika, salt, and pepper. Preheat air fryer to 400°F. Place thighs skin-side down in the basket, not touching. Air fry 12 minutes. Flip skin-side up. Air fry 12 to 14 more minutes until the skin is deeply golden and crispy and the internal temperature reaches 175°F. The air fryer produces the crispiest skin of any method — even better than the oven — because it strips moisture from the skin surface.
+
+**28. Air Fryer Boneless Chicken Thighs**
+Pat boneless skinless thighs dry. Season with salt, pepper, garlic powder, and Italian seasoning. Air fry at 380°F for 10 minutes. Flip. Air fry 8 to 10 more minutes until cooked through. Slice against the grain. Boneless thighs cook in 18 to 20 minutes total — faster than the oven and with a better crust. Use for salads, grain bowls, wraps, or any recipe that calls for cooked chicken.
+
+**29. Air Fryer Honey Mustard Chicken Thighs**
+Coat boneless thighs in a mixture of 2 tablespoons Dijon mustard, 1 tablespoon honey, 1 tablespoon olive oil, garlic powder, salt, and pepper. Air fry at 380°F for 10 minutes, flip, and cook 8 to 10 more minutes. The mustard coating caramelizes beautifully in the air fryer. Serve with roasted vegetables or a simple salad.
+
+**30. Air Fryer Buffalo Chicken Thighs**
+Coat boneless thighs lightly in oil and season with garlic powder, salt, and pepper. Air fry at 380°F for 18 to 20 minutes total, flipping halfway. Toss immediately in buffalo sauce. The air fryer produces a firm exterior that holds the buffalo sauce without becoming soggy — better than baking for sauce adhesion. Serve as is or shred for sandwiches.
+
+**31. Air Fryer Teriyaki Chicken Thighs**
+Marinate boneless thighs in teriyaki sauce for at least 30 minutes. Pat off excess before air frying to prevent smoking. Air fry at 380°F for 18 minutes, flipping at 10 minutes and brushing with fresh teriyaki sauce. The sugars caramelize into a sticky glaze without burning the way they might in an oven. Serve over rice with sesame seeds.
+
+**32. Air Fryer Lemon Pepper Chicken Thighs**
+Coat boneless thighs with olive oil, lemon pepper seasoning, garlic powder, and salt. Air fry at 380°F for 18 to 20 minutes, flipping at 10 minutes. Squeeze fresh lemon over the finished thighs. Lemon pepper and chicken thighs are a natural pairing — the bright acid cuts the fat. Serve alongside roasted potatoes or a Caesar salad.
+
+---
+
+## Grilled Chicken Thigh Recipes (8 Recipes)
+
+**33. Basic Grilled Chicken Thighs**
+Pound boneless thighs to even thickness (about 3/4 inch) for even cooking. Brush with olive oil and season with salt, pepper, garlic powder, and smoked paprika. Grill over medium-high heat, 5 to 6 minutes per side. The even thickness is the key — thin spots overcook while thick spots finish, so pounding makes the whole thigh ready at the same time. Thighs tolerate the higher heat of grilling better than breasts.
+
+**34. Grilled Chicken Thigh Marinade (All-Purpose)**
+Combine 3 tablespoons olive oil, 2 tablespoons lemon juice, 3 minced garlic cloves, 1 tablespoon soy sauce, 1 teaspoon dried oregano, 1 teaspoon smoked paprika, salt, and pepper. Marinate boneless thighs for at least 1 hour (overnight is better). Grill over medium-high heat, 5 to 6 minutes per side. This marinade works on bone-in thighs as well — add 5 to 8 minutes of covered indirect heat to finish cooking.
+
+**35. Grilled BBQ Chicken Thighs**
+Season bone-in thighs with a dry rub: brown sugar, smoked paprika, garlic powder, onion powder, chili powder, salt, and pepper. Grill over medium heat — lower than steakhouse temperature — to allow the fat to render without flaring. Grill covered, 8 minutes per side. Move to indirect heat. Brush generously with barbecue sauce. Close the lid and cook 10 more minutes until the sauce sets and the internal temperature reaches 175°F.
+
+**36. Grilled Chicken Souvlaki Thighs**
+Cut boneless thighs into large cubes. Marinate in olive oil, lemon juice, garlic, dried oregano, salt, and pepper for 2 hours. Thread on skewers. Grill over medium-high heat, turning every 3 to 4 minutes, for 12 to 15 minutes total. Serve in pita bread with tzatziki, sliced tomatoes, and red onion. Thigh meat stays juicy on skewers because it does not dry out the way breast cubes do.
+
+**37. Grilled Thai Chicken Thighs**
+Marinate boneless thighs in a mixture of fish sauce, soy sauce, lime juice, brown sugar, minced garlic, minced ginger, and chili paste for 1 hour. Grill 5 to 6 minutes per side over medium-high heat. Serve with peanut dipping sauce, sliced cucumber, and fresh herbs. The fish sauce gives a savory depth that is hard to achieve with any other ingredient.
+
+**38. Grilled Chicken Thigh Tacos**
+Marinate boneless thighs in a mixture of lime juice, cumin, chili powder, garlic powder, onion powder, salt, and a small amount of oil. Grill 5 to 6 minutes per side. Slice thin against the grain. Serve in warmed corn tortillas with sliced cabbage, pico de gallo, crema, cotija cheese, and lime wedges. Grilled chicken thighs slice more neatly than grilled breasts and hold together better in a taco.
+
+**39. Grilled Jerk Chicken Thighs**
+Blend 2 scotch bonnet peppers (or habaneros), 4 green onions, 3 garlic cloves, 1 tablespoon fresh thyme, 1 teaspoon allspice, 1/2 teaspoon cinnamon, 1/4 teaspoon nutmeg, 2 tablespoons soy sauce, 2 tablespoons brown sugar, 2 tablespoons vegetable oil, juice of 1 lime. Marinate bone-in thighs overnight. Grill over medium heat, covered, 8 to 10 minutes per side. The jerk marinade is high in sugar and will char quickly — medium heat and a covered grill prevent burning before the inside is cooked through.
+
+**40. Grilled Chicken Thighs with Chimichurri**
+Grill boneless thighs simply — olive oil, salt, pepper. No marinade needed. While the chicken rests, make chimichurri: fresh parsley, garlic, red wine vinegar, olive oil, red pepper flakes, salt. Blend or chop finely. Spoon generously over the chicken. The fresh herb sauce is the star — the plain grilled thigh is just the canvas. This approach works because thighs have enough intrinsic flavor to carry the dish without marinating.
+
+---
+
+## Chicken Thigh Meal Prep Guide
+
+Bone-in thighs keep in the refrigerator for 4 days after cooking. Boneless thighs reheat better than breasts — the fat content keeps them moist even after microwaving. For weekly meal prep, cook 8 to 10 boneless thighs using the oven (batch cook at 400°F for 25 minutes) and portion into containers with grains and roasted vegetables.
+
+One pound of boneless chicken thighs costs $1.99 to $3.99 depending on the store and serves a family of four as part of a complete meal. Buying the family pack and cooking all of it at once reduces both cost and active cooking time during the week.
+
+---
+
+## Chicken Thigh Cooking Times by Method
+
+| Method | Cut | Time | Temperature |
+|--------|-----|------|-------------|
+| Stovetop | Boneless | 6 min/side | Medium-high heat |
+| Oven | Bone-in | 38–42 min | 425°F |
+| Oven | Boneless | 22–25 min | 400°F |
+| Slow cooker | Any | 6–8 hrs LOW | — |
+| Instant Pot | Boneless | 8–10 min | HIGH pressure |
+| Instant Pot | Bone-in | 12–15 min | HIGH pressure |
+| Air fryer | Bone-in | 24–26 min | 400°F |
+| Air fryer | Boneless | 18–20 min | 380°F |
+| Grill | Boneless | 10–12 min | Medium-high |
+| Grill | Bone-in | 25–30 min | Medium |
+
+Target internal temperature: 165°F minimum, 175°F for best texture.
+
+---
+
+## FAQ
+
+**What is the best way to cook chicken thighs?**
+The best method depends on your goal. For the crispiest skin: air fryer or high-heat oven. For weeknight speed: stovetop in a cast-iron skillet, 6 minutes per side. For minimal effort: slow cooker on LOW for 6 to 8 hours. For perfectly even results every time: Instant Pot pressure cooker. All four methods produce juicy meat — the differences are in crust, texture, and active time required.
+
+**How do you keep chicken thighs from drying out?**
+Chicken thighs are the hardest cut to dry out. Their fat content means they stay moist even when cooked past 165°F. The most common mistake is cooking them at too low a temperature for too long in the oven — low heat produces flabby skin and steamed rather than roasted meat. Use high heat (400°F to 425°F in the oven), and cook to 175°F for the best texture rather than pulling at 165°F.
+
+**Can you cook chicken thighs from frozen?**
+Yes in an Instant Pot — pressure cook frozen boneless thighs for 15 to 18 minutes on HIGH. In the oven or stovetop, thaw first for even cooking. Cooking from frozen in the oven adds 50% to the cooking time and produces uneven results because the exterior overcooks before the center reaches temperature.
+
+**What goes well with chicken thighs?**
+Chicken thighs pair with almost anything: white rice, brown rice, egg noodles, mashed potatoes, roasted vegetables, salads, or bread. The fat in the meat creates pan sauces naturally — deglaze the pan with broth or wine for an instant sauce. Bold flavors like garlic, lemon, soy sauce, and chili work better with thighs than breasts because the meat can hold its own against strong seasonings.
+
+**How long does cooked chicken thigh last in the refrigerator?**
+3 to 4 days in a sealed container. Reheat gently in a microwave covered with a damp paper towel to retain moisture, or slice cold and use in salads and sandwiches without reheating.
+
+---
+
+Forty chicken thigh recipes — 8 per cooking method — gives you the flexibility to match the technique to the time you have. A weeknight with 15 minutes available is a stovetop or air fryer situation. A Sunday when you want dinner ready with no effort is a slow cooker day. All 40 recipes produce dinner your family will eat without complaints, which is the actual goal.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your weekly chicken thigh dinner plan automatically — five meals, complete grocery list, 30 seconds. The beta is open now and free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
