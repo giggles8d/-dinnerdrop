@@ -6225,6 +6225,166 @@ The 30 casseroles above cover every scenario: quick weeknight assembly, make-ahe
 **[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
   },
 
+  {
+    slug: 'soup-recipes',
+    title: '30 Easy Soup Recipes the Whole Family Will Actually Eat',
+    description:
+      '30 easy soup recipes for busy families — quick weeknight soups, classic chicken soups, ' +
+      'creamy blends, hearty bean and lentil options, and slow cooker favorites.',
+    publishDate: '2026-12-29',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'soup recipes',
+    content: `Soup is the most forgiving category of weeknight cooking. You can adapt a soup based on what is in the refrigerator, stretch it to feed six when you expected four, and most soups improve overnight after the flavors have had time to develop. Unlike braised dishes or casseroles, most soups can be made in under 30 minutes — and the ones that take longer are almost entirely hands-off.
+
+The 30 soup recipes below cover every scenario: quick weeknight meals, classic chicken soups, creamy blended options, protein-rich bean and lentil soups, and slow cooker versions that cook all day. None of them require special equipment or hard-to-find ingredients.
+
+---
+
+## Quick Weeknight Soups
+
+**1. 15-Minute Tomato Basil Soup**
+Heat olive oil in a large pot over medium heat. Add minced garlic and cook 1 minute. Add one 28-ounce can of crushed tomatoes, one 14-ounce can of diced tomatoes, chicken broth, dried oregano, salt, and pepper. Simmer 10 minutes. Use an immersion blender to blend until smooth. Stir in heavy cream or half-and-half and a handful of fresh basil leaves torn by hand. Serve with grilled cheese for a complete meal.
+
+**2. Egg Drop Soup**
+Bring chicken broth to a simmer with soy sauce, sesame oil, a pinch of white pepper, and grated fresh ginger. Mix 1 teaspoon cornstarch with 1 tablespoon cold water to make a slurry; stir into the broth until slightly thickened. Beat 2 eggs with a fork. While stirring the broth slowly in one direction, drizzle the eggs in a thin stream to form ribbons. Top with sliced green onions. Ready in 15 minutes.
+
+**3. Broccoli Cheddar Soup**
+Saute diced onion and garlic in butter until softened. Add chicken broth and broccoli florets. Simmer until broccoli is very tender, about 12 minutes. Roughly blend but leave some texture. Return to heat. Stir in sharp cheddar cheese, a splash of heavy cream, and a pinch of nutmeg. Season with salt, pepper, and a dash of hot sauce. Keep the heat below a boil after adding cheese to prevent breaking.
+
+**4. Pasta e Fagioli**
+Brown Italian sausage (casings removed) in a large pot. Add diced onion, carrot, and celery; cook until softened. Add minced garlic, diced tomatoes, cannellini beans, chicken broth, Italian seasoning, and a parmesan rind if you have one. Bring to a boil and add small pasta such as ditalini or elbow. Cook until pasta is al dente. Remove parmesan rind, stir in a handful of spinach, and serve with grated parmesan.
+
+**5. Sausage and Vegetable Soup**
+Slice smoked sausage into rounds and brown in a large pot. Add diced onion, carrot, celery, and garlic. Cook until softened. Add chicken broth, diced tomatoes, and diced potato. Simmer 15 minutes until potato is tender. Add a can of drained kidney beans and a handful of chopped kale. Cook 5 more minutes until kale wilts. Season with salt, pepper, smoked paprika, and a dash of hot sauce.
+
+**6. Tomato Tortellini Soup**
+Brown Italian sausage in a pot and drain fat. Add garlic and cook 1 minute. Add crushed tomatoes, chicken broth, Italian seasoning, and red pepper flakes. Bring to a boil. Add refrigerated cheese tortellini and cook per package directions. Stir in fresh spinach until wilted. Finish with a swirl of heavy cream and fresh basil. Comes together in 25 minutes using purchased tortellini.
+
+**7. Taco Soup**
+Brown ground beef with diced onion and garlic. Drain fat. Add taco seasoning, a can of diced tomatoes with green chiles, black beans, corn, chicken broth, and tomato sauce. Stir everything together and simmer 15 minutes. Serve with shredded cheddar, sour cream, sliced avocado, and crushed tortilla chips. Stores well for 4 days in the refrigerator.
+
+**8. Chicken Tortilla Soup**
+Saute diced onion, garlic, and jalapeno in oil. Add chili powder, cumin, smoked paprika, and oregano; toast 1 minute. Add chicken broth, diced tomatoes, black beans, corn, and shredded rotisserie chicken. Simmer 15 minutes. Finish with a squeeze of lime juice. Serve topped with crispy tortilla strips, shredded pepper jack, avocado, cilantro, and sour cream.
+
+---
+
+## Chicken Soups
+
+**9. Classic Chicken Noodle Soup**
+Saute diced onion, carrot, and celery in butter until softened. Add minced garlic and cook 1 minute. Add chicken broth and bring to a boil. Add boneless chicken thighs whole and poach 15 minutes until cooked through. Remove and shred. Return chicken to pot with egg noodles and cook until tender. Season generously with salt, pepper, dried thyme, and dried parsley. Salt in stages: broth first, then vegetables, then a final adjustment at the end.
+
+**10. Chicken and Rice Soup**
+Use the same base as chicken noodle: saute aromatics, add broth and chicken thighs, poach and shred. Return chicken to pot. Add long-grain white rice and simmer until cooked through, about 18 minutes. Add a squeeze of lemon juice at the end. Cook rice separately if storing for the week — rice left in broth overnight becomes mushy. Add per bowl when reheating.
+
+**11. Lemon Chicken Orzo Soup**
+Cook diced onion, carrot, and celery in olive oil. Add garlic, dried thyme, and dried dill. Pour in chicken broth and bring to a boil. Add chicken breasts whole and cook 12 to 15 minutes until done. Remove and shred. Add orzo and cook 8 minutes. Return chicken to pot. Whisk together 2 eggs and the juice of 1 lemon; slowly ladle hot broth into the egg mixture to temper it, then stir back into the pot. Do not boil after adding the egg-lemon mixture or it will curdle. Bright and creamy without any cream.
+
+**12. Chicken Pot Pie Soup**
+Melt butter in a large pot. Whisk in flour and cook 2 minutes to form a roux. Slowly add chicken broth and whole milk, whisking until smooth. Add diced potato, carrot, and frozen peas. Simmer until potatoes are tender. Add shredded rotisserie chicken. Season with thyme, onion powder, salt, and pepper. Serve with oyster crackers or crusty bread. All the flavors of pot pie in under 30 minutes.
+
+**13. White Chicken Chili**
+Saute diced onion and garlic in olive oil. Add ground cumin, chili powder, oregano, and a can of diced green chiles; cook 2 minutes. Add white beans, chicken broth, and shredded rotisserie chicken. Simmer 15 minutes. For creamier texture: remove one cup of beans, mash them, and stir back in. Finish with cream cheese stirred until melted, or a dollop of sour cream. Serve with lime, avocado, cilantro, and shredded Monterey Jack.
+
+**14. Chicken and Gnocchi Soup**
+Saute diced onion, celery, and garlic in olive oil. Add chicken broth and bring to a boil. Add store-bought potato gnocchi and cook per package directions. Add shredded rotisserie chicken and baby spinach. Stir in heavy cream and fresh thyme. Simmer 5 minutes. Season with salt, pepper, and a pinch of nutmeg. A weeknight version of the Olive Garden classic, ready in 20 minutes.
+
+**15. Chicken Enchilada Soup**
+Brown diced chicken breast in oil with chili powder and cumin. Add diced onion and garlic; cook until softened. Add chicken broth, canned enchilada sauce, black beans, and corn. Simmer 15 minutes. Stir in cream cheese until melted and smooth. Serve with shredded cheddar, sour cream, sliced jalapeno, and tortilla chips. Thick and rich, closer to a stew than a broth-based soup.
+
+---
+
+## Creamy Soups
+
+**16. Loaded Baked Potato Soup**
+Cook diced bacon in a large pot. Remove bacon and reserve the fat. Saute diced onion in the fat until soft. Whisk in flour and cook 2 minutes. Add chicken broth slowly, whisking. Add diced potatoes and cook until very tender, about 20 minutes. Mash some potatoes against the pot wall to thicken. Stir in sour cream, shredded cheddar, and whole milk. Season generously. Serve topped with bacon, extra cheddar, sour cream, and sliced green onions.
+
+**17. Cream of Mushroom Soup**
+Saute diced onion and garlic in butter. Add sliced cremini mushrooms and cook until liquid releases and evaporates, about 10 minutes. Sprinkle with flour and cook 2 minutes. Add chicken broth and thyme; simmer 10 minutes. Blend half the soup and return to pot for a thick-but-textured consistency. Stir in heavy cream. Season with salt, pepper, and a splash of dry sherry if you have it. Homemade cream of mushroom soup is dramatically better than canned.
+
+**18. Butternut Squash Soup**
+Roast halved butternut squash face-down at 400 degrees F for 45 minutes until very tender. Scoop flesh into a blender with sauteed onion and garlic, chicken or vegetable broth, and a pinch each of nutmeg, cinnamon, and cayenne. Blend until completely smooth. Return to pot, stir in heavy cream, and adjust seasoning. Serve with a swirl of cream and toasted pepitas. Naturally sweet, silky, and freezes perfectly.
+
+**19. Corn Chowder**
+Cook diced bacon until crispy and remove. In the bacon fat, saute diced onion and garlic. Add diced potato, corn (frozen or cut fresh from the cob), chicken broth, smoked paprika, and dried thyme. Simmer until potatoes are tender. Blend about half the soup with an immersion blender. Stir in heavy cream. Season with salt and pepper. Serve topped with reserved bacon, sliced green onions, and a dash of hot sauce.
+
+**20. New England Clam Chowder**
+Cook diced bacon until crispy. Saute onion and celery in the fat. Add flour and cook 2 minutes. Add clam juice (from canned clams), chicken broth, and diced potatoes. Simmer until potatoes are tender. Add canned chopped clams and heavy cream. Heat through without boiling. Season with white pepper, thyme, and a pinch of celery salt. Serve with oyster crackers. Never add tomatoes to New England chowder.
+
+**21. Cream of Broccoli Soup**
+Saute diced onion and garlic in butter until soft. Add chicken broth and broccoli florets. Simmer until very tender. Blend completely smooth. Return to pot and stir in heavy cream, sharp cheddar, and a pinch of nutmeg. Season with salt and pepper. Substitute milk for heavy cream for a lighter version. Serve with croutons or crusty bread. Better than canned at a fraction of the cost.
+
+---
+
+## Bean and Lentil Soups
+
+**22. Classic Lentil Soup**
+Saute diced onion, carrot, and celery in olive oil until soft. Add garlic, cumin, coriander, and smoked paprika; cook 1 minute. Add green or brown lentils (no soaking needed), diced tomatoes, chicken or vegetable broth, and bay leaves. Simmer 25 to 30 minutes until lentils are completely tender. Finish with lemon juice and fresh parsley. One of the most nutritious and budget-friendly soups on this list.
+
+**23. Red Lentil Soup**
+Saute onion and garlic in olive oil. Add ground cumin, coriander, turmeric, smoked paprika, and cayenne; toast 1 minute. Add red lentils and chicken or vegetable broth. Simmer 20 minutes — red lentils break down completely on their own without any blending. Finish with a squeeze of lemon and a drizzle of olive oil swirled with smoked paprika. Serve with warm pita or flatbread. Smooth, bright, and protein-dense.
+
+**24. Split Pea Soup**
+Combine split peas, diced ham (or a ham hock), chicken broth, diced carrot, celery and onion, garlic, dried thyme, and bay leaves in a large pot. Bring to a boil, then reduce heat and simmer 45 to 60 minutes until peas dissolve and soup is thick and smooth. Remove ham hock, shred meat, and return to pot. Season with salt and pepper. Split peas thicken significantly as the soup cools — reheat with added broth.
+
+**25. Ham and White Bean Soup**
+Saute onion, carrot, and celery in olive oil until soft. Add garlic, rosemary, and thyme. Add two cans of cannellini beans, chicken broth, and diced leftover ham. Simmer 20 minutes. Mash some beans against the pot wall for a thicker, creamier consistency. Add baby spinach and stir until wilted. Season with salt and pepper. An excellent use for Easter or Christmas ham leftovers.
+
+---
+
+## Slow Cooker Soups
+
+**26. Slow Cooker Beef and Vegetable Soup**
+Combine beef stew meat, diced onion, carrot, celery, garlic, diced tomatoes, beef broth, Worcestershire sauce, dried thyme, and bay leaves in the slow cooker. Add diced potatoes in the last 2 hours to prevent mushiness. Cook on low 8 hours or high 4 to 5 hours. Stir in frozen peas in the final 15 minutes. Season with salt and pepper. Long, low-heat cooking makes even cheap stew beef very tender.
+
+**27. Slow Cooker Tuscan White Bean Soup**
+Add cannellini beans (rinsed), diced tomatoes, chicken broth, diced onion, garlic, rosemary, thyme, and red pepper flakes to the slow cooker. Cook on low 6 to 8 hours or high 3 to 4 hours. In the last 30 minutes, add browned sliced Italian sausage, chopped kale, and a parmesan rind. Remove rind before serving. Season with salt and black pepper. Serve with crusty bread for dipping.
+
+**28. Slow Cooker Chicken Noodle Soup**
+Place chicken thighs in the slow cooker with diced onion, carrot, celery, garlic, chicken broth, dried thyme, and parsley. Cook on low 6 to 8 hours or high 3 to 4 hours. Remove chicken, shred, and return to pot. Add egg noodles and cook on high 15 to 20 minutes until tender. Season generously with salt and pepper. Always add noodles at the end to prevent them from turning mushy during the long cook.
+
+**29. Slow Cooker Potato Soup**
+Combine diced potatoes, diced onion, garlic, chicken broth, salt, pepper, and dried thyme in the slow cooker. Cook on low 7 to 8 hours or high 3 to 4 hours until potatoes are completely soft. Mash partially in the pot. Stir in sour cream, shredded cheddar, and cream cheese until smooth. Cook 30 more minutes on high. Serve topped with cooked bacon, more cheddar, and green onions. Thick, rich, and completely hands-off.
+
+**30. Slow Cooker Minestrone**
+Combine diced onion, carrot, celery, zucchini, garlic, diced tomatoes, cannellini beans, chicken broth, Italian seasoning, and tomato paste in the slow cooker. Cook on low 6 to 8 hours. In the last 30 minutes, add small pasta (elbow or ditalini) and frozen green beans. Cook until pasta is just tender. Stir in fresh spinach and a parmesan rind (remove before serving). Season with salt and finish with a drizzle of olive oil and grated parmesan.
+
+---
+
+## Make-Ahead and Freezer Notes
+
+Most soups freeze well with one exception: soups made with potatoes or pasta. Potato texture becomes gritty and pasta turns mushy after freezing. If freezing a potato or pasta soup, freeze the base without those ingredients and add them fresh when reheating.
+
+For soups that freeze well, cool completely before transferring to freezer bags or containers. Lay bags flat to freeze, then stand them upright to save space. Most soups last 3 months frozen and 4 to 5 days refrigerated.
+
+Cream-based soups can separate when frozen. To restore: thaw overnight in the refrigerator, then reheat slowly over low heat, stirring until smooth. A splash of fresh cream added when reheating helps restore the texture.
+
+---
+
+## Frequently Asked Questions
+
+**What is the difference between a soup and a stew?**
+Soup has more liquid relative to the solid ingredients. Stews are thicker, with less broth and larger pieces of protein and vegetables. The distinction is practical: soups reheat more easily and serve more people, while stews are heartier and more filling per bowl.
+
+**How do you thicken soup without cream?**
+Four techniques: (1) Blend some of the soup — removing 1 to 2 cups, blending until smooth, and stirring back in thickens without adding fat. (2) Add a cornstarch slurry of 1 tablespoon cornstarch and 1 tablespoon cold water per cup of liquid. (3) Stir in mashed potatoes or a cooked mashed starchy vegetable. (4) Simmer uncovered to reduce and concentrate.
+
+**Why does homemade soup taste better the next day?**
+Flavors continue to develop as the soup sits. Aromatics like garlic, onion, and herbs release more flavor into the broth over time. Proteins contribute gelatin. Starches absorb some liquid and thicken the texture slightly. Make soup at least a few hours before serving when you can.
+
+**How do you keep pasta from getting mushy in soup?**
+Cook pasta separately and add it per bowl rather than in the pot. If storing soup for the week, keep the pasta on the side. When reheating a full batch, add dry pasta to the simmering broth and cook to al dente — do not use pre-cooked pasta that has been sitting in broth overnight.
+
+**Can you make any of these soups vegetarian?**
+Yes. Substitute vegetable broth for chicken or beef broth in any recipe. Omit bacon or sausage, or replace with smoked paprika and a teaspoon of liquid smoke to preserve savory depth. Bean and lentil soups are naturally vegetarian and need no substitutions.
+
+---
+
+The 30 soups above cover every season and scenario: quick weeknight solutions, classic comfort food, lighter blended options, protein-dense bean soups, and hands-off slow cooker versions. Most improve overnight, freeze well, and stretch easily for larger families.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your full week of dinners based on your family size, budget, and preferences — including soup-heavy weeks for fall and winter — and generates the grocery list automatically. The beta is free for 6 months.
+
+**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
