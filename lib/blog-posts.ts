@@ -8150,6 +8150,172 @@ Thirty-five dinner ideas for tonight cover every situation — the nights you ha
 **[Get your personalized dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+
+
+  {
+    slug: "30-minute-meals",
+    title: "30 Minute Meals: 30 Fast Dinners the Whole Family Will Actually Eat",
+    publishDate: "2027-03-16",
+    readingTimeMinutes: 10,
+    primaryKeyword: "30 minute meals",
+    description: "30 quick dinners ready in 30 minutes or less — pasta, chicken, beef, seafood, and vegetarian meals that are fast, filling, and family-approved.",
+    content: `
+# 30 Minute Meals: 30 Fast Dinners the Whole Family Will Actually Eat
+
+The 30-minute meal is not a compromise. It is a constraint that forces better cooking — fewer steps, cleaner flavors, and nothing that requires babysitting. These 30 dinners are organized by protein so you can find what you need based on what you have. Every recipe runs from fridge to table in 30 minutes or less.
+
+---
+
+## Pasta (6 Recipes)
+
+**1. Creamy Garlic Parmesan Pasta**
+Boil 12 oz spaghetti until al dente, reserve 1 cup pasta water before draining. In the same pot, melt 3 tablespoons butter, add 5 minced garlic cloves, cook 1 minute. Add 1 cup heavy cream, simmer 3 minutes. Add pasta back, toss with 1 cup grated parmesan and pasta water as needed to loosen. Season with salt, black pepper, and fresh parsley. Twenty-five minutes from boiling water to plated dinner.
+
+**2. Sausage and Pepper Pasta**
+Slice 1 lb Italian sausage links and brown in a large skillet with sliced bell peppers and diced onion until cooked through. Add 2 cloves minced garlic, 1 can crushed tomatoes, Italian seasoning, salt, and red pepper flakes. Simmer 10 minutes. Toss with 12 oz cooked penne, top with shaved parmesan. Everything in one pan — the sausage fat seasons the sauce automatically.
+
+**3. Lemon Butter Shrimp Pasta**
+Cook 12 oz linguine. Melt 4 tablespoons butter in a large skillet, add 1 lb peeled shrimp, 4 minced garlic cloves, and red pepper flakes. Cook 2 to 3 minutes per side. Squeeze in the juice of 1 large lemon, add 1/4 cup white wine or pasta water, toss with drained linguine and fresh parsley. Season with salt and plenty of black pepper. A restaurant pasta in under 25 minutes.
+
+**4. Baked Tomato and Feta Pasta**
+Place 2 cups cherry tomatoes and 1 block feta in a baking dish. Drizzle with 1/4 cup olive oil, add 4 garlic cloves, salt, and red pepper flakes. Roast at 400F for 20 minutes until tomatoes burst. Meanwhile cook 12 oz rigatoni. Remove dish from oven, mash feta and tomatoes together into a creamy sauce. Toss with pasta and fresh basil. The oven does everything while the pasta cooks itself.
+
+**5. Tortellini with Brown Butter and Sage**
+Boil 20 oz refrigerated cheese tortellini 5 to 7 minutes until tender. Meanwhile melt 4 tablespoons butter in a skillet over medium-high heat until golden brown and nutty-smelling, about 3 minutes. Add 8 fresh sage leaves and cook 30 seconds until crisp. Toss drained tortellini with brown butter, sage, and 1/2 cup grated parmesan. Season with salt and black pepper. Simple enough to cook tired, impressive enough for guests.
+
+**6. Pasta e Fagioli**
+Brown diced pancetta in a large pot. Add diced onion, carrots, and celery and cook 5 minutes. Add 3 minced garlic cloves and cook 30 seconds, then add 1 can crushed tomatoes, 2 cans cannellini beans, and 4 cups chicken broth. Season with Italian seasoning, rosemary, salt, and pepper. Bring to a simmer, add 1 cup small pasta, cook 10 minutes. Top with parmesan and olive oil. A full Italian dinner from a single pot.
+
+---
+
+## Chicken (6 Recipes)
+
+**7. Honey Garlic Chicken Thighs**
+Season 6 bone-in skin-on chicken thighs with salt and pepper. Sear skin-side down in an oven-safe skillet over medium-high heat for 8 minutes until golden. Flip. Mix 3 tablespoons honey, 3 tablespoons soy sauce, 4 minced garlic cloves, and 1 tablespoon apple cider vinegar. Pour over chicken, transfer skillet to 400F oven for 15 minutes. Baste once during cooking. The sauce caramelizes in the oven and creates its own glaze.
+
+**8. Chicken Stir-Fry with Broccoli**
+Slice 1.5 lbs chicken breast thin. Toss with cornstarch, salt, and pepper. Stir-fry in batches in very hot oil, 2 minutes per batch. Set aside. Stir-fry 3 cups broccoli florets and sliced bell peppers 3 minutes. Add sauce: 3 tablespoons soy sauce, 2 tablespoons oyster sauce, 1 tablespoon sesame oil, 1 teaspoon sugar, 2 minced garlic cloves, 1 teaspoon cornstarch. Toss chicken back in, coat everything. Serve over rice.
+
+**9. One-Pan Lemon Herb Chicken and Potatoes**
+Halve baby potatoes and toss with olive oil, garlic powder, rosemary, salt, and pepper on a sheet pan. Roast at 425F for 10 minutes. Season 4 chicken breasts and push potatoes to the edges, add chicken to center. Squeeze 1 lemon over everything, add fresh thyme. Roast another 18 to 20 minutes until chicken reads 165F. One pan, one clean-up.
+
+**10. Tuscan White Bean Chicken**
+Brown 4 seasoned chicken breasts in olive oil, 4 to 5 minutes per side. Set aside. In the same pan add minced garlic, 1 can white beans drained, 1 cup chicken broth, 1 cup baby spinach, and 1/4 cup sun-dried tomatoes. Simmer 5 minutes, return chicken, spoon sauce over top. Finish with a squeeze of lemon. Looks like a restaurant special, takes 25 minutes.
+
+**11. Buffalo Chicken Wraps**
+Cook 1.5 lbs chicken breast in a skillet with a splash of oil, salt, and garlic powder, 5 to 6 minutes per side. Shred with two forks. Toss chicken in 1/3 cup buffalo sauce and 2 tablespoons melted butter. Warm large flour tortillas. Fill each with buffalo chicken, shredded romaine, diced celery, and blue cheese or ranch. Wrap tightly. No one complains about dinner when buffalo chicken is involved.
+
+**12. Chicken and Vegetable Fried Rice**
+Use day-old cold rice for best texture. Scramble 3 eggs in hot oil in a wok, push to side. Add diced onion, frozen peas and carrots, and 2 minced garlic cloves and stir-fry 3 minutes. Add diced cooked chicken. Add rice and break up clumps. Season with 3 tablespoons soy sauce, 1 tablespoon oyster sauce, and sesame oil. Toss over high heat 3 minutes until everything is coated and slightly charred.
+
+---
+
+## Ground Beef (6 Recipes)
+
+**13. Classic Beef Tacos**
+Brown 1 lb ground beef in a skillet, drain fat. Add 2 tablespoons taco seasoning and 1/3 cup water. Simmer 5 minutes. Warm tortillas. Set up a build-your-own station: shredded cheese, salsa, sour cream, lettuce, diced tomato, lime wedges. Everyone builds their own — picky eaters win, adventurous eaters win, cook wins.
+
+**14. Beef and Broccoli**
+Slice 1 lb sirloin steak thin, toss with cornstarch and soy sauce. Stir-fry in batches in very hot oil, 2 minutes per batch. Set aside. Stir-fry 3 cups broccoli florets with minced garlic. Add sauce: 3 tablespoons oyster sauce, 2 tablespoons soy sauce, 1 tablespoon sesame oil, 1 tablespoon brown sugar, 1/2 cup beef broth, 1 teaspoon cornstarch. Return beef, toss to coat. Serve over rice. Cheaper than takeout, faster than delivery.
+
+**15. Smash Burgers**
+Divide 1 lb ground beef into 4 balls. Heat a cast-iron skillet over high heat until smoking. Place a ball on the surface, immediately smash flat with a spatula — thin and lacy edges are the goal. Season with salt and pepper. Cook 2 minutes undisturbed, flip once, add American cheese. Assemble on toasted buns with diced white onion, mustard, and pickles.
+
+**16. Korean Ground Beef Bowls**
+Brown 1 lb ground beef in a skillet, drain. Add 4 minced garlic cloves and cook 30 seconds, then add sauce: 3 tablespoons soy sauce, 1 tablespoon brown sugar, 1 tablespoon sesame oil, 1 teaspoon ginger, red pepper flakes. Stir to combine. Serve over steamed rice. Top with sliced scallions, sesame seeds, and a soft-boiled egg. Full weeknight dinner in under 20 minutes.
+
+**17. Beef and Vegetable Skillet**
+Brown 1 lb ground beef with diced onion and garlic, drain. Add diced zucchini, 1 can diced tomatoes, 1 cup frozen corn, Italian seasoning, salt, and pepper. Cook covered over medium heat 8 minutes until vegetables are tender. Uncover, let excess moisture cook off, top with shredded cheddar, cover 1 minute to melt. One pan, done in 25 minutes.
+
+**18. Beef Fried Noodles**
+Cook 8 oz lo mein noodles or spaghetti. Brown 1 lb ground beef in a wok, drain. Add minced garlic, diced onion, shredded cabbage, and sliced carrots and stir-fry 3 minutes. Add cooked noodles. Sauce: 3 tablespoons soy sauce, 1 tablespoon oyster sauce, 1 tablespoon sesame oil, 1 tablespoon brown sugar, splash of sriracha. Toss over high heat until everything is coated and glossy.
+
+---
+
+## Seafood (6 Recipes)
+
+**19. Garlic Butter Salmon**
+Season 4 salmon fillets with salt, pepper, and garlic powder. Melt 3 tablespoons butter in an oven-safe skillet over medium-high heat. Sear salmon flesh-side down 3 minutes. Flip, add 3 minced garlic cloves and 2 tablespoons lemon juice, baste continuously 1 minute. Transfer to 400F oven for 5 to 7 minutes until salmon flakes easily. The butter baste creates flavor no baked salmon can match.
+
+**20. Shrimp Fajitas**
+Toss 1.5 lbs peeled shrimp with olive oil, cumin, chili powder, garlic powder, smoked paprika, salt, and pepper. Cook shrimp in a hot skillet 2 minutes per side. Set aside. In the same pan, cook sliced bell peppers and onion until charred at edges, about 6 minutes. Return shrimp, toss together. Serve in warm flour tortillas with sour cream, salsa, and fresh lime. Shrimp cook in 4 minutes total.
+
+**21. Teriyaki Salmon Bowls**
+Whisk 3 tablespoons soy sauce, 2 tablespoons honey, 1 tablespoon rice vinegar, 1 teaspoon sesame oil, and 1 teaspoon cornstarch. Sear 4 salmon fillets in oil 3 minutes per side. Pour sauce over salmon, simmer 2 minutes until thickened and glossy. Serve over steamed white rice with sliced cucumbers, edamame, shredded carrots, and sesame seeds. The sauce reduces into a lacquer.
+
+**22. Tuna Pasta**
+Cook 12 oz rigatoni. In a large pan, warm 3 tablespoons olive oil, add 4 minced garlic cloves and red pepper flakes and cook 1 minute. Add 2 cans good-quality tuna in olive oil (do not drain), 1 can diced tomatoes, capers, and salt. Simmer 5 minutes. Toss with pasta and fresh parsley. Top with breadcrumbs toasted in olive oil. A pantry dinner that tastes like it took three times as long.
+
+**23. Shrimp Fried Rice**
+Use day-old rice. Cook 1 lb peeled shrimp in batches in a hot wok, 1 to 2 minutes per side. Set aside. Scramble 3 eggs, push to the side. Add minced garlic, frozen peas and carrots, and sliced scallions. Add rice and break up clumps. Season with 3 tablespoons soy sauce, 1 tablespoon oyster sauce, sesame oil. Return shrimp, toss over high heat 2 minutes. Better than takeout shrimp fried rice in the time it takes to order it.
+
+**24. Lemon Herb Cod**
+Pat 4 cod fillets dry, season with salt and pepper, dredge lightly in flour. Cook in 2 tablespoons butter and 1 tablespoon olive oil over medium-high heat, 4 minutes per side. In the last minute add 3 minced garlic cloves, juice of 1 lemon, and fresh thyme. Baste with pan butter. Serve with roasted asparagus or steamed vegetables.
+
+---
+
+## Vegetarian (6 Recipes)
+
+**25. Shakshuka**
+Warm 2 tablespoons olive oil in a large skillet. Add diced onion and bell pepper, cook 5 minutes. Add 3 minced garlic cloves, 1 tablespoon cumin, 1 teaspoon smoked paprika, and red pepper flakes and cook 1 minute. Add 1 can crushed tomatoes and 1 can diced tomatoes, season with salt. Simmer 10 minutes. Make 4 to 6 wells, crack in eggs, cover and cook 5 to 8 minutes until whites are set and yolks are still runny. Serve with crusty bread.
+
+**26. Black Bean Tacos**
+Warm 1 can black beans drained in a skillet with olive oil, 1 teaspoon cumin, 1 teaspoon chili powder, garlic powder, salt, and a splash of water. Mash slightly — chunky not smooth. Warm corn tortillas. Fill with beans, shredded cabbage, diced avocado, pickled jalapenos, cotija cheese, and a squeeze of lime. Top with salsa verde. Ten-minute vegetarian dinner that does not feel like a compromise.
+
+**27. Caprese Gnocchi**
+Cook 1 lb gnocchi according to package. In a large skillet, warm 3 tablespoons olive oil over medium-high heat, add 2 cups halved cherry tomatoes and cook until blistered and burst, about 4 minutes. Add a pinch of sugar, salt, and pepper. Add drained gnocchi and toss. Remove from heat, add sliced fresh mozzarella and a large handful of fresh basil. Drizzle with balsamic glaze.
+
+**28. Veggie Fried Rice**
+Use cold leftover rice. Scramble 4 eggs in a hot wok, set aside. Stir-fry diced onion, frozen peas and carrots, corn, and 2 cups broccoli florets in batches over very high heat. Add minced garlic and ginger and cook 30 seconds. Add rice, break up clumps. Add scrambled eggs back. Season with 3 tablespoons soy sauce, 1 tablespoon oyster sauce, 1 tablespoon sesame oil. Toss over maximum heat 2 minutes.
+
+**29. White Bean and Spinach Soup**
+Warm 3 tablespoons olive oil in a large pot. Add diced onion and 4 minced garlic cloves and cook 3 minutes. Add 1 teaspoon Italian seasoning, red pepper flakes, and 1 can diced tomatoes and cook 1 minute. Pour in 4 cups vegetable broth and 2 cans white beans. Simmer 10 minutes. Add 4 cups baby spinach and stir until wilted. Season with salt, pepper, and lemon juice. Top with parmesan and olive oil.
+
+**30. Pesto Pasta with Roasted Cherry Tomatoes**
+Spread 2 cups cherry tomatoes on a sheet pan with olive oil, salt, and pepper. Roast at 425F for 15 minutes. Meanwhile cook 12 oz pasta. Drain pasta, reserving 1/2 cup pasta water. Toss pasta with 1/2 cup pesto, adding pasta water as needed. Fold in roasted tomatoes and their juices. Top with fresh basil and toasted pine nuts. The roasted tomatoes collapse into sweet bursts throughout the pasta.
+
+---
+
+## Tips for Faster 30-Minute Cooking
+
+**Prep while heat builds.** The time your pan or oven takes to heat up is not dead time. Chop, measure, and arrange ingredients during those first 5 minutes. You cook faster by eliminating dead time, not by cooking faster.
+
+**Use a hot pan.** Most home cooks use the stove at 60 percent of its capability. Searing chicken, stir-frying vegetables, and browning beef all require genuinely high heat. Low heat makes everything slower and less flavorful.
+
+**Buy the shortcuts that do not compromise quality.** Rotisserie chicken, refrigerated fresh pasta, canned beans, and pre-washed salad greens cut prep without cutting flavor.
+
+**Cook rice in advance.** Twenty minutes of rice cooking is the most common reason a 30-minute meal becomes a 50-minute meal. Cook a large pot on Sunday. Cold leftover rice also fries better than fresh rice.
+
+---
+
+## FAQ
+
+**What is a 30-minute meal?**
+A 30-minute meal is a dinner that goes from refrigerator to table in 30 minutes or less, including active prep time. Every recipe above meets this threshold. Actual time depends on your knife speed and whether you have ingredients staged and ready.
+
+**What are the easiest 30-minute dinners?**
+Korean ground beef bowls (recipe 16), honey garlic chicken thighs (recipe 7), and black bean tacos (recipe 26) consistently run under 20 minutes. They require minimal prep and mostly hands-off cooking time.
+
+**How do I cook dinner faster every night?**
+Commit to a weekly meal plan before the week starts. When Monday arrives, you open the fridge knowing exactly what you are cooking. [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized 5-meal plan with a complete grocery list in about 30 seconds. The beta is open now and free for 6 months.
+
+**What 30-minute meals can I make with chicken?**
+The six chicken recipes cover every scenario: crispy honey garlic thighs (recipe 7), quick stir-fry (recipe 8), sheet pan with potatoes (recipe 9), white bean Tuscan chicken (recipe 10), buffalo wraps (recipe 11), and fried rice (recipe 12). All use common grocery store cuts and standard pantry ingredients.
+
+**What can I cook in 30 minutes for a family?**
+The strongest family options are beef tacos (recipe 13), chicken stir-fry (recipe 8), honey garlic chicken thighs (recipe 7), and pasta e fagioli (recipe 6). All scale easily to 4 to 6 servings by increasing protein by 50 percent and adding one extra side.
+
+---
+
+Thirty dinners, all on the table in 30 minutes or less. The list covers every protein and every palate — from the picky eaters who want tacos to the adventurous ones who want shakshuka or teriyaki salmon bowls.
+
+The hardest part of a 30-minute dinner is not the cooking. It is deciding what to make before you are already standing in front of the open refrigerator at 5pm. A weekly plan eliminates that moment entirely.
+
+[DinnerDrop](https://dinnerdrop.app/beta) generates a personalized 5-meal plan with a complete grocery list in 30 seconds. Every meal is selected based on your dietary preferences, your family size, and your picky eaters. The beta is open now and free for 6 months.
+
+**[Get your personalized weekly meal plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
