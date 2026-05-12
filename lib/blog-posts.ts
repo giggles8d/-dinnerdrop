@@ -13159,6 +13159,157 @@ Twenty-five steak dinner ideas — from 15-minute weeknight skillets to Sunday b
 `
   }
 
+  {
+    slug: 'sheet-pan-chicken',
+    title: '25 Sheet Pan Chicken Recipes for Easy Weeknight Dinners',
+    description:
+      'One pan, one oven, and dinner is done. These 25 sheet pan chicken recipes ' +
+      'deliver juicy chicken and roasted vegetables with minimal cleanup — perfect for busy weeknights.',
+    publishDate: '2027-10-12',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'sheet pan chicken',
+    content: `Sheet pan chicken is not a trend. It is the weeknight dinner format that works every single time: season chicken, add vegetables, slide into a hot oven, and eat in 30–45 minutes with one pan to wash.
+
+The reason sheet pan chicken dominates family dinner planning is simple math. You get protein, vegetables, and sides all cooked simultaneously at the same temperature. There is no standing over the stove, no monitoring multiple burners, and no timing coordination between dishes. You set a timer and walk away.
+
+These 25 sheet pan chicken recipes cover every angle — classic herb-roasted, glazed and saucy, spiced and international, with vegetables you already have, and meals that reheat perfectly for next-day lunches. [DinnerDrop automatically builds a weekly dinner rotation around recipes like these, with a grocery list that covers every ingredient.](/beta)
+
+---
+
+## Classic Sheet Pan Chicken
+
+**1. Lemon Herb Sheet Pan Chicken Thighs**
+Bone-in, skin-on chicken thighs seasoned with olive oil, lemon zest, garlic, rosemary, and thyme. Arrange on a sheet pan with quartered potatoes and whole cherry tomatoes. Roast at 425°F for 40–45 minutes until the skin is deeply golden and the potatoes are crispy at the edges. The lemon and herb combination is the one that works for every family member — no negotiations required. Serve directly from the pan with the pan juices spooned over everything.
+
+**2. Garlic Butter Sheet Pan Chicken**
+Melt butter with minced garlic, Italian seasoning, and a pinch of red pepper flakes. Coat chicken pieces completely. Arrange on the pan with broccoli florets and halved small potatoes. Roast at 400°F for 35–40 minutes. The garlic butter bastes the chicken as it roasts and migrates to the vegetables, making the broccoli as compelling as the main event. This is the recipe that makes children voluntarily eat their vegetables.
+
+**3. Sheet Pan Chicken and Asparagus**
+Season chicken breasts with olive oil, garlic powder, onion powder, salt, and pepper. Place on one side of the sheet pan. Toss asparagus spears with olive oil, lemon juice, and salt on the other side. Roast at 425°F for 20–25 minutes — add the asparagus halfway through if using thin spears, which cook faster than chicken. Finish with a squeeze of fresh lemon. Clean weeknight dinner in under 30 minutes of active work.
+
+**4. Sheet Pan Chicken with Roasted Vegetables**
+Use whatever vegetables are in the refrigerator — bell peppers, zucchini, red onion, cherry tomatoes, broccoli, or green beans. Toss chicken thighs and all vegetables with olive oil, Italian seasoning, garlic, salt, and pepper. Roast at 400°F for 35–40 minutes. This is the most flexible recipe in the lineup — it accommodates whatever produce is available and produces consistent results regardless of the specific vegetable combination.
+
+**5. Sheet Pan Chicken and Sweet Potato**
+Cube sweet potatoes into 1-inch pieces. Season chicken drumsticks with olive oil, smoked paprika, cumin, garlic powder, and brown sugar. Toss sweet potato with the same spice blend. Arrange on a sheet pan and roast at 400°F for 40–45 minutes, flipping the drumsticks halfway through. The sweet potato edges caramelize against the hot pan. The spice blend on the drumsticks creates a dry rub that crisps into a flavorful crust.
+
+---
+
+## Glazed and Saucy Sheet Pan Chicken
+
+**6. Honey Garlic Sheet Pan Chicken**
+Whisk together honey, soy sauce, minced garlic, sesame oil, and a splash of rice vinegar. Coat bone-in chicken thighs and add broccoli and sliced bell peppers to the pan. Roast at 400°F for 35 minutes. Halfway through, brush additional sauce over the chicken. The honey creates a lacquered, sticky glaze in the final 10 minutes. Serve over steamed rice with the pan sauce drizzled over everything. The sauce quantity doubles as a stir fry sauce for weeknight rice bowls.
+
+**7. Teriyaki Sheet Pan Chicken**
+Marinate chicken thighs in homemade teriyaki sauce (soy sauce, mirin, sake, sugar, garlic, ginger) for at least 30 minutes. Arrange on a sheet pan with broccoli florets and sliced carrots. Roast at 400°F for 35–40 minutes. The teriyaki glaze thickens and caramelizes on the surface of the chicken. Serve over white rice with sesame seeds and sliced scallions. This is the sheet pan version of every family's favorite Japanese restaurant order.
+
+**8. BBQ Sheet Pan Chicken**
+Season chicken pieces with a dry rub of smoked paprika, brown sugar, garlic powder, onion powder, cayenne, salt, and black pepper. Roast at 400°F for 25 minutes, then brush generously with your favorite barbecue sauce. Return to the oven for 10–15 minutes until the sauce is set and slightly caramelized. Add corn on the cob and sliced bell peppers to the pan from the start. The dry rub under the BBQ sauce creates layered flavor that stovetop BBQ chicken cannot match.
+
+**9. Maple Dijon Sheet Pan Chicken**
+Whisk together Dijon mustard, maple syrup, olive oil, apple cider vinegar, garlic, and thyme. Coat chicken thighs completely and marinate for 30 minutes. Add Brussels sprouts and sliced red onion to the pan. Roast at 400°F for 35–40 minutes. The maple-Dijon glaze is sophisticated enough for dinner guests and straightforward enough for a Tuesday. The Brussels sprouts absorb the drippings from the chicken and become the most popular item on the pan.
+
+**10. Sheet Pan Chicken with Tomatoes and Olives**
+Scatter halved cherry tomatoes, pitted Kalamata olives, sliced red onion, and capers around bone-in chicken thighs. Drizzle generously with olive oil, season with oregano, red pepper flakes, and salt. Roast at 425°F for 40–45 minutes. The tomatoes burst and create a natural pan sauce. The olives and capers provide briny depth. Serve with crusty bread to scoop up the tomato-olive juice pooled in the pan. This is the Mediterranean dinner that looks like it took effort.
+
+---
+
+## Spiced and International Sheet Pan Chicken
+
+**11. Sheet Pan Chicken Shawarma**
+Marinate chicken thighs in olive oil, lemon juice, cumin, coriander, turmeric, paprika, cinnamon, garlic, and cayenne for at least 2 hours. Arrange on a sheet pan with sliced onion and bell peppers. Roast at 425°F for 30–35 minutes until the edges char slightly. Serve in warm pita or flatbread with tahini sauce, diced tomatoes, cucumber, and pickled red onion. The spice blend on sheet pan shawarma is remarkably close to what comes off a vertical rotisserie — without the equipment.
+
+**12. Sheet Pan Harissa Chicken**
+Coat chicken pieces with harissa paste, olive oil, and lemon juice. Add chickpeas, sliced red onion, and cherry tomatoes to the pan. Roast at 400°F for 35–40 minutes. Harissa is a North African chile paste available at most grocery stores — it delivers complex heat that builds slowly rather than hitting immediately. Finish with fresh cilantro, a squeeze of lemon, and a drizzle of yogurt to balance the heat. This is the recipe that graduates weeknight dinners from "fine" to "that was really good."
+
+**13. Moroccan-Spiced Sheet Pan Chicken**
+Season chicken thighs with ras el hanout (a blend of cumin, coriander, cinnamon, ginger, cardamom, and turmeric), olive oil, honey, garlic, and preserved lemon. Add cubed butternut squash, chickpeas, and sliced red onion. Roast at 400°F for 40–45 minutes. The spice blend makes the kitchen smell extraordinary for the entire cooking time. Serve over couscous with a handful of chopped fresh herbs. Moroccan flavors work with children better than most parents expect.
+
+**14. Cajun Sheet Pan Chicken**
+Season chicken pieces heavily with Cajun spice blend (paprika, cayenne, garlic powder, onion powder, thyme, oregano, black pepper). Add sliced andouille sausage, corn cut into rounds, sliced bell peppers, and red onion. Roast at 400°F for 35–40 minutes. This is the sheet pan version of a Cajun boil without the simmering. The sausage drippings combine with the Cajun spices and create a smoky, spiced sauce that collects under everything.
+
+**15. Greek Lemon Sheet Pan Chicken**
+Marinate chicken pieces in olive oil, lemon juice, lemon zest, garlic, dried oregano, and salt for at least 1 hour. Add quartered potatoes, Kalamata olives, and sliced red onion. Roast at 400°F for 45–50 minutes, adding cherry tomatoes in the final 15 minutes. The potatoes absorb the lemon-garlic marinade drippings and become the star of the pan. Finish with crumbled feta and fresh oregano. This is a complete Greek taverna dinner from one home oven.
+
+---
+
+## Family Favorites and Kid-Friendly
+
+**16. Sheet Pan Chicken and Broccoli**
+The simplest recipe in the lineup. Toss chicken thighs with olive oil, garlic powder, salt, and pepper. Toss broccoli florets with olive oil and salt. Arrange on a sheet pan, chicken on one side, broccoli on the other. Roast at 425°F for 25–30 minutes. The broccoli will have crispy, slightly charred edges — this is the texture that makes children eat broccoli without complaint. Add a pan sauce of butter, lemon juice, and minced garlic spooned over everything at the end.
+
+**17. Sheet Pan Chicken Fajitas**
+Slice chicken breasts into strips. Toss with olive oil, cumin, chili powder, smoked paprika, garlic powder, and oregano. Add sliced bell peppers (multiple colors) and sliced onion with the same seasoning. Spread everything in a single layer and roast at 425°F for 20–25 minutes. Serve immediately in warm flour tortillas with sour cream, salsa, guacamole, and shredded cheese. This is the fajita recipe that skips the splattering stovetop skillet entirely and produces the same result.
+
+**18. Sheet Pan Chicken with Green Beans**
+Season chicken thighs with olive oil, garlic, lemon zest, Italian seasoning, salt, and pepper. Add whole green beans (trim the ends) tossed with olive oil, minced garlic, and salt. Roast at 425°F for 30–35 minutes. The green beans cook perfectly at the same time and temperature as the chicken — no second pot required. This is a four-ingredient dinner that looks assembled rather than effortless.
+
+**19. Sheet Pan Ranch Chicken**
+Mix dry ranch seasoning packet with olive oil. Coat chicken thighs completely. Add quartered baby potatoes and broccoli florets with a separate drizzle of olive oil and salt. Roast at 400°F for 35–40 minutes. Ranch-seasoned chicken is reliably popular with children who approach new flavors with skepticism. The familiar flavor profile on the chicken makes the vegetables on the same pan more approachable.
+
+**20. Sheet Pan Chicken and Corn**
+Season chicken drumsticks with olive oil, smoked paprika, garlic powder, onion powder, salt, and pepper. Add corn cut into 2-inch rounds, sliced bell pepper, and diced red onion to the pan. Roast at 400°F for 40–45 minutes, turning the drumsticks once halfway. The corn chars slightly at the edges, developing the caramelized sweetness that only happens in a hot oven. Finish with fresh lime juice and cilantro.
+
+---
+
+## Quick 30-Minute Sheet Pan Chicken
+
+**21. 30-Minute Crispy Boneless Chicken Thighs**
+The key to 30-minute sheet pan chicken is boneless, skinless thighs and a very hot oven. Season simply with olive oil, garlic powder, onion powder, smoked paprika, salt, and pepper. Add thin-cut vegetables that match the cooking time: asparagus, cherry tomatoes, thin green beans. Roast at 450°F for 20–25 minutes. The high heat crisps the outside without drying the inside.
+
+**22. Sheet Pan Chicken Sausage and Peppers**
+Slice pre-cooked chicken sausage into 1-inch rounds. Toss with sliced bell peppers, onion, and olive oil. Season with Italian seasoning, fennel seed, red pepper flakes, salt, and pepper. Roast at 400°F for 25–30 minutes. This is the sheet pan dinner made entirely from pantry and refrigerator staples. The sausage is already cooked, so the oven time is purely about caramelizing the vegetables and giving the sausage some color.
+
+**23. Sheet Pan Pesto Chicken**
+Spread jarred or fresh pesto generously over chicken breasts. Add halved cherry tomatoes, sliced zucchini, and quartered artichoke hearts around the chicken. Drizzle vegetables with olive oil and salt. Roast at 425°F for 22–25 minutes. The pesto bastes the chicken throughout cooking and forms a green herb crust on the surface. This is the recipe that uses pesto for something other than pasta — and it works better than pasta.
+
+**24. Sheet Pan Chicken with Zucchini and Tomatoes**
+Season chicken thighs with olive oil, Italian seasoning, garlic, salt, pepper, and a pinch of red pepper flakes. Add sliced zucchini and halved cherry tomatoes around the chicken. Roast at 425°F for 28–32 minutes. The tomatoes burst and create a light sauce at the bottom of the pan. Finish with fresh basil and a drizzle of balsamic glaze. This is a summer dinner that comes together faster than any stovetop alternative.
+
+**25. Sheet Pan Chicken with Cauliflower and Chickpeas**
+Toss chicken thighs, cauliflower florets, and drained chickpeas with olive oil, cumin, coriander, turmeric, garlic, and smoked paprika. Spread in a single layer across one or two pans — do not crowd. Roast at 425°F for 30–35 minutes. The chickpeas crisp at the edges of the pan. The cauliflower caramelizes and picks up the spice blend. This is a protein-packed dinner with three filling components that costs under $15 for a family of four.
+
+---
+
+## 5 Tips for Better Sheet Pan Chicken
+
+**1. Use a hot oven — 400–425°F minimum.** Lower temperatures steam the chicken and prevent browning on the skin or caramelization on the vegetables. High heat is what creates the roasted flavor that makes sheet pan chicken worth eating. If your oven runs cool, use convection or go to 450°F.
+
+**2. Do not crowd the pan.** Crowded vegetables steam instead of roast. Leave space between pieces — if everything does not fit in a single layer without touching, use two sheet pans. A crowded pan is the single most common reason sheet pan dinners disappoint.
+
+**3. Cut vegetables to match the cooking time of the chicken.** Dense vegetables (potatoes, carrots, sweet potato) need to be cut smaller than tender vegetables (broccoli, asparagus, cherry tomatoes). Add quick-cooking vegetables halfway through if they would otherwise overcook at the full time.
+
+**4. Pat the chicken completely dry before seasoning.** Surface moisture creates steam when it hits the hot pan. Dry chicken browns; wet chicken steams. This single step determines whether the skin is golden and crispy or pale and soft.
+
+**5. Line the pan with parchment or foil for easy cleanup.** Cleanup is the only disadvantage of sheet pan cooking — and it disappears entirely if you line the pan. Parchment handles temperatures up to 425°F; foil works at any temperature. Remove the liner when done, and the pan needs only a rinse.
+
+Planning a week of sheet pan chicken dinners — one each night, with different vegetables and seasonings — is exactly the kind of system that makes weeknight cooking predictable in a good way. [DinnerDrop builds that rotation automatically, picking five dinners from your family's preferences and generating the complete grocery list.](/beta)
+
+---
+
+## Frequently Asked Questions
+
+**What temperature is best for sheet pan chicken?**
+400–425°F is the ideal range for most sheet pan chicken recipes. Bone-in, skin-on pieces do best at 400–425°F for 35–45 minutes. Boneless, skinless breasts and thighs cook faster at 425–450°F in 20–28 minutes. The higher the temperature, the more browning and caramelization you get on both the chicken and vegetables — which is what makes sheet pan dinners taste roasted rather than just cooked.
+
+**Can I use chicken breasts instead of thighs on a sheet pan?**
+Yes, with adjustments. Chicken breasts cook faster than thighs and dry out more easily. Use boneless, skinless breasts and reduce cooking time by 5–10 minutes compared to thigh recipes. Pound breasts to even thickness before roasting if they vary significantly in size, which prevents the thin end from overcooking while the thick end finishes. Target 165°F internal temperature regardless of cut.
+
+**How do I prevent sheet pan chicken from drying out?**
+Three factors: bone-in and skin-on pieces retain moisture better than boneless; thighs are more forgiving than breasts due to higher fat content; and not overcooking (use a thermometer — pull at 165°F). Marinating chicken for even 30 minutes adds significant moisture insurance. The skin acts as a natural barrier that bastes the meat throughout cooking.
+
+**Can I make sheet pan chicken ahead of time?**
+Yes — sheet pan chicken reheats better than most weeknight proteins. Reheat covered with foil at 350°F for 10–15 minutes to prevent drying out. The vegetables reheat well alongside. Sheet pan chicken is also excellent cold, making it ideal for next-day lunch bowls over rice or greens with a drizzle of sauce.
+
+**What vegetables cook at the same time as chicken on a sheet pan?**
+At 400–425°F for 35–40 minutes (matching bone-in thighs): broccoli florets, Brussels sprouts, halved small potatoes, sweet potato cubes, sliced bell peppers, cauliflower. Add cherry tomatoes and asparagus in the last 15 minutes. At 425–450°F for 20–25 minutes (matching boneless chicken): asparagus, cherry tomatoes, thinly sliced zucchini, corn kernels, and green beans. Cut dense vegetables smaller than they appear to need — they will finish more evenly.
+
+---
+
+Twenty-five sheet pan chicken recipes mean you can cook a different dinner every weeknight for five weeks without repeating. If rotating through them on a planned schedule — matched to what your family actually likes and what is already in the refrigerator — sounds better than deciding at 5pm, [DinnerDrop builds that plan for you every week.](/beta)
+`
+  }
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
