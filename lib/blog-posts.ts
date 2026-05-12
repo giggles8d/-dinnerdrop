@@ -9556,9 +9556,9 @@ Twenty-five ground chicken recipes -- tacos, meatballs, stir-fry, lettuce wraps,
     slug: 'chicken-casserole-recipes',
     title: 'Chicken Casserole Recipes: 25 Easy Baked Dinners the Whole Family Will Love',
     description: 'Twenty-five chicken casserole recipes for busy weeknights. Classic chicken and rice, broccoli cheddar, enchilada, pot pie, and pasta bakes — all made in one dish.',
-    date: '2027-06-01',
-    readTime: '10 min',
-    keyword: 'chicken casserole recipes',
+    publishDate: '2027-06-01',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'chicken casserole recipes',
     content: `
 # Chicken Casserole Recipes: 25 Easy Baked Dinners the Whole Family Will Love
 
