@@ -13310,6 +13310,163 @@ Twenty-five sheet pan chicken recipes mean you can cook a different dinner every
 `
   }
 
+  {
+    slug: 'instant-pot-recipes',
+    title: '25 Instant Pot Recipes That Make Weeknight Dinner Actually Fast',
+    description:
+      'Instant Pot recipes that cut cooking time without cutting flavor. From chicken and beef to soups, pasta, and pork -- 25 family-tested pressure cooker dinners.',
+    publishDate: '2027-10-19',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'instant pot recipes',
+    content: `The Instant Pot promise is real, but only if you know what to cook in it. Throwing random ingredients into a pressure cooker and hoping for the best produces mediocre results. These 25 Instant Pot recipes are built around what the appliance actually does well: turning tough proteins tender in a fraction of the time, building rich soups without hours of simmering, and cooking grains and pasta hands-free while you handle everything else.
+
+Each recipe is tested for realistic weeknight timing — including the time to pressurize and release — and scaled for families of four to six.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan and grocery list in under a minute. The beta is free for six months.
+
+---
+
+## Instant Pot Chicken
+
+**1. Instant Pot Chicken and Rice**
+Add 1.5 cups long-grain white rice, 1.5 cups chicken broth, diced chicken breasts, garlic powder, onion powder, salt, and pepper to the Instant Pot. High pressure 8 minutes, natural release 10 minutes. Fluff with a fork and stir in 2 tablespoons of butter. The rice absorbs all the chicken-flavored broth and comes out perfectly cooked every time. Add frozen peas before the natural release finishes for a complete one-pot meal. This is the recipe to start with if you just bought an Instant Pot.
+
+**2. Instant Pot Whole Roast Chicken**
+Season a 4-pound whole chicken with olive oil, garlic powder, smoked paprika, dried thyme, salt, and pepper. Pour 1 cup of chicken broth into the pot and place the chicken on the trivet. High pressure 25 minutes, natural release 15 minutes. The chicken comes out fully cooked with juices that become a pan sauce. Broil for 5 minutes after if you want browned skin. One chicken produces dinner plus enough shredded meat for tacos or sandwiches the next day.
+
+**3. Instant Pot Honey Garlic Chicken**
+Whisk honey, soy sauce, minced garlic, rice vinegar, and sesame oil into a sauce. Add chicken thighs and sauce to the pot. High pressure 12 minutes, quick release. Remove chicken, set to sauté, whisk cornstarch with cold water and stir into the sauce until thickened. Return chicken and coat. Serve over steamed rice with broccoli. The sauce reduces to a sticky glaze that rivals any takeout honey garlic.
+
+**4. Instant Pot Chicken Tikka Masala**
+Sauté diced onion in oil on the sauté setting. Add garlic, ginger, garam masala, cumin, turmeric, coriander, and paprika — cook 1 minute. Add canned crushed tomatoes, coconut milk, and chicken thigh pieces. High pressure 10 minutes, quick release. Stir in heavy cream. Serve over basmati rice with naan. Authentic tikka masala takes 45 minutes on the stovetop. This version takes 30 minutes total including pressurize time and is indistinguishable to everyone at the table.
+
+**5. Instant Pot Chicken Tacos**
+Place chicken breasts in the pot with a can of diced tomatoes with green chiles, taco seasoning, garlic powder, and chicken broth (just enough to cover the bottom). High pressure 15 minutes, quick release. Shred the chicken directly in the pot using two forks — it shreds in under a minute and absorbs all the liquid. Serve immediately in warm tortillas with your toppings of choice. Makes enough for 8 tacos, feeds a family of four with leftovers for lunch.
+
+---
+
+## Instant Pot Beef
+
+**6. Instant Pot Pot Roast**
+Season a 3-pound chuck roast with salt and pepper. Sear on all sides using the sauté setting until deeply browned. Add beef broth, Worcestershire sauce, garlic, diced onion, and fresh thyme. High pressure 60 minutes, natural release 20 minutes. Add quartered potatoes, halved carrots, and celery, then high pressure 5 more minutes, quick release. The chuck roast becomes fork-tender in 60 minutes instead of 4 hours in the oven. The vegetables absorb the braising liquid and become better than any roasting pan version.
+
+**7. Instant Pot Beef Stew**
+Cut chuck roast into 1.5-inch cubes and toss with flour, salt, and pepper. Sear in batches on the sauté setting. Add beef broth, tomato paste, Worcestershire sauce, diced onion, garlic, thyme, bay leaf, cubed potatoes, and sliced carrots. High pressure 35 minutes, natural release 15 minutes. Remove bay leaf. The flour on the beef and the potato starch create a thick, restaurant-quality stew without a separate slurry step. This is the recipe that makes people believe pressure cooking is magic.
+
+**8. Instant Pot Korean Beef (Bulgogi-Style)**
+Mix soy sauce, brown sugar, sesame oil, grated Asian pear (or apple), garlic, ginger, and red pepper flakes. Toss with thinly sliced beef chuck. Add to pot with a splash of beef broth. High pressure 15 minutes, quick release. Set to sauté and reduce sauce 3-4 minutes if needed. Serve over rice with kimchi, sliced scallions, and sesame seeds. The pressure cooking tenderizes even affordable cuts to the texture you'd expect from a Korean BBQ restaurant.
+
+**9. Instant Pot Beef and Broccoli**
+Make sauce from soy sauce, brown sugar, garlic, ginger, sesame oil, and beef broth. Sear sliced flank steak briefly on sauté mode. Add sauce and pressure cook 12 minutes, quick release. Mix cornstarch with cold water, stir in on sauté mode until thickened. Add steamed broccoli and toss. Serve over white rice. Better than takeout by the standard of being ready before you could drive there and back.
+
+**10. Instant Pot Ground Beef Chili**
+Brown ground beef on sauté mode with diced onion and garlic. Drain excess fat. Add kidney beans (rinsed), black beans (rinsed), diced canned tomatoes, tomato paste, beef broth, chili powder, cumin, smoked paprika, oregano, and cayenne. High pressure 20 minutes, natural release 10 minutes. Serve topped with shredded cheese, sour cream, diced red onion, and sliced jalapeño. Chili is the single best argument for owning an Instant Pot — what normally requires 90 minutes of simmering finishes in 35 minutes total.
+
+---
+
+## Instant Pot Soups and Stews
+
+**11. Instant Pot Chicken Noodle Soup**
+Add chicken breasts, sliced carrots, sliced celery, diced onion, minced garlic, chicken broth, thyme, parsley, bay leaf, salt, and pepper. High pressure 10 minutes, quick release. Remove chicken, shred, return to pot. Remove bay leaf. Set to sauté, add egg noodles, cook 5-7 minutes until tender. The broth has the depth of a four-hour stovetop soup because the pressure forces the vegetables and chicken to release their flavor rapidly. Serve with crusty bread.
+
+**12. Instant Pot Lentil Soup**
+Add red lentils (rinsed), diced onion, minced garlic, diced canned tomatoes, chicken or vegetable broth, cumin, coriander, turmeric, smoked paprika, and a can of coconut milk. High pressure 15 minutes, natural release 10 minutes. Squeeze in lemon juice before serving. Stir — the lentils break down into a thick, creamy soup with no blending required. Serve with warm pita or naan. Completely plant-based and genuinely filling.
+
+**13. Instant Pot Tomato Bisque**
+Sauté diced onion and garlic in butter on sauté mode. Add canned crushed tomatoes, chicken broth, dried basil, oregano, sugar, salt, and red pepper flakes. High pressure 10 minutes, quick release. Blend with an immersion blender directly in the pot. Stir in heavy cream and butter off heat. Serve with grilled cheese. This is the tomato soup that converts adults who claim they don't like tomato soup.
+
+**14. Instant Pot White Bean and Sausage Soup**
+Brown sliced Italian sausage on sauté mode, then remove and set aside. Sauté diced onion, celery, and carrot in the drippings. Add white beans (drained), chicken broth, diced canned tomatoes, garlic, thyme, and bay leaf. High pressure 15 minutes, natural release 10 minutes. Return sausage, stir in fresh spinach until wilted, remove bay leaf. The sausage fat flavors the entire soup and the white beans thicken the broth naturally. A Tuscan-style soup that feeds six in 40 minutes.
+
+**15. Instant Pot Butternut Squash Soup**
+Add cubed butternut squash, diced onion, garlic, chicken broth, apple cider vinegar, nutmeg, cinnamon, and salt. High pressure 8 minutes, quick release. Blend until smooth. Stir in heavy cream. Taste and adjust salt and sweetness — a small amount of maple syrup finishes the flavor if needed. Serve with a swirl of cream and roasted pepitas. Better than any canned version and faster than roasting the squash in the oven.
+
+---
+
+## Instant Pot Pasta and Grains
+
+**16. Instant Pot Mac and Cheese**
+Add elbow macaroni, water (just enough to cover), salt, and a splash of hot sauce. High pressure 4 minutes, quick release (be careful — starchy pasta can sputter). Drain excess water if any remains. Stir in butter, whole milk, shredded sharp cheddar, and shredded Gruyère in batches until melted and creamy. The pasta cooks in exactly 4 minutes and the starch in the cooking water helps the cheese sauce cling. Kids request this version over the box kind within two meals.
+
+**17. Instant Pot Pasta Bolognese**
+Brown ground beef and Italian sausage with diced onion, celery, and carrot on sauté mode. Add garlic, tomato paste, canned crushed tomatoes, beef broth, red wine (or extra broth), dried basil, oregano, and a bay leaf. Layer penne or rigatoni on top — do not stir. High pressure 6 minutes, quick release. Remove bay leaf, stir to combine. Top with Parmigiano-Reggiano. Bolognese typically simmers for 2 hours. The pressure cooker condenses that into 25 minutes total without losing depth.
+
+**18. Instant Pot Risotto**
+Sauté diced onion in butter on sauté mode. Add Arborio rice and stir 1 minute to toast. Add white wine, stir until absorbed. Add warm chicken broth, thyme, and salt — do not stir again. High pressure 6 minutes, quick release. Stir vigorously, adding Parmigiano-Reggiano and cold butter in pieces. Risotto made the traditional way requires 30 minutes of constant stirring. This version requires zero stirring during cooking and produces identical texture.
+
+**19. Instant Pot Quinoa**
+Combine 1 cup rinsed quinoa with 1.25 cups water or broth, salt, and a drizzle of olive oil. High pressure 1 minute, natural release 12 minutes. Fluff with a fork. Perfectly cooked quinoa every time — no guessing whether the water is all absorbed, no scorched bottom. Use as a base for grain bowls, serve alongside roasted vegetables, or make ahead and refrigerate for the week. The Instant Pot produces better quinoa than the stovetop method by a margin most people notice immediately.
+
+**20. Instant Pot Steel Cut Oats**
+Combine 1 cup steel cut oats with 3 cups water or milk, salt, and a drizzle of maple syrup. High pressure 4 minutes, natural release 15 minutes. Stir and add toppings: berries, sliced banana, nut butter, brown sugar, or honey. Doubles the recipe easily for four people. Steel cut oats on the stovetop take 30 minutes of occasional stirring. The Instant Pot requires 4 minutes of active time. The texture — creamy with a slight chew — is better than quick oats by a significant margin.
+
+---
+
+## Instant Pot Pork
+
+**21. Instant Pot Pulled Pork**
+Season a 3 to 4-pound pork shoulder with brown sugar, smoked paprika, garlic powder, onion powder, cumin, salt, and pepper. Sear on all sides using sauté mode. Add apple cider vinegar, chicken broth, and a splash of liquid smoke. High pressure 60 minutes, natural release 20 minutes. Shred with two forks in the pot and mix into the cooking liquid. Serve on brioche buns with coleslaw. Pulled pork from a smoker takes 8-14 hours. This version takes 90 minutes total and feeds eight.
+
+**22. Instant Pot Pork Carnitas**
+Season pork shoulder pieces with cumin, chili powder, oregano, garlic powder, smoked paprika, salt, and pepper. Add to pot with chicken broth, orange juice, lime juice, diced onion, and minced garlic. High pressure 45 minutes, natural release 15 minutes. Shred and spread on a foil-lined baking sheet. Broil 5-7 minutes until the edges crisp. Serve in tacos with diced white onion, fresh cilantro, lime wedges, and salsa verde. The broil step is non-negotiable — it adds the crispy exterior that makes carnitas distinct from generic pulled pork.
+
+**23. Instant Pot Pork Chops with Gravy**
+Season bone-in pork chops with garlic powder, onion powder, smoked paprika, salt, and pepper. Sear on sauté mode 2 minutes per side. Remove chops. Add chicken broth, Worcestershire sauce, garlic, and dried thyme to deglaze. Return chops on top. High pressure 12 minutes, natural release 10 minutes. Remove chops. Whisk cornstarch into cold water, stir into liquid on sauté mode until thickened. Serve chops with gravy over mashed potatoes. Bone-in pork chops stay juicy under pressure where stovetop versions often turn rubbery.
+
+**24. Instant Pot Pork Tenderloin**
+Season pork tenderloin with Dijon mustard, garlic, rosemary, thyme, salt, and pepper. Sear on sauté mode 2-3 minutes per side. Add chicken broth and apple cider to the pot. High pressure 8 minutes, quick release. Rest 5 minutes before slicing. Use the liquid to make a pan sauce with butter and fresh herbs. Pork tenderloin is one of the leanest cuts and dries out easily in the oven. The Instant Pot keeps it perfectly moist in 8 minutes.
+
+**25. Instant Pot Pork and Hominy Posole**
+Toast dried ancho and guajillo chiles in a dry skillet, then simmer in water 5 minutes to soften. Blend with garlic, onion, cumin, and oregano into a red chile sauce. Add pork shoulder pieces, canned hominy (drained), chicken broth, and the red chile sauce to the Instant Pot. High pressure 45 minutes, natural release 20 minutes. Shred pork. Serve with shredded cabbage, diced radishes, fresh lime, dried oregano, and warm tortillas. The pressure cooker condenses a traditional all-day posole into 75 minutes without losing the layered chile flavor.
+
+---
+
+## Instant Pot Tips for Weeknight Cooking
+
+**Understand the pressurize time.** An Instant Pot takes 10-15 minutes to build pressure before the cooking time starts. A recipe that says "high pressure 10 minutes" actually takes 25-30 minutes. Always add 15 minutes to your estimate.
+
+**Natural release vs quick release.** Large cuts of meat need natural release — the pressure drops slowly and the residual heat continues cooking evenly. Vegetables, pasta, and quick-cooking items use quick release to stop cooking immediately. Using quick release on a pot roast results in tough meat.
+
+**Don't underfill.** The Instant Pot needs at least 1 cup of liquid to generate steam. Sauces and marinades count, but dry seasoning does not. Recipes that fail usually fail because they ran dry.
+
+**Deglaze after searing.** If you sear meat on sauté mode, always add liquid and scrape the browned bits off the bottom before pressure cooking. Those stuck bits trigger the burn error on most models.
+
+**Layer pasta and grains on top.** When cooking pasta or grains with a sauce, add the liquid and sauce first, then layer the pasta or rice on top without stirring. This prevents it from settling on the bottom and burning.
+
+---
+
+## How DinnerDrop Builds Your Weekly Instant Pot Rotation
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized dinners per week based on your family's preferences, dietary needs, and the appliances you actually want to use. Tell it you prefer Instant Pot meals and it automatically weights your plan toward pressure cooker-friendly recipes — with a full grocery list included. The beta is free for six months.
+
+---
+
+## FAQ
+
+**How long does an Instant Pot actually take?**
+The listed cooking time doesn't include pressurize time (10-15 minutes) or release time (5-20 minutes depending on method). A recipe labeled "high pressure 15 minutes" typically takes 35-40 minutes from start to serving. It is still faster than conventional oven methods for most recipes, especially braises and soups.
+
+**What can't you cook in an Instant Pot?**
+Crispy or browned exteriors, anything that requires dry heat or caramelization during cooking, and delicate seafood that overcooks in seconds. Eggs cook well but the timing is unforgiving. Dairy-heavy sauces added before pressure cooking tend to curdle — always stir cream or cheese in after releasing pressure.
+
+**Is the Instant Pot worth it for a family?**
+Yes, specifically for families. The use cases where it saves the most time — pot roast, soups, dried beans, pulled pork, and whole grains — are all high-volume, feed-a-crowd meals. The break-even point on the purchase price is roughly 15 uses. Most families hit that in two months.
+
+**What size Instant Pot should a family get?**
+A 6-quart is the standard and fits most family-of-four recipes comfortably. An 8-quart gives more room for large roasts and doubled recipes without liquid overflow risk. The 3-quart is designed for one or two people and will leave families regularly frustrated by capacity limits.
+
+**Why does my Instant Pot say burn?**
+The burn error means the bottom of the pot is too hot and liquid has evaporated or thickened too much. Most common causes: not enough liquid added, tomato-based sauce added before broth (tomatoes settle and scorch), or browned bits stuck to the bottom from searing. Add liquid, deglaze thoroughly after searing, and layer tomato-based ingredients on top of broth rather than mixing them in.
+
+---
+
+Twenty-five Instant Pot recipes across chicken, beef, soups, pasta, and pork — built for families who want real meals on real weeknight timelines.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner weekly plan and full grocery list in under a minute. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
