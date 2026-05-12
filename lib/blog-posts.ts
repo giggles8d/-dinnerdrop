@@ -10590,6 +10590,159 @@ Twenty-five stuffed pepper recipes from classic beef and rice to shakshuka-style
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'mexican-dinner-ideas',
+    title: '25 Mexican Dinner Ideas the Whole Family Will Actually Eat',
+    description:
+      'From quick weeknight tacos to slow cooker carnitas and cheesy enchiladas, these 25 Mexican dinner ideas are family-tested, budget-friendly, and faster than takeout.',
+    publishDate: '2027-07-13',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'mexican dinner ideas',
+    content: `Mexican food is the easiest answer to the weeknight dinner problem most families face: everyone likes something different, the ingredients are cheap, and the flavors are big enough that even picky eaters find something they want.
+
+Tacos solve the picky eater problem because everything is modular. Enchiladas solve the meal-prep problem because they assemble in 20 minutes and bake while you do something else. Slow cooker carnitas solve the busy weekday problem because they cook all day without any effort.
+
+These 25 Mexican dinner ideas work for real weeknights -- not just when you have two hours and a full pantry. Most take 30 minutes or less. Several can be assembled on Sunday and baked or reheated on demand.
+
+---
+
+## Quick Weeknight Mexican Dinners (Under 30 Minutes)
+
+**1. Ground Beef Tacos**
+Brown one pound of ground beef with taco seasoning (cumin, chili powder, garlic powder, onion powder, smoked paprika), drain, and serve in warm tortillas with shredded cheese, sour cream, salsa, and shredded lettuce. This is the 20-minute weeknight staple that most families rotate every other week without getting tired of it. Use hard shells for crunch or flour tortillas for softness -- both work.
+
+**2. Sheet Pan Chicken Fajitas**
+Slice chicken breasts and bell peppers into strips, toss with olive oil, cumin, chili powder, garlic powder, and lime juice, and spread on a sheet pan. Roast at 425°F for 20 to 22 minutes. Serve with warm flour tortillas, guacamole, and sour cream. The sheet pan method means no constant stirring at the stove -- everything finishes at the same time.
+
+**3. Beef and Bean Quesadillas**
+Cook ground beef with taco seasoning, mix with canned black beans and shredded cheddar. Spread onto large flour tortillas, fold, and cook in a dry skillet 2 to 3 minutes per side until crisp. Cut into wedges and serve with sour cream and pico de gallo. Faster than tacos and equally popular with kids.
+
+**4. Chicken Tostadas**
+Spread refried beans on crispy tostada shells, top with shredded rotisserie chicken (seasoned with cumin and lime juice), shredded lettuce, diced tomato, avocado, and queso fresco. Ready in 15 minutes using store-bought tostadas and pre-cooked chicken. This is the best use of leftover rotisserie chicken on a busy Tuesday.
+
+**5. Black Bean Burritos**
+Warm a large flour tortilla, layer with seasoned canned black beans, Mexican rice, shredded cheese, sour cream, and salsa. Roll tightly and serve as-is or press in a panini press for a toasted exterior. Fully vegetarian and fully filling -- a 20-minute dinner that requires zero meat.
+
+---
+
+## Baked Mexican Dinners (Make-Ahead Friendly)
+
+**6. Classic Beef Enchiladas**
+Brown ground beef with diced onion and taco seasoning. Roll beef into corn tortillas that have been briefly dipped in warm red enchilada sauce to soften them (prevents cracking). Lay seam-side down in a baking dish, pour remaining sauce over, top with shredded Monterey Jack. Bake 25 minutes at 375°F. The dipping step is what separates good enchiladas from ones that fall apart at the table.
+
+**7. Green Chile Chicken Enchiladas**
+Shred rotisserie chicken and mix with cream cheese, diced green chiles, cumin, and garlic powder. Roll into flour tortillas, place in a baking dish, cover with green enchilada sauce and shredded pepper Jack. Bake 25 minutes at 375°F until bubbly. Creamy, mildly spicy, universally liked. Easier to assemble than red enchiladas because flour tortillas do not crack.
+
+**8. Mexican Lasagna**
+Layer a 9x13 baking dish with flour tortillas, seasoned ground beef and refried beans, salsa, and shredded cheese -- three layers, like pasta lasagna. Bake 30 minutes at 375°F. Let it rest 10 minutes before slicing. Serves 6 to 8 easily, reheats perfectly, and requires no rolling or dipping. This is the dish that disappears fastest at potlucks.
+
+**9. Chicken Tortilla Casserole**
+Shred rotisserie chicken and combine with canned cream of chicken soup, sour cream, salsa, diced green chiles, and cumin. Layer with torn tortilla chips in a baking dish, top with shredded cheddar. Bake 30 minutes at 350°F. The chips soften slightly in the casserole, giving it a texture like a deconstructed nacho plate. Crowd-pleasing and dead simple.
+
+**10. Stuffed Poblano Peppers**
+Roast whole poblano peppers under the broiler 5 minutes per side until blistered. Halve and deseed. Fill with a mixture of seasoned ground beef or chicken, cooked rice, corn, black beans, and salsa. Top with shredded pepper Jack and bake 20 minutes at 375°F. More impressive-looking than regular stuffed peppers, with smoky pepper flavor that elevates the filling.
+
+---
+
+## Slow Cooker and Instant Pot Mexican Dinners
+
+**11. Slow Cooker Carnitas**
+Rub a 3 to 4 pound pork shoulder with cumin, chili powder, garlic powder, oregano, salt, and pepper. Add diced onion, garlic cloves, orange juice, and lime juice to the slow cooker. Cook on low 8 hours or high 4 to 5 hours until the pork pulls apart easily. Shred with two forks, spread on a sheet pan, broil 3 to 4 minutes until the edges crisp. Serve in flour or corn tortillas with pickled red onion, cilantro, and salsa verde. The broiling step at the end transforms this from braised pork into carnitas with proper crispy edges.
+
+**12. Slow Cooker Chicken Tacos**
+Place chicken breasts in the slow cooker with one can of fire-roasted diced tomatoes, one envelope of taco seasoning, garlic powder, and a pinch of cumin. Cook on low 6 hours. Shred with forks directly in the slow cooker and serve in tortillas. The liquid from the tomatoes braises the chicken into tender, well-seasoned taco meat without any prep beyond dumping everything in. This is the easiest taco meat on this list.
+
+**13. Slow Cooker Chicken Tortilla Soup**
+Combine chicken breasts, canned crushed tomatoes, black beans (drained), corn (frozen or canned), chicken broth, taco seasoning, cumin, garlic, and diced onion in the slow cooker. Cook on low 6 to 8 hours. Shred chicken, stir back in. Serve topped with tortilla strips, shredded cheese, sour cream, and diced avocado. One of the best set-and-forget dinners on this list.
+
+**14. Instant Pot Barbacoa**
+Season a chuck roast (3 pounds) with chipotle peppers in adobo sauce, cumin, oregano, garlic, apple cider vinegar, beef broth, and lime juice. Pressure cook on High for 60 minutes plus 15-minute natural release. Shred and serve in tacos with white onion, cilantro, and salsa. Deep, smoky, tender beef in 75 minutes total. The chipotle adobo sauce does most of the flavoring work.
+
+**15. Slow Cooker Refried Beans**
+Rinse dried pinto beans (no soaking needed), combine with water, diced onion, garlic, cumin, chili powder, and salt in the slow cooker. Cook on low 8 hours. Drain most of the liquid, mash with a potato masher to preferred consistency, and stir in a tablespoon of bacon grease or olive oil. Dramatically better than canned refried beans and a perfect side for any Mexican dinner.
+
+---
+
+## Mexican Rice Bowls and Grain Dishes
+
+**16. Chicken Burrito Bowls**
+Marinate chicken thighs in lime juice, cumin, garlic powder, chili powder, and olive oil for 30 minutes. Cook on a cast iron skillet 4 to 5 minutes per side. Slice and serve over Mexican rice with black beans, corn, pico de gallo, shredded cheese, sour cream, and a squeeze of lime. The Chipotle equivalent made at home for a fraction of the cost.
+
+**17. Ground Turkey Taco Bowls**
+Brown ground turkey with taco seasoning, serve over cilantro-lime rice with black beans, corn, shredded cabbage, pico de gallo, and avocado crema (blend an avocado with sour cream, lime juice, and salt). A lighter, higher-protein version of the classic burrito bowl.
+
+**18. Mexican Street Corn Salad Bowl**
+Char corn in a dry cast iron skillet until some kernels are lightly blackened. Toss with mayonnaise, lime juice, chili powder, garlic powder, cotija cheese, and fresh cilantro. Serve over seasoned rice or as a side dish next to grilled chicken or steak. The deconstructed version of elote -- easier to eat at the dinner table.
+
+**19. Black Bean and Sweet Potato Burrito Bowls**
+Cube and roast sweet potatoes at 425°F for 25 minutes with cumin, chili powder, and olive oil. Serve over rice with seasoned black beans, corn, diced red onion, shredded cabbage, and chipotle-lime dressing. Fully vegetarian and genuinely satisfying to meat eaters too. The roasted sweet potato has a natural sweetness that works well against spiced beans.
+
+**20. Carne Asada Rice Bowls**
+Marinate flank steak in orange juice, lime juice, garlic, cilantro, cumin, chili powder, and olive oil for at least 2 hours. Grill or sear on high heat 3 to 4 minutes per side for medium. Rest 5 minutes, slice thinly against the grain. Serve over rice with grilled peppers and onions, guacamole, and fresh pico de gallo. The citrus marinade tenderizes the flank steak without needing an expensive cut.
+
+---
+
+## Mexican Soups and Comfort Dinners
+
+**21. Pozole Rojo**
+Simmer pork shoulder or chicken thighs in chicken broth with dried ancho and guajillo chiles (blended with garlic and onion to make the red sauce), canned hominy, garlic, oregano, and cumin for 45 minutes to 1 hour until meat is tender. Shred meat and return to pot. Serve with shredded cabbage, diced radishes, dried oregano, lime wedges, and tostadas. Mexican comfort food in its most traditional form -- deeply flavored, warming, and filling.
+
+**22. Sopa de Fideo**
+Toast thin vermicelli pasta in olive oil until golden, about 3 minutes, stirring constantly. Add blended canned tomatoes, chicken broth, cumin, garlic, and diced onion. Simmer 12 minutes until pasta absorbs the broth. Serve with sour cream, cotija cheese, and a squeeze of lime. A tomato-broth pasta that tastes far more complex than its ingredient list suggests.
+
+**23. Mexican Beef Soup (Caldo de Res)**
+Simmer beef chuck pieces in water with garlic, onion, and salt for 45 minutes. Add corn on the cob (halved), sliced zucchini, diced carrots, cabbage wedges, and cilantro. Simmer 20 more minutes until vegetables are tender. Serve with warm corn tortillas, diced onion, fresh cilantro, and lime wedges. A full meal in one pot.
+
+**24. White Chicken Chili**
+Brown diced chicken breasts with diced onion and garlic. Add white beans (drained), green enchilada sauce, chicken broth, cumin, chili powder, and diced green chiles. Simmer 20 minutes. Stir in sour cream and cream cheese off heat to thicken. Serve topped with shredded Monterey Jack, avocado, and tortilla chips. The cream cheese at the end makes this chili noticeably thicker and creamier.
+
+**25. Hominy and Pork Stew**
+Simmer canned hominy with beef broth, diced canned tomatoes, ancho chile powder, garlic, onion, cumin, and dried oregano for 30 minutes. Add shredded pre-cooked pork in the last 10 minutes. Serve with lime wedges, diced onion, dried oregano, and a warm tortilla. A beginner-friendly version of the classic pozole profile that works on a Tuesday night.
+
+---
+
+## The Mexican Dinner Rotation Framework
+
+Most Mexican dinner ingredients cross over between recipes, which is what makes Mexican food so efficient for weeknight cooking.
+
+**The pantry foundation** (keep these stocked): canned black beans, canned refried beans, canned fire-roasted tomatoes, canned green chiles, chicken broth, dried cumin, chili powder, garlic powder, smoked paprika, rice, corn tortillas, flour tortillas, enchilada sauce (red and green), tortilla chips.
+
+**The protein rotation**: ground beef, chicken thighs or breasts, pork shoulder for slow cooker days, and rotisserie chicken for shortcut meals. With these stocked, you can make any recipe on this list without a special grocery run. Taco Tuesday uses the same pantry as enchilada Thursday. Burrito bowls on Wednesday use the same rice you made for fajitas on Monday.
+
+---
+
+## How DinnerDrop Plans Your Mexican Dinner Week
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds five personalized dinners each week based on your family size, dietary preferences, and what you have on hand -- automatically mixing Mexican dinners into your week at a frequency that works for your family. Each weekly plan includes a full grocery list. The beta is free for six months.
+
+---
+
+## FAQ
+
+**What are the easiest Mexican dinners for beginners?**
+Ground beef tacos, chicken quesadillas, and sheet pan fajitas are the best starting points. They have 5 to 7 ingredients, take 20 to 30 minutes, and the technique is forgiving. Once those are comfortable, move to enchiladas and then slow cooker recipes.
+
+**What makes Mexican food kid-friendly?**
+The modular format is the key advantage. Tacos, burritos, tostadas, and quesadillas let each person choose their own toppings, which eliminates the picky-eater problem entirely.
+
+**Can you meal prep Mexican dinners?**
+Yes -- they are among the best meal-prep options. Taco meat refrigerates for 4 days and freezes for 3 months. Carnitas and barbacoa improve overnight as the flavors meld. Enchiladas can be fully assembled up to 24 hours before baking.
+
+**What is the best cut of beef for Mexican recipes?**
+Chuck roast for slow cooker and braised dishes. Flank or skirt steak for carne asada. Ground beef for tacos, enchiladas, and quesadillas. Each needs different heat: chuck roast needs low-and-slow; flank steak needs high heat and thin slicing against the grain.
+
+**How do you make Mexican food less spicy for kids?**
+Use mild salsa and mild enchilada sauce. Skip chipotle peppers. Reduce chili powder by half and increase cumin. Sour cream and shredded cheese neutralize heat effectively. Most kids handle standard taco seasoning fine -- the heat primarily comes from fresh chiles and hot salsa, both easy to omit.
+
+---
+
+Twenty-five Mexican dinner ideas from quick weeknight tacos and sheet pan fajitas to slow cooker carnitas, pozole rojo, and chicken tortilla soup.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan -- five dinners, grocery list included -- in under a minute. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
