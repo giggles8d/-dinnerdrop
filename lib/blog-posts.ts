@@ -10046,6 +10046,198 @@ Twenty-five slow cooker beef recipes across five categories: classic comfort, sh
 `,
   },
 
+
+
+  {
+    slug: 'shrimp-pasta-recipes',
+    title: 'Shrimp Pasta Recipes: 25 Quick and Delicious Dinners the Whole Family Will Love',
+    description: 'The best shrimp pasta recipes for weeknight dinners -- from classic shrimp scampi and Cajun pasta to lemon garlic, Tuscan, and creamy Alfredo. Fast, fresh, and family-friendly.',
+    publishDate: '2027-06-22',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'shrimp pasta recipes',
+    content: `
+# Shrimp Pasta Recipes: 25 Quick and Delicious Dinners the Whole Family Will Love
+
+Shrimp pasta is one of the fastest weeknight dinners you can make. Shrimp cooks in 2 to 3 minutes per side, which means most of these recipes come together in under 30 minutes from fridge to table. Whether you want a rich, creamy Cajun sauce, a bright lemon-garlic butter, or a simple classic scampi, shrimp and pasta are a combination that works with almost any flavor profile.
+
+This list covers 25 shrimp pasta recipes across five categories: classic Italian-style, creamy sauces, light and fresh, Asian-inspired noodle dishes, and quick weeknight one-pan meals. All 25 are family-friendly and use ingredients available at any grocery store.
+
+If you want AI to pick the right shrimp pasta recipe for your week -- based on what your family likes and what is already in your fridge -- [DinnerDrop](https://dinnerdrop.app/beta) handles the full weekly plan for free during the beta.
+
+---
+
+## Classic Italian-Style Shrimp Pasta
+
+### 1. Shrimp Scampi
+
+The gold standard of shrimp pasta. Large shrimp sauteed in garlic, white wine, lemon juice, and butter, then tossed with linguine. Done in 20 minutes. The key is using enough butter and letting it emulsify into the pasta water to create a glossy, clingy sauce. Add red pepper flakes for heat and finish with fresh parsley.
+
+### 2. Shrimp Alfredo
+
+Fettuccine in a rich Parmesan cream sauce with sauteed shrimp. The classic version uses only butter, heavy cream, and Parmesan -- no flour, no thickening agents. The sauce comes together as the Parmesan melts into the cream. Season the shrimp separately with garlic and Italian seasoning before adding them to the sauce.
+
+### 3. Shrimp Fra Diavolo
+
+Fra diavolo means "brother devil" in Italian -- a spicy tomato sauce made with crushed red pepper, garlic, white wine, and San Marzano tomatoes. The shrimp are seared first, then finished in the sauce. Serve over linguine or spaghetti. The heat level is adjustable. This is the shrimp pasta for people who love spice.
+
+### 4. Shrimp Carbonara
+
+A twist on the Roman classic. Instead of guanciale or pancetta, large shrimp are seared in olive oil and tossed with the pasta-and-egg mixture. The technique is the same: eggs and Parmesan are mixed off-heat with hot pasta, creating a silky sauce from the residual heat. No cream needed. The shrimp add sweetness against the rich egg sauce.
+
+### 5. Garlic Butter Shrimp Pasta
+
+The simplest recipe on the list and often the most satisfying. Shrimp sauteed in garlic and butter, tossed with angel hair pasta and a splash of reserved pasta water. The pasta water is the key -- it makes the butter cling to the noodles instead of pooling at the bottom. Finish with fresh lemon juice, parsley, and Parmesan.
+
+---
+
+## Creamy Shrimp Pasta Sauces
+
+### 6. Cajun Shrimp Pasta
+
+One of the most popular shrimp pasta recipes in American home cooking. Shrimp seasoned with Cajun spice (paprika, cayenne, garlic powder, onion powder, thyme) and seared until charred at the edges, then combined with a cream sauce made with bell peppers, diced tomatoes, and heavy cream. Penne or rigatoni holds the sauce well. Adjust Cajun seasoning to control heat.
+
+### 7. Shrimp in Tomato Cream Sauce
+
+A milder, family-friendly version of Fra Diavolo. Crushed tomatoes, heavy cream, garlic, and basil create a blush-colored sauce that coats penne perfectly. The cream softens the acidity of the tomatoes. Add baby spinach in the last 2 minutes for color and nutrition. This is the shrimp pasta that picky eaters will eat without complaint.
+
+### 8. Tuscan Shrimp Pasta
+
+Sun-dried tomatoes, garlic, baby spinach, and heavy cream with Parmesan -- the same flavor profile as Tuscan chicken, but with shrimp. The sun-dried tomatoes add concentrated sweetness and chew that balances the rich cream sauce. Serve over pappardelle or fettuccine. Ready in 25 minutes.
+
+### 9. Shrimp and Spinach Pasta
+
+A lighter creamy pasta that feels indulgent without being heavy. Garlic, cream cheese (or light cream cheese), chicken broth, and a handful of baby spinach create a sauce that is thick enough to coat the pasta but not as rich as Alfredo. The shrimp add sweetness. Use whole wheat pasta to add fiber. This one reheats well for lunch the next day.
+
+### 10. Shrimp Vodka Sauce
+
+Classic penne alla vodka made with shrimp instead of the usual pancetta. The vodka cooks off but leaves behind a flavor that you cannot get any other way -- it pulls out compounds from the tomatoes that water cannot dissolve. The result is a deeper, more complex tomato-cream sauce. Add the shrimp in the last 5 minutes so they do not overcook.
+
+---
+
+## Light and Fresh Shrimp Pasta
+
+### 11. Lemon Garlic Shrimp Pasta
+
+The bright, clean version of garlic butter shrimp pasta. Extra lemon juice, lemon zest, capers, and fresh parsley lighten the dish considerably. Great for summer. Use thin pasta -- angel hair or capellini -- so the sauce stays light. The acidity of the lemon cuts through the butter and keeps the dish from feeling heavy.
+
+### 12. Shrimp Pesto Pasta
+
+Basil pesto from a jar (or homemade) tossed with cooked pasta, sauteed shrimp, halved cherry tomatoes, and fresh mozzarella pearls. No additional cooking required once the shrimp are done. Cold or room temperature, this also works as a pasta salad for potlucks. Arugula pesto is a peppery, adult-friendly variation.
+
+### 13. Greek Shrimp Pasta
+
+Inspired by Greek shrimp saganaki. Garlic, diced tomatoes, white wine, and oregano form the base. Add Kalamata olives, capers, and crumbled feta at the end. The feta does not fully melt -- it softens into creamy pockets throughout the pasta. Use a short pasta like orzo or penne. Finish with fresh lemon juice and parsley.
+
+### 14. Shrimp and Zucchini Pasta
+
+A vegetable-heavy, lower-carb-feeling pasta that still satisfies. Sliced zucchini is sauteed until golden, then combined with garlic, cherry tomatoes, shrimp, and a splash of pasta water. No cream, no heavy sauce -- just olive oil, lemon, and Parmesan. You can add zucchini noodles alongside regular pasta to increase the vegetable ratio without sacrificing the dish.
+
+### 15. Mediterranean Shrimp Pasta
+
+A combination of the best Mediterranean flavors: roasted red peppers, artichoke hearts, sun-dried tomatoes, spinach, and shrimp in a light white wine and olive oil sauce. No cream. Serve over linguine with a heavy pour of Parmesan and crusty bread on the side. The variety of textures and flavors makes this feel like a restaurant dish.
+
+---
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five dinners like these each week -- personalized to your family's preferences, with a complete grocery list. The beta is free for six months. No credit card required.
+
+---
+
+## Asian-Inspired Shrimp Noodle Dishes
+
+### 16. Shrimp Lo Mein
+
+Chinese-American lo mein uses egg noodles (or spaghetti as a substitute), a soy-sesame sauce, and quick-cooked vegetables. Shrimp go in last -- 2 minutes in a very hot wok or skillet. The sauce: soy sauce, oyster sauce, sesame oil, a touch of sugar, and cornstarch to thicken. Cabbage, carrots, snap peas, and green onions are the classic vegetables. Faster than takeout.
+
+### 17. Shrimp Pad Thai
+
+Rice noodles, shrimp, eggs, bean sprouts, green onions, and peanuts in a tamarind-fish sauce-sugar sauce that is sour, sweet, salty, and savory simultaneously. The noodles need to be soaked in cold water first (not boiled) so they finish cooking in the sauce. Serve with lime wedges and extra chili flakes. This is a 30-minute version of a restaurant classic.
+
+### 18. Shrimp Ramen
+
+Upgrade instant ramen with sauteed shrimp, soft-boiled eggs, bok choy, and a scratch-made broth from soy sauce, sesame oil, garlic, ginger, and chicken broth. The broth takes 10 minutes. The assembly is fast. This is the shrimp noodle dish for cold nights. Chili oil on top at the end.
+
+### 19. Teriyaki Shrimp Noodles
+
+Soba or udon noodles tossed with shrimp in a teriyaki glaze (soy sauce, mirin, sake, sugar). Add steamed broccoli, snap peas, or edamame for vegetables. The teriyaki sauce reduces and caramelizes around the shrimp, creating a slightly sticky, intensely savory coating. Serve warm or at room temperature. This is a good meal prep recipe.
+
+### 20. Garlic Sesame Shrimp Noodles
+
+Spaghetti or rice noodles coated in a no-cook sauce made from soy sauce, sesame oil, rice vinegar, garlic, ginger, and chili garlic sauce. Toss with hot noodles and sauteed shrimp. The sauce clings to the noodles without any cooking required. Finish with sliced cucumbers, shredded carrots, sesame seeds, and green onions. Serve cold as a noodle salad in summer.
+
+---
+
+## Quick Weeknight Shrimp Pasta (30 Minutes or Less)
+
+### 21. One-Pan Shrimp Pasta
+
+Everything cooks in a single skillet -- pasta, shrimp, vegetables, and sauce -- without boiling a separate pot of water. Add dry pasta directly to the skillet with enough broth or water to cook it. As the pasta absorbs the liquid, it releases starch that thickens the sauce naturally. Cherry tomatoes, garlic, basil, and shrimp go in together. Done in 20 minutes with one pan to wash.
+
+### 22. 20-Minute Lemon Shrimp Angel Hair
+
+Angel hair pasta cooks in 2 minutes. Shrimp cook in 3. This entire dinner takes 20 minutes including prep. Boil angel hair, drain, then toss immediately with sauteed shrimp, garlic butter, lemon juice, lemon zest, capers, and fresh parsley. The heat from the pasta finishes the sauce. No resting time needed. Great for nights when dinner needs to happen fast.
+
+### 23. Shrimp Pasta Primavera
+
+Spring vegetables -- asparagus, peas, cherry tomatoes, zucchini -- sauteed in olive oil and garlic, then tossed with spaghetti, shrimp, and Parmesan. Light, bright, and fast. The key is cutting all vegetables to roughly the same size so they cook evenly. Add a splash of pasta water at the end to bring everything together. A reliable way to use up produce before it turns.
+
+### 24. Rotini with Frozen Shrimp and Jarred Marinara
+
+A deliberately simple recipe for busy nights. Cook rotini, drain, return to pot, and add jarred marinara sauce warmed in a skillet with sauteed frozen shrimp (thawed quickly under cold water). Season with red pepper flakes and garlic. This is a 15-minute dinner using pantry staples. The result is better than it sounds when you season correctly and use good marinara.
+
+### 25. Shrimp and Burst Cherry Tomato Pasta
+
+Cherry tomatoes cooked in olive oil and garlic until they burst and release their liquid -- this takes about 8 minutes over medium-high heat and creates a light, jammy sauce without any additional ingredients. Add shrimp, toss with cooked pasta, finish with fresh basil and Parmesan. The tomato liquid and pasta water do the work. Clean, fresh, and impressive for how little effort it takes.
+
+---
+
+## Tips for Cooking Shrimp Pasta
+
+**Do not overcook the shrimp.** This is the most common mistake. Shrimp cook in 2 to 3 minutes per side over medium-high heat. They are done when they turn pink and curl into a loose C-shape. An overcooked shrimp curls into a tight O-shape -- rubbery and dry. Pull them from the heat 30 seconds before you think they are done. They will finish cooking from residual heat.
+
+**Always reserve pasta water.** Before you drain the pasta, scoop out at least a cup of the starchy cooking water. When your sauce is too thick, too greasy, or not coating the pasta evenly, a splash of pasta water fixes it immediately. The starch acts as an emulsifier that binds sauce to noodles.
+
+**Buy the right size shrimp.** For pasta, large (16/20 count) or extra-large (13/15 count) shrimp work best. Smaller shrimp overcook easily and get lost in thick sauces. Larger shrimp stay plump and visible in every bite. Frozen shrimp work perfectly -- thaw them under cold running water for 5 minutes and dry them thoroughly before cooking.
+
+**Season the shrimp separately.** Before adding shrimp to a sauce, season them with salt, pepper, garlic powder, and whatever spices fit the dish (Cajun seasoning, Italian seasoning, paprika). Seasoning directly on the shrimp instead of relying only on the sauce creates more layered flavor.
+
+**Dry the shrimp before searing.** Pat shrimp completely dry with paper towels before they hit the pan. Wet shrimp steam instead of sear, which means you lose the browning and caramelized edges that add flavor. A dry, hot pan with a thin layer of oil creates the sear.
+
+---
+
+## How DinnerDrop Handles Shrimp Nights
+
+Knowing which nights work for a 20-minute shrimp scampi versus a longer Cajun pasta is exactly what [DinnerDrop](https://dinnerdrop.app/beta) handles automatically. It generates five personalized dinner plans each week -- including seafood nights -- with a complete grocery list so you buy the right amount of shrimp for exactly the recipes you are making.
+
+The beta is free for six months. No credit card required.
+
+---
+
+## FAQ
+
+**What pasta shape works best with shrimp?**
+Linguine, fettuccine, and spaghetti work best with light, olive-oil or butter-based sauces (scampi, garlic butter, lemon). Penne, rigatoni, and rotini work better with heavier cream or tomato sauces because the sauce gets trapped inside the tubes. Angel hair is the fastest-cooking option for quick weeknight meals.
+
+**Can you use frozen shrimp for pasta?**
+Yes -- frozen shrimp are often fresher than "fresh" shrimp at the seafood counter, which is usually previously frozen and thawed. Buy frozen, thaw under cold running water for 5 minutes, pat dry, and cook as usual. Large frozen shrimp (16/20 count) are the most versatile size for pasta recipes.
+
+**How do you keep shrimp from getting rubbery?**
+Cook quickly over medium-high heat and pull them the moment they turn pink. Shrimp proteins tighten rapidly when overcooked. When in doubt, pull them slightly early -- they will finish cooking from residual heat in the hot sauce. Adding shrimp last in any recipe is almost always the right call.
+
+**Can you make shrimp pasta ahead of time?**
+Shrimp pasta is best served immediately. Shrimp continue to cook in hot pasta and become rubbery when reheated. If meal prepping, cook the pasta and sauce ahead and store separately, then cook fresh shrimp just before eating. Pesto-based and Asian-style noodle dishes reheat slightly better than cream-based sauces.
+
+**What wine pairs well with shrimp pasta?**
+Crisp, dry white wines work best: Pinot Grigio, Sauvignon Blanc, unoaked Chardonnay, or Vermentino. For Cajun-style shrimp pasta, an off-dry Riesling helps balance the heat. For cooking, use the same wine you plan to drink -- avoid cooking wines with added salt.
+
+---
+
+Twenty-five shrimp pasta recipes from classic Italian scampi to Cajun cream, Tuscan, Greek, and quick Asian noodle dishes.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized dinners each week with a complete grocery list -- including shrimp nights when they fit your schedule. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
