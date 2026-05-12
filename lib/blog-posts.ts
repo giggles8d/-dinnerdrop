@@ -12840,6 +12840,168 @@ Baked chicken thighs reheat better than any other cut of chicken. Store in an ai
 Twenty-five baked chicken thigh recipes gives you nearly a month of weeknight dinners without repeating. If you want those recipes turned into a personalized weekly plan with a pre-sorted grocery list, [DinnerDrop has you covered.](/beta)
 `
   }
+
+  ,{
+    slug: 'baked-salmon-recipes',
+    title: '25 Baked Salmon Recipes the Whole Family Will Love',
+    description:
+      'From lemon herb to honey teriyaki, these baked salmon recipes are weeknight-fast, ' +
+      'family-friendly, and packed with flavor. All 25 come together in 30 minutes or less.',
+    publishDate: '2027-09-28',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'baked salmon recipes',
+    content: `Salmon is one of those rare ingredients that manages to be fast, nutritious, and genuinely liked by most families — including picky kids, once you find the right preparation. Baked salmon in particular asks almost nothing of you: season it, put it in the oven, and have dinner on the table before anyone gets desperate.
+
+The challenge is variety. The same lemon-herb fillet every Tuesday gets old. This list gives you 25 baked salmon recipes across five categories — classics, sheet pan meals, glazed versions, family-friendly options, and quick weeknight rescues — so you can rotate through a month of salmon dinners without repetition.
+
+[DinnerDrop turns any of these into a full weekly plan with a ready-to-shop grocery list in one tap.](/beta)
+
+---
+
+## Classic Baked Salmon (5 Recipes)
+
+These are the foundational preparations every salmon cook should have memorized. Simple ingredients, reliable results.
+
+**1. Lemon Herb Baked Salmon**
+Season a center-cut fillet with olive oil, garlic, lemon zest, fresh dill, salt, and pepper. Bake at 400°F for 12–15 minutes until it flakes easily. Finish with a squeeze of fresh lemon juice. This is the benchmark recipe that makes salmon converts out of skeptics.
+
+**2. Garlic Butter Baked Salmon**
+Melt 3 tablespoons of butter with 4 minced garlic cloves and a pinch of red pepper flakes. Brush generously over the fillet and bake at 425°F for 12–14 minutes. Spoon the pan drippings over the top before serving. Serve with crusty bread to catch the butter.
+
+**3. Simple Oven-Baked Salmon (The 10-Minute Version)**
+Olive oil, salt, pepper, and garlic powder. That is the entire ingredient list. Bake at 450°F for 8–10 minutes per inch of thickness. The high heat seals in moisture quickly. This is the recipe for nights when dinner needs to happen immediately.
+
+**4. Dijon Mustard Baked Salmon**
+Spread a thin layer of Dijon mustard across the top of the fillet, then press in a mixture of breadcrumbs, Parmesan, and fresh thyme. Bake at 400°F for 15–18 minutes until the crust is golden. The mustard tanginess cuts through the richness of the salmon perfectly.
+
+**5. Brown Sugar Garlic Baked Salmon**
+Mix 2 tablespoons of brown sugar with minced garlic, soy sauce, and a touch of olive oil to form a glaze. Brush over the fillet and bake at 400°F for 15 minutes. The sugar caramelizes into a sticky crust while the garlic perfumes the whole oven. Kids who claim not to like fish routinely eat two portions.
+
+---
+
+## Sheet Pan Salmon Dinners (5 Recipes)
+
+One pan, protein and vegetables together, done in under 25 minutes. These are the weeknight workhorses.
+
+**6. Sheet Pan Salmon with Asparagus**
+Toss asparagus spears with olive oil and salt, arrange around the salmon fillet, and roast everything at 400°F for 15–18 minutes. Add a lemon garlic butter to finish both the fish and vegetables at once. The asparagus tips get slightly crispy while the salmon cooks through.
+
+**7. Sheet Pan Salmon with Potatoes and Green Beans**
+This one requires a head start: roast baby potatoes for 20 minutes at 425°F before adding the salmon and green beans for the final 15 minutes. Season everything consistently so the plate reads as a cohesive meal. It is a complete dinner with zero additional pots.
+
+**8. Sheet Pan Salmon with Broccoli**
+Season salmon with lemon pepper seasoning, toss broccoli florets with olive oil and garlic, and roast together at 400°F for 18–20 minutes. The broccoli edges crisp in the high heat while the salmon stays moist. Add Parmesan over the broccoli in the last two minutes.
+
+**9. Sheet Pan Mediterranean Salmon**
+Arrange salmon over a bed of cherry tomatoes, kalamata olives, sliced red onion, and artichoke hearts. Drizzle everything with olive oil and dried oregano. Roast at 400°F for 20 minutes. The tomatoes burst and create a natural sauce. Serve with pita or couscous.
+
+**10. Sheet Pan Salmon with Sweet Potato and Brussels Sprouts**
+Cube sweet potatoes and halve Brussels sprouts, toss with olive oil and balsamic vinegar, and roast at 425°F for 20 minutes. Add seasoned salmon and cook 12–15 minutes more. The balsamic caramelizes on the vegetables and the combination of sweet and savory works particularly well with salmon.
+
+---
+
+## Glazed Baked Salmon (5 Recipes)
+
+A glaze transforms salmon from good to something you will crave specifically. The sugar content caramelizes at oven temperature to produce a lacquered surface that looks restaurant-worthy.
+
+**11. Teriyaki Baked Salmon**
+Whisk soy sauce, mirin, sake (or dry sherry), and sugar in a small saucepan until the sugar dissolves. Pour over the fillet and bake at 400°F for 12–15 minutes, basting once halfway through. The glaze thickens in the oven into a glossy coat. Serve over steamed rice with sesame seeds and sliced green onions.
+
+**12. Honey Garlic Baked Salmon**
+Combine honey, minced garlic, soy sauce, and a squeeze of lemon juice. Spoon over the fillet and bake at 400°F for 15 minutes, basting at the 8-minute mark. The honey creates caramelized edges while the center stays silky. This is consistently the most-requested salmon recipe in family households.
+
+**13. Maple Soy Glazed Salmon**
+Pure maple syrup, low-sodium soy sauce, Dijon mustard, and minced ginger. Whisk together, brush generously, and bake at 400°F for 12–15 minutes. The maple adds depth that plain sugar glazes do not. Pairs especially well with roasted root vegetables in fall and winter.
+
+**14. Miso Glazed Salmon**
+White miso paste, mirin, sake, and sugar form a rich, umami-forward glaze. Marinate the salmon for at least 30 minutes (up to overnight), then bake at 400°F for 12–14 minutes. This preparation is popular enough in Japanese cuisine to be the single most-ordered salmon dish at upscale restaurants globally.
+
+**15. Honey Mustard Baked Salmon**
+Equal parts honey and whole-grain mustard, thinned with a splash of apple cider vinegar. Spread across the top and bake at 400°F for 15 minutes. The mustard seeds toast slightly in the oven and add texture. This is an excellent bridge recipe for households where salmon is new — the mustard-honey profile is familiar and approachable.
+
+---
+
+## Family-Friendly and Kid-Approved Salmon (5 Recipes)
+
+These preparations prioritize flavors kids already like and textures that make salmon less intimidating. Several disguise the salmon entirely inside a familiar format.
+
+**16. Salmon Patties (Baked, Not Fried)**
+Mix canned or fresh-cooked salmon with breadcrumbs, egg, Dijon, green onion, and lemon juice. Form into patties and bake at 400°F on a greased sheet for 15 minutes, flipping halfway. Serve with tartar sauce or ketchup for kids. They look and taste more like a crab cake than a fish fillet, which makes them a reliable win for hesitant eaters.
+
+**17. Panko-Crusted Baked Salmon**
+Press a thick layer of panko breadcrumbs mixed with Parmesan, garlic powder, and melted butter into the top of the fillet. Bake at 425°F for 15–18 minutes until the crust is golden and crunchy. The crispy coating mimics fried fish textures, which appeals broadly to kids who claim fish is "too fishy."
+
+**18. Salmon with Cream Sauce**
+Bake a plain fillet at 400°F for 12 minutes while making a quick cream sauce: butter, garlic, heavy cream, Parmesan, and fresh dill in a skillet for 5 minutes. Pour the sauce over the plated salmon. Cream sauces soften the flavor profile significantly. Very young children who are salmon-resistant often accept this version without complaint.
+
+**19. Cajun Baked Salmon**
+Coat salmon generously in a Cajun spice blend (smoked paprika, garlic powder, onion powder, cayenne, thyme). Bake at 425°F for 12–14 minutes for a spiced, bold exterior. Dial the cayenne up or down depending on your household's heat tolerance. Serve over rice with a cooling yogurt or sour cream sauce alongside for kids.
+
+**20. Salmon and Rice Bake**
+Layer uncooked rinsed rice, chicken broth, diced vegetables, and seasoning in a baking dish. Nestle raw salmon fillets on top, cover tightly with foil, and bake at 375°F for 40–45 minutes until the rice has absorbed all liquid and the salmon is cooked through. Everything finishes together in one vessel. Cleanup is a single dish.
+
+---
+
+## Quick 30-Minute Baked Salmon (5 Recipes)
+
+When dinner needs to happen faster than the oven can fully preheat, these preparations prioritize speed above all else.
+
+**21. 15-Minute Baked Salmon at 450°F**
+This is the fastest reliable method: preheat oven to 450°F with a sheet pan inside. Season the fillet, place it on the screaming-hot pan, and bake for exactly 8–10 minutes depending on thickness. The preheated pan cooks the bottom immediately and no flipping is required. Total active time: under 5 minutes.
+
+**22. Foil Packet Salmon**
+Place seasoned salmon on a sheet of foil with sliced lemon, butter, garlic, and fresh herbs. Fold the foil into a sealed packet and bake at 400°F for 18–20 minutes. The packet steams the fish in its own juices, producing exceptionally moist salmon. Clean up is the foil packet going into the trash.
+
+**23. Pesto Salmon**
+Spread 2–3 tablespoons of store-bought or homemade basil pesto over the fillet. Bake at 400°F for 12–15 minutes. Pesto contains olive oil, garlic, and herbs that season the salmon completely — it is a one-ingredient preparation that tastes like it took significantly more effort. Top with halved cherry tomatoes for color.
+
+**24. Lemon Butter Salmon in 20 Minutes**
+Melt butter with garlic, lemon juice, and a pinch of salt in a small bowl. Pour over salmon in a baking dish and bake at 425°F for 12–14 minutes. Baste once halfway through. This is the "nothing in the house" recipe — butter and lemons are pantry constants that produce genuinely good salmon without advance planning.
+
+**25. Air Fryer Baked Salmon**
+Technically not baked, but faster and with better exterior texture than traditional oven methods. Season, air fry at 400°F for 7–9 minutes. No preheating. The circulating air creates a lightly crispy exterior the oven rarely matches at similar cook times. If your household owns an air fryer, this becomes the default weeknight method.
+
+---
+
+## 5 Tips for Perfect Baked Salmon Every Time
+
+**1. Remove salmon from the refrigerator 15 minutes before baking.** Cold salmon placed directly in a hot oven cooks unevenly — the outside overcooks before the center reaches temperature. A brief rest at room temperature produces more consistent results.
+
+**2. Bake at 400–425°F, not 350°F.** Lower temperatures produce soft, somewhat mushy textures. Higher heat creates better caramelization on glazes and firmer texture throughout.
+
+**3. Do not overcook it.** Salmon is done when it reaches 125–130°F internally (medium) or 145°F (well done per USDA guidelines). The fish should flake when pressed with a fork but still look slightly translucent at the very center at medium doneness. Overcooked salmon turns dry and chalky and is the most common reason people claim not to like it.
+
+**4. Skin-on fillets are more forgiving.** The skin acts as a barrier that insulates the flesh from direct oven heat and slows moisture loss. If you or your family dislike eating the skin, cook it skin-on and slide it off before serving.
+
+**5. Let it rest 3 minutes before serving.** Carryover cooking continues after you pull salmon from the oven. A brief rest also lets the juices redistribute so the fish stays moist when portioned.
+
+Choosing which of these to cook on any given night is the one part of dinner that still takes mental energy. [DinnerDrop picks the recipe, builds the weekly plan, and sends you out with a grocery list.](/beta)
+
+---
+
+## Frequently Asked Questions
+
+**How long do you bake salmon at 400°F?**
+A 1-inch fillet takes 12–15 minutes at 400°F. Thin fillets under 3/4-inch take 10–12 minutes. Thick center-cut portions over 1.5 inches need 18–20 minutes. Always test for doneness rather than relying on time alone — the fish should flake when pressed with a fork.
+
+**Should I cover salmon when baking?**
+It depends on the result you want. Uncovered: better caramelization, firmer texture, better glaze adhesion. Covered or in foil: more steam, moister texture, no browning. For glazed recipes, always bake uncovered. For plain or butter-based preparations, either works.
+
+**How do I know when salmon is done?**
+Salmon is cooked through when it reaches an internal temperature of 145°F. Visually, cooked salmon changes from translucent pink to opaque and flakes easily when you press it gently with a fork. When in doubt, a $10 instant-read thermometer removes all guesswork.
+
+**Can I bake salmon from frozen?**
+Yes. Rinse frozen fillets under cold water, pat dry, season, and bake at 400°F for 20–25 minutes (versus 12–15 for thawed). The texture is slightly more watery than fresh but fully acceptable for weeknights. If using a glaze, apply it at the 15-minute mark so it does not burn during the extended cook time.
+
+**What goes with baked salmon?**
+Salmon pairs with almost any side: roasted vegetables, rice, quinoa, couscous, mashed potatoes, simple salads, or crusty bread. Its mild flavor allows bold side dishes without competition. The simplest complete dinner is salmon plus one vegetable on the same sheet pan, which eliminates extra pots entirely.
+
+---
+
+Twenty-five recipes gives you five weeks of salmon dinners before repetition. If you want those recipes organized into a personalized weekly plan with a sorted grocery list, [DinnerDrop handles the planning for you.](/beta)
+`
+  }
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
