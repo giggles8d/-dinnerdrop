@@ -9551,6 +9551,168 @@ Twenty-five ground chicken recipes -- tacos, meatballs, stir-fry, lettuce wraps,
 **[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+
+  {
+    slug: 'chicken-casserole-recipes',
+    title: 'Chicken Casserole Recipes: 25 Easy Baked Dinners the Whole Family Will Love',
+    description: 'Twenty-five chicken casserole recipes for busy weeknights. Classic chicken and rice, broccoli cheddar, enchilada, pot pie, and pasta bakes — all made in one dish.',
+    date: '2027-06-01',
+    readTime: '10 min',
+    keyword: 'chicken casserole recipes',
+    content: `
+# Chicken Casserole Recipes: 25 Easy Baked Dinners the Whole Family Will Love
+
+Chicken casseroles are the most practical category of weeknight dinners. You assemble everything in one dish, slide it into the oven, and the heat does the rest. No stirring. No watching the stove. No juggling three pans at once. When the timer goes off, dinner is ready and cleanup is a single baking dish.
+
+This guide covers 25 chicken casserole recipes across five categories: classic comfort casseroles, broccoli and vegetable bakes, pasta and rice casseroles, enchilada and Mexican-style bakes, and lighter options for families who want something satisfying without a pound of cheese. Each recipe is designed for a 9x13 inch baking dish and serves four to six people.
+
+[DinnerDrop](https://dinnerdrop.app/beta) can plan your casserole nights automatically -- five meals, a grocery list, and zero decision fatigue. The beta is free for six months.
+
+---
+
+## Classic Comfort Chicken Casseroles
+
+### 1. Classic Chicken and Rice Casserole
+The original. Raw rice, chicken thighs, cream of chicken soup, and chicken broth go into the dish together. Cover tightly with foil and bake at 350 degrees F for 90 minutes. The rice absorbs the broth and soup as it cooks, coming out tender and deeply savory. Season with garlic powder, onion powder, salt, and pepper. Add a handful of frozen peas in the last 10 minutes if you want a vegetable built in.
+
+### 2. Chicken Pot Pie Casserole
+All the flavor of a pot pie without making pastry dough. Saute diced chicken breast, carrots, celery, peas, and onion in a skillet. Stir in chicken broth and cream of chicken soup. Pour into a baking dish. Cover with a layer of refrigerated biscuit dough or store-bought puff pastry. Bake at 375 degrees F for 25 to 30 minutes until the topping is golden and the filling is bubbling at the edges.
+
+### 3. Creamy Chicken Noodle Casserole
+Cook egg noodles to al dente. Combine with diced cooked chicken, cream of mushroom soup, sour cream, chicken broth, frozen peas, and shredded cheddar. Pour into a greased 9x13 dish. Top with crushed Ritz crackers mixed with melted butter. Bake at 350 degrees F for 30 minutes. The cracker topping bakes into a buttery, golden crust that contrasts with the creamy noodle base underneath.
+
+### 4. King Ranch Chicken Casserole
+A Texas classic. Layer corn tortillas, shredded cooked chicken, diced tomatoes with green chiles (Rotel), cream of chicken soup, cream of mushroom soup, chicken broth, and shredded cheddar in a 9x13 dish. Repeat layers until the dish is full. Bake uncovered at 350 degrees F for 40 minutes until hot and bubbly. Add sour cream and sliced jalapenos at the table.
+
+### 5. Chicken and Stuffing Casserole
+Spread softened cream cheese and cooked shredded chicken across the bottom of a greased baking dish. Mix a box of stuffing mix with chicken broth per the package directions. Spread the stuffing over the chicken. Drizzle with melted butter. Bake at 375 degrees F for 25 to 30 minutes until the top is golden. A 30-minute Thanksgiving-style dinner on a Tuesday.
+
+---
+
+## Broccoli and Vegetable Chicken Bakes
+
+### 6. Cheesy Chicken Broccoli Casserole
+The most-requested weeknight casserole in American households. Combine cooked rice, cooked chicken breast, steamed broccoli florets, cream of chicken soup, chicken broth, sour cream, and shredded sharp cheddar. Season with garlic powder and onion powder. Pour into a 9x13 dish. Top with more cheddar and crushed crackers. Bake at 350 degrees F for 30 to 35 minutes.
+
+### 7. Chicken and Green Bean Casserole
+Mix cooked chicken pieces with fresh or frozen green beans, cream of mushroom soup, chicken broth, and a dash of Worcestershire sauce. Top with French fried onions and a layer of shredded Swiss cheese. Bake at 350 degrees F for 30 minutes. The Swiss cheese adds a nutty depth the standard green bean casserole lacks.
+
+### 8. Chicken and Asparagus Bake
+Arrange chicken breasts in a greased dish. Toss asparagus spears with olive oil, garlic, lemon zest, salt, and pepper. Layer around and over the chicken. Top with a mixture of Dijon mustard, heavy cream, and Parmesan. Bake at 400 degrees F for 25 to 30 minutes. Lighter than a cream-soup casserole and faster.
+
+### 9. Chicken, Spinach, and Artichoke Casserole
+Mix cream cheese, sour cream, shredded mozzarella, Parmesan, garlic, frozen spinach (thawed and squeezed dry), and canned artichoke hearts. Fold in shredded rotisserie chicken. Pour into a baking dish. Top with more mozzarella. Bake at 375 degrees F for 25 minutes until hot and bubbly. Serve over pasta or with crusty bread.
+
+### 10. Mexican Chicken and Corn Casserole
+Combine shredded chicken, canned corn (drained), black beans (rinsed), salsa, cream cheese, cumin, chili powder, and shredded Mexican blend cheese. Pour into a greased dish. Top with tortilla chips crushed into large pieces. Bake at 375 degrees F for 25 minutes. The chips on top act as a built-in crunch layer.
+
+---
+
+## Pasta and Rice Chicken Bakes
+
+### 11. Chicken Pasta Bake
+Cook penne or ziti to al dente. Combine with sauteed chicken breast, jarred marinara sauce, Italian seasoning, garlic, and ricotta cheese. Pour into a greased 9x13 dish. Top with shredded mozzarella and Parmesan. Bake at 375 degrees F for 25 minutes until the cheese is melted and beginning to brown. Rest 5 minutes before serving.
+
+### 12. Creamy Tuscan Chicken Pasta Casserole
+Cook rigatoni to al dente. Saute chicken in olive oil with garlic, sun-dried tomatoes, and Italian seasoning. Add heavy cream, Parmesan, and a handful of fresh spinach. Toss with the pasta. Pour into a baking dish. Top with breadcrumbs and Parmesan. Bake at 375 degrees F for 20 minutes.
+
+### 13. Chicken Fried Rice Casserole
+Spread leftover cooked rice in a greased 9x13 dish. Top with diced cooked chicken, frozen peas and carrots, soy sauce, sesame oil, garlic, and ginger. Beat 3 eggs and pour over the top. Stir lightly to distribute. Bake at 375 degrees F for 25 minutes, stirring halfway through. The eggs scramble through the rice as it bakes. Finish with sliced green onions.
+
+### 14. Chicken and Wild Rice Casserole
+Cook wild rice blend per package directions. Combine with shredded chicken, sauteed celery, onion, and mushrooms, cream of mushroom soup, chicken broth, and dried thyme. Pour into a greased dish. Top with sliced almonds. Bake at 350 degrees F for 35 minutes. The wild rice adds a nutty, chewy texture that elevates this beyond a standard casserole.
+
+### 15. Buffalo Chicken Mac and Cheese Casserole
+Cook elbow macaroni to al dente. Make a quick cheese sauce with butter, flour, milk, shredded cheddar, and cream cheese. Stir in shredded rotisserie chicken, buffalo sauce, and ranch dressing. Combine with the pasta. Pour into a greased dish. Top with panko breadcrumbs mixed with melted butter. Bake at 375 degrees F for 25 minutes.
+
+---
+
+## Enchilada and Mexican-Style Chicken Casseroles
+
+### 16. Chicken Enchilada Casserole
+Layer corn tortillas, shredded chicken, canned green enchilada sauce, and shredded Monterey Jack in a 9x13 dish. Repeat three times. Top the final layer with extra cheese. Bake at 375 degrees F for 30 minutes until the cheese is golden and the layers are set. Let stand 10 minutes before cutting into squares. Serve with sour cream and pico de gallo.
+
+### 17. White Chicken Enchilada Casserole
+Use white enchilada sauce (sour cream, green chiles, chicken broth) instead of red. Layer flour tortillas with shredded chicken, white sauce, and Monterey Jack. Bake at 350 degrees F for 30 minutes. Top with pickled jalapenos and fresh cilantro. Creamier and milder than the red sauce version.
+
+### 18. Chicken Tamale Casserole
+Make a quick cornbread base using corn muffin mix, creamed corn, egg, and sour cream. Spread in a greased 9x13 dish and bake at 400 degrees F for 15 minutes. Mix shredded chicken with enchilada sauce. Spread over the partially baked cornbread base. Top with shredded cheddar. Return to oven for 15 more minutes. The cornbread bakes into a moist tamale-like layer underneath the sauced chicken.
+
+### 19. Chicken Quesadilla Casserole
+Layer flour tortillas flat across a greased 9x13 dish. Top with seasoned shredded chicken, black beans, corn, salsa, and shredded Mexican cheese. Repeat for two or three layers. Finish with a final tortilla layer and a heavy top of cheese. Bake at 375 degrees F for 25 minutes. Cut into squares like lasagna.
+
+### 20. Chicken Taco Bake
+Season shredded chicken with taco seasoning and salsa. Spread in a greased baking dish. Top with canned refried beans, then shredded cheddar, then crushed tortilla chips. Bake at 375 degrees F for 20 minutes. The chips go on in the last 5 minutes so they toast without going soft.
+
+---
+
+## Lighter Chicken Casseroles
+
+### 21. Greek Chicken and Orzo Bake
+Toss chicken thighs, orzo, cherry tomatoes, sliced Kalamata olives, diced red onion, olive oil, garlic, dried oregano, salt, and pepper in a 9x13 dish. Add chicken broth until the orzo is just covered. Bake covered at 375 degrees F for 30 minutes. Uncover for the last 10 minutes. Finish with crumbled feta and fresh parsley.
+
+### 22. Lemon Herb Chicken and Vegetable Bake
+Arrange chicken breasts over a bed of diced zucchini, red bell pepper, cherry tomatoes, and red onion. Whisk together olive oil, lemon juice, garlic, dried oregano, dried thyme, salt, and pepper. Pour over everything. Bake at 400 degrees F for 30 to 35 minutes until the chicken reaches 165 degrees F and the vegetables are roasted at the edges.
+
+### 23. Chicken and Sweet Potato Casserole
+Toss diced sweet potatoes and chicken thighs with olive oil, smoked paprika, garlic powder, cumin, salt, and pepper. Arrange in a single layer in a 9x13 dish. Bake at 400 degrees F for 35 to 40 minutes, stirring halfway through. Finish with a drizzle of honey and fresh thyme.
+
+### 24. Mediterranean Chicken Bake
+Place chicken thighs in a baking dish. Surround with canned artichoke hearts, sun-dried tomatoes, sliced olives, sliced red onion, and fresh lemon slices. Drizzle with olive oil. Season with salt, pepper, and dried herbs. Bake at 400 degrees F for 35 minutes. Serve directly from the dish with crusty bread.
+
+### 25. Chicken, Quinoa, and Kale Bake
+Cook quinoa in chicken broth. Toss with shredded chicken, chopped kale (stems removed), diced onion, garlic, olive oil, lemon juice, cumin, and salt. Pour into a greased baking dish. Top with a thin layer of shredded Parmesan. Bake at 375 degrees F for 25 minutes. The Parmesan forms a light crust. The quinoa stays fluffy.
+
+---
+
+## Tips for Better Chicken Casseroles
+
+**Use rotisserie chicken.** Rotisserie chicken is the biggest time saver in casserole cooking. A $6 bird gives you 3 to 4 cups of pulled chicken with no cooking required. Pull the meat while it is warm -- it separates more easily. Use both light and dark meat for better flavor than breast alone.
+
+**Cover with foil for the first two-thirds of baking time.** Covering traps steam and prevents the top and edges from drying out before the center is cooked through. Uncover for the last 10 to 15 minutes to brown the topping. The exception: anything with a cracker or chip topping goes uncovered the whole way.
+
+**Do not skip resting time.** Casseroles that come straight from the oven are too loose to cut cleanly. Let them rest 5 to 10 minutes after pulling from the oven. The sauce thickens and the layers set.
+
+**Season every layer.** The most common casserole mistake is seasoning only the sauce. Salt the chicken. Season the vegetables. Taste the sauce before it goes in the dish. Everything should be properly seasoned before assembly.
+
+**Build in a topping texture.** The best casseroles have a contrast between the creamy interior and a crunchy top. Options: crushed Ritz crackers mixed with butter, panko breadcrumbs with Parmesan, crushed tortilla chips, French fried onions, or sliced almonds.
+
+---
+
+## How DinnerDrop Plans Casserole Nights
+
+The hardest part of weeknight cooking is not the cooking -- it is deciding what to make and making sure you have the right ingredients. [DinnerDrop](https://dinnerdrop.app/beta) generates a five-meal weekly plan based on your preferences and builds the complete grocery list automatically. You can weight your plan toward casseroles, specify which nights you want a one-dish dinner, and have everything organized by store aisle before you shop.
+
+The beta is free for six months.
+
+---
+
+## FAQ
+
+**Can I assemble a chicken casserole the night before?**
+Yes. Assemble the casserole, cover tightly with plastic wrap, and refrigerate up to 24 hours. When ready to bake, add 10 to 15 minutes to the bake time to account for the cold start. If the topping is breadcrumbs or crackers, add it just before baking so it does not absorb moisture overnight.
+
+**Can you freeze chicken casserole?**
+Most casseroles freeze well for up to 3 months. Avoid freezing casseroles made with potato or with raw egg mixed into the filling -- both change texture badly after freezing. Assemble in a freezer-safe dish, cover with plastic wrap then foil, and freeze unbaked. Thaw overnight in the refrigerator and bake as directed, adding 10 to 15 minutes.
+
+**What temperature do you bake most chicken casseroles?**
+Most chicken casseroles bake at 350 to 375 degrees F. Higher-heat casseroles (400 degrees F) are the ones that rely on roasting rather than a cream sauce -- sheet-pan-style bakes and vegetable bakes where you want browning and caramelization.
+
+**How do you keep chicken casserole from drying out?**
+Three factors: enough liquid in the sauce, foil for the first portion of baking, and not overbaking. Chicken breast dries out faster than thighs -- substituting thighs gives you significant forgiveness. Cream soups and heavy cream also act as moisture buffers.
+
+**How long does chicken casserole last in the fridge?**
+Three to four days in an airtight container. Reheat individual portions covered with a damp paper towel in the microwave, or reheat the whole dish covered with foil in a 325 degree F oven for 20 minutes. Most casseroles taste better the next day.
+
+---
+
+Twenty-five chicken casserole recipes covering classic comfort bakes, vegetable casseroles, pasta and rice bakes, Mexican-style enchilada casseroles, and lighter one-dish dinners.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan in 30 seconds -- five meals with a complete grocery list, ready to shop. The beta is free for six months.
+
+**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
