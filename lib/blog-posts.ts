@@ -1,4 +1,4 @@
-export interface BlogPost {
+﻿export interface BlogPost {
   slug: string
   title: string
   description: string
@@ -10907,11 +10907,11 @@ Twenty-five chicken stir fry recipes -- from takeout-style chicken and broccoli 
 
 
   {
-    id: 64,
     slug: 'fried-rice-recipe',
     title: 'Fried Rice Recipe: 25 Best Fried Rice Recipes for Weeknight Dinners',
     description: 'The best fried rice recipes for families, from classic egg fried rice and chicken fried rice to hibachi-style, kimchi fried rice, and quick 20-minute weeknight versions.',
-    readTime: '10 min read',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'fried rice recipe',
     publishDate: '2027-07-27',
     content: `# Fried Rice Recipe: 25 Best Fried Rice Recipes for Weeknight Dinners
 
@@ -11062,15 +11062,12 @@ Twenty-five fried rice recipes -- from classic egg fried rice and Yang Chow to k
   },
 ,
   {
-    id: 65,
     slug: 'chili-recipe',
     title: '25 Best Chili Recipes for Every Family — Classic, Quick, and Crowd-Pleasing',
-    excerpt: 'From classic beef chili to white chicken chili, turkey chili, vegetarian versions, and slow cooker favorites — these 25 chili recipes cover every craving, budget, and weeknight scenario.',
+    description: 'From classic beef chili to white chicken chili, turkey chili, vegetarian versions, and slow cooker favorites — these 25 chili recipes cover every craving, budget, and weeknight scenario.',
     publishDate: '2027-08-03',
-    readingTime: '10 min',
-    keyword: 'chili recipe',
-    searchVolume: '12000',
-    category: 'Dinner Ideas',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'chili recipe',
     content: `## 25 Best Chili Recipes for Every Family
 
 Chili is the ultimate weeknight hero: one pot, pantry ingredients, feeds a crowd, and tastes even better the next day. Whether you want a 30-minute stovetop version or an all-day slow cooker project, spicy or mild, beef or beans-only, this list covers every angle.
@@ -11295,15 +11292,15 @@ Classic toppings: sour cream, shredded cheddar, diced onion, sliced jalapeños, 
   }
   ,
   {
-    id: 66,
+
     slug: 'beef-stew-recipe',
     title: '25 Best Beef Stew Recipes for Families — Classic, Slow Cooker, and Hearty Comfort Food',
-    excerpt: 'From classic stovetop beef stew to slow cooker versions, Irish stew, and budget-friendly variations — these 25 beef stew recipes deliver the deep, rich comfort food every family craves on cold nights.',
+    description: 'From classic stovetop beef stew to slow cooker versions, Irish stew, and budget-friendly variations — these 25 beef stew recipes deliver the deep, rich comfort food every family craves on cold nights.',
     publishDate: '2027-08-10',
-    readingTime: '10 min',
-    keyword: 'beef stew recipe',
-    searchVolume: '10000',
-    category: 'Dinner Ideas',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'beef stew recipe',
+
+
     content: `## 25 Best Beef Stew Recipes for Families
 
 Beef stew is one of the greatest comfort foods ever made: tender chunks of beef, hearty vegetables, and a rich, deeply savory broth that thickens into something that feels less like a soup and more like a hug. Whether you have three hours on a Sunday afternoon or want to set a slow cooker and walk away, these 25 beef stew recipes cover every scenario — classic, quick, international, budget-friendly, and everything in between.
@@ -11519,17 +11516,17 @@ Absolutely — beef stew is one of the best make-ahead meals. The flavors deepen
 
 **Want a weekly meal plan that includes hearty dinners like beef stew — already personalized to your family's tastes, budget, and schedule?** [DinnerDrop builds your 5-meal weekly plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
 `
-  }
+  },
 
   {
-    id: 67,
+
     slug: 'mac-and-cheese-recipe',
     title: '25 Mac and Cheese Recipes the Whole Family Will Love',
-    excerpt: 'From ultra-creamy stovetop to golden baked casseroles, these mac and cheese recipes cover every craving — classic comfort food, gourmet upgrades, and quick weeknight fixes.',
+    description: 'From ultra-creamy stovetop to golden baked casseroles, these mac and cheese recipes cover every craving — classic comfort food, gourmet upgrades, and quick weeknight fixes.',
     publishDate: '2027-08-17',
-    readTime: '10 min read',
-    category: 'Dinner Recipes',
-    content: \`# 25 Mac and Cheese Recipes the Whole Family Will Love
+    readingTimeMinutes: 10,
+    primaryKeyword: 'mac and cheese recipe',
+    content: `# 25 Mac and Cheese Recipes the Whole Family Will Love
 
 Mac and cheese is the universal family dinner — beloved by toddlers and adults, infinitely adaptable, and endlessly satisfying. Whether you need a 15-minute stovetop rescue on a Tuesday night or a golden, bubbling baked casserole for Sunday dinner, there is a mac and cheese recipe on this list for that exact moment.
 
@@ -11743,16 +11740,16 @@ Baked mac and cheese freezes well before baking — assemble, cover tightly, fre
 ---
 
 **Want a weekly dinner plan that includes family favorites like mac and cheese — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-\`
-  },
+`
+  }
+,
   {
-    id: 68,
     slug: 'pasta-bake-recipes',
     title: '25 Pasta Bake Recipes for Easy Family Dinners',
-    excerpt: 'From cheesy chicken pasta bakes to creamy vegetarian casseroles, these pasta bake recipes are the ultimate make-ahead family dinners — comforting, crowd-pleasing, and easy to prep.',
+    description: 'From cheesy chicken pasta bakes to creamy vegetarian casseroles, these pasta bake recipes are the ultimate make-ahead family dinners — comforting, crowd-pleasing, and easy to prep.',
     publishDate: '2027-08-24',
-    readTime: '10 min read',
-    category: 'Dinner Recipes',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'pasta bake recipes',
     content: `# 25 Pasta Bake Recipes for Easy Family Dinners
 
 Pasta bakes are among the most practical dinners in a family cook's arsenal. You assemble everything in one dish, slide it into the oven, and walk away. Forty minutes later, dinner is ready — bubbling, golden on top, and warm all the way through. These recipes cover everything from classic cheesy bakes to creative vegetarian options, quick weeknight versions, and impressive dishes worth making for company.
@@ -12188,14 +12185,11 @@ Two techniques: First, pat the chicken completely dry before breading — any mo
   },
 
   {
-    id: 70,
     slug: 'pork-chop-recipes',
     title: '25 Pork Chop Recipes the Whole Family Will Love',
     description: 'From juicy pan-seared pork chops to slow cooker smothered chops, these 25 easy pork chop recipes cover every technique and skill level for perfect weeknight dinners.',
-    keyword: 'pork chop recipes',
-    searchVolume: '8K/mo',
-    publishDate: '2027-09-07',
-    readingTime: '10 min',
+    primaryKeyword: 'pork chop recipes',
+    readingTimeMinutes: 10,
     content: `
 # 25 Pork Chop Recipes the Whole Family Will Love
 
@@ -12416,8 +12410,262 @@ The oven at 275°F with a splash of broth in a covered dish is the best method �
 
 **Want your family's pork chop nights planned automatically — with the right recipe selected for your schedule, a personalized weekly meal plan, and a grocery list auto-built for pickup or delivery?** [DinnerDrop builds your 5-meal plan in one tap. 7-day free trial, no credit card needed →](/beta)
 `
-  }
+  },
 
+
+  {
+    slug: 'healthy-dinner-recipes',
+    title: 'Healthy Dinner Recipes: 30 Easy Meals the Whole Family Will Actually Eat',
+    description: 'The best healthy dinner recipes for families — quick weeknight meals under 30 minutes, sheet pan dinners, protein-packed favorites, and veggie-forward dishes everyone will eat without complaint.',
+    publishDate: '2027-09-14',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'healthy dinner recipes',
+    content: `
+# Healthy Dinner Recipes: 30 Easy Meals the Whole Family Will Actually Eat
+
+Eating healthy as a family sounds simple until Tuesday rolls around and everyone has different opinions and you have exactly 25 minutes before soccer practice. These 30 healthy dinner recipes cut through the noise — real food, real fast, with ingredients people actually recognize.
+
+Whether you need a sheet pan dinner that practically cooks itself, a protein-packed meal to refuel after the gym, or a veggie dish that does not taste like punishment, this list has you covered.
+
+---
+
+## Quick Healthy Dinners Under 30 Minutes
+
+These five weeknight heroes go from fridge to table fast.
+
+### 1. Lemon Garlic Shrimp Stir-Fry
+
+Shrimp cook in 3 minutes flat. Toss with broccoli, snap peas, garlic, lemon juice, and a splash of low-sodium soy sauce. Serve over brown rice or cauliflower rice for a meal under 350 calories.
+
+**Prep time:** 10 min | **Cook time:** 10 min | **Serves:** 4
+
+### 2. Turkey Taco Bowls
+
+Brown ground turkey with taco seasoning, then build bowls with black beans, corn, shredded lettuce, salsa, and Greek yogurt in place of sour cream. Swap the tortillas for cauliflower rice to cut carbs without losing satisfaction.
+
+**Prep time:** 5 min | **Cook time:** 15 min | **Serves:** 4
+
+### 3. Egg Fried Rice with Vegetables
+
+Use leftover rice, two eggs, frozen peas and carrots, garlic, ginger, and low-sodium soy sauce. Ready in under 15 minutes and infinitely customizable based on what vegetables need to be used.
+
+**Prep time:** 5 min | **Cook time:** 10 min | **Serves:** 3
+
+### 4. Greek Chicken Wraps
+
+Grill or pan-sear chicken breast with oregano and lemon. Wrap in whole wheat flatbread with cucumber, tomato, red onion, and tzatziki. High protein, fresh flavors, no oven required.
+
+**Prep time:** 10 min | **Cook time:** 12 min | **Serves:** 4
+
+### 5. White Bean and Spinach Skillet
+
+Sauté garlic and cherry tomatoes in olive oil, add canned white beans and fresh spinach, finish with a squeeze of lemon and parmesan. Serve with crusty whole grain bread. Ready in 20 minutes.
+
+**Prep time:** 5 min | **Cook time:** 15 min | **Serves:** 3
+
+---
+
+## Sheet Pan Healthy Dinners
+
+One pan, minimal cleanup, maximum flavor.
+
+### 6. Sheet Pan Lemon Herb Salmon
+
+Place salmon fillets on one side of the pan with asparagus and halved cherry tomatoes on the other. Drizzle with olive oil, lemon juice, garlic, and dill. Roast at 400°F for 15–18 minutes. Omega-3 rich and deeply satisfying.
+
+**Prep time:** 8 min | **Cook time:** 18 min | **Serves:** 4
+
+### 7. Sheet Pan Chicken Fajitas
+
+Slice chicken breast and bell peppers, toss with olive oil, cumin, chili powder, and garlic. Roast at 425°F for 20 minutes. Serve in warm whole wheat tortillas with salsa and avocado.
+
+**Prep time:** 10 min | **Cook time:** 20 min | **Serves:** 4
+
+### 8. Sheet Pan Turkey Meatballs with Roasted Veggies
+
+Lean turkey meatballs alongside zucchini, red onion, and cherry tomatoes — all roasted together. Serve over spaghetti squash or whole grain pasta with marinara.
+
+**Prep time:** 15 min | **Cook time:** 22 min | **Serves:** 4
+
+### 9. Sheet Pan Shrimp and Broccoli
+
+Toss shrimp and broccoli florets with sesame oil, garlic, ginger, and a touch of honey. Roast at 400°F for 12–15 minutes. Serve over brown rice. Under 400 calories per serving.
+
+**Prep time:** 8 min | **Cook time:** 15 min | **Serves:** 3
+
+### 10. Sheet Pan Sausage, Sweet Potato, and Kale
+
+Chicken or turkey sausage links with cubed sweet potato and kale tossed in olive oil and smoked paprika. Roast at 400°F for 25–28 minutes. Filling, colorful, and full of fiber.
+
+**Prep time:** 10 min | **Cook time:** 28 min | **Serves:** 4
+
+---
+
+## Protein-Packed Healthy Dinners
+
+High-protein meals that keep everyone full and fueled.
+
+### 11. Baked Chicken Breast with Quinoa
+
+Season chicken with smoked paprika, garlic powder, and olive oil. Bake at 400°F for 22 minutes. Serve over quinoa with steamed broccoli. Simple, reliable, and loaded with protein — 45g+ per serving.
+
+**Prep time:** 5 min | **Cook time:** 22 min | **Serves:** 4
+
+### 12. Tuna Steak with Edamame Salad
+
+Sear ahi tuna 90 seconds per side in a hot cast iron pan. Serve alongside a salad of edamame, shredded purple cabbage, cucumber, and sesame-ginger dressing.
+
+**Prep time:** 10 min | **Cook time:** 5 min | **Serves:** 2
+
+### 13. Slow Cooker White Chicken Chili
+
+Chicken breasts, white beans, green chiles, corn, chicken broth, and cumin in the slow cooker for 6–8 hours on low. Shred the chicken before serving. High protein, high fiber, and easily makes 6 servings for meal prep.
+
+**Prep time:** 10 min | **Cook time:** 6–8 hr | **Serves:** 6
+
+### 14. Cottage Cheese Pasta Bake
+
+Blend low-fat cottage cheese with egg, garlic, and Italian seasoning for a creamy high-protein pasta sauce. Mix with whole grain pasta and lean ground beef, top with mozzarella, and bake at 375°F for 25 minutes.
+
+**Prep time:** 15 min | **Cook time:** 25 min | **Serves:** 5
+
+### 15. Greek Yogurt Chicken Marinade Bake
+
+Marinate chicken thighs in Greek yogurt, lemon, garlic, and oregano for at least 30 minutes. Bake at 425°F for 25–30 minutes. The yogurt tenderizes the meat and keeps it incredibly juicy while adding a protein boost.
+
+**Prep time:** 35 min (with marinade) | **Cook time:** 30 min | **Serves:** 4
+
+---
+
+## Veggie-Packed Healthy Dinners
+
+More vegetables, less guilt, full flavor.
+
+### 16. Lentil Soup
+
+Red or green lentils with carrots, celery, onion, cumin, turmeric, and canned tomatoes. Simmer 25–30 minutes. One bowl delivers 18g of protein and 15g of fiber. Freezes beautifully.
+
+**Prep time:** 10 min | **Cook time:** 30 min | **Serves:** 6
+
+### 17. Stuffed Bell Peppers
+
+Halve bell peppers and fill with a mixture of lean ground turkey, brown rice, black beans, diced tomatoes, and taco seasoning. Top with a little cheese. Bake at 375°F for 30–35 minutes.
+
+**Prep time:** 15 min | **Cook time:** 35 min | **Serves:** 4
+
+### 18. Cauliflower Fried Rice
+
+Rice a head of cauliflower and use it as a low-carb base. Stir-fry with peas, carrots, scrambled eggs, garlic, ginger, and low-sodium soy sauce. Tastes indulgent, loads up on vegetables.
+
+**Prep time:** 10 min | **Cook time:** 15 min | **Serves:** 3
+
+### 19. Zucchini Boats with Ground Turkey
+
+Hollow out zucchini halves, fill with seasoned ground turkey and tomato sauce, top with mozzarella. Bake at 400°F for 25 minutes. Low-carb, protein-rich, and genuinely delicious.
+
+**Prep time:** 15 min | **Cook time:** 25 min | **Serves:** 4
+
+### 20. Black Bean Tacos with Mango Salsa
+
+Season canned black beans with cumin, chili powder, and lime. Serve in corn tortillas with mango salsa, avocado, and shredded cabbage. Completely plant-based, under 400 calories, and ready in 15 minutes.
+
+**Prep time:** 10 min | **Cook time:** 5 min | **Serves:** 3
+
+---
+
+## Healthy Soups, Stews, and Grain Bowls
+
+Warming, filling meals that reheat perfectly for next-day lunches.
+
+### 21. Chicken and Vegetable Soup
+
+Rotisserie chicken, carrots, celery, onion, garlic, and low-sodium chicken broth with whole grain egg noodles. Classic comfort food with roughly 280 calories per serving.
+
+**Prep time:** 15 min | **Cook time:** 25 min | **Serves:** 6
+
+### 22. Turkey and Sweet Potato Stew
+
+Ground turkey browned with onion and garlic, then simmered with cubed sweet potato, canned tomatoes, kidney beans, and smoked paprika. Hearty enough for cold nights.
+
+**Prep time:** 10 min | **Cook time:** 30 min | **Serves:** 5
+
+### 23. Mediterranean Grain Bowl
+
+Farro or bulgur wheat base with roasted chickpeas, cucumber, cherry tomatoes, Kalamata olives, red onion, and hummus. Drizzle with lemon-tahini dressing. Meal prep friendly.
+
+**Prep time:** 15 min | **Cook time:** 20 min | **Serves:** 4
+
+### 24. Salmon and Brown Rice Power Bowl
+
+Flaked baked salmon over brown rice with edamame, shredded carrots, avocado, and cucumber. Top with low-sodium soy sauce and sesame seeds. Under 500 calories and packed with omega-3s.
+
+**Prep time:** 10 min | **Cook time:** 20 min | **Serves:** 2
+
+### 25. Chicken Burrito Bowl
+
+Grilled chicken over cilantro-lime brown rice with black beans, roasted corn, pico de gallo, and Greek yogurt. Chipotle-style but healthier and cheaper at home.
+
+**Prep time:** 10 min | **Cook time:** 20 min | **Serves:** 4
+
+---
+
+## 5 More Worth Adding to Your Rotation
+
+### 26. Baked Cod with Roasted Asparagus
+Season cod with lemon, garlic, and herbs. Bake alongside asparagus at 400°F for 15 minutes. Light, flaky, and ready in under 25 minutes total.
+
+### 27. Turkey Lettuce Wraps
+Brown ground turkey with water chestnuts, garlic, ginger, and hoisin sauce. Serve in butter lettuce leaves. A lighter take on the PF Chang's classic.
+
+### 28. Baked Falafel Bowls
+Baked (not fried) chickpea falafel over greens with cucumber, tomato, pickled onion, and tahini. Filling plant-based meal with significant iron and fiber.
+
+### 29. Pesto Chicken and Zoodles
+Spiralized zucchini tossed with basil pesto and topped with grilled chicken breast. Low-carb, gluten-free, and ready in 20 minutes.
+
+### 30. Shakshuka
+Eggs poached in a spiced tomato and pepper sauce. Serve with whole grain bread for dipping. One pan, 25 minutes, and impressive enough for guests.
+
+---
+
+## 5 Tips for Making Healthy Dinners Actually Happen
+
+**1. Keep a protein in the freezer at all times.** Frozen shrimp, chicken breast, ground turkey, and salmon fillets all thaw in cold water in 15–20 minutes. They are the foundation of nearly every quick healthy dinner.
+
+**2. Cook grains in bulk on Sunday.** Brown rice, quinoa, and farro take 30–45 minutes — time you rarely have on a weeknight. Cook a big batch and refrigerate it. Reheats in 90 seconds.
+
+**3. Embrace the rotisserie chicken.** A store-bought rotisserie chicken is one of the best healthy convenience foods available. Use it in wraps, soups, grain bowls, or stir-fries all week.
+
+**4. Make vegetables the default, not the afterthought.** Sheet pan dinners and stir-fries work better when vegetables make up at least half the pan. They add volume and fiber that stretches the protein further.
+
+**5. Use your meal plan so you shop with intention.** Buying groceries without a plan leads to waste, missing ingredients mid-recipe, and defaulting to takeout. A weekly meal plan solves all three problems at once.
+
+Want a meal plan built around these recipes — with a grocery list already sorted by store section? [Try DinnerDrop free for 7 days](/beta)
+
+---
+
+## Frequently Asked Questions
+
+**What makes a dinner recipe actually healthy?**
+A healthy dinner balances protein, fiber, and healthy fats while limiting added sugar, refined carbs, and excessive sodium. Whole foods — vegetables, legumes, lean proteins, whole grains — are the foundation.
+
+**How many calories should a healthy dinner be?**
+Most nutrition guidelines suggest 500–700 calories per dinner for adults on a standard 2,000-calorie diet, leaving room for breakfast, lunch, and snacks.
+
+**Can healthy dinners actually taste good?**
+Yes — and this is the wrong question. Healthy food tastes bland when it is underseasoned and overcooked. Use full amounts of herbs, spices, citrus, and quality olive oil. The technique matters as much as the ingredient list.
+
+**What are the best proteins for healthy dinners?**
+Chicken breast, salmon, shrimp, turkey, eggs, lentils, and beans are the best options for most families — high in protein, relatively low in saturated fat, and widely available.
+
+**How do I get my family to eat healthier dinners without complaints?**
+Start with familiar flavors in healthier formats: taco bowls instead of tacos, cauliflower fried rice instead of takeout, homemade burrito bowls. Do not announce that something is "healthy" — just serve it. Most picky eaters are responding to novelty, not actual nutrition.
+
+---
+
+Thirty healthy dinner recipes is a good start. A plan that turns them into a weekly routine — with a grocery list, timing, and no decisions required at 5pm — is better. [DinnerDrop handles that part for you.](/beta)
+`
+  }
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
