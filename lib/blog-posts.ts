@@ -10905,6 +10905,161 @@ Twenty-five chicken stir fry recipes -- from takeout-style chicken and broccoli 
 `,
   },
 
+
+  {
+    id: 64,
+    slug: 'fried-rice-recipe',
+    title: 'Fried Rice Recipe: 25 Best Fried Rice Recipes for Weeknight Dinners',
+    description: 'The best fried rice recipes for families, from classic egg fried rice and chicken fried rice to hibachi-style, kimchi fried rice, and quick 20-minute weeknight versions.',
+    readTime: '10 min read',
+    publishDate: '2027-07-27',
+    content: `# Fried Rice Recipe: 25 Best Fried Rice Recipes for Weeknight Dinners
+
+Fried rice is one of the most practical dinners you can make. It uses leftover rice, whatever protein and vegetables are already in the refrigerator, and takes under 20 minutes from start to finish. These 25 fried rice recipes cover everything from classic Chinese takeout-style egg fried rice to kimchi fried rice, Hawaiian pineapple fried rice, hibachi restaurant copies, and simple kid-friendly versions. Each recipe is designed for a regular home stove and family portions.
+
+The single most important rule: use cold, day-old rice. Freshly cooked rice is too wet and steams instead of frying. Make rice the night before or use leftover rice from takeout. This one change is the difference between mushy fried rice and the version that tastes like a restaurant made it.
+
+---
+
+## Classic Chinese Takeout-Style Fried Rice
+
+**1. Classic Egg Fried Rice**
+The foundation of all fried rice. Heat oil in a wok or large skillet until smoking. Add 3 eggs scrambled directly in the pan, breaking them into large curds. Add cold cooked rice and press into the pan to let it fry for 30 seconds before stirring. Season with soy sauce, sesame oil, white pepper, and a pinch of sugar. Add sliced scallions at the end. This simple version reveals whether your technique is right -- if the rice is fluffy, separate, and lightly caramelized at the edges, you have the fundamentals down. Serve it as a side dish or add protein for a full meal.
+
+**2. Yang Chow Fried Rice**
+The classic Chinese restaurant mixed fried rice. Scramble eggs first, remove from pan. Stir fry diced char siu pork (or Canadian bacon) and medium shrimp. Add cold rice, season with soy sauce and oyster sauce, then return the eggs. Add frozen peas and diced carrots cooked just until heated through. Yang Chow fried rice is the version most people picture when they think of takeout fried rice -- loaded with protein, lightly salty, with distinct egg and pea throughout.
+
+**3. Chicken Fried Rice**
+Dice boneless chicken thighs into small pieces. Season with soy sauce, white pepper, and cornstarch. Stir fry until just cooked, about 3 minutes. Remove. Scramble two eggs in the same pan. Add cold rice and toss to heat through. Return the chicken. Season with soy sauce, oyster sauce, and sesame oil. Add scallions. Chicken fried rice is the weeknight staple because chicken thighs are always in the refrigerator and children eat it without complaint. The oyster sauce gives the restaurant depth that soy sauce alone does not.
+
+**4. Beef Fried Rice**
+Use flank steak or sirloin sliced thin against the grain. Marinate briefly in soy sauce, oyster sauce, cornstarch, and baking soda (tenderizer). Stir fry beef in batches on very high heat until just browned, 90 seconds. Remove. Cook eggs, add rice, season, return beef. Beef fried rice tastes richer and more substantial than chicken versions. The baking soda marinade is the technique that makes the thin-sliced beef stay tender instead of turning chewy at high heat.
+
+**5. Shrimp Fried Rice**
+Peel and devein medium shrimp. Pat completely dry -- moisture is the enemy of good sear. Stir fry shrimp in smoking oil for 60 seconds per side. Remove the moment they turn pink. Scramble eggs in the same pan. Add cold rice, soy sauce, a small amount of fish sauce, and white pepper. Return shrimp just before serving so they do not overcook from residual heat. Shrimp fried rice needs less time than any other protein version. The fish sauce adds subtle seafood depth that makes the entire dish taste more complex.
+
+---
+
+## Vegetable and Lighter Fried Rice
+
+**6. Vegetable Fried Rice**
+A full meal without meat. Use diced carrots, frozen peas, corn, sliced mushrooms, and bean sprouts. Stir fry vegetables in stages, starting with the hardest. Add rice, season with soy sauce, sesame oil, and a splash of rice vinegar for brightness. Top with a fried egg for each person if desired. The key to satisfying vegetable fried rice is using enough oil and getting good color on the rice -- a dry, colorless vegetable fried rice is the version people are disappointed by. Color means flavor.
+
+**7. Cauliflower Fried Rice**
+Replace regular rice with riced cauliflower for a lower-carb version that holds up well to stir-frying. Pulse cauliflower florets in a food processor until rice-sized. Spread on a towel and squeeze out moisture firmly -- this is critical, or it becomes a wet mess. Fry in batches on high heat until slightly golden, 3 to 4 minutes. Add soy sauce, sesame oil, eggs, and any vegetables. Cauliflower fried rice does not taste exactly like rice fried rice, but it is good enough to satisfy the craving while adding two servings of vegetables per bowl.
+
+**8. Brown Rice Fried Rice**
+Everything in classic fried rice, but made with cooked brown rice. Brown rice needs to be very cold and very dry to fry well -- spread on a baking sheet and refrigerate uncovered overnight if possible. Use a bit more oil than you would with white rice since brown rice is drier. Season aggressively because brown rice absorbs flavor more than white. The nuttier flavor pairs especially well with mushrooms, edamame, and ginger-forward seasoning. Brown rice fried rice is the same dish with more fiber and a slightly chewier texture that some families prefer.
+
+**9. Kimchi Fried Rice**
+One of the best-tasting fried rice variations because fermented kimchi adds sour, spicy, umami depth in every bite. Chop kimchi coarsely and stir fry in a bit of butter and sesame oil until it caramelizes slightly, about 3 minutes. Add cold rice and toss. Season with gochujang (Korean chili paste), soy sauce, and a splash of kimchi brine from the jar. Top with a fried egg and sliced scallions. This version uses pantry staples and improves with older, more fermented kimchi. It is one of the fastest complete meals possible -- 15 minutes, one pan, no planning required.
+
+**10. Thai Basil Fried Rice (Kao Pad Krapow)**
+The Thai version of fried rice uses fish sauce, oyster sauce, and a generous amount of Thai basil leaves wilted in at the end. Stir fry ground chicken or beef with garlic and Thai chilies until cooked. Add cold rice, season with fish sauce, oyster sauce, and a small amount of dark soy sauce for color. Turn off the heat and fold in a large handful of fresh Thai basil leaves. Top with a crispy fried egg. This tastes completely different from Chinese fried rice -- savory, herbaceous, slightly spicy, with the basil fragrance coming through in every bite.
+
+---
+
+## Fusion and International Fried Rice
+
+**11. Hawaiian Pineapple Fried Rice**
+A Thai restaurant staple that works as well at home. Stir fry diced chicken with garlic and onion. Add cold rice and season with soy sauce, fish sauce, and curry powder. Fold in fresh or canned pineapple chunks (drained), frozen peas, and raisins. Top with cashews and sliced scallions. The pineapple adds sweetness and acidity that balances the salty soy base. Serve in a halved pineapple shell for presentation, or just in a bowl for a Tuesday night dinner. Either way, it is one of those meals children ask for by name.
+
+**12. Indonesian Nasi Goreng**
+The Indonesian national dish. Make kecap manis (sweet soy sauce) by simmering regular soy sauce with palm or brown sugar until thick. Stir fry shrimp paste (terasi) with garlic and shallots for 30 seconds. Add cold rice, season with kecap manis, sambal oelek, and fish sauce. Top with a fried egg, cucumber slices, and fried shallots. Nasi goreng is darker, sweeter, and more complex than Chinese fried rice. If kecap manis is unavailable, substitute equal parts soy sauce and molasses -- it is close enough for a weeknight version.
+
+**13. Garlic Butter Fried Rice**
+Western-inflected fried rice that skips soy sauce entirely. Melt butter in a skillet -- not oil -- and toast minced garlic until golden, about 90 seconds. Add cold rice and toss to coat every grain with the garlic butter. Season with salt and fresh cracked pepper. Add grated Parmesan or a squeeze of lemon if desired. This version works as a side dish for grilled chicken, steak, or fish. It is the answer for nights when you want something comfort-food adjacent but lighter than mashed potatoes.
+
+**14. Mexican-Style Arroz Frito**
+Use cold cooked rice and season it like Mexican rice: cumin, chili powder, garlic powder, and a spoonful of tomato paste. Stir fry with diced onion, bell pepper, corn, and black beans. Add scrambled eggs if desired. Top with shredded cheese, cilantro, and lime. This is the fried rice for Taco Tuesday -- uses the same pantry staples and takes 15 minutes. Leftovers make excellent burrito filling the next day.
+
+**15. Spam Musubi Fried Rice**
+Hawaiian comfort food deconstructed. Dice Spam and pan-fry until caramelized on all sides. Reduce a mixture of soy sauce, mirin, and sugar in the same pan, then toss the Spam in the glaze. Stir fry cold rice, fold in the glazed Spam, and add furikake seasoning generously. Serve with sheets of nori (seaweed) cut into strips for wrapping individual bites. Spam fried rice is extremely fast, uses pantry staples, and has the sweet-salty-umami combination that makes it deeply satisfying. Children who have tried it at a Hawaiian food truck request it at home regularly.
+
+---
+
+## Protein-Packed Fried Rice
+
+**16. Salmon Fried Rice**
+Use leftover cooked salmon, flaked into chunks. Make egg fried rice as usual. Fold in the salmon gently at the end so it does not break up into tiny pieces. Season with soy sauce, sesame oil, and a squeeze of lemon. The omega-3 richness of salmon makes this one of the most nutritionally complete fried rice versions. It is especially good with cold leftover salmon from the night before -- one of the better uses of fish leftovers.
+
+**17. Turkey Fried Rice**
+The post-Thanksgiving option. Dice leftover turkey into small pieces. Stir fry with garlic, onion, soy sauce, and oyster sauce. Add cold rice, eggs, and frozen peas. Season with a pinch of Chinese five spice if available -- it bridges the savory turkey flavor with the Asian seasoning base. Turkey fried rice is the reason to cook extra turkey on Thanksgiving. It freezes well after cooking, making it the meal-prep option for the month of November.
+
+**18. Sausage Fried Rice**
+Slice kielbasa or Italian sausage into coins. Pan-fry until browned. Remove. Scramble eggs in the same pan with the rendered sausage fat. Add cold rice and season with soy sauce, Worcestershire, and a bit of hot sauce. Return sausage. Add diced bell pepper and scallions. The rendered fat from the sausage is what makes this version taste particularly rich and complex. It works with any fully cooked sausage you already have -- chicken sausage, andouille, bratwurst, or chorizo.
+
+**19. Tofu Fried Rice**
+Press extra-firm tofu for at least 30 minutes to remove moisture. Dice into small cubes and fry in oil at high heat until golden and crispy on all sides, about 8 minutes -- do not stir too early. Remove. Make egg fried rice with vegetables. Return tofu at the end to preserve its crispiness. Season with soy sauce, sesame oil, and chili oil. Properly crisped tofu in fried rice has a texture close enough to diced chicken that it satisfies the same craving. The key is patience during the frying step -- a soggy tofu fried rice comes from underfrying the tofu.
+
+**20. Bacon and Egg Fried Rice**
+The breakfast-for-dinner version. Cook bacon until crispy, remove, and use the bacon fat to fry the rice. Scramble eggs directly into the hot fat with the rice. Season with soy sauce, a dash of Worcestershire, and plenty of black pepper. Crumble the bacon and fold it in at the end. Add sliced scallions and a fried egg on top for presentation. This is the most crowd-pleasing fried rice for children because the flavors -- bacon, egg, slightly crispy rice -- are already familiar. It uses the grease instead of wasting it, which is efficient and honest cooking.
+
+---
+
+## Family Favorites
+
+**21. Hibachi-Style Fried Rice**
+The restaurant version made at home. Use butter instead of oil for a richer flavor base. Season with soy sauce, garlic butter, and a splash of sesame oil. Add a pinch of sugar to encourage caramelization. The critical technique: let the rice sit on the hot pan for 30 to 45 seconds before stirring so individual grains develop a slightly crispy exterior. Add frozen peas and carrots, scrambled eggs, and diced onion cooked in butter first. Hibachi fried rice tastes different from Chinese fried rice because of the butter and the sugar -- it is sweeter, richer, and slightly smoky from the high-heat caramelization.
+
+**22. Cheesy Fried Rice**
+A Western-inflected version that uses shredded mozzarella or cheddar folded into the hot rice at the end. Stir fry rice with garlic butter and season lightly with soy sauce or just salt and pepper. Remove from heat and stir in cheese until melted. Top with sliced scallions and a fried egg. This is unambiguously not traditional fried rice, and it is also one of the versions that children eat fastest. Works as a side dish or a light main with a salad.
+
+**23. Kid-Friendly Fried Rice**
+Designed for picky eaters. Uses only mild flavors: butter, garlic, soy sauce, and sesame oil. Finely dice carrots and zucchini so they blend into the rice invisibly. Add corn and frozen peas. Scramble eggs directly into the rice. No visible green onions, no fish sauce, no chili. The result is mild, slightly savory, egg-and-vegetable rice that even toddlers will eat. It is also nutritionally complete enough to serve as a full dinner with a piece of fruit on the side.
+
+**24. Leftover Fried Rice**
+The version that uses whatever is already in the refrigerator. Take any leftover protein (last night's chicken, a few slices of steak, shrimp from last week's pasta), any leftover cooked vegetables, and cold rice from the fridge. Stir fry the protein briefly to heat it. Add rice, season with soy sauce and sesame oil, add eggs, fold in the vegetables. Done. Leftover fried rice is the anti-recipe recipe -- it requires only the technique and whatever exists. It is also consistently one of the best-tasting versions because the flavors from the original dishes carry through into the rice.
+
+**25. Quick 15-Minute Weeknight Fried Rice**
+No special ingredients required. Frozen bag of mixed stir fry vegetables, bottled soy sauce and sesame oil, eggs, cold rice. Heat oil, add frozen vegetables directly from frozen and stir fry on high until slightly colored, about 4 minutes. Push to the side, scramble eggs in the empty space. Combine with rice. Season. Done. This is the version for weeknights when you have no energy. The results are reliably good enough to satisfy dinner requirements, and the entire thing takes 15 minutes including the time to get the pan hot.
+
+---
+
+## How to Make Fried Rice That Does Not Come Out Mushy
+
+The technique gap between restaurant fried rice and home fried rice is almost entirely about moisture. Restaurants use woks on high-BTU burners that evaporate moisture instantly. Home stoves work differently, but the gap closes with three adjustments.
+
+**Day-old rice**: Freshly cooked rice has too much surface moisture. When it hits a hot pan, it steams instead of frying. Spread leftover rice on a baking sheet and refrigerate uncovered for at least 4 hours, or overnight. The surface dries enough to sear properly. If you only have fresh rice, spread it on a sheet pan and freeze for 30 minutes -- it works in a pinch.
+
+**Cook in batches**: Overcrowding the pan drops the temperature immediately. The rice steams, sticks, and clumps. Use a large wok or skillet and cook one to two servings at a time. For a family of four, cook in two batches and combine at the end.
+
+**Add sauces at the end**: Adding soy sauce too early turns fried rice into braised rice. Add all liquid seasonings in the last 60 to 90 seconds of cooking and toss quickly to coat. The hot pan will absorb and caramelize the soy sauce instead of turning it into steam.
+
+---
+
+## How DinnerDrop Plans Your Dinner Rotation
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds five personalized weeknight dinners each week, including fried rice nights balanced with your family's other preferences, cook time limits, and available ingredients. The weekly plan generates a complete grocery list so the cold rice you need on Friday is already planned for on Sunday. The beta is free for six months.
+
+---
+
+## FAQ
+
+**Can I make fried rice with freshly cooked rice?**
+You can, but the results will be noticeably wetter and softer than day-old rice. If using fresh rice, spread it on a baking sheet and let it cool uncovered in the refrigerator for at least one hour -- ideally four. The drier the surface of each grain, the more it fries rather than steams.
+
+**What is the best oil for fried rice?**
+Vegetable oil, canola oil, or peanut oil -- all have high smoke points suitable for the high heat required. Olive oil burns at high heat and adds a flavor that does not belong in Asian-style fried rice. Sesame oil is added at the very end as a finishing flavor, not for cooking.
+
+**Why does my fried rice stick to the pan?**
+Two causes: the pan is not hot enough when the rice is added, or the pan is not well-seasoned (for carbon steel or cast iron). Heat the pan until smoking before adding oil, and heat the oil until shimmering before adding rice. If using a stainless steel pan, it will stick more than a wok -- use more oil and do not move the rice for 30 to 45 seconds after adding it.
+
+**Can I freeze fried rice?**
+Yes. Cooked fried rice freezes well in airtight containers for up to three months. Reheat in a hot pan with a splash of water and a little oil rather than in the microwave -- this restores the texture. Frozen fried rice is an excellent meal-prep strategy: make a large batch on Sunday and freeze individual portions for fast weeknight meals.
+
+**How much rice per person for fried rice?**
+About three-quarters of a cup of cooked rice per person as a side dish, or one to one-and-a-quarter cups as a main course. Fried rice reduces slightly in volume during cooking. A standard rice cooker cup (180ml dry) yields approximately two cups cooked, which is enough for two people as a main.
+
+---
+
+Twenty-five fried rice recipes -- from classic egg fried rice and Yang Chow to kimchi fried rice, Hawaiian pineapple, hibachi-style, and quick 15-minute weeknight versions.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan -- five dinners, complete grocery list -- in under a minute. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
