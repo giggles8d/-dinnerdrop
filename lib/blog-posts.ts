@@ -11060,6 +11060,239 @@ Twenty-five fried rice recipes -- from classic egg fried rice and Yang Chow to k
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+,
+  {
+    id: 65,
+    slug: 'chili-recipe',
+    title: '25 Best Chili Recipes for Every Family — Classic, Quick, and Crowd-Pleasing',
+    excerpt: 'From classic beef chili to white chicken chili, turkey chili, vegetarian versions, and slow cooker favorites — these 25 chili recipes cover every craving, budget, and weeknight scenario.',
+    publishDate: '2027-08-03',
+    readingTime: '10 min',
+    keyword: 'chili recipe',
+    searchVolume: '12000',
+    category: 'Dinner Ideas',
+    content: `## 25 Best Chili Recipes for Every Family
+
+Chili is the ultimate weeknight hero: one pot, pantry ingredients, feeds a crowd, and tastes even better the next day. Whether you want a 30-minute stovetop version or an all-day slow cooker project, spicy or mild, beef or beans-only, this list covers every angle.
+
+These 25 chili recipes are organized by type so you can jump straight to what your family needs tonight.
+
+---
+
+**Tired of figuring out dinner from scratch every week?** [DinnerDrop plans 5 personalized meals for your family — including classics like chili — and builds the grocery list automatically. Try it free for 7 days →](/beta)
+
+---
+
+## Classic Beef Chili Recipes
+
+### 1. Classic Texas-Style Beef Chili
+
+No beans, no filler — just chunks of beef chuck braised in a rich ancho and guajillo chile sauce. This is the chili that wins cookoffs. Brown the beef in batches, build your chile paste from dried peppers, and simmer low for at least 90 minutes. Serve with cornbread and pickled jalapeños.
+
+**Why families love it:** Deeply flavored, impressive, and makes spectacular leftovers.
+
+### 2. Ground Beef Chili (30-Minute Weeknight Version)
+
+Brown one pound of ground beef, add a can each of diced tomatoes, kidney beans, and black beans, plus a packet of chili seasoning, and you're done in 30 minutes. This is the recipe that feeds four on a Tuesday with zero stress.
+
+**Why families love it:** Fast, affordable, and every kid knows this flavor.
+
+### 3. Beef and Bean Chili with Cornbread Topping
+
+Pour your favorite beef chili into a cast iron skillet, top with a cornbread batter, and bake at 400°F for 20 minutes. The cornbread crust soaks up the chili underneath and turns golden on top. One pan, one dinner, done.
+
+**Why families love it:** The cornbread topping makes it feel special on a regular Wednesday.
+
+### 4. Smoky Chipotle Beef Chili
+
+Add two chipotles in adobo (chopped fine) to your base beef chili for deep, smoky heat that lingers without overwhelming. Finish with a squeeze of lime and sour cream to balance. This one is for the adults at the table.
+
+**Why families love it:** Adults get something exciting while kids can have a milder bowl.
+
+### 5. Cowboy Chili with Brisket
+
+Use leftover smoked brisket instead of ground beef — chop it coarse and fold it into your tomato-and-bean base. The brisket's smoke flavor transforms a simple pot into something extraordinary. If you don't have brisket, pulled pork works beautifully too.
+
+**Why families love it:** Perfect use of BBQ leftovers; feels fancy with zero extra effort.
+
+---
+
+## White Chicken Chili Recipes
+
+### 6. Creamy White Chicken Chili
+
+Combine shredded rotisserie chicken, white beans, green chiles, chicken broth, cumin, and a block of cream cheese. Stir until the cream cheese melts into a silky, rich base. Top with shredded Monterey Jack, avocado, and tortilla strips.
+
+**Why families love it:** Creamy, mild enough for kids, and comes together in 25 minutes.
+
+### 7. Slow Cooker White Chicken Chili
+
+Add raw chicken breasts, white beans, green chiles, chicken broth, onion, and seasonings to your slow cooker. Cook on low 6–8 hours. Shred the chicken with two forks, stir in cream cheese and sour cream, and serve. Hands-off dinner at its finest.
+
+**Why families love it:** Takes 10 minutes of prep and dinner is waiting when you get home.
+
+### 8. Spicy White Chicken Chili with Jalapeños
+
+Same creamy white base, but add fresh diced jalapeño, a dash of cayenne, and finish with pepper jack cheese instead of Monterey Jack. For heat lovers, serve with sliced fresh jalapeños on top.
+
+**Why families love it:** Grown-ups get the heat; kids can have a milder scoop from the same pot.
+
+### 9. Instant Pot White Chicken Chili
+
+Sauté onion and garlic in the Instant Pot, add chicken breasts, white beans, green chiles, broth, and spices. Pressure cook 15 minutes, quick release, shred chicken, stir in cream cheese. 40 minutes start to finish including pressure time.
+
+**Why families love it:** Weeknight speed with slow-cooker flavor.
+
+### 10. Verde Chicken Chili with Tomatillos
+
+Use jarred salsa verde instead of green chiles for a brighter, tangier flavor. Add hominy for a stew-like texture, and finish with fresh cilantro and a squeeze of lime. This one feels lighter than traditional chili but just as satisfying.
+
+**Why families love it:** A refreshing chili option that works in warmer months too.
+
+---
+
+## Turkey and Lean Chili Recipes
+
+### 11. Ground Turkey Chili
+
+Swap beef for ground turkey to cut fat without losing flavor. The trick: don't skip the browning step, and add a teaspoon of Worcestershire sauce to deepen the flavor that ground turkey naturally lacks. Kidney beans and fire-roasted tomatoes round out the pot.
+
+**Why families love it:** Lighter on calories, still hearty and filling.
+
+### 12. Turkey and Sweet Potato Chili
+
+Add diced sweet potato to your turkey chili base and let it simmer until tender. The sweetness of the potato balances the heat of the spices in a way that kids respond to immediately. This is a full meal in a bowl.
+
+**Why families love it:** Sneaks a vegetable in without anyone complaining about it.
+
+### 13. Lean Turkey Black Bean Chili
+
+Use black beans instead of kidney beans with ground turkey — the combination feels lighter and brighter. Add a cup of corn kernels for sweetness and a can of diced green chiles for heat. Top with Greek yogurt instead of sour cream for extra protein.
+
+**Why families love it:** High protein, lower fat, family-friendly flavors.
+
+---
+
+## Vegetarian and Vegan Chili Recipes
+
+### 14. Three-Bean Vegetarian Chili
+
+Combine kidney beans, black beans, and pinto beans with fire-roasted tomatoes, diced bell peppers, onion, garlic, and a full tablespoon of chili powder. Simmer 30 minutes. The combination of three bean varieties gives incredible body and texture without any meat.
+
+**Why families love it:** Budget-friendly, protein-packed, and satisfying for even meat-eaters.
+
+### 15. Sweet Potato and Black Bean Chili
+
+Roast cubed sweet potato at 425°F until caramelized, then fold into a black bean chili base with smoked paprika and chipotle. The roasted sweet potato adds sweetness and body that makes this chili feel rich even without meat or dairy.
+
+**Why families love it:** Naturally vegan, naturally delicious — no special ingredients needed.
+
+### 16. Lentil Chili
+
+Red lentils cook in 20 minutes and absorb chili spices beautifully. Combine with crushed tomatoes, onion, garlic, cumin, coriander, and a splash of apple cider vinegar for brightness. This is the weeknight vegetarian chili for when you're completely out of canned beans.
+
+**Why families love it:** Made entirely from pantry staples; lentils are cheaper than beans.
+
+### 17. Mushroom and Walnut Chili (Meaty Without Meat)
+
+Pulse cremini mushrooms and walnuts in a food processor until crumbly, then brown in a dry skillet until deep and caramelized. Use as your "meat" base with kidney beans and tomatoes. The texture and umami are shockingly close to ground beef chili.
+
+**Why families love it:** Convinces skeptical meat-eaters without any deception.
+
+---
+
+## Slow Cooker and Make-Ahead Chili Recipes
+
+### 18. Classic Slow Cooker Beef Chili
+
+Brown ground beef and onions on the stovetop (5 minutes), then dump everything into the slow cooker with beans, tomatoes, broth, and spices. Cook low 8 hours or high 4 hours. The long cook time develops flavor you can't rush on the stovetop.
+
+**Why families love it:** Start it before school; dinner is done when everyone gets home.
+
+### 19. Dump-and-Go Slow Cooker Chili
+
+No browning. Add raw ground beef, canned beans, diced tomatoes, beef broth, onion powder, garlic powder, and chili seasoning directly to the slow cooker. Cook low 8 hours. Break up the beef with a wooden spoon and stir before serving.
+
+**Why families love it:** Truly zero prep — this one saves the most time on the busiest days.
+
+### 20. Make-Ahead Freezer Chili
+
+Double any chili recipe, cool completely, and freeze in gallon zip bags flat. Thaw in the fridge overnight or run the sealed bag under warm water for 20 minutes. Reheat on the stovetop or microwave. Having frozen chili on hand is a weeknight superpower.
+
+**Why families love it:** One cooking session gives you two or three future dinners.
+
+### 21. Chili Mac (Chili + Macaroni Bake)
+
+Mix your leftover chili with cooked elbow macaroni in a baking dish, top with shredded cheddar, and bake at 375°F for 20 minutes until bubbly. This is the weeknight transformation that makes leftovers feel like a new meal entirely.
+
+**Why families love it:** Kids who resist chili will eat Chili Mac without hesitation.
+
+---
+
+## Quick and Budget Chili Recipes
+
+### 22. 15-Minute Canned Bean Chili
+
+Open three cans: kidney beans (drained), diced tomatoes, and tomato sauce. Add to a pot with chili powder, cumin, garlic powder, salt, and a pinch of cayenne. Simmer 15 minutes. That's it. This is emergency-level fast and still genuinely good.
+
+**Why families love it:** When you have 15 minutes and not much else, this feeds everyone.
+
+### 23. Budget Beef Chili (Under $10 for a Family of Four)
+
+One pound of ground beef ($4–5), two cans of beans ($1 each), a can of tomatoes ($1), and pantry spices. Total cost: under $10. Makes 6 servings. This is the chili recipe for the end of the month when the budget is tight and everyone still needs a real dinner.
+
+**Why families love it:** Proof that eating well doesn't require spending much.
+
+### 24. Chili Dogs Bar Night
+
+Make a simple ground beef and kidney bean chili, then set up a chili dog bar: hot dogs in buns, pot of chili, shredded cheddar, diced onion, yellow mustard. Everyone builds their own. This turns chili night into an event that kids actually look forward to.
+
+**Why families love it:** Interactive dinner = less complaining, more eating.
+
+### 25. Chili-Stuffed Baked Potatoes
+
+Bake four russet potatoes at 400°F for 60 minutes. Split them open, fluff the inside, and top with a scoop of chili, sour cream, shredded cheddar, and chives. Each potato becomes a complete meal. A clever way to stretch one pot of chili to feed more people.
+
+**Why families love it:** Feels indulgent and special; zero extra cooking required.
+
+---
+
+## Tips for the Best Chili Every Time
+
+**Toast your spices:** Add chili powder, cumin, and paprika to the dry pan before adding liquid. 30 seconds of toasting deepens the flavor significantly.
+
+**Bloom your aromatics:** Cook onion and garlic until soft before adding anything else. Rushing this step mutes the base flavor of your whole chili.
+
+**Add a secret ingredient:** A square of dark chocolate, a tablespoon of strong coffee, or a splash of soy sauce all deepen the umami in beef chili without tasting obviously like themselves.
+
+**Don't skip the simmer:** Chili needs at least 30 minutes of simmering after all ingredients are in. The flavors need time to marry.
+
+**Chili is always better the next day:** Make it the night before if you can. The overnight rest in the fridge intensifies everything.
+
+---
+
+## Chili FAQ
+
+**Can I make chili in an Instant Pot?**
+Yes — sauté aromatics, brown meat, add everything else, and pressure cook 15–20 minutes with a quick release. The flavor is excellent and the total time is under 45 minutes.
+
+**How do I thicken chili that's too watery?**
+Mash a cup of the beans against the side of the pot with the back of a spoon. The starch thickens the liquid naturally. Alternatively, stir in a tablespoon of masa harina (corn flour) dissolved in water.
+
+**Can I freeze leftover chili?**
+Yes — chili freezes beautifully for up to 3 months. Cool completely, pack in airtight containers or freezer bags, and thaw overnight in the fridge.
+
+**How spicy should chili be for kids?**
+Start with half the chili powder the recipe calls for. Serve the kids' portions first, then add cayenne or hot sauce to the pot for adults. You can always add heat, but you can't take it away.
+
+**What toppings go best with chili?**
+Classic toppings: sour cream, shredded cheddar, diced onion, sliced jalapeños, crushed tortilla chips, avocado, fresh cilantro, and lime wedges. Set them all out and let everyone build their own bowl.
+
+---
+
+**Want personalized dinner plans that include crowd-pleasers like chili — already matched to your family's taste, budget, and schedule?** [DinnerDrop builds your weekly meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
+`
+  }
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
