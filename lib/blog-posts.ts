@@ -10743,6 +10743,168 @@ Twenty-five Mexican dinner ideas from quick weeknight tacos and sheet pan fajita
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'chicken-stir-fry-recipe',
+    title: '25 Chicken Stir Fry Recipes That Come Together in 30 Minutes',
+    description:
+      'The best chicken stir fry recipes for weeknight dinners -- classic Chinese takeout-style, teriyaki, spicy ' +
+      'Szechuan, vegetable-loaded, and quick 20-minute versions your family will actually eat.',
+    publishDate: '2027-07-20',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'chicken stir fry recipe',
+    content: `
+# 25 Chicken Stir Fry Recipes That Come Together in 30 Minutes
+
+Chicken stir fry is the weeknight dinner format that rewards you every time you use it. Hot wok, a few minutes of high heat, a sauce that clings to everything -- dinner is on the table faster than the pizza app loads.
+
+The challenge is that most stir fry recipes fall into the same narrow lane: chicken, broccoli, soy sauce. This list covers the full range -- takeout-style classics, teriyaki and sweet glazes, spicy regional recipes, vegetable-loaded dinners, and quick 20-minute versions when you have even less time than usual.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds five dinners like these into a personalized weekly plan for your family, grocery list included. The beta is free for six months.
+
+---
+
+## Classic Chinese Takeout-Style Chicken Stir Fries
+
+**1. Chicken and Broccoli Stir Fry**
+Slice chicken breasts thin and marinate 15 minutes in soy sauce, cornstarch, and sesame oil. Blanch broccoli florets 2 minutes in boiling water, drain. Stir fry chicken in a very hot wok 3 to 4 minutes until cooked through. Add broccoli and pour over a sauce of oyster sauce, soy sauce, chicken broth, cornstarch, and a pinch of sugar. Toss 1 minute until sauce thickens and coats everything. The cornstarch marinade gives the chicken a silky texture that takeout uses and home cooks rarely replicate -- do not skip it.
+
+**2. Classic Chicken Lo Mein**
+Cook lo mein noodles until just underdone, about 1 minute less than package directions. Stir fry sliced chicken thighs with garlic, ginger, shredded cabbage, julienned carrots, and sliced scallions. Add drained noodles and toss with a sauce of soy sauce, oyster sauce, sesame oil, and a splash of the noodle cooking water. High heat is mandatory -- the noodles need to fry slightly, not steam. This is better than most restaurant lo mein because the noodles are not sitting in steam for 20 minutes before serving.
+
+**3. Kung Pao Chicken**
+Cube chicken thighs and marinate in soy sauce, rice wine, and cornstarch. Stir fry with dried red chiles, Szechuan peppercorns, and roasted peanuts. Add minced garlic and ginger, then pour over a sauce of soy sauce, rice vinegar, hoisin, sugar, and a cornstarch slurry. The Szechuan peppercorns create a unique numbing heat that is different from regular chili heat. Remove them after cooking if serving to kids, or skip them for a milder version.
+
+**4. Moo Goo Gai Pan**
+Slice chicken breast paper-thin against the grain. Stir fry with sliced button mushrooms, snow peas, water chestnuts, and baby corn in chicken broth, soy sauce, oyster sauce, and cornstarch. This is the lightest stir fry on the list -- a clear, delicate sauce rather than a heavy glaze. Ready in 20 minutes and one of the few stir fries that reheats without becoming soggy.
+
+**5. Chicken Chow Mein**
+Fry egg noodles in oil until crispy on one side, then flip and crisp the other side. Separately stir fry chicken strips with bean sprouts, shredded cabbage, celery, scallions, and sliced onion. Add a sauce of soy sauce, oyster sauce, sesame oil, and white pepper. Serve the stir fry over the crispy noodles. The contrast between the crunchy noodle base and the saucy chicken topping is the entire point -- do not mix them until plating.
+
+---
+
+## Teriyaki and Sweet Sauce Chicken Stir Fries
+
+**6. Teriyaki Chicken Stir Fry**
+Slice chicken thighs and stir fry on high heat until well caramelized, about 4 minutes. Add broccoli florets and sliced bell peppers. Pour over homemade teriyaki sauce: soy sauce, mirin, sake (or dry sherry), sugar, and garlic. Toss 2 minutes until sauce reduces to a sticky glaze. Serve over white rice. Bottled teriyaki sauce works but homemade takes 5 minutes and tastes dramatically better because it has not been sitting in a bottle for three months.
+
+**7. Honey Garlic Chicken Stir Fry**
+Brown chicken pieces in butter until golden. Add minced garlic and cook 30 seconds. Pour over a sauce of honey, soy sauce, apple cider vinegar, and cornstarch. Add frozen peas and sliced carrots. Simmer 3 minutes until sauce is thick and sticky. The honey garlic combination is the safest choice for picky eaters on this list -- no unusual flavors, mildly sweet, deeply savory.
+
+**8. Orange Chicken Stir Fry**
+Cube chicken breast, coat in cornstarch, and pan-fry in oil until crispy on all sides. Make the sauce: orange zest, orange juice, soy sauce, rice vinegar, ginger, garlic, sugar, and a cornstarch slurry. Toss chicken in the sauce until every piece is coated. The crispy cornstarch coating absorbs the orange sauce without getting soggy if served immediately. This is the dish that makes people ask why they ever order from Panda Express.
+
+**9. Pineapple Chicken Stir Fry**
+Stir fry chicken pieces with diced fresh or canned pineapple, red bell pepper, and red onion. Make the sauce from pineapple juice, soy sauce, rice vinegar, brown sugar, garlic, and cornstarch. The pineapple enzymes help tenderize the chicken slightly, and the natural sugar caramelizes in the hot pan for a slightly charred sweetness. Serve over jasmine rice.
+
+**10. Sesame Chicken Stir Fry**
+Coat chicken cubes in a batter of egg white, cornstarch, and a pinch of baking soda. Shallow-fry until crispy. Toss in a sauce of soy sauce, rice vinegar, hoisin, sugar, garlic, and ginger. Finish with a generous scattering of toasted sesame seeds and sliced scallions. The baking soda in the coating creates an exceptionally light, crispy texture. Do not skip the toasting step for the sesame seeds -- raw sesame seeds taste like nothing.
+
+---
+
+## Spicy Chicken Stir Fry Recipes
+
+**11. General Tso's Chicken**
+This is the most famous American-Chinese stir fry. Coat chicken pieces in cornstarch, deep-fry or air-fry until very crispy. Make the sauce: soy sauce, rice vinegar, hoisin, sugar, dried red chiles, and cornstarch. Toss everything together with minced garlic and ginger. The sauce should coat every piece thickly. Serve immediately -- the crispy coating dissolves in the sauce within 10 minutes, which is why restaurant versions are always better than leftovers.
+
+**12. Szechuan Chicken Stir Fry**
+Slice chicken thighs thin and marinate in soy sauce, Shaoxing wine, and cornstarch. Stir fry with Szechuan peppercorns, dried red chiles, garlic, and ginger. Finish with a sauce of soy sauce, black bean paste, chili oil, and a splash of chicken broth. The combination of Szechuan peppercorns (floral, numbing) and dried chiles (sharp heat) creates a layered spice that is genuinely different from any other stir fry on this list.
+
+**13. Sriracha Honey Chicken Stir Fry**
+Stir fry sliced chicken with garlic, ginger, and sliced bell peppers. Make a sauce with sriracha, honey, soy sauce, lime juice, and cornstarch. Toss everything together and serve over rice with sliced scallions. The honey balances the sriracha into a sauce that is spicy but not aggressive -- a reliable middle ground for families where some members want heat and others do not.
+
+**14. Thai Basil Chicken (Pad Krapow Gai)**
+Ground or minced chicken fried in oil with sliced shallots, garlic, and Thai chiles. Sauce: oyster sauce, fish sauce, soy sauce, and a pinch of sugar. Fold in a huge handful of fresh Thai basil leaves off the heat and let them wilt. Serve with jasmine rice and a fried egg on top with a runny yolk. The combination of crispy-edged ground chicken, wilted basil, and runny egg yolk is one of the best quick dinners in Southeast Asian cooking. Regular basil works if Thai basil is unavailable.
+
+**15. Korean Gochujang Chicken Stir Fry**
+Slice chicken thighs and marinate in gochujang (Korean fermented chili paste), soy sauce, sesame oil, garlic, and sugar. Stir fry with sliced onion, scallions, and sliced zucchini. The gochujang provides a deeply savory, fermented heat that is different from fresh chili heat -- earthy and complex rather than sharp. Serve over steamed rice with kimchi on the side. Gochujang is available in most grocery stores in the international aisle.
+
+---
+
+## Vegetable-Heavy Chicken Stir Fries
+
+**16. Chicken and Bok Choy Stir Fry**
+Quarter baby bok choy lengthwise. Stir fry chicken strips until cooked through. Add garlic and ginger, then bok choy. Toss with oyster sauce, soy sauce, and sesame oil. The bok choy cooks in under 3 minutes -- white stems go in first, leafy tops go in the last 60 seconds. One of the most nutritionally dense stir fries on this list with minimal prep time.
+
+**17. Chicken and Snow Pea Stir Fry**
+A simple wok dinner: chicken slices, snow peas, sliced mushrooms, and water chestnuts. Sauce of soy sauce, oyster sauce, rice wine, and cornstarch. The snow peas stay crisp if you add them in the last 2 minutes. Water chestnuts add a satisfying crunch that no other ingredient replicates. This is the stir fry equivalent of a clean, simple weeknight dinner that does not try too hard.
+
+**18. Rainbow Vegetable Chicken Stir Fry**
+Use five colors of vegetables: red bell pepper, yellow bell pepper, broccoli florets, shredded purple cabbage, and snap peas. Stir fry with chicken strips and a sauce of soy sauce, honey, rice vinegar, garlic, and ginger. This recipe photographs beautifully, which makes it useful if you share food content. It also gets children interested in eating vegetables because the colors make the plate look exciting rather than just "green."
+
+**19. Chicken and Asparagus Stir Fry**
+Cut asparagus spears on a steep diagonal into 2-inch pieces. Stir fry chicken in sesame oil with sliced garlic. Add asparagus and stir fry 3 minutes until bright green but still crisp. Sauce of oyster sauce, soy sauce, and a splash of broth. Asparagus in a stir fry is dramatically underused -- it holds its texture better than broccoli and has a natural sweetness that pairs well with the oyster sauce.
+
+**20. Chicken and Mushroom Stir Fry**
+Use a mix of mushrooms: shiitake, cremini, and oyster if available. Stir fry chicken until golden. Add sliced mushrooms and cook until they release their liquid and that liquid evaporates, about 5 minutes. Finish with garlic, soy sauce, oyster sauce, and white pepper. The mushrooms add deep umami flavor that makes this stir fry taste like it has been cooking for an hour rather than 15 minutes.
+
+---
+
+## Quick 20-Minute Chicken Stir Fries
+
+**21. 15-Minute Garlic Chicken Stir Fry**
+The simplest stir fry: chicken strips, 5 cloves of garlic (minced), frozen stir fry vegetables from a bag. Cook chicken first, add garlic and vegetables, add soy sauce and sesame oil, done. No cornstarch slurry, no specialty ingredients. Keep a bag of frozen stir fry vegetables in the freezer at all times and this dinner is available on zero notice.
+
+**22. Chicken and Cashew Stir Fry**
+Stir fry diced chicken thighs with whole roasted cashews, diced red bell pepper, and sliced scallions. Sauce: soy sauce, hoisin, rice vinegar, and a small amount of chili oil. The cashews add richness and crunch that makes a simple stir fry feel substantial. This is a restaurant-quality dinner that takes 20 minutes and uses ingredients from the pantry.
+
+**23. Chicken Noodle Stir Fry**
+Use regular spaghetti or linguine instead of Asian noodles. Cook the pasta 2 minutes under al dente. Stir fry chicken with garlic, ginger, shredded cabbage, and shredded carrots. Toss with the pasta and a sauce of soy sauce, sesame oil, fish sauce, and a pinch of sugar. Regular pasta works because the sauce adheres the same way. This is the answer to "I want stir fry but only have spaghetti."
+
+**24. Chicken and Frozen Veggie Stir Fry**
+No fresh vegetables required: frozen broccoli florets, frozen sugar snap peas, frozen sliced bell peppers. Thaw briefly or add frozen directly to the wok after the chicken is cooked. Use bottled stir fry sauce if needed. This is the weeknight option for when nothing was planned. The frozen vegetables get slightly more tender than fresh when stir-fried, which some family members prefer. No shame in this.
+
+**25. Lemon Pepper Chicken Stir Fry**
+Stir fry chicken strips with sliced zucchini, yellow squash, and asparagus. Season with lemon zest, cracked black pepper, garlic, and a splash of white wine or chicken broth. Finish with a squeeze of fresh lemon juice and olive oil instead of the usual Asian sauces. A completely different flavor profile from every other stir fry on this list -- bright, lemony, Italian-adjacent. Works with pasta or rice, and it is completely free of soy sauce for households avoiding sodium.
+
+---
+
+## How to Make Chicken Stir Fry That Actually Tastes Like Takeout
+
+Most home stir fries taste flat compared to restaurant versions for one reason: not enough heat. Restaurants use wok burners that reach 100,000 BTUs. Your home stove reaches 12,000 BTUs on high. That gap is real, but you can close it.
+
+**Velveting the chicken**: Mix chicken slices with soy sauce, cornstarch, and egg white or baking soda. Marinate 15 to 30 minutes. This is the technique that makes takeout chicken silky and tender instead of chewy. Every recipe above benefits from this step even when it is not listed.
+
+**The wok hei problem**: The smoky, slightly charred flavor from restaurant stir fries comes from the flame briefly licking up the sides of the wok. At home, achieve this by: using the highest burner on your stove, using a carbon steel wok (not nonstick), cooking in small batches (never more than one pound of chicken at a time), and never stirring constantly -- let the food sit on the hot metal for 30 to 45 seconds between stirs.
+
+**Sauce timing**: Never add cornstarch-thickened sauces to a cold or warm pan -- only to a very hot one. The starch gelatinizes instantly at high heat, which is what creates the glossy, restaurant-style glaze instead of a watery, thin coating.
+
+**Batch cooking**: Every protein on this list can be cooked ahead and refrigerated for 4 days. Make a larger batch of chicken on Sunday and stir fry different vegetables each night for instant weeknight dinners.
+
+---
+
+## How DinnerDrop Plans Your Stir Fry Rotation
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds five personalized weeknight dinners each week, including stir fry nights balanced against your family's preferences, cook time constraints, and dietary needs. The weekly plan comes with a full grocery list so you always have the right sauce ingredients and proteins stocked. The beta is free for six months.
+
+---
+
+## FAQ
+
+**What is the best chicken for stir fry?**
+Chicken thighs are best. They have more fat than breast meat, which means they stay juicy even when cooked on high heat. Chicken breast works but must be sliced thin and marinated -- otherwise it dries out quickly at stir-fry temperatures.
+
+**Do I need a wok for stir fry?**
+A wok is ideal but not required. A large stainless steel or cast iron skillet works on a regular stove. The key is a pan large enough to spread the chicken in a single layer so it sears instead of steams. If using a nonstick pan, your maximum heat is limited by the coating -- this is why carbon steel or stainless gives better results.
+
+**Why does my stir fry come out watery?**
+Two causes: too much food in the pan at once (vegetables release steam that cannot escape) and sauce added too early before the chicken has properly seared. Cook in smaller batches, get the pan very hot before adding anything, and add the sauce only in the last 2 minutes.
+
+**Can I meal prep stir fry?**
+Yes, but keep components separate until reheating. Cooked chicken stores well for 4 days. Cooked vegetables lose their crispness but are still good. Sauce can be made and refrigerated a week ahead. Combine and reheat in a hot pan rather than the microwave to restore texture.
+
+**What vegetables work best in chicken stir fry?**
+Best choices: broccoli, bell peppers, snap peas, snow peas, bok choy, asparagus, mushrooms, zucchini, carrots, and water chestnuts. Avoid tomatoes (too wet), potatoes (too dense), and leafy greens like spinach (wilts to nothing). Cut everything roughly the same size so it cooks evenly.
+
+---
+
+Twenty-five chicken stir fry recipes -- from takeout-style chicken and broccoli to Szechuan, Thai basil, Korean gochujang, and quick 15-minute weeknight versions.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan -- five dinners, grocery list included -- in under a minute. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
