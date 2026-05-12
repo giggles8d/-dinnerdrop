@@ -12665,6 +12665,180 @@ Start with familiar flavors in healthier formats: taco bowls instead of tacos, c
 
 Thirty healthy dinner recipes is a good start. A plan that turns them into a weekly routine — with a grocery list, timing, and no decisions required at 5pm — is better. [DinnerDrop handles that part for you.](/beta)
 `
+  },
+    {
+    slug: 'baked-chicken-thighs',
+    title: 'Baked Chicken Thighs: 25 Juicy Recipes the Whole Family Will Love',
+    description: 'The best baked chicken thigh recipes for weeknight dinners — crispy garlic butter, honey glazed, sheet pan dinners, and Mediterranean-style. Juicy results every time.',
+    publishDate: '2027-09-21',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'baked chicken thighs',
+    content: `
+# Baked Chicken Thighs: 25 Juicy Recipes the Whole Family Will Love
+
+Chicken thighs are the most forgiving cut of chicken you can cook. Unlike chicken breast, they stay juicy even if you leave them in the oven a few minutes too long. They cost less per pound, absorb marinades beautifully, and produce pan drippings worth spooning over everything on the plate.
+
+These 25 baked chicken thigh recipes cover every occasion — from a 30-minute weeknight dinner with pantry spices to a slow-roasted Mediterranean showpiece for the weekend.
+
+---
+
+## Classic Oven-Baked Chicken Thighs
+
+### 1. Crispy Skin Baked Chicken Thighs
+
+Pat the thighs completely dry, rub with olive oil, season generously with salt, pepper, garlic powder, and smoked paprika. Bake at 425°F skin-side up for 35–40 minutes. The skin renders and crisps. The meat stays moist. This is the base recipe — everything else builds from here.
+
+### 2. Garlic Butter Baked Chicken Thighs
+
+Melt 4 tablespoons butter with 6 cloves minced garlic and a pinch of thyme. Spoon over chicken thighs in a baking dish. Bake at 400°F for 40 minutes, basting once halfway through. The garlic infuses the meat and the butter creates a sauce that is exceptional over mashed potatoes.
+
+### 3. Lemon Herb Baked Chicken Thighs
+
+Combine lemon zest, fresh rosemary, thyme, garlic, olive oil, salt, and pepper. Coat thighs thoroughly and let them marinate for at least 30 minutes (overnight if you have the time). Bake at 400°F for 38–42 minutes. Bright, clean flavor that works with almost any side.
+
+### 4. BBQ Baked Chicken Thighs
+
+Season thighs with a dry rub (brown sugar, smoked paprika, garlic powder, onion powder, black pepper). Bake at 375°F for 25 minutes, then brush generously with barbecue sauce and bake another 15 minutes until caramelized. Finish under the broiler for 2 minutes to char the edges.
+
+### 5. Honey Mustard Baked Chicken Thighs
+
+Whisk 3 tablespoons Dijon mustard, 2 tablespoons honey, 1 tablespoon olive oil, salt and pepper. Coat thighs and bake at 400°F for 38 minutes. The mustard forms a crust that locks in moisture. Serve with roasted potatoes and a green salad.
+
+---
+
+## Saucy and Glazed Baked Chicken Thighs
+
+### 6. Honey Garlic Baked Chicken Thighs
+
+Whisk together 3 tablespoons honey, 4 cloves minced garlic, 2 tablespoons soy sauce, and 1 tablespoon apple cider vinegar. Pour over thighs and bake at 400°F for 35–40 minutes, basting at the 20-minute mark. The glaze thickens in the oven and coats every surface. One of the most-requested chicken recipes in family meal planning.
+
+### 7. Teriyaki Baked Chicken Thighs
+
+Combine soy sauce, mirin, sake (or dry sherry), brown sugar, garlic, and ginger. Marinate thighs for at least 1 hour. Bake at 400°F for 35 minutes, basting twice with reserved marinade (boil the marinade first if it has touched raw chicken). Serve over white rice with sliced scallions.
+
+### 8. Buffalo Baked Chicken Thighs
+
+Toss thighs in hot sauce mixed with melted butter, garlic powder, and a splash of Worcestershire sauce. Bake at 425°F for 35–40 minutes until the skin is crispy and the sauce is caramelized. Serve with blue cheese dip and celery sticks. All the flavor of wings without the work.
+
+### 9. Maple Dijon Baked Chicken Thighs
+
+Combine 2 tablespoons maple syrup, 2 tablespoons Dijon mustard, 1 tablespoon whole grain mustard, olive oil, salt, and black pepper. Coat thighs and bake at 400°F for 40 minutes. The maple caramelizes beautifully and works especially well in fall and winter.
+
+### 10. Orange Glazed Baked Chicken Thighs
+
+Reduce fresh orange juice with soy sauce, garlic, ginger, and a tablespoon of brown sugar until syrupy. Brush over thighs and bake at 400°F for 35–40 minutes, glazing halfway through. Bright citrus flavor with a sticky finish that makes these hard to stop eating.
+
+---
+
+## Mediterranean and International Baked Chicken Thighs
+
+### 11. Greek Lemon Baked Chicken Thighs
+
+Marinate chicken in lemon juice, olive oil, dried oregano, garlic, and a pinch of cinnamon for at least 2 hours. Arrange in a baking dish with sliced red onion and Kalamata olives. Bake at 400°F for 40–45 minutes. Add crumbled feta in the last 5 minutes. Serve with pita and tzatziki.
+
+### 12. Moroccan-Spiced Baked Chicken Thighs
+
+Combine cumin, coriander, turmeric, cinnamon, ginger, smoked paprika, and cayenne into a dry rub. Coat thighs generously. Roast at 400°F for 40 minutes. Serve over couscous with preserved lemon and fresh cilantro. The spice blend looks complex but is made entirely from pantry staples.
+
+### 13. Italian Herb Baked Chicken Thighs
+
+Combine dried Italian seasoning, garlic, olive oil, balsamic vinegar, salt, and pepper. Marinate 30 minutes minimum. Nestle thighs in a baking dish with canned crushed tomatoes and bake at 375°F for 45 minutes. Serve over pasta or with crusty bread to catch the sauce.
+
+### 14. Harissa Baked Chicken Thighs
+
+Coat thighs generously in harissa paste mixed with olive oil, lemon juice, and salt. Bake at 425°F for 35–38 minutes until edges are charred and the interior is cooked through. Serve over hummus or with warm flatbread and sliced cucumbers. Bold, spicy, and deeply flavorful.
+
+### 15. Chimichurri Baked Chicken Thighs
+
+Blend parsley, cilantro, garlic, red wine vinegar, olive oil, oregano, and red pepper flakes into chimichurri sauce. Reserve half for serving. Coat thighs in the rest and marinate 1–4 hours. Bake at 400°F for 38–42 minutes. Drizzle with reserved chimichurri right before serving. Fresh and herbaceous.
+
+---
+
+## Sheet Pan Baked Chicken Thighs
+
+### 16. Sheet Pan Chicken Thighs with Roasted Vegetables
+
+Toss bone-in thighs with olive oil and seasoning. Surround with chopped bell peppers, zucchini, red onion, and cherry tomatoes. Everything roasts on one pan at 400°F for 40–45 minutes. The chicken juices season the vegetables underneath. One pan, one dinner, minimal cleanup.
+
+### 17. Sheet Pan Chicken Thighs and Potatoes
+
+Halve baby potatoes and toss with olive oil, garlic, rosemary, and salt. Nestle seasoned thighs on top. Roast at 425°F for 40–45 minutes. The potatoes absorb the chicken fat as it renders. This is the recipe that converts people into sheet pan dinner believers.
+
+### 18. Sheet Pan Lemon Chicken Thighs and Broccoli
+
+Season thighs and arrange on a sheet pan with large broccoli florets. Drizzle everything with lemon juice, olive oil, garlic, and parmesan. Bake at 425°F for 35 minutes. Add extra parmesan in the final 5 minutes for a crispy finish.
+
+### 19. Sheet Pan Chicken Thighs with Sweet Potato and Brussels Sprouts
+
+Toss sweet potato cubes and halved Brussels sprouts with maple syrup, olive oil, salt, and pepper. Lay thighs on top, seasoned with smoked paprika and garlic. Roast at 400°F for 45 minutes. Sweet, savory, and filling enough to stand on its own.
+
+### 20. Sheet Pan Mediterranean Chicken Thighs with Chickpeas
+
+Combine chicken thighs with canned chickpeas, cherry tomatoes, red onion, and Kalamata olives on a sheet pan. Season everything with cumin, paprika, garlic, lemon zest, and olive oil. Roast at 425°F for 38–40 minutes. High protein, fiber-rich, and ready in under an hour.
+
+---
+
+## Quick and Budget Baked Chicken Thighs
+
+### 21. 30-Minute Crispy Baked Chicken Thighs
+
+Use boneless skinless thighs. Pound them slightly to even thickness. Season with garlic powder, onion powder, paprika, salt, and pepper. Bake at 425°F for 22–25 minutes. Internal temp 165°F. Rest 5 minutes. This is the fastest path to juicy baked chicken thighs on a weeknight.
+
+### 22. Pantry Spice Baked Chicken Thighs
+
+No fresh ingredients required. Combine cumin, paprika, garlic powder, onion powder, dried thyme, black pepper, and salt into a rub. Coat thighs and bake at 400°F for 38–40 minutes. Serve with frozen vegetables. Total cost under $6 for a family dinner.
+
+### 23. Soy-Ginger Baked Chicken Thighs
+
+Combine soy sauce, fresh ginger, garlic, sesame oil, and a teaspoon of brown sugar. Marinate thighs for 30 minutes minimum. Bake at 400°F for 38 minutes. Serve over rice with steamed broccoli. Budget-friendly with the flavor profile of a restaurant takeout order.
+
+### 24. Panko-Crusted Baked Chicken Thighs
+
+Dip boneless thighs in beaten egg, then press into seasoned panko breadcrumbs. Arrange on a wire rack set over a sheet pan. Bake at 425°F for 25–28 minutes for oven-fried crunch without deep frying. Kids request these regularly.
+
+### 25. Ranch-Seasoned Baked Chicken Thighs
+
+Coat thighs in a mixture of dry ranch seasoning, olive oil, and a squeeze of lemon. Bake at 400°F for 38–40 minutes. This is the recipe for the night you have almost nothing in the pantry and need something everyone will eat without negotiation.
+
+---
+
+## 5 Tips for Perfectly Baked Chicken Thighs Every Time
+
+**1. Pat the chicken dry before seasoning.** Moisture on the surface steams rather than roasts, which prevents the skin from crisping. Dry the thighs thoroughly with paper towels before applying any oil or seasoning.
+
+**2. Bake at higher heat.** 400–425°F gives better skin texture and faster cook times than 350°F. Lower temperatures work fine for bone-in thighs in a sauce but rarely produce caramelized exterior.
+
+**3. Use a wire rack when you want maximum crispiness.** Elevating the thighs allows hot air to circulate underneath and prevents the bottom from steaming in its own juices.
+
+**4. Check internal temperature, not time.** Chicken thighs are done at 165°F but remain juicy up to 180°F. Unlike breast, they do not dry out in that range. A meat thermometer removes all guesswork.
+
+**5. Rest before cutting.** Five minutes of resting allows juices to redistribute through the meat. Cutting immediately lets those juices run out onto the cutting board.
+
+Planning meals around baked chicken thighs is easy — picking different recipes every night of the week is the harder part. [DinnerDrop builds a weekly plan with a grocery list for you.](/beta)
+
+---
+
+## Frequently Asked Questions
+
+**How long do you bake chicken thighs at 400°F?**
+Bone-in chicken thighs take 38–45 minutes at 400°F. Boneless skinless thighs take 22–28 minutes. Always verify with a meat thermometer — internal temperature should reach 165°F minimum.
+
+**Should I cover chicken thighs when baking?**
+For crispy skin: no. Bake uncovered the entire time. Covering traps steam and produces soft, pale skin. If you want a braised or casserole-style result, cover for the first 30 minutes and uncover for the final 15.
+
+**Can I bake frozen chicken thighs?**
+Yes, but increase baking time by 50 percent and reduce heat to 375°F. Check internal temperature at the original cook time and continue until 165°F is reached. Seasoning will not adhere as well as it does to thawed chicken.
+
+**Are bone-in or boneless thighs better for baking?**
+Bone-in skin-on thighs produce more flavor and stay juicier because the bone conducts heat and the fat under the skin bastes the chicken as it renders. Boneless skinless thighs are faster (25 minutes vs 40) and easier to serve to kids.
+
+**Can I meal prep baked chicken thighs?**
+Baked chicken thighs reheat better than any other cut of chicken. Store in an airtight container for up to 4 days. Reheat at 350°F for 12–15 minutes or in a covered skillet over medium-low heat with a splash of water. They stay moist where breast dries out immediately.
+
+---
+
+Twenty-five baked chicken thigh recipes gives you nearly a month of weeknight dinners without repeating. If you want those recipes turned into a personalized weekly plan with a pre-sorted grocery list, [DinnerDrop has you covered.](/beta)
+`
   }
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
