@@ -9713,6 +9713,179 @@ Twenty-five chicken casserole recipes covering classic comfort bakes, vegetable 
 **[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'chicken-soup-recipe',
+    title: 'Chicken Soup Recipe: The Complete Guide to Homemade Chicken Soup (25 Variations)',
+    description: 'Everything you need to make the best homemade chicken soup — classic chicken noodle, creamy chicken soup, tortilla soup, and 22 more variations your family will request again.',
+    publishDate: '2027-06-08',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'chicken soup recipe',
+    content: `# Chicken Soup Recipe: The Complete Guide to Homemade Chicken Soup (25 Variations)
+
+Chicken soup is the most universally requested dinner in existence. Every culture has a version. Every family has a variation they call the best. And on a cold evening or a sick day, nothing else comes close.
+
+This guide covers the fundamentals of great chicken soup, then gives you 25 complete variations across five categories: classic broths and noodle soups, creamy chicken soups, global-style soups, hearty one-pot meals, and quick weeknight versions. Every recipe is family-tested, practical, and built around ingredients you can keep on hand.
+
+---
+
+## The Foundation: What Makes Great Chicken Soup
+
+Before the variations, the fundamentals. Great chicken soup comes down to four things: good broth, properly cooked chicken, aromatic vegetables, and seasoning at every stage.
+
+**The broth:** Homemade broth is better than store-bought. If you have time, simmer a whole chicken or bone-in pieces with aromatics for 90 minutes. The collagen from the bones gives you body and that silky mouthfeel that canned broth cannot replicate. If you are using store-bought, choose low-sodium so you control the salt level, and look for one that lists actual chicken as the first ingredient.
+
+**The chicken:** Thighs are better than breasts for soup. They stay moist through long simmering and do not turn stringy. If you use breasts, add them in the last 15 to 20 minutes and pull them as soon as they reach 165 degrees F internally. Rotisserie chicken is the biggest shortcut in soup making -- shred it and add it at the end, using the carcass to make quick stock if you have an extra hour.
+
+**The aromatics:** Onion, celery, and carrot are the classic trinity for a reason. They build a savory, balanced base. Do not skip browning the onion and celery in butter or oil before adding liquid -- three minutes of sautéing adds significant depth. Garlic goes in the last 60 seconds before the liquid to avoid bitterness.
+
+**Salt:** Properly salted chicken soup tastes bright and alive. Under-salted chicken soup tastes flat regardless of how long it simmered. Season the broth, taste it, and season again at the end.
+
+---
+
+## Classic Broths and Noodle Soups
+
+**Classic Chicken Noodle Soup**
+The benchmark recipe. Sauté diced onion, celery, and carrot in butter until softened, about 5 minutes. Add minced garlic and cook 60 seconds. Pour in 8 cups low-sodium chicken broth. Add bone-in chicken thighs, a bay leaf, dried thyme, salt, and pepper. Simmer 25 minutes until chicken is cooked through. Remove chicken, shred the meat, discard the skin and bones. Return shredded chicken to the pot. Add 2 cups egg noodles and cook 8 minutes until tender. Adjust seasoning. The bay leaf comes out before serving.
+
+**Slow Cooker Chicken Noodle**
+Everything except the noodles goes in the slow cooker raw: chicken thighs, onion, celery, carrot, garlic, broth, thyme, salt, pepper. Cook on low 6 to 8 hours or high 3 to 4 hours. Shred the chicken directly in the pot. Add egg noodles 30 minutes before serving on high heat. The advantage: the long cook extracts deep flavor from the chicken bones without any active supervision.
+
+**Instant Pot Chicken Noodle**
+Add everything except noodles to the Instant Pot. Pressure cook on high for 15 minutes, natural release 10 minutes, then quick release. Remove and shred chicken. Use the sauté function to bring the broth to a boil, add noodles, cook 8 minutes. Total hands-on time is under 20 minutes.
+
+**Lemon Chicken Orzo Soup**
+Follow the classic noodle soup method but use orzo instead of egg noodles and finish with the juice of one lemon and 2 tablespoons fresh dill. The lemon brightens the broth considerably. Baby spinach added in the last 2 minutes of cooking rounds out the bowl. This version feels lighter than traditional chicken noodle and works well year-round.
+
+**Chicken Rice Soup**
+Replace egg noodles with long-grain white rice, added 20 minutes before the soup is done. Wild rice blend works especially well -- it holds its texture better than white rice and adds an earthy quality. Add a splash of white wine to the broth with the aromatics for extra depth.
+
+---
+
+## Creamy Chicken Soups
+
+**Classic Cream of Chicken Soup**
+Sauté onion and celery in butter. Add garlic, then flour, and cook the flour for 2 minutes to remove the raw taste. Whisk in chicken broth gradually to prevent lumps, then add heavy cream. Simmer until slightly thickened. Add shredded cooked chicken and season with salt, white pepper, and dried thyme. The flour-cream combination gives you a velvety base without canned soup.
+
+**Creamy Chicken and Wild Rice Soup**
+Make the cream of chicken base above and add cooked wild rice blend in the last 10 minutes. This is the restaurant-style version of the classic. Dice chicken thighs into bite-size pieces rather than shredding for a heartier texture.
+
+**Chicken Corn Chowder**
+Sauté onion and diced red pepper in butter. Add garlic, then chicken broth and diced potatoes. Simmer 15 minutes until potatoes are nearly tender. Add corn (frozen or fresh cut from the cob), shredded chicken, and heavy cream. Simmer 5 minutes. Finish with smoked paprika and chives. Serve with crusty bread.
+
+**Broccoli Chicken Soup**
+Build a cream base, then add small broccoli florets and simmer 8 minutes until just tender. Add shredded chicken and shredded sharp cheddar cheese, stirring until melted. Do not boil after adding cheese -- it breaks. This is the soup version of broccoli cheddar, with chicken for protein.
+
+**Tuscan Chicken Soup**
+Sauté onion, garlic, and sun-dried tomatoes in olive oil. Add chicken broth, diced chicken thighs, Italian seasoning, and red pepper flakes. Simmer until chicken is cooked through, then add a can of white beans, heavy cream, and fresh spinach. The spinach wilts in 2 minutes. Top with grated Parmesan.
+
+---
+
+## Global-Style Chicken Soups
+
+**Chicken Tortilla Soup**
+Sauté onion and garlic in oil. Add diced tomatoes, chicken broth, a can of diced green chiles, cumin, chili powder, and smoked paprika. Add chicken thighs and simmer 25 minutes. Shred the chicken. Add a can of black beans and frozen corn. Simmer 5 minutes. Serve topped with tortilla strips, avocado, sour cream, shredded cheese, and fresh lime. This is the soup that converts people who claim not to like soup.
+
+**White Chicken Chili**
+Sauté onion, garlic, and diced jalapeño. Add chicken broth, two cans of white beans, diced chicken, cumin, oregano, and coriander. Simmer 20 minutes. Use a spoon to mash some of the beans against the side of the pot to thicken the broth. Stir in cream cheese and green salsa at the end. Serve with sour cream and shredded Monterey Jack.
+
+**Chicken Pho (Quick Version)**
+Char a halved onion and ginger directly over a gas burner or under the broiler until charred and fragrant. Combine with chicken broth, star anise, cinnamon stick, fish sauce, and a pinch of sugar. Simmer 30 minutes, strain, and return clear broth to the pot. Add thinly sliced raw chicken breast directly to the simmering broth -- it cooks in 3 minutes. Serve over rice noodles with bean sprouts, fresh basil, lime, sriracha, and hoisin on the side.
+
+**Greek Lemon Chicken Soup (Avgolemono)**
+Make a classic chicken broth with shredded chicken. Separately, whisk 3 eggs with the juice of 2 lemons until frothy. Ladle hot broth slowly into the egg mixture while whisking constantly to temper it -- this prevents scrambling. Add the tempered mixture back to the pot and stir over low heat until slightly thickened. Do not boil or the eggs will curdle. Stir in cooked orzo or rice. Avgolemono has a silky, tangy, deeply satisfying quality that is unlike any other chicken soup.
+
+**Thai Coconut Chicken Soup (Tom Kha)**
+Simmer chicken broth with sliced galangal (or ginger), lemongrass stalks, and lime leaves for 10 minutes. Strain. Return broth to the pot and add coconut milk, sliced chicken breast, fish sauce, lime juice, and sliced mushrooms. Simmer until chicken is just cooked, about 5 minutes. Do not boil after adding coconut milk. Finish with fresh cilantro and sliced Thai chiles.
+
+---
+
+## Hearty One-Pot Meals
+
+**Chicken and Vegetable Soup**
+The most flexible recipe in this list. Sauté aromatics (onion, celery, carrot, garlic) in olive oil. Add chicken broth and whatever vegetables you have -- zucchini, green beans, potatoes, parsnips, sweet potato, bell pepper. Add shredded rotisserie chicken or diced raw chicken thighs. Simmer until vegetables are tender. Season aggressively with salt, pepper, and dried Italian seasoning. This is the weekly clean-out-the-vegetable-drawer soup that becomes different every time.
+
+**Chicken Minestrone**
+Build a vegetable soup base with diced tomatoes, zucchini, green beans, carrots, and onion. Add chicken broth and kidney beans. Add small pasta (ditalini or elbows) in the last 12 minutes. Stir in shredded chicken and fresh Parmesan at the end. The pasta absorbs broth quickly -- serve immediately or keep the pasta separate if you are planning leftovers.
+
+**Chicken Barley Soup**
+Hearty enough to be a full meal. Sauté onion, celery, and carrot. Add chicken broth, barley, diced chicken thighs, dried thyme, and bay leaf. Simmer 40 to 45 minutes until barley is fully cooked and tender. Barley absorbs a significant amount of broth as it cooks -- add more broth or water if the soup gets too thick. Season generously at the end.
+
+**Chicken Gnocchi Soup (Copycat Olive Garden Style)**
+Sauté onion, celery, and garlic in butter. Add flour and cook 2 minutes. Whisk in chicken broth and half-and-half. Add diced chicken, baby spinach, and shredded carrot. Simmer until chicken is cooked through. Add store-bought potato gnocchi in the last 5 minutes -- they cook quickly and become pillowy dumplings in the soup. Season with Italian seasoning, salt, and pepper.
+
+**Chicken and Dumpling Soup**
+Make a basic cream-based chicken soup. For the dumplings: mix 2 cups flour, 1 tablespoon baking powder, 1 teaspoon salt, and 3/4 cup whole milk until a thick dough forms. Drop heaping tablespoons of dough directly into the simmering soup. Cover and cook 15 minutes without lifting the lid -- the steam cooks the dumplings through. They puff up and become soft, fluffy dough balls. The dumplings thicken the soup as they cook.
+
+---
+
+## Quick Weeknight Chicken Soups (30 Minutes or Less)
+
+**20-Minute Rotisserie Chicken Soup**
+The fastest route to homemade-tasting soup. Sauté onion, celery, carrot, and garlic in olive oil for 5 minutes. Add 6 cups low-sodium chicken broth, dried thyme, salt, and pepper. Bring to a boil. Add egg noodles and cook 8 minutes. Stir in 2 cups shredded rotisserie chicken and heat through. Start to finish: 20 minutes. Uses pre-cooked chicken so there is no waiting for raw chicken to cook through.
+
+**Chicken Ramen**
+Bring chicken broth to a simmer with ginger, garlic, soy sauce, sesame oil, and a tablespoon of miso paste. Add shredded cooked chicken and sliced mushrooms. Simmer 5 minutes. Add ramen noodles and cook according to package directions (usually 3 minutes). Serve topped with a soft-boiled egg, sliced scallions, and nori. Total time from broth to bowl: under 20 minutes.
+
+**Canned Chicken Shortcut Soup**
+On true emergency nights, this works: sauté aromatics, add broth, add a can of drained white beans and a can of drained chicken breast (yes, canned). Simmer 10 minutes. Season aggressively. Finish with lemon juice and fresh herbs. It will not win awards but it is hot, complete, and on the table in 15 minutes from a fully stocked pantry.
+
+**Chicken and Spinach White Bean Soup**
+Sauté onion and garlic in olive oil. Add chicken broth, a can of white beans, Italian seasoning, and diced chicken thighs. Simmer 15 to 18 minutes until chicken is cooked through. Shred or slice chicken. Add 3 cups fresh baby spinach -- it wilts in 2 minutes. Finish with lemon juice and grated Parmesan. Healthy, hearty, and ready in 30 minutes.
+
+**Chicken Vegetable Noodle Soup (30-Minute)**
+Use boneless skinless chicken breasts cut into small pieces instead of whole thighs -- they cook in 10 to 12 minutes. Sauté aromatics, add broth, bring to a boil, add chicken pieces and noodles together. Simmer until both are done, about 12 minutes. Everything cooks simultaneously. Season at the end. Fast, clean, and exactly what weeknight soup should be.
+
+---
+
+## Tips for Better Chicken Soup
+
+**Do not boil the broth aggressively.** A hard boil makes the broth cloudy and can make chicken stringy. Gentle simmering (small bubbles around the edges, not a rolling boil) keeps the broth clear and the chicken tender.
+
+**Season the broth before adding chicken.** Under-seasoned broth produces flat soup even if the chicken is perfect. The broth should taste slightly saltier than you want the final soup -- it will balance once the other ingredients are added.
+
+**Save the carcass.** If you roast a chicken or use a rotisserie bird, simmer the stripped carcass in water with onion, celery, carrot, peppercorns, and bay leaf for 90 minutes. Strain it. What you have is homemade stock that costs you nothing and is significantly better than anything from a carton.
+
+**Finish with acid.** A squeeze of lemon juice or a splash of white wine vinegar added at the very end brightens the whole pot. Chicken soup tends to taste flat without it. You do not need much -- half a lemon for a full pot.
+
+**Cook pasta separately if you have leftovers.** Noodles and rice continue absorbing broth in the refrigerator. If you plan on leftovers, cook the pasta or rice separately and add it per bowl rather than directly to the pot.
+
+---
+
+## How DinnerDrop Plans Soup Nights
+
+Planning a week of dinners that includes soup nights -- when to make a quick 20-minute version vs. when to start a slow cooker batch -- is the kind of detail that [DinnerDrop](https://dinnerdrop.app/beta) handles automatically. You enter your preferences (cook time per night, number of people, dietary restrictions), and DinnerDrop generates five personalized dinners with a complete grocery list built around what you actually need.
+
+The beta is free for six months. No credit card required to get started.
+
+---
+
+## FAQ
+
+**What is the best cut of chicken for soup?**
+Bone-in chicken thighs give you the best flavor and the most forgiving texture. The bones add collagen to the broth and the dark meat stays moist through long simmering. Boneless skinless thighs are the best shortcut -- no straining required. Chicken breasts work but dry out faster; add them in the last 15 to 20 minutes and pull immediately at 165 degrees F.
+
+**Can you make chicken soup with raw chicken?**
+Yes. Most recipes start with raw chicken added directly to the broth. The chicken poaches in the simmering liquid and is removed, shredded, and returned to the pot. The broth absorbs flavor from the chicken as it cooks. Bone-in pieces produce better broth than boneless. For speed, use pre-cooked rotisserie chicken added at the end.
+
+**How long does homemade chicken soup last in the refrigerator?**
+Three to four days in an airtight container. The soup often tastes better on day two as the flavors continue to develop. If the soup contains pasta or rice, the starch will continue absorbing broth in the refrigerator -- add more broth when reheating or store pasta and grains separately.
+
+**Can you freeze chicken soup?**
+Yes, for up to 3 months. Freeze without the pasta or rice (both become mushy after freezing). Thaw overnight in the refrigerator and reheat on the stovetop over medium heat, adding fresh noodles or rice. Cream-based soups sometimes separate when frozen -- whisk them vigorously as they reheat and add a splash of cream to re-emulsify.
+
+**How do you make chicken soup taste richer?**
+Three things: brown the aromatics before adding liquid, use bone-in chicken rather than boneless, and reduce the finished broth by simmering uncovered for 10 to 15 minutes before adjusting seasoning. A tablespoon of butter stirred in at the very end also rounds out the flavor significantly.
+
+---
+
+Twenty-five chicken soup recipes across five categories: classic broths and noodle soups, creamy chicken soups, global-style soups, hearty one-pot meals, and quick weeknight versions your family can have on the table in 30 minutes or less.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan -- five meals with a complete grocery list in 30 seconds. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
