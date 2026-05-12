@@ -9014,6 +9014,199 @@ Twenty-five Instant Pot chicken recipes covering shredding, soups, pasta, whole 
 **[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    id: 53,
+    slug: 'easy-weeknight-dinners',
+    title: 'Easy Weeknight Dinners: 30 Fast Family Meals Ready in 30 Minutes or Less',
+    description: 'Thirty easy weeknight dinners your family will actually eat, all ready in 30 minutes or less. Includes chicken, pasta, ground beef, seafood, and meatless options.',
+    publishDate: '2027-04-27',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'easy weeknight dinners',
+    content: `# Easy Weeknight Dinners: 30 Fast Family Meals Ready in 30 Minutes or Less
+
+Weeknight dinners have one job: get food on the table fast, without a meltdown. Not from you. Not from the kids.
+
+That means recipes with short ingredient lists, minimal active cooking time, and at least a reasonable chance that everyone at the table will eat without negotiating. This list is 30 dinners that actually work on a Tuesday. No fancy techniques. No ingredients you have to order online. No recipes that call for "a few hours of simmering."
+
+Every dinner here is ready in 30 minutes or less. Most are one pan or one pot. All of them work for families with different tastes at the same table.
+
+---
+
+## Chicken Weeknight Dinners
+
+Chicken is the most forgiving weeknight protein. It cooks fast, takes seasoning well, and works across dozens of flavor profiles. Thighs are more forgiving than breasts -- they stay moist even if you get distracted. Breasts are leaner and cook slightly faster when pounded to even thickness.
+
+**1. Honey Garlic Chicken Thighs**
+Bone-in or boneless thighs seared in a hot skillet, then simmered in a honey, garlic, and soy sauce glaze. The sauce caramelizes in the pan and coats the chicken in about 20 minutes total. Serve with rice or steamed broccoli.
+
+**2. One-Pan Lemon Herb Chicken and Potatoes**
+Chicken thighs, baby potatoes, and garlic roasted on one sheet pan at 425 degrees F. Toss everything with olive oil, lemon juice, and Italian seasoning. Ready in 28 minutes. No sides needed.
+
+**3. Chicken Stir-Fry with Broccoli**
+Sliced chicken breast, broccoli florets, and garlic in a soy-ginger sauce over rice. The whole stir-fry takes 12 minutes once everything is prepped. Use pre-cut broccoli florets to skip most of the prep.
+
+**4. Buffalo Chicken Wraps**
+Shredded rotisserie chicken tossed in buffalo sauce, wrapped in flour tortillas with shredded lettuce, cheddar, and ranch. No cooking required. On the table in 10 minutes. Kids can customize their own.
+
+**5. Tuscan White Bean Chicken**
+Chicken breasts seared in olive oil, then simmered with canned white beans, cherry tomatoes, spinach, and garlic. The beans make it filling. The whole skillet is done in 22 minutes.
+
+**6. Chicken Fajitas**
+Strips of chicken breast and bell peppers cooked in a screaming hot cast iron pan with cumin, chili powder, and garlic. Serve with warm tortillas and whatever toppings are in the fridge. One of the best high-volume weeknight dinners -- easy to scale for four or six.
+
+**7. Crispy Baked Chicken Thighs**
+Pat chicken thighs dry, season with garlic powder, paprika, salt, and pepper, bake at 425 degrees F for 25 minutes skin-side up. The skin gets genuinely crispy. No breading, no fuss. Pair with roasted vegetables on the same sheet pan.
+
+---
+
+## Ground Beef Weeknight Dinners
+
+Ground beef cooks in 8 minutes and absorbs whatever seasoning you add to the pan. It is one of the most efficient proteins for weeknight cooking. Always cook over medium-high heat and break it up as it browns -- do not stir constantly.
+
+**8. Classic Beef Tacos**
+Seasoned ground beef (cumin, chili powder, garlic, onion powder) in taco shells with shredded cheese, lettuce, sour cream, and salsa. From pan to table in 15 minutes. Easily the highest-rated weeknight dinner with picky eaters.
+
+**9. Korean Ground Beef Bowls**
+Ground beef cooked with soy sauce, sesame oil, brown sugar, garlic, and ginger, served over rice with cucumber slices and sesame seeds. Twenty minutes total. Tastes like takeout.
+
+**10. Beef and Broccoli**
+Ground beef (or thinly sliced sirloin) stir-fried with broccoli in a soy-oyster sauce glaze. Serve over rice. Done in 18 minutes. Better than most Chinese takeout versions and far cheaper.
+
+**11. Cheeseburger Skillet**
+Ground beef cooked with diced onion, Worcestershire sauce, and mustard, then topped with American cheese and served over pasta or rice. Tastes exactly like a cheeseburger. Takes 20 minutes and kids always eat it.
+
+**12. Beef Fried Noodles**
+Cooked spaghetti or ramen noodles stir-fried with ground beef, soy sauce, sesame oil, green onions, and a scrambled egg. Use leftover noodles for even faster prep. Ready in 15 minutes.
+
+---
+
+## Pasta Weeknight Dinners
+
+Pasta is the original easy weeknight dinner. Boiling water takes longer than actually cooking the sauce. Use a large pot, heavily salted water, and save a cup of pasta water before draining -- it fixes any sauce that is too thick.
+
+**13. Creamy Garlic Parmesan Pasta**
+Spaghetti tossed with butter, garlic, heavy cream, and parmesan. Add chicken if you want protein. Done in 20 minutes. This is the pasta everyone in the family agrees on.
+
+**14. Sausage and Pepper Pasta**
+Italian sausage sliced and browned, then simmered with bell peppers, canned tomatoes, and penne. One pan, 25 minutes, deeply satisfying. Use mild sausage for picky eaters.
+
+**15. Lemon Butter Shrimp Pasta**
+Shrimp cooked in butter and garlic, tossed with linguine and lemon juice. Shrimp cook in 3 minutes per side. The whole dish is done in 18 minutes. Feels fancy for a Tuesday.
+
+**16. Pasta Aglio e Olio**
+Spaghetti tossed with olive oil, garlic, red pepper flakes, and parsley. Five ingredients, 15 minutes, zero cleanup. Add a fried egg on top if you want it more filling.
+
+**17. Baked Ziti**
+Cooked ziti mixed with ricotta, marinara, and mozzarella, baked at 400 degrees F for 20 minutes until bubbly. The oven does the work while you set the table. Make it on Sunday and reheat all week.
+
+---
+
+## Seafood Weeknight Dinners
+
+Seafood is the fastest-cooking protein category. Shrimp is done in 3 minutes. Salmon fillets take 12 to 14 minutes in the oven. White fish like cod or tilapia takes 10 to 12 minutes. The biggest mistake with seafood is overcooking -- pull it off the heat 30 seconds before you think it is done.
+
+**18. Garlic Butter Salmon**
+Salmon fillets seasoned with salt, pepper, and garlic, seared skin-side down in butter for 4 minutes, then flipped for 2 more. Finish with a squeeze of lemon. One of the fastest dinners on this list.
+
+**19. Shrimp Fajitas**
+Same concept as chicken fajitas but shrimp cooks in 2 minutes per side. Season with cumin and chili powder, cook with bell peppers and onion, serve in warm tortillas. The fastest fajita option.
+
+**20. Teriyaki Salmon Bowls**
+Salmon fillets baked in teriyaki sauce at 400 degrees F for 12 minutes, served over rice with edamame and cucumber slices. Meal prep four portions at once. Works hot or cold.
+
+**21. Garlic Butter Shrimp and Rice**
+Shrimp sauteed in butter, garlic, and a splash of white wine or chicken broth, served over white rice. Twenty minutes from start to finish. Use pre-cooked frozen shrimp to cut the time in half.
+
+---
+
+## Meatless Weeknight Dinners
+
+One or two meatless dinners per week lowers grocery costs significantly. The key to meatless dinners that everyone eats is making them filling -- eggs, beans, cheese, and pasta are your tools.
+
+**22. Shakshuka**
+Eggs poached in a spiced tomato and pepper sauce, served with crusty bread for dipping. One skillet, 20 minutes, no meat needed. Works for dinner or a lazy Saturday breakfast.
+
+**23. Black Bean Tacos**
+Canned black beans seasoned with cumin, chili powder, and garlic, served in warmed corn tortillas with shredded cabbage, cheese, and lime. Fifteen minutes. Cheap, fast, and nutritious.
+
+**24. Caprese Gnocchi**
+Store-bought gnocchi pan-fried until golden, tossed with fresh cherry tomatoes, mozzarella, and basil. The tomatoes burst in the heat and create a light sauce. Twenty minutes total.
+
+**25. Veggie Fried Rice**
+Leftover rice stir-fried with frozen peas, carrots, scrambled eggs, soy sauce, and sesame oil. Uses up vegetables and rice you already have. Ready in 10 minutes if the rice is pre-cooked.
+
+**26. White Bean and Spinach Soup**
+Canned white beans simmered with chicken or vegetable broth, garlic, spinach, and a parmesan rind. One pot, 20 minutes, high protein without meat. Serve with a hunk of bread.
+
+---
+
+## One-Pan Weeknight Dinners
+
+One-pan dinners mean less cleanup and easier timing -- everything finishes cooking at the same time because everything is in the same pan.
+
+**27. Sausage and Vegetable Sheet Pan**
+Sliced kielbasa or Italian sausage, bell peppers, broccoli, and red onion tossed with olive oil and seasoning, roasted at 425 degrees F for 22 minutes. One pan, no sauce required, everything caramelizes together.
+
+**28. Skillet Turkey Taco Bowls**
+Ground turkey cooked with taco seasoning and black beans, served in bowls over rice with shredded cheese, sour cream, and salsa. Done in 18 minutes. High protein, kid-friendly, easily customizable.
+
+**29. Lemon Herb Cod with Asparagus**
+Cod fillets and trimmed asparagus on a sheet pan, drizzled with olive oil, lemon juice, garlic, and dried herbs. Baked at 400 degrees F for 14 minutes. Minimal prep, minimal cleanup.
+
+**30. Pork Chops with Apples and Onions**
+Boneless pork chops seared in a cast iron pan, then simmered with sliced apples, onion, and chicken broth until the sauce reduces. Twenty-five minutes. The apple-onion combination is one of the best pork pairings in weeknight cooking.
+
+---
+
+## The 5-Night Weeknight Rotation
+
+The families that find weeknight dinners easiest are the ones with a loose rotation -- not a rigid schedule, but a category for each night that makes the decision automatic.
+
+A starting framework:
+- **Monday:** Pasta or grain bowl (predictable, easy, crowd-pleasing)
+- **Tuesday:** Chicken (quick-cooking, adaptable to any flavor)
+- **Wednesday:** Ground beef or tacos (fastest cook time, universal appeal)
+- **Thursday:** Sheet pan or one-pan (minimal cleanup on the busiest night)
+- **Friday:** Seafood, takeout, or everyone's choice
+
+Within each category, rotate two or three recipes that your family already likes. You do not need 30 dinners memorized. You need 10 dinners you can make without thinking.
+
+---
+
+## How DinnerDrop Handles This Automatically
+
+Choosing between 30 recipes every Sunday is the same decision fatigue that makes weeknight dinners hard in the first place. [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized 5-dinner weekly plan in 30 seconds. Tell it your family size, dietary preferences, picky-eater constraints, and maximum cook time. It generates five dinners with a complete grocery list you shop from once.
+
+The beta is open and free for 6 months.
+
+---
+
+## FAQ
+
+**What is the fastest easy weeknight dinner?**
+Buffalo chicken wraps take 10 minutes -- shredded rotisserie chicken, buffalo sauce, tortillas, cheese, and ranch. No cooking required. Veggie fried rice with leftover rice takes 10 minutes as well. If you are cooking from raw ingredients, shrimp fajitas are ready in 15 minutes because shrimp cooks in 2 minutes per side.
+
+**How do I make weeknight dinners easier?**
+Three changes make the biggest difference: cook a batch of plain rice on Sunday (5-minute active work), keep a rotisserie chicken in the fridge on Monday and Tuesday, and plan five dinners on Sunday morning rather than deciding each day. The decision is the hard part -- removing it removes most of the stress.
+
+**What are good weeknight dinners for picky eaters?**
+Classic beef tacos, honey garlic chicken, cheeseburger skillet, pasta with butter and parmesan, and sheet pan sausage and vegetables all have high success rates with picky eaters. The common thread: familiar flavors, nothing mixed together, and the option to eat components separately.
+
+**How do I reduce weeknight dinner cleanup?**
+Sheet pan meals and one-skillet recipes mean one pan in the sink. Line sheet pans with foil or parchment before roasting and cleanup is wiping the pan. Use a Dutch oven for soups and stews -- one vessel from stovetop to table. The single biggest cleanup reducer is doing dishes as you cook rather than leaving everything for after dinner.
+
+**Can I prep weeknight dinners in advance?**
+Yes. The highest-leverage prep: cook rice or grains on Sunday, marinate chicken Saturday night, pre-cut vegetables on Sunday, and brown ground beef in a large batch (refrigerates for 4 days). With these components ready, most of the dinners on this list become 10-minute assemblies rather than 25-minute cooks.
+
+---
+
+Thirty easy weeknight dinners across every protein and flavor profile -- all ready in 30 minutes or less. Pick five, put them on a rotation, and stop making the dinner decision every day.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan in 30 seconds. Five dinners, a complete grocery list, and no decision fatigue. The beta is free for 6 months.
+
+**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
