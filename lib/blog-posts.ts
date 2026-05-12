@@ -10238,6 +10238,182 @@ Twenty-five shrimp pasta recipes from classic Italian scampi to Cajun cream, Tus
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'one-pot-pasta',
+    title: 'One Pot Pasta: 25 Easy Recipes with Minimal Cleanup',
+    description:
+      'One pot pasta recipes that cook the noodles right in the sauce -- less cleanup, ' +
+      'more flavor. From creamy chicken to tomato basil, weeknight dinners just got easier.',
+    publishDate: '2027-06-29',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'one pot pasta',
+    content: `One pot pasta changes weeknight cooking by doing something that seems impossible: cooking the pasta directly in the sauce instead of boiling it separately. The starch from the pasta thickens the sauce as it cooks, the sauce flavors the pasta from the inside out, and you end up with one pan to wash instead of two. The results are creamier, more cohesive, and faster than traditional pasta dishes.
+
+This method works across every flavor profile -- creamy Italian, tomato-based, cheesy, spicy, and Asian-inspired. The technique is simple once you understand the core ratio: roughly 2 cups of liquid per 2 ounces of dry pasta. From there, the variations are endless.
+
+Here are 25 one pot pasta recipes organized by style, all tested for weeknight speed and real family palatability.
+
+---
+
+## Classic Italian One Pot Pastas
+
+**1. One Pot Tomato Basil Pasta**
+The original that went viral for good reason. Linguine, cherry tomatoes, garlic, olive oil, onion, basil, and water all go into one pot cold. Bring to a boil, cook 9 minutes, and the starchy water reduces into a glossy sauce that coats every strand. Finish with parmesan and fresh basil. Serves 4 in 15 minutes.
+
+**2. One Pot Cacio e Pepe**
+Spaghetti cooks directly in a shallow amount of salted water until the water reduces to a starchy pasta liquid. Off the heat, toss vigorously with pecorino romano, parmesan, and a generous amount of freshly cracked black pepper. The residual starchy water emulsifies the cheese into a creamy sauce without cream. Serves 2 in 20 minutes.
+
+**3. One Pot Spaghetti with Meat Sauce**
+Brown ground beef or Italian sausage in the pot first, then add crushed tomatoes, broth, garlic, Italian seasoning, and dry spaghetti broken in half. Cover and cook 12 minutes, stirring occasionally so the pasta does not stick. Finish with parmesan. Classic red sauce dinner in one pot, no draining required.
+
+**4. One Pot Pasta e Fagioli**
+A thick Italian pasta and bean soup that eats like a full meal. Saute onion, garlic, celery, and carrots in olive oil, add crushed tomatoes, cannellini beans, chicken broth, and ditalini or small elbow pasta. Simmer 12 to 15 minutes until pasta is tender and the broth thickens. Finish with parmesan rind for extra depth. Serves 6.
+
+**5. One Pot Puttanesca Pasta**
+Bold, briny, and weeknight fast. Saute garlic, anchovy paste, red pepper flakes, capers, and kalamata olives in olive oil for 2 minutes. Add crushed tomatoes, broth, and linguine. Cook 10 to 12 minutes. The anchovies dissolve completely and leave intense savory depth without any fishy flavor. Finish with fresh parsley.
+
+---
+
+## Creamy One Pot Pastas
+
+**6. One Pot Creamy Chicken Pasta**
+The weeknight workhorse. Season and cook chicken breast pieces in olive oil, set aside, saute garlic, add chicken broth, heavy cream, penne, and Italian seasoning. Cook pasta in the cream mixture until al dente. Return chicken, add parmesan, stir until sauce thickens. Finish with fresh parsley. Serves 4 in 30 minutes.
+
+**7. One Pot Tuscan White Bean Pasta**
+Saute garlic and sun-dried tomatoes in olive oil, add white beans, spinach, chicken broth, penne, Italian seasoning, and red pepper flakes. Cook until pasta is tender and most of the liquid is absorbed. Finish with heavy cream and parmesan for a creamy, protein-packed dinner. Vegetarian-friendly.
+
+**8. One Pot Creamy Cajun Sausage Pasta**
+Slice smoked andouille sausage and brown it in the pot. Add diced onion and bell pepper, Cajun seasoning, garlic, chicken broth, cream, and penne. Cook 12 to 15 minutes until pasta is tender and sauce coats the noodles. The sausage renders its fat and spice directly into the sauce. One of the most flavorful one pot pastas you can make.
+
+**9. One Pot Creamy Spinach and Mushroom Pasta**
+A vegetarian one pot that does not taste like a compromise. Saute mushrooms and garlic in butter until deeply browned. Add vegetable broth, heavy cream, penne, and dried thyme. Cook until pasta is tender. Stir in fresh spinach and parmesan at the end. The mushrooms create a naturally rich, savory base.
+
+**10. One Pot Lemon Cream Pasta**
+Light but creamy. Cook penne in a mixture of chicken broth, heavy cream, lemon zest, garlic, and butter. When pasta is tender, finish with fresh lemon juice, parmesan, and a handful of fresh parsley. Serve with grilled chicken or shrimp on top. Bright enough for summer, satisfying enough for fall.
+
+---
+
+## Cheesy One Pot Pastas
+
+**11. One Pot Mac and Cheese**
+Homemade mac in one pot with no roux, no draining, and no box. Cook macaroni in milk (not water), stirring frequently as the milk thickens from the starch. When pasta is just done, turn off heat and stir in shredded sharp cheddar and a tablespoon of cream cheese. The result is creamier than boxed and ready in 15 minutes. Add hot sauce or mustard powder to taste.
+
+**12. One Pot Shells and Cheese with Ground Beef**
+Brown ground beef in the pot, drain fat, add diced onion and garlic, then add beef broth, small pasta shells, and diced tomatoes with green chiles. Cook until pasta absorbs most of the liquid. Stir in shredded cheddar and cream cheese. A family-friendly, budget dinner that is ready in 25 minutes.
+
+**13. One Pot Broccoli Cheddar Pasta**
+Add small broccoli florets directly to the pasta water so they cook simultaneously. When pasta is done and most liquid is absorbed, stir in sharp cheddar and a splash of cream. The broccoli turns tender and the cheddar sauce is thick and rich. Kids who eat only mac and cheese regularly eat seconds of this one.
+
+**14. One Pot Four Cheese Pasta**
+For the cheese-forward crowd. Cook penne in a mixture of chicken broth and cream. When tender, stir in a combination of mozzarella, parmesan, fontina, and gorgonzola (or skip gorgonzola for picky eaters and double the parmesan). The sauce pulls together into a gooey, restaurant-quality dish. Serve immediately -- four cheese sauce tightens fast.
+
+**15. One Pot Pizza Pasta**
+Exactly what it sounds like. Brown Italian sausage, add pepperoni slices, marinara sauce, beef broth, and rotini. Cook until pasta is tender. Stir in mozzarella until melted. Top with additional pepperoni and a sprinkle of dried oregano. Kids who are ambivalent about pasta eat two servings of this one.
+
+---
+
+## Broth-Based One Pot Pastas
+
+**16. One Pot Chicken Noodle Pasta**
+All the comfort of chicken noodle soup in a thicker pasta format. Saute diced onion, celery, and carrots in butter. Add cooked or rotisserie chicken, chicken broth, egg noodles, dried thyme, and a bay leaf. Simmer 8 to 10 minutes until noodles are tender and broth is slightly thickened. Season with salt and pepper, finish with fresh parsley.
+
+**17. One Pot Italian Wedding Soup Pasta**
+Classic Italian wedding soup gets a weeknight pasta upgrade. Brown small turkey or beef meatballs in the pot. Add chicken broth, diced onion, garlic, and orzo pasta. Simmer until orzo is tender. Stir in fresh spinach and parmesan. The orzo absorbs the broth and turns it into a rich, thick soup-pasta hybrid.
+
+**18. One Pot Minestrone Pasta**
+The most flexible one pot on this list -- every ingredient is adjustable. Saute onion, garlic, celery, carrots, and zucchini in olive oil. Add diced tomatoes, white beans, vegetable broth, small pasta (ditalini or elbow), Italian seasoning, and kale or spinach. Simmer 15 minutes. Serve with crusty bread. Completely vegetarian and highly satisfying.
+
+**19. One Pot Sausage and Kale Pasta**
+Brown Italian sausage, add garlic, chicken broth, diced tomatoes, and orecchiette or rotini. When pasta is nearly done, add roughly chopped kale and cook 2 minutes more. Finish with a splash of white wine vinegar to balance the richness of the sausage. A complete nutritious meal in one pot.
+
+**20. One Pot Greek Lemon Chicken Orzo**
+Saute diced chicken thighs in olive oil. Add garlic, chicken broth, orzo, dried oregano, and lemon zest. Simmer until orzo is cooked and most of the liquid is absorbed. Stir in fresh lemon juice, kalamata olives, and feta cheese at the end. Bright, Mediterranean, and deeply satisfying.
+
+---
+
+## Quick One Pot Pastas (20 Minutes or Less)
+
+**21. One Pot Garlic Butter Pasta**
+The 15-minute emergency dinner. Melt butter in a large saucepan, add minced garlic, pour in chicken broth and bring to a boil. Add spaghetti and cook until broth is mostly absorbed and pasta is al dente. Finish with parmesan and fresh parsley. Shockingly good for how simple it is.
+
+**22. One Pot Sun-Dried Tomato Pesto Pasta**
+Boil pasta in a mixture of water and jarred sun-dried tomato pesto (or regular pesto). When liquid is absorbed and pasta is done, the pesto coats every strand. Top with parmesan and toasted pine nuts. This is the 15-minute company dinner.
+
+**23. One Pot Taco Pasta**
+Brown ground beef, season with taco seasoning, add salsa, beef broth, and rotini. Cook 12 minutes. Stir in shredded Mexican blend cheese and cream cheese until melted. Top with sour cream, diced avocado, and crushed tortilla chips.
+
+**24. One Pot Tomato Soup Pasta**
+Open a can of condensed tomato soup, combine with milk, broth, and orzo in a saucepan. Cook 10 to 12 minutes until orzo is tender and liquid is absorbed. Stir in butter and parmesan. Tastes like tomato soup but thick and filling enough to be dinner.
+
+**25. One Pot Ramen-Style Noodles with Vegetables**
+Use ramen noodles (discard the seasoning packet) in a broth made from soy sauce, sesame oil, garlic, ginger, and chicken broth. Add thinly sliced bok choy, snap peas, shredded carrots, and mushrooms. Cook 4 to 5 minutes. Top with soft-boiled eggs, sliced green onion, and sesame seeds.
+
+---
+
+## The One Pot Pasta Formula
+
+Every successful one pot pasta follows the same structure:
+
+**The base:** Aromatics cooked in fat first -- onion, garlic, shallots in olive oil or butter. This is never optional -- this is where flavor begins.
+
+**The protein:** Browned directly in the pot before adding liquids. Browning creates depth that simmering in liquid never will.
+
+**The liquid ratio:** 2 cups of liquid per 2 oz of dry pasta is the starting point. Thinner broths need more; cream-based sauces need less. Add more liquid mid-cook if pasta is absorbing too fast.
+
+**The pasta shape:** Dense shapes (penne, rotini, rigatoni) are most forgiving. Orzo is ideal for soup-style dishes. Egg noodles absorb liquid faster and can go mushy if overcooked by even 2 minutes.
+
+**The finish:** Add dairy (cheese, cream, cream cheese) at the very end, off or on the lowest heat. High heat causes cheese to separate and cream to break.
+
+---
+
+## One Pot Pasta Tips
+
+**Stir every 2 to 3 minutes.** Unlike boiled pasta, one pot pasta sits in limited liquid and can stick or scorch on the bottom if left unattended.
+
+**Use a wide, heavy pot.** A wide pot gives pasta more surface area to cook evenly. Dutch ovens and wide saute pans with high sides are ideal.
+
+**Season the liquid aggressively.** The pasta absorbs the cooking liquid and all of its flavor. Under-seasoned liquid creates bland pasta that no amount of table salt will fix.
+
+**Taste before adding dairy.** Before adding cheese or cream, confirm the pasta is just at al dente. If underdone, add a splash of broth and cook 2 more minutes. Then add your dairy and finish.
+
+**Serve immediately.** One pot pasta tightens as it sits. Serve within 5 minutes of finishing for the best texture.
+
+---
+
+## How DinnerDrop Plans Your One Pot Week
+
+One pot pasta is exactly the kind of dinner [DinnerDrop](https://dinnerdrop.app/beta) plans for automatically -- fast enough for weeknights, minimal dishes, and flexible for almost any dietary preference. Each week, DinnerDrop generates five personalized dinner ideas with a complete grocery list, including which nights call for a fast 20-minute one pot and which nights have more time for a slower Tuscan version.
+
+The beta is free for six months. No credit card required.
+
+---
+
+## FAQ
+
+**Can you cook pasta in broth instead of water?**
+Yes -- and it makes better pasta. Broth adds flavor from the outside in as the pasta cooks. Use low-sodium broth so you can control the final salt level. Chicken broth works in almost any recipe. The pasta absorbs the broth and all of its flavor.
+
+**Why is my one pot pasta sticky?**
+Two causes: not enough liquid, or not stirring frequently enough. Pasta sitting in too little liquid sticks to itself and to the pot bottom. Add a splash of broth if liquid is evaporating too fast, and stir every 2 to 3 minutes.
+
+**Can you make one pot pasta without heavy cream?**
+Yes. Cream cheese, full-fat coconut milk, or half-and-half work as lighter substitutes. Broth-based one pot pastas skip dairy entirely and are just as satisfying.
+
+**How do you reheat one pot pasta?**
+Add a splash of broth or water and reheat on the stovetop over medium-low heat, stirring until warmed through. The added liquid prevents the pasta from drying out. Microwave works in a pinch -- add liquid, cover loosely, and heat in 90-second intervals, stirring in between.
+
+**What is the best pasta shape for one pot cooking?**
+Rotini, penne, rigatoni, and shells are the most forgiving. Orzo is ideal for soup-style dishes. Spaghetti and linguine work well in the no-drain Italian method. Avoid very thin pasta shapes like angel hair -- they overcook in seconds in low-liquid environments.
+
+---
+
+Twenty-five one pot pasta recipes from classic Italian to creamy Cajun, cheesy mac, and 15-minute garlic butter spaghetti.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized weeknight dinners each week with a complete grocery list -- including one pot nights when you need dinner fast and cleanup faster. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
