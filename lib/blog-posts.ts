@@ -9015,7 +9015,6 @@ Twenty-five Instant Pot chicken recipes covering shredding, soups, pasta, whole 
 `,
   },
   {
-    id: 53,
     slug: 'easy-weeknight-dinners',
     title: 'Easy Weeknight Dinners: 30 Fast Family Meals Ready in 30 Minutes or Less',
     description: 'Thirty easy weeknight dinners your family will actually eat, all ready in 30 minutes or less. Includes chicken, pasta, ground beef, seafood, and meatless options.',
@@ -9207,6 +9206,179 @@ Thirty easy weeknight dinners across every protein and flavor profile -- all rea
 **[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'easy-dinner-recipes-for-two',
+    title: 'Easy Dinner Recipes for Two: 25 Simple Meals That Never Disappoint',
+    description: 'Twenty-five easy dinner recipes for two people, sized correctly for smaller households. Chicken, pasta, beef, seafood, and vegetarian dinners all ready in 30 minutes or less.',
+    publishDate: '2027-05-11',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'easy dinner recipes for two',
+    content: `
+# Easy Dinner Recipes for Two: 25 Simple Meals That Never Disappoint
+
+Cooking dinner for two is its own category. The quantities are different, the leftovers can take over the fridge, and most recipes are written for four to six people. These 25 easy dinner recipes for two are sized correctly, fast to make, and work for couples, roommates, empty nesters, or anyone cooking for a smaller household.
+
+Every recipe below takes 30 minutes or less and uses ingredients available at any grocery store.
+
+---
+
+## Quick Chicken Dinners for Two
+
+Chicken is the most flexible weeknight protein. It cooks fast, absorbs any flavor you give it, and works as both a budget and a premium dinner depending on how you prepare it.
+
+**1. Honey Garlic Chicken Thighs**
+Two boneless, skinless chicken thighs seared in a skillet with olive oil until golden, then simmered in honey, soy sauce, garlic, and a splash of rice vinegar. Serve over rice or with roasted broccoli. Ready in 20 minutes. The sauce is sticky, sweet, and savory -- this is one of the easiest dinners that tastes like restaurant takeout.
+
+**2. Lemon Butter Chicken Cutlets**
+Pound two chicken breasts thin, dredge lightly in flour, and cook in a hot pan with butter for 3 minutes per side. Deglaze with white wine or chicken broth, add a squeeze of lemon and a handful of capers. Serve immediately with pasta or mashed potatoes. Total time: 18 minutes.
+
+**3. Creamy Tuscan Chicken**
+One chicken breast per person, seared golden, then simmered in a pan sauce of heavy cream, sun-dried tomatoes, spinach, and garlic. Serve over pasta or with a thick slice of crusty bread. Takes 25 minutes and looks significantly harder than it is.
+
+**4. Sheet Pan Chicken with Vegetables**
+Two chicken thighs, a cubed sweet potato, and a handful of broccoli florets tossed with olive oil and your choice of seasoning. Roast at 425 degrees F for 25 minutes. One pan, zero cleanup, complete dinner.
+
+**5. Chicken Stir-Fry for Two**
+Slice one chicken breast thin and stir-fry in a very hot pan with sesame oil, soy sauce, ginger, and garlic for 4 minutes. Add whatever vegetables are in your fridge -- bell peppers, snap peas, bok choy. Serve over rice. Faster than any delivery option.
+
+---
+
+## Pasta Dinners for Two
+
+Pasta scales naturally to two people. A half pound of pasta is exactly right for a dinner for two with no leftover pasta problem.
+
+**6. Cacio e Pepe**
+Eight ounces of spaghetti cooked al dente, tossed with two tablespoons of butter, a generous amount of freshly cracked black pepper, and a large handful of Pecorino Romano cheese. The pasta water emulsifies everything into a silky sauce. Takes 15 minutes and requires only three real ingredients.
+
+**7. Sausage and Pepper Pasta**
+Two Italian sausage links (sweet or hot), sliced and cooked in a skillet until browned, then simmered with sliced bell peppers, onion, and a jar of marinara. Toss with cooked rigatoni. Hearty, satisfying, and done in 25 minutes.
+
+**8. Shrimp Scampi**
+Eight to ten large shrimp sauteed in butter, olive oil, garlic, lemon, and white wine for 4 minutes. Toss with angel hair pasta and a sprinkle of parsley. One of the fastest impressive dinners you can make -- the shrimp cook so fast that the pasta is usually the longer step.
+
+**9. Pesto Pasta with Cherry Tomatoes**
+Toss cooked pasta with store-bought or homemade pesto, halved cherry tomatoes, and fresh mozzarella. A drizzle of olive oil and cracked black pepper finish it. Ten minutes if you use jarred pesto. Light enough for a warm evening, filling enough for a proper dinner.
+
+**10. Mushroom and Spinach Pasta**
+Saute sliced cremini mushrooms in olive oil and butter until deeply browned. Add minced garlic, a splash of white wine, and a large handful of baby spinach. Toss with pasta and a little pasta water. Finish with Parmesan. Vegetarian, earthy, and ready in 20 minutes.
+
+---
+
+## Beef Dinners for Two
+
+Ground beef is the fastest-cooking red meat. Half a pound is the correct amount for two servings.
+
+**11. Smash Burgers at Home**
+Divide half a pound of ground beef into two loose balls. Press them flat onto a very hot cast iron pan and do not touch them for 2 minutes. The crust is everything. Add cheese, let it melt, stack on a toasted bun with pickles and special sauce (mayo plus ketchup plus a dash of hot sauce). Better than most restaurants at a fraction of the cost.
+
+**12. Beef Bulgogi Bowls**
+Thinly sliced beef (or ground beef) marinated for 10 minutes in soy sauce, sesame oil, garlic, ginger, pear or apple puree, and a pinch of sugar. Cook in a hot pan for 5 minutes. Serve over rice with pickled vegetables and a drizzle of sesame seeds. One of the most flavorful weeknight dinners with minimal effort.
+
+**13. Classic Beef Tacos**
+Brown half a pound of ground beef with taco seasoning and two tablespoons of water. Warm corn tortillas directly on the stove flame for 20 seconds per side. Load with beef, shredded cheese, salsa, and sour cream. Dinner is ready in 15 minutes and both people get to build exactly what they want.
+
+**14. Skillet Beef and Broccoli**
+Slice sirloin thin against the grain, cook in a hot skillet with oil until browned, add broccoli florets and a sauce of soy sauce, oyster sauce, sesame oil, garlic, and cornstarch. Toss until glossy and thickened. Better than Chinese takeout and ready in 20 minutes.
+
+**15. Cheeseburger Pasta Skillet**
+Brown half a pound of ground beef in a skillet, drain, add diced onion, garlic, diced tomatoes, beef broth, and small pasta shells. Simmer until the pasta is cooked in the broth. Stir in shredded cheddar until melted. One pan, all the cheeseburger flavors, no bun required.
+
+---
+
+## Seafood Dinners for Two
+
+Seafood cooks faster than any other protein and scales perfectly to two servings. A pound of shrimp or two salmon fillets is the exact right amount.
+
+**16. Garlic Butter Salmon**
+Two salmon fillets, skin-side down, in a skillet with butter and olive oil for 4 minutes. Flip, add minced garlic and a squeeze of lemon, baste for 2 more minutes. Serve with roasted asparagus or rice. A restaurant-quality dinner in under 10 minutes of cooking.
+
+**17. Teriyaki Salmon Bowls**
+Two salmon fillets brushed with store-bought teriyaki sauce, baked at 400 degrees F for 12 minutes. Serve over rice with edamame, sliced cucumber, and sesame seeds. A bowl dinner that feels complete and balanced without any complicated assembly.
+
+**18. Garlic Butter Shrimp Skillet**
+Twelve large shrimp cooked in butter, garlic, and a pinch of red pepper flakes for 3 minutes total. Squeeze lemon over everything, toss with parsley, serve over rice or with crusty bread for dipping. The entire dinner takes 12 minutes.
+
+**19. Fish Tacos for Two**
+Two cod or tilapia fillets, seasoned with cumin, chili powder, and garlic powder, cooked in a skillet for 3 minutes per side. Flake into warm tortillas with shredded cabbage, a squeeze of lime, and a drizzle of chipotle mayo. Light, fresh, and done in 20 minutes.
+
+**20. Shrimp Fried Rice**
+This requires day-old rice, which you need to plan one day ahead. Scramble two eggs in a hot pan with oil, push to the side, add the rice and shrimp, toss everything with soy sauce and sesame oil. Add frozen peas. Better than takeout, ready in 12 minutes.
+
+---
+
+## Vegetarian Dinners for Two
+
+Vegetarian dinners for two are often the fastest category. No thawing, no long cook times, and the ingredients are always on hand.
+
+**21. Shakshuka**
+Two eggs poached directly in a skillet of simmered crushed tomatoes, garlic, onion, and paprika. Tear pita or crusty bread to dip into the sauce and broken yolks. A complete dinner in one skillet that takes 20 minutes and costs almost nothing.
+
+**22. Black Bean Quesadillas**
+Two large flour tortillas filled with black beans, corn, shredded cheddar, and diced onion. Cook in a dry skillet until golden and crispy on both sides. Serve with sour cream and salsa. Ten minutes, filling, easy to customize.
+
+**23. Caprese Gnocchi Skillet**
+Pan-fry a package of gnocchi in butter until golden on the outside. Add halved cherry tomatoes and fresh mozzarella, cook until the tomatoes burst and the cheese melts slightly. Drizzle with balsamic glaze and fresh basil. Ready in 15 minutes.
+
+**24. Vegetable Fried Noodles**
+Cook spaghetti or lo mein noodles, drain, and toss in a very hot skillet with sesame oil, soy sauce, whatever vegetables need to be used up, and two scrambled eggs. Fifteen minutes total. A complete dinner that uses whatever is in the crisper drawer.
+
+**25. White Bean and Kale Soup**
+Saute garlic and diced onion in olive oil for 3 minutes. Add a can of white beans, chicken or vegetable broth, and a large bunch of kale. Simmer for 10 minutes. Finish with a squeeze of lemon and a drizzle of olive oil. Serve with thick slices of bread. Simple, warm, filling, and done in 20 minutes.
+
+---
+
+## Planning Dinners for Two
+
+The two biggest inefficiencies when cooking for two:
+
+**Portion control.** Most grocery packaging is sized for four people. Buy half where possible -- half a pound of ground beef, two chicken thighs, two salmon fillets. Or plan for intentional leftovers and build the second meal around them.
+
+**Ingredient overlap.** When you plan five dinners for the week, build them around shared ingredients. If you buy a bunch of cilantro for tacos on Monday, use it again for stir-fry on Wednesday and fish tacos on Friday. Two people waste more produce than four because the quantities are smaller but the package sizes stay the same.
+
+**A starting weekly rotation:**
+- Monday: Pasta (cacio e pepe or pesto -- no protein to prep)
+- Tuesday: Chicken (honey garlic thighs or lemon butter cutlets)
+- Wednesday: Beef or tacos (15 to 18 minutes, no planning required)
+- Thursday: Seafood (garlic butter salmon or shrimp scampi)
+- Friday: Vegetarian or leftover remix
+
+---
+
+## How DinnerDrop Handles Dinner for Two
+
+The meal planning problem for two-person households is that every recipe requires you to do the math -- halving ingredients, adjusting cooking times, figuring out what to do with the other half of everything. [DinnerDrop](https://dinnerdrop.app/beta) generates a personalized five-dinner plan for your household size, dietary preferences, and cook time limit. A complete grocery list is included so you buy exactly what you need and nothing extra.
+
+The beta is open and free for six months.
+
+---
+
+## FAQ
+
+**What are the easiest dinners to make for two people?**
+Garlic butter salmon (10 minutes), shrimp scampi (15 minutes), cacio e pepe (15 minutes), honey garlic chicken thighs (20 minutes), and beef tacos (15 minutes) are the fastest on this list with the least cleanup. They all use five or fewer main ingredients.
+
+**How do I cook for two without wasting food?**
+Plan your week so recipes share ingredients -- cilantro across tacos and stir-fry, broccoli across two dinners, half a block of cheese used on two different nights. Buy proteins in the exact quantity you need (two chicken thighs, two salmon fillets) rather than larger packages. Cook grains like rice in a batch on Sunday since they reheat perfectly.
+
+**What is a good cheap dinner for two?**
+Black bean quesadillas (under $4 total), beef tacos with half a pound of ground beef (under $6), cacio e pepe with butter and Pecorino (under $5), and shakshuka with eggs and a can of tomatoes (under $5) are all filling dinners for two that cost less than a single takeout entree.
+
+**How do I make dinner for two feel special?**
+Presentation matters more than complexity. Use proper plates, add a simple side, and light a candle. Shrimp scampi, creamy Tuscan chicken, and garlic butter salmon all feel like restaurant dinners even though they take 20 minutes. The effort is in the setup, not the cooking.
+
+**Can I meal prep for two people?**
+Yes -- and it is more efficient for two than for larger households because you use ingredients before they go bad. Useful prep for two: cook a batch of rice Sunday, marinate chicken Friday night for Saturday cooking, pre-cut one week of vegetables in one session. Soups and grain bowls store well; pasta and stir-fry are better cooked fresh.
+
+---
+
+Twenty-five easy dinner recipes for two -- sized for two people, ready in 30 minutes or less, and designed to avoid the ingredient waste problem that makes cooking for smaller households frustrating.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner plan for your household size in 30 seconds -- complete grocery list included. The beta is free for six months.
+
+**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
