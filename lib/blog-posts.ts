@@ -13624,6 +13624,181 @@ Twenty-five crockpot chicken recipes -- classics, creamy dinners, international 
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'meatloaf-recipe',
+    title: 'Meatloaf Recipe: The Best Classic Family Meatloaf (That Actually Stays Moist)',
+    publishDate: '2027-11-09',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'meatloaf recipe',
+    description: 'The best classic meatloaf recipe for families — moist, flavorful, and topped with a tangy glaze. Includes variations, make-ahead tips, and leftover ideas.',
+    content: `# Meatloaf Recipe: The Best Classic Family Meatloaf (That Actually Stays Moist)
+
+Meatloaf has a reputation problem. Most people have eaten a version that was dense, dry, flavorless, or all three. Good meatloaf — the kind that your family requests on cold nights — is tender, deeply savory, and topped with a sweet-tangy glaze that caramelizes in the oven. The difference between bad meatloaf and great meatloaf comes down to three things: fat content, binder ratio, and not overmixing.
+
+Here is the complete classic meatloaf recipe plus variations, troubleshooting tips, and everything you can do with the leftovers.
+
+---
+
+## The Classic Family Meatloaf Recipe
+
+### Ingredients (serves 6)
+
+**For the meatloaf:**
+- 2 lbs ground beef (80/20 fat ratio — do not use lean)
+- 1 cup plain breadcrumbs (or crushed Ritz crackers)
+- 2 eggs, beaten
+- 1/2 cup whole milk
+- 1 medium onion, finely diced
+- 3 cloves garlic, minced
+- 2 tablespoons Worcestershire sauce
+- 1 tablespoon ketchup
+- 1 teaspoon Dijon mustard
+- 1 teaspoon salt
+- 1/2 teaspoon black pepper
+- 1/2 teaspoon smoked paprika
+- 1/4 teaspoon dried thyme
+- 1/4 cup fresh parsley, finely chopped (or 1 tablespoon dried)
+
+**For the glaze:**
+- 1/2 cup ketchup
+- 2 tablespoons brown sugar
+- 1 tablespoon apple cider vinegar
+- 1 teaspoon Worcestershire sauce
+- 1/2 teaspoon garlic powder
+
+### Instructions
+
+**Step 1: Preheat and prep.**
+Preheat your oven to 350 degrees F. Line a rimmed baking sheet with foil and lightly grease it, or use a 9x5 inch loaf pan (free-form on a sheet pan produces crispier edges and a better crust; a loaf pan holds more moisture but the sides steam rather than brown).
+
+**Step 2: Soften the onion.**
+Cook the diced onion in a tablespoon of butter or olive oil over medium heat until soft and translucent, about 5-7 minutes. Add the garlic and cook 1 more minute. Let cool slightly. This step matters — raw onion stays crunchy in the finished meatloaf and releases water that makes it steam from the inside. Cooked onion becomes sweet and integrates into the meat.
+
+**Step 3: Make the panade.**
+In a large bowl, combine the breadcrumbs and milk. Stir and let sit for 2-3 minutes until the breadcrumbs absorb the milk into a paste. This is the panade — the moisture trap that keeps your meatloaf from drying out in the oven.
+
+**Step 4: Mix the meatloaf.**
+Add the eggs, cooled onion and garlic, Worcestershire sauce, ketchup, Dijon, salt, pepper, smoked paprika, thyme, and parsley to the panade. Mix until combined. Add the ground beef and mix until just incorporated — use your hands and stop the moment you can no longer see streaks of seasoning. Overmixing develops the protein in the meat and produces a dense, rubbery loaf.
+
+**Step 5: Shape and glaze.**
+Transfer the meat mixture to your prepared pan or baking sheet. Shape into a roughly 9x5 inch loaf with rounded edges. Mix together all glaze ingredients and spread half of it over the top and sides of the loaf.
+
+**Step 6: Bake.**
+Bake at 350 degrees F for 45 minutes. Remove from oven and spread the remaining glaze over the top. Return to oven and bake 20-25 more minutes, until the internal temperature reads 160 degrees F on an instant-read thermometer. The glaze should be caramelized and slightly sticky.
+
+**Step 7: Rest before slicing.**
+Let the meatloaf rest for 10-15 minutes before slicing. This is not optional — the internal juices redistribute during resting. Slice too early and they pour out onto the cutting board instead of staying in the meat.
+
+**Total time:** 20 minutes prep + 65-70 minutes bake + 10 minutes rest
+
+---
+
+## Why This Recipe Works
+
+**80/20 ground beef.** The 20 percent fat content provides the moisture and richness that keeps meatloaf tender. Leaner ground beef (90/10 or 93/7) produces dry, dense meatloaf. The fat renders into the loaf as it cooks and carries flavor throughout. If you want to use lean beef, compensate by adding 2 tablespoons of olive oil to the mixture.
+
+**The panade.** Breadcrumbs soaked in milk create a moisture-holding network inside the meatloaf. As the meat heats and contracts, the panade holds the released juices like a sponge and releases them back as you eat. Skip the panade and you get a dense brick. Use the panade and you get a tender, sliceable loaf.
+
+**Cooked onion.** Raw onion releases steam inside the loaf and stays crunchy. Cooked onion becomes a sweet, savory flavor carrier with no textural issues.
+
+**Two-stage glazing.** Applying half the glaze before baking and half halfway through produces a deeper, more caramelized crust than a single application. The first layer bakes into the exterior; the second layer finishes glossy and sticky on top.
+
+---
+
+## Meatloaf Variations
+
+### Turkey Meatloaf
+Substitute 2 lbs of 93/7 ground turkey for the beef. Add 2 tablespoons of olive oil to the mixture to compensate for the lower fat content. Increase Worcestershire sauce to 3 tablespoons and add 1 teaspoon of soy sauce for additional depth. Turkey meatloaf is lighter than beef and a good option for families who prefer leaner proteins.
+
+### Italian Meatloaf
+Replace the Dijon with 2 tablespoons of tomato paste. Add 1/2 cup of grated parmesan to the meat mixture and increase the parsley. Replace the ketchup glaze with marinara sauce — spread it over the top and sides before baking. Top with shredded mozzarella for the final 10 minutes.
+
+### Brown Sugar Bacon Meatloaf
+Add 1/4 cup of brown sugar to the meat mixture. Lay strips of thin-cut bacon over the top of the loaf before glazing. The bacon crisps as the meatloaf bakes and adds smokiness and crunch. Skip the glaze — the brown sugar in the meat and the bacon on top provide all the sweetness and caramelization you need.
+
+### Mini Meatloaves
+Divide the mixture into 6 portions and press into a greased standard muffin tin. Glaze the tops. Bake at 375 degrees F for 22-25 minutes until cooked through. Mini meatloaves cook faster, have more caramelized exterior per serving, and are pre-portioned for kids. Freeze the leftovers individually.
+
+---
+
+## Common Meatloaf Problems (and Fixes)
+
+**Dry meatloaf:** You used lean beef, skipped the panade, baked too long, or sliced before resting. Fix: use 80/20 beef, do not skip the milk-breadcrumb step, pull at 160 degrees F internal, and rest for 10 minutes minimum.
+
+**Meatloaf falls apart when sliced:** Not enough binder. You need at least 1 cup of breadcrumbs and 2 eggs for 2 lbs of meat. Let it rest fully — trying to slice hot meatloaf before the proteins reset is the most common cause of crumbling.
+
+**Dense, rubbery texture:** You overmixed. Mix the non-meat ingredients together first, add the ground beef last, and stop mixing the moment the meat is incorporated.
+
+**Bland meatloaf:** Underseasoned. The seasoning needs to carry through a large mass of meat — 1 teaspoon of salt minimum per pound of meat, plus Worcestershire, garlic, and aromatics. Taste the mixture before it goes in the oven (yes, you can taste a small amount of the raw mixture safely if you immediately cook it — or fry a teaspoon of the mixture in a small pan and taste that).
+
+**Grease pooling around the loaf:** Normal with 80/20 beef. Tip the pan carefully and spoon it away before the final glaze application. The rendered fat is not a problem — it means the meatloaf is staying moist.
+
+---
+
+## What to Serve with Meatloaf
+
+Meatloaf is one of the rare proteins that works with almost any side dish. The classic pairing is mashed potatoes and green beans — the mashed potatoes soak up any juices from the meatloaf and the green beans provide contrast. Other combinations that work:
+
+Mashed potatoes (classic), roasted broccoli, creamed corn, glazed carrots, mac and cheese, dinner rolls for soaking up the glaze, coleslaw (cold crunch against the warm savory loaf).
+
+---
+
+## Make-Ahead and Freezing
+
+**Make-ahead (unbaked):** Mix and shape the meatloaf up to 24 hours in advance. Cover tightly with plastic wrap and refrigerate. Bring to room temperature for 20 minutes before baking. Add 5-10 minutes to the bake time if it goes in cold from the fridge.
+
+**Freezing (unbaked):** Shape the loaf, wrap in plastic wrap, then aluminum foil. Freeze for up to 3 months. Thaw overnight in the refrigerator before baking as directed.
+
+**Freezing (baked):** Slice the cooled meatloaf and freeze individual slices between pieces of parchment paper in a freezer bag. Reheat in the microwave or oven. Baked meatloaf freezes well and reheats without significant texture loss.
+
+---
+
+## Leftover Meatloaf Ideas
+
+Cold meatloaf sliced thin between white bread with ketchup and yellow mustard is one of the best sandwiches in the weeknight dinner leftover canon. Other uses for leftover meatloaf:
+
+**Meatloaf sandwich:** Thick slice on toasted sourdough with ketchup, sliced tomato, and iceberg lettuce.
+
+**Meatloaf hash:** Dice leftover meatloaf into cubes. Fry in a skillet with diced potatoes and onion until crispy. Serve with a fried egg on top.
+
+**Meatloaf crumbles over pasta:** Break leftover meatloaf into rough chunks and heat with marinara sauce. Serve over spaghetti as a quick weeknight pasta with zero prep.
+
+**Meatloaf stuffed peppers:** Crumble leftover meatloaf with rice and a can of diced tomatoes. Stuff into halved bell peppers and bake at 375 degrees for 25 minutes.
+
+---
+
+## How DinnerDrop Handles Your Weekly Dinner Planning
+
+If meatloaf is one of your family's favorite meals, [DinnerDrop](https://dinnerdrop.app/beta) will include it in your weekly rotation. Tell it your household preferences — protein types, dietary restrictions, cook time — and it generates five personalized dinners plus a complete grocery list every week. The beta is free for six months.
+
+---
+
+## FAQ
+
+**What temperature should meatloaf be cooked to?**
+160 degrees F internal temperature, measured with an instant-read thermometer inserted into the thickest part of the loaf. At 160 degrees F, the meat is cooked through and food-safe. The residual heat during the 10-minute rest will carry it to approximately 165 degrees F. Do not rely on bake time alone — oven temperatures vary, and a thermometer is the only reliable measure of doneness.
+
+**Should I cook meatloaf covered or uncovered?**
+Uncovered. Covering meatloaf traps steam, which prevents the exterior from browning and the glaze from caramelizing. The dry oven heat creates the crust and sets the glaze. If your meatloaf is browning too quickly before it reaches temperature, tent it loosely with foil for the last 15 minutes.
+
+**Can I use a loaf pan or should I free-form on a baking sheet?**
+Either works. A loaf pan produces a more uniform shape and holds more moisture but the sides steam and stay pale. Free-form on a foil-lined baking sheet gives you browned, caramelized edges on all sides and a crispier exterior. If you prioritize appearance and crust, use a baking sheet. If you want maximum moisture and neat slices, use a loaf pan.
+
+**How do I know when meatloaf is done without a thermometer?**
+The safest answer is: get a thermometer (they cost $10 and work for everything). Without one, bake a 2-lb meatloaf at 350 degrees F for 60-70 minutes. The juices should run clear when you pierce the center with a knife or skewer, the top should be browned and set, and the loaf should feel firm (not soft) when pressed lightly in the center.
+
+**Why does my meatloaf crack on top?**
+Cracking is normal and not a sign of a problem. The surface of the loaf dries and sets while the interior continues expanding as it heats. The cracks are simply where the surface gives way. The two-stage glazing technique helps mask the cracks. If you want a crack-free surface, bake in a loaf pan with the meat pressed to the very edges.
+
+---
+
+Classic meatloaf is one of the most efficient family dinners you can make: inexpensive, hands-off after it goes in the oven, good the next day, and freezable in either direction. Master the fat ratio and the panade and you will have a recipe worth putting on permanent rotation.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week and complete grocery list automatically. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
