@@ -15304,6 +15304,177 @@ Baked ziti is one of the most practical family dinners you can add to a rotation
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'hamburger-recipe',
+    title: 'Hamburger Recipe: The Best Juicy Homemade Burgers (Restaurant Quality at Home)',
+    publishDate: '2027-12-28',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'hamburger recipe',
+    description: 'The best homemade hamburger recipe for juicy, flavorful burgers every time. Classic smash burgers, stuffed burgers, turkey burgers, and 15 variations — plus the technique that keeps patties from shrinking.',
+    content: `
+<h1>Hamburger Recipe: The Best Juicy Homemade Burgers</h1>
+
+<p>A great homemade burger beats any drive-through version. The difference is knowing two things: what fat percentage to use and how to form the patty without overworking the meat. Fix both and you have restaurant-quality burgers in 15 minutes with ingredients from any grocery store.</p>
+
+<p><strong>DinnerDrop builds your weekly family dinner plan automatically — including burger nights — with a complete grocery list. <a href="https://dinnerdrop.app/beta">Try it free for 7 days.</a></strong></p>
+
+<hr/>
+
+<h2>The Classic Hamburger Recipe</h2>
+
+<p><strong>Serves:</strong> 4 | <strong>Time:</strong> 20 minutes | <strong>Difficulty:</strong> Easy</p>
+
+<h3>Ingredients</h3>
+
+<p><strong>For the patties:</strong></p>
+<ul>
+  <li>1.5 lbs ground beef (80/20 fat ratio)</li>
+  <li>1 tsp kosher salt</li>
+  <li>1/2 tsp black pepper</li>
+  <li>1/2 tsp garlic powder (optional)</li>
+  <li>1 tbsp Worcestershire sauce (optional — adds umami depth)</li>
+</ul>
+
+<p><strong>For assembly:</strong></p>
+<ul>
+  <li>4 brioche or potato buns, toasted</li>
+  <li>4 slices American, cheddar, or Swiss cheese</li>
+  <li>Lettuce, tomato, onion, pickles</li>
+  <li>Condiments: ketchup, mustard, mayo, special sauce</li>
+</ul>
+
+<h3>Method</h3>
+
+<p><strong>Step 1: Handle the meat minimally.</strong> The most important rule in burger-making: mix and form as little as possible. Overworked ground beef develops dense, rubbery patties. Combine salt, pepper, and Worcestershire with the meat using your hands — 10 to 15 seconds, just until incorporated.</p>
+
+<p><strong>Step 2: Form the patties.</strong> Divide into 4 equal portions (about 6 oz each). Press gently into a disc about 3/4 inch thick and 1 inch wider than your bun — burgers shrink as they cook. Press a shallow dimple in the center of each patty with your thumb. This prevents the burger from puffing into a dome.</p>
+
+<p><strong>Step 3: Season the outside.</strong> Season both sides with salt and pepper immediately before cooking, not before.</p>
+
+<p><strong>Step 4: Cook at high heat.</strong> Heat a cast-iron skillet or grill to high heat. Do not use nonstick — you want the sear. Cook patties 3 to 4 minutes per side for medium (160 degrees F internal). Do not press down on the patty — this squeezes out the juice.</p>
+
+<p><strong>Step 5: Add cheese and rest.</strong> In the last 60 seconds, add cheese and cover the pan to melt. Rest patties 2 minutes before assembling — this redistributes the juices.</p>
+
+<p><strong>Step 6: Toast the buns.</strong> Butter cut sides of the buns and toast in the same skillet 60 seconds until golden. This step is worth doing every time.</p>
+
+<hr/>
+
+<h2>The Smash Burger Technique</h2>
+
+<p>Smash burgers are thinner, crispier, and more flavorful than standard patties because of the Maillard reaction: maximum surface area pressed directly onto screaming-hot cast iron creates an extraordinary crust.</p>
+
+<p><strong>How to smash burger:</strong> Roll 3 oz of loose ground beef into a ball. Drop onto a cast-iron skillet heated to maximum heat. Press flat immediately with a spatula or burger press — firmly, to about 1/4 inch thick. Season with salt and pepper. Cook 2 to 3 minutes without moving. Flip once when the edges are deeply browned. Add cheese, cook 30 more seconds. The result: crispy, lacey edges, caramelized crust, fast cook time.</p>
+
+<p><strong>Double smash burger:</strong> Two 3-oz patties per bun. This is the move for a full meal. Cook both patties simultaneously, stack on a toasted bun with special sauce, pickles, and onion. Children who claim not to like burgers reliably eat these.</p>
+
+<hr/>
+
+<h2>15 Hamburger Variations</h2>
+
+<h3>Classic and Family Favorites</h3>
+
+<p><strong>1. Classic Cheeseburger.</strong> 80/20 ground beef, American cheese, yellow mustard, ketchup, white onion, pickles, on a soft bun. The standard. Cooks in 8 minutes. Every member of the family will eat it.</p>
+
+<p><strong>2. Double Smash Burger.</strong> Two 3-oz smash patties, American cheese on each, special sauce (mayo + ketchup + pickle juice), shredded lettuce, white onion, pickles. This is the homemade version of the fast food burger everyone is nostalgic for.</p>
+
+<p><strong>3. Bacon Cheeseburger.</strong> Classic patty with 2 strips of thick-cut bacon, cheddar cheese, lettuce, tomato, mayo. Crisp the bacon first in the same pan you will cook the burgers in.</p>
+
+<p><strong>4. BBQ Bacon Burger.</strong> Add a tablespoon of barbecue sauce to the meat before forming patties. Top with crispy bacon, cheddar, fried onion strings, and more barbecue sauce. Sweet and smoky.</p>
+
+<p><strong>5. Mushroom Swiss Burger.</strong> Saute sliced cremini mushrooms in butter with a pinch of thyme until deeply browned. Top the patty with mushrooms and melted Swiss cheese. One of the most satisfying flavor combinations in the burger canon.</p>
+
+<h3>Elevated and Restaurant-Style</h3>
+
+<p><strong>6. Steakhouse Burger.</strong> Use 85/15 ground beef with 1 tbsp Worcestershire. Top with blue cheese crumbles, caramelized onions (cooked 25 minutes in butter over low heat), and arugula. The kind of burger that makes a Tuesday night feel like a restaurant.</p>
+
+<p><strong>7. Brioche and Brie Burger.</strong> Classic patty on a toasted brioche bun with melted brie, fig jam, arugula, and a thin slice of prosciutto. Sweet-savory and genuinely impressive without extra effort.</p>
+
+<p><strong>8. Patty Melt.</strong> Form a thin oval patty sized to fit rye bread. Cook on the griddle. Top with Swiss cheese and grilled onions. Butter two slices of rye bread, assemble like a grilled cheese. Cook until the bread is golden and the cheese melts. The griddle creates flavors a standard burger bun cannot.</p>
+
+<p><strong>9. Oklahoma Onion Burger.</strong> Press a large handful of thinly sliced white onions directly into a loose beef ball before smashing. The onions caramelize into the patty as it cooks. Top with yellow mustard and a slice of American cheese on a soft bun. Iconic regional variation.</p>
+
+<p><strong>10. Green Chile Burger.</strong> Top with fire-roasted Hatch green chiles (canned work fine), pepper jack cheese, and mayo. The New Mexico style. Heat level is mild-to-medium and adaptable. Kids who like cheese quesadillas typically like this burger.</p>
+
+<h3>Alternative Proteins and Dietary Variations</h3>
+
+<p><strong>11. Turkey Burger.</strong> 93/7 ground turkey, 1 tbsp olive oil in the mix to replace fat, garlic, grated onion, salt. Turkey patties dry out faster than beef — pull at 165 degrees F exactly. Top with avocado, Swiss cheese, and pesto mayo. Cook on medium heat, not high.</p>
+
+<p><strong>12. Salmon Burger.</strong> Pulse 1 lb fresh salmon fillet in a food processor until coarsely ground. Mix with 1 tbsp Dijon, 1 tbsp mayo, sliced green onion, lemon zest, salt, and pepper. Form and cook 3 to 4 minutes per side in a nonstick skillet. Top with tartar sauce and cucumber. Lighter, omega-3 rich, takes 20 minutes.</p>
+
+<p><strong>13. Black Bean Burger.</strong> Drain and dry two cans of black beans, mash until mostly smooth, mix with breadcrumbs, egg, cumin, garlic, smoked paprika, diced jalapeño. Form into patties, refrigerate 30 minutes to firm, cook in a skillet 4 minutes per side. Top with avocado, pickled red onion, and chipotle mayo. Genuinely satisfying — not a substitute, a complete meal.</p>
+
+<p><strong>14. Lamb Burger.</strong> 80/20 ground lamb, 1 tbsp minced fresh mint, 1 tsp cumin, 1 tsp coriander, pinch of cinnamon, salt, pepper. Cook to medium. Top with feta, tzatziki, sliced cucumber, and tomato on a toasted pita or bun. Mediterranean weeknight dinner.</p>
+
+<p><strong>15. Chorizo Beef Blend Burger.</strong> Mix 3/4 lb ground beef with 1/4 lb fresh Mexican chorizo, remove casings. The chorizo contributes fat, salt, and spice — no additional seasoning needed. Top with Oaxaca cheese, guacamole, and pickled jalapeños. A burger that tastes like it took more work than it did.</p>
+
+<hr/>
+
+<h2>Why Do Burgers Shrink? (And How to Stop It)</h2>
+
+<p>Burgers shrink because proteins contract when heated and fat renders out. Three techniques prevent this:</p>
+
+<p><strong>Make the patty larger than the bun.</strong> Form patties about 1 inch wider in diameter than the bun. Shrinkage brings them to the right size.</p>
+
+<p><strong>Press the thumb dimple.</strong> A shallow dent in the center of the patty prevents the center from puffing upward as proteins contract. No dimple means a dome-shaped burger that falls out of the bun.</p>
+
+<p><strong>Use 80/20 beef, not leaner.</strong> Leaner beef shrinks more dramatically because fat renders out faster. The fat in 80/20 stays mostly in the patty and keeps it juicy and correctly sized.</p>
+
+<hr/>
+
+<h2>Special Sauce Recipe</h2>
+
+<p>Special sauce is the condiment that makes a diner burger taste like it came from a restaurant. Mix: 1/2 cup mayonnaise, 2 tbsp ketchup, 1 tbsp yellow mustard, 2 tbsp sweet pickle relish, 1 tsp white vinegar, pinch of garlic powder, pinch of paprika. Keeps in the refrigerator 2 weeks. Makes everything better — burgers, sandwiches, dipping sauce for fries.</p>
+
+<hr/>
+
+<h2>What to Serve with Burgers</h2>
+
+<p><strong>Classic sides:</strong> French fries or oven-baked fries, coleslaw, potato salad, corn on the cob, baked beans, onion rings.</p>
+
+<p><strong>Fast weeknight sides:</strong> Bagged salad with ranch, corn from a can roasted in butter, frozen sweet potato fries air-fried, sliced watermelon in summer.</p>
+
+<p><strong>For a crowd:</strong> Keep patties warm on a sheet pan in a 200-degree oven while cooking in batches. Set up a condiment bar and let everyone build their own — picky eaters included.</p>
+
+<hr/>
+
+<h2>Make-Ahead Burger Tips</h2>
+
+<p><strong>Form patties ahead:</strong> Stack between parchment paper, refrigerate up to 24 hours. Cold patties hold their shape better and develop a better sear.</p>
+
+<p><strong>Freeze raw patties:</strong> Stack with parchment between, freeze on a sheet pan 1 hour, bag them. Cook from frozen over medium heat, 5 to 6 minutes per side.</p>
+
+<p><strong>Cook ahead:</strong> Burgers reheat acceptably in a skillet with a splash of water and a lid for steam. Not perfect, but functional for meal prep purposes.</p>
+
+<hr/>
+
+<p><strong>DinnerDrop plans five family dinners per week automatically — burger nights included — with a complete grocery list ready in seconds. <a href="https://dinnerdrop.app/beta">Start your free 7-day trial.</a></strong></p>
+
+<hr/>
+
+<h2>FAQ</h2>
+
+<p><strong>What is the best meat for burgers?</strong><br/>80/20 ground beef (80 percent lean, 20 percent fat). The fat ratio is what produces juicy, flavorful burgers. 90/10 produces dry burgers. 70/30 produces greasy burgers. Ground chuck is the cut most often sold as 80/20 and is the standard choice.</p>
+
+<p><strong>How do you know when a burger is done?</strong><br/>Use a meat thermometer. USDA recommends 160 degrees F for ground beef (fully cooked). For medium, pull at 155-158 degrees F — carryover cooking brings it to 160. Cutting into the burger to check releases juice. Get a thermometer.</p>
+
+<p><strong>Why are my homemade burgers dry?</strong><br/>Three causes: lean beef (use 80/20), overworking the meat (mix 10-15 seconds only), or cooking past 160 degrees F internal temperature. The thumb dimple also helps retain moisture by preventing the puffing that leads to extended cook times.</p>
+
+<p><strong>Can I cook burgers in the oven?</strong><br/>Yes. Place patties on a wire rack over a baking sheet. Bake at 425 degrees F for 15 to 20 minutes, flipping once at 10 minutes, until 160 degrees F internal. You lose the crust you get from a skillet, but the method works well for cooking a large batch simultaneously.</p>
+
+<p><strong>What bun is best for burgers?</strong><br/>Brioche buns for richness and soft texture. Potato rolls for mild flavor that lets the beef star. Martin's Potato Rolls are the industry standard for smash burgers. Avoid sesame seed buns for anything with strong toppings — the seeds distract.</p>
+
+<p><strong>Can I make burgers with ground turkey instead of beef?</strong><br/>Yes. Turkey burgers require added fat (olive oil or butter in the mix) to stay moist and must be cooked to 165 degrees F. They are drier than beef burgers but work well with avocado, pesto, or sauces that add moisture.</p>
+
+<hr/>
+
+<p>The classic hamburger is one of the most forgiving dinners in existence. Wrong technique still produces an edible burger. Right technique produces a great one. The two rules that matter most: use 80/20 beef and do not overwork it.</p>
+
+<p><a href="https://dinnerdrop.app/beta">DinnerDrop</a> plans your family's five dinners per week and builds the complete grocery list automatically. The beta is free for six months.</p>
+
+<p><strong><a href="https://dinnerdrop.app/beta">Get your weekly dinner plan at DinnerDrop</a></strong></p>
+`,
+  },
+
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
