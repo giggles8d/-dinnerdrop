@@ -27326,6 +27326,130 @@ Pulled pork is one of the highest-return proteins in the family kitchen: minimal
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'pot-roast-recipe',
+    title: 'Pot Roast Recipe: The Classic That Cooks Itself While You Do Everything Else',
+    description:
+      'A foolproof pot roast recipe with fall-apart beef, rich gravy, and vegetables. Oven and slow cooker methods, make-ahead tips, and everything you need for a perfect Sunday dinner any night of the week.',
+    publishDate: '2027-11-23',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'pot roast recipe',
+    content: `Pot roast is the definition of a dinner that rewards patience over technique. There is no complicated method here -- the work is mostly done by time, low heat, and a cut of meat that actively improves the longer it cooks. The result is fork-tender beef, vegetables that have absorbed everything good from the braising liquid, and a pan sauce that tastes like it took hours to make because it did.
+
+This recipe works in a Dutch oven, a roasting pan, or a slow cooker. All three methods are covered below.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. The beta is free for six months.
+
+---
+
+## What You Need
+
+**Serves:** 6-8
+**Total time:** 3.5-4 hours oven or 8-9 hours slow cooker
+**Equipment:** Dutch oven or heavy roasting pan with lid (oven method); 6-quart slow cooker (slow cooker method)
+
+### Ingredients
+
+**For the roast:**
+- 3-4 lb chuck roast (boneless)
+- 2 tsp salt
+- 1 tsp black pepper
+- 1 tsp garlic powder
+- 1 tsp onion powder
+- 2 tbsp vegetable oil
+
+**For the braise:**
+- 1 large onion, roughly chopped
+- 4 cloves garlic, smashed
+- 3 tbsp tomato paste
+- 1 cup beef broth
+- 1 cup red wine (or additional beef broth)
+- 2 tbsp Worcestershire sauce
+- 2 sprigs fresh thyme (or 1 tsp dried)
+- 2 bay leaves
+
+**Vegetables:**
+- 1 lb baby potatoes, halved
+- 4 large carrots, cut into 2-inch pieces
+- 3 stalks celery, cut into 2-inch pieces
+
+**For the gravy:**
+- 2 tbsp cornstarch
+- 2 tbsp cold water
+
+---
+
+## Oven Method (Dutch Oven)
+
+**Step 1: Season and sear the roast.** Preheat oven to 325 degrees F. Pat the chuck roast dry with paper towels -- moisture prevents a good sear. Season all sides with salt, pepper, garlic powder, and onion powder. Heat oil in a Dutch oven over medium-high heat. Add the roast and do not move it for 3-4 minutes per side. Sear all sides until deeply browned, about 12-15 minutes total. Transfer to a plate. The sear creates the flavor base for the entire dish -- do not skip it.
+
+**Step 2: Build the braise.** In the same pot over medium heat, cook onion 3-4 minutes. Add garlic and cook 1 minute. Add tomato paste and cook 2 minutes, stirring. Add wine and scrape up all the browned bits. Add broth, Worcestershire, thyme, and bay leaves.
+
+**Step 3: Braise low and slow.** Return the roast to the pot. Liquid should reach one-third up the sides. Cover and bake at 325 degrees F for 3 to 4 hours depending on size. The roast is done when it falls apart when pressed with a fork. Add potatoes, carrots, and celery at the 2-hour mark for vegetables with texture, or at the start for very soft vegetables.
+
+**Step 4: Make the gravy.** Remove roast and vegetables to a platter. Discard herbs and bay leaves. Bring braising liquid to a simmer on the stovetop. Whisk cornstarch and cold water together, then whisk into the liquid. Cook 3-5 minutes until thickened.
+
+---
+
+## Slow Cooker Method
+
+Sear the roast as described above. Transfer to the slow cooker. Build the braise base in the same skillet, scraping up the browned bits, then pour over the roast. Add vegetables around the roast. Cook on LOW 8-9 hours or HIGH 4-5 hours. Make gravy using the braising liquid on the stovetop.
+
+---
+
+## The Right Cut of Meat
+
+Chuck roast is the correct choice. It comes from the shoulder and has connective tissue and intramuscular fat that break down over long slow cooking into gelatin -- which makes the braising liquid silky and the meat tender. Do not use round roast, sirloin, or any lean cut. Lean cuts turn dry and stringy in a braise. Buy more than you think you need -- pot roast leftovers are excellent.
+
+---
+
+## Make-Ahead and Storage
+
+Pot roast is one of the best make-ahead dinners. The flavor intensifies overnight and the fat rises to the surface when cold, making it easy to skim. Reheat covered in a 325 degree oven for 30-40 minutes with a splash of broth. Refrigerate up to 4 days. Freeze up to 3 months -- slice or shred the beef, combine with gravy, and freeze in portions.
+
+Leftover ideas: pot roast tacos with shredded beef and corn tortillas, pot roast hash with diced beef and potatoes in a cast iron skillet, pot roast sandwiches on toasted hoagie rolls with horseradish cream, pot roast beef soup with the remaining braising liquid.
+
+---
+
+## Variations
+
+**Mississippi Pot Roast:** Skip wine, broth, tomato paste, and fresh herbs. Add one packet dry ranch seasoning, one packet dry au jus mix, one stick of butter, and 6-8 pepperoncini peppers with a splash of their brine. No additional liquid. Slow cook on LOW 8 hours. Shred and serve over mashed potatoes.
+
+**Italian Pot Roast:** Add a can of diced tomatoes and a tablespoon of Italian seasoning. Serve over polenta or with crusty bread.
+
+**Red Wine Pot Roast:** Increase wine to 1.5 cups and reduce broth to 0.5 cups. Add a tablespoon of balsamic vinegar for depth.
+
+---
+
+## How DinnerDrop Uses This
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week based on your preferences, including how much active cooking time you have. Tell it you prefer set-and-forget dinners and it plans slow cooker and braise recipes like this one -- with the full grocery list for your family size included. The beta is free for six months.
+
+---
+
+## FAQ
+
+**What is the best cut for pot roast?** Chuck roast, every time. It has the right balance of fat and connective tissue to become tender in a long braise. Avoid anything labeled lean or from the round or loin sections.
+
+**Do I have to sear the roast first?** No, but you should. The sear creates hundreds of flavor compounds that carry through the entire braise. Skipping it produces a pot roast that tastes flat by comparison. It takes 15 minutes and it matters.
+
+**Can I add wine if I do not cook with alcohol?** Replace the wine with equal parts beef broth plus a tablespoon of balsamic vinegar. The vinegar provides the acidity that wine contributes.
+
+**How do I know when pot roast is done?** Press the meat with a fork. It should fall apart with almost no resistance. If it resists, it needs more time -- there is no shortcut for collagen breakdown.
+
+**Can I make pot roast in an Instant Pot?** Yes. Sear using the Saute function. Cook on HIGH pressure for 60-75 minutes for a 3-pound roast. Natural release 20 minutes. Add vegetables and cook on HIGH pressure 3-4 minutes with quick release.
+
+**My pot roast is tough after 3 hours.** It needs more time, not higher heat. Return it covered to the oven and check every 30 minutes. Chuck roast transitions from tough to tender at a specific point in the collagen breakdown process -- you cannot rush it by raising the temperature.
+
+---
+
+Pot roast is one of the few dinners where the hands-off time is an advantage rather than a compromise. Three and a half hours in a low oven produces something genuinely impressive with fewer than 30 minutes of actual work.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
