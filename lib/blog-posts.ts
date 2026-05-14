@@ -16117,7 +16117,216 @@ Yes. Replace the sour cream in the filling with cream cheese (softened) or omit 
 4 days refrigerated in an airtight container. They reheat well and are arguably better on day 2 after the flavors have melded.
 `,
   },
-] as BlogPost[]
+] as BlogPost[,
+  {
+    id: 'beef-stroganoff-recipe',
+    slug: 'beef-stroganoff-recipe',
+    title: 'Beef Stroganoff Recipe: Classic Comfort Food Ready in 30 Minutes',
+    excerpt: 'The classic beef stroganoff recipe — tender strips of beef in a rich, creamy mushroom sauce over egg noodles. Plus a slow cooker version and quick weeknight shortcuts.',
+    publishDate: '2027-11-23',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'beef stroganoff recipe',
+    content: `
+# Beef Stroganoff Recipe: Classic Comfort Food Ready in 30 Minutes
+
+Beef stroganoff is one of those weeknight dinners that feels more impressive than the effort it requires — tender strips of beef, a rich mushroom cream sauce, and egg noodles that catch every drop. This guide covers the classic stovetop recipe, a slow cooker version for hands-off cooking, and the technique fixes that prevent the sauce from breaking or turning grainy.
+
+---
+
+## Why This Beef Stroganoff Recipe Works
+
+The classic version uses sour cream as the finishing element, stirred in at the end off the heat. High-quality sour cream, added cold and not boiled, creates a smooth, velvety sauce that clings to the noodles without curdling. The key is patience at two points: a proper sear on the beef and gentle heat when adding the sour cream.
+
+**Serves:** 4–6 | **Total time:** 30 minutes | **Active time:** 25 minutes
+
+---
+
+## Classic Beef Stroganoff (Stovetop)
+
+### Ingredients
+
+**For the beef:**
+- 1½ pounds sirloin steak or beef tenderloin, sliced into thin strips (about ¼ inch thick)
+- Salt and black pepper
+- 2 tablespoons olive oil or butter
+
+**For the sauce:**
+- 3 tablespoons unsalted butter
+- 1 medium yellow onion, thinly sliced
+- 3 cloves garlic, minced
+- 8 oz cremini or baby bella mushrooms, sliced
+- 2 tablespoons all-purpose flour
+- 1½ cups beef broth
+- 1 tablespoon Worcestershire sauce
+- 1 teaspoon Dijon mustard
+- 1 cup full-fat sour cream (room temperature)
+- Salt and pepper to taste
+- Fresh parsley, chopped, for serving
+
+**For serving:**
+- 12 oz egg noodles, cooked according to package directions
+- Or mashed potatoes, rice, or buttered pasta
+
+### Instructions
+
+**Step 1: Prep the beef.** Slice the steak against the grain into thin strips about ¼ inch thick and 2 inches long. Season generously with salt and pepper on all sides. Pat dry with paper towels — this is non-negotiable for a proper sear.
+
+**Step 2: Sear the beef.** Heat a large skillet or sauté pan over medium-high heat until very hot. Add 1 tablespoon oil. Working in batches — do not crowd — sear the beef strips for 1–2 minutes per side until browned. Remove to a plate. Do not cook through; the beef finishes in the sauce. Crowding causes steaming, not searing.
+
+**Step 3: Sauté aromatics.** Reduce heat to medium. Add butter to the same pan. Add sliced onion and cook 3–4 minutes until softened. Add garlic and mushrooms. Cook 5–6 minutes, stirring occasionally, until mushrooms have released their liquid and begun to brown. Season with salt.
+
+**Step 4: Build the sauce.** Sprinkle flour over the mushroom mixture and stir for 1 minute to cook out the raw flour taste. Add beef broth, Worcestershire, and Dijon mustard. Stir well, scraping up any brown bits from the pan (this is where the flavor lives). Simmer 5 minutes until the sauce thickens to a gravy consistency.
+
+**Step 5: Finish the sauce.** Reduce heat to low. Return the seared beef strips (and any accumulated juices) to the pan. Stir to coat and heat through, about 2 minutes. Remove pan from heat.
+
+**Step 6: Add sour cream.** Stir in the sour cream. This must happen OFF heat — boiling sour cream causes it to break and curdle. Stir until fully incorporated and the sauce is smooth and creamy. Taste and adjust salt.
+
+**Step 7: Serve immediately.** Spoon over cooked egg noodles. Top with fresh parsley.
+
+---
+
+## Slow Cooker Beef Stroganoff
+
+The slow cooker version uses a tougher cut — chuck roast — that benefits from long, low cooking. The result is fork-tender beef in a deep, rich sauce.
+
+### Slow Cooker Ingredients
+
+- 2 pounds beef chuck roast, cut into 1-inch cubes
+- 1 medium onion, diced
+- 4 cloves garlic, minced
+- 8 oz mushrooms, sliced
+- 1½ cups beef broth
+- 1 tablespoon Worcestershire sauce
+- 1 tablespoon Dijon mustard
+- 1 teaspoon garlic powder
+- 1 teaspoon onion powder
+- Salt and pepper
+- 3 tablespoons cornstarch mixed with 3 tablespoons cold water (slurry)
+- 1 cup sour cream, room temperature
+
+### Slow Cooker Method
+
+**Step 1:** Season beef cubes with salt, pepper, garlic powder, and onion powder. Optional: sear in a hot skillet with 1 tablespoon oil before adding to slow cooker — adds flavor but is not required.
+
+**Step 2:** Add beef, onion, garlic, mushrooms, broth, Worcestershire, and Dijon to the slow cooker. Stir to combine.
+
+**Step 3:** Cook LOW for 7–8 hours or HIGH for 4–5 hours until beef is fork-tender.
+
+**Step 4:** Thirty minutes before serving, stir in the cornstarch slurry. Cook on HIGH 20–30 minutes until sauce thickens.
+
+**Step 5:** Turn off the slow cooker. Stir in sour cream. Serve over egg noodles.
+
+---
+
+## Weeknight Shortcut: 20-Minute Ground Beef Stroganoff
+
+When time is tight, ground beef produces a satisfying stroganoff in under 20 minutes.
+
+- Brown 1 pound ground beef in a large skillet, drain fat
+- Add 1 diced onion and cook 3 minutes
+- Add 8 oz sliced mushrooms and 2 minced garlic cloves, cook 4 minutes
+- Sprinkle 2 tablespoons flour, stir 1 minute
+- Add 1½ cups beef broth, 1 tablespoon Worcestershire, 1 teaspoon Dijon — simmer 5 minutes
+- Remove from heat, stir in ¾ cup sour cream
+- Serve over egg noodles
+
+The texture is different from the sliced beef version — looser, more like a pasta sauce — but the flavors are identical and the technique is the same.
+
+---
+
+## Choosing the Right Cut of Beef
+
+**Best cuts for stovetop (quick cook):**
+- **Sirloin** — the standard choice, good balance of tenderness and flavor, affordable
+- **Beef tenderloin** — most tender, least flavor, best when budget allows
+- **Ribeye** — excellent marbling, richest flavor, slightly harder to slice thin
+
+**Best cuts for slow cooker (long cook):**
+- **Chuck roast** — ideal, breaks down into tender chunks with rich flavor
+- **Bottom round** — leaner, works well, slightly drier than chuck
+- **Stew beef** — convenient pre-cut option, often chuck or round
+
+**What to avoid:** Flank steak or skirt steak for stroganoff — they become chewy if not sliced paper-thin and cooked very quickly.
+
+---
+
+## Stroganoff Sauce Variations
+
+**Classic American-style:** Sour cream only, as written above. Rich, tangy, cream-colored sauce.
+
+**Russian-style (more traditional):** Add 2 tablespoons Madeira wine or dry sherry to the broth. Skip the Dijon. The wine adds complexity and a slightly thinner sauce.
+
+**Lighter version:** Replace half the sour cream with plain Greek yogurt. Stir in at the end off heat. Slightly tangier, fewer calories, same creaminess.
+
+**Dairy-free:** Use cashew cream (soak raw cashews in water 2 hours, blend with ½ cup water until smooth). Add same way as sour cream. The flavor is different but the texture holds.
+
+**Extra umami:** Add 1 teaspoon soy sauce and 1 tablespoon tomato paste with the Worcestershire. The added depth works especially well with the mushrooms.
+
+---
+
+## Serving Options Beyond Egg Noodles
+
+Egg noodles are traditional, but stroganoff is equally good over:
+
+- **Mashed potatoes** — the stroganoff sauce becomes a rich gravy
+- **White rice** — neutral backdrop that lets the sauce shine
+- **Buttered spaghetti or linguine** — when egg noodles are unavailable
+- **Cauliflower rice** — for low-carb versions
+- **Crusty bread** — for soaking up extra sauce as a starter or light meal
+
+---
+
+## Make-Ahead and Storage
+
+**Sauce without sour cream:** The beef and mushroom sauce (without the sour cream) keeps refrigerated up to 4 days and freezes up to 3 months. When reheating, bring to a simmer, then remove from heat and stir in fresh sour cream. This prevents the sour cream from separating on reheating.
+
+**Fully assembled leftovers:** Reheat gently over low heat, not in the microwave. If the sauce has broken (looks grainy or greasy), whisk in 2 tablespoons warm water while stirring over low heat — it often re-emulsifies.
+
+**Do not freeze with sour cream:** Dairy-based sauces separate when frozen and thawed. Always freeze the sauce component alone and add fresh sour cream on reheating.
+
+---
+
+## Troubleshooting
+
+**Sour cream curdled or grainy:** The sauce was too hot when you added it. Next time, remove from heat, let cool 1 minute, then stir in room-temperature sour cream.
+
+**Sauce is too thin:** Return to a simmer (without sour cream) and reduce 3–5 minutes. Or stir 1 tablespoon cornstarch into 2 tablespoons cold water, add to simmering sauce, and cook 2 minutes.
+
+**Beef is tough:** Either the cut was wrong for the cooking method, or the beef was overcooked. For quick stovetop: slice thin, sear fast, and warm through in the sauce — do not simmer. For slow cooker: use chuck and cook on LOW.
+
+**Sauce is too salty:** Add a tablespoon of sour cream and a splash of unsalted broth. Egg noodles also absorb salt as you eat — serve immediately and let them balance it.
+
+**Mushrooms are soggy, not browned:** The pan was not hot enough, or you stirred too often. Mushrooms need space, high heat, and minimal stirring to brown. Cook in batches if necessary.
+
+---
+
+## FAQ
+
+**What is the best substitute for sour cream in beef stroganoff?**
+Full-fat Greek yogurt is the closest substitute — same tangy flavor, similar consistency. Add it off heat the same way. Crème fraîche works beautifully and does not curdle as easily. Heavy cream produces a richer, less tangy sauce and can simmer without breaking.
+
+**Can I make beef stroganoff without mushrooms?**
+Yes, though mushrooms contribute a lot of the savory depth. If omitting, add a teaspoon of soy sauce or Worcestershire extra to compensate. Some recipes use diced bell pepper in their place for texture.
+
+**How do I reheat beef stroganoff without the sauce breaking?**
+Reheat in a skillet over low heat, adding a splash of broth or water. Do not microwave — the uneven heat breaks dairy sauces. If using leftover stroganoff with sour cream already mixed in, stir constantly over low heat and do not let it boil.
+
+**Is beef stroganoff supposed to be thick or thin?**
+The sauce should coat a spoon but pour easily — similar to a light gravy. Not as thick as a stew, not as thin as broth. If you can draw a line on the back of a spoon and it holds, the consistency is right.
+
+**Can I use cream of mushroom soup instead of making the sauce from scratch?**
+Yes — the shortcut version mixes cream of mushroom soup with beef broth and sour cream. It is faster and still tasty, though the flavor is simpler. Add sautéed onion and garlic at minimum to round it out.
+
+---
+
+## Make Dinner Planning as Easy as This Recipe
+
+Beef stroganoff is perfect for rotation — quick on weeknights, impressive enough for guests, and excellent as leftovers. The problem is that planning five nights like this every week takes more time than it should. [DinnerDrop builds your personalized 5-meal week including pasta, beef, chicken, and more, with a full grocery list in one tap.](/beta) Set your family's preferences once. It does the rest.
+
+[Start your free 7-day trial at DinnerDrop](/beta)
+`
+  }
+]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
 }
