@@ -11288,8 +11288,8 @@ Classic toppings: sour cream, shredded cheddar, diced onion, sliced jalapeños, 
 ---
 
 **Want personalized dinner plans that include crowd-pleasers like chili — already matched to your family's taste, budget, and schedule?** [DinnerDrop builds your weekly meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-`
-  }
+`,
+  },
   ,
   {
 
@@ -11740,8 +11740,8 @@ Baked mac and cheese freezes well before baking — assemble, cover tightly, fre
 ---
 
 **Want a weekly dinner plan that includes family favorites like mac and cheese — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-`
-  }
+`,
+  },
 ,
   {
     slug: 'pasta-bake-recipes',
@@ -11960,8 +11960,8 @@ Keep the dish covered with foil until the final 15 minutes of baking. If the top
 ---
 
 **Want a weekly dinner plan that includes family favorites like pasta bakes — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-`
-  }
+`,
+  },
   ,
   {
     slug: 'air-fryer-chicken-recipes',
@@ -12838,8 +12838,8 @@ Baked chicken thighs reheat better than any other cut of chicken. Store in an ai
 ---
 
 Twenty-five baked chicken thigh recipes gives you nearly a month of weeknight dinners without repeating. If you want those recipes turned into a personalized weekly plan with a pre-sorted grocery list, [DinnerDrop has you covered.](/beta)
-`
-  }
+`,
+  },
 
   ,{
     slug: 'baked-salmon-recipes',
@@ -12999,9 +12999,10 @@ Salmon pairs with almost any side: roasted vegetables, rice, quinoa, couscous, m
 ---
 
 Twenty-five recipes gives you five weeks of salmon dinners before repetition. If you want those recipes organized into a personalized weekly plan with a sorted grocery list, [DinnerDrop handles the planning for you.](/beta)
-`
-  }
-,
+`,
+  },
+
+,
   {
     slug: 'steak-dinner-ideas',
     title: '25 Steak Dinner Ideas for Weeknights and Special Occasions',
@@ -13156,8 +13157,8 @@ Steak pairs with almost any side: roasted potatoes, mashed potatoes, roasted veg
 ---
 
 Twenty-five steak dinner ideas — from 15-minute weeknight skillets to Sunday braises — mean steak works at every budget and time constraint your week throws at you. If rotating through them on a schedule with a matching grocery list sounds like the part you would rather hand off, [DinnerDrop handles the planning so you handle the cooking.](/beta)
-`
-  }
+`,
+  },
 
   {
     slug: 'sheet-pan-chicken',
@@ -13307,8 +13308,8 @@ At 400–425°F for 35–40 minutes (matching bone-in thighs): broccoli florets,
 ---
 
 Twenty-five sheet pan chicken recipes mean you can cook a different dinner every weeknight for five weeks without repeating. If rotating through them on a planned schedule — matched to what your family actually likes and what is already in the refrigerator — sounds better than deciding at 5pm, [DinnerDrop builds that plan for you every week.](/beta)
-`
-  }
+`,
+  },
 
   {
     slug: 'instant-pot-recipes',
