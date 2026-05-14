@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 ﻿export interface BlogPost {
   slug: string
   title: string
@@ -13004,7 +13003,6 @@ Twenty-five recipes gives you five weeks of salmon dinners before repetition. If
   },
 
 ,
-=======
 ﻿export interface BlogPost {
   slug: string
   title: string
@@ -25870,7 +25868,6 @@ Twenty-five recipes gives you five weeks of salmon dinners before repetition. If
 `
   }
 ,
->>>>>>> Stashed changes
   {
     slug: 'steak-dinner-ideas',
     title: '25 Steak Dinner Ideas for Weeknights and Special Occasions',
@@ -27543,7 +27540,6 @@ Chicken parmesan is one of the most reliable weeknight dinners for families. Mos
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
-<<<<<<< HEAD
   {
     slug: 'pot-roast-recipe',
     title: 'Pot Roast Recipe: The Classic That Cooks Itself While You Do Everything Else',
@@ -27642,7 +27638,6 @@ Leftover ideas: pot roast tacos with shredded beef and corn tortillas, pot roast
 ## How DinnerDrop Uses This
 
 [DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week based on your preferences, including how much active cooking time you have. Tell it you prefer set-and-forget dinners and it plans slow cooker and braise recipes like this one -- with the full grocery list for your family size included. The beta is free for six months.
-=======
 ,
   {
     slug: 'chicken-pot-pie',
@@ -27772,13 +27767,11 @@ Chicken pot pie is a complete meal on its own — protein, vegetables, and carbs
 - **Roasted green beans or asparagus** — bright vegetables provide contrast
 - **Cranberry sauce** — sounds odd, works brilliantly, especially in fall and winter
 - **Sparkling water with lemon** or a light white wine for adults
->>>>>>> a27039eb818bbe67f694a9e9e5e1b9dc029a006e
 
 ---
 
 ## FAQ
 
-<<<<<<< HEAD
 **What is the best cut for pot roast?** Chuck roast, every time. It has the right balance of fat and connective tissue to become tender in a long braise. Avoid anything labeled lean or from the round or loin sections.
 
 **Do I have to sear the roast first?** No, but you should. The sear creates hundreds of flavor compounds that carry through the entire braise. Skipping it produces a pot roast that tastes flat by comparison. It takes 15 minutes and it matters.
@@ -27800,7 +27793,6 @@ Pot roast is one of the few dinners where the hands-off time is an advantage rat
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
-=======
 **Can I use canned chicken for pot pie?**
 You can, but the texture will be mushier than rotisserie or poached chicken. If using canned, drain thoroughly and break up any large chunks. Rotisserie chicken is the superior shortcut.
 
@@ -27825,7 +27817,6 @@ Chicken pot pie is exactly the kind of dinner that deserves a spot on the weekly
 [Start your free 7-day trial at DinnerDrop](/beta)
 `
   }
->>>>>>> a27039eb818bbe67f694a9e9e5e1b9dc029a006e
   {
     slug: 'fried-chicken-recipe',
     title: 'Fried Chicken Recipe: The Best Classic Southern Fried Chicken (Crispy Every Time)',
@@ -27964,3 +27955,4 @@ export function getPostBySlug(slug: string): BlogPost | undefined {
 export function getAllPostSlugs(): string[] {
   return BLOG_POSTS.map((p) => p.slug)
 }
+
