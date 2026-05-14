@@ -11148,8 +11148,8 @@ Classic toppings: sour cream, shredded cheddar, diced onion, sliced jalapeños, 
 ---
 
 **Want personalized dinner plans that include crowd-pleasers like chili — already matched to your family's taste, budget, and schedule?** [DinnerDrop builds your weekly meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-`
-  }
+`,
+  },
   ,
   {
 
@@ -11600,8 +11600,8 @@ Baked mac and cheese freezes well before baking — assemble, cover tightly, fre
 ---
 
 **Want a weekly dinner plan that includes family favorites like mac and cheese — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-`
-  }
+`,
+  },
 ,
   {
     slug: 'pasta-bake-recipes',
@@ -11820,8 +11820,8 @@ Keep the dish covered with foil until the final 15 minutes of baking. If the top
 ---
 
 **Want a weekly dinner plan that includes family favorites like pasta bakes — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-`
-  }
+`,
+  },
   ,
   {
     slug: 'air-fryer-chicken-recipes',
@@ -12699,8 +12699,8 @@ Baked chicken thighs reheat better than any other cut of chicken. Store in an ai
 ---
 
 Twenty-five baked chicken thigh recipes gives you nearly a month of weeknight dinners without repeating. If you want those recipes turned into a personalized weekly plan with a pre-sorted grocery list, [DinnerDrop has you covered.](/beta)
-`
-  }
+`,
+  },
 
   ,{
     slug: 'baked-salmon-recipes',
@@ -12860,8 +12860,8 @@ Salmon pairs with almost any side: roasted vegetables, rice, quinoa, couscous, m
 ---
 
 Twenty-five recipes gives you five weeks of salmon dinners before repetition. If you want those recipes organized into a personalized weekly plan with a sorted grocery list, [DinnerDrop handles the planning for you.](/beta)
-`
-  }
+`,
+  },
 
 ,
   {
@@ -14594,8 +14594,8 @@ Absolutely. Diced potatoes, corn, green beans, mushrooms, and parsnips all work 
 Chicken pot pie is exactly the kind of dinner that deserves a spot on the weekly rotation — but planning five nights from scratch every week takes time you do not have. [DinnerDrop generates your personalized 5-meal week plus a complete grocery list in under 60 seconds.](/beta) Tell it your preferences, dietary needs, and preferred stores once. It handles the rest.
 
 [Start your free 7-day trial at DinnerDrop](/beta)
-`
-  }
+`,
+  },
   {
     slug: 'fried-chicken-recipe',
     title: 'Fried Chicken Recipe: The Best Classic Southern Fried Chicken (Crispy Every Time)',
