@@ -15991,6 +15991,132 @@ Two reasons: either the heat is too low (sauce needs to actively bubble to reduc
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'chicken-enchiladas-recipe',
+    title: 'Chicken Enchiladas Recipe: Easy, Cheesy, and Family-Approved',
+    description: 'A homemade chicken enchiladas recipe with tender shredded chicken, red enchilada sauce, and melted cheese. Includes make-ahead tips, freezer instructions, and variations for the whole family.',
+    publishDate: '2027-12-07',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'chicken enchiladas recipe',
+    content: `## The Best Chicken Enchiladas Recipe
+
+Chicken enchiladas are one of the most satisfying family dinners you can make at home. Shredded chicken, rich red sauce, and melted cheese — rolled and baked until the edges get slightly crispy and the center stays tender and saucy.
+
+This recipe takes about 45 minutes start to finish, makes enough for six servings, and reheats perfectly the next day. You can use store-bought rotisserie chicken to cut the time to 30 minutes.
+
+[DinnerDrop](https://dinnerdrop.app/beta) can build chicken enchiladas into your weekly dinner plan with a complete, sorted grocery list ready for your store.
+
+---
+
+## Chicken Enchiladas Ingredients
+
+**Serves 6 | Prep: 20 minutes | Cook: 25 minutes | Total: 45 minutes**
+
+**For the filling:**
+- 3 cups cooked, shredded chicken (rotisserie chicken works perfectly)
+- 1 cup sour cream
+- 1 1/2 cups shredded Monterey Jack cheese, divided
+- 1 cup shredded cheddar cheese, divided
+- 1 can (4 oz) diced green chiles, drained
+- 1 teaspoon cumin
+- 1/2 teaspoon garlic powder
+- 1/2 teaspoon onion powder
+- Salt and pepper to taste
+
+**For assembly:**
+- 10 to 12 flour tortillas (8-inch), or corn tortillas for more traditional flavor
+- 2 cans (10 oz each) red enchilada sauce
+- 1/4 cup fresh cilantro, chopped (optional)
+- Sliced green onions for topping
+
+---
+
+## How to Make Chicken Enchiladas
+
+**Step 1: Preheat and prep.** Preheat oven to 375 degrees F. Lightly grease a 9x13-inch baking dish. Pour about 1/2 cup of enchilada sauce across the bottom of the dish.
+
+**Step 2: Make the filling.** In a large bowl, combine shredded chicken, sour cream, 1 cup of the Monterey Jack, 1/2 cup of the cheddar, green chiles, cumin, garlic powder, and onion powder. Season with salt and pepper. Mix well.
+
+**Step 3: Fill and roll.** Warm tortillas in the microwave (30 seconds, wrapped in a damp paper towel) so they roll without cracking. Spoon about 1/3 cup of filling down the center of each tortilla. Roll tightly and place seam-side down in the prepared baking dish. Repeat with remaining tortillas.
+
+**Step 4: Sauce and top.** Pour remaining enchilada sauce evenly over the rolled enchiladas. Sprinkle the remaining Monterey Jack and cheddar over the top.
+
+**Step 5: Bake.** Bake uncovered for 20 to 25 minutes until cheese is melted and bubbly and the edges are golden. Let rest 5 minutes before serving.
+
+**Step 6: Garnish and serve.** Top with cilantro and green onions. Serve with rice, refried beans, or a simple green salad.
+
+---
+
+## Tips for the Best Chicken Enchiladas
+
+**Use rotisserie chicken.** It is already seasoned, already cooked, and shreds in 3 minutes. Buying a rotisserie chicken and skipping the raw chicken step cuts your active time in half.
+
+**Warm your tortillas before rolling.** Cold tortillas crack. Warm them 30 seconds in the microwave wrapped in a damp paper towel. They become pliable and won't split during rolling.
+
+**Don't skip the sauce on the bottom.** The sauce layer on the bottom of the dish prevents sticking and ensures the bottoms of the enchiladas cook in sauce, not dry heat.
+
+**Bake uncovered for slightly crispy edges.** Some recipes cover the dish with foil — this steams the enchiladas and makes them soft throughout. Baking uncovered gives you slightly crispy, browned edges which most people prefer.
+
+---
+
+## Variations
+
+**Green chicken enchiladas.** Swap the red enchilada sauce for green tomatillo sauce (salsa verde). The flavor is brighter and less heavy. Works especially well with corn tortillas.
+
+**Sour cream white sauce enchiladas.** Replace the red sauce with a homemade white sauce: melt 2 tablespoons butter, whisk in 2 tablespoons flour, add 1 1/2 cups chicken broth and 1 cup sour cream, season with cumin and garlic. Milder flavor, very popular with kids.
+
+**Black bean and chicken enchiladas.** Add one drained can of black beans to the filling. Stretch the recipe to 8 servings, adds fiber, and is a good way to make the dish go further on a budget.
+
+**Beef enchiladas.** Swap shredded chicken for seasoned ground beef or shredded braised beef. Brown 1 lb ground beef with taco seasoning. Same assembly process.
+
+**Picky eater version.** Reduce the green chiles to 2 tablespoons or omit entirely. Use mild enchilada sauce. Fill with plain shredded chicken and cheese only — most picky eaters will eat enchiladas when the filling is simplified.
+
+---
+
+## Make-Ahead and Freezer Instructions
+
+**Make-ahead (refrigerator):** Assemble the full dish up to the point of baking. Cover tightly with plastic wrap or foil and refrigerate up to 24 hours. Bake directly from the refrigerator — add 5 to 10 extra minutes to the bake time.
+
+**Freezer instructions:** Assemble in a freezer-safe baking dish. Do not bake. Cover tightly with a double layer of foil. Freeze up to 3 months. Thaw overnight in the refrigerator. Bake per the original instructions, adding 10 minutes if still cold in the center.
+
+**Reheating leftovers:** Cover with foil and reheat at 350 degrees F for 15 to 20 minutes, or microwave individual portions for 2 minutes with a splash of enchilada sauce to prevent drying out.
+
+---
+
+## What to Serve with Chicken Enchiladas
+
+Classic sides that work well: Mexican rice, refried beans, black beans, or pinto beans. For a lighter option, a simple salad with lime vinaigrette balances the richness of the enchiladas.
+
+Toppings bar approach: Set out sour cream, guacamole or sliced avocado, salsa, pickled jalapeños, and lime wedges. Everyone adds what they like, which makes the meal work for picky eaters and adults alike.
+
+---
+
+## How DinnerDrop Handles Taco Night and Beyond
+
+If Mexican-style dinners are a weekly staple in your house, [DinnerDrop](https://dinnerdrop.app/beta) builds a varied rotation of five dinners per week — so you get the chicken enchiladas one week, something different the next, without the mental work of planning. The grocery list is sorted by store section and sent directly to your preferred store. The beta is free for six months.
+
+**[Plan your weekly dinners at DinnerDrop](https://dinnerdrop.app/beta)**
+
+---
+
+## FAQ
+
+**Can I use corn tortillas instead of flour?**
+Yes. Corn tortillas are more traditional and have better flavor, but they crack more easily when rolling. To prevent cracking, warm them briefly in a dry skillet or microwave and work quickly. Alternatively, dip each corn tortilla in warm enchilada sauce before rolling — this softens them and adds flavor.
+
+**What enchilada sauce brand works best?**
+Old El Paso and Las Palmas are reliable grocery store options. For the best flavor, use a medium or hot sauce rather than mild — the heat balances the richness of the cheese and sour cream. Homemade enchilada sauce is easy: sauté 1 tablespoon each chili powder, cumin, and garlic powder in 2 tablespoons oil, add 2 cups chicken broth and 1 small can tomato paste, simmer 10 minutes.
+
+**My enchiladas turned out soggy — what happened?**
+Too much sauce or covering the dish during baking traps steam. Use the sauce amounts in the recipe (not more), bake uncovered, and rest 5 minutes before serving so the sauce can set slightly.
+
+**Can I make chicken enchiladas without sour cream?**
+Yes. Replace the sour cream in the filling with cream cheese (softened) or omit it entirely and add an extra half cup of shredded cheese. The filling will be slightly drier but still holds together.
+
+**How long do leftovers keep?**
+4 days refrigerated in an airtight container. They reheat well and are arguably better on day 2 after the flavors have melded.
+`,
+  },
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
