@@ -13928,6 +13928,210 @@ Mozzarella is standard -- it melts clean and stretches. Use fresh mozzarella for
 Yes. Bread the chicken as directed, spray with cooking spray, and air fry at 400 degrees F for 10 minutes, flip, and cook another 5 minutes. Add sauce and cheese, air fry another 3-4 minutes until the cheese melts. The crust is crispier than baked but lacks the deep golden color of pan-fried. If you regularly make chicken parmesan, the air fryer version is faster on a weeknight.
 `,
   },
+  {
+    slug: 'lasagna-recipe',
+    title: 'Lasagna Recipe: Classic Layers, Perfect Every Time',
+    description:
+      'Master the classic lasagna recipe with this complete guide. Ground beef, rich tomato sauce, ' +
+      'creamy ricotta, and perfectly layered noodles — restaurant-quality results at home.',
+    publishDate: '2027-11-23',
+    readingTimeMinutes: 12,
+    primaryKeyword: 'lasagna recipe',
+    content: `Lasagna is one of the most satisfying dishes you can make — layers of rich meat sauce, creamy ricotta, mozzarella, and tender pasta all baked together into something that tastes like it came from a neighborhood Italian restaurant. It takes about 90 minutes start to finish and feeds six to eight people. Most of that time is hands-off baking.
+
+This guide covers the complete classic lasagna recipe, how to make a proper meat sauce, the béchamel versus ricotta debate, how to layer correctly, five variations, and everything you need to know about making it ahead and freezing.
+
+---
+
+## Classic Lasagna Recipe
+
+### Ingredients
+
+**Meat sauce:**
+- 1 lb ground beef (80/20) or a mix of beef and Italian sausage
+- 1 medium yellow onion, finely diced
+- 4 cloves garlic, minced
+- 1 can (28 oz) crushed tomatoes
+- 1 can (15 oz) tomato sauce
+- 2 tablespoons tomato paste
+- 1 teaspoon dried oregano
+- 1 teaspoon dried basil
+- 1/2 teaspoon sugar (balances acidity)
+- Salt and black pepper to taste
+- 2 tablespoons olive oil
+
+**Ricotta layer:**
+- 15 oz whole-milk ricotta
+- 1 large egg
+- 1/4 cup grated Parmesan
+- 2 tablespoons fresh parsley, chopped
+- 1/2 teaspoon salt
+- 1/4 teaspoon black pepper
+
+**Assembly:**
+- 12 lasagna noodles (regular or oven-ready)
+- 3 cups shredded low-moisture mozzarella
+- 1/2 cup grated Parmesan
+
+### Instructions
+
+**Step 1: Make the meat sauce (25 minutes)**
+
+Heat olive oil in a large skillet or Dutch oven over medium-high heat. Add the ground beef and cook, breaking it up, until no pink remains, about 7 minutes. Drain excess fat if needed.
+
+Add the diced onion to the pan and cook 4 minutes until softened. Add the garlic and cook 1 minute more. Stir in the tomato paste and cook 2 minutes — this caramelizes the paste and deepens the flavor significantly.
+
+Add crushed tomatoes, tomato sauce, oregano, basil, sugar, salt, and pepper. Reduce heat to low and simmer uncovered for 15 minutes, stirring occasionally. The sauce should thicken slightly. Taste and adjust seasoning.
+
+**Step 2: Mix the ricotta layer (5 minutes)**
+
+Combine ricotta, egg, Parmesan, parsley, salt, and pepper in a bowl. Stir until smooth. The egg is essential — it binds the ricotta so it stays in a cohesive layer when sliced rather than sliding out. Set aside.
+
+**Step 3: Cook the noodles (if using regular noodles)**
+
+Cook lasagna noodles in well-salted boiling water for 2 minutes less than the package directions (they will finish cooking in the oven). Drain, lay flat on a lightly oiled baking sheet or parchment to prevent sticking.
+
+If using oven-ready noodles, skip this step. They hydrate during baking from the sauce moisture.
+
+**Step 4: Assemble**
+
+Preheat oven to 375 degrees F.
+
+In a 9x13-inch baking dish, spread 1/2 cup of meat sauce on the bottom — this prevents the bottom noodles from sticking and burning.
+
+Layer in this order (from bottom to top):
+- 3 noodles (slightly overlapping)
+- 1/3 of the ricotta mixture (dollop and spread gently)
+- 1 cup meat sauce
+- 3/4 cup mozzarella
+
+Repeat three times total, ending with the final 3 noodles topped with remaining meat sauce, remaining mozzarella, and the 1/2 cup Parmesan.
+
+**Step 5: Bake**
+
+Cover tightly with foil (tent it slightly so the cheese does not stick). Bake covered for 35 minutes.
+
+Remove foil and bake uncovered for 20 minutes until the cheese is golden-brown and the edges are bubbling. If you want more browning, broil for 2 to 3 minutes — watch carefully.
+
+**Step 6: Rest before cutting**
+
+This is the step most people skip and then wonder why their lasagna falls apart. Let it rest for 15 minutes. The layers need time to set. If you cut it hot out of the oven, the cheese runs and the layers collapse. After 15 minutes, you can cut clean squares.
+
+---
+
+## The Meat Sauce: How to Build Real Flavor
+
+A weak meat sauce is the most common reason lasagna tastes flat. Three things matter most:
+
+**Use good meat.** 80/20 ground beef has enough fat to develop flavor in the pan. Extra-lean beef produces a dry, crumbly sauce. A 50/50 mix of ground beef and mild Italian sausage adds depth and seasoning — the sausage does a lot of flavor work for you.
+
+**Cook the tomato paste.** Stirring tomato paste directly into liquid is fine but wasteful. Cooking it in the oil for 2 minutes before adding other liquid caramelizes the sugars, removing the raw, slightly tinny edge. This is a professional kitchen habit that makes a real difference.
+
+**Simmer with the lid off.** The sauce should reduce and concentrate. A watery sauce produces a soggy lasagna. 15 to 20 minutes of uncovered simmering is enough to get the right consistency — it should coat the back of a spoon heavily.
+
+---
+
+## Béchamel vs. Ricotta
+
+Classic American lasagna uses ricotta. Traditional Italian lasagna (lasagne alla bolognese) uses béchamel — a white sauce made from butter, flour, and milk.
+
+Both are correct. The choice is a matter of preference:
+
+**Ricotta** is faster, richer, slightly grainy in texture. It absorbs the tomato sauce flavors. It is forgiving and familiar.
+
+**Béchamel** is silkier, milder, and creates a creamy counterpoint to the tomato sauce. To make a simple béchamel: melt 3 tablespoons butter in a saucepan, whisk in 3 tablespoons flour, cook 1 minute, then slowly whisk in 2 cups warm whole milk. Season with salt, pepper, and a pinch of nutmeg. Cook until thickened, about 5 minutes. Use in the same proportion as the ricotta mixture.
+
+For families and weeknights, ricotta is the practical choice. For a dinner party version with a slightly elevated result, try béchamel.
+
+---
+
+## How to Layer Lasagna Correctly
+
+The order of layers matters. The most common mistake is putting too much ricotta and not enough sauce, leaving the interior dry. Another common mistake is insufficient sauce on the bottom — without it, the bottom noodles absorb the sauce unevenly and can crisp in spots.
+
+Correct layering principle: sauce touches every noodle layer, both above and below. Ricotta goes in the middle three layers. Cheese goes on top of each layer and in a thick cap on top.
+
+Bottom-to-top: sauce base, noodles, ricotta, sauce, cheese. Repeat. Final layer: noodles, sauce, cheese, Parmesan. The Parmesan on top forms the golden crust.
+
+---
+
+## 5 Lasagna Variations
+
+**1. Spinach and Ricotta Lasagna (Vegetarian)**
+Omit meat. Add 10 oz of frozen spinach, thawed and squeezed completely dry, to the ricotta mixture. Use jarred marinara in place of the meat sauce or make a simple all-tomato sauce. Add 1/2 teaspoon nutmeg to the ricotta. This version is lighter and works well for households with vegetarians.
+
+**2. Sausage Lasagna**
+Replace the ground beef entirely with mild Italian sausage, casings removed. The sausage is already seasoned, so reduce the oregano and basil by half. The fat content is higher, which means richer flavor and more bubbling. This is the version to make when you want comfort food.
+
+**3. White Lasagna (No Red Sauce)**
+Use béchamel throughout. Add sautéed mushrooms, chicken, or roasted vegetables between layers. No tomato at all. Top with fontina or Gruyere instead of mozzarella. This version is elegant and pairs well with a green salad.
+
+**4. Four-Cheese Lasagna**
+Add dollops of goat cheese or crumbled gorgonzola to the ricotta layer. Use a four-cheese mozzarella blend. Reduce the meat or eliminate it. The extra cheese complexity does not need much else.
+
+**5. Turkey Lasagna**
+Substitute ground turkey for ground beef. Turkey is leaner, so add an extra tablespoon of olive oil when browning. The flavor is milder — compensate with a larger amount of Italian sausage mixed in (50/50), or increase the garlic and add a pinch of red pepper flakes to the sauce.
+
+---
+
+## Make-Ahead and Freezing
+
+Lasagna is one of the best dishes to make ahead because it actually improves overnight. The flavors meld, the noodles fully absorb the sauce, and it reheats to a better texture than fresh-baked.
+
+**Refrigerator (up to 3 days):** Assemble completely but do not bake. Cover tightly with plastic wrap then foil. When ready to serve, remove plastic, replace foil, and bake at 375 degrees F for 60 minutes covered, then 20 minutes uncovered. Add 15 to 20 minutes extra if going straight from cold refrigerator to oven.
+
+**Freezer (up to 3 months):** Assemble and bake as directed. Let cool completely. Slice into individual portions or keep whole. Wrap tightly in plastic wrap, then foil. Label with date. To reheat from frozen: thaw overnight in the refrigerator, then reheat covered at 350 degrees F for 30 to 40 minutes.
+
+**Sauce ahead:** The meat sauce can be made up to 4 days ahead and refrigerated, or frozen for 3 months. Having sauce ready cuts assembly time to about 15 minutes.
+
+---
+
+## Common Lasagna Mistakes
+
+**Not salting the pasta water enough.** Lasagna noodles need aggressively salted water — at least 1 tablespoon of salt per gallon. Under-salted noodles taste flat no matter how good the sauce is.
+
+**Using fresh mozzarella.** Fresh mozzarella packed in water releases significant liquid during baking. This pools in the layers and makes everything watery. Use low-moisture mozzarella for baking. Reserve fresh mozzarella for salads and pizza.
+
+**Skipping the rest time.** Already covered above, but worth repeating. 15 minutes. Do not negotiate with this.
+
+**Overcrowding the ricotta.** More ricotta does not mean better lasagna. Too much creates a dense, wet layer that compresses the other layers. The recipe quantities above are the right proportions.
+
+**Not covering during the first bake.** The foil traps steam and cooks the interior. Without it, the edges overcook before the center reaches temperature.
+
+---
+
+## How DinnerDrop Handles Your Weekly Dinners
+
+If lasagna is a family favorite, [DinnerDrop](https://dinnerdrop.app/beta) puts it in your weekly rotation and builds the complete grocery list automatically. You tell it your family's preferences — proteins, dietary needs, how much time you have to cook — and every week it generates five personalized dinners plus a shopping list organized by store section. The beta is completely free for six months, no credit card required.
+
+---
+
+## FAQ
+
+**Can I use no-boil lasagna noodles?**
+Yes. No-boil (oven-ready) noodles hydrate from the moisture in the sauce during baking. They work well, but the sauce needs to be slightly thinner than with regular noodles — the noodles absorb more liquid. Add a splash of water (about 1/4 cup) to your sauce before assembling if it looks very thick. Do not overlap oven-ready noodles more than 1/4 inch — they expand as they hydrate.
+
+**How do I know when lasagna is done?**
+The internal temperature should reach 165 degrees F. Visually: the edges are vigorously bubbling, the cheese on top is golden-brown with some dark spots, and a knife inserted in the center meets no resistance from the noodles. If the top is browning too fast before the center is hot, re-cover with foil and add 10 minutes.
+
+**Why is my lasagna watery?**
+Three common causes: (1) The meat sauce was too thin — it needs to be thick enough to stand up on a spoon. (2) Fresh mozzarella was used instead of low-moisture. (3) The noodles were not drained well before assembly and brought excess water into the layers. If your lasagna is watery when it comes out, tilt the pan slightly and use a baster or spoon to remove pooled liquid, then bake uncovered for another 10 minutes.
+
+**Can I make lasagna in a smaller pan?**
+A 9x9-inch pan works for half the recipe. Use 9 noodles in three layers of three. Everything else scales by half. Reduce covered baking time by 5 minutes — the smaller mass heats through faster.
+
+**How long does leftover lasagna keep?**
+Refrigerated in an airtight container, 4 to 5 days. The flavor actually peaks on day two. Reheat individual portions in the microwave at 50 percent power for 3 to 4 minutes to heat evenly without drying the edges, or in the oven at 350 degrees F covered with foil for 20 minutes.
+
+---
+
+Lasagna rewards patience in two places: simmering the sauce long enough to concentrate it, and resting the finished dish long enough to slice cleanly. Get those right and everything else follows.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your family's full dinner week and generates the grocery list automatically. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
