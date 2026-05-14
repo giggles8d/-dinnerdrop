@@ -14725,6 +14725,93 @@ Classic fried chicken rewards good technique but forgives imperfect execution. T
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+
+  {
+    slug: 'spaghetti-and-meatballs',
+    title: 'Spaghetti and Meatballs: The Classic Family Recipe That Actually Works',
+    publishDate: '2027-11-30',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'spaghetti and meatballs',
+    description:
+      'The best spaghetti and meatballs recipe — tender homemade meatballs, rich tomato sauce, ' +
+      'and perfectly cooked pasta. Make-ahead friendly, freezer-ready, feeds a crowd.',
+    content: `Spaghetti and meatballs is the dinner that gets requested every birthday. It is weeknight-doable once you know the method: mix gently, rest before cooking, finish in the sauce. The result is tender instead of dense.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five family dinners automatically and builds your grocery list in one tap. Beta access is free for six months.
+
+## What Makes Homemade Meatballs Different
+
+Frozen meatballs are dense because they are fully cooked at high heat with no resting time. Homemade meatballs use a panade — bread soaked in milk — which keeps the protein strands from tightening. They are mixed minimally so the fat stays intact, and they finish in the sauce, picking up flavor while staying moist.
+
+## Ingredients
+
+**Meatballs (makes 22-26):** 1 lb ground beef (80/20), half lb ground pork (or 1.5 lbs beef total), 2 slices white bread crusts removed soaked in one-third cup whole milk, 1 large egg, half cup freshly grated Parmesan, 3 cloves garlic minced, quarter cup fresh parsley chopped, 1 tsp salt, half tsp black pepper, half tsp oregano.
+
+**Sauce:** 3 tbsp olive oil, 1 medium yellow onion diced, 4 cloves garlic minced, 2 cans (28 oz each) crushed San Marzano tomatoes, 1 tsp sugar, 1 tsp salt, half tsp black pepper, 1 tsp dried basil, fresh basil to finish.
+
+**Pasta:** 1 lb spaghetti, extra Parmesan to serve.
+
+## Instructions
+
+**Step 1:** Tear bread, combine with milk, mash to a paste, rest 5 minutes.
+
+**Step 2:** Add meats, egg, Parmesan, garlic, parsley, salt, pepper, oregano to the bowl. Mix with hands 20-30 seconds — just until combined. No dry spots, no overworking.
+
+**Step 3:** Refrigerate mixture 15-20 minutes.
+
+**Step 4:** Heat olive oil in a Dutch oven over medium. Cook onion 6-7 minutes. Add garlic, cook 60 seconds. Add tomatoes, sugar, salt, pepper, dried basil. Bring to a simmer, reduce to low.
+
+**Step 5:** With wet hands, roll meatball mixture into 1.5-inch balls. Heat 2 tbsp oil in a skillet over medium-high. Brown in batches, 2 minutes per side on 2-3 sides.
+
+**Step 6:** Transfer browned meatballs to simmering sauce. Spoon sauce over. Simmer uncovered 20-25 minutes until cooked through (165F). Stir in fresh basil.
+
+**Step 7:** Cook spaghetti until al dente, reserve 1 cup pasta water, drain. Plate pasta, ladle sauce, top with meatballs, finish with Parmesan.
+
+Total active time: 40 minutes, simmer time: 25 minutes. Serves 5-6.
+
+## Rules for Tender Meatballs
+
+Mix minimally — 20-30 seconds max. Keep hands wet when rolling. Brown in batches — crowded pans steam instead of sear. Always finish in sauce. Do not stir aggressively; spoon sauce over gently.
+
+## 4 Variations
+
+**Beef only:** 1.5 lbs 80/20 ground beef. Slightly firmer but excellent.
+
+**Turkey meatballs:** 1.5 lbs ground turkey (93/7) plus 1 extra tbsp olive oil in the mixture.
+
+**Baked meatballs:** Arrange on a rack over a sheet pan, bake at 425F for 15 minutes, transfer to sauce, simmer 20 minutes.
+
+**Store-bought sauce shortcut:** 2 jars (24 oz each) Rao's Homemade. Bring to a simmer, add browned meatballs, finish as directed.
+
+## Make-Ahead
+
+**Freeze raw:** Form meatballs, freeze on a sheet pan 2 hours, bag them. Cook from frozen in sauce with 15 extra minutes of simmer time.
+
+**Freeze cooked:** Cool meatballs in sauce, portion into containers, freeze up to 3 months. Thaw overnight, reheat covered over low.
+
+Double the batch — the extra effort is minimal, and frozen meatballs are one of the best things to have on hand.
+
+## FAQ
+
+**Can I skip the panade?** You can, but the meatballs will be noticeably denser. The panade is the single most important step for tenderness.
+
+**Why do my meatballs fall apart?** Three causes: mixture too dry, not browned first, or stirred too aggressively in the sauce.
+
+**What pasta works best?** Spaghetti is traditional. Rigatoni catches more sauce. Pappardelle is a good alternative. Avoid angel hair.
+
+**Can I use jarred marinara?** Yes — Rao's or Carbone. Bring to a simmer, add meatballs, finish as directed.
+
+**How do I know they are cooked through?** 165F at center on an instant-read thermometer, or cut the largest in half — uniformly beige-brown with no pink.
+
+---
+
+Spaghetti and meatballs scales beautifully — double the batch and freeze half. The sauce improves every day in the fridge.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your family's five dinners for the week and builds the grocery list automatically. Beta access is free for six months.
+
+**[Plan this week's dinners at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
