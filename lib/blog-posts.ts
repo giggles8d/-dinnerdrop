@@ -13799,6 +13799,135 @@ Classic meatloaf is one of the most efficient family dinners you can make: inexp
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'chicken-parmesan-recipe',
+    title: 'Chicken Parmesan Recipe: The Crispy, Saucy Family Dinner That Never Fails',
+    description:
+      'The best chicken parmesan recipe for busy families -- crispy breaded chicken, marinara, melted mozzarella. Classic Italian-American comfort food in under an hour.',
+    publishDate: '2027-11-16',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'chicken parmesan recipe',
+    content: `Chicken parmesan is one of the most requested family dinners for good reason: it combines crispy fried chicken, tangy marinara, and melted cheese into something that feels like a restaurant meal but costs about $3 per serving to make at home. The trick to getting it right every time is managing the breading -- it needs to stay crispy even after the sauce goes on, which means proper dredging technique and finishing it in the oven rather than drowning it in sauce on the stovetop.
+
+This recipe works for weeknights (40 minutes start to finish) and is just as good for a Sunday dinner when you have a little more time.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your family's full dinner week and builds the grocery list. Free for six months during beta.
+
+---
+
+## Classic Chicken Parmesan
+
+**Ingredients (serves 4)**
+
+- 4 boneless, skinless chicken breasts (about 6 oz each)
+- 1 cup all-purpose flour
+- 2 large eggs, beaten
+- 1 1/2 cups Italian breadcrumbs
+- 1/2 cup grated parmesan, divided
+- 1 teaspoon garlic powder
+- 1 teaspoon dried oregano
+- 1/2 teaspoon salt, 1/4 teaspoon black pepper
+- 3 tablespoons olive oil (or as needed for frying)
+- 1 1/2 cups marinara sauce (jarred or homemade)
+- 1 1/2 cups shredded mozzarella
+- Fresh basil or flat-leaf parsley to finish
+
+**Instructions**
+
+Preheat the oven to 425 degrees F. Line a baking sheet with a wire rack if you have one (elevates the chicken so the bottom stays crispy). If not, a foil-lined baking sheet works.
+
+Pound the chicken breasts to an even 1/2-inch thickness between sheets of plastic wrap. Uneven chicken is the most common cause of dry, overcooked chicken parmesan -- the thicker parts stay raw while the thin parts overcook.
+
+Set up a three-stage dredging station: flour in one shallow dish, beaten egg in the second, breadcrumbs mixed with 1/4 cup of the parmesan, garlic powder, oregano, salt, and pepper in the third.
+
+Dredge each breast in flour (shake off the excess), then egg (let it drip), then breadcrumbs (press firmly on both sides). The flour helps the egg adhere; the egg helps the breadcrumbs stick. Press is the key word for the breadcrumb step -- you want full, even coverage.
+
+Heat 3 tablespoons of olive oil in a large oven-safe skillet (or regular skillet if transferring to a baking sheet) over medium-high heat. When the oil shimmers, fry the breaded chicken in batches -- do not crowd the pan -- for 3 minutes per side until golden brown. You are not cooking the chicken through at this stage, just setting the crust.
+
+Transfer to the prepared baking sheet or keep in the oven-safe skillet. Spoon 2-3 tablespoons of marinara over each breast (do not drown it -- this is what ruins the crust), scatter the mozzarella over the sauce, and sprinkle the remaining parmesan.
+
+Bake at 425 degrees F for 15-18 minutes until the cheese is bubbling and golden at the edges and the chicken registers 165 degrees F internal. Let rest 3 minutes before serving.
+
+Finish with torn fresh basil if you have it.
+
+**Serve with:** Spaghetti with marinara, garlic bread, a simple green salad.
+
+---
+
+## Why This Recipe Works
+
+**Pounding the chicken.** Even thickness is the single most important step in chicken parmesan. A pounded chicken breast cooks in the same time from edge to center, producing juicy meat instead of the dried-out, chewy exterior you get with uneven cuts. It also gives you more surface area for breading, which means more crispy crust per bite.
+
+**The three-stage dredge.** Flour, then egg, then breadcrumbs is not optional -- it is structural. The flour gives the egg something to grip; the egg acts as glue for the breadcrumbs. Skip the flour and your breading slides off. Skipping the press on the breadcrumbs gives you patchy coverage that gaps and falls off during frying.
+
+**Fry first, bake second.** You cannot achieve a properly browned, crispy crust in the oven alone -- the Maillard reaction requires direct contact with hot oil. The fry builds the crust; the bake finishes the chicken and melts the cheese without burning the breadcrumbs. This two-stage approach is how restaurant chicken parmesan is made.
+
+**Less sauce, more cheese.** It sounds counterintuitive but restraint with the marinara is what keeps the crust intact. Two to three tablespoons per breast is enough -- the sauce is flavor, not a topping. Pile on the cheese instead.
+
+---
+
+## Chicken Parmesan Variations
+
+### Sheet Pan Chicken Parmesan
+Skip the stovetop fry entirely. Bread the chicken as directed, spray both sides generously with cooking spray, and place on a wire rack over a foil-lined sheet pan. Bake at 425 degrees F for 20 minutes until golden, flip once at 10 minutes. Add the sauce and cheese, return to oven for 8-10 more minutes. The result is slightly less crispy than the pan-fry version but easier to make in quantity for a large family and requires no oil beyond the cooking spray.
+
+### Chicken Parmesan with Homemade Marinara
+In a small saucepan, saute 3 garlic cloves in 2 tablespoons of olive oil for 1 minute. Add one 28-oz can of crushed San Marzano tomatoes, 1 teaspoon of dried basil, 1 teaspoon of dried oregano, and a pinch of red pepper flakes. Simmer 20 minutes. Season with salt. Better than any jar of marinara and takes 5 minutes of active work.
+
+### Chicken Parmesan Sliders
+Make the full recipe, then slice the baked chicken into strips. Load onto slider buns with extra marinara and a slice of provolone. Great for feeding a crowd at a gathering where sit-down dinner is impractical.
+
+### Baked Chicken Parmesan Casserole
+Layer 4 cups of cooked penne or rigatoni in a 9x13 baking dish with 2 cups of marinara. Lay the pan-fried (but not yet baked) chicken on top. Cover with 2 cups of shredded mozzarella and 1/2 cup of parmesan. Bake at 375 degrees F for 25 minutes covered, 10 minutes uncovered. The pasta absorbs the extra sauce and you get a one-dish meal.
+
+---
+
+## Make-Ahead Options
+
+**Bread and refrigerate:** Bread the chicken up to 24 hours ahead. Store on a wire rack over a sheet pan, uncovered, in the refrigerator. The fridge air circulation firms up the coating. Fry and bake the day of.
+
+**Freeze breaded (unfried):** Bread the chicken, lay flat on a parchment-lined sheet pan, freeze until solid (about 2 hours), then transfer to a freezer bag. Freeze up to 2 months. Thaw overnight in the refrigerator before frying and baking.
+
+**Freeze fully cooked:** The baked, sauced chicken freezes well for up to 3 months. Wrap individual pieces in foil and freeze. Reheat at 350 degrees F for 20-25 minutes until warmed through. Add fresh cheese and broil for 2 minutes before serving.
+
+---
+
+## Common Chicken Parmesan Problems
+
+**Breading falls off during frying:** You skipped the flour, did not let the egg drip before the breadcrumbs, or moved the chicken too soon in the pan. Let it sit undisturbed for the full 3 minutes before flipping -- the crust releases naturally from the pan when it is ready. Forcing an early flip tears the breading.
+
+**Soggy bottom:** Too much sauce applied before baking. Use 2-3 tablespoons per breast maximum. If you are using jarred marinara, drain off some of the thin liquid before spooning it on the chicken.
+
+**Dry, tough chicken:** You did not pound to even thickness, or you overcooked it. Pull at 165 degrees F internal and rest for 3 minutes. The chicken will be done in 15-18 minutes at 425 degrees F -- do not walk away and forget it.
+
+**Pale, soft crust:** Your oil was not hot enough before the chicken went in, or the pan was overcrowded and the temperature dropped. The oil needs to shimmer before the first piece of chicken goes in. Fry in batches -- one layer with space between each piece.
+
+---
+
+## How DinnerDrop Plans Your Chicken Parmesan Week
+
+If chicken parmesan is a regular in your household, [DinnerDrop](https://dinnerdrop.app/beta) will build it into your weekly rotation alongside four other dinners your family actually likes. Enter your preferences -- protein types, dietary restrictions, max cook time -- and get a full week of personalized meals plus a complete grocery list in under a minute. The beta is free for six months.
+
+---
+
+## FAQ
+
+**Can I use chicken thighs instead of breasts for chicken parmesan?**
+Yes, and many cooks prefer them. Boneless, skinless chicken thighs stay juicier than breasts and are more forgiving if you overcook them slightly. Pound them to an even thickness the same way. The higher fat content in thighs means the breading browns a little faster, so watch the fry time -- 2-3 minutes per side rather than 3.
+
+**What is the difference between chicken parmesan and chicken parmigiana?**
+They are the same dish. Parmigiana is the Italian-American original spelling (parmigiana di pollo), chicken parmesan is the shortened American name. Some menus use parmigiana to sound more upscale. The dish is identical regardless of what it is called.
+
+**Can I use panko breadcrumbs instead of Italian breadcrumbs?**
+Panko produces a lighter, crispier crust with more texture. Italian breadcrumbs give a more compact, classic coating. For the crispiest possible result, use a mixture: 1 cup panko plus 1/2 cup Italian breadcrumbs. If using plain panko, add 1 teaspoon each of dried oregano, basil, garlic powder, and salt to season them.
+
+**What cheese goes on chicken parmesan?**
+Mozzarella is standard -- it melts clean and stretches. Use fresh mozzarella for a creamier result; shredded low-moisture mozzarella for better browning. The parmesan in the recipe adds saltiness and depth. Some recipes add provolone or fontina for a sharper flavor profile. Avoid processed cheese -- it does not behave the same way under high heat.
+
+**Can I make chicken parmesan in an air fryer?**
+Yes. Bread the chicken as directed, spray with cooking spray, and air fry at 400 degrees F for 10 minutes, flip, and cook another 5 minutes. Add sauce and cheese, air fry another 3-4 minutes until the cheese melts. The crust is crispier than baked but lacks the deep golden color of pan-fried. If you regularly make chicken parmesan, the air fryer version is faster on a weeknight.
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
