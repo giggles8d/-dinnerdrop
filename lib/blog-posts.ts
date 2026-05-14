@@ -27325,7 +27325,225 @@ Pulled pork is one of the highest-return proteins in the family kitchen: minimal
 
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
+  },,
+  {
+    slug: 'chicken-parmesan-recipe',
+    title: 'Chicken Parmesan Recipe: Crispy, Saucy, and Actually Weeknight-Friendly',
+    description:
+      'The best chicken parmesan recipe for busy families — crispy breaded chicken, ' +
+      'marinara sauce, and melted mozzarella in under 45 minutes. No deep frying required.',
+    publishDate: '2027-11-08',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'chicken parmesan recipe',
+    content: `Chicken parmesan is one of those rare restaurant dishes that works better at home. Less greasy, better proportioned, and done in under 45 minutes when you use the oven instead of a deep fryer.
+
+This recipe produces crispy breaded chicken, bright marinara, and melted mozzarella every time. Active prep is about 15 minutes and the oven does the rest.
+
+## The Best Chicken Parmesan Recipe
+
+### Ingredients (Serves 4)
+
+**For the chicken:**
+- 4 boneless, skinless chicken breasts (6-7 oz each)
+- 1 cup all-purpose flour
+- 2 large eggs beaten with 1 tablespoon water
+- 1 cup Italian breadcrumbs
+- 1/2 cup panko breadcrumbs
+- 1/2 cup grated Parmesan cheese
+- 1 teaspoon garlic powder
+- 1 teaspoon dried oregano
+- 1 teaspoon dried basil
+- 1/2 teaspoon onion powder
+- 1/2 teaspoon kosher salt
+- 1/4 teaspoon black pepper
+- 3 tablespoons olive oil
+
+**For assembly:**
+- 1 1/2 cups marinara sauce
+- 1 1/2 cups shredded low-moisture mozzarella
+- 1/4 cup grated Parmesan
+- Fresh basil for garnish (optional)
+
+### Instructions
+
+**Step 1 - Pound the chicken.** Pound each breast to an even 3/4-inch thickness between plastic wrap. Even thickness means even cooking. Takes 2 minutes and fixes the most common chicken parmesan problem.
+
+**Step 2 - Breading station.** Three shallow dishes: flour with salt; beaten egg with water; breadcrumbs mixed with Parmesan, garlic powder, oregano, basil, onion powder, salt, and pepper.
+
+**Step 3 - Bread the chicken.** Coat in flour, dip in egg, press firmly into breadcrumbs on both sides. Refrigerating 15 minutes helps the coating adhere.
+
+**Step 4 - Sear.** Heat olive oil in a large oven-safe skillet over medium-high until shimmering. Sear 3-4 minutes per side until golden brown. You are building crust, not cooking through.
+
+**Step 5 - Top and bake.** Preheat oven to 425 degrees F. Spoon marinara over each piece leaving a border of crust exposed. Add mozzarella and Parmesan. Bake 15-18 minutes until cheese bubbles and internal temp reaches 165 degrees F.
+
+**Step 6 - Rest.** 3 minutes out of the oven before serving.
+
+**Total time:** approximately 40 minutes
+
+---
+
+## 25 Chicken Parmesan Ideas and Variations
+
+### Classic Versions
+
+**1. Traditional Chicken Parm**
+Pounded breast, Italian breadcrumbs, marinara, mozzarella. Serve over spaghetti with sauce spooned over the pasta. The version families put on permanent rotation.
+
+**2. Sheet Pan Chicken Parmesan**
+Skip stovetop searing. Brush breaded chicken with olive oil, place on a wire rack over a baking sheet, bake at 450 degrees F for 20 minutes. Top with sauce and cheese, bake 8 more minutes. The rack circulates hot air for a crispy bottom without frying.
+
+**3. Air Fryer Chicken Parmesan**
+375 degrees F for 10 minutes, flip, 5 more minutes. Top with sauce and mozzarella, cook 3-4 more minutes. Faster than oven method.
+
+**4. Skillet-to-Oven Chicken Parm**
+Sear in cast iron, top with sauce and cheese in the same pan, transfer entire skillet to oven. One pan, minimal cleanup.
+
+**5. Thin-Cutlet Chicken Parmesan**
+Buy pre-cut chicken cutlets. They cook in half the time and have more crust surface area.
+
+### Family-Friendly Variations
+
+**6. Chicken Parmesan Strips**
+Cut pounded chicken into 1-inch strips before breading. Cooks faster, easier for kids to portion. Serve with marinara for dipping.
+
+**7. Chicken Parmesan Bake**
+Place cooked breaded chicken in a 9x13 dish. Pour 2 cups marinara over everything. Top with 1 cup mozzarella and half cup Parmesan. Cover and bake at 375 degrees F for 20 minutes, uncover for 10 more. Feeds 6-8 people.
+
+**8. Mini Chicken Parmesan Sliders**
+Cut breaded chicken to fit slider rolls. Top with marinara and fresh mozzarella. Bake until cheese melts, serve on Hawaiian rolls.
+
+**9. Chicken Parmesan Pasta Bake**
+Cut cooked chicken parmesan into chunks. Toss with penne, marinara, and mozzarella in a baking dish. Top with Parmesan and breadcrumbs. Bake at 375 degrees F for 20 minutes until bubbly.
+
+**10. Chicken Parmesan Grilled Cheese**
+Layer leftover chicken parmesan with mozzarella and marinara between sourdough. Butter outside, grill until golden. One of the best leftover sandwiches in the weeknight dinner canon.
+
+### Restaurant-Style Upgrades
+
+**11. Fresh Mozzarella Chicken Parm**
+Use sliced fresh mozzarella. Pat slices dry before using so excess moisture does not soften the crust.
+
+**12. Vodka Sauce Chicken Parmesan**
+Swap marinara for vodka sauce. Richer and creamier, restaurant-level without extra work.
+
+**13. San Marzano Marinara Chicken Parm**
+Quick homemade sauce: one 28-oz can crushed San Marzano tomatoes, 4 garlic cloves sauteed in olive oil, pinch of sugar, fresh basil. Simmer 20 minutes. Significantly better than most jarred options.
+
+**14. Burrata Chicken Parmesan**
+Top baked chicken with a halved ball of burrata after it comes out of the oven. The burrata melts from residual heat into a creamy pool over the crispy chicken.
+
+**15. Prosciutto-Wrapped Chicken Parmesan**
+Wrap each pounded breast in 2 slices of prosciutto before breading. Adds salt, fat, and crunch. Skip extra salt in the breadcrumbs.
+
+### Lighter and Alternative Versions
+
+**16. Gluten-Free Chicken Parmesan**
+Use 1:1 gluten-free flour and gluten-free panko breadcrumbs. Press the coating on firmly.
+
+**17. Low-Carb Chicken Parmesan**
+Almond flour instead of all-purpose flour, crushed pork rinds mixed with Parmesan as the coating. Serve over zucchini noodles or cauliflower rice.
+
+**18. Baked Lighter Version**
+Spray breaded chicken with cooking spray, bake at 450 degrees F on a wire rack for 20 minutes, then top with sauce and cheese for 8 more minutes. Less oil, still crispy.
+
+**19. Chicken Parmesan Stuffed Peppers**
+Fill halved bell peppers with ground chicken mixed with breadcrumbs and Parmesan. Top with marinara and mozzarella. Bake at 375 degrees F for 30 minutes.
+
+**20. Chicken Parmesan Zucchini Boats**
+Halve zucchini lengthwise and scoop out seeds. Fill with shredded cooked chicken mixed with marinara. Top with mozzarella and Parmesan. Bake at 400 degrees F for 20-25 minutes.
+
+### Quick Weeknight Shortcuts
+
+**21. Pre-Pounded Cutlets**
+Buy pre-pounded cutlets from the butcher. Eliminates the pounding step and saves 10 minutes.
+
+**22. Prep-Ahead Seared Chicken**
+Bread and sear all chicken on Sunday. Refrigerate up to 3 days. Top with sauce and cheese and bake 15 minutes when needed. The crust re-crisps well.
+
+**23. Jarred Sauce**
+A good jarred marinara is excellent. Rao's Homemade is the consistent recommendation. Focus effort on the chicken coating and cheese.
+
+**24. 30-Minute Chicken Parmesan**
+Thin-cut cutlets, sheet pan method, pre-shredded mozzarella. Total time 28-30 minutes.
+
+**25. Leftover Rotisserie Chicken Version**
+Shred rotisserie chicken. Mix with marinara in a baking dish. Top with mozzarella, Parmesan, and toasted breadcrumbs. Bake at 375 degrees F for 20 minutes. Deconstructed chicken parm in 25 minutes.
+
+---
+
+## Techniques That Make or Break Chicken Parmesan
+
+**Pound to even thickness.** The most important step. 3/4-inch thickness means the breast cooks through without the crust burning.
+
+**Mix Italian breadcrumbs with panko.** Italian breadcrumbs carry seasoning and adhere closely; panko provides coarse texture that crisps into actual crunch. Either alone is inferior to the combination.
+
+**Leave a crust border.** Apply marinara leaving a thin edge of bare breadcrumb exposed on each side. Covering the entire top with sauce steams the crust.
+
+**Do not crowd the pan when searing.** Crowding drops oil temperature and causes steaming instead of browning. Sear in batches if needed.
+
+**Rest before cutting.** Three minutes lets juices redistribute and the cheese set. Cutting immediately releases moisture and softens the bottom crust.
+
+---
+
+## Common Problems and Fixes
+
+**Soggy crust:** Apply sauce only to the top surface, leave the edges dry, serve immediately.
+
+**Crust falls off:** Pat chicken completely dry before breading. Press the coating firmly with both hands. Let breaded chicken rest 15 minutes before cooking.
+
+**Dry chicken:** Pound to 3/4-inch thickness, pull at 165 degrees F internal.
+
+**Bland coating:** Season the dry breadcrumb mixture until it tastes good on its own before breading anything.
+
+**Cheese slides off:** Use low-moisture shredded mozzarella. If using fresh mozzarella, pat slices dry before applying.
+
+---
+
+## What to Serve with Chicken Parmesan
+
+Spaghetti or penne with extra marinara. Garlic bread for soaking up sauce. Caesar salad to cut through the richness. Roasted broccoli or green beans (same oven temperature, 20 minutes). Zucchini noodles for a lower-carb option.
+
+---
+
+## Make-Ahead and Storage
+
+Breaded but uncooked: refrigerate on parchment for up to 24 hours before searing and baking. Cooked: refrigerate up to 3 days, reheat at 375 degrees F for 12-15 minutes to re-crisp. Freeze breaded and seared (unbaked) for up to 2 months.
+
+---
+
+## How DinnerDrop Handles Your Weekly Dinner Planning
+
+If chicken parmesan is a family staple, [DinnerDrop](https://dinnerdrop.app/beta) includes it in your weekly rotation and automatically adds every ingredient to your grocery list. Five dinners plus a complete grocery list every week. The beta is free for six months.
+
+---
+
+## FAQ
+
+**Can I use chicken thighs instead of chicken breast?**
+Yes. Boneless skinless thighs pound well and produce a juicier result. Cook to 165 degrees F internal.
+
+**What is the best marinara for chicken parmesan?**
+Rao's Homemade Marinara is the consistent recommendation for a jarred sauce. For homemade, a quick San Marzano marinara (20 minutes) is significantly better than most jars.
+
+**Do I have to pound the chicken?**
+Yes for even cooking. The alternative is to butterfly each breast by slicing it horizontally into two thinner pieces.
+
+**Can I make it ahead for a dinner party?**
+Yes. Bread and sear up to 24 hours ahead and refrigerate. Top with sauce and cheese and bake 18-20 minutes when needed.
+
+**Why is my chicken parmesan always greasy?**
+Usually too much oil or oil not hot enough before adding the chicken. Use just enough to coat the pan bottom, wait until it shimmers, and do not move the chicken for the full 3-4 minutes.
+
+---
+
+Chicken parmesan is one of the most reliable weeknight dinners for families. Most kids eat it willingly, it scales to any family size, and the leftovers are genuinely good the next day. The oven method eliminates the deep-fryer mess permanently.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week and sends the complete grocery list to your cart automatically. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
   },
+<<<<<<< HEAD
   {
     slug: 'pot-roast-recipe',
     title: 'Pot Roast Recipe: The Classic That Cooks Itself While You Do Everything Else',
@@ -27424,11 +27642,143 @@ Leftover ideas: pot roast tacos with shredded beef and corn tortillas, pot roast
 ## How DinnerDrop Uses This
 
 [DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week based on your preferences, including how much active cooking time you have. Tell it you prefer set-and-forget dinners and it plans slow cooker and braise recipes like this one -- with the full grocery list for your family size included. The beta is free for six months.
+=======
+,
+  {
+    slug: 'chicken-pot-pie',
+    title: 'Chicken Pot Pie: The Easy Homemade Recipe That Beats Any Frozen Version',
+    description: 'Make a rich, creamy chicken pot pie from scratch with a flaky crust, tender chicken, and vegetable-packed filling. Includes shortcuts, a crustless skillet version, and make-ahead tips.',
+    primaryKeyword: 'chicken pot pie',
+    publishDate: '2027-11-23',
+    readingTime: 10,
+    content: `# Chicken Pot Pie: The Easy Homemade Recipe That Beats Any Frozen Version
+
+Chicken pot pie is the definition of comfort food. A buttery flaky crust, creamy herbed filling packed with tender chicken and vegetables — it is the kind of dinner that makes people stop what they are doing and come to the table. Once you know the method, it takes about an hour from start to finish and the leftovers (if any survive) are somehow even better the next day.
+
+This guide covers the full classic version, a 30-minute shortcut using rotisserie chicken and store-bought crust, a crustless skillet version for weeknights, and every tip for a filling that is rich but not gluey.
+
+> **Need your whole week planned, not just tonight?** [DinnerDrop builds your 5-meal weekly plan and grocery list in under 60 seconds — try it free for 7 days](/beta)
+
+---
+
+## Classic Chicken Pot Pie Recipe
+
+**Serves:** 6 | **Prep:** 20 min | **Cook:** 45 min | **Total:** ~1 hour 5 min
+
+### Ingredients
+
+**For the filling:**
+- 3 cups cooked chicken, shredded or cubed (rotisserie chicken works perfectly)
+- 1/3 cup unsalted butter
+- 1 medium yellow onion, diced
+- 3 cloves garlic, minced
+- 2 medium carrots, peeled and diced
+- 2 stalks celery, diced
+- 1/3 cup all-purpose flour
+- 2 cups chicken broth
+- 1 cup whole milk or half-and-half
+- 1 cup frozen peas
+- 1 tsp dried thyme
+- 1/2 tsp dried rosemary
+- 1 tsp salt, 1/2 tsp black pepper
+
+**For the crust:**
+- 2 store-bought refrigerated pie crusts (one bottom, one top) OR homemade double crust
+- 1 egg beaten with 1 tbsp water (egg wash)
+
+### Instructions
+
+**1. Preheat oven to 425 degrees F.**
+
+**2. Make the filling.** Melt butter in a large oven-safe skillet or saucepan over medium heat. Add onion, carrots, and celery. Cook 6-8 minutes until softened. Add garlic and cook 1 minute more.
+
+**3. Build the roux.** Sprinkle flour over the vegetables and stir to coat. Cook 2 minutes, stirring constantly — this cooks out the raw flour taste.
+
+**4. Add liquids.** Slowly pour in chicken broth while stirring, then add milk. Bring to a simmer, stirring frequently. Cook 5-7 minutes until the mixture thickens to a gravy-like consistency.
+
+**5. Add chicken and seasoning.** Stir in chicken, frozen peas, thyme, rosemary, salt, and pepper. Remove from heat. Taste and adjust seasoning.
+
+**6. Assemble.** Unroll one pie crust into a 9-inch pie dish. Pour in the filling. Cover with the second crust, crimp the edges to seal, and cut 4-5 slits in the top to vent steam. Brush with egg wash.
+
+**7. Bake.** Bake at 425 degrees F for 30-35 minutes until the crust is deep golden brown. If edges brown too quickly, shield them with foil or a pie shield after 20 minutes.
+
+**8. Rest before cutting.** Let the pot pie rest for 10 minutes before slicing — the filling sets as it cools slightly and will not pour out.
+
+---
+
+## What Makes a Great Pot Pie Filling
+
+**Proper roux-to-liquid ratio.** The 1/3 cup flour to 3 cups total liquid creates a filling thick enough to hold its shape when cut but creamy and loose enough to eat. Too much flour and it is pasty. Too little and it pours out when you slice it.
+
+**Cook the vegetables first.** Raw vegetables in the filling will release water as they bake, thinning the sauce and undercooking at the center. Saute them until tender before adding the liquid.
+
+**Do not skip the egg wash.** Egg wash is the difference between a pale, dull crust and a deep mahogany one. Beat one egg with a tablespoon of water and brush the entire top crust before baking.
+
+**Rotisserie chicken is the right call.** You need fully cooked chicken for this recipe anyway, and rotisserie gives you tender, already-seasoned meat in seconds. There is no reason to poach raw chicken for pot pie.
+
+---
+
+## 4 Chicken Pot Pie Variations
+
+### 1. 30-Minute Shortcut Version
+
+Use rotisserie chicken and store-bought refrigerated pie crust (Pillsbury rolls out of a can). The only thing you are making from scratch is the filling — and that takes 15 minutes. Total hands-on time: 20 minutes. This is the weeknight version.
+
+### 2. Crustless Chicken Pot Pie Skillet
+
+Make the filling exactly as written. Serve it in bowls with crusty bread for dipping, or top with store-bought biscuits (place them directly on top of the filling and bake at 400 degrees F for 12-15 minutes). No crust to make, no pie dish to clean, just a rich creamy chicken dinner in under 30 minutes.
+
+### 3. Individual Pot Pies
+
+Use a muffin tin or ramekins. Cut circles of pie crust slightly larger than each opening, press in as the bottom crust, fill, cover with a smaller circle of crust, and seal. Bake at 400 degrees F for 20-25 minutes. Great for portion control and the kids love having their own.
+
+### 4. Puff Pastry Top Crust
+
+Skip the bottom crust entirely and top the filling with one sheet of store-bought puff pastry. Cut to fit the baking dish, press the edges to seal, brush with egg wash, and bake at 400 degrees F for 25-30 minutes. The puff pastry blisters and crisps dramatically — visually impressive and even easier than a traditional crust.
+
+---
+
+## Make-Ahead and Freezing
+
+**Assemble, then refrigerate:** Build the entire assembled pot pie up to 24 hours ahead. Cover tightly with plastic wrap and refrigerate. Bake straight from the fridge, adding 5-10 extra minutes.
+
+**Freeze unbaked:** Assemble the pot pie completely. Wrap tightly in plastic wrap, then foil. Freeze up to 3 months. Bake from frozen at 400 degrees F for 60-70 minutes, tenting with foil if the crust browns too quickly.
+
+**Freeze the filling only:** Make the filling, cool completely, and freeze in a zip-top bag. When ready to use, thaw overnight in the fridge, pour into a pie dish with crusts, and bake as directed.
+
+**Leftover storage:** Refrigerate leftovers covered for up to 4 days. Reheat individual slices in a 350-degree oven for 15 minutes or in the microwave for 2 minutes (crust will soften).
+
+---
+
+## Troubleshooting
+
+**Filling is too runny when cut:** The filling was not thick enough before going into the oven, or you did not let it rest after baking. Resting 10 minutes allows the starch to finish thickening as it cools. If the filling is consistently thin, add an extra tablespoon of flour to the roux.
+
+**Bottom crust is soggy:** Blind bake the bottom crust for 10 minutes at 425 degrees F before adding the filling. This sets the crust before the wet filling touches it.
+
+**Top crust burns before filling is done:** Shield the edges and top loosely with foil after 20 minutes of baking. The filling needs more time than the crust — foil slows the crust browning without stopping it.
+
+**Crust is pale and not golden:** You skipped the egg wash, or your oven runs cool. Always use egg wash and verify your oven temperature with an oven thermometer.
+
+**Filling tastes bland:** Season aggressively before baking. Cream and starchy fillings absorb salt. Taste the filling before it goes into the crust — it should taste slightly over-seasoned raw because the flavor mellows in the oven.
+
+---
+
+## What to Serve With Chicken Pot Pie
+
+Chicken pot pie is a complete meal on its own — protein, vegetables, and carbs in one dish. But if you want sides:
+
+- **Simple green salad** with a sharp vinaigrette to cut through the richness
+- **Roasted green beans or asparagus** — bright vegetables provide contrast
+- **Cranberry sauce** — sounds odd, works brilliantly, especially in fall and winter
+- **Sparkling water with lemon** or a light white wine for adults
+>>>>>>> a27039eb818bbe67f694a9e9e5e1b9dc029a006e
 
 ---
 
 ## FAQ
 
+<<<<<<< HEAD
 **What is the best cut for pot roast?** Chuck roast, every time. It has the right balance of fat and connective tissue to become tender in a long braise. Avoid anything labeled lean or from the round or loin sections.
 
 **Do I have to sear the roast first?** No, but you should. The sear creates hundreds of flavor compounds that carry through the entire braise. Skipping it produces a pot roast that tastes flat by comparison. It takes 15 minutes and it matters.
@@ -27446,6 +27796,162 @@ Leftover ideas: pot roast tacos with shredded beef and corn tortillas, pot roast
 Pot roast is one of the few dinners where the hands-off time is an advantage rather than a compromise. Three and a half hours in a low oven produces something genuinely impressive with fewer than 30 minutes of actual work.
 
 [DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
+=======
+**Can I use canned chicken for pot pie?**
+You can, but the texture will be mushier than rotisserie or poached chicken. If using canned, drain thoroughly and break up any large chunks. Rotisserie chicken is the superior shortcut.
+
+**How do I keep the bottom crust from getting soggy?**
+Three options: blind bake the bottom crust 10 minutes before filling, use a glass pie dish (conducts heat better than ceramic), or skip the bottom crust entirely and do a top-crust-only or puff pastry version.
+
+**Can I make chicken pot pie without dairy?**
+Yes. Substitute unsweetened oat milk or full-fat coconut milk for the dairy. Use dairy-free butter for the roux. The flavor will be slightly different but the technique is identical.
+
+**How long does chicken pot pie last in the fridge?**
+Up to 4 days covered in the refrigerator. The crust softens over time but the flavor improves — the filling seasons the crust from inside.
+
+**Can I add other vegetables?**
+Absolutely. Diced potatoes, corn, green beans, mushrooms, and parsnips all work well. Add heartier vegetables with the onions and carrots. Add softer vegetables like corn or spinach at the end with the peas.
+
+---
+
+## Stop Asking "What Is for Dinner" Every Single Night
+
+Chicken pot pie is exactly the kind of dinner that deserves a spot on the weekly rotation — but planning five nights from scratch every week takes time you do not have. [DinnerDrop generates your personalized 5-meal week plus a complete grocery list in under 60 seconds.](/beta) Tell it your preferences, dietary needs, and preferred stores once. It handles the rest.
+
+[Start your free 7-day trial at DinnerDrop](/beta)
+`
+  }
+>>>>>>> a27039eb818bbe67f694a9e9e5e1b9dc029a006e
+  {
+    slug: 'fried-chicken-recipe',
+    title: 'Fried Chicken Recipe: The Best Classic Southern Fried Chicken (Crispy Every Time)',
+    publishDate: '2027-11-30',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'fried chicken recipe',
+    description: 'The best fried chicken recipe for families — crispy, juicy, and deeply seasoned. Includes the buttermilk marinade technique, oil temperature guide, variations, and make-ahead tips.',
+    content: `
+# Fried Chicken Recipe: The Best Classic Southern Fried Chicken (Crispy Every Time)
+
+Fried chicken is one of the great American dinner traditions — deeply seasoned, crunchy coating, juicy meat, completely satisfying. The reason most homemade fried chicken disappoints is not the recipe itself but two specific mistakes: skipping the buttermilk marinade and cooking at the wrong oil temperature. Fix both and the results rival anything from a restaurant.
+
+---
+
+## What You Need for Fried Chicken
+
+**For the buttermilk marinade:**
+- 2 lbs bone-in chicken pieces (legs, thighs, breasts cut in half)
+- 2 cups buttermilk
+- 1 tsp hot sauce (Tabasco or Crystal)
+- 1 tsp garlic powder, 1 tsp onion powder, 1 tsp paprika, 1 tsp kosher salt
+
+**For the seasoned coating:**
+- 2 cups all-purpose flour
+- 1/2 cup cornstarch (key to extra-crispy coating)
+- 2 tsp each: garlic powder, onion powder, smoked paprika
+- 1 tsp cayenne, 1 tsp dried thyme, 1 tsp dried oregano
+- 2 tsp kosher salt, 1 tsp black pepper
+
+**For frying:** 4 cups vegetable or peanut oil (3 inches depth)
+
+**Active time:** 30 minutes | **Marinate time:** 4-24 hours | **Serves:** 4-6
+
+---
+
+## The Full Recipe
+
+### Step 1: Marinate in Buttermilk
+
+The buttermilk marinade tenderizes the chicken through its mild acidity and creates a wet surface the flour coating bonds to. Skipping this step produces coating that falls off in the oil.
+
+Mix buttermilk, hot sauce, and all marinade spices in a large bowl. Add chicken, making sure each piece is submerged. Cover and refrigerate for at least 4 hours and up to 24 hours. Overnight is ideal.
+
+### Step 2: Make the Seasoned Coating
+
+Mix flour, cornstarch, and all coating spices in a large shallow bowl or zip-lock bag. The cornstarch is what most recipes skip — it produces a lighter, crispier crust and reduces the chewiness that all-flour coatings produce.
+
+### Step 3: Dredge the Chicken
+
+Remove chicken from the buttermilk without shaking off all the marinade. A thick coating of buttermilk creates the craggly texture of great fried chicken.
+
+Press each piece firmly into the seasoned flour on all sides. Shake off loose excess. Rest coated pieces on a wire rack for 10-15 minutes before frying — this lets the coating hydrate and bond.
+
+For extra-thick coating: after the first dredge, dip back in buttermilk briefly, then dredge again. Double-dredged fried chicken has significantly more crunch.
+
+### Step 4: Fry at the Right Temperature
+
+Target oil temperature: 325-350 degrees F. Use a thermometer — this is not guesswork.
+
+Heat 3 inches of oil in a large Dutch oven or deep cast-iron skillet to 325-350 degrees F. Fry in batches (3-4 pieces max per batch — do not crowd).
+
+Fry times: legs and thighs 12-15 minutes total; breast halves 14-16 minutes; wings 10-12 minutes.
+
+Chicken is done at 165 degrees F internally with deep golden brown coating. Drain on a wire rack, not paper towels.
+
+---
+
+## Why Is My Fried Chicken Not Crispy?
+
+**Oil too cool:** The most common cause. Below 300 degrees F, the coating absorbs fat before it can set. **Skipping cornstarch:** Flour alone produces chewier, less stable crust. **Skipping the rest after dredging:** Without resting, coating slides off in oil. **Paper towels:** Steam has nowhere to escape — use a wire rack. **Crowding the pan:** Drops oil temperature and produces steamed coating.
+
+---
+
+## Variations
+
+**Air Fryer Fried Chicken:** Marinate and dredge as written. Spray generously with cooking spray on all sides. Air fry at 380 degrees F for 20-25 minutes, flipping once at 12 minutes, until 165 degrees F internally.
+
+**Oven-Baked Fried Chicken:** Marinate and dredge as usual. Place on wire rack over baking sheet. Spray with cooking spray. Bake at 425 degrees F for 35-45 minutes, flipping once at 20 minutes.
+
+**Nashville Hot Chicken:** Mix 1/4 cup of the hot frying oil with 2 tablespoons cayenne, 1 tablespoon brown sugar, 1 tsp garlic powder, 1 tsp paprika. Brush over each piece immediately after frying. Serve on white bread with pickles.
+
+**Buttermilk Chicken Tenders:** Use boneless, skinless breast cut into strips. Marinate and dredge as written. Fry at 350 degrees F for 4-5 minutes total. The weeknight version children reliably eat.
+
+**Korean Double-Fried Chicken:** First fry at 325 degrees F for 10 minutes. Rest 5 minutes. Return to 375 degrees F oil for 5 more minutes. Double frying drives moisture from the coating and produces extraordinary crunch.
+
+---
+
+## Make-Ahead Options
+
+**Marinate overnight:** 24-hour buttermilk soak is ideal — tenderizes more and deepens flavor. **Dredge ahead:** Coated chicken on a wire rack, refrigerated uncovered up to 2 hours before frying, actually produces crispier results as the coating dries slightly.
+
+**Reheat without losing crunch:** Oven at 400 degrees F on a wire rack for 15-20 minutes. Air fryer at 375 degrees F for 8 minutes. Avoid the microwave — it steams the coating soft.
+
+---
+
+## What to Serve with Fried Chicken
+
+**Classic:** Mashed potatoes and gravy, mac and cheese, coleslaw, cornbread, biscuits, collard greens.
+**Summer:** Corn on the cob, potato salad, watermelon, cucumber salad.
+**Quick weeknight sides:** Roasted broccoli, steamed green beans, dinner rolls, green salad.
+
+---
+
+## How DinnerDrop Plans Dinners Like This
+
+If fried chicken is a family tradition, [DinnerDrop](https://dinnerdrop.app/beta) builds your weekly dinner plan around meals your family actually wants. Tell it your preferences and it generates five personalized dinners plus a complete grocery list every week. The beta is free for six months.
+
+---
+
+## FAQ
+
+**What oil is best for frying chicken?** Peanut oil (450 degrees F smoke point) is the professional choice. Vegetable oil (400-450 degrees F) works equally well and is more accessible. Avoid olive oil (smokes too low) and butter (burns).
+
+**Can I fry chicken in a regular skillet?** A cast-iron skillet is the traditional vessel. Use at least 3 inches of oil depth. Add fewer pieces per batch and monitor temperature closely since skillets lose heat faster than deep pots.
+
+**How do I know when the chicken is done without a thermometer?** Get a thermometer. Without one: cut into the thickest part near the bone. Juices should run completely clear and meat should be opaque with no pink anywhere.
+
+**Can I use skinless chicken?** You can, but skin provides a base layer the coating bonds to. Skinless fried chicken tends to be drier and the coating adheres less well. Use the double-dredge technique if going skinless.
+
+**How long does fried chicken stay crispy?** About 30-45 minutes at room temperature on a wire rack. For crowds, hold on a wire rack in a 225 degrees F oven for up to an hour.
+
+---
+
+Classic fried chicken rewards good technique but forgives imperfect execution. The buttermilk marinade and correct oil temperature are the two variables that separate average from excellent fried chicken.
+
+[DinnerDrop](https://dinnerdrop.app/beta) handles your five-dinner week and full grocery list automatically. The beta is free for six months.
 
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
