@@ -14133,6 +14133,157 @@ Lasagna rewards patience in two places: simmering the sauce long enough to conce
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+
+  {
+    slug: 'chicken-alfredo-recipe',
+    title: 'Chicken Alfredo Recipe: Rich, Creamy, and Ready in 30 Minutes',
+    description:
+      'Make the best chicken alfredo recipe at home — tender chicken, silky parmesan cream sauce, ' +
+      'and fettuccine that comes together in 30 minutes. Better than any restaurant version.',
+    publishDate: '2027-11-30',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'chicken alfredo recipe',
+    content: `Chicken alfredo is one of those dishes that feels indulgent but is genuinely simple to make. Tender pan-seared chicken, fettuccine, and a rich parmesan cream sauce that coats every strand. From start to finish: 30 minutes. Most of that is passive cook time.
+
+The secret to restaurant-quality alfredo at home is two things: real parmesan (not the green can) and pasta water. The starchy water emulsifies the sauce so it clings to the pasta instead of pooling at the bottom. This guide covers the full recipe, the science behind the sauce, five variations, and everything you need about making it ahead.
+
+---
+
+## Ingredients
+
+**For the chicken:**
+- 1.5 lbs boneless, skinless chicken breasts or thighs
+- 1 teaspoon garlic powder
+- 1 teaspoon Italian seasoning
+- 1/2 teaspoon salt
+- 1/4 teaspoon black pepper
+- 2 tablespoons olive oil
+
+**For the alfredo sauce:**
+- 4 tablespoons unsalted butter
+- 4 cloves garlic, minced
+- 1.5 cups heavy cream
+- 1.5 cups freshly grated parmesan cheese (about 4 oz by weight)
+- 1/2 teaspoon salt
+- 1/4 teaspoon white or black pepper
+- Pinch of nutmeg (optional but traditional)
+
+**For the pasta:**
+- 12 oz fettuccine
+- 1 tablespoon salt (for pasta water)
+- Reserved pasta water (at least 1 cup — save before draining)
+
+**To finish:**
+- Fresh parsley, chopped
+- Extra parmesan for serving
+- Red pepper flakes (optional)
+
+---
+
+## Instructions
+
+**Step 1: Season and cook the chicken.**
+Pat chicken dry with paper towels — dry chicken browns instead of steaming. Season both sides with garlic powder, Italian seasoning, salt, and pepper. Heat olive oil in a large skillet over medium-high heat until shimmering. Add chicken and cook without moving it for 5 to 6 minutes. Flip and cook another 4 to 5 minutes until internal temperature reaches 165 degrees F. Transfer to a cutting board and tent loosely with foil. Rest 5 minutes before slicing.
+
+**Step 2: Cook the fettuccine.**
+While chicken cooks, bring a large pot of water to a boil. Add 1 tablespoon of salt — the water should taste like mild seawater. Cook fettuccine 1 minute less than package directions (it finishes in the sauce). Before draining, scoop out at least 1 cup of pasta water. This is critical. Drain pasta.
+
+**Step 3: Build the sauce.**
+In the same skillet used for chicken (do not wipe it out — the browned bits add flavor), reduce heat to medium. Add butter and let it melt. Add minced garlic and cook 60 seconds until fragrant. Pour in heavy cream and bring to a gentle simmer. Cook 3 to 4 minutes, stirring occasionally, until the cream reduces slightly and coats the back of a spoon.
+
+**Step 4: Add the parmesan.**
+Remove pan from heat. Add grated parmesan in three additions, stirring vigorously after each addition until fully melted before adding more. Adding cheese off-heat prevents it from seizing and clumping. Season with salt, pepper, and a pinch of nutmeg if using.
+
+**Step 5: Combine and finish.**
+Add drained pasta directly to the sauce. Toss to coat, adding pasta water a splash at a time until the sauce reaches a silky, flowing consistency that coats the pasta without pooling. The starch in the pasta water is what makes it cling. Slice chicken and fan it over the top. Finish with parsley and extra parmesan. Serve immediately.
+
+**Serves:** 4 | **Total time:** 30 minutes | **Active time:** 20 minutes
+
+---
+
+## Why Most Homemade Alfredo Fails (And How to Fix It)
+
+**Pre-grated parmesan.** The anti-caking agents in pre-shredded cheese prevent it from melting smoothly. It clumps. Use a block of Parmigiano-Reggiano or Grana Padano and grate it yourself on the finest side of a box grater.
+
+**Adding cheese to hot liquid.** When parmesan hits simmering cream, the proteins seize and the fat separates. You get greasy, stringy sauce. Always remove the pan from heat before adding cheese, and add it in stages.
+
+**Skipping the pasta water.** Without starchy pasta water, the sauce is too thick and heavy. It breaks from the pasta as it cools. The pasta water is not optional — it is what makes the sauce work.
+
+**Overcooking the cream.** Heavy cream thickens as it reduces. Over-reduce it and the sauce is too thick before you even add cheese. Simmer just until it coats a spoon — 3 to 4 minutes.
+
+**Not resting the chicken.** Slicing immediately loses all the juices. Five minutes of resting gives you moist, tender slices instead of dry shreds.
+
+---
+
+## 5 Chicken Alfredo Variations
+
+**1. Bacon Chicken Alfredo**
+Cook 4 strips of bacon until crispy. Remove and chop. Use 1 tablespoon of the bacon fat in place of half the butter for the sauce. Add bacon back in with the pasta. The smokiness cuts through the richness.
+
+**2. Spinach and Mushroom Chicken Alfredo**
+After cooking the garlic, add 8 oz sliced cremini mushrooms and cook until golden, about 5 minutes. Add 2 packed cups of baby spinach in the last minute and let it wilt. Proceed with cream and cheese. Adds vegetables without changing the core dish.
+
+**3. Sun-Dried Tomato Chicken Alfredo**
+Add 1/3 cup drained, chopped sun-dried tomatoes (packed in oil) with the garlic. The tomatoes add a tangy sweetness that balances the cream. Use a little of the sun-dried tomato oil in place of olive oil for the chicken.
+
+**4. Cajun Chicken Alfredo**
+Season the chicken with 1 tablespoon of Cajun seasoning instead of garlic powder and Italian seasoning. Add 1/2 teaspoon of Cajun seasoning to the sauce and a handful of sliced bell peppers sautéed with the garlic. The heat from the Cajun spice cuts the richness perfectly.
+
+**5. Lighter Chicken Alfredo**
+Replace half the heavy cream with whole milk and half the butter with reserved pasta water. Use only 1 cup of parmesan. The sauce is thinner and less calorie-dense but still coats the pasta. Add 1 teaspoon of cornstarch mixed with 2 tablespoons of milk if you want more body.
+
+---
+
+## Make-Ahead and Storage
+
+**The chicken:** Cook and slice the chicken up to 3 days ahead. Refrigerate in an airtight container. Reheat gently in the microwave with a splash of water or broth before adding to fresh pasta.
+
+**The sauce:** Alfredo sauce does not freeze well — the cream and cheese separate when frozen. Make it fresh. It takes 10 minutes.
+
+**Assembled leftovers:** Refrigerate in an airtight container for up to 3 days. Reheat in a skillet over low heat with 2 to 3 tablespoons of milk or cream, stirring constantly. Do not microwave without adding liquid — the sauce seizes. The microwave at 50 percent power with a splash of milk works if you stir halfway through.
+
+**Make it a 15-minute meal:** Prep the chicken and cook it ahead. The only remaining work is boiling pasta and making the sauce — 15 minutes active.
+
+---
+
+## What to Serve with Chicken Alfredo
+
+The dish is rich, so sides that cut through the richness work best. Garlic bread is traditional and exactly right. A simple arugula salad with lemon vinaigrette provides acid contrast. Roasted broccoli or broccolini makes it a complete plate — the slight bitterness of broccoli works well against cream sauce. A glass of dry white wine — Pinot Grigio or unoaked Chardonnay — is the classic pairing.
+
+---
+
+## How DinnerDrop Plans Rich Dinners Like This
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan around meals your family actually likes. If chicken alfredo is a regular request at your table, it goes in the rotation. You get five personalized dinners each week plus a complete grocery list with quantities — everything you need, nothing you don't. The beta is completely free for six months, no credit card required.
+
+---
+
+## FAQ
+
+**Can I use milk instead of heavy cream?**
+Whole milk works but the sauce will be thinner and may not emulsify as well. If using milk, whisk 1 teaspoon of flour or cornstarch into the milk before adding it to the pan. This helps thicken it. Half-and-half is a good middle ground — richer than milk, lighter than cream, and it emulsifies reliably.
+
+**Why did my sauce break?**
+A broken alfredo sauce (greasy, with visible butter pooling separately) usually means the heat was too high when cheese was added, or the cheese was added too fast. Fix it: remove from heat, add a splash of pasta water, and whisk vigorously. Often this brings it back together. Prevention: always add cheese off-heat, in small additions, with constant stirring.
+
+**Can I use a different pasta?**
+Yes. Fettuccine is traditional because the wide, flat shape holds cream sauce well. Linguine, pappardelle, tagliatelle, or penne all work. Avoid very thin pasta like angel hair — it gets overwhelmed by the sauce weight. Short pastas like rigatoni work well if that is what you have.
+
+**Is chicken alfredo kid-friendly?**
+Very. Mild, creamy, and familiar — most kids who eat pasta will eat chicken alfredo. The garlic is subtle enough that it is not off-putting to picky eaters. If you have very picky eaters, you can omit the parsley garnish (some kids reject anything green on the plate).
+
+**Can I add vegetables directly to the pasta?**
+Absolutely. Broccoli, peas, asparagus, and spinach all work well. Add blanched or roasted broccoli or peas directly to the pasta when tossing with sauce. Add raw spinach to the hot sauce just before adding pasta and let it wilt. Asparagus spears are excellent roasted and laid on top with the chicken.
+
+---
+
+Chicken alfredo rewards attention to two details: good parmesan and the pasta water. Get those right, and the rest of the recipe comes together easily. The whole thing is on the table in 30 minutes.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your family's full dinner week and builds the grocery list automatically. The beta is free for six months — no credit card required.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
