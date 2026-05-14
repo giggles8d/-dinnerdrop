@@ -12862,7 +12862,8 @@ Salmon pairs with almost any side: roasted vegetables, rice, quinoa, couscous, m
 Twenty-five recipes gives you five weeks of salmon dinners before repetition. If you want those recipes organized into a personalized weekly plan with a sorted grocery list, [DinnerDrop handles the planning for you.](/beta)
 `
   }
-,
+
+,
   {
     slug: 'steak-dinner-ideas',
     title: '25 Steak Dinner Ideas for Weeknights and Special Occasions',
@@ -14812,6 +14813,139 @@ Spaghetti and meatballs scales beautifully — double the batch and freeze half.
 **[Plan this week's dinners at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'chicken-noodle-soup-recipe',
+    title: 'Chicken Noodle Soup Recipe: The Best Homemade Version (Ready in 45 Minutes)',
+    description: 'The best homemade chicken noodle soup with rich broth, tender chicken, and egg noodles. Ready in 45 minutes. Tips for flavor, freezing, and variations.',
+    publishDate: '2027-11-23',
+    readingTimeMinutes: 9,
+    tags: ['Chicken Noodle Soup', 'Soup Recipes', 'Comfort Food', 'Family Dinners', 'Easy Recipes'],
+    content: `
+## Why Homemade Beats Every Can
+
+Campbell's chicken noodle soup tastes like salt water with a noodle floating in it. Homemade tastes like someone actually cared. The difference is three things: searing the chicken, sauteing the aromatics properly, and using thighs instead of breasts.
+
+This recipe takes 45 minutes, makes 6 servings, and uses one pot.
+
+---
+
+## Ingredients
+
+- 1.5 lbs boneless skinless chicken thighs
+- 2 tbsp olive oil or butter
+- 1 medium yellow onion, diced
+- 3 medium carrots, peeled and sliced into coins
+- 3 stalks celery, sliced
+- 4 cloves garlic, minced
+- 8 cups low-sodium chicken broth
+- 2 cups water
+- 2 tsp fresh thyme (or 3/4 tsp dried)
+- 2 bay leaves
+- Salt and black pepper to taste
+- 8 oz wide egg noodles
+- 2 tbsp fresh parsley, chopped
+
+---
+
+## Instructions
+
+**Step 1: Sear the chicken (5 minutes)**
+Heat oil in a large Dutch oven over medium-high heat. Season chicken with salt and pepper. Sear 3 minutes per side until golden brown. Remove and set aside. The fond left in the pan becomes flavor in your broth.
+
+**Step 2: Saute the aromatics (5 minutes)**
+In the same pot, cook onion, carrots, and celery over medium heat 5 minutes. Add garlic, cook 1 more minute until fragrant.
+
+**Step 3: Build the broth (25 minutes)**
+Add broth, water, thyme, and bay leaves. Return chicken to the pot. Bring to a boil, reduce to a simmer. Cook uncovered 20-25 minutes until chicken reaches 165 degrees F.
+
+**Step 4: Shred the chicken**
+Remove chicken from pot. Shred with two forks into bite-sized pieces. Return to pot.
+
+**Step 5: Cook the noodles (8-10 minutes)**
+Bring soup back to a boil. Add egg noodles. Cook 1 minute less than package directions -- they continue cooking in the hot broth.
+
+**Step 6: Finish and serve**
+Remove bay leaves. Stir in fresh parsley. Squeeze in half a lemon for brightness if desired. Adjust salt and serve.
+
+---
+
+## What Makes It Taste Good
+
+**Use chicken thighs, not breasts.** More fat and collagen means juicier meat and a richer broth. Breasts go rubbery after simmering.
+
+**The sear matters.** Brown bits (fond) on the pan bottom deglaze into your broth -- you cannot replicate this flavor any other way.
+
+**Saut the vegetables first.** Raw aromatics dropped straight into broth taste flat. Five minutes of softening unlocks their flavor.
+
+**Add fresh herbs last.** Dried thyme can go in early. Fresh parsley added at the end stays bright, not grassy.
+
+**Flat soup fix:** Add 1 tsp soy sauce or Worcestershire sauce. You won't taste anything foreign -- just more depth.
+
+---
+
+## Noodle Choices
+
+**Wide egg noodles** are the classic choice -- chewy, neutral, holds up well in broth. Most people's first instinct is right.
+
+**Orzo** gives a more uniform texture and works well in Greek-style lemon chicken soup.
+
+**Rice** is the gluten-free alternative. Add 1 cup cooked rice at the end.
+
+**Important:** Any noodle keeps absorbing broth as it sits. For leftovers, cook noodles separately and add to individual bowls at serving time.
+
+---
+
+## Freezing and Make-Ahead
+
+**Fridge:** 4 days in an airtight container. The noodles soften over time.
+
+**Freezer:** Freeze the broth, chicken, and vegetables WITHOUT noodles. Keeps up to 3 months. Add fresh noodles when you reheat.
+
+**Batch cook:** Double or triple the recipe. The extra time investment is small and you'll have 2-3 meals in the freezer for sick days, cold nights, or busy weeks.
+
+---
+
+## Variations
+
+**Lemon Chicken Noodle Soup:** Add the juice of 1 full lemon at the end. Brighter and less heavy -- great for spring.
+
+**Creamy Chicken Noodle Soup:** Stir in 1/2 cup heavy cream in the last 5 minutes. Richer, velvety, very kid-friendly.
+
+**Chicken Tortellini Soup:** Swap egg noodles for cheese tortellini. Add a can of white beans and a handful of spinach for a heartier meal.
+
+**Slow Cooker Version:** Add everything except noodles and parsley. Cook LOW 6-8 hours or HIGH 3-4 hours. Shred chicken, add noodles, cook HIGH 15 more minutes.
+
+**Instant Pot Version:** Saute aromatics on Saute mode. Add all except noodles, cook High Pressure 15 minutes, quick release. Shred chicken, switch to Saute, add noodles 8 minutes.
+
+---
+
+## Let DinnerDrop Plan Your Soup Nights
+
+If deciding what to make five nights a week sounds like more effort than it should be, [DinnerDrop](https://dinnerdrop.app/beta) handles it for you -- 5 personalized meals with a one-tap grocery list. Free for 7 days.
+
+**[Try DinnerDrop free for 7 days](https://dinnerdrop.app/beta)**
+
+---
+
+## FAQs
+
+**Can I use rotisserie chicken?**
+Yes. Skip the searing step. Shred the rotisserie chicken and add it directly with the broth. The soup will still taste great.
+
+**What is the best broth to use?**
+Low-sodium store-bought (Swanson, Imagine, or Better Than Bouillon) is your best bet. Avoid regular-sodium -- it becomes too salty when concentrated.
+
+**Why are my noodles mushy?**
+They kept absorbing broth after you pulled the soup off the heat. Cook them al dente (1 minute less than the package says) and store noodles separately for leftovers.
+
+**Can I make this without noodles?**
+Yes. Skip the noodles for a low-carb version. Add extra vegetables or white beans for substance.
+
+**Is chicken noodle soup actually good for colds?**
+The hot broth helps clear nasal congestion. Chicken contains cysteine, an amino acid that may thin mucus secretions. And eating something warm and nourishing simply feels better. Whether it is science or psychology, it works.
+    `,
+  },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
