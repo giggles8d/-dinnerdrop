@@ -14946,6 +14946,233 @@ The hot broth helps clear nasal congestion. Chicken contains cysteine, an amino 
     `,
   },
 
+  {
+    slug: 'spaghetti-recipe',
+    title: 'Spaghetti Recipe: The Best Classic Family Spaghetti (Plus 8 Variations)',
+    description:
+      'The definitive family spaghetti recipe with meat sauce — plus carbonara, aglio e olio, ' +
+      'alfredo, and 5 more variations. Everything your family needs for the perfect pasta night.',
+    publishDate: '2027-11-16',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'spaghetti recipe',
+    content: `Spaghetti is the most-cooked dinner in America for a reason. It is fast, forgiving, beloved by children, adaptable to any budget, and capable of feeding a crowd with thirty minutes of actual work. When done correctly, it is genuinely delicious.
+
+This guide covers the definitive classic spaghetti with meat sauce — the one that becomes your family's standard — plus eight variations that use the same core skills.
+
+---
+
+## The Classic: Spaghetti with Meat Sauce
+
+This is not a bolognese (which takes three hours). This is the 30-minute weeknight version that feeds a family of four generously and produces leftovers worth looking forward to.
+
+**Serves:** 4-6 | **Time:** 30 minutes | **Difficulty:** Beginner
+
+### Ingredients
+
+**For the sauce:**
+- 1 lb (450g) ground beef (80/20) or a mix of beef and Italian sausage
+- 1 medium yellow onion, finely diced
+- 4 garlic cloves, minced
+- 1 can (28 oz) crushed tomatoes
+- 1 can (15 oz) tomato sauce
+- 2 tablespoons tomato paste
+- 1 teaspoon dried oregano
+- 1 teaspoon dried basil (or 8-10 fresh basil leaves, added at the end)
+- 1/2 teaspoon red pepper flakes (optional)
+- 1 teaspoon sugar
+- Salt and black pepper to taste
+- 2 tablespoons olive oil
+
+**For the pasta:**
+- 1 lb (450g) spaghetti
+- 4 quarts water
+- 1 tablespoon kosher salt
+- Reserved pasta water (about 1 cup)
+
+**For serving:**
+- Freshly grated Parmesan or Pecorino Romano
+- Fresh basil leaves
+- Extra olive oil
+
+### Method
+
+**Start the sauce before the pasta water.** Sauce takes longer than pasta.
+
+1. Heat olive oil in a large 12-inch skillet over medium-high heat. Add the onion and cook 4-5 minutes until softened. Add garlic and cook 60 seconds until fragrant.
+
+2. Add ground beef. Break into small pieces and cook 5-7 minutes until no pink remains. Drain excess fat.
+
+3. Add tomato paste and stir into the meat. Cook 2 minutes, stirring constantly. This caramelizes the paste and deepens flavor.
+
+4. Add crushed tomatoes, tomato sauce, oregano, basil, red pepper flakes, and sugar. Stir to combine.
+
+5. Reduce heat to medium-low. Simmer uncovered 15-20 minutes, stirring occasionally.
+
+6. Meanwhile, bring 4 quarts of water to a rolling boil. Add 1 tablespoon kosher salt. Cook spaghetti 1-2 minutes less than package directions.
+
+7. Before draining, scoop out 1 cup of pasta water. Drain the spaghetti.
+
+8. Add drained spaghetti directly to the sauce. Toss with tongs over medium heat for 1-2 minutes. Add pasta water as needed to adjust consistency.
+
+9. Tear fresh basil over the top. Taste and adjust salt. Serve with Parmesan and olive oil.
+
+---
+
+## The Techniques That Make Spaghetti Great
+
+### Salt the pasta water aggressively
+One tablespoon of kosher salt per 4 quarts. Under-salted pasta water means under-seasoned pasta regardless of how good your sauce is.
+
+### Cook pasta shorter than you think
+When finishing pasta in the sauce, cook it 90 seconds to 2 minutes less than package directions. It finishes in the pan.
+
+### Save the pasta water — always
+Pasta water contains dissolved starch that emulsifies sauce, helps it cling, and adjusts consistency without diluting flavor. It is the secret ingredient restaurant pasta has that home cooks pour down the drain.
+
+### Finish pasta in the sauce, not on the plate
+Toss the pasta directly in the pan with the sauce for 60-90 seconds. Every strand gets coated. The flavor is significantly better than ladling sauce on top.
+
+---
+
+## 8 Spaghetti Variations
+
+### 1. Spaghetti Carbonara
+No cream — the creaminess comes from eggs and Pecorino Romano emulsified with pasta water and guanciale or pancetta.
+
+**Ingredients:** 4 oz guanciale or pancetta, 3 egg yolks + 1 whole egg, 1 cup grated Pecorino Romano, generous black pepper.
+
+**Method:** Cook pasta. Render guanciale until crispy. Remove from heat. Whisk eggs with cheese and pepper. Add drained hot pasta to pan. Add egg mixture off heat, tossing constantly. Add pasta water a tablespoon at a time until silky. **Time:** 20 minutes.
+
+### 2. Spaghetti Aglio e Olio
+Six ingredients. Twenty minutes. One of the most satisfying pastas in Italian cooking.
+
+**Ingredients:** 8-10 garlic cloves (thinly sliced), 1/2 cup good olive oil, 1 tsp red pepper flakes, 1/4 cup fresh parsley, Parmesan to finish.
+
+**Method:** Toast garlic in olive oil over low heat until golden — not brown. Add red pepper flakes 30 seconds. Toss with pasta and pasta water until emulsified. Finish with parsley. **Time:** 20 minutes.
+
+### 3. Spaghetti Bolognese (Slow Version)
+2.5-3 hours total, but only 30 minutes hands-on. The slow simmer is what makes it.
+
+**Ingredients:** Equal parts ground beef and pork, soffritto (carrot, celery, onion), whole milk, dry white wine, beef broth, crushed tomatoes, bay leaf.
+
+**Method:** Cook soffritto in butter 15 minutes. Add meat in small pieces. Add milk and let absorb. Add wine and let absorb. Add tomatoes and broth. Simmer on lowest heat 2+ hours, partially covered. **Time:** 2.5-3 hours.
+
+### 4. Spaghetti Alfredo
+Traditional Roman Alfredo uses only butter and Parmesan. The American version adds cream. Both are excellent.
+
+**Ingredients:** 4 tbsp butter, 1 cup heavy cream (American version), 1.5 cups grated Parmesan, salt, white pepper.
+
+**Method:** Melt butter, add cream and reduce slightly. Add Parmesan off heat. Toss with pasta and pasta water until silky. **Time:** 15 minutes.
+
+### 5. Spaghetti Puttanesca
+Bold, briny, assertive. Ready in 20 minutes.
+
+**Ingredients:** 4 anchovy fillets, 1/2 cup Kalamata olives (chopped), 2 tbsp capers, 1 can crushed tomatoes, 4 garlic cloves, red pepper flakes, olive oil.
+
+**Method:** Cook garlic and anchovies in oil until anchovies melt (2 minutes). Add capers, olives, red pepper flakes, tomatoes. Simmer 10 minutes. Toss with pasta. **Time:** 20 minutes.
+
+### 6. Spaghetti Cacio e Pepe
+Two ingredients beyond pasta. Requires focus — rewards it.
+
+**Ingredients:** 2 cups finely grated Pecorino Romano, 1.5 tsp coarsely cracked black pepper, pasta water.
+
+**Method:** Toast pepper in a dry pan. Add pasta water to create a liquid base. Add cooked pasta. Add Pecorino off heat in stages, tossing constantly. Keep heat low — cheese must melt silky, not clump. **Time:** 20 minutes.
+
+### 7. Spaghetti with Shrimp and Garlic
+Fast, impressive, weeknight-feasible.
+
+**Ingredients:** 1 lb large shrimp (peeled, deveined), 6 garlic cloves, 1/4 cup dry white wine, 4 tbsp butter, fresh parsley, lemon zest and juice, red pepper flakes.
+
+**Method:** Cook shrimp in butter 2 minutes per side. Remove. Cook garlic 60 seconds. Add wine and reduce by half. Return shrimp, add pasta, toss with pasta water, finish with lemon and parsley. **Time:** 25 minutes.
+
+### 8. Spaghetti Primavera
+Vegetables, olive oil, garlic, and whatever is in the fridge.
+
+**Good vegetables:** Zucchini, cherry tomatoes, bell peppers, asparagus, peas, broccoli, spinach, mushrooms.
+
+**Method:** Sauté garlic in olive oil. Add harder vegetables first (4-5 min), softer ones second (2-3 min). Add pasta and pasta water. Toss with Parmesan and fresh basil. Finish with lemon. **Time:** 25 minutes.
+
+---
+
+## Feeding the Family: Tips and Scaling
+
+### For picky eaters
+Dice the onion very finely or use a food processor. Carrots and zucchini can be grated into the sauce invisibly. Omit red pepper flakes entirely for sensitive palates.
+
+### Make-ahead strategy
+Meat sauce keeps 5 days in the refrigerator and 3 months in the freezer. Double the sauce, freeze half — you have a second dinner that requires only boiling pasta.
+
+### Scaling for a crowd
+For 8-10 people: double everything and use a large Dutch oven. Sauce cooking time increases by about 5 minutes.
+
+### Budget shortcut
+Brown the meat, drain fat, add a jar of good marinara (Rao's, Victoria, Carbone), simmer 10 minutes. Thirty minutes becomes fifteen. Completely reasonable on busy weeknights.
+
+---
+
+## What to Serve with Spaghetti
+
+**Garlic bread:** French bread toasted with butter and garlic under the broiler.
+
+**Caesar salad:** Bitter romaine cuts the richness of meat sauce. A bag kit is fine.
+
+**Meatballs:** Brown in a pan first (4 minutes per side), finish in the simmering sauce the last 15 minutes.
+
+**Simple green salad:** Arugula with lemon and olive oil. Three ingredients, five minutes.
+
+---
+
+## Storage and Reheating
+
+**Refrigerator:** Sauce keeps 5 days. Cooked pasta keeps 3 days. Store separately.
+
+**Freezer:** Sauce freezes for 3 months. Freeze sauce only; cook fresh pasta when serving.
+
+**Reheating:** Warm sauce gently on the stovetop with a splash of water. Microwave works — cover with a damp paper towel, heat in 60-second intervals.
+
+---
+
+## How DinnerDrop Uses This
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five family dinners per week based on your preferences, cook time, and family size. Tell it you want classic Italian comfort food and it builds plans around dishes like spaghetti with meat sauce — with the grocery list already built and quantities adjusted for your family size. The beta is free for six months.
+
+---
+
+## Troubleshooting
+
+**Why is my sauce watery?** Insufficient simmer time — keep it uncovered for 15-20 minutes. A tablespoon of tomato paste added early also helps.
+
+**Why does my pasta clump?** Move it into the sauce immediately after draining.
+
+**Why is my pasta mushy?** Overcooked. Pull it 2 minutes early and finish in the sauce.
+
+**Why does my carbonara scramble?** Remove the pan from heat completely before adding eggs and toss constantly.
+
+**My aglio e olio tastes bitter.** The garlic burned. Use low heat and pull the moment it turns golden.
+
+---
+
+## FAQ
+
+**What is the difference between spaghetti and linguine?** Shape — spaghetti is round, linguine is slightly oval. Interchangeable in most recipes.
+
+**Should I add oil to pasta water?** No. Oil prevents sauce from adhering. Stir the pasta during the first 2 minutes to prevent sticking.
+
+**Can I use jarred marinara?** Yes. Brown the meat, drain fat, add the jar, simmer 10 minutes. Completely reasonable.
+
+**How much pasta per person?** 2 oz (57g) for a moderate portion, 3 oz (85g) for a hungry family. One pound serves 4-6 with sauce.
+
+**Can I make the sauce the day before?** Yes — it is better the next day. Make Sunday, reheat Monday in 5 minutes with fresh pasta.
+
+---
+
+Spaghetti is the dinner that taught most families how to cook. The classic meat sauce version takes 30 minutes, feeds everyone reliably, and improves every time you make it. Master the core technique — salt the water, save the pasta water, finish in the sauce — and every variation becomes simple.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five family dinners and your complete grocery list every week. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
