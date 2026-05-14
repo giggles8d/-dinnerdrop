@@ -13800,6 +13800,511 @@ Classic meatloaf is one of the most efficient family dinners you can make: inexp
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'chicken-parmesan-recipe',
+    title: 'Chicken Parmesan Recipe: The Crispy, Saucy Family Dinner That Never Fails',
+    description:
+      'The best chicken parmesan recipe for busy families -- crispy breaded chicken, marinara, melted mozzarella. Classic Italian-American comfort food in under an hour.',
+    publishDate: '2027-11-16',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'chicken parmesan recipe',
+    content: `Chicken parmesan is one of the most requested family dinners for good reason: it combines crispy fried chicken, tangy marinara, and melted cheese into something that feels like a restaurant meal but costs about $3 per serving to make at home. The trick to getting it right every time is managing the breading -- it needs to stay crispy even after the sauce goes on, which means proper dredging technique and finishing it in the oven rather than drowning it in sauce on the stovetop.
+
+This recipe works for weeknights (40 minutes start to finish) and is just as good for a Sunday dinner when you have a little more time.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your family's full dinner week and builds the grocery list. Free for six months during beta.
+
+---
+
+## Classic Chicken Parmesan
+
+**Ingredients (serves 4)**
+
+- 4 boneless, skinless chicken breasts (about 6 oz each)
+- 1 cup all-purpose flour
+- 2 large eggs, beaten
+- 1 1/2 cups Italian breadcrumbs
+- 1/2 cup grated parmesan, divided
+- 1 teaspoon garlic powder
+- 1 teaspoon dried oregano
+- 1/2 teaspoon salt, 1/4 teaspoon black pepper
+- 3 tablespoons olive oil (or as needed for frying)
+- 1 1/2 cups marinara sauce (jarred or homemade)
+- 1 1/2 cups shredded mozzarella
+- Fresh basil or flat-leaf parsley to finish
+
+**Instructions**
+
+Preheat the oven to 425 degrees F. Line a baking sheet with a wire rack if you have one (elevates the chicken so the bottom stays crispy). If not, a foil-lined baking sheet works.
+
+Pound the chicken breasts to an even 1/2-inch thickness between sheets of plastic wrap. Uneven chicken is the most common cause of dry, overcooked chicken parmesan -- the thicker parts stay raw while the thin parts overcook.
+
+Set up a three-stage dredging station: flour in one shallow dish, beaten egg in the second, breadcrumbs mixed with 1/4 cup of the parmesan, garlic powder, oregano, salt, and pepper in the third.
+
+Dredge each breast in flour (shake off the excess), then egg (let it drip), then breadcrumbs (press firmly on both sides). The flour helps the egg adhere; the egg helps the breadcrumbs stick. Press is the key word for the breadcrumb step -- you want full, even coverage.
+
+Heat 3 tablespoons of olive oil in a large oven-safe skillet (or regular skillet if transferring to a baking sheet) over medium-high heat. When the oil shimmers, fry the breaded chicken in batches -- do not crowd the pan -- for 3 minutes per side until golden brown. You are not cooking the chicken through at this stage, just setting the crust.
+
+Transfer to the prepared baking sheet or keep in the oven-safe skillet. Spoon 2-3 tablespoons of marinara over each breast (do not drown it -- this is what ruins the crust), scatter the mozzarella over the sauce, and sprinkle the remaining parmesan.
+
+Bake at 425 degrees F for 15-18 minutes until the cheese is bubbling and golden at the edges and the chicken registers 165 degrees F internal. Let rest 3 minutes before serving.
+
+Finish with torn fresh basil if you have it.
+
+**Serve with:** Spaghetti with marinara, garlic bread, a simple green salad.
+
+---
+
+## Why This Recipe Works
+
+**Pounding the chicken.** Even thickness is the single most important step in chicken parmesan. A pounded chicken breast cooks in the same time from edge to center, producing juicy meat instead of the dried-out, chewy exterior you get with uneven cuts. It also gives you more surface area for breading, which means more crispy crust per bite.
+
+**The three-stage dredge.** Flour, then egg, then breadcrumbs is not optional -- it is structural. The flour gives the egg something to grip; the egg acts as glue for the breadcrumbs. Skip the flour and your breading slides off. Skipping the press on the breadcrumbs gives you patchy coverage that gaps and falls off during frying.
+
+**Fry first, bake second.** You cannot achieve a properly browned, crispy crust in the oven alone -- the Maillard reaction requires direct contact with hot oil. The fry builds the crust; the bake finishes the chicken and melts the cheese without burning the breadcrumbs. This two-stage approach is how restaurant chicken parmesan is made.
+
+**Less sauce, more cheese.** It sounds counterintuitive but restraint with the marinara is what keeps the crust intact. Two to three tablespoons per breast is enough -- the sauce is flavor, not a topping. Pile on the cheese instead.
+
+---
+
+## Chicken Parmesan Variations
+
+### Sheet Pan Chicken Parmesan
+Skip the stovetop fry entirely. Bread the chicken as directed, spray both sides generously with cooking spray, and place on a wire rack over a foil-lined sheet pan. Bake at 425 degrees F for 20 minutes until golden, flip once at 10 minutes. Add the sauce and cheese, return to oven for 8-10 more minutes. The result is slightly less crispy than the pan-fry version but easier to make in quantity for a large family and requires no oil beyond the cooking spray.
+
+### Chicken Parmesan with Homemade Marinara
+In a small saucepan, saute 3 garlic cloves in 2 tablespoons of olive oil for 1 minute. Add one 28-oz can of crushed San Marzano tomatoes, 1 teaspoon of dried basil, 1 teaspoon of dried oregano, and a pinch of red pepper flakes. Simmer 20 minutes. Season with salt. Better than any jar of marinara and takes 5 minutes of active work.
+
+### Chicken Parmesan Sliders
+Make the full recipe, then slice the baked chicken into strips. Load onto slider buns with extra marinara and a slice of provolone. Great for feeding a crowd at a gathering where sit-down dinner is impractical.
+
+### Baked Chicken Parmesan Casserole
+Layer 4 cups of cooked penne or rigatoni in a 9x13 baking dish with 2 cups of marinara. Lay the pan-fried (but not yet baked) chicken on top. Cover with 2 cups of shredded mozzarella and 1/2 cup of parmesan. Bake at 375 degrees F for 25 minutes covered, 10 minutes uncovered. The pasta absorbs the extra sauce and you get a one-dish meal.
+
+---
+
+## Make-Ahead Options
+
+**Bread and refrigerate:** Bread the chicken up to 24 hours ahead. Store on a wire rack over a sheet pan, uncovered, in the refrigerator. The fridge air circulation firms up the coating. Fry and bake the day of.
+
+**Freeze breaded (unfried):** Bread the chicken, lay flat on a parchment-lined sheet pan, freeze until solid (about 2 hours), then transfer to a freezer bag. Freeze up to 2 months. Thaw overnight in the refrigerator before frying and baking.
+
+**Freeze fully cooked:** The baked, sauced chicken freezes well for up to 3 months. Wrap individual pieces in foil and freeze. Reheat at 350 degrees F for 20-25 minutes until warmed through. Add fresh cheese and broil for 2 minutes before serving.
+
+---
+
+## Common Chicken Parmesan Problems
+
+**Breading falls off during frying:** You skipped the flour, did not let the egg drip before the breadcrumbs, or moved the chicken too soon in the pan. Let it sit undisturbed for the full 3 minutes before flipping -- the crust releases naturally from the pan when it is ready. Forcing an early flip tears the breading.
+
+**Soggy bottom:** Too much sauce applied before baking. Use 2-3 tablespoons per breast maximum. If you are using jarred marinara, drain off some of the thin liquid before spooning it on the chicken.
+
+**Dry, tough chicken:** You did not pound to even thickness, or you overcooked it. Pull at 165 degrees F internal and rest for 3 minutes. The chicken will be done in 15-18 minutes at 425 degrees F -- do not walk away and forget it.
+
+**Pale, soft crust:** Your oil was not hot enough before the chicken went in, or the pan was overcrowded and the temperature dropped. The oil needs to shimmer before the first piece of chicken goes in. Fry in batches -- one layer with space between each piece.
+
+---
+
+## How DinnerDrop Plans Your Chicken Parmesan Week
+
+If chicken parmesan is a regular in your household, [DinnerDrop](https://dinnerdrop.app/beta) will build it into your weekly rotation alongside four other dinners your family actually likes. Enter your preferences -- protein types, dietary restrictions, max cook time -- and get a full week of personalized meals plus a complete grocery list in under a minute. The beta is free for six months.
+
+---
+
+## FAQ
+
+**Can I use chicken thighs instead of breasts for chicken parmesan?**
+Yes, and many cooks prefer them. Boneless, skinless chicken thighs stay juicier than breasts and are more forgiving if you overcook them slightly. Pound them to an even thickness the same way. The higher fat content in thighs means the breading browns a little faster, so watch the fry time -- 2-3 minutes per side rather than 3.
+
+**What is the difference between chicken parmesan and chicken parmigiana?**
+They are the same dish. Parmigiana is the Italian-American original spelling (parmigiana di pollo), chicken parmesan is the shortened American name. Some menus use parmigiana to sound more upscale. The dish is identical regardless of what it is called.
+
+**Can I use panko breadcrumbs instead of Italian breadcrumbs?**
+Panko produces a lighter, crispier crust with more texture. Italian breadcrumbs give a more compact, classic coating. For the crispiest possible result, use a mixture: 1 cup panko plus 1/2 cup Italian breadcrumbs. If using plain panko, add 1 teaspoon each of dried oregano, basil, garlic powder, and salt to season them.
+
+**What cheese goes on chicken parmesan?**
+Mozzarella is standard -- it melts clean and stretches. Use fresh mozzarella for a creamier result; shredded low-moisture mozzarella for better browning. The parmesan in the recipe adds saltiness and depth. Some recipes add provolone or fontina for a sharper flavor profile. Avoid processed cheese -- it does not behave the same way under high heat.
+
+**Can I make chicken parmesan in an air fryer?**
+Yes. Bread the chicken as directed, spray with cooking spray, and air fry at 400 degrees F for 10 minutes, flip, and cook another 5 minutes. Add sauce and cheese, air fry another 3-4 minutes until the cheese melts. The crust is crispier than baked but lacks the deep golden color of pan-fried. If you regularly make chicken parmesan, the air fryer version is faster on a weeknight.
+`,
+  },
+  {
+    slug: 'lasagna-recipe',
+    title: 'Lasagna Recipe: Classic Layers, Perfect Every Time',
+    description:
+      'Master the classic lasagna recipe with this complete guide. Ground beef, rich tomato sauce, ' +
+      'creamy ricotta, and perfectly layered noodles — restaurant-quality results at home.',
+    publishDate: '2027-11-23',
+    readingTimeMinutes: 12,
+    primaryKeyword: 'lasagna recipe',
+    content: `Lasagna is one of the most satisfying dishes you can make — layers of rich meat sauce, creamy ricotta, mozzarella, and tender pasta all baked together into something that tastes like it came from a neighborhood Italian restaurant. It takes about 90 minutes start to finish and feeds six to eight people. Most of that time is hands-off baking.
+
+This guide covers the complete classic lasagna recipe, how to make a proper meat sauce, the béchamel versus ricotta debate, how to layer correctly, five variations, and everything you need to know about making it ahead and freezing.
+
+---
+
+## Classic Lasagna Recipe
+
+### Ingredients
+
+**Meat sauce:**
+- 1 lb ground beef (80/20) or a mix of beef and Italian sausage
+- 1 medium yellow onion, finely diced
+- 4 cloves garlic, minced
+- 1 can (28 oz) crushed tomatoes
+- 1 can (15 oz) tomato sauce
+- 2 tablespoons tomato paste
+- 1 teaspoon dried oregano
+- 1 teaspoon dried basil
+- 1/2 teaspoon sugar (balances acidity)
+- Salt and black pepper to taste
+- 2 tablespoons olive oil
+
+**Ricotta layer:**
+- 15 oz whole-milk ricotta
+- 1 large egg
+- 1/4 cup grated Parmesan
+- 2 tablespoons fresh parsley, chopped
+- 1/2 teaspoon salt
+- 1/4 teaspoon black pepper
+
+**Assembly:**
+- 12 lasagna noodles (regular or oven-ready)
+- 3 cups shredded low-moisture mozzarella
+- 1/2 cup grated Parmesan
+
+### Instructions
+
+**Step 1: Make the meat sauce (25 minutes)**
+
+Heat olive oil in a large skillet or Dutch oven over medium-high heat. Add the ground beef and cook, breaking it up, until no pink remains, about 7 minutes. Drain excess fat if needed.
+
+Add the diced onion to the pan and cook 4 minutes until softened. Add the garlic and cook 1 minute more. Stir in the tomato paste and cook 2 minutes — this caramelizes the paste and deepens the flavor significantly.
+
+Add crushed tomatoes, tomato sauce, oregano, basil, sugar, salt, and pepper. Reduce heat to low and simmer uncovered for 15 minutes, stirring occasionally. The sauce should thicken slightly. Taste and adjust seasoning.
+
+**Step 2: Mix the ricotta layer (5 minutes)**
+
+Combine ricotta, egg, Parmesan, parsley, salt, and pepper in a bowl. Stir until smooth. The egg is essential — it binds the ricotta so it stays in a cohesive layer when sliced rather than sliding out. Set aside.
+
+**Step 3: Cook the noodles (if using regular noodles)**
+
+Cook lasagna noodles in well-salted boiling water for 2 minutes less than the package directions (they will finish cooking in the oven). Drain, lay flat on a lightly oiled baking sheet or parchment to prevent sticking.
+
+If using oven-ready noodles, skip this step. They hydrate during baking from the sauce moisture.
+
+**Step 4: Assemble**
+
+Preheat oven to 375 degrees F.
+
+In a 9x13-inch baking dish, spread 1/2 cup of meat sauce on the bottom — this prevents the bottom noodles from sticking and burning.
+
+Layer in this order (from bottom to top):
+- 3 noodles (slightly overlapping)
+- 1/3 of the ricotta mixture (dollop and spread gently)
+- 1 cup meat sauce
+- 3/4 cup mozzarella
+
+Repeat three times total, ending with the final 3 noodles topped with remaining meat sauce, remaining mozzarella, and the 1/2 cup Parmesan.
+
+**Step 5: Bake**
+
+Cover tightly with foil (tent it slightly so the cheese does not stick). Bake covered for 35 minutes.
+
+Remove foil and bake uncovered for 20 minutes until the cheese is golden-brown and the edges are bubbling. If you want more browning, broil for 2 to 3 minutes — watch carefully.
+
+**Step 6: Rest before cutting**
+
+This is the step most people skip and then wonder why their lasagna falls apart. Let it rest for 15 minutes. The layers need time to set. If you cut it hot out of the oven, the cheese runs and the layers collapse. After 15 minutes, you can cut clean squares.
+
+---
+
+## The Meat Sauce: How to Build Real Flavor
+
+A weak meat sauce is the most common reason lasagna tastes flat. Three things matter most:
+
+**Use good meat.** 80/20 ground beef has enough fat to develop flavor in the pan. Extra-lean beef produces a dry, crumbly sauce. A 50/50 mix of ground beef and mild Italian sausage adds depth and seasoning — the sausage does a lot of flavor work for you.
+
+**Cook the tomato paste.** Stirring tomato paste directly into liquid is fine but wasteful. Cooking it in the oil for 2 minutes before adding other liquid caramelizes the sugars, removing the raw, slightly tinny edge. This is a professional kitchen habit that makes a real difference.
+
+**Simmer with the lid off.** The sauce should reduce and concentrate. A watery sauce produces a soggy lasagna. 15 to 20 minutes of uncovered simmering is enough to get the right consistency — it should coat the back of a spoon heavily.
+
+---
+
+## Béchamel vs. Ricotta
+
+Classic American lasagna uses ricotta. Traditional Italian lasagna (lasagne alla bolognese) uses béchamel — a white sauce made from butter, flour, and milk.
+
+Both are correct. The choice is a matter of preference:
+
+**Ricotta** is faster, richer, slightly grainy in texture. It absorbs the tomato sauce flavors. It is forgiving and familiar.
+
+**Béchamel** is silkier, milder, and creates a creamy counterpoint to the tomato sauce. To make a simple béchamel: melt 3 tablespoons butter in a saucepan, whisk in 3 tablespoons flour, cook 1 minute, then slowly whisk in 2 cups warm whole milk. Season with salt, pepper, and a pinch of nutmeg. Cook until thickened, about 5 minutes. Use in the same proportion as the ricotta mixture.
+
+For families and weeknights, ricotta is the practical choice. For a dinner party version with a slightly elevated result, try béchamel.
+
+---
+
+## How to Layer Lasagna Correctly
+
+The order of layers matters. The most common mistake is putting too much ricotta and not enough sauce, leaving the interior dry. Another common mistake is insufficient sauce on the bottom — without it, the bottom noodles absorb the sauce unevenly and can crisp in spots.
+
+Correct layering principle: sauce touches every noodle layer, both above and below. Ricotta goes in the middle three layers. Cheese goes on top of each layer and in a thick cap on top.
+
+Bottom-to-top: sauce base, noodles, ricotta, sauce, cheese. Repeat. Final layer: noodles, sauce, cheese, Parmesan. The Parmesan on top forms the golden crust.
+
+---
+
+## 5 Lasagna Variations
+
+**1. Spinach and Ricotta Lasagna (Vegetarian)**
+Omit meat. Add 10 oz of frozen spinach, thawed and squeezed completely dry, to the ricotta mixture. Use jarred marinara in place of the meat sauce or make a simple all-tomato sauce. Add 1/2 teaspoon nutmeg to the ricotta. This version is lighter and works well for households with vegetarians.
+
+**2. Sausage Lasagna**
+Replace the ground beef entirely with mild Italian sausage, casings removed. The sausage is already seasoned, so reduce the oregano and basil by half. The fat content is higher, which means richer flavor and more bubbling. This is the version to make when you want comfort food.
+
+**3. White Lasagna (No Red Sauce)**
+Use béchamel throughout. Add sautéed mushrooms, chicken, or roasted vegetables between layers. No tomato at all. Top with fontina or Gruyere instead of mozzarella. This version is elegant and pairs well with a green salad.
+
+**4. Four-Cheese Lasagna**
+Add dollops of goat cheese or crumbled gorgonzola to the ricotta layer. Use a four-cheese mozzarella blend. Reduce the meat or eliminate it. The extra cheese complexity does not need much else.
+
+**5. Turkey Lasagna**
+Substitute ground turkey for ground beef. Turkey is leaner, so add an extra tablespoon of olive oil when browning. The flavor is milder — compensate with a larger amount of Italian sausage mixed in (50/50), or increase the garlic and add a pinch of red pepper flakes to the sauce.
+
+---
+
+## Make-Ahead and Freezing
+
+Lasagna is one of the best dishes to make ahead because it actually improves overnight. The flavors meld, the noodles fully absorb the sauce, and it reheats to a better texture than fresh-baked.
+
+**Refrigerator (up to 3 days):** Assemble completely but do not bake. Cover tightly with plastic wrap then foil. When ready to serve, remove plastic, replace foil, and bake at 375 degrees F for 60 minutes covered, then 20 minutes uncovered. Add 15 to 20 minutes extra if going straight from cold refrigerator to oven.
+
+**Freezer (up to 3 months):** Assemble and bake as directed. Let cool completely. Slice into individual portions or keep whole. Wrap tightly in plastic wrap, then foil. Label with date. To reheat from frozen: thaw overnight in the refrigerator, then reheat covered at 350 degrees F for 30 to 40 minutes.
+
+**Sauce ahead:** The meat sauce can be made up to 4 days ahead and refrigerated, or frozen for 3 months. Having sauce ready cuts assembly time to about 15 minutes.
+
+---
+
+## Common Lasagna Mistakes
+
+**Not salting the pasta water enough.** Lasagna noodles need aggressively salted water — at least 1 tablespoon of salt per gallon. Under-salted noodles taste flat no matter how good the sauce is.
+
+**Using fresh mozzarella.** Fresh mozzarella packed in water releases significant liquid during baking. This pools in the layers and makes everything watery. Use low-moisture mozzarella for baking. Reserve fresh mozzarella for salads and pizza.
+
+**Skipping the rest time.** Already covered above, but worth repeating. 15 minutes. Do not negotiate with this.
+
+**Overcrowding the ricotta.** More ricotta does not mean better lasagna. Too much creates a dense, wet layer that compresses the other layers. The recipe quantities above are the right proportions.
+
+**Not covering during the first bake.** The foil traps steam and cooks the interior. Without it, the edges overcook before the center reaches temperature.
+
+---
+
+## How DinnerDrop Handles Your Weekly Dinners
+
+If lasagna is a family favorite, [DinnerDrop](https://dinnerdrop.app/beta) puts it in your weekly rotation and builds the complete grocery list automatically. You tell it your family's preferences — proteins, dietary needs, how much time you have to cook — and every week it generates five personalized dinners plus a shopping list organized by store section. The beta is completely free for six months, no credit card required.
+
+---
+
+## FAQ
+
+**Can I use no-boil lasagna noodles?**
+Yes. No-boil (oven-ready) noodles hydrate from the moisture in the sauce during baking. They work well, but the sauce needs to be slightly thinner than with regular noodles — the noodles absorb more liquid. Add a splash of water (about 1/4 cup) to your sauce before assembling if it looks very thick. Do not overlap oven-ready noodles more than 1/4 inch — they expand as they hydrate.
+
+**How do I know when lasagna is done?**
+The internal temperature should reach 165 degrees F. Visually: the edges are vigorously bubbling, the cheese on top is golden-brown with some dark spots, and a knife inserted in the center meets no resistance from the noodles. If the top is browning too fast before the center is hot, re-cover with foil and add 10 minutes.
+
+**Why is my lasagna watery?**
+Three common causes: (1) The meat sauce was too thin — it needs to be thick enough to stand up on a spoon. (2) Fresh mozzarella was used instead of low-moisture. (3) The noodles were not drained well before assembly and brought excess water into the layers. If your lasagna is watery when it comes out, tilt the pan slightly and use a baster or spoon to remove pooled liquid, then bake uncovered for another 10 minutes.
+
+**Can I make lasagna in a smaller pan?**
+A 9x9-inch pan works for half the recipe. Use 9 noodles in three layers of three. Everything else scales by half. Reduce covered baking time by 5 minutes — the smaller mass heats through faster.
+
+**How long does leftover lasagna keep?**
+Refrigerated in an airtight container, 4 to 5 days. The flavor actually peaks on day two. Reheat individual portions in the microwave at 50 percent power for 3 to 4 minutes to heat evenly without drying the edges, or in the oven at 350 degrees F covered with foil for 20 minutes.
+
+---
+
+Lasagna rewards patience in two places: simmering the sauce long enough to concentrate it, and resting the finished dish long enough to slice cleanly. Get those right and everything else follows.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your family's full dinner week and generates the grocery list automatically. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
+  {
+    slug: 'chicken-parmesan-recipe',
+    title: 'Chicken Parmesan Recipe: The Classic That Actually Works on a Weeknight',
+    description:
+      'A foolproof chicken parmesan recipe with crispy breading, rich marinara, and melted cheese. Tips for keeping it crispy, shortcuts that do not sacrifice quality, and make-ahead options for busy families.',
+    publishDate: '2027-11-16',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'chicken parmesan recipe',
+    content: `Chicken parmesan earns its place in the permanent rotation because it satisfies every requirement a weeknight dinner needs to meet: it appeals to nearly every family member without modification, the leftovers are as good as the original, and it is genuinely achievable on a school night if you know the shortcuts that do not cost you anything in quality.
+
+The failure mode most people encounter is the breading falling off or going soggy in the oven. Both problems have simple causes and simple fixes. This guide covers the classic method, the sheet pan shortcut, the make-ahead option, and the troubleshooting cases that trip people up.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. The beta is free for six months.
+
+---
+
+## What You Need
+
+**Serves:** 4
+**Total time:** 40 minutes (active: 20 minutes)
+**Equipment:** Meat mallet or rolling pin, three shallow dishes, large oven-safe skillet or sheet pan
+
+### Ingredients
+
+**For the chicken:**
+- 4 boneless, skinless chicken breasts (6-8 oz each)
+- 1 tsp salt
+- ½ tsp black pepper
+- ½ tsp garlic powder
+- ½ cup all-purpose flour
+- 2 large eggs, beaten
+- 1 cup Italian breadcrumbs
+- ½ cup grated Parmesan (freshly grated, not canned)
+- ½ tsp dried oregano
+- ½ tsp dried basil
+- 3-4 tbsp olive oil or vegetable oil
+
+**For topping:**
+- 1½ cups marinara sauce (store-bought or homemade)
+- 1½ cups shredded mozzarella
+- ¼ cup grated Parmesan
+- Fresh basil for garnish (optional)
+
+---
+
+## Instructions
+
+### Step 1: Pound the chicken to even thickness
+
+Place each chicken breast between two sheets of plastic wrap or in a zip-lock bag. Pound with a meat mallet or rolling pin to an even ¾-inch thickness. This is the most important step — uneven chicken means the thin parts overcook while the thick parts are still raw. Even thickness also means faster, more consistent cooking. Season both sides with salt, pepper, and garlic powder.
+
+### Step 2: Set up the breading station
+
+Set up three shallow dishes in a line: flour in the first, beaten eggs in the second, breadcrumbs mixed with grated Parmesan, oregano, and basil in the third.
+
+Work one piece at a time: dredge in flour and shake off the excess (the flour is an adhesive layer — too much creates a gummy base), dip in egg coating completely, then press firmly into the breadcrumb mixture on both sides. Press the breadcrumbs into the surface — passive coating falls off; pressed coating stays. Place on a wire rack while you bread the remaining pieces.
+
+### Step 3: Pan-fry until golden
+
+Preheat your oven to 400°F.
+
+Heat 3-4 tablespoons of oil in a large oven-safe skillet over medium-high heat. The oil should shimmer and a breadcrumb dropped in should sizzle immediately. If the oil isn't hot enough, the breadcrumbs absorb oil instead of crisping — greasy rather than golden.
+
+Add the chicken in batches if needed — do not crowd the pan. Cook 2-3 minutes per side until deep golden brown. You are not cooking the chicken through at this stage, only building the crust. Transfer to a wire rack if working in batches.
+
+### Step 4: Top and finish in the oven
+
+Return all four pieces to the skillet (or transfer to a sheet pan). Spoon marinara sauce over each piece — about 3 tablespoons each. Less sauce than you think: the goal is a thin layer that adds flavor without making the breading soggy. Top with shredded mozzarella and a sprinkle of Parmesan.
+
+Bake at 400°F for 15-18 minutes until the cheese is bubbling and the chicken reaches 165°F internal temperature. Rest 3 minutes before serving. Garnish with fresh basil if using.
+
+---
+
+## The Sheet Pan Shortcut (No Stovetop Required)
+
+If you want to skip the pan-frying step, you can bake the breaded chicken directly on a sheet pan. This method takes longer and produces a less dramatically crispy crust, but it is genuinely good and significantly easier to clean up.
+
+Preheat oven to 425°F. Line a sheet pan with a wire rack (important — direct sheet pan contact steams the bottom of the chicken and the breading never crisps). Spray the wire rack with cooking spray and place the breaded chicken on top. Spray the top of the chicken generously with cooking spray or brush lightly with olive oil. Bake 20-25 minutes until golden. Add sauce and cheese, return to oven for 5-7 minutes until cheese melts.
+
+The hybrid method — pan-fry just the first side, then flip onto a sheet pan sauce-side-up and finish in the oven — gives you most of the crust quality with less hands-on time.
+
+---
+
+## Make-Ahead and Storage Options
+
+**Bread ahead:** Breaded, uncooked chicken cutlets can be refrigerated on a wire rack (uncovered) for up to 24 hours before cooking. The drying actually improves the crust adhesion. Do not stack them.
+
+**Freeze before baking:** Bread the chicken, freeze flat on a sheet pan until solid, then transfer to a freezer bag. Cook from frozen at 400°F for 25-30 minutes (no sauce or cheese until the final 8 minutes). Quality is slightly reduced but still very good.
+
+**Reheat leftovers:** The oven is the only correct tool for reheating chicken parm. The microwave makes the breading soggy in under 60 seconds. Reheat at 375°F on a wire rack for 10-12 minutes. The crust comes back to approximately 80% of original crispiness, which is better than most restaurant leftovers.
+
+---
+
+## What to Serve with Chicken Parmesan
+
+**Classic:** Spaghetti with marinara. Use the same sauce from the chicken — heat the remainder in a small pan while the chicken is in the oven.
+
+**Lighter:** Zucchini noodles or spaghetti squash for a lower-carb version that keeps the spirit of the dish intact.
+
+**Side salad:** A simple arugula salad with lemon and olive oil cuts the richness of the cheese. This is the traditional Italian pairing.
+
+**Garlic bread:** If you are feeding children who already think chicken parm is perfect, garlic bread is the correct accompaniment.
+
+**Roasted vegetables:** Broccoli, asparagus, or green beans roasted on a second sheet pan in the same 400°F oven while the chicken finishes.
+
+---
+
+## Variations
+
+**Chicken Parmesan Sandwich:** Slice the cooked chicken breast and serve on a toasted hoagie roll with extra marinara and melted provolone. Better than any fast food chicken sandwich by a significant margin.
+
+**Baked (not fried) lighter version:** Skip the pan-fry entirely, use panko breadcrumbs instead of Italian breadcrumbs, and toast the panko in a dry skillet for 2 minutes before using. Pre-toasted panko mimics the color and crunch of fried breading without the oil.
+
+**Chicken Parmesan Bake (casserole style):** Lay breaded cutlets (pan-fried) in a 9x13 baking dish, spoon marinara over all, top with mozzarella and Parmesan, and bake. Serves a larger group with minimal effort and works as a make-ahead dish held in the refrigerator for up to 48 hours before baking.
+
+**Turkey Parmesan:** Substitute turkey cutlets. Same method, slightly shorter cook time (check at 165°F around minute 12-14 in the oven). Works especially well in November.
+
+**Eggplant Parmesan:** Salt eggplant slices, let them drain for 30 minutes to pull moisture out, then use the identical breading method. The texture is softer but the flavor profile is identical and it is one of the most satisfying vegetarian main courses.
+
+---
+
+## How DinnerDrop Uses This
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week based on your preferences, cook time limits, and what your family likes. Tell it you want classic Italian-American meals and it builds plans around dishes like this — with the full grocery list included, quantities adjusted for your family size. The beta is free for six months.
+
+---
+
+## Troubleshooting
+
+**Why is my breading falling off?**
+Three causes: the chicken surface was wet before breading (pat dry first), you skipped the flour layer (it is the adhesion base), or you did not press the breadcrumbs firmly into the surface. All three are easy to fix.
+
+**Why is my breading soggy?**
+The oil was not hot enough when you added the chicken, so the breadcrumbs absorbed oil instead of crisping in it. The second common cause is too much marinara sauce — a thin layer flavors the chicken, a thick layer steams the breading from above.
+
+**Why is my chicken dry?**
+Two causes: the breasts were not pounded to even thickness (the thicker parts cook through too slowly while the thinner parts overcook), or the internal temperature passed 165°F significantly. Use a thermometer and pull at exactly 165°F. Resting for 3 minutes helps.
+
+**My cheese isn't browning — how do I fix it?**
+Switch the oven to broil for the final 2-3 minutes. Watch it closely — cheese goes from perfectly golden to burnt in under a minute under the broiler. Stand at the oven.
+
+**Can I use chicken thighs?**
+Boneless, skinless thighs work and are harder to overcook. Pound them flat (they are irregular in thickness), bread identically, and increase oven time by 3-5 minutes. Some people prefer thighs for this dish because the higher fat content keeps them moist even if the timing is slightly off.
+
+---
+
+## FAQ
+
+**What is the difference between chicken parmesan and chicken parmigiana?**
+Nothing — they are the same dish. "Parmigiana" is the Italian (specifically Sicilian) origin; "parmesan" is the Americanized name. The dish as most Americans know it — breaded, pan-fried, topped with marinara and mozzarella — is an Italian-American creation rather than a traditional Italian dish, where melanzane (eggplant) parmigiana is the older and more traditional form.
+
+**Do I have to pan-fry first, or can I bake the whole thing?**
+You can bake it fully (see the sheet pan method above). The crust will be less crispy than the pan-fried version. If crispiness matters to your family, pan-fry. If ease matters more, bake at a higher temperature (425°F) on a wire rack.
+
+**What mozzarella works best — fresh or shredded?**
+Shredded low-moisture mozzarella melts cleaner and browns better. Fresh mozzarella is higher moisture, which can make the crust soggy and produces a more watery melt. Save fresh mozzarella for Caprese salads. Use shredded low-moisture mozzarella for chicken parmesan.
+
+**Can I make this gluten-free?**
+Yes. Use a gluten-free all-purpose flour for dredging, gluten-free Italian breadcrumbs (or blitz gluten-free crackers with Italian seasoning), and verify your marinara sauce is GF (most are). The method is identical.
+
+**How long does chicken parmesan keep in the refrigerator?**
+3-4 days. Reheat in the oven at 375°F on a wire rack for 10-12 minutes. Do not microwave — the breading becomes irreversibly soft.
+
+---
+
+Chicken parmesan is one of those dishes where a good method produces results that look and taste far more difficult than they were to make. Pound the chicken, build the crust in stages, get the oil hot, use less sauce than you think, and rest before serving. Forty minutes start to finish.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five family dinners and your complete grocery list every week. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
