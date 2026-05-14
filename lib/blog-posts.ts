@@ -12045,7 +12045,7 @@ Two techniques: First, pat the chicken completely dry before breading — any mo
   },
 
   {
-    slug: 'pork-chop-recipes',
+    slug: 'pork-chop-dinner-ideas',
     title: '25 Pork Chop Recipes the Whole Family Will Love',
     description: 'From juicy pan-seared pork chops to slow cooker smothered chops, these 25 easy pork chop recipes cover every technique and skill level for perfect weeknight dinners.',
     publishDate: '2027-02-23',
@@ -14417,14 +14417,15 @@ Leftover ideas: pot roast tacos with shredded beef and corn tortillas, pot roast
 ## How DinnerDrop Uses This
 
 [DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week based on your preferences, including how much active cooking time you have. Tell it you prefer set-and-forget dinners and it plans slow cooker and braise recipes like this one -- with the full grocery list for your family size included. The beta is free for six months.
-,
+`,
+  },
   {
     slug: 'chicken-pot-pie',
     title: 'Chicken Pot Pie: The Easy Homemade Recipe That Beats Any Frozen Version',
     description: 'Make a rich, creamy chicken pot pie from scratch with a flaky crust, tender chicken, and vegetable-packed filling. Includes shortcuts, a crustless skillet version, and make-ahead tips.',
     primaryKeyword: 'chicken pot pie',
     publishDate: '2027-11-23',
-    readingTime: 10,
+    readingTimeMinutes: 10,
     content: `# Chicken Pot Pie: The Easy Homemade Recipe That Beats Any Frozen Version
 
 Chicken pot pie is the definition of comfort food. A buttery flaky crust, creamy herbed filling packed with tender chicken and vegetables — it is the kind of dinner that makes people stop what they are doing and come to the table. Once you know the method, it takes about an hour from start to finish and the leftovers (if any survive) are somehow even better the next day.
@@ -14570,8 +14571,7 @@ Pot roast is one of the few dinners where the hands-off time is an advantage rat
 [DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. The beta is free for six months.
 
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
-`,
-  },
+
 **Can I use canned chicken for pot pie?**
 You can, but the texture will be mushier than rotisserie or poached chicken. If using canned, drain thoroughly and break up any large chunks. Rotisserie chicken is the superior shortcut.
 
@@ -15475,6 +15475,522 @@ Baked ziti is one of the most practical family dinners you can add to a rotation
 `,
   },
 
+=======
+    title: 'Hamburger Recipe: The Best Homemade Burger and 15 Variations Your Family Will Actually Request',
+    description: 'The best homemade hamburger recipe — juicy patties, proper technique, and 15 burger variations from classic cheeseburger to smash burgers, turkey burgers, and stuffed burgers.',
+    publishDate: '2028-02-18',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'hamburger recipe',
+    content: `
+Homemade burgers are one of the highest-return family dinners: fast to make, universally liked, and infinitely variable. Most home burgers end up dry, overworked, or falling apart because of a few fixable technique mistakes. This guide covers the classic recipe that produces a consistently juicy patty — and 15 variations your family will start requesting by name.
+
+---
+
+## The Classic Homemade Hamburger Recipe
+
+**Serves:** 4 | **Total time:** 25 minutes | **Hands-on:** 15 minutes
+
+### Ingredients
+
+- 1.5 pounds ground beef (80/20)
+- 1 teaspoon kosher salt
+- 1/2 teaspoon black pepper
+- 1/2 teaspoon garlic powder
+- 4 burger buns
+- Your choice of toppings: cheese, lettuce, tomato, onion, pickles, condiments
+- 1 tablespoon butter or oil for cooking
+
+### Instructions
+
+1. Divide ground beef into 4 equal portions (about 6 oz each). Handle as little as possible.
+2. Gently form each portion into a patty slightly wider than your bun — burgers shrink when cooked.
+3. Press a shallow thumb indent into the center of each patty. This prevents the center from puffing up.
+4. Season both sides generously with salt and pepper just before cooking.
+5. Heat a cast iron skillet or grill to high heat. Add butter or oil.
+6. Cook patties 3 to 4 minutes per side for medium (internal temp 160°F for food safety, or 145°F for medium).
+7. Add cheese in the last minute of cooking and cover briefly to melt.
+8. Toast buns cut-side down in the same pan for 30 to 60 seconds.
+9. Build your burger and serve immediately.
+
+---
+
+## Why Most Homemade Burgers Are Dry (And How to Fix It)
+
+**Use 80/20 ground beef.** The fat is what makes a burger juicy. Leaner beef (90/10 or 93/7) produces dry, crumbly patties. The fat renders as it cooks and keeps the meat moist. If you want a leaner option, use turkey or chicken — not lean beef.
+
+**Do not overwork the meat.** Mix-ins, pressing, and over-handling activate proteins that tighten the meat and make it dense and rubbery. Form the patty gently with minimal contact — about 5 seconds per patty.
+
+**Press the thumb indent.** A shallow indent in the center prevents the patty from puffing into a dome as the proteins contract under heat. Without it, you get an uneven burger that falls out of the bun.
+
+**Season at the last minute.** Salt draws out moisture. Season just before the patty hits the pan, not 20 minutes ahead. This keeps the surface dry for better browning and the interior juicy.
+
+**Use high heat.** A hot pan creates a Maillard crust — the browned, flavorful exterior that makes a burger taste like a burger, not a meatball. Medium heat steams the patty instead of searing it.
+
+---
+
+## 15 Burger Variations Your Family Will Actually Eat
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans your full five-dinner week — including burger nights — with a complete grocery list. The beta is free for six months.
+
+### Classic Burgers (5)
+
+**1. Classic Cheeseburger**
+American cheese melted over an 80/20 beef patty, served with ketchup, yellow mustard, pickles, and diced white onion on a potato bun. The simplicity is the point.
+
+**2. Smash Burger**
+Use a 3 oz ball of ground beef per patty. Place on a ripping-hot griddle and immediately smash flat with a heavy spatula. Cook 2 to 3 minutes until the edges are deeply browned and crispy. Flip once, add American cheese, cook 30 seconds. Serve double-stacked on a Martin's potato roll. The high surface-area-to-volume ratio maximizes crust.
+
+**3. Bacon Cheeseburger**
+Cook 4 strips of bacon until crispy. Layer over a classic beef patty with cheddar or American cheese, lettuce, tomato, and special sauce (mayo + ketchup + relish + a splash of vinegar).
+
+**4. Mushroom Swiss Burger**
+Sauté sliced cremini mushrooms in butter with a pinch of thyme until golden (8 to 10 minutes). Top a beef patty with Swiss cheese and the mushroom mixture. Serve on a brioche bun with Dijon mustard.
+
+**5. BBQ Burger**
+Season the patty with a dry rub (smoked paprika, garlic powder, brown sugar, cayenne). Glaze with BBQ sauce in the last minute of cooking. Top with crispy fried onion strings, pickles, and more BBQ sauce. Serve on a toasted sesame bun.
+
+---
+
+### Stuffed Burgers (3)
+
+**6. Jucy Lucy Stuffed Burger**
+Place 1 oz of American or cheddar cheese between two thin patties. Pinch the edges completely sealed. Cook over medium heat (lower than usual — the cheese needs time to melt). Let rest 5 minutes before eating — the molten interior is very hot. Originated at Matt's Bar in Minneapolis.
+
+**7. Blue Cheese Stuffed Burger**
+Stuff each patty with 1 tablespoon of crumbled blue cheese and a teaspoon of diced caramelized onion. Pinch sealed. Cook as usual. Top with arugula, caramelized onion, and a drizzle of balsamic reduction.
+
+**8. Jalapeño Popper Burger**
+Stuff the patty with cream cheese mixed with diced pickled jalapeños. Seal completely. Top the finished burger with pepper jack cheese, fresh jalapeño slices, and spicy mayo (mayo + sriracha + lime juice).
+
+---
+
+### Alternative Protein Burgers (4)
+
+**9. Turkey Burger**
+Ground turkey is leaner and drier than beef — compensate with additions: 1 tablespoon olive oil, 1 teaspoon Worcestershire sauce, and 2 tablespoons finely grated onion mixed directly into the meat. Do not overwork. Season aggressively. Cook to 165°F internal temperature.
+
+**10. Chicken Burger**
+Ground chicken tends to be very wet. Add 1/4 cup panko breadcrumbs to help bind and firm the patty. Season with garlic powder, onion powder, smoked paprika, and salt. Cook over medium heat (chicken burns more easily than beef). Top with pesto mayo and provolone.
+
+**11. Salmon Burger**
+Pulse 1 pound of salmon in a food processor until roughly chopped (not paste). Mix with 2 tablespoons breadcrumbs, 1 tablespoon Dijon, 1 egg yolk, capers, dill, salt, and pepper. Form into patties and refrigerate 20 minutes to firm. Cook in a nonstick pan over medium heat 3 to 4 minutes per side. Serve with lemon-caper aioli.
+
+**12. Black Bean Burger**
+Drain and partially mash two 15 oz cans of black beans — leave some texture. Mix with 1/2 cup breadcrumbs, 1 egg, diced jalapeño, cumin, smoked paprika, garlic powder, and salt. Form into patties and refrigerate 30 minutes minimum (critical for holding together). Cook in a nonstick pan with oil over medium heat 4 minutes per side. Do not flip early.
+
+---
+
+### Elevated Burgers (3)
+
+**13. Caramelized Onion Burger**
+Caramelize 2 large sliced onions in butter over medium-low heat for 40 to 45 minutes, stirring occasionally, until deep golden and jammy. Layer over a beef patty with Gruyère cheese and whole grain mustard on a brioche bun. The onions alone are worth the time.
+
+**14. Truffle Burger**
+Mix 1 teaspoon truffle oil and 1 tablespoon finely grated Parmesan into the raw beef before forming patties (sparingly — truffle oil is strong). Top with aged cheddar, arugula, and truffle mayo (mayo + a few drops of truffle oil). Serve on a brioche bun.
+
+**15. Banh Mi Burger**
+Season beef patty with fish sauce and lemongrass. Top with sriracha mayo, quick-pickled carrot and daikon (shredded, soaked in rice vinegar and sugar 20 minutes), fresh cilantro, and sliced jalapeño. Serve on a toasted baguette instead of a standard bun.
+
+---
+
+## The Five-Night Burger Rotation
+
+Burger night once a week stays fresh by rotating through styles:
+
+- **Week 1:** Classic cheeseburger — the reliable baseline
+- **Week 2:** Smash burgers — a different technique and texture
+- **Week 3:** Stuffed Jucy Lucy — a weekend project burger
+- **Week 4:** Turkey or chicken burger — lighter variation
+
+---
+
+## Sides That Work With Any Burger
+
+**Oven fries:** Cut potatoes into wedges, toss with oil, salt, garlic powder, and paprika. Roast at 425°F for 30 to 35 minutes, flipping once. Ready while the burgers cook.
+
+**Coleslaw:** Shredded cabbage and carrot tossed with mayo, apple cider vinegar, celery seed, and a pinch of sugar. Make it 30 minutes ahead — it improves as it sits.
+
+**Corn on the cob:** Boil or grill. Season with butter, salt, and smoked paprika. No recipe needed.
+
+**Simple green salad:** Works as a light counterbalance to a rich burger.
+
+---
+
+## Frequently Asked Questions
+
+**What is the best meat for homemade burgers?**
+80/20 ground chuck is the standard recommendation — enough fat to keep the burger juicy without being greasy. Ground sirloin (90/10) is leaner and works for those who prefer it, but needs a gentler touch and shorter cook time. Avoid ground round (very lean, very dry).
+
+**How do I know when a burger is done?**
+Use an instant-read thermometer. 160°F is fully cooked (USDA safe for ground beef). 145°F is medium (slightly pink center, juicier). 130°F is medium-rare (very pink, not recommended for ground beef since grinding distributes surface bacteria throughout). For turkey and chicken burgers, always cook to 165°F.
+
+**Why do my burgers fall apart on the grill?**
+Three common causes: (1) Too lean — not enough fat to bind. (2) Overworked — dense, crumbly texture. (3) Too wet — if adding mix-ins, drain any liquid ingredients thoroughly. Also ensure the grill is fully preheated before placing the patties — cold grates cause sticking.
+
+**How far in advance can I form patties?**
+Form patties up to 24 hours ahead and refrigerate covered. The cold helps them hold their shape. Do not freeze unless the ground beef itself was never frozen — refreezing previously frozen beef changes the texture.
+
+**What is special sauce and how do I make it?**
+Basic special sauce: 1/2 cup mayo, 2 tablespoons ketchup, 1 tablespoon yellow mustard, 1 tablespoon finely diced pickles or pickle relish, 1 teaspoon apple cider vinegar, 1/4 teaspoon garlic powder, salt and pepper. Stir together. Keeps refrigerated for up to 2 weeks. Better than any bottled condiment.
+
+---
+
+Homemade burgers consistently outperform restaurant versions when the technique is right — better fat content, better seasoning control, and straight from the pan to the bun. Master the 80/20 patty and the smash burger technique and you have two completely different burger nights in your rotation.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week — including burger nights — and generates the complete grocery list automatically. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+    `,
+  },
+  {
+    slug: 'chicken-fajitas-recipe',
+    title: 'Chicken Fajitas Recipe: The Best Sizzling Family Version (Ready in 30 Minutes)',
+    description: 'Make the best chicken fajitas at home with this simple, sizzling recipe. Juicy marinated chicken, charred peppers and onions, and a method that takes 30 minutes start to finish.',
+    publishDate: '2027-12-28',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'chicken fajitas recipe',
+    content: `Chicken fajitas are one of the best weeknight dinners you can have in rotation. They come together in 30 minutes, the prep is minimal, and the sizzle and aroma when they hit the table is enough to get even reluctant eaters to the kitchen.
+
+This is the recipe that actually works on a Tuesday night — one pan, a simple marinade that you can skip in a pinch, and a method that produces juicy chicken and properly charred vegetables every time.
+
+**[DinnerDrop builds your full five-dinner week automatically — try it free for 6 months.](https://dinnerdrop.app/beta)**
+
+---
+
+## What You Need
+
+**The chicken:**
+- 1½ lbs boneless skinless chicken breasts or thighs (thighs stay juicier; breasts work fine)
+- 2 tablespoons olive oil
+- Juice of 1 lime
+- 1 teaspoon cumin
+- 1 teaspoon chili powder
+- ½ teaspoon smoked paprika
+- ½ teaspoon garlic powder
+- ½ teaspoon onion powder
+- ¾ teaspoon salt
+- ¼ teaspoon black pepper
+
+**The vegetables:**
+- 2 bell peppers (any color — a mix of red and green looks best), sliced into strips
+- 1 large yellow onion, sliced into half-rings
+- 1 tablespoon olive oil
+- Salt and pepper
+
+**To serve:**
+- 8 small flour or corn tortillas, warmed
+- Sour cream, guacamole or sliced avocado, shredded cheese, salsa, fresh lime wedges, fresh cilantro
+
+---
+
+## The Method
+
+### 1. Slice and marinate the chicken
+
+Slice the chicken into strips roughly ½ inch wide, cutting against the grain. For breasts, pound to even thickness before slicing if any piece is noticeably thicker.
+
+Combine olive oil, lime juice, and all the spices in a bowl or zip-top bag. Add the chicken, toss to coat, and let it sit for at least 15 minutes at room temperature. If you have more time, up to 2 hours in the refrigerator is better. If you have zero time, skip it — the recipe still works.
+
+### 2. Get the pan very hot
+
+Use a cast iron skillet or heavy stainless pan. Set heat to high and let it preheat for 2 full minutes. You want genuine heat — this is what creates the char. A non-stick pan works but will not give you the same crust.
+
+### 3. Cook the vegetables first
+
+Add 1 tablespoon olive oil to the hot pan. Add the peppers and onion, season with a pinch of salt and pepper, and do not stir for the first 2 minutes. Let them sit against the hot surface and char on one side. Then toss and cook another 3–4 minutes until softened with some dark spots. Transfer to a plate.
+
+### 4. Cook the chicken in a single layer
+
+Add a drizzle of oil if the pan looks dry. Add the chicken strips in a single layer — do not crowd the pan. If your pan is small, cook in two batches. Crowding causes steaming instead of searing. Cook 3–4 minutes per side until there are dark edges and the internal temperature reaches 165°F. The marinade sugars will caramelize quickly — this is what you want.
+
+### 5. Combine and serve immediately
+
+Return the peppers and onion to the pan, toss briefly to combine, and take the pan directly to the table or serve onto a platter. The sizzle is the experience.
+
+Warm the tortillas in a dry skillet, in the oven wrapped in foil at 350°F for 10 minutes, or directly over a gas burner for 30 seconds per side.
+
+---
+
+## The 3 Rules That Make Fajitas Actually Good
+
+**1. High heat the whole way through.**
+Fajitas are not a low-and-slow dish. Everything should be cooked fast over high heat. The char on the vegetables and the crust on the chicken are not optional — they are the flavor.
+
+**2. Do not skip the resting cut.**
+After pulling the chicken off heat, let it rest 2 minutes before serving. This lets the juices redistribute. Cut-too-early chicken releases all the moisture onto your cutting board instead of into the tortilla.
+
+**3. Season the tortillas.**
+A warmed tortilla is fine. A warm tortilla that got 15 seconds in a dry cast iron pan until it has a few dark spots is significantly better. This one step upgrades store-bought tortillas to something worth eating.
+
+---
+
+## 5 Variations Worth Knowing
+
+**Sheet pan fajitas:** Toss everything on a sheet pan (425°F, 20–22 minutes, toss once at 10 minutes). Easier cleanup, same result, less sizzle drama.
+
+**Steak fajitas:** Substitute flank steak or skirt steak. Same marinade, same method. Cook steak to 130–135°F internal for medium-rare, rest 5 minutes before slicing thin against the grain.
+
+**Shrimp fajitas:** Use large shrimp (peeled, deveined). Marinate 10 minutes maximum. Cook 1–2 minutes per side. Shrimp go from done to overcooked fast.
+
+**Slow cooker fajitas:** Place whole chicken breasts in the slow cooker with the marinade ingredients and ½ cup chicken broth. Cook low 4–5 hours or high 2–3 hours. Shred. Char peppers and onions separately in a skillet (the slow cooker will not do this). The chicken will be very tender but you will not get the crust.
+
+**Fajita bowls:** Skip the tortillas. Serve over cilantro lime rice with black beans, corn, and all the toppings. Everything else is the same.
+
+---
+
+## Make-Ahead and Meal Prep
+
+**Marinade ahead:** Combine the marinade and add the sliced chicken up to 24 hours in advance. Store in the refrigerator. Do not marinate longer than 24 hours — the lime juice will begin to break down the protein and make the texture mealy.
+
+**Prep the vegetables:** Slice the peppers and onion up to 3 days ahead. Store in an airtight container in the refrigerator.
+
+**Cook ahead and reheat:** Cooked fajita chicken and vegetables reheat well. Reheat in a hot skillet (not the microwave, which steams them) for 3–4 minutes. They will not be quite as crisp on reheating but are still good.
+
+**Freeze the marinade:** Mix the dry spices and freeze in a small container or zip bag. Dump directly over chicken the night before — no measuring required.
+
+---
+
+## For Picky Eaters
+
+Fajitas are one of the best formats for families with picky eaters because the components are separate and customizable.
+
+The standard approach: serve the components separately — chicken on one plate, peppers/onion on another, all toppings available. Each person builds what they want. A child who will not touch peppers can have chicken and cheese in a tortilla. A child who wants only rice can have that. Everyone eats from the same dinner.
+
+If your child dislikes any spice at all, set aside a small portion of chicken before adding the marinade. Season with just salt and cook separately. The rest of the family gets the full version.
+
+---
+
+## What to Serve With Chicken Fajitas
+
+**Standard sides:**
+- Mexican rice or cilantro lime rice
+- Refried beans or black beans
+- Guacamole and chips as an appetizer while the fajitas cook
+
+**If you want to keep it simple:**
+- A bag of frozen corn, heated with butter and a squeeze of lime
+- A simple cabbage slaw (cabbage, lime, salt, tiny bit of sugar)
+- Store-bought salsa and sour cream do most of the work
+
+Fajitas are complete as a meal on their own. The sides are optional — most weeknight versions are just the fajitas in tortillas with whatever toppings are in the fridge.
+
+---
+
+## Frequently Asked Questions
+
+**Can I use chicken thighs instead of breasts?**
+Yes, and many cooks prefer them. Thighs have more fat content, which makes them more forgiving — they stay juicy even if you go a minute over. The cooking time is the same. Use boneless skinless thighs.
+
+**What if I don't have a cast iron skillet?**
+A heavy stainless pan or carbon steel pan will work nearly as well. Thin non-stick pans will not give you good char — the heat dissipates too quickly. Use whatever you have and still get it very hot.
+
+**Can I do this on the grill?**
+Yes. Marinate the chicken whole (not sliced), grill over high heat 5–6 minutes per side to 165°F internal, then slice. For the vegetables, use a grill basket or a sheet of heavy foil with the edges folded up. The grill adds smoke that works well here.
+
+**How do I warm tortillas without them getting stiff?**
+Wrap a stack in a damp paper towel and microwave 30–45 seconds. Alternatively, warm them in a dry skillet over medium heat 30 seconds per side. Keep them covered or wrapped until serving — they dry out fast once exposed to air.
+
+**What's the difference between fajita seasoning and taco seasoning?**
+Fajita seasoning leans heavier on cumin and chili powder, often with less oregano. Taco seasoning usually has more oregano and sometimes tomato powder. In practice, they are interchangeable for this recipe — use whatever you have.
+
+---
+
+Chicken fajitas are worth keeping in regular rotation because they hit every practical weeknight requirement: fast prep, one pan to clean, universally liked, endlessly reschedulable (you can marinate Monday and cook Thursday if plans change). Once you have the method down, it takes as long as it takes to heat a skillet.
+
+[DinnerDrop](https://dinnerdrop.app/beta) generates your family's full five-dinner week and matching grocery list in under a minute. The beta is free for six months — no credit card charge until month seven.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
+
+  {
+    slug: 'teriyaki-chicken',
+    title: 'Teriyaki Chicken: The Easy Homemade Version Better Than Any Takeout',
+    description: 'Make restaurant-quality teriyaki chicken at home in under 30 minutes. Includes the simple 4-ingredient sauce, oven, stovetop, and slow cooker methods, and tips for the glossy glaze families love.',
+    primaryKeyword: 'teriyaki chicken',
+    publishDate: '2028-02-03',
+    readingTimeMinutes: 9,
+    content: `# Teriyaki Chicken: The Easy Homemade Version Better Than Any Takeout
+
+Teriyaki chicken is one of the most universally liked dinners in any family rotation. The flavor profile — sweet, salty, slightly sticky, deeply savory — hits every note that makes a meal feel satisfying. Kids love it. Adults love it. It reheats perfectly the next day. And homemade teriyaki sauce takes four ingredients and five minutes, which is less time than it takes to find the menu and order delivery.
+
+This guide covers the stovetop glaze method, the oven bake method, the slow cooker version for set-and-forget dinners, and every tip for getting that glossy, lacquered finish that makes teriyaki so appealing.
+
+> **Dinner planned and groceries listed in 60 seconds:** [DinnerDrop builds your 5-meal weekly plan and grocery list automatically — try it free for 7 days](/beta)
+
+---
+
+## What Makes Teriyaki Sauce Work
+
+Authentic teriyaki sauce has four components:
+
+- **Soy sauce** -- the salt and umami base
+- **Mirin** -- sweet Japanese rice wine that adds depth and gloss
+- **Sake** -- dry rice wine that balances the sweetness (substitute dry sherry or rice vinegar)
+- **Sugar** -- brown sugar or honey adds caramelization
+
+The ratio: 3 tablespoons soy sauce, 2 tablespoons mirin, 1 tablespoon sake or dry sherry, 1 tablespoon brown sugar. That is it. Simmer 2-3 minutes until slightly thickened. The cornstarch slurry approach (1 tsp cornstarch dissolved in 1 tbsp water) gives a thicker, glossier result -- add it at the end if you want restaurant-style sauce.
+
+Bottled teriyaki sauce works fine. Kikkoman and Soy Vay are both reliable. Homemade is better, but the difference is not worth the effort on a busy Tuesday.
+
+---
+
+## Method 1: Stovetop Glaze (Best Flavor -- 25 Minutes)
+
+Best for boneless chicken thighs or breasts sliced thin.
+
+**Serves:** 4 | **Prep:** 5 min | **Cook:** 20 min
+
+### Ingredients
+
+- 1.5 lbs boneless skinless chicken thighs (preferred) or breasts
+- 3 tbsp soy sauce
+- 2 tbsp mirin
+- 1 tbsp sake or dry sherry
+- 1 tbsp brown sugar
+- 2 garlic cloves, minced
+- 1 tsp fresh ginger, grated
+- 1 tsp sesame oil
+- Optional: 1 tsp cornstarch dissolved in 1 tbsp water for thicker sauce
+- For serving: steamed white rice, sesame seeds, sliced green onions, steamed broccoli or edamame
+
+### Instructions
+
+**1. Make the sauce.** Whisk soy sauce, mirin, sake, brown sugar, garlic, and ginger in a small bowl. Set aside.
+
+**2. Cook the chicken.** Pat chicken dry with paper towels. Heat 1 tablespoon oil in a large skillet over medium-high heat. Add chicken in a single layer, working in batches if needed. Cook 4-5 minutes without moving until golden brown. Flip and cook another 3-4 minutes until cooked through (165 degrees F internal).
+
+**3. Glaze.** Reduce heat to medium. Pour sauce over chicken. Toss to coat. Cook 2-3 minutes, turning chicken frequently, until sauce reduces and glazes every piece. It should look sticky and lacquered. If using cornstarch slurry, add it now and stir constantly for 1 minute.
+
+**4. Finish.** Add sesame oil, toss once more. Slice chicken against the grain if using breasts. Serve immediately over steamed rice.
+
+Why thighs over breasts: Chicken thighs stay juicy under high-heat glazing. Breasts can dry out if overcooked by even a minute. If using breasts, slice them horizontally to create cutlets before cooking.
+
+---
+
+## Method 2: Oven-Baked Teriyaki Chicken (Easiest -- 35 Minutes)
+
+Best for bone-in thighs or a larger batch.
+
+**Serves:** 4-6 | **Prep:** 5 min + 30 min marinating | **Cook:** 40 min
+
+### Ingredients
+
+- 2-2.5 lbs bone-in skin-on chicken thighs (or boneless)
+- 1/3 cup teriyaki sauce (homemade or bottled)
+- 1 tbsp sesame oil
+- Salt and pepper
+
+### Instructions
+
+**1. Marinate.** Combine chicken with half the teriyaki sauce and sesame oil. Marinate 30 minutes at room temperature or up to 8 hours in the refrigerator.
+
+**2. Bake.** Preheat oven to 400 degrees F. Arrange chicken skin-side up on a rimmed baking sheet or in a baking dish. Bake 30 minutes.
+
+**3. Glaze and finish.** Brush with remaining teriyaki sauce. Return to oven for 8-10 minutes until chicken is cooked through (165 degrees F internal) and the glaze is caramelized at the edges.
+
+**4. Optional broil.** For extra caramelization, broil 2-3 minutes at the end. Watch closely -- teriyaki sauce burns fast under direct heat.
+
+Make-ahead tip: Marinate overnight, bake the next day. The longer marinade time significantly deepens the flavor.
+
+---
+
+## Method 3: Slow Cooker Teriyaki Chicken (Set and Forget)
+
+Best for shredded teriyaki chicken over rice bowls. Feeds 6, makes excellent leftovers.
+
+**Serves:** 6 | **Cook time:** 6-7 hours on LOW
+
+### Ingredients
+
+- 2 lbs boneless skinless chicken thighs
+- 1/2 cup soy sauce
+- 1/4 cup brown sugar
+- 2 tbsp rice vinegar
+- 3 garlic cloves, minced
+- 1 tbsp fresh ginger, grated
+- 2 tbsp cornstarch + 2 tbsp water (for thickening at end)
+
+### Instructions
+
+**1. Combine.** Place chicken in slow cooker. Whisk soy sauce, brown sugar, rice vinegar, garlic, and ginger. Pour over chicken.
+
+**2. Cook.** LOW 6-7 hours or HIGH 3-4 hours. Chicken is done when it shreds easily with a fork.
+
+**3. Shred and thicken.** Remove chicken and shred with two forks. Whisk cornstarch slurry into the cooking liquid. Turn slow cooker to HIGH, cover, and cook 20-30 minutes until sauce thickens into a glaze consistency. Return shredded chicken to the pot and toss to coat.
+
+**4. Serve.** Over steamed white rice with steamed broccoli, edamame, or snap peas. Top with sesame seeds and sliced green onions.
+
+Slow cooker teriyaki is the meal prep champion. One batch feeds four people twice. The shredded chicken reheats in 90 seconds with a splash of water, making it the most forgiving leftover in the rotation.
+
+---
+
+## Teriyaki Chicken Bowl Build
+
+The bowl format makes teriyaki a complete dinner. Each component stands alone, which also makes it a picky eater solution.
+
+**Base:** Steamed jasmine rice, brown rice, or rice noodles
+
+**Protein:** Teriyaki chicken, sliced or shredded
+
+**Vegetables:** Steamed broccoli, edamame, snap peas, sliced cucumber, shredded purple cabbage, or roasted carrots
+
+**Toppings:** Sesame seeds, sliced green onions, pickled ginger, sriracha mayo (mayo + sriracha + lime juice) for adults who want heat
+
+Serve each component separately for younger or pickier eaters -- everything is the same dinner, it just doesn't touch.
+
+---
+
+## Common Teriyaki Mistakes
+
+**Using too much sauce before cooking.** Excess sauce burns before the chicken finishes cooking. Use a light coat for cooking and add more sauce in the last 2-3 minutes to build the glaze.
+
+**Skipping the pat-dry step.** Surface moisture creates steam instead of browning. Dry chicken produces better caramelization.
+
+**Overcrowding the pan.** Chicken steams instead of sears when pieces touch each other. Cook in batches if your pan is not large enough.
+
+**Pulling it too soon.** The glaze needs those final 2-3 minutes to reduce and become sticky. Take it off too early and the sauce stays thin.
+
+---
+
+## Teriyaki Variations Worth Making
+
+**Teriyaki Salmon:** Substitute salmon fillets. Bake at 400 degrees F for 12 minutes with teriyaki sauce brushed on at the start. Broil 2 minutes at the end. One of the fastest healthy dinners possible.
+
+**Teriyaki Shrimp:** Saute shrimp in oil over high heat 2 minutes per side. Add teriyaki sauce and cook 2 minutes more until shrimp is coated and sauce thickens.
+
+**Teriyaki Beef:** Thin-sliced ribeye or sirloin, cooked in a hot skillet 2-3 minutes per side, glazed with teriyaki in the final minute. Faster and richer than chicken.
+
+**Teriyaki Tofu:** Press extra-firm tofu, cube it, and pan-fry until crispy on all sides before adding sauce. The crispy exterior holds the glaze better than soft tofu.
+
+---
+
+## FAQ
+
+**Can I make teriyaki chicken ahead?**
+Yes. Cooked teriyaki chicken keeps 4 days in the refrigerator and 3 months frozen. Reheat gently in a skillet with a splash of water to loosen the sauce, or microwave with a damp paper towel over the top to prevent drying out.
+
+**Is teriyaki chicken healthy?**
+By most measures, yes. Chicken thighs are high protein. The sauce adds about 60-80 calories per serving for homemade. Serve with steamed vegetables instead of fried rice to keep the full meal balanced.
+
+**What is the difference between teriyaki and soy sauce chicken?**
+Teriyaki uses mirin and sugar, which caramelize into a glossy glaze during cooking. Plain soy sauce chicken is saltier and less sweet without the caramelized finish. The mirin is what makes teriyaki distinct.
+
+**Can I use chicken breasts instead of thighs?**
+Yes, but thighs are significantly more forgiving. Breasts cook faster and dry out more easily. If using breasts, slice horizontally into thin cutlets and cook at slightly lower heat.
+
+**Why is my sauce not getting glossy?**
+Two reasons: either the heat is too low (sauce needs to actively bubble to reduce and caramelize) or there is too much liquid in the pan. Increase heat to medium-high and keep the chicken moving.
+
+---
+
+## How DinnerDrop Uses This
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. Tell it your family preferences -- including quick weeknight dinners, slow cooker options, or both -- and it builds the week automatically. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
