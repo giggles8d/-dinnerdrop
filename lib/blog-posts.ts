@@ -27543,7 +27543,164 @@ Chicken parmesan is one of the most reliable weeknight dinners for families. Mos
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+,
+  {
+    slug: 'chicken-pot-pie',
+    title: 'Chicken Pot Pie: The Easy Homemade Recipe That Beats Any Frozen Version',
+    description: 'Make a rich, creamy chicken pot pie from scratch with a flaky crust, tender chicken, and vegetable-packed filling. Includes shortcuts, a crustless skillet version, and make-ahead tips.',
+    primaryKeyword: 'chicken pot pie',
+    publishDate: '2027-11-23',
+    readingTime: 10,
+    content: `# Chicken Pot Pie: The Easy Homemade Recipe That Beats Any Frozen Version
 
+Chicken pot pie is the definition of comfort food. A buttery flaky crust, creamy herbed filling packed with tender chicken and vegetables — it is the kind of dinner that makes people stop what they are doing and come to the table. Once you know the method, it takes about an hour from start to finish and the leftovers (if any survive) are somehow even better the next day.
+
+This guide covers the full classic version, a 30-minute shortcut using rotisserie chicken and store-bought crust, a crustless skillet version for weeknights, and every tip for a filling that is rich but not gluey.
+
+> **Need your whole week planned, not just tonight?** [DinnerDrop builds your 5-meal weekly plan and grocery list in under 60 seconds — try it free for 7 days](/beta)
+
+---
+
+## Classic Chicken Pot Pie Recipe
+
+**Serves:** 6 | **Prep:** 20 min | **Cook:** 45 min | **Total:** ~1 hour 5 min
+
+### Ingredients
+
+**For the filling:**
+- 3 cups cooked chicken, shredded or cubed (rotisserie chicken works perfectly)
+- 1/3 cup unsalted butter
+- 1 medium yellow onion, diced
+- 3 cloves garlic, minced
+- 2 medium carrots, peeled and diced
+- 2 stalks celery, diced
+- 1/3 cup all-purpose flour
+- 2 cups chicken broth
+- 1 cup whole milk or half-and-half
+- 1 cup frozen peas
+- 1 tsp dried thyme
+- 1/2 tsp dried rosemary
+- 1 tsp salt, 1/2 tsp black pepper
+
+**For the crust:**
+- 2 store-bought refrigerated pie crusts (one bottom, one top) OR homemade double crust
+- 1 egg beaten with 1 tbsp water (egg wash)
+
+### Instructions
+
+**1. Preheat oven to 425 degrees F.**
+
+**2. Make the filling.** Melt butter in a large oven-safe skillet or saucepan over medium heat. Add onion, carrots, and celery. Cook 6-8 minutes until softened. Add garlic and cook 1 minute more.
+
+**3. Build the roux.** Sprinkle flour over the vegetables and stir to coat. Cook 2 minutes, stirring constantly — this cooks out the raw flour taste.
+
+**4. Add liquids.** Slowly pour in chicken broth while stirring, then add milk. Bring to a simmer, stirring frequently. Cook 5-7 minutes until the mixture thickens to a gravy-like consistency.
+
+**5. Add chicken and seasoning.** Stir in chicken, frozen peas, thyme, rosemary, salt, and pepper. Remove from heat. Taste and adjust seasoning.
+
+**6. Assemble.** Unroll one pie crust into a 9-inch pie dish. Pour in the filling. Cover with the second crust, crimp the edges to seal, and cut 4-5 slits in the top to vent steam. Brush with egg wash.
+
+**7. Bake.** Bake at 425 degrees F for 30-35 minutes until the crust is deep golden brown. If edges brown too quickly, shield them with foil or a pie shield after 20 minutes.
+
+**8. Rest before cutting.** Let the pot pie rest for 10 minutes before slicing — the filling sets as it cools slightly and will not pour out.
+
+---
+
+## What Makes a Great Pot Pie Filling
+
+**Proper roux-to-liquid ratio.** The 1/3 cup flour to 3 cups total liquid creates a filling thick enough to hold its shape when cut but creamy and loose enough to eat. Too much flour and it is pasty. Too little and it pours out when you slice it.
+
+**Cook the vegetables first.** Raw vegetables in the filling will release water as they bake, thinning the sauce and undercooking at the center. Saute them until tender before adding the liquid.
+
+**Do not skip the egg wash.** Egg wash is the difference between a pale, dull crust and a deep mahogany one. Beat one egg with a tablespoon of water and brush the entire top crust before baking.
+
+**Rotisserie chicken is the right call.** You need fully cooked chicken for this recipe anyway, and rotisserie gives you tender, already-seasoned meat in seconds. There is no reason to poach raw chicken for pot pie.
+
+---
+
+## 4 Chicken Pot Pie Variations
+
+### 1. 30-Minute Shortcut Version
+
+Use rotisserie chicken and store-bought refrigerated pie crust (Pillsbury rolls out of a can). The only thing you are making from scratch is the filling — and that takes 15 minutes. Total hands-on time: 20 minutes. This is the weeknight version.
+
+### 2. Crustless Chicken Pot Pie Skillet
+
+Make the filling exactly as written. Serve it in bowls with crusty bread for dipping, or top with store-bought biscuits (place them directly on top of the filling and bake at 400 degrees F for 12-15 minutes). No crust to make, no pie dish to clean, just a rich creamy chicken dinner in under 30 minutes.
+
+### 3. Individual Pot Pies
+
+Use a muffin tin or ramekins. Cut circles of pie crust slightly larger than each opening, press in as the bottom crust, fill, cover with a smaller circle of crust, and seal. Bake at 400 degrees F for 20-25 minutes. Great for portion control and the kids love having their own.
+
+### 4. Puff Pastry Top Crust
+
+Skip the bottom crust entirely and top the filling with one sheet of store-bought puff pastry. Cut to fit the baking dish, press the edges to seal, brush with egg wash, and bake at 400 degrees F for 25-30 minutes. The puff pastry blisters and crisps dramatically — visually impressive and even easier than a traditional crust.
+
+---
+
+## Make-Ahead and Freezing
+
+**Assemble, then refrigerate:** Build the entire assembled pot pie up to 24 hours ahead. Cover tightly with plastic wrap and refrigerate. Bake straight from the fridge, adding 5-10 extra minutes.
+
+**Freeze unbaked:** Assemble the pot pie completely. Wrap tightly in plastic wrap, then foil. Freeze up to 3 months. Bake from frozen at 400 degrees F for 60-70 minutes, tenting with foil if the crust browns too quickly.
+
+**Freeze the filling only:** Make the filling, cool completely, and freeze in a zip-top bag. When ready to use, thaw overnight in the fridge, pour into a pie dish with crusts, and bake as directed.
+
+**Leftover storage:** Refrigerate leftovers covered for up to 4 days. Reheat individual slices in a 350-degree oven for 15 minutes or in the microwave for 2 minutes (crust will soften).
+
+---
+
+## Troubleshooting
+
+**Filling is too runny when cut:** The filling was not thick enough before going into the oven, or you did not let it rest after baking. Resting 10 minutes allows the starch to finish thickening as it cools. If the filling is consistently thin, add an extra tablespoon of flour to the roux.
+
+**Bottom crust is soggy:** Blind bake the bottom crust for 10 minutes at 425 degrees F before adding the filling. This sets the crust before the wet filling touches it.
+
+**Top crust burns before filling is done:** Shield the edges and top loosely with foil after 20 minutes of baking. The filling needs more time than the crust — foil slows the crust browning without stopping it.
+
+**Crust is pale and not golden:** You skipped the egg wash, or your oven runs cool. Always use egg wash and verify your oven temperature with an oven thermometer.
+
+**Filling tastes bland:** Season aggressively before baking. Cream and starchy fillings absorb salt. Taste the filling before it goes into the crust — it should taste slightly over-seasoned raw because the flavor mellows in the oven.
+
+---
+
+## What to Serve With Chicken Pot Pie
+
+Chicken pot pie is a complete meal on its own — protein, vegetables, and carbs in one dish. But if you want sides:
+
+- **Simple green salad** with a sharp vinaigrette to cut through the richness
+- **Roasted green beans or asparagus** — bright vegetables provide contrast
+- **Cranberry sauce** — sounds odd, works brilliantly, especially in fall and winter
+- **Sparkling water with lemon** or a light white wine for adults
+
+---
+
+## FAQ
+
+**Can I use canned chicken for pot pie?**
+You can, but the texture will be mushier than rotisserie or poached chicken. If using canned, drain thoroughly and break up any large chunks. Rotisserie chicken is the superior shortcut.
+
+**How do I keep the bottom crust from getting soggy?**
+Three options: blind bake the bottom crust 10 minutes before filling, use a glass pie dish (conducts heat better than ceramic), or skip the bottom crust entirely and do a top-crust-only or puff pastry version.
+
+**Can I make chicken pot pie without dairy?**
+Yes. Substitute unsweetened oat milk or full-fat coconut milk for the dairy. Use dairy-free butter for the roux. The flavor will be slightly different but the technique is identical.
+
+**How long does chicken pot pie last in the fridge?**
+Up to 4 days covered in the refrigerator. The crust softens over time but the flavor improves — the filling seasons the crust from inside.
+
+**Can I add other vegetables?**
+Absolutely. Diced potatoes, corn, green beans, mushrooms, and parsnips all work well. Add heartier vegetables with the onions and carrots. Add softer vegetables like corn or spinach at the end with the peas.
+
+---
+
+## Stop Asking "What Is for Dinner" Every Single Night
+
+Chicken pot pie is exactly the kind of dinner that deserves a spot on the weekly rotation — but planning five nights from scratch every week takes time you do not have. [DinnerDrop generates your personalized 5-meal week plus a complete grocery list in under 60 seconds.](/beta) Tell it your preferences, dietary needs, and preferred stores once. It handles the rest.
+
+[Start your free 7-day trial at DinnerDrop](/beta)
+`
+  }
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
