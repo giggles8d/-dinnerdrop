@@ -13001,7 +13001,8 @@ Salmon pairs with almost any side: roasted vegetables, rice, quinoa, couscous, m
 Twenty-five recipes gives you five weeks of salmon dinners before repetition. If you want those recipes organized into a personalized weekly plan with a sorted grocery list, [DinnerDrop handles the planning for you.](/beta)
 `
   }
-,
+
+,
   {
     slug: 'steak-dinner-ideas',
     title: '25 Steak Dinner Ideas for Weeknights and Special Occasions',
@@ -13156,8 +13157,8 @@ Steak pairs with almost any side: roasted potatoes, mashed potatoes, roasted veg
 ---
 
 Twenty-five steak dinner ideas — from 15-minute weeknight skillets to Sunday braises — mean steak works at every budget and time constraint your week throws at you. If rotating through them on a schedule with a matching grocery list sounds like the part you would rather hand off, [DinnerDrop handles the planning so you handle the cooking.](/beta)
-`
-  }
+`,
+  },
 
   {
     slug: 'sheet-pan-chicken',
@@ -13307,8 +13308,8 @@ At 400–425°F for 35–40 minutes (matching bone-in thighs): broccoli florets,
 ---
 
 Twenty-five sheet pan chicken recipes mean you can cook a different dinner every weeknight for five weeks without repeating. If rotating through them on a planned schedule — matched to what your family actually likes and what is already in the refrigerator — sounds better than deciding at 5pm, [DinnerDrop builds that plan for you every week.](/beta)
-`
-  }
+`,
+  },
 
   {
     slug: 'instant-pot-recipes',
