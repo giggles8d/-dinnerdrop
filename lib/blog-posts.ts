@@ -14132,6 +14132,178 @@ Lasagna rewards patience in two places: simmering the sauce long enough to conce
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'chicken-parmesan-recipe',
+    title: 'Chicken Parmesan Recipe: The Classic That Actually Works on a Weeknight',
+    description:
+      'A foolproof chicken parmesan recipe with crispy breading, rich marinara, and melted cheese. Tips for keeping it crispy, shortcuts that do not sacrifice quality, and make-ahead options for busy families.',
+    publishDate: '2027-11-16',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'chicken parmesan recipe',
+    content: `Chicken parmesan earns its place in the permanent rotation because it satisfies every requirement a weeknight dinner needs to meet: it appeals to nearly every family member without modification, the leftovers are as good as the original, and it is genuinely achievable on a school night if you know the shortcuts that do not cost you anything in quality.
+
+The failure mode most people encounter is the breading falling off or going soggy in the oven. Both problems have simple causes and simple fixes. This guide covers the classic method, the sheet pan shortcut, the make-ahead option, and the troubleshooting cases that trip people up.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. The beta is free for six months.
+
+---
+
+## What You Need
+
+**Serves:** 4
+**Total time:** 40 minutes (active: 20 minutes)
+**Equipment:** Meat mallet or rolling pin, three shallow dishes, large oven-safe skillet or sheet pan
+
+### Ingredients
+
+**For the chicken:**
+- 4 boneless, skinless chicken breasts (6-8 oz each)
+- 1 tsp salt
+- ½ tsp black pepper
+- ½ tsp garlic powder
+- ½ cup all-purpose flour
+- 2 large eggs, beaten
+- 1 cup Italian breadcrumbs
+- ½ cup grated Parmesan (freshly grated, not canned)
+- ½ tsp dried oregano
+- ½ tsp dried basil
+- 3-4 tbsp olive oil or vegetable oil
+
+**For topping:**
+- 1½ cups marinara sauce (store-bought or homemade)
+- 1½ cups shredded mozzarella
+- ¼ cup grated Parmesan
+- Fresh basil for garnish (optional)
+
+---
+
+## Instructions
+
+### Step 1: Pound the chicken to even thickness
+
+Place each chicken breast between two sheets of plastic wrap or in a zip-lock bag. Pound with a meat mallet or rolling pin to an even ¾-inch thickness. This is the most important step — uneven chicken means the thin parts overcook while the thick parts are still raw. Even thickness also means faster, more consistent cooking. Season both sides with salt, pepper, and garlic powder.
+
+### Step 2: Set up the breading station
+
+Set up three shallow dishes in a line: flour in the first, beaten eggs in the second, breadcrumbs mixed with grated Parmesan, oregano, and basil in the third.
+
+Work one piece at a time: dredge in flour and shake off the excess (the flour is an adhesive layer — too much creates a gummy base), dip in egg coating completely, then press firmly into the breadcrumb mixture on both sides. Press the breadcrumbs into the surface — passive coating falls off; pressed coating stays. Place on a wire rack while you bread the remaining pieces.
+
+### Step 3: Pan-fry until golden
+
+Preheat your oven to 400°F.
+
+Heat 3-4 tablespoons of oil in a large oven-safe skillet over medium-high heat. The oil should shimmer and a breadcrumb dropped in should sizzle immediately. If the oil isn't hot enough, the breadcrumbs absorb oil instead of crisping — greasy rather than golden.
+
+Add the chicken in batches if needed — do not crowd the pan. Cook 2-3 minutes per side until deep golden brown. You are not cooking the chicken through at this stage, only building the crust. Transfer to a wire rack if working in batches.
+
+### Step 4: Top and finish in the oven
+
+Return all four pieces to the skillet (or transfer to a sheet pan). Spoon marinara sauce over each piece — about 3 tablespoons each. Less sauce than you think: the goal is a thin layer that adds flavor without making the breading soggy. Top with shredded mozzarella and a sprinkle of Parmesan.
+
+Bake at 400°F for 15-18 minutes until the cheese is bubbling and the chicken reaches 165°F internal temperature. Rest 3 minutes before serving. Garnish with fresh basil if using.
+
+---
+
+## The Sheet Pan Shortcut (No Stovetop Required)
+
+If you want to skip the pan-frying step, you can bake the breaded chicken directly on a sheet pan. This method takes longer and produces a less dramatically crispy crust, but it is genuinely good and significantly easier to clean up.
+
+Preheat oven to 425°F. Line a sheet pan with a wire rack (important — direct sheet pan contact steams the bottom of the chicken and the breading never crisps). Spray the wire rack with cooking spray and place the breaded chicken on top. Spray the top of the chicken generously with cooking spray or brush lightly with olive oil. Bake 20-25 minutes until golden. Add sauce and cheese, return to oven for 5-7 minutes until cheese melts.
+
+The hybrid method — pan-fry just the first side, then flip onto a sheet pan sauce-side-up and finish in the oven — gives you most of the crust quality with less hands-on time.
+
+---
+
+## Make-Ahead and Storage Options
+
+**Bread ahead:** Breaded, uncooked chicken cutlets can be refrigerated on a wire rack (uncovered) for up to 24 hours before cooking. The drying actually improves the crust adhesion. Do not stack them.
+
+**Freeze before baking:** Bread the chicken, freeze flat on a sheet pan until solid, then transfer to a freezer bag. Cook from frozen at 400°F for 25-30 minutes (no sauce or cheese until the final 8 minutes). Quality is slightly reduced but still very good.
+
+**Reheat leftovers:** The oven is the only correct tool for reheating chicken parm. The microwave makes the breading soggy in under 60 seconds. Reheat at 375°F on a wire rack for 10-12 minutes. The crust comes back to approximately 80% of original crispiness, which is better than most restaurant leftovers.
+
+---
+
+## What to Serve with Chicken Parmesan
+
+**Classic:** Spaghetti with marinara. Use the same sauce from the chicken — heat the remainder in a small pan while the chicken is in the oven.
+
+**Lighter:** Zucchini noodles or spaghetti squash for a lower-carb version that keeps the spirit of the dish intact.
+
+**Side salad:** A simple arugula salad with lemon and olive oil cuts the richness of the cheese. This is the traditional Italian pairing.
+
+**Garlic bread:** If you are feeding children who already think chicken parm is perfect, garlic bread is the correct accompaniment.
+
+**Roasted vegetables:** Broccoli, asparagus, or green beans roasted on a second sheet pan in the same 400°F oven while the chicken finishes.
+
+---
+
+## Variations
+
+**Chicken Parmesan Sandwich:** Slice the cooked chicken breast and serve on a toasted hoagie roll with extra marinara and melted provolone. Better than any fast food chicken sandwich by a significant margin.
+
+**Baked (not fried) lighter version:** Skip the pan-fry entirely, use panko breadcrumbs instead of Italian breadcrumbs, and toast the panko in a dry skillet for 2 minutes before using. Pre-toasted panko mimics the color and crunch of fried breading without the oil.
+
+**Chicken Parmesan Bake (casserole style):** Lay breaded cutlets (pan-fried) in a 9x13 baking dish, spoon marinara over all, top with mozzarella and Parmesan, and bake. Serves a larger group with minimal effort and works as a make-ahead dish held in the refrigerator for up to 48 hours before baking.
+
+**Turkey Parmesan:** Substitute turkey cutlets. Same method, slightly shorter cook time (check at 165°F around minute 12-14 in the oven). Works especially well in November.
+
+**Eggplant Parmesan:** Salt eggplant slices, let them drain for 30 minutes to pull moisture out, then use the identical breading method. The texture is softer but the flavor profile is identical and it is one of the most satisfying vegetarian main courses.
+
+---
+
+## How DinnerDrop Uses This
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week based on your preferences, cook time limits, and what your family likes. Tell it you want classic Italian-American meals and it builds plans around dishes like this — with the full grocery list included, quantities adjusted for your family size. The beta is free for six months.
+
+---
+
+## Troubleshooting
+
+**Why is my breading falling off?**
+Three causes: the chicken surface was wet before breading (pat dry first), you skipped the flour layer (it is the adhesion base), or you did not press the breadcrumbs firmly into the surface. All three are easy to fix.
+
+**Why is my breading soggy?**
+The oil was not hot enough when you added the chicken, so the breadcrumbs absorbed oil instead of crisping in it. The second common cause is too much marinara sauce — a thin layer flavors the chicken, a thick layer steams the breading from above.
+
+**Why is my chicken dry?**
+Two causes: the breasts were not pounded to even thickness (the thicker parts cook through too slowly while the thinner parts overcook), or the internal temperature passed 165°F significantly. Use a thermometer and pull at exactly 165°F. Resting for 3 minutes helps.
+
+**My cheese isn't browning — how do I fix it?**
+Switch the oven to broil for the final 2-3 minutes. Watch it closely — cheese goes from perfectly golden to burnt in under a minute under the broiler. Stand at the oven.
+
+**Can I use chicken thighs?**
+Boneless, skinless thighs work and are harder to overcook. Pound them flat (they are irregular in thickness), bread identically, and increase oven time by 3-5 minutes. Some people prefer thighs for this dish because the higher fat content keeps them moist even if the timing is slightly off.
+
+---
+
+## FAQ
+
+**What is the difference between chicken parmesan and chicken parmigiana?**
+Nothing — they are the same dish. "Parmigiana" is the Italian (specifically Sicilian) origin; "parmesan" is the Americanized name. The dish as most Americans know it — breaded, pan-fried, topped with marinara and mozzarella — is an Italian-American creation rather than a traditional Italian dish, where melanzane (eggplant) parmigiana is the older and more traditional form.
+
+**Do I have to pan-fry first, or can I bake the whole thing?**
+You can bake it fully (see the sheet pan method above). The crust will be less crispy than the pan-fried version. If crispiness matters to your family, pan-fry. If ease matters more, bake at a higher temperature (425°F) on a wire rack.
+
+**What mozzarella works best — fresh or shredded?**
+Shredded low-moisture mozzarella melts cleaner and browns better. Fresh mozzarella is higher moisture, which can make the crust soggy and produces a more watery melt. Save fresh mozzarella for Caprese salads. Use shredded low-moisture mozzarella for chicken parmesan.
+
+**Can I make this gluten-free?**
+Yes. Use a gluten-free all-purpose flour for dredging, gluten-free Italian breadcrumbs (or blitz gluten-free crackers with Italian seasoning), and verify your marinara sauce is GF (most are). The method is identical.
+
+**How long does chicken parmesan keep in the refrigerator?**
+3-4 days. Reheat in the oven at 375°F on a wire rack for 10-12 minutes. Do not microwave — the breading becomes irreversibly soft.
+
+---
+
+Chicken parmesan is one of those dishes where a good method produces results that look and taste far more difficult than they were to make. Pound the chicken, build the crust in stages, get the oil hot, use less sauce than you think, and rest before serving. Forty minutes start to finish.
+
+[DinnerDrop](https://dinnerdrop.app/beta) plans five family dinners and your complete grocery list every week. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
