@@ -15173,6 +15173,137 @@ Spaghetti is the dinner that taught most families how to cook. The classic meat 
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
   },
+  {
+    slug: 'baked-ziti-recipe',
+    title: 'Baked Ziti Recipe: The Best Easy Family Pasta (Ready in 45 Minutes)',
+    description: 'The best baked ziti recipe for families — hearty pasta baked with ricotta, mozzarella, marinara, and Italian sausage. Includes make-ahead, vegetarian, and freezer meal versions.',
+    publishDate: '2027-12-21',
+    readingTimeMinutes: 8,
+    primaryKeyword: 'baked ziti recipe',
+    content: `Baked ziti is what happens when pasta becomes a proper casserole: tube-shaped pasta layered with ricotta, mozzarella, and marinara, baked until the cheese is bubbling and golden, the edges crisped, and the whole thing sliceable like lasagna but with about a third of the effort. It is one of the great family pasta bakes — feeds a crowd, works as leftovers, freezes well, and kids reliably eat it without negotiation. [DinnerDrop can build baked ziti into your weekly dinner rotation with a complete grocery list.](/beta)
+
+The recipe below takes about 45 minutes total, including 25 minutes of mostly-unattended baking time. Make it ahead and the actual work on dinner night drops to zero.
+
+---
+
+## Classic Baked Ziti Recipe
+
+**Serves:** 6 to 8 | **Time:** 45 minutes | **Difficulty:** Easy
+
+### Ingredients
+
+- 1 lb ziti pasta (or penne, rigatoni, or any ridged tube pasta)
+- 1 lb Italian sausage, casings removed (or ground beef or ground turkey)
+- 1 small onion, diced
+- 3 garlic cloves, minced
+- 1 jar (24 oz) marinara sauce
+- 15 oz whole-milk ricotta cheese
+- 1 large egg
+- 2 cups shredded mozzarella cheese, divided
+- Half cup grated Parmesan cheese, divided
+- 1 tsp dried Italian seasoning
+- Half tsp salt
+- Half tsp black pepper
+- Fresh basil or parsley for garnish (optional)
+
+### Instructions
+
+1. **Cook the pasta.** Bring a large pot of salted water to a boil. Cook ziti 2 minutes less than package directions (it finishes cooking in the oven). Drain and set aside.
+
+2. **Brown the sausage.** In a large oven-safe skillet or saucepan over medium-high heat, cook Italian sausage, breaking it up as it cooks, until browned, about 7 minutes. Add onion and cook 4 minutes until softened. Add garlic and cook 1 minute. Drain any excess fat.
+
+3. **Add sauce.** Pour marinara into the sausage mixture. Stir to combine. Simmer 3 minutes. Remove from heat.
+
+4. **Make the ricotta layer.** In a bowl, mix together ricotta, egg, 1 cup of the mozzarella, a quarter cup of the Parmesan, Italian seasoning, salt, and pepper.
+
+5. **Assemble.** Preheat oven to 375 degrees F. In a 9x13-inch baking dish: spread a thin layer of the meat sauce on the bottom. Add half the cooked pasta. Dollop half the ricotta mixture over the pasta. Add half the remaining meat sauce. Repeat: remaining pasta, remaining ricotta, remaining sauce. Top with the remaining 1 cup mozzarella and remaining quarter cup Parmesan.
+
+6. **Bake.** Cover with foil and bake 20 minutes. Remove foil and bake 10 to 15 minutes more until cheese is melted, bubbling, and golden in spots.
+
+7. **Rest and serve.** Let stand 5 minutes before cutting. Garnish with fresh basil or parsley if using. Serve with garlic bread and a green salad.
+
+---
+
+## 4 Baked Ziti Variations
+
+### 1. Vegetarian Baked Ziti
+Skip the meat. Saute the onion and garlic in olive oil, add diced zucchini and mushrooms, cook until tender. Add marinara and proceed as directed. The vegetables add body without any meat. You can also add a can of drained white beans for protein.
+
+### 2. Three-Cheese Baked Ziti (No Ricotta)
+Replace the ricotta layer with a bechamel sauce: melt 3 tablespoons butter in a saucepan, whisk in 3 tablespoons flour, cook 1 minute, slowly whisk in 2 cups whole milk, season with salt, pepper, and a pinch of nutmeg. Cook until thickened. Use in place of ricotta mixture. Creamier, richer result.
+
+### 3. Baked Ziti with Spinach
+Add 5 oz frozen spinach (thawed and squeezed completely dry) to the ricotta mixture. Adds vegetables invisibly — kids rarely notice, adults appreciate it. Works for both meat and vegetarian versions.
+
+### 4. Make-Ahead Baked Ziti (Assembled, Unbaked)
+Assemble the full casserole, cover tightly with foil, and refrigerate for up to 24 hours or freeze for up to 3 months. Bake from refrigerated at 375 degrees F, covered, for 35 minutes, then uncovered for 15 minutes. Bake from frozen at 375 degrees F covered for 60 minutes, uncovered for 20 minutes.
+
+---
+
+## Make-Ahead and Storage
+
+**Refrigerator:** Assembled, unbaked baked ziti keeps in the refrigerator for up to 24 hours. Cooked baked ziti keeps covered in the refrigerator for 4 to 5 days. Reheats well in the oven at 350 degrees F or in the microwave.
+
+**Freezer:** Assemble the casserole but do not bake. Wrap tightly in plastic wrap and then foil. Label with date and baking instructions. Freezes for up to 3 months. This is one of the best freezer meals for families because it reheats to nearly the same quality as freshly made.
+
+**Reheating leftovers:** Add a splash of water or extra marinara before covering with foil to rehydrate the pasta. Bake at 350 degrees F for 20 minutes or microwave covered in 2-minute intervals.
+
+---
+
+## Tips for the Best Baked Ziti
+
+**Undercook the pasta.** Pasta that is cooked to package instructions will become soft and mushy after baking. Pull it 2 minutes early. It finishes in the oven.
+
+**Use whole-milk ricotta.** Part-skim ricotta releases more water during baking, which can make the casserole watery. Whole-milk ricotta stays richer and creamier.
+
+**Salt the pasta water generously.** The pasta picks up flavor during cooking. Bland pasta leads to a bland baked ziti regardless of how good the sauce is.
+
+**Let it rest.** Five minutes of resting makes the casserole set enough to cut clean portions. Skip the rest and it falls apart in the pan.
+
+**Layer, do not mix.** The distinct layers of pasta, ricotta, and sauce create better texture than stirring everything together. The ricotta stays creamy rather than dissolving into the sauce.
+
+---
+
+## What to Serve with Baked Ziti
+
+Classic pairings: garlic bread or crusty Italian bread, Caesar salad, green salad with Italian dressing. For a crowd, a large bowl of arugula with lemon and Parmesan is fast and impressive alongside.
+
+For weeknight simplicity: a bagged salad kit and store-bought garlic bread handle the sides with zero extra effort.
+
+---
+
+## How DinnerDrop Handles Pasta Night
+
+If baked ziti is in your family's rotation, [DinnerDrop](https://dinnerdrop.app/beta) builds it into your weekly plan alongside four other dinners matched to your household. It generates a complete, sorted grocery list covering every ingredient so you shop once and cook all week. The beta is free for six months.
+
+---
+
+## FAQ
+
+**What pasta works best for baked ziti?**
+Ziti is traditional, but any ridged tube pasta works: penne, rigatoni, mostaccioli. The ridges and hollow center trap sauce and cheese. Avoid smooth pasta shapes (spaghetti, linguine) — they do not hold the layers as well and tend to clump.
+
+**Can I use cottage cheese instead of ricotta?**
+Yes. Drain the cottage cheese first and blend it smooth if you prefer the texture closer to ricotta. The flavor is slightly tangier than ricotta. Many families make baked ziti with cottage cheese routinely.
+
+**Why is my baked ziti watery?**
+Three common causes: (1) part-skim ricotta releases more water than whole-milk, (2) frozen spinach that was not squeezed completely dry, (3) covering the dish for the entire bake time trapping steam. Remove the foil for the last 10 to 15 minutes to let moisture evaporate and the top brown.
+
+**Can I make baked ziti without meat?**
+Yes. The vegetarian variation above uses sauteed vegetables and optionally white beans. It holds together well and is a complete meatless family dinner.
+
+**How far ahead can I assemble baked ziti?**
+Up to 24 hours in the refrigerator, unbaked. Up to 3 months in the freezer. Both work well. It is one of the better make-ahead dinner options because it reheats without significant quality loss.
+
+---
+
+Baked ziti is one of the most practical family dinners you can add to a rotation: it scales easily, tolerates substitutions, pleases picky eaters, and the leftovers are as good as the original. The freezer version makes it genuinely useful for meal prep in a way most casseroles are not.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's full five-dinner week and grocery list automatically. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
