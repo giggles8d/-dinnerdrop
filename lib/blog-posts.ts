@@ -650,7 +650,7 @@ If you have a kid who won't eat anything with sauce, a dairy-free spouse, and a 
 Beta members get **6 months completely free**. No credit card required to start.
 
 [Claim your free beta spot](https://dinnerdrop.app/beta)
-`
+`,
   },
   {
     slug: 'save-money-on-groceries-meal-planning',
@@ -762,7 +762,7 @@ $1,200 per year — or roughly $100 per month — is a conservative estimate of 
 Start this weekend. Pick five dinners. Build the list. Buy what is on it. Come back next Sunday and do it again.
 
 [Try DinnerDrop free for 6 months →](https://dinnerdrop.app/beta)
-`
+`,
   },
   {
     slug: 'ai-grocery-list-generator',
@@ -873,7 +873,7 @@ The tools worth using are the ones that solve the whole problem: what are we eat
 If that's what you're looking for, [DinnerDrop has a free 6-month beta](https://dinnerdrop.app/beta) open right now. Set up your family profile, get your first week of dinners generated, and see what your grocery list looks like when it's actually built around your meals.
 
 [Try DinnerDrop free for 6 months ->](https://dinnerdrop.app/beta)
-`
+`,
   },
 
   {
@@ -1066,7 +1066,7 @@ decide what to make — [DinnerDrop generates your week's dinners and grocery li
 Sunday prep starts with a plan already made.
 
 [Claim your free 6-month beta spot ->](https://dinnerdrop.app/beta)
-`
+`,
   },
 
   {
@@ -11375,7 +11375,7 @@ Absolutely — beef stew is one of the best make-ahead meals. The flavors deepen
 ---
 
 **Want a weekly meal plan that includes hearty dinners like beef stew — already personalized to your family's tastes, budget, and schedule?** [DinnerDrop builds your 5-meal weekly plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-`
+`,
   },
 
   {
@@ -12041,7 +12041,7 @@ Two techniques: First, pat the chicken completely dry before breading — any mo
 ---
 
 **Want air fryer chicken nights planned for you automatically — with a personalized weekly meal plan and grocery list that accounts for your family's tastes and schedule?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 7-day free trial, no credit card needed →](/beta)
-`
+`,
   },
 
   {
@@ -12270,7 +12270,7 @@ The oven at 275°F with a splash of broth in a covered dish is the best method �
 ---
 
 **Want your family's pork chop nights planned automatically — with the right recipe selected for your schedule, a personalized weekly meal plan, and a grocery list auto-built for pickup or delivery?** [DinnerDrop builds your 5-meal plan in one tap. 7-day free trial, no credit card needed →](/beta)
-`
+`,
   },
 
 
@@ -12525,7 +12525,7 @@ Start with familiar flavors in healthier formats: taco bowls instead of tacos, c
 ---
 
 Thirty healthy dinner recipes is a good start. A plan that turns them into a weekly routine — with a grocery list, timing, and no decisions required at 5pm — is better. [DinnerDrop handles that part for you.](/beta)
-`
+`,
   },
     {
     slug: 'baked-chicken-thigh-recipes',
