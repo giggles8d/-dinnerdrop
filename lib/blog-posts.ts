@@ -27325,7 +27325,225 @@ Pulled pork is one of the highest-return proteins in the family kitchen: minimal
 
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
 `,
+  },,
+  {
+    slug: 'chicken-parmesan-recipe',
+    title: 'Chicken Parmesan Recipe: Crispy, Saucy, and Actually Weeknight-Friendly',
+    description:
+      'The best chicken parmesan recipe for busy families — crispy breaded chicken, ' +
+      'marinara sauce, and melted mozzarella in under 45 minutes. No deep frying required.',
+    publishDate: '2027-11-08',
+    readingTimeMinutes: 10,
+    primaryKeyword: 'chicken parmesan recipe',
+    content: `Chicken parmesan is one of those rare restaurant dishes that works better at home. Less greasy, better proportioned, and done in under 45 minutes when you use the oven instead of a deep fryer.
+
+This recipe produces crispy breaded chicken, bright marinara, and melted mozzarella every time. Active prep is about 15 minutes and the oven does the rest.
+
+## The Best Chicken Parmesan Recipe
+
+### Ingredients (Serves 4)
+
+**For the chicken:**
+- 4 boneless, skinless chicken breasts (6-7 oz each)
+- 1 cup all-purpose flour
+- 2 large eggs beaten with 1 tablespoon water
+- 1 cup Italian breadcrumbs
+- 1/2 cup panko breadcrumbs
+- 1/2 cup grated Parmesan cheese
+- 1 teaspoon garlic powder
+- 1 teaspoon dried oregano
+- 1 teaspoon dried basil
+- 1/2 teaspoon onion powder
+- 1/2 teaspoon kosher salt
+- 1/4 teaspoon black pepper
+- 3 tablespoons olive oil
+
+**For assembly:**
+- 1 1/2 cups marinara sauce
+- 1 1/2 cups shredded low-moisture mozzarella
+- 1/4 cup grated Parmesan
+- Fresh basil for garnish (optional)
+
+### Instructions
+
+**Step 1 - Pound the chicken.** Pound each breast to an even 3/4-inch thickness between plastic wrap. Even thickness means even cooking. Takes 2 minutes and fixes the most common chicken parmesan problem.
+
+**Step 2 - Breading station.** Three shallow dishes: flour with salt; beaten egg with water; breadcrumbs mixed with Parmesan, garlic powder, oregano, basil, onion powder, salt, and pepper.
+
+**Step 3 - Bread the chicken.** Coat in flour, dip in egg, press firmly into breadcrumbs on both sides. Refrigerating 15 minutes helps the coating adhere.
+
+**Step 4 - Sear.** Heat olive oil in a large oven-safe skillet over medium-high until shimmering. Sear 3-4 minutes per side until golden brown. You are building crust, not cooking through.
+
+**Step 5 - Top and bake.** Preheat oven to 425 degrees F. Spoon marinara over each piece leaving a border of crust exposed. Add mozzarella and Parmesan. Bake 15-18 minutes until cheese bubbles and internal temp reaches 165 degrees F.
+
+**Step 6 - Rest.** 3 minutes out of the oven before serving.
+
+**Total time:** approximately 40 minutes
+
+---
+
+## 25 Chicken Parmesan Ideas and Variations
+
+### Classic Versions
+
+**1. Traditional Chicken Parm**
+Pounded breast, Italian breadcrumbs, marinara, mozzarella. Serve over spaghetti with sauce spooned over the pasta. The version families put on permanent rotation.
+
+**2. Sheet Pan Chicken Parmesan**
+Skip stovetop searing. Brush breaded chicken with olive oil, place on a wire rack over a baking sheet, bake at 450 degrees F for 20 minutes. Top with sauce and cheese, bake 8 more minutes. The rack circulates hot air for a crispy bottom without frying.
+
+**3. Air Fryer Chicken Parmesan**
+375 degrees F for 10 minutes, flip, 5 more minutes. Top with sauce and mozzarella, cook 3-4 more minutes. Faster than oven method.
+
+**4. Skillet-to-Oven Chicken Parm**
+Sear in cast iron, top with sauce and cheese in the same pan, transfer entire skillet to oven. One pan, minimal cleanup.
+
+**5. Thin-Cutlet Chicken Parmesan**
+Buy pre-cut chicken cutlets. They cook in half the time and have more crust surface area.
+
+### Family-Friendly Variations
+
+**6. Chicken Parmesan Strips**
+Cut pounded chicken into 1-inch strips before breading. Cooks faster, easier for kids to portion. Serve with marinara for dipping.
+
+**7. Chicken Parmesan Bake**
+Place cooked breaded chicken in a 9x13 dish. Pour 2 cups marinara over everything. Top with 1 cup mozzarella and half cup Parmesan. Cover and bake at 375 degrees F for 20 minutes, uncover for 10 more. Feeds 6-8 people.
+
+**8. Mini Chicken Parmesan Sliders**
+Cut breaded chicken to fit slider rolls. Top with marinara and fresh mozzarella. Bake until cheese melts, serve on Hawaiian rolls.
+
+**9. Chicken Parmesan Pasta Bake**
+Cut cooked chicken parmesan into chunks. Toss with penne, marinara, and mozzarella in a baking dish. Top with Parmesan and breadcrumbs. Bake at 375 degrees F for 20 minutes until bubbly.
+
+**10. Chicken Parmesan Grilled Cheese**
+Layer leftover chicken parmesan with mozzarella and marinara between sourdough. Butter outside, grill until golden. One of the best leftover sandwiches in the weeknight dinner canon.
+
+### Restaurant-Style Upgrades
+
+**11. Fresh Mozzarella Chicken Parm**
+Use sliced fresh mozzarella. Pat slices dry before using so excess moisture does not soften the crust.
+
+**12. Vodka Sauce Chicken Parmesan**
+Swap marinara for vodka sauce. Richer and creamier, restaurant-level without extra work.
+
+**13. San Marzano Marinara Chicken Parm**
+Quick homemade sauce: one 28-oz can crushed San Marzano tomatoes, 4 garlic cloves sauteed in olive oil, pinch of sugar, fresh basil. Simmer 20 minutes. Significantly better than most jarred options.
+
+**14. Burrata Chicken Parmesan**
+Top baked chicken with a halved ball of burrata after it comes out of the oven. The burrata melts from residual heat into a creamy pool over the crispy chicken.
+
+**15. Prosciutto-Wrapped Chicken Parmesan**
+Wrap each pounded breast in 2 slices of prosciutto before breading. Adds salt, fat, and crunch. Skip extra salt in the breadcrumbs.
+
+### Lighter and Alternative Versions
+
+**16. Gluten-Free Chicken Parmesan**
+Use 1:1 gluten-free flour and gluten-free panko breadcrumbs. Press the coating on firmly.
+
+**17. Low-Carb Chicken Parmesan**
+Almond flour instead of all-purpose flour, crushed pork rinds mixed with Parmesan as the coating. Serve over zucchini noodles or cauliflower rice.
+
+**18. Baked Lighter Version**
+Spray breaded chicken with cooking spray, bake at 450 degrees F on a wire rack for 20 minutes, then top with sauce and cheese for 8 more minutes. Less oil, still crispy.
+
+**19. Chicken Parmesan Stuffed Peppers**
+Fill halved bell peppers with ground chicken mixed with breadcrumbs and Parmesan. Top with marinara and mozzarella. Bake at 375 degrees F for 30 minutes.
+
+**20. Chicken Parmesan Zucchini Boats**
+Halve zucchini lengthwise and scoop out seeds. Fill with shredded cooked chicken mixed with marinara. Top with mozzarella and Parmesan. Bake at 400 degrees F for 20-25 minutes.
+
+### Quick Weeknight Shortcuts
+
+**21. Pre-Pounded Cutlets**
+Buy pre-pounded cutlets from the butcher. Eliminates the pounding step and saves 10 minutes.
+
+**22. Prep-Ahead Seared Chicken**
+Bread and sear all chicken on Sunday. Refrigerate up to 3 days. Top with sauce and cheese and bake 15 minutes when needed. The crust re-crisps well.
+
+**23. Jarred Sauce**
+A good jarred marinara is excellent. Rao's Homemade is the consistent recommendation. Focus effort on the chicken coating and cheese.
+
+**24. 30-Minute Chicken Parmesan**
+Thin-cut cutlets, sheet pan method, pre-shredded mozzarella. Total time 28-30 minutes.
+
+**25. Leftover Rotisserie Chicken Version**
+Shred rotisserie chicken. Mix with marinara in a baking dish. Top with mozzarella, Parmesan, and toasted breadcrumbs. Bake at 375 degrees F for 20 minutes. Deconstructed chicken parm in 25 minutes.
+
+---
+
+## Techniques That Make or Break Chicken Parmesan
+
+**Pound to even thickness.** The most important step. 3/4-inch thickness means the breast cooks through without the crust burning.
+
+**Mix Italian breadcrumbs with panko.** Italian breadcrumbs carry seasoning and adhere closely; panko provides coarse texture that crisps into actual crunch. Either alone is inferior to the combination.
+
+**Leave a crust border.** Apply marinara leaving a thin edge of bare breadcrumb exposed on each side. Covering the entire top with sauce steams the crust.
+
+**Do not crowd the pan when searing.** Crowding drops oil temperature and causes steaming instead of browning. Sear in batches if needed.
+
+**Rest before cutting.** Three minutes lets juices redistribute and the cheese set. Cutting immediately releases moisture and softens the bottom crust.
+
+---
+
+## Common Problems and Fixes
+
+**Soggy crust:** Apply sauce only to the top surface, leave the edges dry, serve immediately.
+
+**Crust falls off:** Pat chicken completely dry before breading. Press the coating firmly with both hands. Let breaded chicken rest 15 minutes before cooking.
+
+**Dry chicken:** Pound to 3/4-inch thickness, pull at 165 degrees F internal.
+
+**Bland coating:** Season the dry breadcrumb mixture until it tastes good on its own before breading anything.
+
+**Cheese slides off:** Use low-moisture shredded mozzarella. If using fresh mozzarella, pat slices dry before applying.
+
+---
+
+## What to Serve with Chicken Parmesan
+
+Spaghetti or penne with extra marinara. Garlic bread for soaking up sauce. Caesar salad to cut through the richness. Roasted broccoli or green beans (same oven temperature, 20 minutes). Zucchini noodles for a lower-carb option.
+
+---
+
+## Make-Ahead and Storage
+
+Breaded but uncooked: refrigerate on parchment for up to 24 hours before searing and baking. Cooked: refrigerate up to 3 days, reheat at 375 degrees F for 12-15 minutes to re-crisp. Freeze breaded and seared (unbaked) for up to 2 months.
+
+---
+
+## How DinnerDrop Handles Your Weekly Dinner Planning
+
+If chicken parmesan is a family staple, [DinnerDrop](https://dinnerdrop.app/beta) includes it in your weekly rotation and automatically adds every ingredient to your grocery list. Five dinners plus a complete grocery list every week. The beta is free for six months.
+
+---
+
+## FAQ
+
+**Can I use chicken thighs instead of chicken breast?**
+Yes. Boneless skinless thighs pound well and produce a juicier result. Cook to 165 degrees F internal.
+
+**What is the best marinara for chicken parmesan?**
+Rao's Homemade Marinara is the consistent recommendation for a jarred sauce. For homemade, a quick San Marzano marinara (20 minutes) is significantly better than most jars.
+
+**Do I have to pound the chicken?**
+Yes for even cooking. The alternative is to butterfly each breast by slicing it horizontally into two thinner pieces.
+
+**Can I make it ahead for a dinner party?**
+Yes. Bread and sear up to 24 hours ahead and refrigerate. Top with sauce and cheese and bake 18-20 minutes when needed.
+
+**Why is my chicken parmesan always greasy?**
+Usually too much oil or oil not hot enough before adding the chicken. Use just enough to coat the pan bottom, wait until it shimmers, and do not move the chicken for the full 3-4 minutes.
+
+---
+
+Chicken parmesan is one of the most reliable weeknight dinners for families. Most kids eat it willingly, it scales to any family size, and the leftovers are genuinely good the next day. The oven method eliminates the deep-fryer mess permanently.
+
+[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week and sends the complete grocery list to your cart automatically. The beta is free for six months.
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
   },
+
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
