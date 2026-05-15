@@ -16324,7 +16324,7 @@ Yes — the shortcut version mixes cream of mushroom soup with beef broth and so
 Beef stroganoff is perfect for rotation — quick on weeknights, impressive enough for guests, and excellent as leftovers. The problem is that planning five nights like this every week takes more time than it should. [DinnerDrop builds your personalized 5-meal week including pasta, beef, chicken, and more, with a full grocery list in one tap.](/beta) Set your family's preferences once. It does the rest.
 
 [Start your free 7-day trial at DinnerDrop](/beta)
-`
+`,
   }
 ]
 export function getPostBySlug(slug: string): BlogPost | undefined {
