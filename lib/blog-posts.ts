@@ -16325,6 +16325,164 @@ Beef stroganoff is perfect for rotation — quick on weeknights, impressive enou
 [Start your free 7-day trial at DinnerDrop](/beta)
 `,
   },
+
+  {
+    id: 'honey-garlic-chicken-recipe',
+    slug: 'honey-garlic-chicken-recipe',
+    title: 'Honey Garlic Chicken Recipe: The Sticky, Sweet, Savory Weeknight Dinner',
+    excerpt: 'The best honey garlic chicken recipe — pan-seared chicken thighs in a sticky honey garlic sauce ready in 25 minutes. Includes baked, air fryer, and slow cooker versions.',
+    publishDate: '2028-03-04',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'honey garlic chicken recipe',
+    content: `
+# Honey Garlic Chicken Recipe: The Sticky, Sweet, Savory Weeknight Dinner
+
+Honey garlic chicken is one of those weeknight recipes that earns permanent rotation — five ingredients, one pan, 25 minutes, and a sticky glaze that tastes like it came from a restaurant. This guide covers the stovetop pan sauce method, a hands-off baked version, an air fryer shortcut, and a slow cooker option for busy days. It also includes the technique details that separate sticky, glossy sauce from thin, watery one.
+
+---
+
+## Why This Honey Garlic Chicken Recipe Works
+
+The glaze works because honey provides both sweetness and body while garlic caramelizes quickly in a hot pan, turning mellow and slightly sweet rather than sharp. Soy sauce adds the salt and umami that prevent the dish from being cloying. The sequence matters: sear the chicken first, make the sauce in the same pan, then return the chicken to glaze — this builds three layers of flavor in one skillet.
+
+---
+
+## Ingredients (Serves 4)
+
+**Chicken:**
+- 4 bone-in, skin-on chicken thighs (or 6 boneless skinless thighs)
+- 1 teaspoon each salt, black pepper, garlic powder
+- 1 tablespoon olive oil or avocado oil
+
+**Honey garlic sauce:**
+- 6 cloves garlic, minced (about 2 tablespoons)
+- ⅓ cup honey
+- 3 tablespoons low-sodium soy sauce
+- 1 tablespoon rice vinegar or apple cider vinegar
+- 1 teaspoon sesame oil (optional, adds depth)
+- ½ teaspoon red pepper flakes (optional)
+- 1 tablespoon unsalted butter (finish)
+
+---
+
+## Stovetop Method (25 Minutes)
+
+**Step 1 — Season the chicken:** Pat dry with paper towels. Dry skin = better sear. Season all sides with salt, pepper, and garlic powder.
+
+**Step 2 — Sear:** Heat oil in a large oven-safe skillet (cast iron or stainless) over medium-high heat until shimmering. Place chicken skin-side down. Do not move for 6–7 minutes. The skin should release naturally when properly seared. Flip and cook 4–5 minutes on the second side. For boneless thighs, reduce each side by 2 minutes. Remove chicken and set aside.
+
+**Step 3 — Build the sauce:** Reduce heat to medium. Add minced garlic to the rendered chicken fat in the pan. Cook 60–90 seconds, stirring, until fragrant and just golden — not brown. Add honey, soy sauce, vinegar, and sesame oil. Stir to combine. Bring to a gentle simmer.
+
+**Step 4 — Glaze and finish:** Return chicken to the pan. Spoon sauce over the top. Simmer 5–6 minutes, basting every minute, until sauce thickens and coats the chicken. Internal temperature should read 165°F (74°C) at the thickest point. Add butter and swirl to finish the glaze. Serve immediately.
+
+---
+
+## Baked Honey Garlic Chicken
+
+Preheat oven to 400°F (200°C). Season and sear chicken in an oven-safe skillet as above, 3–4 minutes skin-side down only. Flip, pour sauce over chicken, and transfer pan to oven. Bake 20–25 minutes (bone-in) or 15–18 minutes (boneless), basting with pan juices halfway through. Rest 5 minutes before serving.
+
+**Why bake:** Bone-in pieces cook more evenly in the oven, and the sauce concentrates into a thicker glaze without constant stirring.
+
+---
+
+## Air Fryer Honey Garlic Chicken
+
+Season chicken as above. Air fry at 380°F for 12 minutes (boneless) or 18 minutes (bone-in), flipping once halfway. While chicken cooks, make the sauce in a small saucepan over medium heat until slightly thickened (3–4 minutes). Toss or brush cooked chicken with sauce. Return to air fryer 2–3 minutes to set the glaze.
+
+**Note:** Do not put the full sauce in the air fryer from the start — the honey burns before the chicken cooks through. Build the sauce separately, glaze at the end.
+
+---
+
+## Slow Cooker Honey Garlic Chicken
+
+Place chicken thighs (boneless work best) in the slow cooker. Whisk sauce ingredients together and pour over. Cook LOW 4–5 hours or HIGH 2–3 hours. Remove chicken. Pour liquid into a small saucepan, bring to a boil, and reduce 5–7 minutes until thickened to a glaze. Pour over chicken to serve.
+
+**Make it faster:** The sauce will not thicken in the slow cooker on its own — always reduce it on the stovetop before serving or the result is watery.
+
+---
+
+## 5 Variations
+
+**Spicy honey garlic:** Double the red pepper flakes and add 1 teaspoon sriracha to the sauce. Finish with a drizzle of chili oil.
+
+**Lemon honey garlic:** Replace vinegar with 2 tablespoons fresh lemon juice and add 1 teaspoon lemon zest. Lighter, brighter flavor — good for summer.
+
+**Ginger honey garlic:** Add 1 tablespoon freshly grated ginger with the garlic. Pairs particularly well with rice and stir-fried vegetables.
+
+**Honey garlic chicken thighs with vegetables:** Nestle halved baby potatoes or broccoli florets around the chicken in the pan before baking. They roast in the dripping sauce.
+
+**Honey garlic chicken wings:** Use the same sauce. Bake wings at 425°F for 40 minutes (flipping at 20), then toss in sauce and broil 3 minutes for caramelized finish.
+
+---
+
+## What to Serve With Honey Garlic Chicken
+
+The sauce is the star — pair it with anything that absorbs it well.
+
+**Rice:** Jasmine or basmati catches every drop of glaze. Cook 1.5 cups rice to serve 4 and spoon pan juices over the top.
+
+**Noodles:** Lo mein or rice noodles tossed with sesame oil and scallion work perfectly under glazed chicken.
+
+**Roasted vegetables:** Broccoli, green beans, or snap peas roasted at 400°F for 15 minutes alongside the chicken.
+
+**Steamed broccoli:** The simplest option — quick, absorbs sauce well, cuts through the richness.
+
+**Cauliflower rice:** For lower-carb serving without sacrificing the sauce experience.
+
+---
+
+## Make-Ahead and Storage
+
+**Sauce:** Make the honey garlic sauce up to 5 days ahead. Store in a jar in the refrigerator. Rewarm gently before using.
+
+**Cooked chicken:** Keeps refrigerated up to 4 days. Reheat in a skillet over medium heat with a splash of water to loosen the glaze, or microwave covered at 70% power for 90 seconds.
+
+**Freezing:** Freeze cooked honey garlic chicken in a freezer bag up to 3 months. Thaw overnight in the refrigerator. The sauce may separate slightly on reheating — stir in a teaspoon of honey to bring it back together.
+
+**Meal prep:** Honey garlic chicken is one of the better proteins to meal prep. It holds flavor well, reheats easily, and pairs with different sides through the week without becoming boring.
+
+---
+
+## Troubleshooting
+
+**Sauce is too thin:** It needs more time on the heat. Simmer without the chicken in the pan until the sauce coats the back of a spoon. Do not rush by turning up the heat — honey burns easily above medium heat.
+
+**Sauce is too thick or sticky:** Add a tablespoon of water or chicken broth and stir over low heat. The sauce will loosen and re-glaze.
+
+**Garlic burned:** Burned garlic turns bitter and ruins the sauce — there is no fixing it. Start over with clean pan and fat. Keep heat at medium and watch constantly during the 60–90 second garlic step.
+
+**Chicken skin not crispy:** Two reasons: the chicken was not dry before searing, or the pan was not hot enough. Always pat dry with paper towels and let the oil shimmer before adding chicken.
+
+**Sauce not sticking to chicken:** The chicken surface has too much moisture. Pat dry before cooking. If the sauce still slides off, simmer chicken in the sauce an extra 2 minutes before serving.
+
+---
+
+## FAQ
+
+**Can I use chicken breasts instead of thighs?**
+Yes, but reduce cook time. Boneless chicken breasts at 165°F take 6–7 minutes per side in a skillet. The risk is drying out — thighs are more forgiving because the higher fat content keeps them moist even if slightly overcooked. If using breasts, pound to even thickness before cooking.
+
+**What if I don’t have rice vinegar?**
+Apple cider vinegar works equally well and is more common in American pantries. White wine vinegar is also fine. In a pinch, 1 teaspoon fresh lemon juice. Do not omit the acid entirely — it balances the sweetness of the honey.
+
+**How do I make the sauce thicker without reducing it?**
+Mix 1 teaspoon cornstarch with 1 tablespoon cold water. Stir into the simmering sauce. It thickens in 60 seconds. Use sparingly — too much cornstarch creates a gluey texture rather than a glossy glaze.
+
+**Is this recipe gluten-free?**
+Not as written — soy sauce contains wheat. Substitute tamari (certified GF) or coconut aminos in equal quantities. Coconut aminos are slightly sweeter and less salty; taste and adjust honey and salt accordingly.
+
+**Can I make honey garlic chicken ahead for meal prep?**
+Yes. Cook fully, cool, and store in portioned containers for up to 4 days. The sauce penetrates deeper as it sits, so day-two leftovers often taste better than the original. Pack rice or noodles separately to prevent them from becoming soggy.
+
+---
+
+## Make Dinner Planning as Easy as This Recipe
+
+Honey garlic chicken is a perfect weekly staple — fast, crowd-pleasing, and customizable for picky eaters. The challenge is having five dinners this reliable every week without spending Sunday afternoon planning. [DinnerDrop builds your personalized 5-meal week, including recipes like this one, with a grocery list pushed directly to your preferred store — all in one tap.](/beta) Set your family's preferences once. Everything else is handled.
+
+[Start your free 7-day trial at DinnerDrop](/beta)
+`,
+  }
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
