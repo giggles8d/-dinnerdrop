@@ -15476,8 +15476,8 @@ Baked ziti is one of the most practical family dinners you can add to a rotation
   },
 
   {
-    id: 'hamburger-recipe',
-    slug: 'hamburger-recipe',
+    id: 'hamburger-recipe-skillet',
+    slug: 'hamburger-recipe-skillet',
     title: 'Hamburger Recipe: The Best Homemade Burger and 15 Variations Your Family Will Actually Request',
     description: 'The best homemade hamburger recipe — juicy patties, proper technique, and 15 burger variations from classic cheeseburger to smash burgers, turkey burgers, and stuffed burgers.',
     publishDate: '2028-02-18',
@@ -16484,7 +16484,182 @@ Honey garlic chicken is a perfect weekly staple — fast, crowd-pleasing, and cu
 
 [Start your free 7-day trial at DinnerDrop](/beta)
 `,
-  }
+  },
+  {
+    id: 'potato-soup-recipe',
+    slug: 'potato-soup-recipe',
+    title: 'Potato Soup Recipe: Thick, Creamy, and Ready in 30 Minutes',
+    description: 'The ultimate creamy potato soup recipe — loaded with bacon, cheddar, and sour cream. Make it on the stovetop, in the slow cooker, or in your Instant Pot. Family dinner ready in 30 minutes.',
+    publishDate: '2028-04-07',
+    readingTimeMinutes: 9,
+    category: 'Soup Recipes',
+    tags: ['potato soup', 'creamy soup', 'soup recipe', 'comfort food', 'family dinner', 'easy dinner', 'winter dinner'],
+    content: `If your family loves thick, hearty soup, this **potato soup recipe** is one you will make on repeat. It is rich and creamy, loaded with tender chunks of potato, crispy bacon, sharp cheddar cheese, and a dollop of sour cream on top. And the best part? It comes together in about 30 minutes on the stovetop — or you can set it in the slow cooker and forget it.
+
+This is pure weeknight comfort food, the kind that makes a cold evening feel instantly better.
+
+[CTA]Want DinnerDrop to plan a full week of dinners like this one — complete with your grocery list? [Try it free for 7 days →](/beta)[/CTA]
+
+## Why This Potato Soup Recipe Works
+
+Most potato soup recipes get mushy potatoes or a gluey texture. This one avoids both problems with two simple techniques:
+
+**Cut your potatoes small and evenly.** Aim for half-inch cubes. They cook fast and evenly, and some of them naturally break down into the broth to thicken it without needing a lot of added thickener.
+
+**Don't over-blend.** You want texture — a mix of intact potato chunks and a creamy base. Either use an immersion blender briefly, or mash just a portion of the soup with a potato masher. Full-blending turns it into baby food.
+
+## Ingredients
+
+**For the soup:**
+- 4 strips thick-cut bacon, chopped
+- 1 medium yellow onion, diced
+- 3 garlic cloves, minced
+- 2 pounds Yukon Gold potatoes (about 5-6 medium), peeled and cubed
+- 3 cups chicken broth (low sodium)
+- 1 cup whole milk
+- 1 cup heavy cream
+- 1 teaspoon salt, plus more to taste
+- 1/2 teaspoon black pepper
+- 1/4 teaspoon smoked paprika
+
+**For serving:**
+- 1 cup sharp cheddar cheese, shredded
+- 1/2 cup sour cream
+- 2 green onions, sliced
+- Extra bacon bits
+
+## How to Make Potato Soup (Stovetop Method)
+
+**Step 1: Cook the bacon.** In a large Dutch oven or heavy pot over medium heat, cook the chopped bacon until crispy, about 6-8 minutes. Remove bacon with a slotted spoon and set aside. Leave about 2 tablespoons of bacon fat in the pot — this is your flavor base.
+
+**Step 2: Soften the aromatics.** Add the diced onion to the bacon fat and cook over medium heat until softened and translucent, about 4-5 minutes. Add garlic and cook another 60 seconds until fragrant. Don't let it brown.
+
+**Step 3: Add potatoes and broth.** Add the cubed potatoes and chicken broth. Bring to a boil, then reduce heat to a steady simmer. Cook uncovered for 15-18 minutes, until the potatoes are fork-tender and some are starting to fall apart.
+
+**Step 4: Thicken the soup.** Use a potato masher to mash about one-third of the potatoes directly in the pot. This thickens the soup naturally. Alternatively, use an immersion blender and pulse just 3-4 times — you want chunks remaining.
+
+**Step 5: Add dairy.** Pour in the milk and heavy cream. Stir to combine and bring back to a gentle simmer over low heat. Do not boil after adding the dairy or it can curdle. Season with salt, pepper, and smoked paprika.
+
+**Step 6: Serve.** Ladle into bowls and top with shredded cheddar, sour cream, green onions, and reserved bacon bits.
+
+Total time: about 35 minutes.
+
+## Slow Cooker Potato Soup
+
+For a hands-off version, the slow cooker does all the work:
+
+1. Skip the bacon fat step — cook bacon separately on the stovetop until crispy, set aside.
+2. Add potatoes, onion, garlic, broth, salt, pepper, and paprika to the slow cooker.
+3. Cook on LOW for 7-8 hours or HIGH for 4-5 hours, until potatoes are completely tender.
+4. Use a potato masher or immersion blender to reach your desired texture.
+5. Stir in milk and heavy cream. Cook on HIGH for an additional 15 minutes.
+6. Serve topped with cheddar, sour cream, green onions, and bacon.
+
+This method is perfect for days when you want dinner waiting when you get home.
+
+## Instant Pot Potato Soup
+
+If you need soup on the table fast, the Instant Pot cuts the cooking time to about 20 minutes total:
+
+1. Set Instant Pot to Sauté mode. Cook bacon until crispy, remove and set aside.
+2. Sauté onion in bacon fat for 3 minutes. Add garlic for 1 minute.
+3. Add potatoes, broth, salt, pepper, and paprika. Stir to combine.
+4. Lock lid, set valve to SEALING. Cook on Manual HIGH pressure for 10 minutes.
+5. Quick release the pressure carefully.
+6. Mash or blend to your preferred texture.
+7. Stir in milk and cream. Use the Sauté function on LOW for 2-3 minutes until heated through.
+8. Serve with all toppings.
+
+[CTA]DinnerDrop builds meals like this into your weekly plan — 5 dinners, one grocery list, delivered to your store. [Join free →](/beta)[/CTA]
+
+## Which Potato Should You Use?
+
+Not all potatoes behave the same in soup.
+
+**Yukon Gold** (recommended): Naturally creamy, buttery flavor, holds their shape while also breaking down slightly to thicken the broth. The best choice for this recipe.
+
+**Russet potatoes**: High starch content means they break down faster and thicken more aggressively. Good if you want a thicker soup, but they can get mealy if overcooked. Cut them a little larger than you think you need to.
+
+**Red potatoes**: Waxy variety that holds its shape well. Great for a chunkier, more rustic soup. Less natural thickening than Yukon Gold.
+
+Avoid using sweet potatoes or purple potatoes in this recipe — they change the flavor profile significantly.
+
+## 5 Loaded Potato Soup Variations
+
+**Classic Loaded:** The version above — bacon, cheddar, sour cream, green onions. The crowd-pleaser that beats everything else.
+
+**Broccoli Cheddar Potato Soup:** Add 2 cups of small broccoli florets to the pot 10 minutes before the potatoes finish cooking. Use extra sharp cheddar and stir some directly into the soup base.
+
+**Ham and Potato Soup:** Skip the bacon entirely. Use 1 cup of diced leftover ham added with the broth. Great use of post-holiday leftovers.
+
+**Vegetarian Potato Soup:** Omit bacon, use vegetable broth instead of chicken broth, and add 1 tablespoon of butter for richness at the start. Top with cheese and sour cream as usual.
+
+**Potato Corn Chowder:** Add 1 can of drained sweet corn (or 1.5 cups frozen corn) with the potatoes. The corn adds sweetness that balances the richness of the broth.
+
+## Make-Ahead and Storage
+
+**Make-ahead:** Potato soup is actually better the next day — the flavors deepen overnight. Make it up to 3 days ahead, store covered in the refrigerator, and reheat gently on the stovetop over low heat, stirring frequently.
+
+**Reheating tip:** The soup will thicken in the fridge. Add a splash of broth or milk when reheating to loosen it back to the right consistency.
+
+**Freezing:** You can freeze potato soup, but dairy-based soups can separate or become grainy after thawing. If you want to freeze it, make the soup through Step 4 (before adding milk and cream), then freeze. Add the dairy fresh when you reheat. Frozen soup keeps for up to 3 months.
+
+**Meal prep:** This recipe doubles easily for batch cooking. One big pot covers two dinners for a family of 4.
+
+## Picky Eater Strategy
+
+Potato soup is a top performer with picky eaters because the texture is mild and comforting. But there are a few common complaints and how to handle them:
+
+**"I don't like chunky soup."** Blend the entire pot smooth with an immersion blender and let your picky eater customize their bowl with just cheese on top. A smooth, creamy version is harder to object to.
+
+**"I don't want bacon."** Set aside a plain portion before adding the bacon. Alternatively, serve bacon as a topping so kids can control whether it goes in.
+
+**"I want something to dip."** Serve with warm crusty bread, dinner rolls, or crackers. Dipping is a game-changer for reluctant soup eaters.
+
+**"I don't like sour cream."** Skip it entirely for that bowl. The soup is great without it — the creaminess comes from the heavy cream and cheddar.
+
+## What to Serve With Potato Soup
+
+Potato soup is filling enough to stand alone, but pairing it elevates the meal:
+
+- **Crusty bread or sourdough**: For dipping and scooping up every last drop.
+- **Grilled cheese sandwich**: The ultimate soup-and-sandwich combo for family dinners.
+- **Simple green salad**: A light contrast to the richness of the soup.
+- **Cornbread**: Especially good with the ham and potato variation.
+- **Dinner rolls**: Easy, kid-friendly, and great for soaking up broth.
+
+## Troubleshooting: Common Potato Soup Problems
+
+**Soup is too thin:** Add a cornstarch slurry (1 tablespoon cornstarch + 2 tablespoons cold water, stirred together) directly to the simmering soup. Stir constantly for 2 minutes. Alternatively, blend more of the potatoes into the base.
+
+**Soup is too thick:** Add chicken broth or milk a quarter cup at a time until you reach the consistency you want. Always add liquid over low heat.
+
+**Potatoes are mushy:** You cooked them too long, or the chunks were cut too small. Next time, cut larger and start checking for doneness at 12 minutes. The good news: over-soft potatoes blend beautifully into a silky smooth soup.
+
+**Soup tastes flat:** The fix is almost always salt. Add half a teaspoon at a time, stir, and taste again. Potatoes absorb salt aggressively, so you'll often need more than you expect. A squeeze of lemon juice or a splash of white wine vinegar can also brighten the flavor.
+
+**Dairy curdled or separated:** This happens when the soup is brought to a hard boil after adding milk or cream. Always add dairy over low to medium-low heat, and never let it boil again after that point.
+
+[CTA]Stop guessing what's for dinner. DinnerDrop plans your whole week — dinners like this one, plus your grocery list. [Try free →](/beta)[/CTA]
+
+## FAQ
+
+**Can I use chicken broth instead of chicken stock?**
+Yes — they're interchangeable in this recipe. Broth is lighter and slightly less rich. Stock is more full-bodied. Either works perfectly. If using regular (not low-sodium) broth, reduce the added salt and taste as you go.
+
+**How do I make potato soup thicker without cream?**
+Three methods: (1) Blend or mash more of the potatoes into the base. (2) Add a cornstarch slurry (1 tablespoon cornstarch per cup of liquid you want to thicken). (3) Stir in a few tablespoons of cream cheese, which melts in and adds body and richness.
+
+**Can I make this dairy-free?**
+Yes. Substitute full-fat coconut milk or oat milk creamer for the heavy cream, and use dairy-free cheddar and sour cream. The flavor will be slightly different but still delicious. Use olive oil or a dairy-free butter substitute in place of bacon fat if making the vegetarian version.
+
+**Is potato soup good for meal prep?**
+Absolutely. It stores for up to 4 days in the refrigerator and reheats well on the stovetop. It's one of the best soups for batch cooking because the flavor actually improves after a day or two. Make a double batch on Sunday and you have two easy weeknight dinners covered.
+
+**Can I use frozen potatoes or hash browns?**
+You can, though fresh potatoes give better texture and flavor. If using frozen hash browns, add them directly from frozen and reduce the broth by about half a cup since they release more water as they cook. They'll break down faster, so this works best if you want a smoother soup.
+`,
+  },
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p && p.slug === slug)
