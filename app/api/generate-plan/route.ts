@@ -10,17 +10,6 @@ interface GeneratePlanResponse {
   totalEstimatedCost: number
 }
 
-// Dietary restriction keywords mapped to ingredient categories / terms to avoid
-const DIETARY_CHECKS: Record<string, { label: string; blocked: string[] }> = {
-  vegetarian: { label: 'vegetarian', blocked: ['Meat & Seafood'] },
-  vegan: { label: 'vegan', blocked: ['Meat & Seafood', 'Dairy & Eggs'] },
-  'gluten-free': { label: 'gluten-free', blocked: [] },
-  'dairy-free': { label: 'dairy-free', blocked: ['Dairy & Eggs'] },
-  'nut-free': { label: 'nut-free', blocked: [] },
-  keto: { label: 'keto', blocked: [] },
-  halal: { label: 'halal', blocked: [] },
-}
-
 export async function POST(request: Request) {
   try {
     const body = await request.json()
