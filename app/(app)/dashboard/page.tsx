@@ -194,19 +194,27 @@ function DashboardContent() {
 
       const favoriteMeals = favoritesRes.data?.map(f => f.meal_data as Meal) || []
 
-      const res = await fetch('/api/generate-plan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          familySize: profile.family_size,
-          weeklyBudget: profile.weekly_budget,
-          maxCookTime: profile.max_cook_time,
-          cuisinePreference: profile.cuisine_preference,
-          dietaryNeeds: profile.dietary_needs || [],
-          favoriteMeals,
-          userId: user.id,
-        }),
-      })
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 58000)
+      let res: Response
+      try {
+        res = await fetch('/api/generate-plan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
+          body: JSON.stringify({
+            familySize: profile.family_size,
+            weeklyBudget: profile.weekly_budget,
+            maxCookTime: profile.max_cook_time,
+            cuisinePreference: profile.cuisine_preference,
+            dietaryNeeds: profile.dietary_needs || [],
+            favoriteMeals,
+            userId: user.id,
+          }),
+        })
+      } finally {
+        clearTimeout(timeoutId)
+      }
 
       const data = await res.json()
 
@@ -236,8 +244,11 @@ function DashboardContent() {
       }
     } catch (error) {
       console.error('Error generating plan:', error)
+      const isTimeout = error instanceof Error && (error.name === 'AbortError' || error.message.includes('timeout'))
       setGenerateError(
-        error instanceof Error ? error.message : 'Something went wrong. Please try again.'
+        isTimeout
+          ? 'Generation took too long — please try again. It usually works on the second attempt.'
+          : error instanceof Error ? error.message : 'Something went wrong. Please try again.'
       )
     } finally {
       setLoading(false)

@@ -135,31 +135,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
       return Response.json({ error: 'AI returned an unexpected format. Please try again.' }, { status: 500 })
     }
 
-    if (profile.dietaryNeeds.length > 0) {
-      const needs = profile.dietaryNeeds.map((n: string) => n.toLowerCase())
-      const blockedCategories = new Set<string>()
-
-      for (const need of needs) {
-        const check = DIETARY_CHECKS[need]
-        if (check) check.blocked.forEach(cat => blockedCategories.add(cat))
-      }
-
-      if (blockedCategories.size > 0) {
-        const hasViolation = planData.meals.some(meal =>
-          meal.ingredients.some(i => blockedCategories.has(i.category))
-        )
-        if (hasViolation) {
-          const retryText = await generateWithClaude(
-            prompt + '\n\nCRITICAL: The previous response violated dietary restrictions. Try again. Absolutely no ' +
-            Array.from(blockedCategories).join(' or ') + ' ingredients.',
-            4000
-          )
-          const retryData = parseClaudeJSON<GeneratePlanResponse>(retryText)
-          return Response.json(retryData)
-        }
-      }
-    }
-
+    // Dietary validation enforced via prompt — sync retry removed to prevent 60s Vercel timeout
     return Response.json(planData)
   } catch (error) {
     console.error('Error generating meal plan:', error)
