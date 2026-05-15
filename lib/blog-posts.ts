@@ -2543,7 +2543,7 @@ Eating cheaply doesn't require eating badly. It requires knowing which ingredien
 <p>One pot meals aren’t a compromise. They’re a category of cooking that produces genuinely excellent dinners with the least possible friction. Less setup, less cleanup, less mental load on a Tuesday when you’ve already made 200 decisions.</p>
 <p>Pick 5 from this list. Make a rotation. Let the one pot do the work.</p>
 <p>And if you want AI to pick the 5 that fit your family’s taste, dietary needs, and current pantry, <a href="https://dinnerdrop.app/beta">try DinnerDrop free</a> — 5 personalized dinners and a full grocery list, built in under 30 seconds.</p>
-    `,
+`,
   },
 
 
@@ -2706,7 +2706,7 @@ Tell it your household size, dietary preferences, and how much time you have to 
 Pick five from this list. Build a week around them. Grocery shop for just those five meals.
 
 If planning is the hard part, [DinnerDrop](https://dinnerdrop.app/beta) handles it automatically — five personalized dinners and a complete grocery list sized for your household, built in under 30 seconds. Free for 7 days.
-    `,
+`,
   },
 
 
@@ -2861,7 +2861,7 @@ A single pound of beef stretched with lentils or mushrooms can feed a family of 
 Ground beef is the most versatile weeknight protein. One pound gives you 25 completely different dinners across every cooking style — skillet meals, pasta, tacos, casseroles, and soups.
 
 If deciding what to make is the hard part, [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner plan for your family in under 30 seconds — including a complete grocery list. Free for 7 days, no credit card required.
-    `,
+`,
   },
 
 
@@ -3073,7 +3073,7 @@ The crockpot earns its counter space when you use it strategically. A handful of
 Set it before the school run. Come home to dinner already done.
 
 If choosing which five meals to make this week is where you stall, [DinnerDrop](https://dinnerdrop.app/beta) picks them for you based on what your family actually likes -- and builds the grocery list too.
-    `,
+`,
   },
 
 
@@ -3289,7 +3289,7 @@ Chicken dinners do not have to mean the same three recipes rotating every week. 
 The decision of which chicken dinner to make is the bottleneck. [DinnerDrop](https://dinnerdrop.app/beta) removes it -- five personalized dinners built in 30 seconds, grocery list included, sent to your preferred store.
 
 [Start your free 7-day trial at dinnerdrop.app/beta](https://dinnerdrop.app/beta)
-    `,
+`,
   },
 
   {
@@ -3513,7 +3513,7 @@ The 40 recipes above cover every protein, every major cooking method, and every 
 [DinnerDrop](https://dinnerdrop.app/beta) does the rotation for you. Five personalized weeknight dinners built around your family's preferences, with a grocery list sent to your store. Dinner decided in 30 seconds.
 
 [Start your free 7-day trial at dinnerdrop.app/beta](https://dinnerdrop.app/beta)
-    `,
+`,
   },
   {
     slug: 'healthy-dinner-ideas',
@@ -3655,7 +3655,7 @@ The 40 recipes above cover every protein, every major cooking method, and every 
 
 <h3>How do I make healthy dinners faster on busy nights?</h3>
 <p>Two strategies: rotisserie chicken (use it in soups, stir-fries, grain bowls, and tacos in minutes) and a Sunday prep block of 20–30 minutes where you pre-chop vegetables and cook a grain like quinoa or brown rice. Those two habits cut active cook time significantly on weeknights.</p>
-    `,
+`,
   },
   {
     slug: 'pasta-dinner-ideas',
@@ -3814,7 +3814,7 @@ The 40 recipes above cover every protein, every major cooking method, and every 
 
 <h3>What's the best pasta dinner for picky eaters?</h3>
 <p>Buttered noodles with parmesan is the gateway, but it's not a dead end. Once kids are used to pasta, you can add ingredients slowly — a mild tomato sauce, then small pieces of mild sausage, then very soft vegetables. Most picky eaters who reject casseroles and mixed dishes will eat pasta components when they can see and identify everything on the plate.</p>
-    `,
+`,
   },
   {
     slug: 'healthy-chicken-recipes',
@@ -14943,7 +14943,7 @@ Yes. Skip the noodles for a low-carb version. Add extra vegetables or white bean
 
 **Is chicken noodle soup actually good for colds?**
 The hot broth helps clear nasal congestion. Chicken contains cysteine, an amino acid that may thin mucus secretions. And eating something warm and nourishing simply feels better. Whether it is science or psychology, it works.
-    `,
+`,
   },
 
   {
@@ -15475,7 +15475,7 @@ Baked ziti is one of the most practical family dinners you can add to a rotation
 `,
   },
 
-=======
+  {
     title: 'Hamburger Recipe: The Best Homemade Burger and 15 Variations Your Family Will Actually Request',
     description: 'The best homemade hamburger recipe — juicy patties, proper technique, and 15 burger variations from classic cheeseburger to smash burgers, turkey burgers, and stuffed burgers.',
     publishDate: '2028-02-18',
@@ -15640,7 +15640,7 @@ Homemade burgers consistently outperform restaurant versions when the technique 
 [DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week — including burger nights — and generates the complete grocery list automatically. The beta is free for six months.
 
 **[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
-    `,
+`,
   },
   {
     slug: 'chicken-fajitas-recipe',
@@ -16117,7 +16117,6 @@ Yes. Replace the sour cream in the filling with cream cheese (softened) or omit 
 4 days refrigerated in an airtight container. They reheat well and are arguably better on day 2 after the flavors have melded.
 `,
   },
-] as BlogPost[,
   {
     id: 'beef-stroganoff-recipe',
     slug: 'beef-stroganoff-recipe',
@@ -16325,8 +16324,8 @@ Beef stroganoff is perfect for rotation — quick on weeknights, impressive enou
 
 [Start your free 7-day trial at DinnerDrop](/beta)
 `,
-  }
-]
+  },
+] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug)
 }
