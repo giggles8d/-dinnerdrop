@@ -16485,10 +16485,10 @@ Honey garlic chicken is a perfect weekly staple — fast, crowd-pleasing, and cu
   }
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
-  return BLOG_POSTS.find((p) => p.slug === slug)
+  return BLOG_POSTS.find((p) => p && p.slug === slug)
 }
 
 export function getAllPostSlugs(): string[] {
-  return BLOG_POSTS.map((p) => p.slug)
+  return BLOG_POSTS.filter((p): p is BlogPost => !!(p && p.slug)).map((p) => p.slug)
 }
 
