@@ -15,7 +15,7 @@ export default function BlogIndexPage() {
       {/* Posts */}
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="space-y-8">
-          {[...BLOG_POSTS].sort((a, b) => new Date(a.publishDate).getTime() - new Date(b.publishDate).getTime()).map((post) => (
+          {[...BLOG_POSTS].filter(p => p && p.slug).sort((a, b) => new Date(a.publishDate).getTime() - new Date(b.publishDate).getTime()).map((post) => (
             <article
               key={post.slug}
               className="border border-gray-200 rounded-xl p-6 hover:border-[#1a5c38] transition-colors"

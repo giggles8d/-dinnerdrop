@@ -15476,6 +15476,8 @@ Baked ziti is one of the most practical family dinners you can add to a rotation
   },
 
   {
+    id: 'hamburger-recipe',
+    slug: 'hamburger-recipe',
     title: 'Hamburger Recipe: The Best Homemade Burger and 15 Variations Your Family Will Actually Request',
     description: 'The best homemade hamburger recipe — juicy patties, proper technique, and 15 burger variations from classic cheeseburger to smash burgers, turkey burgers, and stuffed burgers.',
     publishDate: '2028-02-18',
