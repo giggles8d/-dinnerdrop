@@ -16660,6 +16660,160 @@ Absolutely. It stores for up to 4 days in the refrigerator and reheats well on t
 You can, though fresh potatoes give better texture and flavor. If using frozen hash browns, add them directly from frozen and reduce the broth by about half a cup since they release more water as they cook. They'll break down faster, so this works best if you want a smoother soup.
 `,
   },
+
+  {
+    id: '98',
+    slug: 'taco-soup-recipe',
+    title: 'Taco Soup Recipe: Easy One-Pot Dinner the Whole Family Will Love',
+    keyword: 'taco soup recipe',
+    searchVolume: '20K/mo',
+    difficulty: 'Low',
+    category: 'Soups & Stews',
+    publishDate: '2028-01-20',
+    readingTime: '9 min',
+    excerpt: 'A hearty taco soup recipe made in one pot in under 30 minutes. Ground beef, beans, corn, and bold taco seasoning your new favorite easy weeknight dinner.',
+    content: `
+Taco soup is the dinner that everyone actually finishes. It has everything that makes tacos great — seasoned ground beef, beans, corn, tomatoes, and all the toppings — served warm in a bowl instead of assembled by hand. It comes together in one pot in about 25 minutes, the leftovers are arguably better than the original, and it costs well under two dollars per serving.
+
+This recipe covers the classic stovetop version first, then walks through slow cooker and Instant Pot adaptations, variations for different dietary needs, topping ideas, and answers to every question that comes up when you make taco soup for the first time.
+
+## What Makes a Great Taco Soup
+
+The best taco soup has three things: bold seasoning built in layers, a base that is thick enough to feel hearty but not so heavy it weighs you down, and contrast — something creamy, something crunchy, something bright at the end. The recipe below nails all three.
+
+The seasoning goes in twice: once when you brown the meat, once when you add the liquids. This layering is what separates flat taco soup from one that tastes like it simmered all day.
+
+[CTA]Let DinnerDrop plan this week's dinners — taco soup, grocery list included. [Try free](/beta)[/CTA]
+
+## The Classic Taco Soup Recipe
+
+**Serves:** 6 to 8 | **Total time:** 30 minutes | **One pot**
+
+### Ingredients
+
+- 1.5 lbs ground beef (80/20)
+- 1 medium yellow onion, diced
+- 3 cloves garlic, minced
+- 1 packet (1 oz) taco seasoning
+- 1 packet (1 oz) ranch seasoning mix
+- 1 can (15 oz) black beans, drained and rinsed
+- 1 can (15 oz) kidney beans, drained and rinsed
+- 1 can (15 oz) whole kernel corn, drained
+- 1 can (14.5 oz) diced tomatoes with green chiles (like Rotel)
+- 1 can (14.5 oz) plain diced tomatoes
+- 2 cups beef broth
+- Salt and black pepper to taste
+
+For serving: shredded cheddar, sour cream, tortilla chips, sliced jalapeno, diced avocado, cilantro, lime wedges
+
+### Instructions
+
+1. **Brown the beef.** Set a large Dutch oven or stockpot over medium-high heat. Add the ground beef and cook, breaking it apart with a spoon, for 7 to 8 minutes until no pink remains. Drain excess fat if needed, leaving about a tablespoon in the pot.
+
+2. **Cook the aromatics.** Add the diced onion to the beef and cook for 3 to 4 minutes until softened. Add the garlic and cook for 1 more minute, stirring constantly so it does not burn.
+
+3. **Season the base.** Sprinkle in the taco seasoning and ranch mix. Stir to coat the meat and onions evenly. Cook for 1 minute — the spices will bloom in the fat and the kitchen will smell incredible.
+
+4. **Add everything else.** Pour in the black beans, kidney beans, corn, both cans of tomatoes, and the broth. Stir to combine.
+
+5. **Simmer.** Bring to a boil, then reduce heat to medium-low. Let the soup simmer uncovered for 10 to 15 minutes. The liquid will reduce slightly and the flavors will meld. Taste and adjust salt and pepper.
+
+6. **Serve.** Ladle into bowls and set out your toppings. Let everyone customize their own — this is half the fun of taco soup.
+
+## Homemade Taco Seasoning
+
+Two and a half tablespoons makes the equivalent of one seasoning packet, without the added starch or sodium:
+
+- 1 tablespoon chili powder
+- 1.5 teaspoons cumin
+- 0.5 teaspoon garlic powder
+- 0.5 teaspoon onion powder
+- 0.5 teaspoon paprika
+- 0.25 teaspoon dried oregano
+- 0.25 teaspoon black pepper
+- 0.25 teaspoon salt
+
+Mix together and store in a small jar. Doubles as a dry rub for chicken or fish.
+
+## 5 Taco Soup Variations
+
+### 1. Slow Cooker Taco Soup
+
+Brown the beef and onions on the stovetop first (5 minutes — do not skip this step, it builds flavor). Transfer to the slow cooker with all remaining ingredients except toppings. Cook on LOW for 6 to 8 hours or HIGH for 3 to 4 hours. The beans will soften further, the broth will thicken slightly, and the seasoning will deepen. Perfect for Sunday prep or workday cooking.
+
+### 2. Instant Pot Taco Soup
+
+Set the Instant Pot to Saute. Brown the beef and cook the onions and garlic directly in the pot. Add the seasoning, stir, then add all remaining ingredients. Seal the lid, set to Manual/Pressure Cook on HIGH for 10 minutes. Quick release the pressure. Fully cooked and deeply flavored in under 30 minutes total.
+
+### 3. Chicken Taco Soup
+
+Swap the ground beef for 1.5 pounds of boneless skinless chicken breasts or thighs. For stovetop: dice the chicken and cook in oil until cooked through, then proceed as written. For slow cooker: add raw chicken breasts whole, cook on LOW 6 to 8 hours, then shred with two forks directly in the pot before serving. The shredded chicken soaks up the broth beautifully.
+
+### 4. White Chicken Taco Soup
+
+A lighter, creamier version. Use shredded rotisserie chicken, white beans instead of black and kidney, white or yellow corn, a can of green chiles, and 4 oz softened cream cheese stirred in at the end. Use plain chicken broth instead of Rotel. Finish with a squeeze of lime. Top with pepper jack, sour cream, and cilantro.
+
+### 5. Vegetarian Taco Soup
+
+Drop the meat entirely. Add an extra can of black beans, a can of pinto beans, and one diced zucchini or a cup of frozen fire-roasted corn. Use vegetable broth instead of beef broth. The beans provide more than enough protein and substance. Most meat-eaters will not feel like they are missing anything.
+
+[CTA]Stop figuring out dinner every single night. DinnerDrop builds your weekly plan and grocery list automatically. [Try free for 7 days](/beta)[/CTA]
+
+## The Toppings Bar: What to Set Out
+
+Set these out in small bowls so everyone builds their own:
+
+Essential: shredded cheddar or Monterey Jack, sour cream or Greek yogurt, tortilla chips or strips.
+
+Highly recommended: sliced jalapenos, diced avocado or guacamole, fresh cilantro, lime wedges, diced white or green onion.
+
+For bigger appetites: warm flour or corn tortillas on the side, or a scoop of cooked white rice in the bowl before ladling the soup over.
+
+## What to Serve Alongside
+
+Taco soup is a complete meal in a bowl, but if you want something to round it out: cornbread or corn muffins (the classic pairing — sweet against spicy), cheese quesadillas cut into wedges for dipping, a scoop of Mexican rice in each bowl, avocado salad (diced avocado, red onion, lime juice, salt), or elote (grilled corn with mayo, cotija, chili powder, and lime).
+
+## Storage, Meal Prep, and Reheating
+
+Taco soup is one of the best recipes for meal prep. The flavor improves significantly after 24 hours as the seasoning continues to work into the beans and broth.
+
+**Refrigerator:** Cool completely, then store in airtight containers for up to 5 days.
+
+**Freezer:** Ladle cooled soup into zip-top freezer bags or freezer-safe containers, leaving an inch of space at the top. Freeze for up to 3 months. Thaw overnight in the refrigerator, then reheat on the stovetop over medium heat.
+
+**Reheating:** Stovetop is best — add a splash of broth or water if the soup has thickened. Microwave works for single servings; stir halfway through.
+
+**Meal prep tip:** Make a double batch on Sunday. Use the leftovers Wednesday over rice or as a nacho topping Friday night.
+
+## Adjusting the Heat Level
+
+Milder: use plain diced tomatoes instead of Rotel, skip the jalapeno topping, use mild taco seasoning. This version is ideal for younger kids.
+
+More heat: use hot Rotel or fire-roasted tomatoes with green chiles, add a diced jalapeno to the pot when cooking the onions, finish with hot sauce.
+
+## How to Thicken Taco Soup
+
+Three options: (1) Simmer longer uncovered — more liquid evaporates and the soup concentrates. (2) Mash some beans — remove a cup of the soup, mash the beans in it, stir back in. (3) Stir in 4 oz softened cream cheese during the last 5 minutes of cooking. It melts in and thickens the broth while adding mild creaminess.
+
+## Taco Soup for Kids
+
+Use mild Rotel or plain diced tomatoes. Let kids pick their own toppings. Serve over rice to dilute the heat. Set out tortilla chips for dipping — kids who will not eat soup will eat soup that comes with chips.
+
+[CTA]DinnerDrop plans family-friendly dinners like this one every week. No repeats, no stress, grocery list ready to go. [Start free](/beta)[/CTA]
+
+## FAQ
+
+**Can I make taco soup without ranch seasoning?** Yes. The ranch packet adds a subtle creaminess and herb note, but it is not essential. Skip it and increase the taco seasoning slightly, or add a teaspoon each of garlic powder and dried dill. The soup will still be excellent.
+
+**What beans work best in taco soup?** Black beans and kidney beans are the classic combination. Pinto beans are a great third addition or swap. Cannellini beans work well in chicken versions. Avoid chickpeas — they have a firmer texture that does not absorb the seasoning as well.
+
+**Can I use ground turkey instead of ground beef?** Absolutely. Ground turkey is leaner and cooks almost identically in this recipe. Use 93/7 lean ground turkey for the best texture.
+
+**How do I keep the soup from being too salty?** Use low-sodium or no-salt-added canned goods and reduced-sodium broth. Taste before adding any additional salt. If it is already too salty, add a diced potato or a tablespoon of apple cider vinegar to balance.
+
+**Can I use dried beans instead of canned?** Yes, but cook them first. Dried beans added raw will not cook through properly in 30 minutes. One 15-oz can equals about 1.5 cups cooked dried beans.
+`,
+  },
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p && p.slug === slug)
