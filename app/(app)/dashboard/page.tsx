@@ -26,6 +26,8 @@ function DashboardContent() {
   const [hasGenerated, setHasGenerated] = useState(false)
   const [isPlanStale, setIsPlanStale] = useState(false)
   const [generateError, setGenerateError] = useState('')
+  const [pendingMeals, setPendingMeals] = useState<Meal[]>([])
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [favoriteNames, setFavoriteNames] = useState<Set<string>>(new Set())
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
   const [isBetaMember, setIsBetaMember] = useState(false)
@@ -36,6 +38,8 @@ function DashboardContent() {
 
   const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing'
   const canGenerate = isSubscribed || planCount === 0 || isBetaMember
+  const isPickingMeals = pendingMeals.length > 0
+  const selectedMeals = pendingMeals.filter(m => selectedIds.has(m.day))
 
   const loadExistingPlan = useCallback(async () => {
     try {
@@ -235,24 +239,10 @@ function DashboardContent() {
       }
 
       if (data.meals) {
-        setMeals(data.meals)
-        setTotalCost(data.totalEstimatedCost)
-        setHasGenerated(true)
-        setIsPlanStale(false)
-        setPlanCount(prev => prev + 1)
-        localStorage.setItem('current-meals', JSON.stringify(data.meals))
-
-        const today = new Date()
-        const monday = new Date(today)
-        monday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
-
-        await supabase.from('meal_plans').insert({
-          user_id: user.id,
-          week_start: monday.toISOString().split('T')[0],
-          meals: data.meals,
-          grocery_list: {},
-          total_estimated_cost: data.totalEstimatedCost,
-        })
+        // Show picker — user selects which meals they want before saving
+        setPendingMeals(data.meals)
+        setSelectedIds(new Set(data.meals.map((m: Meal) => m.day)))
+        setGenerateError('')
       }
     } catch (error) {
       console.error('Error generating plan:', error)
@@ -262,6 +252,62 @@ function DashboardContent() {
           ? 'Generation took too long — please try again. It usually works on the second attempt.'
           : error instanceof Error ? error.message : 'Something went wrong. Please try again.'
       )
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  function toggleMealSelection(meal: Meal) {
+    setSelectedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(meal.day)) {
+        next.delete(meal.day)
+      } else {
+        next.add(meal.day)
+      }
+      return next
+    })
+  }
+
+  async function confirmPlan() {
+    if (selectedMeals.length === 0) return
+    setLoading(true)
+    setGenerateError('')
+    try {
+      const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+      const confirmed = selectedMeals.map((meal, i) => ({
+        ...meal,
+        day: DAY_NAMES[i] ?? `Day ${i + 1}`,
+      }))
+      const confirmedCost = confirmed.reduce((sum, m) => sum + m.estimatedCost, 0)
+
+      const { data: { session } } = await supabase.auth.getSession()
+      const user = session?.user ?? null
+      if (!user) { router.push('/login'); return }
+
+      const today = new Date()
+      const monday = new Date(today)
+      monday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
+
+      await supabase.from('meal_plans').insert({
+        user_id: user.id,
+        week_start: monday.toISOString().split('T')[0],
+        meals: confirmed,
+        grocery_list: {},
+        total_estimated_cost: confirmedCost,
+      })
+
+      setMeals(confirmed)
+      setTotalCost(confirmedCost)
+      setHasGenerated(true)
+      setIsPlanStale(false)
+      setPlanCount(prev => prev + 1)
+      localStorage.setItem('current-meals', JSON.stringify(confirmed))
+      setPendingMeals([])
+      setSelectedIds(new Set())
+    } catch (error) {
+      console.error('Error confirming plan:', error)
+      setGenerateError('Something went wrong saving your plan. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -347,33 +393,53 @@ function DashboardContent() {
         <div className="flex items-start justify-between mb-8 pb-6 border-b border-border">
           <div>
             <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">
-              Weekly meal plan
+              {isPickingMeals ? 'Pick your meals' : 'Weekly meal plan'}
             </p>
             <h1 className="text-4xl font-heading font-bold text-foreground leading-tight">
-              This week&apos;s dinners
+              {isPickingMeals ? 'Choose your favorites' : "This week's dinners"}
             </h1>
             <p className="text-muted-foreground mt-2">
-              5 meals planned around your budget and preferences
+              {isPickingMeals
+                ? `Tap meals to select or deselect — ${selectedMeals.length} chosen`
+                : '5 meals planned around your budget and preferences'}
             </p>
           </div>
-          <button
-            onClick={generatePlan}
-            disabled={loading || initialLoading}
-            className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
-          >
-            {initialLoading
-              ? 'Loading...'
-              : loading
-              ? 'Generating...'
-              : !canGenerate
-                ? 'Upgrade to generate'
-                : hasGenerated
-                  ? 'Generate new week'
-                  : 'Generate my plan'}
-          </button>
+          {isPickingMeals ? (
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => { setPendingMeals([]); setSelectedIds(new Set()) }}
+                className="px-4 py-3 rounded-xl border border-border text-foreground/70 font-semibold hover:bg-muted transition-colors text-sm"
+              >
+                Start over
+              </button>
+              <button
+                onClick={confirmPlan}
+                disabled={loading || selectedMeals.length === 0}
+                className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
+              >
+                {loading ? 'Saving...' : `Confirm ${selectedMeals.length} meal${selectedMeals.length !== 1 ? 's' : ''} →`}
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={generatePlan}
+              disabled={loading || initialLoading}
+              className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
+            >
+              {initialLoading
+                ? 'Loading...'
+                : loading
+                ? 'Generating...'
+                : !canGenerate
+                  ? 'Upgrade to generate'
+                  : hasGenerated
+                    ? 'Generate new week'
+                    : 'Generate my plan'}
+            </button>
+          )}
         </div>
 
-                {!hasGenerated && !initialLoading && (
+                {!hasGenerated && !initialLoading && !isPickingMeals && (
           <div className="mb-8 p-6 rounded-2xl border border-accent/30 bg-accent/5 text-center">
             <div className="text-3xl mb-3">&#127858;</div>
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">Welcome to DinnerDrop!</h2>
@@ -389,14 +455,24 @@ function DashboardContent() {
             </div>
           </div>
         )}
-        <MealGrid
-          meals={meals}
-          loading={initialLoading || loading}
-          favoriteNames={favoriteNames}
-          onToggleFavorite={toggleFavorite}
-        />
+        {isPickingMeals ? (
+          <MealGrid
+            meals={pendingMeals}
+            loading={loading}
+            selectable
+            selectedIds={selectedIds}
+            onSelectMeal={toggleMealSelection}
+          />
+        ) : (
+          <MealGrid
+            meals={meals}
+            loading={initialLoading || loading}
+            favoriteNames={favoriteNames}
+            onToggleFavorite={toggleFavorite}
+          />
+        )}
 
-        {hasGenerated && meals.length > 0 && (
+        {hasGenerated && meals.length > 0 && !isPickingMeals && (
           <>
             <div className="mt-8 p-4 rounded-lg border border-border bg-card">
               <div className="flex items-center justify-between mb-2">

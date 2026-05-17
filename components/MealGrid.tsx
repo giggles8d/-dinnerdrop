@@ -6,6 +6,9 @@ interface MealGridProps {
   loading?: boolean
   favoriteNames?: Set<string>
   onToggleFavorite?: (meal: Meal) => void
+  selectable?: boolean
+  selectedIds?: Set<string>
+  onSelectMeal?: (meal: Meal) => void
 }
 
 function SkeletonCard() {
@@ -19,11 +22,21 @@ function SkeletonCard() {
   )
 }
 
-export default function MealGrid({ meals, loading, favoriteNames, onToggleFavorite }: MealGridProps) {
+export default function MealGrid({
+  meals,
+  loading,
+  favoriteNames,
+  onToggleFavorite,
+  selectable,
+  selectedIds,
+  onSelectMeal,
+}: MealGridProps) {
+  const skeletonCount = selectable ? 10 : 5
+
   if (loading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-        {Array.from({ length: 5 }).map((_, i) => (
+        {Array.from({ length: skeletonCount }).map((_, i) => (
           <SkeletonCard key={i} />
         ))}
       </div>
@@ -38,6 +51,9 @@ export default function MealGrid({ meals, loading, favoriteNames, onToggleFavori
           meal={meal}
           isFavorite={favoriteNames?.has(meal.name)}
           onToggleFavorite={onToggleFavorite}
+          selectable={selectable}
+          selected={selectedIds?.has(meal.day)}
+          onSelect={onSelectMeal}
         />
       ))}
     </div>

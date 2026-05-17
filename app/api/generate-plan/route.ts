@@ -77,7 +77,7 @@ IMPORTANT: Include 1-2 of these favorites in the plan. Use them exactly as named
       ? `STRICT dietary requirements — every meal MUST comply:\n${profile.dietaryNeeds.map(d => `- ${d}`).join('\n')}\nDo NOT include any ingredients that violate these restrictions.`
       : ''
 
-    const prompt = `You are a meal planning assistant for DinnerDrop. Generate exactly 5 dinner meal plans.
+    const prompt = `You are a meal planning assistant for DinnerDrop. Generate exactly 10 diverse dinner ideas for a family to choose from.
 
 User profile:
 - Family size: ${profile.familySize} people
@@ -89,16 +89,17 @@ ${dietaryInstructions}
 ${favoritesSection}${tasteProfileSection}
 Requirements:
 - Each meal must be completable in ${profile.maxCookTime} minutes or less
-- Total grocery cost must stay within ${profile.weeklyBudget}
-- Use overlapping ingredients across meals to minimize waste
+- Each meal individually must cost within ${profile.weeklyBudget} divided by 5
+- Make the 10 ideas diverse — different cuisines, proteins, and styles
 - Maximum 8 ingredients per meal
 - Prioritize meals a tired parent can actually cook on a weeknight
+- The user will pick their favorites, so make every option appealing
 
 Return ONLY valid JSON with this exact structure, no markdown:
 {
   "meals": [
     {
-      "day": "Monday",
+      "day": "1",
       "name": "string",
       "cuisine": "Italian",
       "protein": "chicken",
@@ -113,7 +114,9 @@ Return ONLY valid JSON with this exact structure, no markdown:
     }
   ],
   "totalEstimatedCost": 87.50
-}`
+}
+
+Use "day" values "1" through "10" as unique identifiers for each meal idea.`
 
     const text = await generateWithClaude(prompt, 4000)
     let planData: GeneratePlanResponse
