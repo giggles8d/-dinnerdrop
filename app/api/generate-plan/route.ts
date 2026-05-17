@@ -91,7 +91,8 @@ Requirements:
 - Each meal must be completable in ${profile.maxCookTime} minutes or less
 - Each meal individually must cost within ${profile.weeklyBudget} divided by 5
 - Make the 10 ideas diverse — different cuisines, proteins, and styles
-- Maximum 8 ingredients per meal
+- Maximum 6 ingredients per meal (keep it lean for speed)
+- Maximum 4 steps per meal
 - Prioritize meals a tired parent can actually cook on a weeknight
 - The user will pick their favorites, so make every option appealing
 
@@ -118,7 +119,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
 
 Use "day" values "1" through "10" as unique identifiers for each meal idea.`
 
-    const text = await generateWithClaude(prompt, 4000)
+    const text = await generateWithClaude(prompt, 8000)
     let planData: GeneratePlanResponse
     try {
       planData = parseClaudeJSON<GeneratePlanResponse>(text)
