@@ -39,7 +39,10 @@ function DashboardContent() {
   const loadExistingPlan = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
+      if (!user) {
+        router.push('/login')
+        return
+      }
 
       // Fetch profile first (need onboarding_complete before proceeding)
       const { data: profile } = await supabase
@@ -181,7 +184,10 @@ function DashboardContent() {
 
     try {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
+      if (!user) {
+        router.push('/login')
+        return
+      }
 
       // Fetch profile + favorites in parallel
       const [profileRes, favoritesRes] = await Promise.all([
