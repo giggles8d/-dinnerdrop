@@ -16814,6 +16814,163 @@ Use mild Rotel or plain diced tomatoes. Let kids pick their own toppings. Serve 
 **Can I use dried beans instead of canned?** Yes, but cook them first. Dried beans added raw will not cook through properly in 30 minutes. One 15-oz can equals about 1.5 cups cooked dried beans.
 `,
   },
+  {
+    slug: 'fish-tacos-recipe',
+    title: 'Fish Tacos Recipe: Light, Crispy, and Ready in 30 Minutes',
+    description:
+      'Fish tacos are one of the quickest and most crowd-pleasing weeknight dinners you can make. ' +
+      'Here is a complete guide — crispy pan-fried fish, slaw, and a creamy sauce in under 30 minutes.',
+    publishDate: '2027-11-19',
+    readingTimeMinutes: 9,
+    primaryKeyword: 'fish tacos recipe',
+    content: `
+# Fish Tacos Recipe: Light, Crispy, and Ready in 30 Minutes
+
+Fish tacos are one of those dinners that feel special but take less than 30 minutes start to finish. Crispy seasoned fish, a tangy slaw, a creamy sauce, and warm tortillas — the combination of textures and flavors is genuinely hard to beat on a weeknight.
+
+This guide covers the best methods for cooking the fish (pan-fried, baked, and air fryer), the slaw that makes the taco, the sauce that ties everything together, and every variation worth knowing.
+
+---
+
+## Why Fish Tacos Work for Weeknight Dinners
+
+**They're fast.** The fish cooks in under 10 minutes. Make the slaw and sauce while the fish rests and everything is ready at the same time.
+
+**The ingredients are cheap.** Cod, tilapia, and mahi-mahi are all affordable, widely available, and work perfectly in tacos. You don't need anything expensive.
+
+**Picky eaters often take to them.** The mild flavor of white fish, the crunch of the slaw, and the familiar taco format make this a reliable option for families with mixed tastes.
+
+**[DinnerDrop](https://dinnerdrop.app/beta) builds your family's whole week of dinners and generates the grocery list automatically. The beta is free for six months.**
+
+---
+
+## The Classic Fish Taco Recipe (Pan-Fried)
+
+### Ingredients (serves 4)
+
+**Fish:**
+- 1.5 lbs white fish fillets (cod, tilapia, mahi-mahi, or halibut)
+- 1 teaspoon chili powder
+- 1 teaspoon cumin
+- 1/2 teaspoon garlic powder
+- 1/2 teaspoon paprika
+- 1/2 teaspoon salt
+- 1/4 teaspoon black pepper
+- 2 tablespoons olive oil
+
+**Cilantro-lime slaw:**
+- 2 cups shredded green cabbage (or coleslaw mix)
+- 1/4 cup fresh cilantro, chopped
+- 2 tablespoons lime juice
+- 1 tablespoon olive oil
+- 1/2 teaspoon salt
+- 1/4 teaspoon sugar
+
+**Creamy sauce:**
+- 1/2 cup sour cream (or Greek yogurt)
+- 2 tablespoons mayonnaise
+- 1 tablespoon lime juice
+- 1 teaspoon hot sauce (Cholula or Tapatio)
+- 1/2 teaspoon garlic powder
+- Salt to taste
+
+**Assembly:**
+- 8-10 small corn or flour tortillas
+- 1 avocado, sliced
+- Lime wedges for serving
+- Extra cilantro, pickled jalapenos (optional)
+
+### Instructions
+
+**Step 1: Make the slaw (5 minutes)**
+Combine cabbage, cilantro, lime juice, olive oil, salt, and sugar in a bowl. Toss well and set aside. It improves as it sits — make this first.
+
+**Step 2: Make the sauce (2 minutes)**
+Whisk together sour cream, mayo, lime juice, hot sauce, garlic powder, and salt. Taste and adjust — add more lime for brightness, more hot sauce for heat. Refrigerate until ready.
+
+**Step 3: Season the fish**
+Pat fish dry with paper towels. Mix the spices in a small bowl and rub evenly over both sides of each fillet.
+
+**Step 4: Cook the fish (6-8 minutes)**
+Heat oil in a large skillet over medium-high heat until shimmering. Add fish and cook undisturbed for 3-4 minutes until golden brown on the bottom. Flip once and cook another 2-3 minutes until the fish flakes easily with a fork and is opaque throughout. Remove from heat and let rest 2 minutes.
+
+**Step 5: Warm tortillas**
+Warm tortillas in a dry skillet over medium heat for 30 seconds per side, or wrap in a damp paper towel and microwave 45 seconds. Keep wrapped in a clean kitchen towel to stay soft.
+
+**Step 6: Assemble**
+Break or cut the fish into chunks. Build each taco: slaw on the bottom, fish, creamy sauce, avocado, extra cilantro, squeeze of lime. Serve immediately.
+
+---
+
+## Fish Taco Variations
+
+### Baked Fish Tacos
+Pat the fish dry and season as above. Arrange on a parchment-lined baking sheet, drizzle with olive oil. Bake at 425 degrees F for 12-15 minutes until the fish flakes easily. This method is hands-off and works well for feeding a crowd.
+
+### Air Fryer Fish Tacos
+Season the fish as above. Spray the air fryer basket with oil. Cook at 400 degrees F for 8-10 minutes, flipping halfway through, until golden and flaky. The texture is very close to pan-fried with less mess.
+
+### Crispy Beer-Battered Fish Tacos (Baja Style)
+Make a quick batter: 1 cup flour, 1 cup cold beer, 1 teaspoon each chili powder and garlic powder, salt and pepper. Dip fish pieces in batter and fry in 375 degree F oil for 3-4 minutes per side until golden. Classic Baja taco style with maximum crunch.
+
+### Grilled Fish Tacos
+Brush fish with olive oil and season generously. Grill over medium-high heat 3-4 minutes per side. The slight char adds a smoky flavor that works especially well with mango salsa.
+
+### Shrimp Tacos (Same Method)
+Swap the fish for 1.5 lbs of large peeled and deveined shrimp. Season the same way and cook in the skillet 2 minutes per side until pink and opaque. Everything else stays identical.
+
+---
+
+## Best Fish for Fish Tacos
+
+**Cod:** The most popular choice. Mild, flaky, holds together well, widely available frozen.
+
+**Tilapia:** Budget-friendly, mild, thin fillets cook in about 3 minutes per side. Very forgiving.
+
+**Mahi-mahi:** Firmer texture, slightly sweeter flavor. Excellent for grilling.
+
+**Halibut:** More expensive but very clean flavor and holds up well to all cooking methods.
+
+**Catfish:** Bold flavor, works well with heavy seasoning. A Southern spin on the classic.
+
+---
+
+## The Slaw Variations
+
+**Classic cabbage slaw:** Cabbage, lime, cilantro, olive oil. Takes 5 minutes and holds up without wilting.
+
+**Creamy chipotle slaw:** Add 1 tablespoon of mayo and 1 teaspoon of chipotle in adobo sauce. Smoky and rich.
+
+**Mango slaw:** Swap half the cabbage for shredded carrots and add 1 diced mango. Sweet-acidic contrast that works especially well with grilled fish.
+
+---
+
+## Frequently Asked Questions
+
+**What is the best fish for beginners?**
+Cod or tilapia. Both are mild, widely available, inexpensive, and very forgiving in the pan.
+
+**Can I use frozen fish?**
+Yes. Thaw overnight in the refrigerator or under cold running water for 20 minutes. Pat completely dry before seasoning.
+
+**How do I keep the tortillas warm?**
+Wrap in a clean kitchen towel right after warming. They will stay soft for 15-20 minutes.
+
+**Can I make the components ahead?**
+The slaw keeps in the refrigerator for up to a day. The sauce keeps for 3 days covered. Cook the fish right before serving.
+
+**Corn or flour tortillas?**
+Traditionalists say corn. Families with texture preferences often prefer flour. Use whichever your people will eat.
+
+---
+
+Fish tacos are one of the best weeknight dinners precisely because they feel like more effort than they require. Under 30 minutes, affordable, crowd-pleasing, and genuinely delicious.
+
+**[DinnerDrop](https://dinnerdrop.app/beta) plans five dinners per week for your family and builds the complete grocery list — including taco nights. The beta is free for six months.**
+
+**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+`,
+  },
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p && p.slug === slug)
