@@ -28,13 +28,14 @@ function DashboardContent() {
   const [generateError, setGenerateError] = useState('')
   const [favoriteNames, setFavoriteNames] = useState<Set<string>>(new Set())
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
+  const [isBetaMember, setIsBetaMember] = useState(false)
   const [planCount, setPlanCount] = useState(0)
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
 
   const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing'
-  const canGenerate = isSubscribed || planCount === 0
+  const canGenerate = isSubscribed || planCount === 0 || isBetaMember
 
   const loadExistingPlan = useCallback(async () => {
     try {
@@ -54,6 +55,7 @@ function DashboardContent() {
       if (profile) {
         setBudget(profile.weekly_budget)
         setSubscriptionStatus(profile.subscription_status || 'free')
+        setIsBetaMember(profile.is_beta_member || false)
 
         if (!profile.onboarding_complete) {
           router.push('/onboarding')
@@ -171,7 +173,7 @@ function DashboardContent() {
       return
     }
     if (!canGenerate) {
-      router.push('/subscribe')
+      router.push('/subscribe?coupon=BETA100')
       return
     }
 
