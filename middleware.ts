@@ -1,3 +1,4 @@
+import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
 // A/B test: route 50% of /beta traffic to /beta-v2
@@ -7,6 +8,12 @@ function getBetaVariant(request: NextRequest): 'control' | 'variant' {
   if (existing) return existing.value as 'control' | 'variant'
   return Math.random() < 0.5 ? 'variant' : 'control'
 }
+
+const protectedPaths = [
+  '/dashboard', '/grocery-list', '/favorites', '/recipe',
+  '/onboarding', '/pantry', '/history', '/account',
+]
+const authPaths = ['/login', '/signup']
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -30,32 +37,60 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const protectedPaths = ['/dashboard', '/grocery-list', '/favorites', '/recipe', '/onboarding', '/pantry', '/history', '/account']
   const isProtectedRoute = protectedPaths.some(path => pathname.startsWith(path))
-
-  const authPaths = ['/login', '/signup']
   const isAuthRoute = authPaths.some(path => pathname.startsWith(path))
 
-  const hasSession = request.cookies.getAll().some(c => c.name.includes('auth-token') || c.name.includes('sb-') )
+  // Skip auth check for routes that don't need it
+  if (!isProtectedRoute && !isAuthRoute) {
+    return NextResponse.next()
+  }
 
-  if (isProtectedRoute && !hasSession) {
+  // Use Supabase SSR to properly validate session and refresh expired tokens
+  let response = NextResponse.next({ request })
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          // Apply updated cookies to both the request and response
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          )
+          response = NextResponse.next({ request })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          )
+        },
+      },
+    }
+  )
+
+  // getUser() validates the JWT server-side and refreshes if expired
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (isProtectedRoute && !user) {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/login'
     redirectUrl.searchParams.set('redirect', pathname)
     return NextResponse.redirect(redirectUrl)
   }
 
-  if (isAuthRoute && hasSession) {
+  if (isAuthRoute && user) {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/dashboard'
     return NextResponse.redirect(redirectUrl)
   }
 
-  return NextResponse.next()
+  return response
 }
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

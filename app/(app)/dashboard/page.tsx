@@ -39,7 +39,8 @@ function DashboardContent() {
 
   const loadExistingPlan = useCallback(async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser()
+      const { data: { session } } = await supabase.auth.getSession()
+      const user = session?.user ?? null
       if (!user) {
         router.push('/login')
         return
@@ -109,7 +110,8 @@ function DashboardContent() {
   useEffect(() => {
     if (searchParams.get('subscribed') === 'true') {
       const refresh = async () => {
-        const { data: { user } } = await supabase.auth.getUser()
+        const { data: { session } } = await supabase.auth.getSession()
+        const user = session?.user ?? null
         if (!user) return
         const { data: profile } = await supabase
           .from('profiles')
@@ -125,7 +127,8 @@ function DashboardContent() {
   }, [searchParams, supabase])
 
   async function toggleFavorite(meal: Meal) {
-    const { data: { user } } = await supabase.auth.getUser()
+    const { data: { session } } = await supabase.auth.getSession()
+    const user = session?.user ?? null
     if (!user) return
 
     const isFav = favoriteNames.has(meal.name)
@@ -185,7 +188,8 @@ function DashboardContent() {
     }
 
     try {
-      const { data: { user } } = await supabase.auth.getUser()
+      const { data: { session } } = await supabase.auth.getSession()
+      const user = session?.user ?? null
       if (!user) {
         router.push('/login')
         return
