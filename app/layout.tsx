@@ -117,6 +117,25 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
+        {/* Pinterest Tag */}
+        <Script id="pinterest-tag" strategy="afterInteractive">
+          {`
+            !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments)
+            },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.pinimg.com/js/pintrk.js'
+            ,a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+            pintrk('load', '2612772503928');
+            pintrk('page');
+          `}
+        </Script>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            alt=""
+            src="https://ct.pinterest.com/v3/?event=init&tid=2612772503928&noscript=1"
+          />
+        </noscript>
         {children}
         <Analytics />
       </body>
