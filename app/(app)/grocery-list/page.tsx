@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import GroceryList from '@/components/GroceryList'
+import InstacartButton from '@/components/InstacartButton'
 import { getStoreHomepageUrl } from '@/lib/affiliate-links'
 import { STORE_OPTIONS } from '@/lib/affiliate-links'
 import type { GroceryCategory, GroceryItem, Meal } from '@/types'
@@ -208,6 +209,7 @@ export default function GroceryListPage() {
   }
 
   const isKroger = preferredStore === 'Kroger'
+  const isInstacart = preferredStore === 'Instacart'
 
   return (
     <div className="min-h-screen bg-background">
@@ -220,7 +222,7 @@ export default function GroceryListPage() {
           <p className="text-muted-foreground mt-2">
             Everything you need for this week&apos;s dinners
           </p>
-          {!isKroger && (
+          {!isKroger && !isInstacart && (
             <p className="text-xs text-muted-foreground mt-1">
               Tap any item to find it at {preferredStore}
             </p>
@@ -263,6 +265,13 @@ export default function GroceryListPage() {
                     {krogerResult.message}
                   </p>
                 )}
+              </>
+            ) : isInstacart ? (
+              <>
+                <InstacartButton groceryList={groceryList} />
+                <p className="text-xs text-muted-foreground">
+                  Opens your list on Instacart — pick a retailer and check out.
+                </p>
               </>
             ) : (
               <a
