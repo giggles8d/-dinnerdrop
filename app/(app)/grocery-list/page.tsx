@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import GroceryList from '@/components/GroceryList'
 import InstacartButton from '@/components/InstacartButton'
-import { getStoreHomepageUrl } from '@/lib/affiliate-links'
-import { STORE_OPTIONS } from '@/lib/affiliate-links'
 import type { GroceryCategory, GroceryItem, Meal } from '@/types'
 
 type GroceryListData = Record<GroceryCategory, GroceryItem[]>
@@ -15,7 +13,6 @@ export default function GroceryListPage() {
   const [totalCost, setTotalCost] = useState(0)
   const [loading, setLoading] = useState(true)
   const [generateError, setGenerateError] = useState(false)
-  const [preferredStore, setPreferredStore] = useState('Instacart')
   const [krogerConnected, setKrogerConnected] = useState(false)
   const [krogerLoading, setKrogerLoading] = useState(false)
   const [krogerResult, setKrogerResult] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
@@ -25,16 +22,11 @@ export default function GroceryListPage() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setLoading(false); return }
 
-    // Load profile for preferred store
     const { data: profile } = await supabase
       .from('profiles')
-      .select('preferred_store, kroger_access_token, kroger_token_expires_at')
+      .select('kroger_access_token, kroger_token_expires_at')
       .eq('id', user.id)
       .single()
-
-    if (profile?.preferred_store) {
-      setPreferredStore(profile.preferred_store)
-    }
 
     if (profile) {
       const tokenValid = profile.kroger_access_token &&
@@ -57,7 +49,6 @@ export default function GroceryListPage() {
 
     setTotalCost(plan.total_estimated_cost || 0)
 
-    // Fetch pantry items for subtraction
     const { data: pantryItems } = await supabase
       .from('pantry_items')
       .select('name')
@@ -117,17 +108,6 @@ export default function GroceryListPage() {
   useEffect(() => {
     loadGroceryList()
   }, [loadGroceryList])
-
-  async function handleChangeStore(newStore: string) {
-    setPreferredStore(newStore)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (user) {
-      await supabase
-        .from('profiles')
-        .update({ preferred_store: newStore })
-        .eq('id', user.id)
-    }
-  }
 
   async function handleKrogerCart() {
     if (!krogerConnected) {
@@ -208,9 +188,6 @@ export default function GroceryListPage() {
     )
   }
 
-  const isKroger = preferredStore === 'Kroger'
-  const isInstacart = preferredStore === 'Instacart'
-
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -222,14 +199,9 @@ export default function GroceryListPage() {
           <p className="text-muted-foreground mt-2">
             Everything you need for this week&apos;s dinners
           </p>
-          {!isKroger && !isInstacart && (
-            <p className="text-xs text-muted-foreground mt-1">
-              Tap any item to find it at {preferredStore}
-            </p>
-          )}
         </div>
 
-        <GroceryList groceryList={groceryList} store={preferredStore} />
+        <GroceryList groceryList={groceryList} />
 
         <div className="mt-8 p-5 rounded-xl bg-foreground">
           <div className="flex items-center justify-between">
@@ -241,66 +213,46 @@ export default function GroceryListPage() {
         </div>
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0">
-          <div className="space-y-3">
-            {isKroger ? (
-              <>
-                {krogerConnected ? (
-                  <button
-                    onClick={handleKrogerCart}
-                    disabled={krogerLoading}
-                    className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] disabled:opacity-50 transition-colors shadow-lg"
-                  >
-                    {krogerLoading ? 'Adding to cart...' : 'Send to Kroger cart'}
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => { window.location.href = '/api/kroger/auth' }}
-                    className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] transition-colors shadow-lg"
-                  >
-                    Connect your Kroger account
-                  </button>
-                )}
-                {krogerResult && (
-                  <p className={`text-sm ${krogerResult.type === 'success' ? 'text-green-600' : 'text-destructive'}`}>
-                    {krogerResult.message}
-                  </p>
-                )}
-              </>
-            ) : isInstacart ? (
-              <>
-                <InstacartButton groceryList={groceryList} />
-                <p className="text-xs text-muted-foreground">
-                  Opens your list on Instacart — pick a retailer and check out.
-                </p>
-              </>
-            ) : (
-              <a
-                href={getStoreHomepageUrl(preferredStore)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors shadow-lg"
-              >
-                Shop this list at {preferredStore} &rarr;
-              </a>
-            )}
+          <p className="hidden sm:block text-xs font-semibold tracking-widest text-primary uppercase mb-3">
+            Send to your cart
+          </p>
+          <div className="space-y-4">
+            {/* Instacart — one-tap shopping list */}
+            <InstacartButton groceryList={groceryList} />
 
-            <div className="flex items-center gap-2">
-              <label htmlFor="store-select" className="text-xs text-muted-foreground">Change store:</label>
-              <select
-                id="store-select"
-                value={preferredStore}
-                onChange={(e) => handleChangeStore(e.target.value)}
-                className="text-xs border border-border rounded px-2 py-1 bg-background text-foreground"
-              >
-                {STORE_OPTIONS.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
+            {/* Kroger — direct cart push via OAuth */}
+            <div className="space-y-2">
+              {krogerConnected ? (
+                <button
+                  onClick={handleKrogerCart}
+                  disabled={krogerLoading}
+                  className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] disabled:opacity-50 transition-colors shadow-lg"
+                >
+                  {krogerLoading ? 'Adding to cart...' : 'Send to Kroger cart'}
+                </button>
+              ) : (
+                <button
+                  onClick={() => { window.location.href = '/api/kroger/auth' }}
+                  className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] transition-colors shadow-lg"
+                >
+                  Connect Kroger to send to cart
+                </button>
+              )}
+              {krogerResult && (
+                <p className={`text-sm ${krogerResult.type === 'success' ? 'text-green-600' : 'text-destructive'}`}>
+                  {krogerResult.message}
+                </p>
+              )}
+              {!krogerResult && (
+                <p className="text-[11px] text-muted-foreground">
+                  Pushes ingredients directly into your Kroger.com cart.
+                </p>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="h-20 sm:hidden" />
+        <div className="h-32 sm:hidden" />
       </div>
     </div>
   )

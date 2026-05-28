@@ -34,13 +34,13 @@ export default async function LandingPage() {
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-secondary text-primary text-xs font-bold px-3 py-1.5 rounded-full border border-primary/20 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
-            AI meal planning + grocery handoff in one tap
+            AI dinners + one-tap Instacart cart
           </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-heading font-bold text-foreground leading-tight mb-6">
             Dinner,<br />handled.
           </h1>
           <p className="text-xl text-muted-foreground max-w-xl leading-relaxed mb-10">
-            Five budget-friendly weeknight dinners, planned by AI, groceries sent straight to your favorite store. Under 30 minutes every night.
+            Five budget-friendly weeknight dinners, planned by AI. Tap once — your whole grocery list lands in your Instacart cart, ready to check out. Under 30 minutes every night.
           </p>
           <div className="flex flex-col sm:flex-row items-start gap-3">
             <Link href="/beta" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-colors shadow-sm">
@@ -92,7 +92,7 @@ export default async function LandingPage() {
           {[
             { step: '01', title: 'Tell us about your family', description: 'Budget, family size, dietary needs, how much time you have to cook. Takes 2 minutes.' },
             { step: '02', title: 'Get 5 personalized dinners', description: 'AI builds a full week of budget-friendly meals your family will actually eat.' },
-            { step: '03', title: 'One tap to your grocery store', description: 'Your full grocery list, organized and deduplicated, sent straight to your cart for delivery or pickup.' },
+            { step: '03', title: 'One tap. List in your cart.', description: 'Tap Instacart and your full list auto-loads — pick a retailer, check out, done. Or push straight to your Kroger cart from your account.' },
           ].map((item) => (
             <div key={item.step} className="space-y-4">
               <p className="text-4xl font-heading font-bold text-primary/20">{item.step}</p>
@@ -112,7 +112,7 @@ export default async function LandingPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { icon: '🧠', title: 'AI meal planning', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },
-            { icon: '🛒', title: 'One-tap grocery handoff', description: 'Your full shopping list sent directly to Instacart, Walmart, Amazon Fresh, or Kroger — ready to check out.' },
+            { icon: '🛒', title: 'Auto-cart at Instacart or Kroger', description: 'Your full shopping list lands in your Instacart cart in one tap — or syncs straight to your Kroger cart via your account. No retyping. No missed items.' },
             { icon: '👨‍👩‍👧', title: 'Picky-eater friendly', description: "Swap any meal you don't love in one tap. DinnerDrop learns your family's tastes over time." },
             { icon: '💵', title: 'Budget optimization', description: 'Set your weekly food budget. Every plan is built to hit your number — no surprises at checkout.' },
           ].map((f) => (
