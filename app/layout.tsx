@@ -62,7 +62,7 @@ export default function RootLayout({
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "6-month free beta offer — no credit card required"
+                "description": "6-month free beta offer — $0 today, cancel anytime"
               },
               "aggregateRating": {
                 "@type": "AggregateRating",

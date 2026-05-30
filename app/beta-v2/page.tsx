@@ -54,7 +54,7 @@ export default function BetaV2Page() {
           5 dinners planned in 30 seconds. Groceries sent to your store in one tap.
         </p>
         <p className="text-lg text-gray-500 max-w-xl mx-auto leading-relaxed mb-10">
-          Join 100 families getting <strong>6 months completely free</strong> — then just $9/month. No credit card to start.
+          Join 100 families getting <strong>6 months completely free</strong> — then just $9/month. Card secured at signup, $0 charged for 6 months.
         </p>
 
         {/* Primary CTA */}
@@ -67,7 +67,7 @@ export default function BetaV2Page() {
             Start my free trial &rarr;
           </Link>
           <p className="text-xs text-gray-400">
-            No credit card required · 6 months free · Cancel anytime
+            $0 today · 6 months free · Cancel anytime
           </p>
         </div>
 
@@ -155,7 +155,7 @@ export default function BetaV2Page() {
         >
           Start my free trial &rarr;
         </Link>
-        <p className="text-xs text-gray-400 mt-3">No credit card · 6 months free · $9/month after · Cancel anytime</p>
+        <p className="text-xs text-gray-400 mt-3">$0 today · 6 months free · $9/month after · Cancel anytime</p>
       </section>
 
       {/* FAQ */}
@@ -167,7 +167,7 @@ export default function BetaV2Page() {
           {[
             {
               q: 'Is this actually free for 6 months?',
-              a: 'Yes — no credit card required to start. The beta is 100% free for your first 6 months. After that, DinnerDrop is $9/month. You\'ll get an email reminder before the trial ends and can cancel any time.',
+              a: 'Yes — $0 charged for 6 months. We secure your card at Stripe signup (industry standard for trials) but you won\'t be charged for 6 months. After that, DinnerDrop is $9/month. You\'ll get an email reminder 7 days before billing starts and can cancel any time.',
             },
             {
               q: 'Which stores do you support?',

@@ -50,7 +50,7 @@ export default async function LandingPage() {
               See how it works
             </a>
           </div>
-          <p className="text-xs text-muted-foreground mt-4">No credit card required &middot; First plan is free</p>
+          <p className="text-xs text-muted-foreground mt-4">First plan is free &middot; Cancel anytime</p>
           <div className="mt-6 flex items-start gap-3">
             <div className="flex -space-x-2 flex-shrink-0">
               {['S','J','P'].map(initial => (

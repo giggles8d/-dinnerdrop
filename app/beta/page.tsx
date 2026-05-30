@@ -50,7 +50,7 @@ export default function BetaPage() {
           Dinner, sorted.<br /><span style={{ color: '#e8a838' }}>6 months free.</span>
         </h1>
         <p className="text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-12">
-          First 100 families get <strong>6 months completely free</strong> — no credit card required to start.
+          First 100 families get <strong>6 months completely free</strong> — $0 charged today, cancel anytime.
         </p>
 
         {/* Benefits */}
@@ -97,7 +97,7 @@ export default function BetaPage() {
             Claim my free 6 months &rarr;
           </Link>
           <p className="text-xs text-gray-400">
-            No credit card required — your first 6 months are completely free.<br />After that, just $9/month. Cancel anytime, no fine print.
+            $0 charged today — your first 6 months are completely free.<br />After that, just $9/month. Cancel anytime, no fine print.
           </p>
         </div>
 
