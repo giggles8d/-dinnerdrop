@@ -43,6 +43,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="aRL3GZUE7P9djb-TJ4-DGsySJ-a4ga092frVWuHVvmo" />
+        <meta name="impact-site-verification" value="873816be-9855-4c55-995a-412f97a0bbac" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
