@@ -25,7 +25,7 @@ function SignupForm() {
     // Without this, every email-verifying user lands on /onboarding and never reaches Stripe checkout,
     // so they never redeem BETA100 and never become a beta_member. (Funnel bug discovered 2026-05-30.)
     const postOnboardingTarget = nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
-    const { error } = await supabase.auth.signUp({
+    const { data: signUpData, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -37,6 +37,22 @@ function SignupForm() {
       setError(error.message)
       setLoading(false)
       return
+    }
+
+    // Fire a branded "thanks for signing up" email immediately — the Supabase verification
+    // email comes from noreply@mail.app.supabase.io and often lands in spam. A first-touch
+    // branded email primes them to look for it.
+    if (signUpData?.user?.email) {
+      try {
+        await fetch('/api/email/welcome-unverified', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: signUpData.user.email, userId: signUpData.user.id }),
+        })
+      } catch (err) {
+        // Never block signup on welcome-email failure
+        console.warn('[signup] welcome-unverified email failed:', err)
+      }
     }
 
     const onboardingUrl = nextUrl ? '/onboarding?next=' + encodeURIComponent(nextUrl) : '/onboarding'
