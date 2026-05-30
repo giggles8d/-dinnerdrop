@@ -44,10 +44,9 @@ export default function ConversionTracker({ value = 54, currency = 'USD' }: { va
       }
     }
 
-    // Google Ads — fire both GA4 standard "sign_up" event and a generic
-    // Google Ads conversion ping against the configured tag (AW-18170234265).
-    // Sarah maps the Sign-up conversion action to listen for "sign_up" in
-    // Google Ads > Goals > Sign-up > "Use a Google tag event" panel.
+    // Google Ads — fire both GA4 standard "sign_up" event and the specific
+    // Sign-up (gtag event) conversion action (AW-18170234265/Rv_gCJLep7YcEJmLn9hD,
+    // created 2026-05-30, value=$54, Count=One, Click-through=90d, Manual event).
     safeFire(() => {
       if (typeof window.gtag !== 'function') return
       window.gtag('event', 'sign_up', {
@@ -55,10 +54,9 @@ export default function ConversionTracker({ value = 54, currency = 'USD' }: { va
         value,
         currency,
       })
-      // Also fire as a generic conversion in case the Sign-up action is set
-      // to listen for "conversion" (account-default).
+      // Fire the specific Sign-up conversion using its full conversion label.
       window.gtag('event', 'conversion', {
-        send_to: 'AW-18170234265',
+        send_to: 'AW-18170234265/Rv_gCJLep7YcEJmLn9hD',
         value,
         currency,
       })
