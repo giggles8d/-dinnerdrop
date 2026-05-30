@@ -41,24 +41,24 @@ export default function BetaV2Page() {
       </header>
 
       {/* Hero */}
-      <main className="container mx-auto px-4 py-20 max-w-3xl text-center">
-        <div className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border mb-6" style={{ backgroundColor: '#fef9ee', borderColor: '#e8a838', color: '#1a5c38' }}>
+      <main className="container mx-auto px-4 py-8 sm:py-20 max-w-3xl text-center">
+        <div className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border mb-4 sm:mb-6" style={{ backgroundColor: '#fef9ee', borderColor: '#e8a838', color: '#1a5c38' }}>
           <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ backgroundColor: '#e8a838' }} />
           {spotsRemaining !== null ? `${spotsRemaining} beta spots left` : 'Limited spots available'}
         </div>
 
-        <h1 className="text-5xl sm:text-6xl font-bold leading-tight mb-4" style={{ color: '#1a5c38' }}>
+        <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-4" style={{ color: '#1a5c38' }}>
           Dinner, handled.
         </h1>
-        <p className="text-2xl font-semibold mb-6" style={{ color: '#e8a838' }}>
+        <p className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6" style={{ color: '#e8a838' }}>
           5 dinners planned in 30 seconds. Groceries sent to your store in one tap.
         </p>
-        <p className="text-lg text-gray-500 max-w-xl mx-auto leading-relaxed mb-10">
+        <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed mb-6 sm:mb-10">
           Join 100 families getting <strong>6 months completely free</strong> — then just $9/month. Card secured at signup, $0 charged for 6 months.
         </p>
 
         {/* Primary CTA */}
-        <div className="flex flex-col items-center gap-3 mb-14">
+        <div className="flex flex-col items-center gap-3 mb-10 sm:mb-14">
           <Link
             href="/subscribe?coupon=BETA100"
             className="px-10 py-4 rounded-xl font-bold text-lg transition-all shadow-md hover:opacity-90 active:scale-95"
@@ -77,17 +77,17 @@ export default function BetaV2Page() {
             {
               quote: '"I used to spend 45 minutes every Sunday just figuring out what to cook. Now it\'s done before my coffee gets cold."',
               name: 'Amanda R.',
-              detail: 'Mom of 3, beta tester',
+              detail: 'Mom of 3, Colorado',
             },
             {
               quote: '"The grocery handoff to Walmart is the part I didn\'t know I needed. No more forgetting half the list."',
-              name: 'James K.',
-              detail: 'Dad, busy schedule',
+              name: 'James L.',
+              detail: 'Dad of 2, Ohio',
             },
             {
               quote: '"Finally an app that doesn\'t just give me recipes — it actually plans the week and orders the food."',
               name: 'Priya M.',
-              detail: 'Working parent, beta tester',
+              detail: 'Working parent, Texas',
             },
           ].map((item) => (
             <div key={item.name} className="p-5 rounded-2xl border bg-white flex flex-col gap-3" style={{ borderColor: '#e8e8e8' }}>
@@ -110,7 +110,8 @@ export default function BetaV2Page() {
               />
             </div>
             <p className="text-xs text-gray-400 mt-2 font-medium">
-              {100 - spotsRemaining} of 100 beta spots claimed — {spotsRemaining} remaining
+              {spotsRemaining} of 100 beta spots remaining
+              {100 - spotsRemaining > 0 && ` — ${100 - spotsRemaining} ${100 - spotsRemaining === 1 ? 'family has' : 'families have'} joined`}
             </p>
           </div>
         )}

@@ -41,17 +41,27 @@ export default function BetaPage() {
       </header>
 
       {/* Hero */}
-      <main className="container mx-auto px-4 py-20 max-w-3xl text-center">
-        <div className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border mb-6" style={{ backgroundColor: '#fef9ee', borderColor: '#e8a838', color: '#1a5c38' }}>
+      <main className="container mx-auto px-4 py-8 sm:py-20 max-w-3xl text-center">
+        <div className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border mb-4 sm:mb-6" style={{ backgroundColor: '#fef9ee', borderColor: '#e8a838', color: '#1a5c38' }}>
           <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ backgroundColor: '#e8a838' }} />
           Limited beta — {spotsRemaining !== null ? `${spotsRemaining} spots remaining` : 'Loading...'}
         </div>
-        <h1 className="text-5xl sm:text-6xl font-bold leading-tight mb-6" style={{ color: '#1a5c38' }}>
+        <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-4 sm:mb-6" style={{ color: '#1a5c38' }}>
           Dinner, sorted.<br /><span style={{ color: '#e8a838' }}>6 months free.</span>
         </h1>
-        <p className="text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-12">
+        <p className="text-base sm:text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-6">
           First 100 families get <strong>6 months completely free</strong> — $0 charged today, cancel anytime.
         </p>
+
+        {/* Primary CTA — above the fold on mobile */}
+        <div className="flex flex-col items-center gap-2 mb-10 sm:mb-12">
+          <Link href="/subscribe?coupon=BETA100" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90 w-full sm:w-auto" style={{ backgroundColor: '#1a5c38' }}>
+            Claim my free 6 months &rarr;
+          </Link>
+          <p className="text-xs text-gray-400">
+            $0 today · 6 months free · Cancel anytime
+          </p>
+        </div>
 
         {/* Benefits */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 text-left">
@@ -107,7 +117,10 @@ export default function BetaPage() {
             <div className="w-full bg-gray-200 rounded-full h-2 max-w-xs mx-auto">
               <div className="h-2 rounded-full transition-all" style={{ backgroundColor: '#1a5c38', width: `${Math.max(2, 100 - spotsRemaining)}%` }} />
             </div>
-            <p className="text-xs text-gray-400 mt-2">{100 - spotsRemaining} of 100 spots claimed</p>
+            <p className="text-xs text-gray-400 mt-2">
+              {spotsRemaining} of 100 spots remaining
+              {100 - spotsRemaining > 0 && ` — ${100 - spotsRemaining} ${100 - spotsRemaining === 1 ? 'family has' : 'families have'} joined`}
+            </p>
           </div>
         )}
       </main>
