@@ -7,6 +7,7 @@ import { AlertCircle, Sparkles } from 'lucide-react'
 import { recordMealSignal } from '@/lib/taste-profile'
 import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
+import ConversionTracker from '@/components/ConversionTracker'
 import type { Meal } from '@/types'
 
 export default function DashboardPage() {
@@ -327,6 +328,8 @@ function DashboardContent() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Fire ad-platform conversion pings on successful Stripe return */}
+      {searchParams.get('subscribed') === 'true' && <ConversionTracker />}
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Past due payment banner */}
         {subscriptionStatus === 'past_due' && (
