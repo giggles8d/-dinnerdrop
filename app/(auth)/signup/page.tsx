@@ -21,11 +21,15 @@ function SignupForm() {
     setLoading(true)
     setError('')
 
+    // Preserve nextUrl (e.g. /subscribe?coupon=BETA100) through the email-verification round-trip.
+    // Without this, every email-verifying user lands on /onboarding and never reaches Stripe checkout,
+    // so they never redeem BETA100 and never become a beta_member. (Funnel bug discovered 2026-05-30.)
+    const postOnboardingTarget = nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=/onboarding`,
+        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(postOnboardingTarget)}`,
       },
     })
 
