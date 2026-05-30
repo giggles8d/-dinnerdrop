@@ -72,7 +72,7 @@ async function handle(request: NextRequest, defaultDryRun: boolean) {
   }
 
   // Parse optional body (POST) or query (GET)
-  let opts: { daysBack?: number; dryRun?: boolean } = {}
+  let opts: { daysBack?: number; dryRun?: boolean; onlyEmails?: string[] } = {}
   if (request.method === 'POST') {
     try { opts = (await request.json()) ?? {} } catch { /* no body */ }
   } else {
@@ -84,6 +84,9 @@ async function handle(request: NextRequest, defaultDryRun: boolean) {
   }
   const daysBack = opts.daysBack ?? 60
   const dryRun = opts.dryRun ?? defaultDryRun
+  const onlyEmails = Array.isArray(opts.onlyEmails) && opts.onlyEmails.length > 0
+    ? new Set(opts.onlyEmails.map((e) => e.toLowerCase()))
+    : null
 
   // Service-role Supabase client (bypasses RLS — needed to read auth.users via admin API)
   const supabase = createClient(
@@ -104,7 +107,9 @@ async function handle(request: NextRequest, defaultDryRun: boolean) {
   const cutoff = Date.now() - daysBack * 24 * 60 * 60 * 1000
   const unverified = usersData.users.filter((u) => {
     const created = new Date(u.created_at).getTime()
-    return !u.email_confirmed_at && created >= cutoff && !!u.email
+    if (u.email_confirmed_at || created < cutoff || !u.email) return false
+    if (onlyEmails && !onlyEmails.has(u.email.toLowerCase())) return false
+    return true
   })
 
   // Read live beta-spot count for the email body
@@ -130,13 +135,17 @@ async function handle(request: NextRequest, defaultDryRun: boolean) {
     })
   }
 
-  // Send
+  // Send (with 250ms delay between sends — Resend rate limits at 5/sec)
   const resend = new Resend(process.env.RESEND_API_KEY)
   const fromAddress = process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>'
   const sent: Array<{ email: string; id?: string }> = []
   const failed: Array<{ email: string; error: string }> = []
+  const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
+  let isFirst = true
 
   for (const u of unverified) {
+    if (!isFirst) await sleep(250)
+    isFirst = false
     if (!u.email) continue
     const unsubscribeUrl = `https://dinnerdrop.app/unsubscribe?uid=${u.id}`
     const firstName = u.email.split('@')[0].replace(/[^a-zA-Z]/g, '') || 'there'
