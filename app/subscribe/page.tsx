@@ -53,7 +53,7 @@ function SubscribeContent() {
             <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
           </div>
           <Link
-            href="/dashboard"
+            href="/"
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />

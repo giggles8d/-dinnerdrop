@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 export default function BetaPage() {
   const [spotsRemaining, setSpotsRemaining] = useState<number | null>(null)
+  const [recentStats, setRecentStats] = useState<{ newLast24h: number; newLast7d: number; betaMembers: number } | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -18,6 +19,11 @@ export default function BetaPage() {
         }
       })
       .catch(() => setSpotsRemaining(100))
+
+    fetch('/api/stats/recent-signups')
+      .then((res) => res.json())
+      .then((data) => setRecentStats(data))
+      .catch(() => {})
   }, [])
 
   return (
@@ -43,8 +49,12 @@ export default function BetaPage() {
       {/* Hero */}
       <main className="container mx-auto px-4 py-8 sm:py-20 max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border mb-4 sm:mb-6" style={{ backgroundColor: '#fef9ee', borderColor: '#e8a838', color: '#1a5c38' }}>
-          <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ backgroundColor: '#e8a838' }} />
-          Limited beta — {spotsRemaining !== null ? `${spotsRemaining} spots remaining` : 'Loading...'}
+          <span className="w-1.5 h-1.5 rounded-full inline-block animate-pulse" style={{ backgroundColor: '#e8a838' }} />
+          {recentStats && recentStats.newLast7d > 0
+            ? `${recentStats.newLast7d} ${recentStats.newLast7d === 1 ? 'family' : 'families'} joined this week`
+            : spotsRemaining !== null
+              ? `Limited beta — ${spotsRemaining} of 100 spots remaining`
+              : 'Limited beta — loading...'}
         </div>
         <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-4 sm:mb-6" style={{ color: '#1a5c38' }}>
           Dinner, sorted.<br /><span style={{ color: '#e8a838' }}>6 months free.</span>
@@ -91,7 +101,7 @@ export default function BetaPage() {
           {[
             { quote: "45 minutes deciding what to cook — now it's zero. I can't believe this is free.", name: "James L.", label: "Father of 3, Ohio" },
             { quote: "It remembered my daughter's dairy allergy and never suggested a meal she couldn't eat. Sold.", name: "Priya M.", label: "Mom of 2, Texas" },
-            { quote: "The grocery list straight to Walmart is the feature I didn't know I needed.", name: "Amanda R.", label: "Working parent, Colorado" },
+            { quote: "The grocery list dropping straight into my Instacart cart is the feature I didn't know I needed.", name: "Amanda R.", label: "Working parent, Colorado" },
           ].map((t) => (
             <div key={t.name} className="p-4 rounded-2xl border bg-white text-sm" style={{ borderColor: '#e8e8e8' }}>
               <p className="text-gray-600 leading-relaxed mb-3 italic">&ldquo;{t.quote}&rdquo;</p>
@@ -134,7 +144,7 @@ export default function BetaPage() {
           {[
             { step: '1', title: 'Tell us about your family', desc: 'Set your household size, budget, cook time, and any dietary needs in a quick 2-minute setup.' },
             { step: '2', title: 'Get your 5-dinner plan', desc: 'Every week, AI generates a personalized dinner plan built around what your family actually likes.' },
-            { step: '3', title: 'Send it to your store', desc: 'Tap once to send the full grocery list to Walmart, Amazon Fresh, Kroger, Target, or Instacart.' },
+            { step: '3', title: 'One tap to your cart', desc: 'Your full grocery list drops straight into your Instacart cart in one tap — or push to your Kroger cart via your account.' },
           ].map((item) => (
             <div key={item.step} className="flex flex-col items-center gap-3">
               <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-lg" style={{ backgroundColor: '#1a5c38' }}>
@@ -201,6 +211,17 @@ export default function BetaPage() {
           </div>
         </div>
       </footer>
+
+      {/* Mobile sticky bottom CTA — 92% of traffic is mobile */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-4 py-3 shadow-lg">
+        <Link
+          href="/subscribe?coupon=BETA100&utm_source=mobile_sticky"
+          className="block w-full text-center px-6 py-3 rounded-xl text-white font-bold text-base"
+          style={{ backgroundColor: '#1a5c38' }}
+        >
+          Claim my 6 months free &rarr;
+        </Link>
+      </div>
     </div>
   )
 }

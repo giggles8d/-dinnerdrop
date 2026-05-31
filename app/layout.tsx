@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
+import ExitIntentModal from "@/components/ExitIntentModal";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -72,7 +73,7 @@ export default function RootLayout({
               "featureList": [
                 "AI meal planning personalized for your family",
                 "One-tap grocery list generation",
-                "Instacart, Walmart, Amazon Fresh, Kroger integration",
+                "Instacart and Kroger one-tap grocery cart integration",
                 "Picky-eater friendly meal swapping",
                 "Weekly budget tracking"
               ]
@@ -160,6 +161,7 @@ export default function RootLayout({
           </>
         )}
         {children}
+        <ExitIntentModal />
         <Analytics />
       </body>
     </html>
