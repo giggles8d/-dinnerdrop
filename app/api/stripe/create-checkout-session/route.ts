@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 
+// Use the Stripe SDK default API version (pinned to the account in the Stripe dashboard).
+// Previously hardcoded to a non-existent version which made every checkout fail.
 function getStripe() {
-  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2026-02-25.clover',
-  })
+  return new Stripe(process.env.STRIPE_SECRET_KEY!)
 }
 
 export async function POST(req: NextRequest) {
@@ -45,38 +45,51 @@ export async function POST(req: NextRequest) {
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
 
-    const sessionParams: Stripe.Checkout.SessionCreateParams = {
-      customer: customerId,
-      mode: 'subscription',
-      line_items: [
-        {
-          price: 'price_1TBEm3BnujZBkm2Rdirr7XtN',
-          quantity: 1,
-        },
-      ],
-      success_url: `${appUrl}/dashboard?subscribed=true`,
-      cancel_url: `${appUrl}/dashboard`,
-      subscription_data: {
-        trial_period_days: 7,
-      },
-    }
+    // BETA100 = 6 months completely free with NO card collected.
+    // We implement this via a 180-day Stripe trial (rock-solid, no coupon required)
+    // and `payment_method_collection: 'if_required'` so the user can check out
+    // without entering a card. We email them before the trial ends to add one.
+    //
+    // Any other coupon code falls back to the legacy discount flow.
+    let sessionParams: Stripe.Checkout.SessionCreateParams
 
-    if (couponCode) {
-      sessionParams.discounts = [{ coupon: couponCode }]
-      // Coupon replaces the 7-day trial (BETA100 = 6 months free)
-      // payment_method_collection: 'if_required' means no card needed upfront for $0 beta
-      // We email users before month 7 to add a payment method
-      delete sessionParams.subscription_data
-      sessionParams.payment_method_collection = 'if_required'
+    if (couponCode === 'BETA100') {
+      sessionParams = {
+        customer: customerId,
+        mode: 'subscription',
+        line_items: [{ price: 'price_1TBEm3BnujZBkm2Rdirr7XtN', quantity: 1 }],
+        success_url: `${appUrl}/dashboard?subscribed=true&beta=1`,
+        cancel_url: `${appUrl}/subscribe?coupon=BETA100`,
+        subscription_data: {
+          trial_period_days: 180,
+          metadata: { beta_member: 'true', source: 'BETA100' },
+        },
+        payment_method_collection: 'if_required',
+        allow_promotion_codes: false,
+      }
+    } else {
+      sessionParams = {
+        customer: customerId,
+        mode: 'subscription',
+        line_items: [{ price: 'price_1TBEm3BnujZBkm2Rdirr7XtN', quantity: 1 }],
+        success_url: `${appUrl}/dashboard?subscribed=true`,
+        cancel_url: `${appUrl}/dashboard`,
+        subscription_data: { trial_period_days: 7 },
+      }
+      if (couponCode) {
+        sessionParams.discounts = [{ coupon: couponCode }]
+      }
     }
 
     const session = await stripe.checkout.sessions.create(sessionParams)
 
     return NextResponse.json({ url: session.url })
   } catch (error) {
-    console.error('Stripe checkout error:', error)
+    // Surface the real Stripe error in logs so failures are debuggable.
+    const message = error instanceof Error ? error.message : String(error)
+    console.error('Stripe checkout error:', message, error)
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: 'Failed to create checkout session', detail: message },
       { status: 500 }
     )
   }
