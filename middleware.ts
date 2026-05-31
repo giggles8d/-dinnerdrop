@@ -1,12 +1,12 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
-// A/B test: route 50% of /beta traffic to /beta-v2
-// Cookie "dd_ab_beta" keeps each visitor in the same variant (30-day TTL)
+// A/B test DISABLED 2026-05-31 — /beta-v2 had stale "Start my free trial" copy
+// while /beta had the corrected "Claim my 6 months free" CTA + live signups counter.
+// Half of ad traffic was hitting the broken variant and bouncing → 0 signups in 24h.
+// Forcing all visitors to control (/beta) until /beta-v2 is brought up to parity.
 function getBetaVariant(request: NextRequest): 'control' | 'variant' {
-  const existing = request.cookies.get('dd_ab_beta')
-  if (existing) return existing.value as 'control' | 'variant'
-  return Math.random() < 0.5 ? 'variant' : 'control'
+  return 'control'
 }
 
 const protectedPaths = [
