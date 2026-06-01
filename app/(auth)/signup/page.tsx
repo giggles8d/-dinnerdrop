@@ -94,8 +94,8 @@ function SignupForm() {
       <div className="w-full max-w-md space-y-8">
         {isBeta && (
           <div className="rounded-xl border-2 px-4 py-3 text-center" style={{borderColor:'#e8a838',backgroundColor:'#fef9ee'}}>
-            <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 You're claiming your 6 free months</p>
-            <p className="text-xs mt-1" style={{color:'#1a5c38'}}>No credit card. No checkout. Just create your account and you're in.</p>
+            <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 You&apos;re claiming your 6 free months</p>
+            <p className="text-xs mt-1" style={{color:'#1a5c38'}}>No credit card. No checkout. Just create your account and you&apos;re in.</p>
           </div>
         )}
         <div className="text-center">
