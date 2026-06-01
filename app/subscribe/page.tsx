@@ -13,6 +13,12 @@ function SubscribeContent() {
 
   useEffect(() => {
     const coupon = searchParams.get('coupon')
+    // Beta funnel is now pure email signup — no Stripe, no card, no checkout.
+    // Any legacy /subscribe?coupon=BETA100 bookmark redirects to the new flow.
+    if (coupon === 'BETA100') {
+      window.location.replace('/signup?beta=1')
+      return
+    }
     if (coupon) setCouponCode(coupon)
   }, [searchParams])
 

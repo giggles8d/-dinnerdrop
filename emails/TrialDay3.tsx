@@ -24,21 +24,21 @@ export default function TrialDay3({
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
-              You're three days into your DinnerDrop trial — which means you've probably already
+              You're three days into your DinnerDrop beta — which means you've probably already
               had a few dinners handled for you. 🎉
             </Text>
             <Text style={paragraph}>We just wanted to check in.</Text>
             <Text style={heading}>Here's what most families discover by Day 3:</Text>
             <Text style={paragraph}>
-              The best part isn't the meal plan itself — it's the grocery list. Instead of
-              wandering the store or forgetting an ingredient, everything is organized by category
-              and ready to send straight to your preferred store in one tap.
+              The best part isn't the meal plan itself — it's the grocery list. Everything is
+              organized, deduplicated, and ready to drop straight into your Instacart cart in one tap.
             </Text>
-            <Text style={heading}>Have you tried the grocery handoff yet?</Text>
+            <Text style={heading}>Have you tried the Instacart hand-off yet?</Text>
             <Text style={paragraph}>
               After DinnerDrop generates your meal plan, head to <strong>Grocery List</strong> and
-              tap the "Shop at [your store]" button. It opens a pre-filled search at Walmart,
-              Amazon Fresh, Instacart, or wherever you shop — no more copying items by hand.
+              tap the <strong>"Send to Instacart"</strong> button. Your full week's groceries land
+              in your Instacart cart, pre-loaded and ready to check out. Kroger cart push is
+              also available if you've linked your Kroger account.
             </Text>
             <Section style={ctaSection}>
               <Button style={button} href="https://dinnerdrop.app/grocery-list">

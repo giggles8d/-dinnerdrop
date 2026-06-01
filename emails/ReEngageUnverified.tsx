@@ -65,10 +65,10 @@ export default function ReEngageUnverified({
             </Text>
 
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/subscribe?coupon=BETA100&utm_source=resend&utm_campaign=re_engage_v1">
+              <Button style={button} href="https://dinnerdrop.app/signup?beta=1&utm_source=resend&utm_campaign=re_engage_v1">
                 Finish my signup →
               </Button>
-              <Text style={ctaSubtext}>$0 today · 6 months free · Cancel anytime</Text>
+              <Text style={ctaSubtext}>No credit card · 6 months free · Cancel anytime</Text>
             </Section>
 
             <Hr style={hr} />

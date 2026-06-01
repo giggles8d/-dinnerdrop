@@ -39,7 +39,7 @@ export default function BetaPage() {
             <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors">
               Sign in
             </Link>
-            <Link href="/subscribe?coupon=BETA100" className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-colors" style={{ backgroundColor: '#1a5c38' }}>
+            <Link href="/signup?beta=1" className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-colors" style={{ backgroundColor: '#1a5c38' }}>
               Try free
             </Link>
           </div>
@@ -60,16 +60,16 @@ export default function BetaPage() {
           Dinner, sorted.<br /><span style={{ color: '#e8a838' }}>6 months free.</span>
         </h1>
         <p className="text-base sm:text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-6">
-          First 100 families get <strong>6 months completely free</strong> — $0 charged today, cancel anytime.
+          First 100 families get <strong>6 months completely free</strong> — no credit card required, cancel anytime.
         </p>
 
         {/* Primary CTA — above the fold on mobile */}
         <div className="flex flex-col items-center gap-2 mb-10 sm:mb-12">
-          <Link href="/subscribe?coupon=BETA100" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90 w-full sm:w-auto" style={{ backgroundColor: '#1a5c38' }}>
+          <Link href="/signup?beta=1" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90 w-full sm:w-auto" style={{ backgroundColor: '#1a5c38' }}>
             Claim my free 6 months &rarr;
           </Link>
           <p className="text-xs text-gray-400">
-            $0 today · 6 months free · Cancel anytime
+            No credit card · 6 months free · Cancel anytime
           </p>
         </div>
 
@@ -113,11 +113,11 @@ export default function BetaPage() {
 
         {/* CTA */}
         <div className="flex flex-col items-center gap-3">
-          <Link href="/subscribe?coupon=BETA100" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90" style={{ backgroundColor: '#1a5c38' }}>
+          <Link href="/signup?beta=1" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90" style={{ backgroundColor: '#1a5c38' }}>
             Claim my free 6 months &rarr;
           </Link>
           <p className="text-xs text-gray-400">
-            $0 charged today — your first 6 months are completely free.<br />After that, just $9/month. Cancel anytime, no fine print.
+            No credit card needed for the beta — your first 6 months are completely free.<br />After that, just $9/month if you choose to continue. Cancel anytime, no fine print.
           </p>
         </div>
 
@@ -161,7 +161,7 @@ export default function BetaPage() {
       <section className="container mx-auto px-4 py-10 max-w-3xl text-center">
         <p className="text-gray-500 text-sm mb-4">Ready? Spots go fast — this is a one-time beta offer.</p>
         <Link
-          href="/subscribe?coupon=BETA100"
+          href="/signup?beta=1"
           className="inline-block px-8 py-3 rounded-xl text-white font-bold text-base transition-colors shadow-sm hover:opacity-90"
           style={{ backgroundColor: '#1a5c38' }}
         >
@@ -178,7 +178,7 @@ export default function BetaPage() {
           {[
             {
               q: "Do I need a credit card?",
-              a: "No card required to start — Stripe processes a $0 checkout so no payment is collected for 6 months. We'll email you a reminder before your beta ends so you can add a payment method or cancel, with no surprises.",
+              a: "Nope. Beta members sign up with just an email — no card collected, no payment processor involved, nothing to cancel. We'll email you a reminder before your 6-month beta ends so you can add a card to continue (or just stop using it, no charge).",
             },
             {
               q: "What happens after 6 months?",
@@ -215,7 +215,7 @@ export default function BetaPage() {
       {/* Mobile sticky bottom CTA — 92% of traffic is mobile */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-4 py-3 shadow-lg">
         <Link
-          href="/subscribe?coupon=BETA100&utm_source=mobile_sticky"
+          href="/signup?beta=1&utm_source=mobile_sticky"
           className="block w-full text-center px-6 py-3 rounded-xl text-white font-bold text-base"
           style={{ backgroundColor: '#1a5c38' }}
         >

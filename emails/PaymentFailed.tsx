@@ -68,7 +68,7 @@ export default function PaymentFailed({
               <Text style={loseTitle}>Currently paused on your account:</Text>
               <Text style={loseItem}>• Weekly meal plan generation</Text>
               <Text style={loseItem}>• Grocery list builder</Text>
-              <Text style={loseItem}>• One-tap Walmart / Amazon Fresh cart handoff</Text>
+              <Text style={loseItem}>• One-tap Instacart cart handoff (and Kroger push)</Text>
               <Text style={loseItem}>• Saved preferences and meal history</Text>
             </Section>
 

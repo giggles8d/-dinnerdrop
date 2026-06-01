@@ -181,7 +181,7 @@ function DashboardContent() {
       return
     }
     if (!canGenerate) {
-      router.push('/subscribe?coupon=BETA100')
+      router.push('/signup?beta=1')
       return
     }
 
@@ -353,7 +353,7 @@ function DashboardContent() {
         {/* Subscription upgrade banner */}
         {!isSubscribed && subscriptionStatus !== 'past_due' && planCount > 0 && (
           <Link
-            href="/subscribe?coupon=BETA100"
+            href="/signup?beta=1"
             className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-foreground text-primary-foreground hover:bg-foreground/90 transition-colors"
           >
             <div className="flex items-center gap-3">

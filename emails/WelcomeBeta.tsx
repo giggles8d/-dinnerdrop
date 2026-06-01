@@ -20,7 +20,7 @@ interface WelcomeBetaProps {
 
 export default function WelcomeBeta({
   firstName = 'there',
-  trialEndsDate = 'in 7 days',
+  trialEndsDate = 'in 6 months',
   unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
 }: WelcomeBetaProps) {
   return (
@@ -47,8 +47,9 @@ export default function WelcomeBeta({
               100 families to trust us with your dinner table.
             </Text>
             <Text style={paragraph}>
-              Your 7-day free trial is now active (trial ends {trialEndsDate}), and your 6-month
-              beta membership is already locked in. You won't be charged anything for 6 months.
+              Your 6-month beta is now active (it ends {trialEndsDate}). No card was charged
+              and no card is on file — we'll email you 7 days before billing starts so you can
+              add one or cancel without surprises.
             </Text>
 
             <Hr style={hr} />
@@ -80,10 +81,10 @@ export default function WelcomeBeta({
             <div style={stepRow}>
               <Text style={stepNumber}>03</Text>
               <div style={stepContent}>
-                <Text style={stepTitle}>Send your grocery list to your store</Text>
+                <Text style={stepTitle}>One tap → your Instacart cart</Text>
                 <Text style={stepDesc}>
-                  One tap sends your full, organized grocery list to Walmart, Amazon Fresh,
-                  Instacart, or your preferred store. No more copying items by hand.
+                  Your full grocery list lands in your Instacart cart in one tap, organized
+                  and deduplicated. Kroger cart push is supported too, via your linked account.
                 </Text>
               </div>
             </div>

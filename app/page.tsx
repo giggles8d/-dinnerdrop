@@ -209,7 +209,7 @@ export default async function LandingPage() {
                 <li>One-tap grocery cart handoff</li>
                 <li>Budget optimization</li>
               </ul>
-              <Link href="/subscribe?coupon=BETA100" className="block text-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors">
+              <Link href="/signup?beta=1" className="block text-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors">
                 Claim beta — 6 months free &rarr;
               </Link>
             </div>

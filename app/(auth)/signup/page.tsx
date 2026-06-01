@@ -13,6 +13,10 @@ function SignupForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const nextUrl = searchParams.get('redirect') || null
+  // beta=1 means this user clicked through from the beta landing page. We mark
+  // them as a beta member (is_beta_member=true) in the auth callback, no Stripe
+  // checkout, no credit card collected. 6 months free is just "free."
+  const isBeta = searchParams.get('beta') === '1'
 
   const supabase = createClient()
 
@@ -21,15 +25,19 @@ function SignupForm() {
     setLoading(true)
     setError('')
 
-    // Preserve nextUrl (e.g. /subscribe?coupon=BETA100) through the email-verification round-trip.
-    // Without this, every email-verifying user lands on /onboarding and never reaches Stripe checkout,
-    // so they never redeem BETA100 and never become a beta_member. (Funnel bug discovered 2026-05-30.)
-    const postOnboardingTarget = nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
+    // For beta users we land them on /onboarding directly with the beta flag.
+    // For non-beta users with a `redirect` URL we preserve it.
+    const postOnboardingTarget = isBeta
+      ? '/onboarding?beta=1'
+      : nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
+    const callbackUrl = isBeta
+      ? `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(postOnboardingTarget)}&beta=1`
+      : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(postOnboardingTarget)}`
     const { data: signUpData, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(postOnboardingTarget)}`,
+        emailRedirectTo: callbackUrl,
       },
     })
 
@@ -55,17 +63,24 @@ function SignupForm() {
       }
     }
 
-    const onboardingUrl = nextUrl ? '/onboarding?next=' + encodeURIComponent(nextUrl) : '/onboarding'
+    const onboardingUrl = isBeta
+      ? '/onboarding?beta=1'
+      : nextUrl ? '/onboarding?next=' + encodeURIComponent(nextUrl) : '/onboarding'
     router.push(onboardingUrl)
     router.refresh()
   }
 
   async function handleGoogleSignup() {
-    const onboardingNext = nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
+    const onboardingNext = isBeta
+      ? '/onboarding?beta=1'
+      : nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
+    const callbackUrl = isBeta
+      ? `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}&beta=1`
+      : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}`
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}`,
+        redirectTo: callbackUrl,
       },
     })
 
@@ -77,9 +92,19 @@ function SignupForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
+        {isBeta && (
+          <div className="rounded-xl border-2 px-4 py-3 text-center" style={{borderColor:'#e8a838',backgroundColor:'#fef9ee'}}>
+            <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 You're claiming your 6 free months</p>
+            <p className="text-xs mt-1" style={{color:'#1a5c38'}}>No credit card. No checkout. Just create your account and you're in.</p>
+          </div>
+        )}
         <div className="text-center">
-          <h1 className="text-3xl font-heading font-bold text-foreground">Create your account</h1>
-          <p className="mt-2 text-muted-foreground">Start planning better dinners in 60 seconds</p>
+          <h1 className="text-3xl font-heading font-bold text-foreground">
+            {isBeta ? 'Claim your beta access' : 'Create your account'}
+          </h1>
+          <p className="mt-2 text-muted-foreground">
+            {isBeta ? 'Just an email and password. No card. 60 seconds.' : 'Start planning better dinners in 60 seconds'}
+          </p>
         </div>
 
         {error && (
