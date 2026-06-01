@@ -190,7 +190,7 @@ export default function AccountPage() {
             </div>
 
             <Link
-              href="/subscribe?coupon=BETA100"
+              href="/signup?beta=1"
               className="block text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors"
               style={{ backgroundColor: '#1a5c38' }}
             >

@@ -90,11 +90,11 @@ export default function ExitIntentModal() {
           </h2>
           <p className="text-gray-600 text-sm mb-6 leading-relaxed">
             The first 100 families get 6 months of DinnerDrop completely free.<br />
-            <strong>$0 charged today. Cancel anytime.</strong>
+            <strong>No credit card required. Cancel anytime.</strong>
           </p>
 
           <Link
-            href="/subscribe?coupon=BETA100&utm_source=exit_intent&utm_medium=modal"
+            href="/signup?beta=1&utm_source=exit_intent&utm_medium=modal"
             onClick={() => {
               if (typeof window !== 'undefined' && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
                 ;(window as unknown as { gtag: (...args: unknown[]) => void }).gtag('event', 'exit_intent_cta_click', { send_to: 'AW-18170234265' })
