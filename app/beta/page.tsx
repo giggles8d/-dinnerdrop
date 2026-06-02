@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import RecentSignupsTicker from '@/components/RecentSignupsTicker'
 
 export default function BetaPage() {
   const [spotsRemaining, setSpotsRemaining] = useState<number | null>(null)
@@ -64,13 +65,18 @@ export default function BetaPage() {
         </p>
 
         {/* Primary CTA — above the fold on mobile */}
-        <div className="flex flex-col items-center gap-2 mb-10 sm:mb-12">
+        <div className="flex flex-col items-center gap-2 mb-6 sm:mb-8">
           <Link href="/signup?beta=1" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90 w-full sm:w-auto" style={{ backgroundColor: '#1a5c38' }}>
             Claim my free 6 months &rarr;
           </Link>
           <p className="text-xs text-gray-400">
             No credit card · 6 months free · Cancel anytime
           </p>
+        </div>
+
+        {/* Live recent-signups ticker — hides gracefully if no beta members yet */}
+        <div className="mb-10 sm:mb-12">
+          <RecentSignupsTicker />
         </div>
 
         {/* Benefits */}
