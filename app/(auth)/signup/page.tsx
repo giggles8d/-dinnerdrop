@@ -1,43 +1,48 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 
 function SignupForm() {
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const [magicSent, setMagicSent] = useState(false)
   const searchParams = useSearchParams()
   const nextUrl = searchParams.get('redirect') || null
   // beta=1 means this user clicked through from the beta landing page. We mark
   // them as a beta member (is_beta_member=true) in the auth callback, no Stripe
-  // checkout, no credit card collected. 6 months free is just "free."
+  // checkout, no credit card collected. 6 months free is just &quot;free.&quot;
   const isBeta = searchParams.get('beta') === '1'
 
   const supabase = createClient()
 
-  async function handleSignup(e: React.FormEvent) {
+  function buildCallbackUrl() {
+    const onboardingNext = isBeta
+      ? '/onboarding?beta=1'
+      : nextUrl
+        ? `/onboarding?next=${encodeURIComponent(nextUrl)}`
+        : '/onboarding'
+    return isBeta
+      ? `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}&beta=1`
+      : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}`
+  }
+
+  async function handleMagicLink(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
 
-    // For beta users we land them on /onboarding directly with the beta flag.
-    // For non-beta users with a `redirect` URL we preserve it.
-    const postOnboardingTarget = isBeta
-      ? '/onboarding?beta=1'
-      : nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
-    const callbackUrl = isBeta
-      ? `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(postOnboardingTarget)}&beta=1`
-      : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(postOnboardingTarget)}`
-    const { data: signUpData, error } = await supabase.auth.signUp({
+    // Magic-link signup: one-step. Clicking the link IS the email verification.
+    // No password to remember, no separate confirm-email step. Highest-conversion
+    // signup path for B2C consumer apps.
+    const { error } = await supabase.auth.signInWithOtp({
       email,
-      password,
       options: {
-        emailRedirectTo: callbackUrl,
+        emailRedirectTo: buildCallbackUrl(),
+        shouldCreateUser: true,
       },
     })
 
@@ -47,40 +52,16 @@ function SignupForm() {
       return
     }
 
-    // Fire a branded "thanks for signing up" email immediately — the Supabase verification
-    // email comes from noreply@mail.app.supabase.io and often lands in spam. A first-touch
-    // branded email primes them to look for it.
-    if (signUpData?.user?.email) {
-      try {
-        await fetch('/api/email/welcome-unverified', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: signUpData.user.email, userId: signUpData.user.id }),
-        })
-      } catch (err) {
-        // Never block signup on welcome-email failure
-        console.warn('[signup] welcome-unverified email failed:', err)
-      }
-    }
-
-    const onboardingUrl = isBeta
-      ? '/onboarding?beta=1'
-      : nextUrl ? '/onboarding?next=' + encodeURIComponent(nextUrl) : '/onboarding'
-    router.push(onboardingUrl)
-    router.refresh()
+    setMagicSent(true)
+    setLoading(false)
   }
 
   async function handleGoogleSignup() {
-    const onboardingNext = isBeta
-      ? '/onboarding?beta=1'
-      : nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
-    const callbackUrl = isBeta
-      ? `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}&beta=1`
-      : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}`
+    setError('')
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: callbackUrl,
+        redirectTo: buildCallbackUrl(),
       },
     })
 
@@ -89,13 +70,40 @@ function SignupForm() {
     }
   }
 
+  if (magicSent) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background px-4">
+        <div className="w-full max-w-md space-y-6 text-center">
+          <div className="text-6xl">📩</div>
+          <h1 className="text-3xl font-heading font-bold text-foreground">Check your inbox</h1>
+          <p className="text-muted-foreground leading-relaxed">
+            We sent a magic link to <strong className="text-foreground">{email}</strong>.
+            <br />Click it to finish setting up your account.
+          </p>
+          {isBeta && (
+            <div className="rounded-xl border-2 px-4 py-3" style={{borderColor:'#e8a838',backgroundColor:'#fef9ee'}}>
+              <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 Your 6-month beta is locked in.</p>
+              <p className="text-xs mt-1" style={{color:'#1a5c38'}}>The moment you click the link, you&apos;re in. No card, no checkout.</p>
+            </div>
+          )}
+          <p className="text-xs text-muted-foreground">
+            Didn&apos;t get it? Check your spam folder, or{' '}
+            <button onClick={() => setMagicSent(false)} className="text-primary hover:underline font-medium">
+              try a different email
+            </button>.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
         {isBeta && (
           <div className="rounded-xl border-2 px-4 py-3 text-center" style={{borderColor:'#e8a838',backgroundColor:'#fef9ee'}}>
             <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 You&apos;re claiming your 6 free months</p>
-            <p className="text-xs mt-1" style={{color:'#1a5c38'}}>No credit card. No checkout. Just create your account and you&apos;re in.</p>
+            <p className="text-xs mt-1" style={{color:'#1a5c38'}}>No credit card. No password. Just your email — we&apos;ll send a one-click sign-in link.</p>
           </div>
         )}
         <div className="text-center">
@@ -103,7 +111,9 @@ function SignupForm() {
             {isBeta ? 'Claim your beta access' : 'Create your account'}
           </h1>
           <p className="mt-2 text-muted-foreground">
-            {isBeta ? 'Just an email and password. No card. 60 seconds.' : 'Start planning better dinners in 60 seconds'}
+            {isBeta
+              ? 'No password to remember. Just your email.'
+              : "We'll email you a one-click sign-in link."}
           </p>
         </div>
 
@@ -113,7 +123,7 @@ function SignupForm() {
           </div>
         )}
 
-        <form onSubmit={handleSignup} className="space-y-4">
+        <form onSubmit={handleMagicLink} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-foreground">
               Email
@@ -124,34 +134,26 @@ function SignupForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoFocus
               className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               placeholder="you@example.com"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-foreground">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              placeholder="••••••••"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-md bg-primary px-4 py-2 text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
+            className="w-full rounded-md bg-primary px-4 py-3 text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
           >
-            {loading ? 'Creating account...' : 'Create account'}
+            {loading
+              ? 'Sending your link...'
+              : isBeta
+                ? 'Send my beta access link →'
+                : 'Email me a magic link →'}
           </button>
+          <p className="text-xs text-center text-muted-foreground">
+            No password. No card. We&apos;ll just email you a one-click sign-in link.
+          </p>
         </form>
 
         <div className="relative">
@@ -159,7 +161,7 @@ function SignupForm() {
             <span className="w-full border-t border-border" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+            <span className="bg-background px-2 text-muted-foreground">Or</span>
           </div>
         </div>
 

@@ -10,13 +10,40 @@ function LoginForm() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [magicSent, setMagicSent] = useState(false)
+  const [usePassword, setUsePassword] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/dashboard'
 
   const supabase = createClient()
 
-  async function handleEmailLogin(e: React.FormEvent) {
+  async function handleMagicLink(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+
+    const callbackUrl = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(redirect)}`
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: callbackUrl,
+        // Login flow — don&apos;t auto-create new accounts here. Existing users only.
+        shouldCreateUser: false,
+      },
+    })
+
+    if (error) {
+      setError(error.message)
+      setLoading(false)
+      return
+    }
+
+    setMagicSent(true)
+    setLoading(false)
+  }
+
+  async function handlePasswordLogin(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
@@ -34,6 +61,7 @@ function LoginForm() {
   }
 
   async function handleGoogleLogin() {
+    setError('')
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -46,11 +74,34 @@ function LoginForm() {
     }
   }
 
+  if (magicSent) {
+    return (
+      <div className="w-full max-w-md space-y-6 text-center">
+        <div className="text-6xl">📩</div>
+        <h1 className="text-3xl font-heading font-bold text-foreground">Check your inbox</h1>
+        <p className="text-muted-foreground leading-relaxed">
+          We sent a one-click sign-in link to <strong className="text-foreground">{email}</strong>.
+          <br />Click it and you&apos;re in.
+        </p>
+        <p className="text-xs text-muted-foreground">
+          Didn&apos;t get it? Check spam, or{' '}
+          <button onClick={() => setMagicSent(false)} className="text-primary hover:underline font-medium">
+            try a different email
+          </button>.
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full max-w-md space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-heading font-bold text-foreground">Welcome back</h1>
-        <p className="mt-2 text-muted-foreground">Sign in to your DinnerDrop account</p>
+        <p className="mt-2 text-muted-foreground">
+          {usePassword
+            ? 'Sign in with your password.'
+            : "We'll email you a one-click sign-in link."}
+        </p>
       </div>
 
       {error && (
@@ -59,57 +110,99 @@ function LoginForm() {
         </div>
       )}
 
-      <form onSubmit={handleEmailLogin} className="space-y-4">
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-foreground">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-            placeholder="you@example.com"
-          />
-        </div>
-
-        <div>
-          <div className="flex items-center justify-between">
-            <label htmlFor="password" className="block text-sm font-medium text-foreground">
-              Password
+      {usePassword ? (
+        <form onSubmit={handlePasswordLogin} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-foreground">
+              Email
             </label>
-            <Link href="/forgot-password" className="text-xs text-primary hover:underline font-medium">
-              Forgot password?
-            </Link>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="you@example.com"
+            />
           </div>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-            placeholder="••••••••"
-          />
-        </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-md bg-primary px-4 py-2 text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
-        >
-          {loading ? 'Signing in...' : 'Sign in'}
-        </button>
-      </form>
+          <div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="password" className="block text-sm font-medium text-foreground">
+                Password
+              </label>
+              <Link href="/forgot-password" className="text-xs text-primary hover:underline font-medium">
+                Forgot password?
+              </Link>
+            </div>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-md bg-primary px-4 py-2 text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
+          >
+            {loading ? 'Signing in...' : 'Sign in'}
+          </button>
+          <button
+            type="button"
+            onClick={() => setUsePassword(false)}
+            className="w-full text-xs text-muted-foreground hover:text-foreground"
+          >
+            Use magic link instead
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleMagicLink} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-foreground">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoFocus
+              className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-md bg-primary px-4 py-3 text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+          >
+            {loading ? 'Sending link...' : 'Email me a magic link →'}
+          </button>
+          <button
+            type="button"
+            onClick={() => setUsePassword(true)}
+            className="w-full text-xs text-muted-foreground hover:text-foreground"
+          >
+            Or sign in with password
+          </button>
+        </form>
+      )}
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+          <span className="bg-background px-2 text-muted-foreground">Or</span>
         </div>
       </div>
 
