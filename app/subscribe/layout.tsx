@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Start Your Free Trial — DinnerDrop',
-  description: 'Join DinnerDrop free. AI-powered dinner planning for busy families — 5 personalized meals and a grocery list in one tap. 7-day free trial.',
+  description: 'Join DinnerDrop. AI-powered dinner planning for busy families — 5 personalized meals and a grocery list in one tap. Founding-family beta: 6 months free, no credit card.',
   openGraph: {
     title: 'Start Your Free Trial — DinnerDrop',
     description: 'Get 5 personalized dinners + one-tap grocery list. First 100 beta families get 6 months completely free. $0 today, cancel anytime.',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Start Your Free Trial — DinnerDrop',
-    description: '5 dinners planned in 30 seconds. One-tap grocery list. 7-day free trial.',
+    description: '5 dinners planned in 30 seconds. One-tap grocery list. Founding-family beta: 6 months free, no credit card.',
     images: ['/og-image.png'],
   },
 }

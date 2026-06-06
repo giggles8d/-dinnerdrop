@@ -195,7 +195,7 @@ export default async function LandingPage() {
               <h3 className="font-heading font-semibold text-foreground">Basic</h3>
               <div>
                 <p className="text-3xl font-bold text-foreground">
-                  <span className="line-through text-muted-foreground">$9</span>
+                  <span className="line-through text-muted-foreground">$9</span>{' '}
                   <span className="ml-2" style={{color:'#1a5c38'}}>$0</span>
                   <span className="text-sm font-normal text-muted-foreground">/mo</span>
                 </p>

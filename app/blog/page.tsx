@@ -1,5 +1,8 @@
 import Link from 'next/link'
-import { BLOG_POSTS } from '@/lib/blog-posts'
+import { getPublishedPosts } from '@/lib/published-posts'
+
+// Re-evaluate hourly so future-dated posts appear automatically on their publish date.
+export const revalidate = 3600
 
 export default function BlogIndexPage() {
   return (
@@ -15,7 +18,7 @@ export default function BlogIndexPage() {
       {/* Posts */}
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="space-y-8">
-          {[...BLOG_POSTS].filter(p => p && p.slug).sort((a, b) => new Date(a.publishDate).getTime() - new Date(b.publishDate).getTime()).map((post) => (
+          {getPublishedPosts().sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()).map((post) => (
             <article
               key={post.slug}
               className="border border-gray-200 rounded-xl p-6 hover:border-[#1a5c38] transition-colors"

@@ -1,18 +1,21 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { getPostBySlug, getAllPostSlugs } from '@/lib/blog-posts'
+import { getPublishedPosts, getPublishedPostBySlug } from '@/lib/published-posts'
 
 interface Props {
   params: { slug: string }
 }
 
+// Re-evaluate hourly so future-dated posts go live automatically on their publish date.
+export const revalidate = 3600
+
 export async function generateStaticParams() {
-  return getAllPostSlugs().map((slug) => ({ slug }))
+  return getPublishedPosts().map((post) => ({ slug: post.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = getPostBySlug(params.slug)
+  const post = getPublishedPostBySlug(params.slug)
   if (!post) return {}
   return {
     title: post.title,
@@ -158,7 +161,8 @@ function inlineFormat(text: string): React.ReactNode {
 }
 
 export default function BlogPostPage({ params }: Props) {
-  const post = getPostBySlug(params.slug)
+  // Future-dated posts 404 until their publish date (B-04).
+  const post = getPublishedPostBySlug(params.slug)
   if (!post) notFound()
 
   const jsonLd = {

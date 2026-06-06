@@ -6,10 +6,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DinnerDrop — AI Dinner Planning for Busy Families",
-  description: "Generate 5 personalized dinner plans, build your grocery list, and shop at your favorite store — all in one tap. Try free for 7 days.",
+  description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Founding-family beta: 6 months free, no credit card.",
   openGraph: {
     title: "DinnerDrop — AI Dinner Planning for Busy Families",
-    description: "Generate 5 personalized dinner plans, build your grocery list, and shop at your favorite store — all in one tap. Try free for 7 days.",
+    description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Founding-family beta: 6 months free, no credit card.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DinnerDrop" }],
     type: "website",
     url: "https://dinnerdrop.app",

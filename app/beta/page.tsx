@@ -55,7 +55,7 @@ export default function BetaPage() {
             ? `${recentStats.newLast7d} ${recentStats.newLast7d === 1 ? 'family' : 'families'} joined this week`
             : spotsRemaining !== null
               ? `Limited beta — ${spotsRemaining} of 100 spots remaining`
-              : 'Limited beta — loading...'}
+              : 'Limited beta — first 100 families get 6 months free'}
         </div>
         <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-4 sm:mb-6" style={{ color: '#1a5c38' }}>
           Dinner, sorted.<br /><span style={{ color: '#e8a838' }}>6 months free.</span>
