@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Dinner, handled. — DinnerDrop Free Trial',
     description:
-      '5 dinners planned in 30 seconds. One-tap grocery handoff to Walmart, Kroger, Amazon Fresh, Target, or Instacart. 6 months free for beta members.',
+      '5 dinners planned in 30 seconds. One-tap grocery handoff to Instacart or Kroger. 6 months free for beta members.',
     url: 'https://dinnerdrop.app/beta-v2',
     siteName: 'DinnerDrop',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop — Dinner, handled.' }],

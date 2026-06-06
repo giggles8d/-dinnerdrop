@@ -194,7 +194,7 @@ export default function AccountPage() {
               className="block text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors"
               style={{ backgroundColor: '#1a5c38' }}
             >
-              Claim 6 months free →
+              Claim my 6 months free →
             </Link>
 
             <p className="text-xs text-center text-muted-foreground">

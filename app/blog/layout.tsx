@@ -32,7 +32,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
           </a>
           <nav className="flex items-center gap-4 text-sm font-medium text-gray-500">
             <a href="/blog" className="hover:text-gray-900 transition-colors">Blog</a>
-            <a href="/beta" className="px-4 py-1.5 rounded-lg bg-green-800 text-white text-sm font-semibold hover:bg-green-700 transition-colors">Try free</a>
+            <a href="/beta" className="px-4 py-1.5 rounded-lg bg-green-800 text-white text-sm font-semibold hover:bg-green-700 transition-colors">Claim my 6 months free</a>
           </nav>
         </div>
       </header>

@@ -224,7 +224,7 @@ export default function BlogPostPage({ params }: Props) {
             href="/beta"
             className="inline-block bg-[#e8a838] text-white font-bold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
           >
-            Claim my free spot &rarr;
+            Claim my 6 months free &rarr;
           </Link>
         </div>
       </article>

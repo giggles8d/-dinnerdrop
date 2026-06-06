@@ -83,7 +83,7 @@ The 5-minutes-on-Sunday approach works. But there's a version of this that takes
 
 The whole process takes about 30 seconds.
 
-You're not searching recipes. You're not cross-referencing ingredients. You're not trying to remember if you still have half an onion in the fridge. You tap a button, get a week of dinners, and send the grocery list to Instacart, Walmart, or Kroger.
+You're not searching recipes. You're not cross-referencing ingredients. You're not trying to remember if you still have half an onion in the fridge. You tap a button, get a week of dinners, and send the grocery list to Instacart or Kroger.
 
 For families dealing with picky eaters, food allergies, or just the relentless "we always eat the same things" complaint — the AI adjusts for all of it.
 
@@ -136,7 +136,7 @@ Our ranking criteria: AI vs. manual, grocery integration, dietary filter support
 
 DinnerDrop takes a completely different approach than every other app on this list. Instead of asking you to search recipes, save them, and schedule them manually — DinnerDrop generates everything from your family profile.
 
-You enter your family size, weekly grocery budget, dietary restrictions, and preferred cook time. Hit generate. In about 30 seconds, you have five weeknight dinners and a deduplicated, organized grocery list ready to send to Instacart, Walmart, Amazon Fresh, or Kroger.
+You enter your family size, weekly grocery budget, dietary restrictions, and preferred cook time. Hit generate. In about 30 seconds, you have five weeknight dinners and a deduplicated, organized grocery list ready to send to Instacart or Kroger.
 
 **What makes it different:**
 - AI builds the plan from your family profile, not a recipe database you browse
@@ -299,7 +299,7 @@ After canceling HelloFresh, we tried several meal planning apps before landing o
 
 DinnerDrop works differently. Answer a short quiz once: family size, dietary restrictions, cooking time, preferred grocery store. It generates a full week of personalized dinners in about 30 seconds, with a complete grocery list organized by store section.
 
-Dietary filters are specific enough to actually matter: nut-free, dairy-free, gluten-free, vegetarian all work independently or in combination. The grocery list integrates with Instacart, Walmart, and Amazon Fresh for delivery — or you shop yourself.
+Dietary filters are specific enough to actually matter: nut-free, dairy-free, gluten-free, vegetarian all work independently or in combination. The grocery list integrates with Instacart and Kroger for delivery — or you shop yourself.
 
 Monthly cost: **$9/month**. Compare that to $564/month for HelloFresh. The first 100 families to sign up get 6 months completely free through the beta program.
 
@@ -414,7 +414,7 @@ If one of the five meals doesn't work, tap swap. The AI replaces it with a new o
 
 ### Step 4: Get the Grocery List
 
-Tap "Build grocery list." You get every ingredient for all five meals, quantities calculated for your exact family size, items organized by store section (produce, proteins, pantry, dairy, frozen), and a one-tap handoff to Instacart, Walmart Grocery, or Amazon Fresh.
+Tap "Build grocery list." You get every ingredient for all five meals, quantities calculated for your exact family size, items organized by store section (produce, proteins, pantry, dairy, frozen), and a one-tap handoff to Instacart or Kroger.
 
 ---
 
@@ -643,7 +643,7 @@ The single most effective strategy for picky eaters: serve the same components s
 
 A list of 50 ideas is a great starting point. But what your household actually needs is a customized version — filtered for your picky eater's specific preferences, your family's dietary restrictions, your schedule, and what's actually in season.
 
-That's what [DinnerDrop](https://dinnerdrop.app) does. You tell it your family size, dietary needs, and any foods to avoid once. Every week, the AI generates 5 personalized dinners — with the grocery list built automatically and connected to Instacart, Walmart, or Kroger.
+That's what [DinnerDrop](https://dinnerdrop.app) does. You tell it your family size, dietary needs, and any foods to avoid once. Every week, the AI generates 5 personalized dinners — with the grocery list built automatically and connected to Instacart or Kroger.
 
 If you have a kid who won't eat anything with sauce, a dairy-free spouse, and a toddler who refuses anything green — DinnerDrop accounts for all of it. You get dinners your family will actually eat, without the 5pm mental inventory and the negotiation that follows.
 
@@ -749,7 +749,7 @@ If 10 minutes still feels like a lot — or if the planning process itself is wh
 
 [DinnerDrop](https://dinnerdrop.app/beta) is an AI dinner planning tool that does the entire process in about 30 seconds. You tell it your family size, dietary restrictions, cooking time preferences, and any foods to avoid once. Every week, it generates five personalized dinners and builds the complete grocery list automatically.
 
-The grocery list connects directly to Instacart, Walmart, or Kroger — so you are not manually transferring items from a screen to a store app. You tap one button and your cart is ready.
+The grocery list connects directly to Instacart or Kroger — so you are not manually transferring items from a screen to a store app. You tap one button and your cart is ready.
 
 The three money leaks the manual system plugs — food waste, impulse buying, emergency takeout — DinnerDrop addresses directly. Every item on the grocery list is tied to a specific meal. Nothing is vague. Nothing is "I might need this." No more 5pm "what are we having" conversations that end in a DoorDash order.
 
@@ -815,7 +815,7 @@ Generic ingredient lists ignore reality. Your family of four doesn't need the sa
 Not "chicken breast" — "1.5 lbs boneless chicken breast." Not "pasta" — "12 oz penne." Quantities come from knowing how many people you're feeding and how the recipe scales. This is the detail that separates a useful list from a useless one.
 
 **4. Connect to your actual store.**
-Building a list is only half the job. The other half is getting those items into a cart. A tool that outputs a PDF or a text list is making you do another transfer step. A real AI grocery tool connects directly to Instacart, Walmart, or Kroger — one tap and your cart is populated.
+Building a list is only half the job. The other half is getting those items into a cart. A tool that outputs a PDF or a text list is making you do another transfer step. A real AI grocery tool connects directly to Instacart or Kroger — one tap and your cart is populated.
 
 **5. Update intelligently.**
 When you swap a meal — chicken tonight, pasta tomorrow — the list should update automatically. You shouldn't have to manually add the pasta ingredients and remove the chicken ingredients. The AI should handle that.
@@ -832,7 +832,7 @@ The process takes about 30 seconds:
 
 3. **The grocery list builds automatically.** Every ingredient from every dinner, with quantities scaled to your family size, organized by category (produce, proteins, dairy, pantry). You don't type anything.
 
-4. **You connect to your store.** DinnerDrop integrates with Instacart, Walmart Grocery, and Kroger. The items from your list go directly into your store cart — no manual transfer.
+4. **You connect to your store.** DinnerDrop integrates with Instacart and Kroger. The items from your list go directly into your store cart — no manual transfer.
 
 5. **You swap meals without rebuilding.** Don't feel like tacos on Tuesday? Swap it. The grocery list updates automatically: taco ingredients removed, new meal ingredients added.
 
@@ -1022,7 +1022,7 @@ family size, cook time preferences, dietary needs, picky eaters — and it gener
 dinners plus a complete grocery list in under 30 seconds. Not a list of random recipes. Actual
 meals filtered for your family, with one grocery list already built.
 
-Connect your preferred store (Walmart, Instacart, Kroger, Amazon Fresh, or Target) and the
+Connect your preferred store (Instacart or Kroger) and the
 grocery list goes straight to your cart. No writing anything down. No app-switching.
 
 From there, Sunday component prep is just following through on a plan that already exists.
@@ -1151,7 +1151,7 @@ Most meal planning apps are freemium. That's not inherently bad — but you shou
 Here's the honest gap in the free meal planning market in 2026:
 
 - **AI-generated meal plans** — No free app generates a personalized weekly dinner plan from scratch. This is uniformly a paid feature.
-- **One-tap grocery cart handoff** — Sending your list directly to Instacart, Walmart, or Amazon Fresh requires a paid tier on every app that offers it.
+- **One-tap grocery cart handoff** — Sending your list directly to Instacart or Kroger requires a paid tier on every app that offers it.
 - **Picky-eater meal swapping** — The ability to reject a meal and get an instant replacement that respects your family's preferences is paywalled everywhere.
 - **Budget optimization** — Building a plan around a specific weekly grocery budget requires premium on Mealime and others.
 
@@ -1167,7 +1167,7 @@ What you get during the free period:
 
 **AI meal generation** — Tell DinnerDrop your family size, budget, dietary needs, and how much time you have to cook. It generates 5 personalized dinners for the week. Takes 30 seconds.
 
-**One-tap grocery handoff** — Your full shopping list, deduplicated and organized by section, sent directly to your cart at Instacart, Walmart, Amazon Fresh, or Kroger.
+**One-tap grocery handoff** — Your full shopping list, deduplicated and organized by section, sent directly to your cart at Instacart or Kroger.
 
 **Picky-eater meal swapping** — Don't like a meal? Swap it in one tap. DinnerDrop learns your family's preferences over time and stops suggesting meals you've rejected.
 
@@ -1371,7 +1371,7 @@ The families that stick with meal planning long-term either have a rigid rotatio
 
 DinnerDrop is built for the second group. Tell it your family size, weekly budget, dietary restrictions, and how much time you want to spend cooking each night. It generates 5 personalized dinner ideas and builds your grocery list automatically -- organized by store section, with quantities calculated for your family. The whole process takes about 30 seconds.
 
-Beta members (first 100 families) get the app free for 6 months, including one-tap grocery handoff to Instacart, Walmart, or Amazon Fresh.
+Beta members (first 100 families) get the app free for 6 months, including one-tap grocery handoff to Instacart or Kroger.
 
 Try DinnerDrop free: /beta
 
@@ -1437,7 +1437,7 @@ Before you pay for (or commit to) any AI meal planner, run it through this check
 
 **3. Produce a consolidated grocery list.** A five-dinner plan means 30–50 ingredients. The AI should combine duplicate items across meals, adjust quantities for your family size, and organize the list logically.
 
-**4. Connect to your grocery store.** Generating a list is nice. Sending that list directly to your Instacart cart or Walmart pickup order is what makes meal planning actually stick.
+**4. Connect to your grocery store.** Generating a list is nice. Sending that list directly to your Instacart or Kroger cart is what makes meal planning actually stick.
 
 **5. Learn from feedback.** When you swap out a meal or skip a recipe entirely, the app should note that and adjust future recommendations.
 
@@ -2380,7 +2380,7 @@ The meals above average about $5-7 for a family of four. Getting consistent abou
 
 **Cook in batches.** Rice, beans, roasted vegetables, and cooked grains all reheat well. Making double quantities when you're already cooking means faster assembly later in the week.
 
-If you want the weekly planning done automatically: [DinnerDrop](https://dinnerdrop.app/beta) generates five personalized budget-friendly dinners in 30 seconds — tailored to your family size, dietary needs, preferred store, and weekly budget. It builds the grocery list and sends it directly to Walmart, Instacart, Amazon Fresh, or Kroger. The beta is free for 6 months.
+If you want the weekly planning done automatically: [DinnerDrop](https://dinnerdrop.app/beta) generates five personalized budget-friendly dinners in 30 seconds — tailored to your family size, dietary needs, preferred store, and weekly budget. It builds the grocery list and sends it directly to Instacart or Kroger. The beta is free for 6 months.
 
 ## Frequently Asked Questions
 
@@ -3989,7 +3989,7 @@ In most cases, yes. Thighs forgive overcooking better, making them great for beg
 
 Deciding which of these 30 recipes to make — and when — is exactly the kind of friction that leads to ordering pizza instead.
 
-DinnerDrop does it for you. Tell it your family size, dietary preferences, budget, and cook time. It generates a full week of personalized dinners and sends the grocery list straight to Walmart, Instacart, Amazon Fresh, or Kroger.
+DinnerDrop does it for you. Tell it your family size, dietary preferences, budget, and cook time. It generates a full week of personalized dinners and sends the grocery list straight to Instacart or Kroger.
 
 [Try DinnerDrop free →](/beta)
 
@@ -4160,7 +4160,7 @@ Yes. Bake a batch Sunday, refrigerate up to 4 days. Reheat gently with a damp pa
 
 Knowing 25 chicken breast recipes is only half the problem. The other half is deciding which one to make on which night — and making sure you actually have the ingredients.
 
-DinnerDrop handles that automatically. Tell it your family size, how much time you have each night, dietary preferences, and budget. It generates a full personalized weekly dinner plan and sends the grocery list straight to Walmart, Instacart, Amazon Fresh, or Kroger.
+DinnerDrop handles that automatically. Tell it your family size, how much time you have each night, dietary preferences, and budget. It generates a full personalized weekly dinner plan and sends the grocery list straight to Instacart or Kroger.
 
 [Try DinnerDrop free →](/beta)
 
@@ -4313,7 +4313,7 @@ What do the kids eat? What did we have last week? What is on sale? Is there enou
 
 DinnerDrop eliminates that entire decision. Tell it your family size, dietary preferences, budget, and how much
 time you have each night. It generates 5 personalized dinners in seconds and sends the full grocery list
-straight to your preferred store (Walmart, Instacart, Amazon Fresh, or Kroger).
+straight to your preferred store (Instacart or Kroger).
 
 [Try DinnerDrop free ->](/beta)
 

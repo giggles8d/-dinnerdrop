@@ -14,7 +14,7 @@ export default async function LandingPage() {
     <div className="min-h-screen bg-white">
 
       <a href="/beta" className="block text-center py-2 text-sm font-medium" style={{backgroundColor:'#e8a838',color:'#1a5c38'}}>
-        🎉 Beta: First 100 families get 6 months free &rarr; Claim your spot
+        🎉 Beta: First 100 families get 6 months free — Claim my 6 months free &rarr;
       </a>
       <header className="border-b border-border bg-white sticky top-0 z-10">
         <div className="container mx-auto px-4 max-w-5xl flex items-center justify-between h-16">
@@ -26,7 +26,7 @@ export default async function LandingPage() {
             <Link href="/blog" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
             <Link href="/beta" className="px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Beta</Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
-            <Link href="/beta" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Try free</Link>
+            <Link href="/beta" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Claim my 6 months free</Link>
           </div>
         </div>
       </header>
@@ -210,7 +210,7 @@ export default async function LandingPage() {
                 <li>Budget optimization</li>
               </ul>
               <Link href="/signup?beta=1" className="block text-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors">
-                Claim beta — 6 months free &rarr;
+                Claim my 6 months free &rarr;
               </Link>
             </div>
           </div>
@@ -222,7 +222,7 @@ export default async function LandingPage() {
           <h2 className="text-4xl font-heading font-bold text-primary-foreground mb-4">Stop staring at the fridge.</h2>
           <p className="text-primary-foreground/60 mb-8 text-lg">Your first meal plan is completely free.</p>
           <Link href="/beta" className="inline-block px-10 py-4 rounded-xl bg-accent text-foreground font-bold text-base hover:bg-accent/90 transition-colors">
-            Claim 6 months free &rarr;
+            Claim my 6 months free &rarr;
           </Link>
         </div>
       </section>

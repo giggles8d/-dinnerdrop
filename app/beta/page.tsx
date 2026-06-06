@@ -41,7 +41,7 @@ export default function BetaPage() {
               Sign in
             </Link>
             <Link href="/signup?beta=1" className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-colors" style={{ backgroundColor: '#1a5c38' }}>
-              Try free
+              Claim my 6 months free
             </Link>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function BetaPage() {
         {/* Primary CTA — above the fold on mobile */}
         <div className="flex flex-col items-center gap-2 mb-6 sm:mb-8">
           <Link href="/signup?beta=1" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90 w-full sm:w-auto" style={{ backgroundColor: '#1a5c38' }}>
-            Claim my free 6 months &rarr;
+            Claim my 6 months free &rarr;
           </Link>
           <p className="text-xs text-gray-400">
             No credit card · 6 months free · Cancel anytime
@@ -105,8 +105,8 @@ export default function BetaPage() {
         {/* Social proof */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 text-left">
           {[
-            { quote: "45 minutes deciding what to cook — now it's zero. I can't believe this is free.", name: "James L.", label: "Father of 3, Ohio" },
-            { quote: "It remembered my daughter's dairy allergy and never suggested a meal she couldn't eat. Sold.", name: "Priya M.", label: "Mom of 2, Texas" },
+            { quote: "45 minutes deciding what to cook — now it's zero. I can't believe this is free.", name: "James L.", label: "Family of 2" },
+            { quote: "It respects our dietary preferences, which makes weekly planning so much easier.", name: "Priya K.", label: "Family of 3" },
             { quote: "The grocery list dropping straight into my Instacart cart is the feature I didn't know I needed.", name: "Amanda R.", label: "Working parent, Colorado" },
           ].map((t) => (
             <div key={t.name} className="p-4 rounded-2xl border bg-white text-sm" style={{ borderColor: '#e8e8e8' }}>
@@ -116,11 +116,14 @@ export default function BetaPage() {
             </div>
           ))}
         </div>
+        <p className="text-xs text-gray-400 -mt-6 mb-10">
+          DinnerDrop plans around your saved dietary preferences — always check ingredient labels before cooking or checkout.
+        </p>
 
         {/* CTA */}
         <div className="flex flex-col items-center gap-3">
           <Link href="/signup?beta=1" className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90" style={{ backgroundColor: '#1a5c38' }}>
-            Claim my free 6 months &rarr;
+            Claim my 6 months free &rarr;
           </Link>
           <p className="text-xs text-gray-400">
             No credit card needed for the beta — your first 6 months are completely free.<br />After that, just $9/month if you choose to continue. Cancel anytime, no fine print.
@@ -171,7 +174,7 @@ export default function BetaPage() {
           className="inline-block px-8 py-3 rounded-xl text-white font-bold text-base transition-colors shadow-sm hover:opacity-90"
           style={{ backgroundColor: '#1a5c38' }}
         >
-          Claim my free 6 months &rarr;
+          Claim my 6 months free &rarr;
         </Link>
       </section>
 
