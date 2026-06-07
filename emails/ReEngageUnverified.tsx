@@ -34,18 +34,18 @@ export default function ReEngageUnverified({
           </Section>
 
           <Section style={badgeSection}>
-            <Text style={badge}>{betaSpotsRemaining} BETA SPOTS LEFT — 6 MONTHS FREE</Text>
+            <Text style={badge}>{betaSpotsRemaining} FOUNDING SPOTS LEFT — 6 MONTHS FREE</Text>
           </Section>
 
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
               You started signing up for DinnerDrop a few days ago but never confirmed your email,
-              so your beta spot isn&apos;t locked in yet.
+              so your founding spot isn&apos;t locked in yet.
             </Text>
             <Text style={paragraph}>
               I&apos;m emailing you directly so this doesn&apos;t end up in spam like the last one
-              might have. We hold a beta spot for 14 days after you sign up — yours is still available.
+              might have. We hold a founding spot for 14 days after you sign up — yours is still available.
             </Text>
 
             <Hr style={hr} />

@@ -14,7 +14,7 @@ export default async function LandingPage() {
     <div className="min-h-screen bg-white">
 
       <a href="/beta" className="block text-center py-2 text-sm font-medium" style={{backgroundColor:'#e8a838',color:'#1a5c38'}}>
-        🎉 Beta: First 100 families get 6 months free — Claim my 6 months free &rarr;
+        🎉 First 100 families get 6 months free — Claim my 6 months free &rarr;
       </a>
       <header className="border-b border-border bg-white sticky top-0 z-10">
         <div className="container mx-auto px-4 max-w-5xl flex items-center justify-between h-16">
@@ -24,7 +24,7 @@ export default async function LandingPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link href="/blog" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
-            <Link href="/beta" className="px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Beta</Link>
+            <Link href="/beta" className="px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>6 months free</Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
             <Link href="/beta" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Claim my 6 months free</Link>
           </div>
@@ -69,7 +69,7 @@ export default async function LandingPage() {
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-2xl font-heading font-bold text-primary">{spotsRemaining}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">beta spots left — 6 months free</p>
+              <p className="text-xs text-muted-foreground mt-0.5">founding spots left — 6 months free</p>
             </div>
             <div>
               <p className="text-2xl font-heading font-bold text-primary">$47</p>
@@ -155,7 +155,7 @@ export default async function LandingPage() {
           <div className="flex items-center justify-center gap-2 mb-2">
             <span className="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse" />
             <p className="text-sm font-semibold" style={{color:'#92400e'}}>
-              {spotsRemaining} of 100 beta spots still available &mdash; 6 months completely free
+              {spotsRemaining} of 100 founding spots still available &mdash; 6 months completely free
             </p>
           </div>
           <div className="w-full max-w-xs mx-auto rounded-full h-1.5 mb-3" style={{backgroundColor:'#fde68a'}}>
@@ -200,7 +200,7 @@ export default async function LandingPage() {
                   <span className="text-sm font-normal text-muted-foreground">/mo</span>
                 </p>
                 <p className="text-xs font-semibold mt-0.5" style={{color:'#1a5c38'}}>
-                  🎉 Beta offer: free for your first 6 months
+                  🎉 Founding offer: free for your first 6 months
                 </p>
               </div>
               <ul className="space-y-2 text-sm text-muted-foreground">

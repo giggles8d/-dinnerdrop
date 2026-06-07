@@ -83,14 +83,14 @@ export default function Newsletter({
             <Hr style={hr} />
             {isBetaMember ? (
               <>
-                <Text style={heading}>💬 Beta corner</Text>
+                <Text style={heading}>💬 Founding corner</Text>
                 <Text style={paragraph}>
                   You&apos;re one of our founding families, and your feedback genuinely shapes
                   what gets built next. Hit reply with anything — a meal that missed, a feature
                   you wish existed, a grocery-handoff hiccup. I read every response.
                 </Text>
                 <Text style={paragraph}>
-                  Know a family drowning in the 5pm scramble? Beta spots are still open —{' '}
+                  Know a family drowning in the 5pm scramble? Founding spots are still open —{' '}
                   <Link href="https://dinnerdrop.app/beta" style={blogLink}>
                     send them to the 6-months-free offer
                   </Link>.

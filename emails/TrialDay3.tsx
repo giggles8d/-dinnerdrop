@@ -24,7 +24,7 @@ export default function TrialDay3({
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
-              You're three days into your DinnerDrop beta — which means you've probably already
+              You're three days into your DinnerDrop 6 months free — which means you've probably already
               had a few dinners handled for you. 🎉
             </Text>
             <Text style={paragraph}>We just wanted to check in.</Text>
@@ -49,7 +49,7 @@ export default function TrialDay3({
             <Text style={quoteText}>
               <em>"I used to spend 20 minutes every Sunday figuring out what to make. Now I just
               open DinnerDrop on my phone while I have coffee."</em>
-              <br />— Early beta user
+              <br />— Founding family
             </Text>
             <Hr style={hr} />
             <Text style={paragraph}>

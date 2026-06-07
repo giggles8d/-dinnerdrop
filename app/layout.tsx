@@ -6,10 +6,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DinnerDrop — AI Dinner Planning for Busy Families",
-  description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Founding-family beta: 6 months free, no credit card.",
+  description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Founding family offer: 6 months free, no credit card.",
   openGraph: {
     title: "DinnerDrop — AI Dinner Planning for Busy Families",
-    description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Founding-family beta: 6 months free, no credit card.",
+    description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Founding family offer: 6 months free, no credit card.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DinnerDrop" }],
     type: "website",
     url: "https://dinnerdrop.app",
@@ -63,7 +63,7 @@ export default function RootLayout({
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "6-month free beta offer — $0 today, cancel anytime"
+                "description": "6 months free for our first 100 families — $0 today, cancel anytime"
               },
               "aggregateRating": {
                 "@type": "AggregateRating",

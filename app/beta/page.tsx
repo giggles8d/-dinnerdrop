@@ -51,17 +51,15 @@ export default function BetaPage() {
       <main className="container mx-auto px-4 py-8 sm:py-20 max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border mb-4 sm:mb-6" style={{ backgroundColor: '#fef9ee', borderColor: '#e8a838', color: '#1a5c38' }}>
           <span className="w-1.5 h-1.5 rounded-full inline-block animate-pulse" style={{ backgroundColor: '#e8a838' }} />
-          {recentStats && recentStats.newLast7d > 0
-            ? `${recentStats.newLast7d} ${recentStats.newLast7d === 1 ? 'family' : 'families'} joined this week`
-            : spotsRemaining !== null
-              ? `Limited beta — ${spotsRemaining} of 100 spots remaining`
-              : 'Limited beta — first 100 families get 6 months free'}
+          {spotsRemaining !== null && spotsRemaining < 97
+            ? `Sarah and ${100 - spotsRemaining - 1} other families have already started · ${spotsRemaining} spots left`
+            : 'Sarah and 2 other families have already started · 97 spots left'}
         </div>
-        <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-4 sm:mb-6" style={{ color: '#1a5c38' }}>
-          Dinner, sorted.<br /><span style={{ color: '#e8a838' }}>6 months free.</span>
+        <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: '#1a5c38' }}>
+          Dinner sorted. <span style={{ color: '#e8a838' }}>6 months free.</span>
         </h1>
-        <p className="text-base sm:text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-6">
-          First 100 families get <strong>6 months completely free</strong> — no credit card required, cancel anytime.
+        <p className="text-sm sm:text-base font-semibold text-gray-700 max-w-xl mx-auto leading-relaxed mb-5">
+          $0 today · $0 for 6 months · cancel anytime
         </p>
 
         {/* Primary CTA — above the fold on mobile */}
@@ -74,7 +72,12 @@ export default function BetaPage() {
           </p>
         </div>
 
-        {/* Live recent-signups ticker — hides gracefully if no beta members yet */}
+        {/* Longer subhead — pushed below the hero CTA so mobile sees price + CTA first */}
+        <p className="text-base sm:text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-8">
+          First 100 families get <strong>6 months completely free</strong> — no credit card required, cancel anytime.
+        </p>
+
+        {/* Live recent-signups ticker — hides gracefully if no founding families yet */}
         <div className="mb-10 sm:mb-12">
           <RecentSignupsTicker />
         </div>
@@ -126,7 +129,7 @@ export default function BetaPage() {
             Claim my 6 months free &rarr;
           </Link>
           <p className="text-xs text-gray-400">
-            No credit card needed for the beta — your first 6 months are completely free.<br />After that, just $9/month if you choose to continue. Cancel anytime, no fine print.
+            No credit card needed — your first 6 months are completely free.<br />After that, just $9/month if you choose to continue. Cancel anytime, no fine print.
           </p>
         </div>
 
@@ -168,7 +171,7 @@ export default function BetaPage() {
 
       {/* Mid-page CTA */}
       <section className="container mx-auto px-4 py-10 max-w-3xl text-center">
-        <p className="text-gray-500 text-sm mb-4">Ready? Spots go fast — this is a one-time beta offer.</p>
+        <p className="text-gray-500 text-sm mb-4">Ready? Spots go fast — this is a one-time launch offer.</p>
         <Link
           href="/signup?beta=1"
           className="inline-block px-8 py-3 rounded-xl text-white font-bold text-base transition-colors shadow-sm hover:opacity-90"
@@ -187,15 +190,15 @@ export default function BetaPage() {
           {[
             {
               q: "Do I need a credit card?",
-              a: "Nope. Beta members sign up with just an email — no card collected, no payment processor involved, nothing to cancel. We'll email you a reminder before your 6-month beta ends so you can add a card to continue (or just stop using it, no charge).",
+              a: "Nope. Founding families sign up with just an email — no card collected, no payment processor involved, nothing to cancel. We'll email you a reminder before your 6 months end so you can add a card to continue (or just stop using it, no charge).",
             },
             {
               q: "What happens after 6 months?",
-              a: "After your 6-month free beta, DinnerDrop is $9/month. You'll receive an email reminder before your trial ends. You can cancel anytime — no hassle, no fine print.",
+              a: "After your 6 free months, DinnerDrop is $9/month. You'll receive an email reminder before your trial ends. You can cancel anytime — no hassle, no fine print.",
             },
             {
               q: "How do I submit feedback?",
-              a: "As a beta member, you'll have a direct line to Sarah (the founder) via email. You'll also receive a short 5-minute survey at the 30-day mark. Your feedback directly shapes what we build next.",
+              a: "As a founding family, you'll have a direct line to Sarah (the founder) via email. You'll also receive a short 5-minute survey at the 30-day mark. Your feedback directly shapes what we build next.",
             },
           ].map((item) => (
             <div key={item.q} className="p-6 rounded-2xl border bg-white" style={{ borderColor: '#e8e8e8' }}>

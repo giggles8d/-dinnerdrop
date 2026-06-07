@@ -36,18 +36,18 @@ export default function WelcomeBeta({
 
           {/* Beta badge */}
           <Section style={badgeSection}>
-            <Text style={badge}>🎉 BETA MEMBER — 6 months completely free</Text>
+            <Text style={badge}>🎉 FOUNDING FAMILY — 6 months completely free</Text>
           </Section>
 
           {/* Body */}
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
-              You're in. Welcome to the DinnerDrop beta — and thank you for being one of the first
+              You're in. Welcome to DinnerDrop — and thank you for being one of the first
               100 families to trust us with your dinner table.
             </Text>
             <Text style={paragraph}>
-              Your 6-month beta is now active (it ends {trialEndsDate}). No card was charged
+              Your 6 free months are now active (they end {trialEndsDate}). No card was charged
               and no card is on file — we'll email you 7 days before billing starts so you can
               add one or cancel without surprises.
             </Text>
@@ -97,21 +97,21 @@ export default function WelcomeBeta({
 
             <Hr style={hr} />
 
-            <Text style={heading}>What beta members told us to tell you:</Text>
+            <Text style={heading}>What founding families told us to tell you:</Text>
             <Text style={quoteText}>
               <em>
                 "The grocery handoff saved me 25 minutes on my first trip. I thought it was a
                 gimmick — it's not."
               </em>
-              <br />— Beta member, family of 4
+              <br />— Founding family of 4
             </Text>
 
             <Hr style={hr} />
 
             <Text style={smallText}>
               <strong>A note from Sarah:</strong> I built DinnerDrop because I was doing the
-              dinner-decision math every Sunday and failing it every time. You're not just a beta
-              user — you're helping shape what this product becomes. If anything doesn't work
+              dinner-decision math every Sunday and failing it every time. You're not just a customer
+              — you're helping shape what this product becomes. If anything doesn't work
               perfectly, please reply to this email. I read every message.
             </Text>
 
@@ -125,7 +125,7 @@ export default function WelcomeBeta({
           {/* Footer */}
           <Section style={footerSection}>
             <Text style={footerText}>
-              Your beta access is confirmed and locked in. You won't be charged for 6 months.
+              Your 6 months free are confirmed and locked in. You won't be charged for 6 months.
             </Text>
             <Text style={footerText}>
               <Link href="https://dinnerdrop.app/dashboard" style={footerLink}>

@@ -37,7 +37,7 @@ export default function NotFound() {
             className="px-6 py-3 rounded-lg font-semibold transition-opacity hover:opacity-90 border-2"
             style={{ borderColor: "#1a5c38", color: "#1a5c38" }}
           >
-            Join beta — 6 months free
+            Get 6 months free
           </Link>
         </div>
       </div>

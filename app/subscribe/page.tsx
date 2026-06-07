@@ -141,7 +141,7 @@ function SubscribeContent() {
             <div className="rounded-2xl border-2 border-primary bg-white p-8 shadow-sm">
               {couponCode === 'BETA100' && (
                 <div className="mb-6 -mt-2 -mx-2 px-4 py-3 rounded-xl text-sm font-semibold text-center" style={{backgroundColor:'#dcfce7',color:'#166534',border:'1px solid #bbf7d0'}}>
-                  🎉 Beta coupon applied — 6 months completely free
+                  🎉 Founding offer applied — 6 months completely free
                 </div>
               )}
               <div className="mb-6">
@@ -160,7 +160,7 @@ function SubscribeContent() {
                   )}
                 </div>
                 <div className="inline-block bg-secondary text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 mt-2">
-                  {couponCode === 'BETA100' ? 'Beta offer: 6 months completely free' : '7-day free trial — no charge today'}
+                  {couponCode === 'BETA100' ? 'Founding offer: 6 months completely free' : '7-day free trial — no charge today'}
                 </div>
               </div>
                 {couponCode === 'BETA100' && (

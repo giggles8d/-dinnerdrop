@@ -62,10 +62,10 @@ export default function WaitlistPage() {
           <>
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs font-semibold text-accent">
-                All 100 beta spots claimed
+                All 100 founding spots claimed
               </div>
               <h1 className="text-3xl font-heading font-bold text-foreground">
-                You just missed the beta
+                You just missed the founding offer
               </h1>
               <p className="text-muted-foreground">
                 All 100 founding member spots are taken. Join the waitlist and we&apos;ll reach out the moment more open up.

@@ -33,13 +33,13 @@ export default function WelcomeUnverified({
             <Text style={paragraph}>Hi there,</Text>
             <Text style={paragraph}>
               Thanks for starting your DinnerDrop signup! You&apos;re one step away from your
-              free 6-month beta.
+              6 free months.
             </Text>
             <Text style={paragraph}>
               <strong>What to do next:</strong> Look for a second email from us (it comes from{' '}
               <code style={code}>noreply@mail.app.supabase.io</code> because that&apos;s our
               authentication provider). Click the link in that email to verify your address,
-              then your free 6-month beta is locked in.
+              then your 6 free months are locked in.
             </Text>
 
             <Section style={ctaBox}>

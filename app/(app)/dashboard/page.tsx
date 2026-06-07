@@ -360,7 +360,7 @@ function DashboardContent() {
               <Sparkles className="w-5 h-5 text-accent flex-shrink-0" />
               <div>
                 <p className="text-sm font-semibold">Unlock unlimited meal plans</p>
-                <p className="text-xs text-primary-foreground/60 mt-0.5">Beta offer — 6 months free · No credit card today</p>
+                <p className="text-xs text-primary-foreground/60 mt-0.5">Founding offer — 6 months free · No credit card today</p>
               </div>
             </div>
             <span className="text-xs font-semibold text-accent flex-shrink-0">
@@ -518,7 +518,7 @@ function DashboardContent() {
                   }}
                   className="px-5 py-2 rounded-lg border border-accent text-accent text-xs font-semibold hover:bg-accent/10 transition-colors"
                 >
-                  Copy beta invite link
+                  Copy invite link
                 </button>
               </div>
             </div>

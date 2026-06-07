@@ -82,7 +82,7 @@ function SignupForm() {
           </p>
           {isBeta && (
             <div className="rounded-xl border-2 px-4 py-3" style={{borderColor:'#e8a838',backgroundColor:'#fef9ee'}}>
-              <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 Your 6-month beta is locked in.</p>
+              <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 Your 6 free months are locked in.</p>
               <p className="text-xs mt-1" style={{color:'#1a5c38'}}>The moment you click the link, you&apos;re in. No card, no checkout.</p>
             </div>
           )}
@@ -108,7 +108,7 @@ function SignupForm() {
         )}
         <div className="text-center">
           <h1 className="text-3xl font-heading font-bold text-foreground">
-            {isBeta ? 'Claim your beta access' : 'Create your account'}
+            {isBeta ? 'Claim your 6 free months' : 'Create your account'}
           </h1>
           <p className="mt-2 text-muted-foreground">
             {isBeta
@@ -148,7 +148,7 @@ function SignupForm() {
             {loading
               ? 'Sending your link...'
               : isBeta
-                ? 'Send my beta access link →'
+                ? 'Send my access link →'
                 : 'Email me a magic link →'}
           </button>
           <p className="text-xs text-center text-muted-foreground">
