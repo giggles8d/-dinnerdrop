@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getPublishedPosts } from '@/lib/published-posts'
+import NewsletterSignup from '@/components/NewsletterSignup'
 
 // Re-evaluate hourly so future-dated posts appear automatically on their publish date.
 export const revalidate = 3600
@@ -42,6 +43,11 @@ export default function BlogIndexPage() {
               </Link>
             </article>
           ))}
+        </div>
+
+        {/* Newsletter signup */}
+        <div className="mt-12">
+          <NewsletterSignup />
         </div>
 
         {/* CTA */}
