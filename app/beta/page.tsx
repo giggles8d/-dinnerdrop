@@ -7,7 +7,6 @@ import RecentSignupsTicker from '@/components/RecentSignupsTicker'
 
 export default function BetaPage() {
   const [spotsRemaining, setSpotsRemaining] = useState<number | null>(null)
-  const [recentStats, setRecentStats] = useState<{ newLast24h: number; newLast7d: number; betaMembers: number } | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -20,11 +19,6 @@ export default function BetaPage() {
         }
       })
       .catch(() => setSpotsRemaining(100))
-
-    fetch('/api/stats/recent-signups')
-      .then((res) => res.json())
-      .then((data) => setRecentStats(data))
-      .catch(() => {})
   }, [])
 
   return (
