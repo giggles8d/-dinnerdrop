@@ -240,9 +240,10 @@ function DashboardContent() {
       }
 
       if (data.meals) {
-        // Show picker — user selects which meals they want before saving
+        // Show picker with all 10 options and NOTHING pre-selected — the user
+        // chooses the dinners they actually want for the week.
         setPendingMeals(data.meals)
-        setSelectedIds(new Set(data.meals.map((m: Meal) => m.day)))
+        setSelectedIds(new Set())
         setGenerateError('')
       }
     } catch (error) {
@@ -403,8 +404,10 @@ function DashboardContent() {
             </h1>
             <p className="text-muted-foreground mt-2">
               {isPickingMeals
-                ? `Tap meals to select or deselect — ${selectedMeals.length} chosen`
-                : '5 meals planned around your budget and preferences'}
+                ? `Tap the dinners you want this week — pick about 5 · ${selectedMeals.length} selected`
+                : meals.length > 0
+                  ? `${meals.length} dinners planned around your budget and preferences`
+                  : 'Planned around your budget and preferences'}
             </p>
           </div>
           {isPickingMeals ? (
@@ -447,10 +450,10 @@ function DashboardContent() {
             <div className="text-3xl mb-3">&#127858;</div>
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">Welcome to DinnerDrop!</h2>
             <p className="text-muted-foreground text-sm max-w-md mx-auto mb-4">
-              Your family&apos;s personal dinner planner is ready. Tap &ldquo;Generate my plan&rdquo; above to get your first 5 AI-planned dinners — personalized to your budget, cook time, and tastes.
+              Your family&apos;s personal dinner planner is ready. Tap &ldquo;Generate my plan&rdquo; above to get 10 AI-planned dinner ideas — personalized to your budget, cook time, and tastes — then pick your favorites for the week.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">&#10003; 5 personalized dinners</span>
+              <span className="flex items-center gap-1">&#10003; 10 dinner ideas to choose from</span>
               <span className="hidden sm:block">·</span>
               <span className="flex items-center gap-1">&#10003; Budget-tracked grocery list</span>
               <span className="hidden sm:block">·</span>

@@ -30,28 +30,59 @@ function SignupForm() {
       : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}`
   }
 
-  async function handleMagicLink(e: React.FormEvent) {
+  function onboardingDestination() {
+    if (isBeta) return '/onboarding?beta=1'
+    return nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
+  }
+
+  async function handleSignup(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
 
-    // Magic-link signup: one-step. Clicking the link IS the email verification.
-    // No password to remember, no separate confirm-email step. Highest-conversion
-    // signup path for B2C consumer apps.
-    const { error } = await supabase.auth.signInWithOtp({
+    // Instant signup: create the account and sign the user straight in — no email
+    // to verify, no link to click, no password for them to remember (we generate a
+    // strong random one they never see; returning users sign in via magic link).
+    // This requires Supabase "Confirm email" to be OFF. If it's still on, or the
+    // account already exists, we fall back to a one-click email link so nothing breaks.
+    const password = `${crypto.randomUUID()}-${crypto.randomUUID()}`
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email,
-      options: {
-        emailRedirectTo: buildCallbackUrl(),
-        shouldCreateUser: true,
-      },
+      password,
+      options: { emailRedirectTo: buildCallbackUrl() },
     })
 
-    if (error) {
-      setError(error.message)
+    if (signUpError) {
+      // Most likely an existing account — send a one-click sign-in link instead.
+      const { error: otpError } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: buildCallbackUrl(), shouldCreateUser: true },
+      })
+      if (otpError) {
+        setError(otpError.message)
+        setLoading(false)
+        return
+      }
+      setMagicSent(true)
       setLoading(false)
       return
     }
 
+    // Session present → "Confirm email" is OFF, user is logged in instantly.
+    if (data.session && data.user) {
+      if (isBeta) {
+        try {
+          await supabase.from('profiles').update({ is_beta_member: true }).eq('id', data.user.id)
+        } catch {
+          // Non-fatal — the flag can be backfilled; don't block entry.
+        }
+      }
+      window.location.assign(onboardingDestination())
+      return
+    }
+
+    // No session → "Confirm email" still enabled. Supabase sent a confirmation
+    // email; show the inbox screen as a graceful fallback until the toggle is off.
     setMagicSent(true)
     setLoading(false)
   }
@@ -103,7 +134,7 @@ function SignupForm() {
         {isBeta && (
           <div className="rounded-xl border-2 px-4 py-3 text-center" style={{borderColor:'#e8a838',backgroundColor:'#fef9ee'}}>
             <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 You&apos;re claiming your 6 free months</p>
-            <p className="text-xs mt-1" style={{color:'#1a5c38'}}>No credit card. No password. Just your email — we&apos;ll send a one-click sign-in link.</p>
+            <p className="text-xs mt-1" style={{color:'#1a5c38'}}>No credit card. No password. Just your email — and you&apos;re in instantly.</p>
           </div>
         )}
         <div className="text-center">
@@ -112,8 +143,8 @@ function SignupForm() {
           </h1>
           <p className="mt-2 text-muted-foreground">
             {isBeta
-              ? 'No password to remember. Just your email.'
-              : "We'll email you a one-click sign-in link."}
+              ? 'Just your email — no password, no card. Instant access.'
+              : 'Just your email. No password to remember.'}
           </p>
         </div>
 
@@ -123,7 +154,7 @@ function SignupForm() {
           </div>
         )}
 
-        <form onSubmit={handleMagicLink} className="space-y-4">
+        <form onSubmit={handleSignup} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-foreground">
               Email
@@ -146,13 +177,13 @@ function SignupForm() {
             className="w-full rounded-md bg-primary px-4 py-3 text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
           >
             {loading
-              ? 'Sending your link...'
+              ? 'Setting up your account...'
               : isBeta
-                ? 'Send my access link →'
-                : 'Email me a magic link →'}
+                ? 'Claim my 6 months free →'
+                : 'Create my account →'}
           </button>
           <p className="text-xs text-center text-muted-foreground">
-            No password. No card. We&apos;ll just email you a one-click sign-in link.
+            No password. No credit card. You&apos;re in instantly.
           </p>
         </form>
 

@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
-import ExitIntentModal from "@/components/ExitIntentModal";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -161,7 +160,6 @@ export default function RootLayout({
           </>
         )}
         {children}
-        <ExitIntentModal />
         <Analytics />
       </body>
     </html>
