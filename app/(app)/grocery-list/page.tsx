@@ -250,6 +250,11 @@ export default function GroceryListPage() {
               )}
             </div>
           </div>
+          <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
+            DinnerDrop may earn a commission when you shop through our Instacart or Kroger links,
+            at no extra cost to you.{' '}
+            <a href="/disclosure" className="underline hover:text-foreground">Learn more</a>.
+          </p>
         </div>
 
         <div className="h-32 sm:hidden" />

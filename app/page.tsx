@@ -235,7 +235,10 @@ export default async function LandingPage() {
             <span className="font-heading font-bold text-sm text-primary">DinnerDrop</span>
           </div>
           <p>&copy; 2026 DinnerDrop</p>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
+            <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
+            <Link href="/disclosure" className="hover:text-foreground transition-colors">Disclosure</Link>
             <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
           </div>
