@@ -70,6 +70,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Failed to add items to Kroger cart' }, { status: 500 })
     }
 
+    // Log the handoff (best-effort — never block the response on analytics).
+    try {
+      await supabase.from('grocery_handoffs').insert({
+        user_id: user.id,
+        store: 'Kroger',
+        item_count: cartItems.length,
+      })
+    } catch (logErr) {
+      console.error('[kroger] handoff log failed:', logErr)
+    }
+
     return NextResponse.json({
       added: cartItems.length,
       total: allItems.length,

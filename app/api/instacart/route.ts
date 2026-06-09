@@ -26,6 +26,19 @@ export async function POST(request: Request) {
 
     const result = await createInstacartLink(allItems)
 
+    // Log the handoff (best-effort — never block the response on analytics).
+    if (result.link && !result.fallback) {
+      try {
+        await supabase.from('grocery_handoffs').insert({
+          user_id: user.id,
+          store: 'Instacart',
+          item_count: allItems.length,
+        })
+      } catch (logErr) {
+        console.error('[instacart] handoff log failed:', logErr)
+      }
+    }
+
     return NextResponse.json(result)
   } catch (error) {
     console.error('Error creating Instacart link:', error)
