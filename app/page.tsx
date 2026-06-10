@@ -1,15 +1,6 @@
 import Link from 'next/link'
 
 export default async function LandingPage() {
-  let spotsRemaining = 100
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://dinnerdrop.app'
-    const res = await fetch(`${baseUrl}/api/stripe/beta-spots`, { cache: 'no-store' })
-    if (res.ok) {
-      const data = await res.json()
-      spotsRemaining = Number(data.spotsRemaining) || 100
-    }
-  } catch {}
   return (
     <div className="min-h-screen bg-white">
 
@@ -66,11 +57,7 @@ export default async function LandingPage() {
 
       <section className="border-y border-border bg-secondary">
         <div className="container mx-auto px-4 max-w-5xl py-6">
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <p className="text-2xl font-heading font-bold text-primary">{spotsRemaining}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">founding spots left — 6 months free</p>
-            </div>
+          <div className="grid grid-cols-2 gap-4 text-center">
             <div>
               <p className="text-2xl font-heading font-bold text-primary">$47</p>
               <p className="text-xs text-muted-foreground mt-0.5">avg weekly grocery savings</p>
@@ -146,24 +133,6 @@ export default async function LandingPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Urgency bar */}
-      <section className="border-y" style={{backgroundColor:'#fffbeb',borderColor:'#fde68a'}}>
-        <div className="container mx-auto px-4 py-5 max-w-4xl text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse" />
-            <p className="text-sm font-semibold" style={{color:'#92400e'}}>
-              {spotsRemaining} of 100 founding spots still available &mdash; 6 months completely free
-            </p>
-          </div>
-          <div className="w-full max-w-xs mx-auto rounded-full h-1.5 mb-3" style={{backgroundColor:'#fde68a'}}>
-            <div className="h-1.5 rounded-full" style={{backgroundColor:'#f59e0b',width:`${Math.max(2, 100 - spotsRemaining)}%`}} />
-          </div>
-          <Link href="/beta" className="text-xs font-bold underline underline-offset-2" style={{color:'#b45309'}}>
-            Claim your spot before they&apos;re gone &rarr;
-          </Link>
         </div>
       </section>
 
