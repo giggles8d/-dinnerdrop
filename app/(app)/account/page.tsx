@@ -119,7 +119,7 @@ export default function AccountPage() {
                 <Clock className="w-5 h-5" style={{ color: '#1a5c38' }} />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Beta trial active</p>
+                <p className="font-semibold text-foreground">Founding family — active</p>
                 <p className="text-xs text-muted-foreground">6 months free, then $9/month</p>
               </div>
             </div>
@@ -182,7 +182,7 @@ export default function AccountPage() {
 
             <div className="rounded-xl p-4 bg-secondary border border-border">
               <p className="text-sm font-semibold text-foreground mb-1">
-                🎉 Beta spots still available
+                🎉 Founding-family spots still available
               </p>
               <p className="text-xs text-muted-foreground">
                 First 100 families get 6 months completely free — no credit card required.
