@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Camera, Loader2, Plus, Trash2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
+import { AmazonRestock } from '@/components/AmazonRestock'
+import { PANTRY_ESSENTIALS } from '@/lib/amazon-affiliate'
 
 interface PantryItem {
   id: string
@@ -285,6 +287,14 @@ export default function PantryPage() {
             ))}
           </ul>
         )}
+
+        <div className="mt-10">
+          <AmazonRestock
+            groups={PANTRY_ESSENTIALS}
+            heading="Restock your essentials"
+            subheading="Running low? Send any staple straight to Amazon in one tap."
+          />
+        </div>
       </div>
     </div>
   )

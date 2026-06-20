@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { getPublishedPosts, getPublishedPostBySlug } from '@/lib/published-posts'
+import { AmazonRestock } from '@/components/AmazonRestock'
+import { KITCHEN_TOOLS } from '@/lib/amazon-affiliate'
 
 interface Props {
   params: { slug: string }
@@ -210,6 +212,15 @@ export default function BlogPostPage({ params }: Props) {
       {/* Article body */}
       <article className="max-w-3xl mx-auto px-4 py-12">
         {renderContent(post!.content)}
+
+        {/* Affiliate: kitchen tools */}
+        <div className="mt-14">
+          <AmazonRestock
+            groups={[KITCHEN_TOOLS]}
+            heading="Stock your kitchen for weeknight dinners"
+            subheading="The everyday tools that make these recipes faster — shop them on Amazon."
+          />
+        </div>
 
         {/* CTA */}
         <div className="mt-16 bg-[#1a5c38] rounded-2xl p-8 text-center">

@@ -42,16 +42,9 @@ export default async function LandingPage() {
             </a>
           </div>
           <p className="text-xs text-muted-foreground mt-4">First plan is free &middot; Cancel anytime</p>
-          <div className="mt-6 flex items-start gap-3">
-            <div className="flex -space-x-2 flex-shrink-0">
-              {['S','J','P'].map(initial => (
-                <div key={initial} className="w-7 h-7 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">{initial}</div>
-              ))}
-            </div>
-            <p className="text-xs text-muted-foreground leading-snug max-w-xs pt-1">
-              <span className="font-semibold text-foreground">Early families love it</span> &mdash; &ldquo;I used to spend 45 minutes deciding what to cook. Now it&apos;s zero.&rdquo; &mdash; James L.
-            </p>
-          </div>
+          <p className="text-xs text-muted-foreground leading-snug max-w-sm mt-6">
+            <span className="font-semibold text-foreground">Founding-family offer</span> &mdash; the first 100 families get 6 months free. No credit card to start, and your first plan is free either way.
+          </p>
         </div>
       </section>
 
@@ -113,26 +106,20 @@ export default async function LandingPage() {
       </section>
 
       <section className="bg-secondary border-y border-border">
-        <div className="container mx-auto px-4 py-16 max-w-5xl">
-          <p className="text-xs font-bold text-primary uppercase tracking-widest mb-10">What families say</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { quote: 'DinnerDrop cut our grocery bill by 30%. The meal plans are actually things my kids will eat.', name: 'Sarah M.', detail: 'Family of 4' },
-              { quote: 'I used to spend 45 minutes just deciding what to cook. Now it takes zero minutes.', name: 'James L.', detail: 'Family of 2' },
-              { quote: 'The grocery handoff is a game changer. Sunday planning takes 5 minutes now.', name: 'Priya K.', detail: 'Family of 3' },
-            ].map((t) => (
-              <div key={t.name} className="bg-white p-6 rounded-2xl border border-border space-y-4">
-                <p className="text-sm text-foreground leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center gap-2 pt-2 border-t border-border">
-                  <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">{t.name[0]}</div>
-                  <div>
-                    <p className="text-xs font-semibold text-foreground">{t.name}</p>
-                    <p className="text-xs text-muted-foreground">{t.detail}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+        <div className="container mx-auto px-4 py-16 max-w-3xl">
+          <p className="text-xs font-bold text-primary uppercase tracking-widest mb-6">Why I built DinnerDrop</p>
+          <div className="space-y-4 text-foreground">
+            <p className="text-lg leading-relaxed">
+              Hi, I&apos;m Sarah. For years the hardest part of my week wasn&apos;t cooking &mdash; it was the 5pm scramble of deciding what to make, then realizing we were out of half the ingredients.
+            </p>
+            <p className="text-lg leading-relaxed">
+              I built DinnerDrop so dinner stops being a daily negotiation: it plans the week around your family and your budget, builds the grocery list, and drops it into your cart in one tap.
+            </p>
+            <p className="text-lg leading-relaxed">
+              We&apos;re brand new and building this alongside our first 100 families. Join now and you&apos;ll help shape what it becomes &mdash; and get six months free while we do.
+            </p>
           </div>
+          <p className="mt-6 text-sm font-semibold text-primary">&mdash; Sarah, founder of DinnerDrop</p>
         </div>
       </section>
 
@@ -151,7 +138,7 @@ export default async function LandingPage() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>1 meal plan per month</li>
                 <li>5 dinners per plan</li>
-                <li>Grocery list (no cart push)</li>
+                <li>One-tap cart push to Instacart &amp; Kroger</li>
               </ul>
               <Link href="/beta" className="block text-center px-4 py-2 rounded-md border border-input text-foreground font-medium hover:bg-muted transition-colors">
                 Get started
@@ -173,10 +160,10 @@ export default async function LandingPage() {
                 </p>
               </div>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>Weekly meal plans</li>
+                <li>Unlimited meal plans</li>
                 <li>5 dinners per plan</li>
-                <li>One-tap grocery cart handoff</li>
                 <li>Budget optimization</li>
+                <li>Save favorites &amp; meal history</li>
               </ul>
               <Link href="/signup?beta=1" className="block text-center px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors">
                 Claim my 6 months free &rarr;
