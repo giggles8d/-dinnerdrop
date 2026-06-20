@@ -8,14 +8,14 @@ interface InstacartButtonProps {
 }
 
 /**
- * Instacart "Shop with Instacart" button.
+ * Instacart "Shop ingredients" CTA.
  *
- * Branding follows Instacart Developer Platform requirements:
- *  - Instacart carrot mark
- *  - Brand green (#43B02A)
- *  - Explicit "Get Recipe Ingredients" / "Get Ingredients" intent
- *
- * Docs: https://docs.instacart.com/developer_platform_api/guide/tutorials_and_guides/branding
+ * Built to the Instacart Developer Platform CTA design spec (Dark variant):
+ *   - Pill button, height 46px, padding 16px / 18px
+ *   - Background #003D29, foreground text #FAF1E5
+ *   - Official full-color carrot logo (#FF7009 / #0AAD0A), 22px
+ *   - Approved button copy: "Shop ingredients"
+ * Docs: https://docs.instacart.com/developer_platform_api/guide/concepts/design/cta_design
  */
 export default function InstacartButton({ groceryList }: InstacartButtonProps) {
   const [loading, setLoading] = useState(false)
@@ -60,29 +60,16 @@ export default function InstacartButton({ groceryList }: InstacartButtonProps) {
       <button
         onClick={handleSendToInstacart}
         disabled={loading}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg bg-[#43B02A] text-white font-semibold text-base hover:bg-[#3a9a24] disabled:opacity-50 transition-colors shadow-lg"
-        aria-label="Get ingredients on Instacart"
+        style={{ backgroundColor: '#003D29', color: '#FAF1E5', height: '46px', paddingLeft: '18px', paddingRight: '18px' }}
+        className="inline-flex items-center justify-center gap-2 rounded-full font-semibold text-base hover:opacity-90 disabled:opacity-50 transition-opacity shadow-lg"
+        aria-label="Shop ingredients on Instacart"
       >
-        {/* Instacart carrot mark (inline SVG so we don't have to ship an asset) */}
-        <svg
-          aria-hidden="true"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M19.6 4.4c-1.4-1.4-3.5-1.5-5-.4l-1.7 1.3 5.8 5.8 1.3-1.7c1.1-1.5 1-3.6-.4-5z"
-            fill="#FF8200"
-          />
-          <path
-            d="M12.4 6.4 4 12.8c-1.4 1-1.7 3-.5 4.4l3.3 3.3c1.4 1.2 3.4.9 4.4-.5l6.4-8.4-5.2-5.2z"
-            fill="#FFFFFF"
-          />
-          <path d="M15 9l-6 4.5L10 15l6-4.5L15 9z" fill="#43B02A" />
+        {/* Official Instacart carrot mark — full-color (#FF7009 / #0AAD0A), 22px */}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.6 18.4a2.6 2.6 0 0 0 3.68 0l8.06-8.06-3.68-3.68-8.06 8.06a2.6 2.6 0 0 0 0 3.68z" fill="#FF7009" />
+          <path d="M14.2 3.1c1.6-1.2 3.6-1 4.9.3 1.3 1.3 1.5 3.3.3 4.9l-1.1 1.4-5.5-5.5 1.4-1.1z" fill="#0AAD0A" />
         </svg>
-        <span>{loading ? 'Creating your list…' : 'Get Ingredients on Instacart'}</span>
+        <span>{loading ? 'Creating your list…' : 'Shop ingredients'}</span>
       </button>
 
       <p className="text-[11px] text-muted-foreground">
