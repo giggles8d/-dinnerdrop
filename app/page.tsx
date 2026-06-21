@@ -15,6 +15,7 @@ export default async function LandingPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link href="/blog" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
+            <Link href="/shop" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Shop</Link>
             <Link href="/beta" className="px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>6 months free</Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
             <Link href="/beta" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Claim my 6 months free</Link>
@@ -194,6 +195,7 @@ export default async function LandingPage() {
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
             <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
+            <Link href="/shop" className="hover:text-foreground transition-colors">Shop</Link>
             <Link href="/disclosure" className="hover:text-foreground transition-colors">Disclosure</Link>
             <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
