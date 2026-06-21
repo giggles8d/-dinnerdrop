@@ -167,6 +167,9 @@ export default function BlogPostPage({ params }: Props) {
   const post = getPublishedPostBySlug(params.slug)
   if (!post) notFound()
 
+  // Internal links to other posts — improves SEO crawl/link equity and dwell time.
+  const related = getPublishedPosts().filter((p) => p.slug !== post!.slug).slice(0, 3)
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -221,6 +224,25 @@ export default function BlogPostPage({ params }: Props) {
             subheading="The everyday tools that make these recipes faster — shop them on Amazon."
           />
         </div>
+
+        {/* Keep reading — internal links for SEO crawl + dwell time */}
+        {related.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Keep reading</h2>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {related.map((r) => (
+                <Link
+                  key={r.slug}
+                  href={`/blog/${r.slug}`}
+                  className="block rounded-xl border border-gray-200 p-4 hover:border-[#1a5c38] transition-colors"
+                >
+                  <p className="font-semibold text-gray-900 leading-snug">{r.title}</p>
+                  <p className="text-sm text-gray-500 mt-2">{r.readingTimeMinutes} min read</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* CTA */}
         <div className="mt-16 bg-[#1a5c38] rounded-2xl p-8 text-center">
