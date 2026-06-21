@@ -121,9 +121,12 @@ function OnboardingQuizInner() {
       }
     } else {
       setAnswers({ ...answers, [field]: value })
-      // Auto-advance for single-select
       if (step < STEPS.length - 1) {
+        // Auto-advance for single-select
         setTimeout(() => setStep(step + 1), 200)
+      } else {
+        // Final single-select step (store): auto-submit so there's no dead-end.
+        setTimeout(() => handleSubmit({ [field]: value } as Partial<Answers>), 250)
       }
     }
   }
@@ -138,7 +141,8 @@ function OnboardingQuizInner() {
 
   const [submitError, setSubmitError] = useState('')
 
-  async function handleSubmit() {
+  async function handleSubmit(override?: Partial<Answers>) {
+    const final = { ...answers, ...override }
     setLoading(true)
     setSubmitError('')
 
@@ -149,21 +153,21 @@ function OnboardingQuizInner() {
       return
     }
 
-    const cuisinePref = answers.cuisinePreference.length > 0
-      ? answers.cuisinePreference.join(', ')
+    const cuisinePref = final.cuisinePreference.length > 0
+      ? final.cuisinePreference.join(', ')
       : 'mixed'
 
-    const dietaryNeeds = answers.dietaryNeeds.filter((v) => v !== 'None')
+    const dietaryNeeds = final.dietaryNeeds.filter((v) => v !== 'None')
 
     const { error } = await supabase
       .from('profiles')
       .update({
-        family_size: answers.familySize,
-        weekly_budget: answers.weeklyBudget,
-        max_cook_time: answers.maxCookTime,
+        family_size: final.familySize,
+        weekly_budget: final.weeklyBudget,
+        max_cook_time: final.maxCookTime,
         cuisine_preference: cuisinePref,
         dietary_needs: dietaryNeeds,
-        preferred_store: answers.preferredStore,
+        preferred_store: final.preferredStore || 'Instacart',
         onboarding_complete: true,
       })
       .eq('id', user.id)
@@ -222,38 +226,48 @@ function OnboardingQuizInner() {
           ))}
         </div>
 
-        <div className="flex justify-between pt-4">
-          <button
-            onClick={() => setStep(Math.max(0, step - 1))}
-            disabled={step === 0}
-            className="text-sm text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
-          >
-            Back
-          </button>
-
+        <div className="space-y-4 pt-2">
+          {/* Primary action — always visible so the flow never looks stuck */}
           {currentStep.multiSelect && !isLastStep && (
             <button
               onClick={() => setStep(step + 1)}
-              className="px-6 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+              className="w-full px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
             >
-              Next
+              Continue &rarr;
             </button>
           )}
 
           {isLastStep && (
-            <div className="flex flex-col items-end gap-2">
+            <div className="space-y-2">
               {submitError && (
-                <p className="text-sm text-destructive text-right">{submitError}</p>
+                <p className="text-sm text-destructive text-center">{submitError}</p>
               )}
               <button
-                onClick={handleSubmit}
+                onClick={() => handleSubmit()}
                 disabled={loading || !answers.preferredStore}
-                className="px-6 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                className="w-full px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
-                {loading ? 'Saving...' : 'Get my meal plan'}
+                {loading ? 'Building your plan…' : 'Get my meal plan →'}
               </button>
             </div>
           )}
+
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setStep(Math.max(0, step - 1))}
+              disabled={step === 0 || loading}
+              className="text-sm text-muted-foreground hover:text-foreground disabled:opacity-30 transition-colors"
+            >
+              &larr; Back
+            </button>
+            <button
+              onClick={() => handleSubmit({ preferredStore: answers.preferredStore || 'Instacart' })}
+              disabled={loading}
+              className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-2 disabled:opacity-30 transition-colors"
+            >
+              Skip — just show me a plan
+            </button>
+          </div>
         </div>
       </div>
     </div>
