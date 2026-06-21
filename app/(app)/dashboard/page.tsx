@@ -211,32 +211,42 @@ function DashboardContent() {
 
       const favoriteMeals = favoritesRes.data?.map(f => f.meal_data as Meal) || []
 
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 58000)
-      let res: Response
-      try {
-        res = await fetch('/api/generate-plan', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          signal: controller.signal,
-          body: JSON.stringify({
-            familySize: profile.family_size,
-            weeklyBudget: profile.weekly_budget,
-            maxCookTime: profile.max_cook_time,
-            cuisinePreference: profile.cuisine_preference,
-            dietaryNeeds: profile.dietary_needs || [],
-            favoriteMeals,
-            userId: user.id,
-          }),
-        })
-      } finally {
-        clearTimeout(timeoutId)
+      // Generation occasionally fails on the first attempt — auto-retry once,
+      // transparently, so users don't get stranded with no plan.
+      let data: { meals?: Meal[]; error?: string } | null = null
+      let lastErr: unknown = null
+      for (let attempt = 0; attempt < 2; attempt++) {
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 50000)
+        try {
+          const res = await fetch('/api/generate-plan', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            signal: controller.signal,
+            body: JSON.stringify({
+              familySize: profile.family_size,
+              weeklyBudget: profile.weekly_budget,
+              maxCookTime: profile.max_cook_time,
+              cuisinePreference: profile.cuisine_preference,
+              dietaryNeeds: profile.dietary_needs || [],
+              favoriteMeals,
+              userId: user.id,
+            }),
+          })
+          const json = await res.json()
+          if (!res.ok || json.error) throw new Error(json.error || `Server error ${res.status}`)
+          data = json
+          lastErr = null
+          break
+        } catch (err) {
+          lastErr = err
+        } finally {
+          clearTimeout(timeoutId)
+        }
       }
 
-      const data = await res.json()
-
-      if (!res.ok || data.error) {
-        throw new Error(data.error || `Server error ${res.status}`)
+      if (!data) {
+        throw lastErr instanceof Error ? lastErr : new Error('Generation failed')
       }
 
       if (data.meals) {

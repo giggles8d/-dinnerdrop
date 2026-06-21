@@ -18,5 +18,16 @@ export async function generateWithClaude(prompt: string, maxTokens: number = 400
 
 export function parseClaudeJSON<T>(text: string): T {
   const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
-  return JSON.parse(cleaned) as T
+  // Be forgiving: the model occasionally wraps the JSON in a sentence or two.
+  // Extract the outermost object/array so stray prose doesn't break parsing.
+  try {
+    return JSON.parse(cleaned) as T
+  } catch {
+    const firstObj = cleaned.search(/[{[]/)
+    const lastObj = Math.max(cleaned.lastIndexOf('}'), cleaned.lastIndexOf(']'))
+    if (firstObj >= 0 && lastObj > firstObj) {
+      return JSON.parse(cleaned.slice(firstObj, lastObj + 1)) as T
+    }
+    throw new Error('No JSON found in model response')
+  }
 }
