@@ -18,6 +18,17 @@ export interface DigitalProduct {
 
 export const PRODUCTS: DigitalProduct[] = [
   {
+    id: '30-dinners-under-30-minutes',
+    name: '30 Dinners Under 30 Minutes',
+    description:
+      '30 family-tested weeknight dinners — 6 ingredients or fewer, 30 minutes or less, with a full-color photo for every recipe. Plus 5 bonus guides: a 7-day meal plan + grocery list, smart swaps, a pantry checklist, and a freezer guide. 40-page instant PDF download.',
+    priceUsd: 9.99,
+    fileKey: '30-dinners-under-30-minutes.pdf',
+    image: '/shop-30-dinners.jpg',
+    // Flip to true AFTER the PDF is uploaded to the shop-downloads bucket.
+    active: false,
+  },
+  {
     id: 'weeknight-dinner-planner',
     name: 'Weeknight Dinner Planner (Printable)',
     description:
