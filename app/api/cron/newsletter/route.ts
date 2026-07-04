@@ -20,19 +20,48 @@ const PREVIEW_RECIPIENT = 'setzl1979@gmail.com'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get('authorization')
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+const ADMIN_EMAIL = 'setzl1979@gmail.com'
 
+// Preview/dry-run may also be triggered from Sarah's logged-in browser session
+// (so approving issue #1 is one click). Full sends remain cron-secret only.
+async function isAdminSession(): Promise<boolean> {
+  try {
+    const { createServerClient } = await import('@supabase/ssr')
+    const { cookies } = await import('next/headers')
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (!supabaseUrl || !supabaseAnonKey) return false
+    const cookieStore = cookies()
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+      cookies: {
+        get(name: string) { return cookieStore.get(name)?.value },
+        set() { /* read-only */ },
+        remove() { /* read-only */ },
+      },
+    })
+    const { data: { user } } = await supabase.auth.getUser()
+    return user?.email?.toLowerCase() === ADMIN_EMAIL
+  } catch {
+    return false
+  }
+}
+
+export async function GET(request: NextRequest) {
   const url = new URL(request.url)
   const dryRun = url.searchParams.get('dryRun') === '1'
   const preview = url.searchParams.get('preview') === '1'
   const force = url.searchParams.get('force') === '1'
 
+  const authHeader = request.headers.get('authorization')
+  const hasCronAuth = authHeader === `Bearer ${process.env.CRON_SECRET}`
+  const canUseSession = (preview || dryRun) && (await isAdminSession())
+  if (!hasCronAuth && !canUseSession) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const now = new Date()
-  if (!force && !isSendWeek(now)) {
+  // Preview/dry-run always work regardless of the biweekly parity gate
+  if (!force && !preview && !dryRun && !isSendWeek(now)) {
     return NextResponse.json({ skipped: true, reason: `odd ISO week ${isoWeek(now)} — biweekly gate`, sent: 0 })
   }
 

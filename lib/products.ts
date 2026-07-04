@@ -25,8 +25,7 @@ export const PRODUCTS: DigitalProduct[] = [
     priceUsd: 9.99,
     fileKey: '30-dinners-under-30-minutes.pdf',
     image: '/shop-30-dinners.jpg',
-    // Flip to true AFTER the PDF is uploaded to the shop-downloads bucket.
-    active: false,
+    active: true, // PDF uploaded to shop-downloads 2026-07-04
   },
   {
     id: 'weeknight-dinner-planner',
@@ -36,8 +35,7 @@ export const PRODUCTS: DigitalProduct[] = [
     priceUsd: 7,
     fileKey: 'weeknight-dinner-planner.pdf',
     image: '/og-image.png',
-    // Flip to true AFTER the file is uploaded to the shop-downloads bucket.
-    active: false,
+    active: true, // PDF uploaded to shop-downloads 2026-07-04
   },
   {
     id: 'family-meal-prep-bundle',
@@ -47,8 +45,7 @@ export const PRODUCTS: DigitalProduct[] = [
     priceUsd: 12,
     fileKey: 'family-meal-prep-bundle.pdf',
     image: '/og-image.png',
-    // Flip to true AFTER the file is uploaded to the shop-downloads bucket.
-    active: false,
+    active: true, // PDF uploaded to shop-downloads 2026-07-04
   },
 ]
 
