@@ -2,18 +2,21 @@ import React from 'react'
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
 import { render } from '@react-email/render'
-import TrialDay3 from '@/emails/TrialDay3'
-import TrialDay6 from '@/emails/TrialDay6'
-import TrialDay7 from '@/emails/TrialDay7'
+import ActivateDay1 from '@/emails/ActivateDay1'
+import ActivateDay3 from '@/emails/ActivateDay3'
+import ActivateDay7 from '@/emails/ActivateDay7'
 
 function getResend() { return new Resend(process.env.RESEND_API_KEY) }
 
 type EmailNumber = 1 | 2 | 3
 
+// Activation sequence (2026-07: replaced the trial-conversion sequence — 226/227
+// users are 'free' and never received emails; the goal now is first-plan
+// activation, not trial-end urgency).
 const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: React.FC<{ firstName?: string; unsubscribeUrl: string; nextBillingDate?: string }> }> = {
-  1: { subject: 'How are your dinners going this week? 🍽️', Template: TrialDay3 },
-  2: { subject: 'One day left in your free trial', Template: TrialDay6 },
-  3: { subject: 'Your DinnerDrop trial ends tonight', Template: TrialDay7 },
+  1: { subject: 'Your 5 dinners for this week are ready 🍽️', Template: ActivateDay1 },
+  2: { subject: "Tonight's dinner, solved in 30 seconds", Template: ActivateDay3 },
+  3: { subject: '60 seconds for a week of dinners — last nudge', Template: ActivateDay7 },
 }
 
 export async function POST(request: NextRequest) {

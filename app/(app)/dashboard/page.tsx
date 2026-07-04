@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useCallback, useEffect, useState } from 'react'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { AlertCircle, Sparkles } from 'lucide-react'
@@ -33,6 +33,11 @@ function DashboardContent() {
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
   const [isBetaMember, setIsBetaMember] = useState(false)
   const [planCount, setPlanCount] = useState(0)
+  // Instant first plan: brand-new users (no plan yet) get their first week
+  // auto-generated with smart defaults — no quiz gate before seeing value.
+  const [needsPersonalize, setNeedsPersonalize] = useState(false)
+  const [shouldAutoGen, setShouldAutoGen] = useState(false)
+  const autoGenFired = useRef(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
@@ -62,11 +67,10 @@ function DashboardContent() {
         setBudget(profile.weekly_budget)
         setSubscriptionStatus(profile.subscription_status || 'free')
         setIsBetaMember(profile.is_beta_member || false)
-
-        if (!profile.onboarding_complete) {
-          router.push('/onboarding')
-          return
-        }
+        // Don't gate the dashboard behind the quiz anymore — show the product
+        // first, offer personalization after. (This was where 95% of signups
+        // used to vanish.)
+        setNeedsPersonalize(!profile.onboarding_complete)
       }
 
       // Run remaining queries in parallel — no dependency between them
@@ -100,6 +104,12 @@ function DashboardContent() {
       }
 
       setPlanCount(countRes.count ?? 0)
+
+      // First-ever visit with no plan: kick off generation automatically so the
+      // user's first experience is watching their dinners appear.
+      if (!plan && (countRes.count ?? 0) === 0) {
+        setShouldAutoGen(true)
+      }
     } catch (err) {
       console.error('Dashboard load error:', err)
     } finally {
@@ -110,6 +120,16 @@ function DashboardContent() {
   useEffect(() => {
     loadExistingPlan()
   }, [loadExistingPlan])
+
+  // Auto-generate the first plan exactly once per visit (guarded by ref so it
+  // can't loop). If it fails, the normal welcome card + button is the fallback.
+  useEffect(() => {
+    if (!initialLoading && shouldAutoGen && !autoGenFired.current) {
+      autoGenFired.current = true
+      generatePlan()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialLoading, shouldAutoGen])
 
   // Refresh subscription status when returning from Stripe
   useEffect(() => {
@@ -250,10 +270,15 @@ function DashboardContent() {
       }
 
       if (data.meals) {
-        // Show picker with all 10 options and NOTHING pre-selected — the user
-        // chooses the dinners they actually want for the week.
         setPendingMeals(data.meals)
-        setSelectedIds(new Set())
+        // First plan ever: pre-select 5 so one tap confirms — new users should
+        // be one click from done, not facing 10 unchecked boxes. Returning
+        // users regenerating start empty and choose deliberately.
+        setSelectedIds(
+          planCount === 0 && !hasGenerated
+            ? new Set(data.meals.slice(0, 5).map(m => m.day))
+            : new Set()
+        )
         setGenerateError('')
       }
     } catch (error) {
@@ -380,6 +405,23 @@ function DashboardContent() {
           </Link>
         )}
 
+        {/* Personalization nudge — user is on smart defaults, quiz is optional */}
+        {needsPersonalize && !initialLoading && (
+          <div className="mb-5 flex items-center justify-between px-4 py-3 rounded-lg bg-primary/5 border border-primary/20">
+            <p className="text-sm text-foreground/70">
+              {isPickingMeals || hasGenerated || loading
+                ? 'These dinners use smart defaults — tell us about your family to make them perfect.'
+                : 'Tell us about your family to personalize your dinners.'}
+            </p>
+            <Link
+              href="/onboarding"
+              className="text-xs font-semibold text-primary hover:text-primary/80 underline flex-shrink-0 ml-4"
+            >
+              Personalize (2 min) &rarr;
+            </Link>
+          </div>
+        )}
+
         {/* Stale plan nudge */}
         {isPlanStale && hasGenerated && !loading && !initialLoading && (
           <div className="mb-5 flex items-center justify-between px-4 py-3 rounded-lg bg-accent/10 border border-accent/30">
@@ -414,7 +456,9 @@ function DashboardContent() {
             </h1>
             <p className="text-muted-foreground mt-2">
               {isPickingMeals
-                ? `Tap the dinners you want this week — pick about 5 · ${selectedMeals.length} selected`
+                ? planCount === 0
+                  ? `We picked 5 to get you started — tap any to swap · ${selectedMeals.length} selected`
+                  : `Tap the dinners you want this week — pick about 5 · ${selectedMeals.length} selected`
                 : meals.length > 0
                   ? `${meals.length} dinners planned around your budget and preferences`
                   : 'Planned around your budget and preferences'}
@@ -455,7 +499,21 @@ function DashboardContent() {
           )}
         </div>
 
-                {!hasGenerated && !initialLoading && !isPickingMeals && (
+        {/* First-plan auto-generation in progress */}
+        {loading && !hasGenerated && !isPickingMeals && (
+          <div className="mb-8 p-6 rounded-2xl border border-primary/20 bg-primary/5 text-center">
+            <div className="text-3xl mb-3 animate-bounce">&#127859;</div>
+            <h2 className="text-xl font-heading font-bold text-foreground mb-2">
+              Building your first week of dinners&hellip;
+            </h2>
+            <p className="text-muted-foreground text-sm max-w-md mx-auto">
+              Our AI is planning 10 weeknight dinners around your budget and cook
+              time. Takes about 30 seconds — worth the wait.
+            </p>
+          </div>
+        )}
+
+                {!hasGenerated && !initialLoading && !loading && !isPickingMeals && (
           <div className="mb-8 p-6 rounded-2xl border border-accent/30 bg-accent/5 text-center">
             <div className="text-3xl mb-3">&#127858;</div>
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">Welcome to DinnerDrop!</h2>

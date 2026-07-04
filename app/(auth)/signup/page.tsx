@@ -19,20 +19,18 @@ function SignupForm() {
 
   const supabase = createClient()
 
+  // Instant value: new users land straight on the dashboard, where their first
+  // week of dinners auto-generates with smart defaults. The personalization
+  // quiz is offered after they've seen the plan — not as a gate before it.
   function buildCallbackUrl() {
-    const onboardingNext = isBeta
-      ? '/onboarding?beta=1'
-      : nextUrl
-        ? `/onboarding?next=${encodeURIComponent(nextUrl)}`
-        : '/onboarding'
+    const destination = nextUrl && nextUrl.startsWith('/') ? nextUrl : '/dashboard?new=1'
     return isBeta
-      ? `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}&beta=1`
-      : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(onboardingNext)}`
+      ? `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(destination)}&beta=1`
+      : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(destination)}`
   }
 
-  function onboardingDestination() {
-    if (isBeta) return '/onboarding?beta=1'
-    return nextUrl ? `/onboarding?next=${encodeURIComponent(nextUrl)}` : '/onboarding'
+  function postSignupDestination() {
+    return nextUrl && nextUrl.startsWith('/') ? nextUrl : '/dashboard?new=1'
   }
 
   async function handleSignup(e: React.FormEvent) {
@@ -77,7 +75,7 @@ function SignupForm() {
           // Non-fatal — the flag can be backfilled; don't block entry.
         }
       }
-      window.location.assign(onboardingDestination())
+      window.location.assign(postSignupDestination())
       return
     }
 
