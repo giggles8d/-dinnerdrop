@@ -4,18 +4,22 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
-import { AlertCircle, Clock, CheckCircle, CreditCard } from 'lucide-react'
+import { AlertCircle, Clock, CheckCircle, CreditCard, LogOut } from 'lucide-react'
 
 interface Profile {
   subscription_status: string | null
   trial_ends_at: string | null
   full_name: string | null
+  is_beta_member: boolean | null
 }
 
 export default function AccountPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [userId, setUserId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [portalLoading, setPortalLoading] = useState(false)
+  const [claimLoading, setClaimLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
@@ -24,14 +28,20 @@ export default function AccountPage() {
     async function loadProfile() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push('/login'); return }
+      setUserEmail(user.email ?? null)
+      setUserId(user.id)
 
-      const { data } = await supabase
+      const { data, error: profileError } = await supabase
         .from('profiles')
-        .select('subscription_status, trial_ends_at, full_name')
+        .select('subscription_status, trial_ends_at, full_name, is_beta_member')
         .eq('id', user.id)
         .single()
 
-      setProfile(data as Profile)
+      if (profileError) {
+        console.error('Account profile load failed:', profileError)
+        setError('We had trouble loading your plan details. Refresh to try again.')
+      }
+      setProfile((data as Profile) ?? null)
       setLoading(false)
 
       // Auto-redirect active/past_due users straight to portal — same as before
@@ -43,6 +53,30 @@ export default function AccountPage() {
     loadProfile()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  async function handleSignOut() {
+    await supabase.auth.signOut()
+    router.push('/')
+    router.refresh()
+  }
+
+  // Signed-in users claim their founding-family spot in place — no bouncing
+  // back through /signup (which used to dead-end existing accounts).
+  async function claimFoundingSpot() {
+    if (!userId) return
+    setClaimLoading(true)
+    setError(null)
+    const { error: claimError } = await supabase
+      .from('profiles')
+      .update({ is_beta_member: true })
+      .eq('id', userId)
+    if (claimError) {
+      setError('Something went wrong claiming your spot. Please try again.')
+    } else {
+      setProfile(prev => prev ? { ...prev, is_beta_member: true } : prev)
+    }
+    setClaimLoading(false)
+  }
 
   async function openPortal() {
     setPortalLoading(true)
@@ -82,7 +116,11 @@ export default function AccountPage() {
 
   const status = profile?.subscription_status ?? 'free'
   const daysLeft = getTrialDaysRemaining()
-  const firstName = profile?.full_name?.split(' ')[0] ?? 'there'
+  const emailPrefix = userEmail?.split('@')[0]?.replace(/[^a-zA-Z]/g, '') || ''
+  const firstName =
+    profile?.full_name?.split(' ')[0]
+    ?? (emailPrefix ? emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1) : 'there')
+  const isFoundingMember = profile?.is_beta_member === true
 
   // active/past_due — portal redirect is fired in useEffect; show spinner while it happens
   if (status === 'active' || status === 'past_due') {
@@ -102,6 +140,11 @@ export default function AccountPage() {
         <div className="mb-8">
           <p className="text-xs font-bold text-primary uppercase tracking-widest mb-1">Account</p>
           <h1 className="text-3xl font-heading font-bold text-foreground">Hi, {firstName}</h1>
+          {userEmail && (
+            <p className="text-sm text-muted-foreground mt-1">
+              Signed in as <span className="font-medium text-foreground">{userEmail}</span>
+            </p>
+          )}
         </div>
 
         {error && (
@@ -167,8 +210,38 @@ export default function AccountPage() {
           </div>
         )}
 
-        {/* Free / no subscription */}
-        {(status === 'free' || !status) && (
+        {/* Free + founding member — everything unlocked, nothing to claim */}
+        {(status === 'free' || !status) && isFoundingMember && (
+          <div className="bg-white rounded-2xl border border-border p-6 space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#e8f5ef' }}>
+                <CheckCircle className="w-5 h-5" style={{ color: '#1a5c38' }} />
+              </div>
+              <div>
+                <p className="font-semibold text-foreground">Founding family — active</p>
+                <p className="text-xs text-muted-foreground">6 months free · No card on file</p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                Unlimited weekly meal plans
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                One-tap grocery cart handoff
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                Budget optimization + pantry subtraction
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Free / no subscription — claim in place, no signup round-trip */}
+        {(status === 'free' || !status) && !isFoundingMember && (
           <div className="bg-white rounded-2xl border border-border p-6 space-y-5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
@@ -189,13 +262,14 @@ export default function AccountPage() {
               </p>
             </div>
 
-            <Link
-              href="/signup?beta=1"
-              className="block text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors"
+            <button
+              onClick={claimFoundingSpot}
+              disabled={claimLoading}
+              className="block w-full text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors disabled:opacity-50"
               style={{ backgroundColor: '#1a5c38' }}
             >
-              Claim my 6 months free →
-            </Link>
+              {claimLoading ? 'Claiming…' : 'Claim my 6 months free →'}
+            </button>
 
             <p className="text-xs text-center text-muted-foreground">
               $0 today — No credit card — Cancel anytime
@@ -239,10 +313,17 @@ export default function AccountPage() {
           </div>
         )}
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 flex items-center justify-center gap-6">
           <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             ← Back to dashboard
           </Link>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            Sign out
+          </button>
         </div>
       </div>
     </div>
