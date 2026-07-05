@@ -34,7 +34,7 @@ export const PRODUCTS: DigitalProduct[] = [
       'A clean, printable weekly dinner planner + grocery checklist. Plan the week, shop once, skip the 5pm scramble. Instant PDF download.',
     priceUsd: 7,
     fileKey: 'weeknight-dinner-planner.pdf',
-    image: '/og-image.png',
+    image: '/shop-dinner-planner.jpg',
     active: true, // PDF uploaded to shop-downloads 2026-07-04
   },
   {
@@ -44,7 +44,7 @@ export const PRODUCTS: DigitalProduct[] = [
       'Meal-prep planner, pantry inventory sheet, and a budget grocery tracker — everything a busy family needs to run dinner on autopilot. Instant PDF download.',
     priceUsd: 12,
     fileKey: 'family-meal-prep-bundle.pdf',
-    image: '/og-image.png',
+    image: '/shop-meal-prep-bundle.jpg',
     active: true, // PDF uploaded to shop-downloads 2026-07-04
   },
 ]
