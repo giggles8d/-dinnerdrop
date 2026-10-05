@@ -37,10 +37,24 @@ function getInstacartBaseUrl(): string {
     : 'https://connect.dev.instacart.tools'
 }
 
+/**
+ * Demo branch only (instacart-demo): Vercel will not accept a branch-specific
+ * INSTACART_API_KEY while one exists for Production and Preview, so the
+ * development key lives under its own name. When it is set, requests always go
+ * to Instacart's development server, whatever INSTACART_API_ENV says.
+ */
+function getInstacartConfig(): { apiKey: string | undefined; baseUrl: string } {
+  const demoKey = process.env.INSTACART_DEMO_API_KEY
+  if (demoKey) {
+    return { apiKey: demoKey, baseUrl: 'https://connect.dev.instacart.tools' }
+  }
+  return { apiKey: process.env.INSTACART_API_KEY, baseUrl: getInstacartBaseUrl() }
+}
+
 export async function createInstacartLink(
   items: GroceryItem[]
 ): Promise<{ link: string; fallback: boolean }> {
-  const apiKey = process.env.INSTACART_API_KEY
+  const { apiKey, baseUrl } = getInstacartConfig()
   if (!apiKey) {
     console.error('INSTACART_API_KEY is not set')
     return {
@@ -68,7 +82,7 @@ export async function createInstacartLink(
     },
   }
 
-  const endpoint = `${getInstacartBaseUrl()}/idp/v1/products/products_link`
+  const endpoint = `${baseUrl}/idp/v1/products/products_link`
 
   try {
     const response = await fetch(endpoint, {
