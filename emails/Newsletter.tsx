@@ -90,8 +90,8 @@ export default function Newsletter({
                   you wish existed, a grocery-handoff hiccup. I read every response.
                 </Text>
                 <Text style={paragraph}>
-                  Know a family drowning in the 5pm scramble? Founding spots are still open —{' '}
-                  <Link href="https://dinnerdrop.app/beta" style={blogLink}>
+                  Know a family drowning in the 5pm scramble? They can try DinnerDrop free for 14 days —{' '}
+                  <Link href="https://dinnerdrop.app/start?utm_source=newsletter" style={blogLink}>
                     send them to the 6-months-free offer
                   </Link>.
                 </Text>
@@ -99,15 +99,15 @@ export default function Newsletter({
               </>
             ) : (
               <>
-                <Text style={heading}>🎉 Founding-family spots are still open</Text>
+                <Text style={heading}>🛒 The one-tap Instacart cart is live</Text>
                 <Text style={paragraph}>
                   DinnerDrop plans 5 personalized weeknight dinners and drops your whole grocery
-                  list into your Instacart or Kroger cart in one tap. The first 100 families get
-                  6 months completely free — no credit card.
+                  list into your Instacart or Kroger cart in one tap.
+                  Try it free for 14 days — then $9/month, cancel anytime.
                 </Text>
                 <Section style={ctaSection}>
-                  <Button style={button} href="https://dinnerdrop.app/beta">
-                    Claim my 6 months free →
+                  <Button style={button} href="https://dinnerdrop.app/start?utm_source=newsletter">
+                    Start my 14-day free trial →
                   </Button>
                 </Section>
               </>

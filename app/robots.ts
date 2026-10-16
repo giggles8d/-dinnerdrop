@@ -10,7 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         "/(app)/",
         "/(auth)/",
         "/unsubscribe",
-        "/beta-v2",
         "/auth/",
       ],
     },

@@ -33,11 +33,11 @@ export default function NotFound() {
             Go home
           </Link>
           <Link
-            href="/beta"
+            href="/start"
             className="px-6 py-3 rounded-lg font-semibold transition-opacity hover:opacity-90 border-2"
             style={{ borderColor: "#1a5c38", color: "#1a5c38" }}
           >
-            Get 6 months free
+            Start free trial
           </Link>
         </div>
       </div>

@@ -1,14 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
-// A/B test DISABLED 2026-05-31 — /beta-v2 had stale "Start my free trial" copy
-// while /beta had the corrected "Claim my 6 months free" CTA + live signups counter.
-// Half of ad traffic was hitting the broken variant and bouncing → 0 signups in 24h.
-// Forcing all visitors to control (/beta) until /beta-v2 is brought up to parity.
-function getBetaVariant(request: NextRequest): 'control' | 'variant' {
-  return 'control'
-}
-
 const protectedPaths = [
   '/dashboard', '/grocery-list', '/favorites', '/recipe',
   '/onboarding', '/pantry', '/history', '/account',
@@ -17,25 +9,6 @@ const authPaths = ['/login', '/signup']
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-
-  // A/B test: /beta -> 50% see /beta-v2, variant sticky via cookie
-  if (pathname === '/beta') {
-    const variant = getBetaVariant(request)
-    if (variant === 'variant') {
-      const rewriteUrl = request.nextUrl.clone()
-      rewriteUrl.pathname = '/beta-v2'
-      const res = NextResponse.rewrite(rewriteUrl)
-      if (!request.cookies.get('dd_ab_beta')) {
-        res.cookies.set('dd_ab_beta', 'variant', { maxAge: 30 * 24 * 60 * 60, path: '/', sameSite: 'lax' })
-      }
-      return res
-    }
-    if (!request.cookies.get('dd_ab_beta')) {
-      const res = NextResponse.next()
-      res.cookies.set('dd_ab_beta', 'control', { maxAge: 30 * 24 * 60 * 60, path: '/', sameSite: 'lax' })
-      return res
-    }
-  }
 
   const isProtectedRoute = protectedPaths.some(path => pathname.startsWith(path))
   const isAuthRoute = authPaths.some(path => pathname.startsWith(path))

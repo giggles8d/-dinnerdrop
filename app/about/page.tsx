@@ -98,9 +98,9 @@ export default function AboutPage() {
               little time and a little sanity every week.
             </p>
             <p className="mb-3">
-              We&apos;re in our founding-family chapter right now — the first 100 families get six
-              months free, and their feedback shapes everything we build next. If you have
-              thoughts, I genuinely want to hear them.
+              Over 200 families planned dinner with us in our founding chapter, and their feedback
+              shaped everything — including the one-tap Instacart cart that is now live. If you
+              have thoughts, I want to hear them.
             </p>
             <p className="text-muted-foreground">
               — Sarah, Founder ·{' '}
@@ -127,10 +127,10 @@ export default function AboutPage() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/beta"
+            href="/start"
             className="inline-block px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-sm"
           >
-            Claim my 6 months free &rarr;
+            Start my 14-day free trial &rarr;
           </Link>
         </div>
       </main>

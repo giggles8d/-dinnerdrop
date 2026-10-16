@@ -74,7 +74,8 @@ export async function POST(req: NextRequest) {
         line_items: [{ price: 'price_1TBEm3BnujZBkm2Rdirr7XtN', quantity: 1 }],
         success_url: `${appUrl}/dashboard?subscribed=true`,
         cancel_url: `${appUrl}/dashboard`,
-        subscription_data: { trial_period_days: 7 },
+        // 14-day trial (was 7) — standard offer since 2026-10-16.
+        subscription_data: { trial_period_days: 14 },
       }
       if (couponCode) {
         sessionParams.discounts = [{ coupon: couponCode }]

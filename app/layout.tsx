@@ -1,14 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
+import PwaRegister from "@/components/PwaRegister";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DinnerDrop — AI Dinner Planning for Busy Families",
-  description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Founding family offer: 6 months free, no credit card.",
+  description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Try it free for 14 days.",
   openGraph: {
     title: "DinnerDrop — AI Dinner Planning for Busy Families",
-    description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Founding family offer: 6 months free, no credit card.",
+    description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Try it free for 14 days.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DinnerDrop" }],
     type: "website",
     url: "https://dinnerdrop.app",
@@ -22,6 +23,13 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://dinnerdrop.app"),
   icons: {
     icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "DinnerDrop",
+    statusBarStyle: "default",
   },
   verification: {
     google: "aRL3GZUE7P9djb-TJ4-DGsySJ-a4ga092frVWuHVvmo",
@@ -32,6 +40,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  themeColor: "#1a5c38",
 };
 
 export default function RootLayout({
@@ -61,14 +70,9 @@ export default function RootLayout({
               "description": "AI-powered weekly dinner planning for busy families. Get 5 personalized meals and a one-tap grocery list in seconds.",
               "offers": {
                 "@type": "Offer",
-                "price": "0",
+                "price": "9",
                 "priceCurrency": "USD",
-                "description": "6 months free for our first 100 families — $0 today, cancel anytime"
-              },
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "reviewCount": "47"
+                "description": "14-day free trial, then $9/month. Cancel anytime."
               },
               "featureList": [
                 "AI meal planning personalized for your family",
@@ -162,6 +166,7 @@ export default function RootLayout({
         )}
         {children}
         <Analytics />
+        <PwaRegister />
       </body>
     </html>
   );

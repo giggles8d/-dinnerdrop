@@ -89,12 +89,12 @@ export default function ExitIntentModal() {
             Wait — before you go.
           </h2>
           <p className="text-gray-600 text-sm mb-6 leading-relaxed">
-            The first 100 families get 6 months of DinnerDrop completely free.<br />
-            <strong>No credit card required. Cancel anytime.</strong>
+            Try DinnerDrop free for 14 days — five dinners planned and your whole list in your Instacart cart.<br />
+            <strong>$0 today. Cancel anytime.</strong>
           </p>
 
           <Link
-            href="/signup?beta=1&utm_source=exit_intent&utm_medium=modal"
+            href="/start?utm_source=exit_intent&utm_medium=modal"
             onClick={() => {
               if (typeof window !== 'undefined' && (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
                 ;(window as unknown as { gtag: (...args: unknown[]) => void }).gtag('event', 'exit_intent_cta_click', { send_to: 'AW-18170234265' })
@@ -104,7 +104,7 @@ export default function ExitIntentModal() {
             className="block w-full px-6 py-3 rounded-xl text-white font-bold text-base transition-colors shadow-sm hover:opacity-90 mb-3"
             style={{ backgroundColor: '#1a5c38' }}
           >
-            Claim my 6 months free →
+            Start my 14-day free trial →
           </Link>
 
           <button

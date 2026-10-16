@@ -56,13 +56,13 @@ export default function BlogIndexPage() {
             Ready to stop the 5pm scramble?
           </h2>
           <p className="text-[#e8a838] mb-6">
-            DinnerDrop plans 5 dinners + grocery list in 30 seconds. First 100 families get 6 months free.
+            DinnerDrop plans 5 dinners + grocery list in 30 seconds, then drops it in your Instacart cart. Try it free for 14 days.
           </p>
           <Link
-            href="/beta"
+            href="/start"
             className="inline-block bg-[#e8a838] text-white font-bold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
           >
-            Claim my 6 months free &rarr;
+            Start my 14-day free trial &rarr;
           </Link>
         </div>
       </div>

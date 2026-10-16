@@ -11,16 +11,25 @@ function SubscribeContent() {
   const [couponCode, setCouponCode] = useState('')
   const searchParams = useSearchParams()
 
+  const autoCheckout = searchParams.get('auto') === '1'
+
   useEffect(() => {
     const coupon = searchParams.get('coupon')
-    // Beta funnel is now pure email signup — no Stripe, no card, no checkout.
-    // Any legacy /subscribe?coupon=BETA100 bookmark redirects to the new flow.
+    // The founding (BETA100) offer is fulfilled as of 2026-10-16. Any legacy
+    // /subscribe?coupon=BETA100 bookmark now lands on the standard trial.
     if (coupon === 'BETA100') {
-      window.location.replace('/signup?beta=1')
+      window.location.replace('/start')
       return
     }
     if (coupon) setCouponCode(coupon)
   }, [searchParams])
+
+  // /start → /signup → /subscribe?auto=1: the user already clicked "Start my
+  // 14-day free trial", so go straight to Stripe Checkout instead of asking twice.
+  useEffect(() => {
+    if (autoCheckout) handleCheckout()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoCheckout])
 
   async function handleCheckout() {
     setLoading(true)
@@ -32,8 +41,8 @@ function SubscribeContent() {
         body: JSON.stringify({ couponCode: couponCode || undefined }),
       })
       if (res.status === 401) {
-        // Not logged in — redirect to signup, then back here with coupon preserved
-        const dest = '/subscribe' + (couponCode ? '?coupon=' + couponCode : '')
+        // Not logged in — redirect to signup, then back here (auto-checkout on return)
+        const dest = '/subscribe?auto=1' + (couponCode ? '&coupon=' + couponCode : '')
         window.location.href = '/signup?redirect=' + encodeURIComponent(dest)
         return
       }
@@ -80,7 +89,7 @@ function SubscribeContent() {
               Dinner, handled.<br />Every week.
             </h1>
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-              Stop staring at the fridge at 5pm. DinnerDrop plans your week, builds your grocery list, and sends it straight to your favorite store.
+              Stop staring at the fridge at 5pm. DinnerDrop plans your week, builds your grocery list, and drops it into your Instacart cart in one tap. Try it free for 14 days.
             </p>
 
             <div className="space-y-5">
@@ -98,8 +107,8 @@ function SubscribeContent() {
                   <ShoppingCart className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">One tap to your grocery store</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">Your full grocery list, deduplicated and organized, sent straight to your cart.</p>
+                  <p className="font-semibold text-foreground text-sm">One tap to your Instacart cart</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">Your full grocery list, deduplicated and organized, pre-loaded in Instacart — or pushed to your Kroger cart.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -128,9 +137,9 @@ function SubscribeContent() {
             {/* Social proof */}
             <div className="space-y-3 mb-6">
               {[
-                { quote: "45 minutes deciding what to cook every night — now zero.", name: "James L.", location: "Ohio" },
-                { quote: "My kids actually eat what DinnerDrop picks. That alone is worth $9/month.", name: "Priya M.", location: "Texas" },
-                { quote: "I saved $60 on groceries in the first two weeks just from the overlapping ingredients.", name: "Amanda R.", location: "Colorado" },
+                { quote: "45 minutes deciding what to cook every night — now zero.", name: "James L.", location: "Family of 2" },
+                { quote: "It respects our dietary preferences, which makes weekly planning so much easier.", name: "Priya K.", location: "Family of 3" },
+                { quote: "The grocery list dropping straight into my Instacart cart is the feature I didn't know I needed.", name: "Amanda R.", location: "Colorado" },
               ].map((t) => (
                 <div key={t.name} className="rounded-xl border border-border bg-secondary/40 px-4 py-3">
                   <p className="text-sm text-foreground leading-snug">&ldquo;{t.quote}&rdquo;</p>
@@ -160,7 +169,7 @@ function SubscribeContent() {
                   )}
                 </div>
                 <div className="inline-block bg-secondary text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 mt-2">
-                  {couponCode === 'BETA100' ? 'Founding offer: 6 months completely free' : '7-day free trial — no charge today'}
+                  {couponCode === 'BETA100' ? 'Founding offer: 6 months completely free' : '14-day free trial — nothing charged today'}
                 </div>
               </div>
                 {couponCode === 'BETA100' && (
@@ -192,7 +201,7 @@ function SubscribeContent() {
                 disabled={loading}
                 className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
               >
-                {loading ? 'Redirecting to checkout...' : couponCode === 'BETA100' ? 'Claim my 6 months free →' : 'Start my free trial →'}
+                {loading ? 'Redirecting to checkout...' : couponCode === 'BETA100' ? 'Claim my 6 months free →' : 'Start my 14-day free trial →'}
               </button>
 
               {error && (
@@ -202,7 +211,7 @@ function SubscribeContent() {
               <p className="text-xs text-muted-foreground text-center mt-3 font-medium">
                 {couponCode === 'BETA100'
                   ? "You'll enter your card at Stripe checkout — no charge for 6 months. We'll email you before billing starts."
-                  : "You’ll be redirected to Stripe’s secure checkout. Your 7-day trial starts immediately."}
+                  : "You’ll be redirected to Stripe’s secure checkout. Add a card, pay $0 today, and your 14-day trial starts immediately. We email you 3 days before it ends."}
               </p>
 
               <p className="text-xs text-muted-foreground text-center mt-4">

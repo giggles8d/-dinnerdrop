@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Create Your Account — DinnerDrop',
-  description: 'Create your DinnerDrop account — founding family offer: 6 months free, no credit card. AI-powered dinner planning for busy families.',
+  description: 'Create your DinnerDrop account — 14-day free trial of AI-powered dinner planning for busy families. $0 today, cancel anytime.',
   robots: { index: false, follow: false },
 }
 

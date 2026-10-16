@@ -6,8 +6,8 @@ export default async function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
 
-      <a href="/beta" className="block text-center py-2 text-sm font-medium" style={{backgroundColor:'#e8a838',color:'#1a5c38'}}>
-        🎉 First 100 families get 6 months free — Claim my 6 months free &rarr;
+      <a href="/start" className="block text-center py-2 text-sm font-medium" style={{backgroundColor:'#e8a838',color:'#1a5c38'}}>
+        🛒 The one-tap Instacart cart is live — try DinnerDrop free for 14 days &rarr;
       </a>
       <header className="border-b border-border bg-white/90 backdrop-blur sticky top-0 z-10">
         <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">
@@ -18,9 +18,9 @@ export default async function LandingPage() {
           <div className="flex items-center gap-3">
             <Link href="/blog" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
             <Link href="/shop" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Shop</Link>
-            <Link href="/beta" className="hidden md:block px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>6 months free</Link>
+            <Link href="/start" className="hidden md:block px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Pricing</Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
-            <Link href="/beta" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Claim my 6 months free</Link>
+            <Link href="/start" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Start free trial</Link>
           </div>
         </div>
       </header>
@@ -41,14 +41,14 @@ export default async function LandingPage() {
                 Five budget-friendly weeknight dinners, planned by AI. Tap once — your whole grocery list lands in your Instacart cart, ready to check out. Under 30 minutes every night.
               </p>
               <div className="flex flex-col sm:flex-row items-start gap-3">
-                <Link href="/beta" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-                  Claim my 6 months free &rarr;
+                <Link href="/start" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                  Start my 14-day free trial &rarr;
                 </Link>
                 <a href="#how-it-works" className="px-8 py-4 rounded-xl border-2 border-primary/15 bg-white text-foreground font-semibold text-base hover:border-primary/40 transition-colors">
                   See how it works
                 </a>
               </div>
-              <p className="text-xs text-muted-foreground mt-4">First plan is free &middot; No credit card &middot; Cancel anytime</p>
+              <p className="text-xs text-muted-foreground mt-4">14 days free &middot; then $9/month &middot; Cancel anytime</p>
             </div>
 
             <div className="relative">
@@ -83,7 +83,7 @@ export default async function LandingPage() {
       </section>
 
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
-        <span className="font-semibold text-foreground">Founding-family offer</span> &mdash; the first 100 families get 6 months free. No credit card to start, and your first plan is free either way.
+        <span className="font-semibold text-foreground">Try it free for 14 days</span> &mdash; add a card, pay $0 today, and cancel in one tap if it isn&apos;t for you. Over 200 families already plan dinner with DinnerDrop.
       </p>
 
       {/* How it works — photo + steps */}
@@ -185,14 +185,14 @@ export default async function LandingPage() {
               $0<span className="text-sm font-sans font-normal text-muted-foreground">/mo</span>
             </p>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
-              {['1 meal plan per month', '5 dinners per plan', 'One-tap cart push to Instacart & Kroger'].map((li) => (
+              {['1 meal plan to try it out', '5 dinners per plan', 'One-tap cart push to Instacart & Kroger'].map((li) => (
                 <li key={li} className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />{li}
                 </li>
               ))}
             </ul>
-            <Link href="/beta" className="block text-center px-4 py-2.5 rounded-xl border border-input text-foreground font-medium hover:bg-muted transition-colors">
-              Get started
+            <Link href="/signup" className="block text-center px-4 py-2.5 rounded-xl border border-input text-foreground font-medium hover:bg-muted transition-colors">
+              Try one plan free
             </Link>
           </div>
           <div className="p-7 rounded-2xl border-2 border-primary bg-white shadow-lg space-y-5 relative">
@@ -202,12 +202,10 @@ export default async function LandingPage() {
             <h3 className="font-heading font-semibold text-foreground">Basic</h3>
             <div>
               <p className="text-4xl font-heading font-bold text-foreground">
-                <span className="line-through text-muted-foreground text-2xl">$9</span>{' '}
-                <span className="ml-1" style={{color:'#1a5c38'}}>$0</span>
-                <span className="text-sm font-sans font-normal text-muted-foreground">/mo</span>
+                $9<span className="text-sm font-sans font-normal text-muted-foreground">/mo</span>
               </p>
               <p className="text-xs font-semibold mt-1" style={{color:'#1a5c38'}}>
-                🎉 Founding offer: free for your first 6 months
+                14-day free trial &middot; $0 today &middot; cancel anytime
               </p>
             </div>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
@@ -217,8 +215,8 @@ export default async function LandingPage() {
                 </li>
               ))}
             </ul>
-            <Link href="/signup?beta=1" className="block text-center px-4 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors">
-              Claim my 6 months free &rarr;
+            <Link href="/start" className="block text-center px-4 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors">
+              Start my 14-day free trial &rarr;
             </Link>
           </div>
         </div>
@@ -228,9 +226,9 @@ export default async function LandingPage() {
       <section className="bg-foreground relative overflow-hidden">
         <div className="container mx-auto px-4 py-20 max-w-5xl text-center relative">
           <h2 className="text-4xl sm:text-5xl font-heading font-bold text-primary-foreground mb-4">Stop staring at the fridge.</h2>
-          <p className="text-primary-foreground/60 mb-9 text-lg">Your first meal plan is completely free.</p>
-          <Link href="/beta" className="inline-block px-10 py-4 rounded-xl bg-accent text-foreground font-bold text-base hover:bg-accent/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-            Claim my 6 months free &rarr;
+          <p className="text-primary-foreground/60 mb-9 text-lg">Two weeks of dinners, planned and in your cart. On us.</p>
+          <Link href="/start" className="inline-block px-10 py-4 rounded-xl bg-accent text-foreground font-bold text-base hover:bg-accent/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+            Start my 14-day free trial &rarr;
           </Link>
         </div>
       </section>

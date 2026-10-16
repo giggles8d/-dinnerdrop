@@ -12,6 +12,9 @@ function SignupForm() {
   const [magicSent, setMagicSent] = useState(false)
   const searchParams = useSearchParams()
   const nextUrl = searchParams.get('redirect') || null
+  // Coming from /start: the next step is Stripe Checkout (14-day trial), so the
+  // "no credit card" line would be false here.
+  const toTrial = !!nextUrl && nextUrl.startsWith('/subscribe')
   // beta=1 means this user clicked through from the beta landing page. We mark
   // them as a beta member (is_beta_member=true) in the auth callback, no Stripe
   // checkout, no credit card collected. 6 months free is just &quot;free.&quot;
@@ -137,12 +140,14 @@ function SignupForm() {
         )}
         <div className="text-center">
           <h1 className="text-3xl font-heading font-bold text-foreground">
-            {isBeta ? 'Claim your 6 free months' : 'Create your account'}
+            {isBeta ? 'Claim your 6 free months' : toTrial ? 'Start your 14-day free trial' : 'Create your account'}
           </h1>
           <p className="mt-2 text-muted-foreground">
             {isBeta
               ? 'Just your email — no password, no card. Instant access.'
-              : 'Just your email. No password to remember.'}
+              : toTrial
+                ? 'Step 1 of 2: your email. Step 2: add a card at secure checkout — $0 today.'
+                : 'Just your email. No password to remember.'}
           </p>
         </div>
 
@@ -178,10 +183,14 @@ function SignupForm() {
               ? 'Setting up your account...'
               : isBeta
                 ? 'Claim my 6 months free →'
-                : 'Create my account →'}
+                : toTrial
+                  ? 'Continue to secure checkout →'
+                  : 'Create my account →'}
           </button>
           <p className="text-xs text-center text-muted-foreground">
-            No password. No credit card. You&apos;re in instantly.
+            {toTrial
+              ? 'No password to remember. Nothing charged for 14 days. Cancel anytime.'
+              : 'No password. You\'re in instantly.'}
           </p>
         </form>
 

@@ -16,7 +16,6 @@ interface Profile {
 export default function AccountPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [userEmail, setUserEmail] = useState<string | null>(null)
-  const [userId, setUserId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [portalLoading, setPortalLoading] = useState(false)
   const [claimLoading, setClaimLoading] = useState(false)
@@ -29,7 +28,6 @@ export default function AccountPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push('/login'); return }
       setUserEmail(user.email ?? null)
-      setUserId(user.id)
 
       const { data, error: profileError } = await supabase
         .from('profiles')
@@ -60,20 +58,25 @@ export default function AccountPage() {
     router.refresh()
   }
 
-  // Signed-in users claim their founding-family spot in place — no bouncing
-  // back through /signup (which used to dead-end existing accounts).
-  async function claimFoundingSpot() {
-    if (!userId) return
+  // 2026-10-16: the founding (free) offer is fulfilled. Free users start the
+  // standard 14-day trial via Stripe Checkout — same route /subscribe uses.
+  async function startTrial() {
     setClaimLoading(true)
     setError(null)
-    const { error: claimError } = await supabase
-      .from('profiles')
-      .update({ is_beta_member: true })
-      .eq('id', userId)
-    if (claimError) {
-      setError('Something went wrong claiming your spot. Please try again.')
-    } else {
-      setProfile(prev => prev ? { ...prev, is_beta_member: true } : prev)
+    try {
+      const res = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+        return
+      }
+      setError(data.error || 'Something went wrong starting your trial. Please try again.')
+    } catch {
+      setError('Something went wrong starting your trial. Please try again.')
     }
     setClaimLoading(false)
   }
@@ -249,30 +252,30 @@ export default function AccountPage() {
               </div>
               <div>
                 <p className="font-semibold text-foreground">Free plan</p>
-                <p className="text-xs text-muted-foreground">1 meal plan per month</p>
+                <p className="text-xs text-muted-foreground">1 meal plan to try it out</p>
               </div>
             </div>
 
             <div className="rounded-xl p-4 bg-secondary border border-border">
               <p className="text-sm font-semibold text-foreground mb-1">
-                🎉 Founding-family spots still available
+                Unlock unlimited meal plans
               </p>
               <p className="text-xs text-muted-foreground">
-                First 100 families get 6 months completely free — no credit card required.
+                14-day free trial, then $9/month. Nothing charged today — cancel anytime from this page.
               </p>
             </div>
 
             <button
-              onClick={claimFoundingSpot}
+              onClick={startTrial}
               disabled={claimLoading}
               className="block w-full text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors disabled:opacity-50"
               style={{ backgroundColor: '#1a5c38' }}
             >
-              {claimLoading ? 'Claiming…' : 'Claim my 6 months free →'}
+              {claimLoading ? 'Opening secure checkout…' : 'Start my 14-day free trial →'}
             </button>
 
             <p className="text-xs text-center text-muted-foreground">
-              $0 today — No credit card — Cancel anytime
+              $0 today — Secure checkout by Stripe — Cancel anytime
             </p>
           </div>
         )}
@@ -308,7 +311,7 @@ export default function AccountPage() {
             </Link>
 
             <p className="text-xs text-center text-muted-foreground">
-              7-day free trial · $9/month after · Cancel anytime
+              14-day free trial · $9/month after · Cancel anytime
             </p>
           </div>
         )}

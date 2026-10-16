@@ -201,7 +201,7 @@ function DashboardContent() {
       return
     }
     if (!canGenerate) {
-      router.push('/signup?beta=1')
+      router.push('/subscribe')
       return
     }
 
@@ -389,14 +389,14 @@ function DashboardContent() {
         {/* Subscription upgrade banner */}
         {!isSubscribed && subscriptionStatus !== 'past_due' && planCount > 0 && (
           <Link
-            href="/signup?beta=1"
+            href="/subscribe"
             className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-foreground text-primary-foreground hover:bg-foreground/90 transition-colors"
           >
             <div className="flex items-center gap-3">
               <Sparkles className="w-5 h-5 text-accent flex-shrink-0" />
               <div>
                 <p className="text-sm font-semibold">Unlock unlimited meal plans</p>
-                <p className="text-xs text-primary-foreground/60 mt-0.5">Founding offer — 6 months free · No credit card today</p>
+                <p className="text-xs text-primary-foreground/60 mt-0.5">14-day free trial · $9/mo after · Cancel anytime</p>
               </div>
             </div>
             <span className="text-xs font-semibold text-accent flex-shrink-0">
@@ -581,11 +581,11 @@ function DashboardContent() {
               </Link>
               <div className="mt-6 p-4 rounded-xl border border-accent/30 bg-accent/5 text-center">
                 <p className="text-sm font-semibold text-foreground mb-1">Know someone who dreads the dinner question?</p>
-                <p className="text-xs text-muted-foreground mb-3">Share DinnerDrop — they get 6 months free too</p>
+                <p className="text-xs text-muted-foreground mb-3">Share DinnerDrop — they get 14 days free</p>
                 <button
                   onClick={() => {
-                    navigator.clipboard.writeText('https://dinnerdrop.app/beta')
-                    alert('Link copied! Share it — they get 6 months free.')
+                    navigator.clipboard.writeText('https://dinnerdrop.app/start?utm_source=referral&utm_medium=dashboard')
+                    alert('Link copied! Share it — they get a 14-day free trial.')
                   }}
                   className="px-5 py-2 rounded-lg border border-accent text-accent text-xs font-semibold hover:bg-accent/10 transition-colors"
                 >

@@ -251,13 +251,13 @@ export default function BlogPostPage({ params }: Props) {
           </h2>
           <p className="text-[#e8a838] mb-6">
             DinnerDrop plans 5 dinners + grocery list in 30 seconds.
-            First 100 families get 6 months completely free.
+            Try it free for 14 days — your whole list lands in your Instacart cart in one tap.
           </p>
           <Link
-            href="/beta"
+            href="/start"
             className="inline-block bg-[#e8a838] text-white font-bold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity"
           >
-            Claim my 6 months free &rarr;
+            Start my 14-day free trial &rarr;
           </Link>
         </div>
       </article>
