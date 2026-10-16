@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">DinnerDrop</string>
+    <string name="title_activity_main">DinnerDrop</string>
+    <string name="package_name">app.dinnerdrop.mobile</string>
+    <string name="custom_url_scheme">app.dinnerdrop.mobile</string>
+</resources>

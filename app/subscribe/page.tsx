@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { openExternal } from '@/lib/native'
 import { ArrowLeft, Check, Clock, ShoppingCart, Sparkles, TrendingDown } from 'lucide-react'
 
 function SubscribeContent() {
@@ -48,7 +49,7 @@ function SubscribeContent() {
       }
       const data = await res.json()
       if (data.url) {
-        window.location.href = data.url
+        await openExternal(data.url, 'sameTab')
       } else {
         setError(data.error || 'Something went wrong. Please try again.')
         setLoading(false)

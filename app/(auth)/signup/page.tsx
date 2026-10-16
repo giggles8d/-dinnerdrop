@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
+import { isNativeApp, nativePlatform } from '@/lib/native'
 
 function SignupForm() {
   const [email, setEmail] = useState('')
@@ -193,6 +194,7 @@ function SignupForm() {
               : 'No password. You\'re in instantly.'}
           </p>
         </form>
+      {!(isNativeApp() && nativePlatform() === 'ios') && (<>
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
@@ -209,6 +211,7 @@ function SignupForm() {
         >
           Continue with Google
         </button>
+      </>)}
 
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{' '}

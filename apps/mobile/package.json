@@ -1,0 +1,31 @@
+{
+  "name": "dinnerdrop-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DinnerDrop native shell (iOS + Android) built with Capacitor. Loads the production web app with native push, share, haptics, and a home-screen entry point.",
+  "scripts": {
+    "sync": "cap sync",
+    "add:android": "cap add android",
+    "add:ios": "cap add ios",
+    "open:android": "cap open android",
+    "open:ios": "cap open ios",
+    "build:android": "cd android && ./gradlew bundleRelease",
+    "assets": "capacitor-assets generate --iconBackgroundColor '#1a5c38' --iconBackgroundColorDark '#1a5c38' --splashBackgroundColor '#FBF8F1' --splashBackgroundColorDark '#1a5c38'"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/browser": "^8.0.5",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/push-notifications": "^8.1.3",
+    "@capacitor/share": "^8.0.3",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.4"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.5.3"
+  }
+}

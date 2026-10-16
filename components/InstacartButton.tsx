@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { openExternal } from '@/lib/native'
 import type { GroceryCategory, GroceryItem } from '@/types'
 
 interface InstacartButtonProps {
@@ -43,7 +44,7 @@ export default function InstacartButton({ groceryList }: InstacartButtonProps) {
         if (data.fallback) {
           setError('Instacart had a hiccup — opening a search instead.')
         }
-        window.open(data.link, '_blank', 'noopener,noreferrer')
+        await openExternal(data.link)
       } else {
         setError('No shopping link returned. Please try again.')
       }

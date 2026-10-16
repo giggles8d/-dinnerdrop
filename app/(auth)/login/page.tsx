@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
+import { isNativeApp, nativePlatform } from '@/lib/native'
 
 function LoginForm() {
   const [email, setEmail] = useState('')
@@ -196,6 +197,7 @@ function LoginForm() {
           </button>
         </form>
       )}
+      {!(isNativeApp() && nativePlatform() === 'ios') && (<>
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
@@ -212,6 +214,7 @@ function LoginForm() {
       >
         Continue with Google
       </button>
+      </>)}
 
       <p className="text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{' '}
