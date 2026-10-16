@@ -147,9 +147,13 @@ export default function PrivacyPage() {
                 <span className="font-medium text-foreground">Export your data:</span> Request a
                 copy of your meal plans, favorites, and profile in a machine-readable format
               </li>
-              <li>
+              <li id="delete">
                 <span className="font-medium text-foreground">Delete your account:</span> Permanently
-                delete your account and all associated personal data
+                delete your account and all associated personal data. Email{' '}
+                <a href="mailto:info@dinnerdrop.app?subject=Delete%20my%20DinnerDrop%20account" className="text-primary underline">info@dinnerdrop.app</a>{' '}
+                from the address on your account with the subject &ldquo;Delete my DinnerDrop account&rdquo; and
+                we will delete your profile, meal plans, favorites, pantry, and grocery-handoff records within 30 days
+                and confirm by email. Subscription billing records are retained only as required by law.
               </li>
               <li>
                 <span className="font-medium text-foreground">Correct your data:</span> Update
