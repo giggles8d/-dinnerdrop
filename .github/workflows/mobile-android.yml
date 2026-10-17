@@ -15,7 +15,7 @@ on:
         required: false
         default: ''
   push:
-    branches: [main, feat/mobile-shell]
+    branches: [main]
     paths:
       - 'apps/mobile/**'
       - '.github/workflows/mobile-android.yml'
