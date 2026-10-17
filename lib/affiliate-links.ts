@@ -1,3 +1,5 @@
+import { withInstacartAffiliate } from '@/lib/instacart';
+
 export const STORE_OPTIONS = ['Walmart', 'Amazon Fresh', 'Instacart', 'Target', 'Kroger'] as const;
 export type StoreName = typeof STORE_OPTIONS[number];
 
@@ -11,7 +13,7 @@ export function getStoreSearchUrl(storeName: string, searchTerm: string): string
       // TODO: Add Amazon Associates tag once approved
       return `https://www.amazon.com/s?k=${encoded}&i=amazonfresh`;
     case 'Instacart':
-      return `https://www.instacart.com/products/search?q=${encoded}`;
+      return withInstacartAffiliate(`https://www.instacart.com/products/search?q=${encoded}`);
     case 'Target':
       return `https://www.target.com/s?searchTerm=${encoded}`;
     case 'Kroger':
@@ -28,7 +30,7 @@ export function getStoreHomepageUrl(storeName: string): string {
     case 'Amazon Fresh':
       return 'https://www.amazon.com/fresh';
     case 'Instacart':
-      return 'https://www.instacart.com/';
+      return withInstacartAffiliate('https://www.instacart.com/');
     case 'Target':
       return 'https://www.target.com/';
     case 'Kroger':

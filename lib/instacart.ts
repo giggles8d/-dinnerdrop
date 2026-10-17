@@ -37,6 +37,38 @@ function getInstacartBaseUrl(): string {
     : 'https://connect.dev.instacart.tools'
 }
 
+/**
+ * Instacart affiliate attribution (Impact.com, IDP affiliate program — Partner ID 7359743,
+ * campaign 20313, approved 2026-10-17). Instacart appends these parameters to every
+ * products_link URL it returns, so NEVER call this on an API-created link (duplicates
+ * break attribution, per Instacart's docs). It is only for our own fallback links —
+ * search pages and the homepage — which would otherwise carry no tracking at all.
+ */
+const AFFILIATE_PARTNER_ID = process.env.INSTACART_AFFILIATE_PARTNER_ID || '7359743'
+const AFFILIATE_CAMPAIGN_ID = process.env.INSTACART_AFFILIATE_CAMPAIGN_ID || '20313'
+
+export function withInstacartAffiliate(url: string): string {
+  try {
+    const u = new URL(url)
+    if (u.hostname !== 'www.instacart.com' && u.hostname !== 'instacart.com') return url
+    let hasUtm = false
+    u.searchParams.forEach((_, k) => { if (k.startsWith('utm_')) hasUtm = true })
+    if (hasUtm) return url
+    u.searchParams.set('utm_campaign', 'instacart-idp')
+    u.searchParams.set('utm_medium', 'affiliate')
+    u.searchParams.set('utm_source', 'instacart_idp')
+    u.searchParams.set('utm_term', 'partnertype-mediapartner')
+    u.searchParams.set('utm_content', `campaignid-${AFFILIATE_CAMPAIGN_ID}_partnerid-${AFFILIATE_PARTNER_ID}`)
+    return u.toString()
+  } catch {
+    return url
+  }
+}
+
+function fallbackSearch(term: string): string {
+  return withInstacartAffiliate(`https://www.instacart.com/products/search?q=${encodeURIComponent(term)}`)
+}
+
 export async function createInstacartLink(
   items: GroceryItem[]
 ): Promise<{ link: string; fallback: boolean }> {
@@ -44,9 +76,7 @@ export async function createInstacartLink(
   if (!apiKey) {
     console.error('INSTACART_API_KEY is not set')
     return {
-      link: `https://www.instacart.com/products/search?q=${encodeURIComponent(
-        items[0]?.searchTerm || 'groceries'
-      )}`,
+      link: fallbackSearch(items[0]?.searchTerm || 'groceries'),
       fallback: true,
     }
   }
@@ -88,7 +118,7 @@ export async function createInstacartLink(
       )
       const firstItem = items[0]?.searchTerm || 'groceries'
       return {
-        link: `https://www.instacart.com/products/search?q=${encodeURIComponent(firstItem)}`,
+        link: fallbackSearch(firstItem),
         fallback: true,
       }
     }
@@ -97,7 +127,7 @@ export async function createInstacartLink(
     if (!data.products_link_url) {
       console.error('Instacart API: missing products_link_url in response')
       return {
-        link: 'https://www.instacart.com/',
+        link: withInstacartAffiliate('https://www.instacart.com/'),
         fallback: true,
       }
     }
@@ -105,7 +135,7 @@ export async function createInstacartLink(
   } catch (err) {
     console.error('Instacart API call threw:', err)
     return {
-      link: 'https://www.instacart.com/',
+      link: withInstacartAffiliate('https://www.instacart.com/'),
       fallback: true,
     }
   }
