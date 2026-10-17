@@ -44,8 +44,9 @@ function getInstacartBaseUrl(): string {
  * break attribution, per Instacart's docs). It is only for our own fallback links —
  * search pages and the homepage — which would otherwise carry no tracking at all.
  */
-const AFFILIATE_PARTNER_ID = process.env.INSTACART_AFFILIATE_PARTNER_ID || '7359743'
+const AFFILIATE_PARTNER_ID = process.env.INSTACART_AFFILIATE_PARTNER_ID || '7359743' // Impact media partner (irmp)
 const AFFILIATE_CAMPAIGN_ID = process.env.INSTACART_AFFILIATE_CAMPAIGN_ID || '20313'
+const AFFILIATE_AD_ID = process.env.INSTACART_AFFILIATE_AD_ID || '1744632' // Impact ad id (irad) from the contract's tracking link
 
 export function withInstacartAffiliate(url: string): string {
   try {
@@ -53,7 +54,10 @@ export function withInstacartAffiliate(url: string): string {
     if (u.hostname !== 'www.instacart.com' && u.hostname !== 'instacart.com') return url
     let hasUtm = false
     u.searchParams.forEach((_, k) => { if (k.startsWith('utm_')) hasUtm = true })
-    if (hasUtm) return url
+    if (hasUtm || u.searchParams.has('irmp')) return url
+    // Impact direct-link click tracking (what the contract's last-click / 7-day window keys on)
+    u.searchParams.set('irmp', AFFILIATE_PARTNER_ID)
+    u.searchParams.set('irad', AFFILIATE_AD_ID)
     u.searchParams.set('utm_campaign', 'instacart-idp')
     u.searchParams.set('utm_medium', 'affiliate')
     u.searchParams.set('utm_source', 'instacart_idp')
