@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
+import { ensurePortions } from '@/lib/portions'
 import { mergeSettings } from '@/lib/settings'
 import { upsertRecipes } from '@/lib/recipe-library'
 
@@ -97,6 +98,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
 
     const text = await generateWithClaude(prompt, 2000)
     const data = parseClaudeJSON<SwapMealResponse>(text)
+    data.meal = ensurePortions({ ...data.meal, servings: Number(data.meal.servings) || profile.familySize })
     try {
       const [stored] = await upsertRecipes(supabase, [data.meal], { userId, dietary: profileRow.dietary_needs ?? [] })
       if (stored) data.meal = stored
