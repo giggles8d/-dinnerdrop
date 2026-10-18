@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import StorePriceExample from '@/components/StorePriceExample'
 import FamilyTextingSection from '@/components/FamilyTextingSection'
 
 // Primary conversion page for ads and campaigns.
@@ -138,6 +139,9 @@ export default function StartPage() {
           </div>
         </section>
       </main>
+
+      {/* Real store prices */}
+      <StorePriceExample ctaHref="/signup" tone="cream" />
 
       {/* How it works */}
       <FamilyTextingSection ctaHref={FAMILY_HREF} />

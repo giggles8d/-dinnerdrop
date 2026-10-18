@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import HeroClip from '@/components/HeroClip'
 import FamilyTextingSection from '@/components/FamilyTextingSection'
+import StorePriceExample from '@/components/StorePriceExample'
 import SampleWeek from '@/components/SampleWeek'
 import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, Clock3 } from 'lucide-react'
 
@@ -140,6 +141,9 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* Real store prices — the thing no other planner does */}
+      <StorePriceExample ctaHref="/signup" />
+
       {/* Features */}
       <section className="container mx-auto px-4 py-20 max-w-6xl">
         <p className="text-xs font-bold text-primary uppercase tracking-widest mb-4">What you get</p>
@@ -154,7 +158,7 @@ export default async function LandingPage() {
             { Icon: Sparkles, title: 'AI meal planning', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },
             { Icon: ShoppingCart, title: 'Auto-cart at Instacart or Kroger', description: 'One tap opens your full list in Instacart with every item matched — pick your store, glance, add to cart. On Family it goes straight into your Kroger cart. No retyping. No missed items.' },
             { Icon: Heart, title: 'Picky-eater friendly', description: "Swap any meal you don't love in one tap. DinnerDrop learns your family's tastes over time." },
-            { Icon: PiggyBank, title: 'Built to your budget', description: 'Set your weekly food budget. Every plan targets it and shows an estimated total before you shop; store prices and package sizes set the final number.' },
+            { Icon: PiggyBank, title: 'Built to your budget', description: 'Set your weekly food budget. Every plan targets it, builds around your store\u2019s weekly sales, and prices the list at each store you shop so you can pick the cheapest.' },
           ].map(({ Icon, title, description }) => (
             <div key={title} className="p-6 rounded-2xl border border-border bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all space-y-3">
               <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{backgroundColor:'#EAF1EC'}}>
