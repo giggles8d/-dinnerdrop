@@ -16,7 +16,7 @@ import type { SaleItem, WeeklySales } from '@/lib/sales-shared'
 
 type Img = { base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' }
 
-const EXTRACT_RULES = `Return ONLY JSON: {"store":"<store name or empty>","validFrom":"YYYY-MM-DD or empty","validTo":"YYYY-MM-DD or empty","items":[{"name":"<plain grocery item, lowercase, no brand unless it matters>","price":"<as printed, e.g. $1.99/lb, 2 for $5, $3.49>","unit":"<lb|each|pack|bag|box|can|dozen|oz|gallon or empty>","category":"<Produce|Meat & Seafood|Dairy & Eggs|Pantry & Dry Goods|Frozen|Bakery|Beverages>","brand":"<brand or empty>","note":"<e.g. with digital coupon, family pack, limit 2 — or empty>"}]}.
+const EXTRACT_RULES = `Return ONLY JSON: {"store":"<store name or empty>","validFrom":"YYYY-MM-DD or empty (assume the current year)","validTo":"YYYY-MM-DD or empty","items":[{"name":"<plain grocery item, lowercase, no brand unless it matters>","price":"<as printed, e.g. $1.99/lb, 2 for $5, $3.49>","unit":"<lb|each|pack|bag|box|can|dozen|oz|gallon or empty>","category":"<Produce|Meat & Seafood|Dairy & Eggs|Pantry & Dry Goods|Frozen|Bakery|Beverages>","brand":"<brand or empty>","note":"<e.g. with digital coupon, family pack, limit 2 — or empty>"}]}.
 Only include food and grocery items a family would cook with or stock (skip gift cards, flowers, cleaning, electronics). Keep names short and shoppable ("chicken thighs", "ground beef 80/20", "strawberries", "cheddar block"). Up to 60 items, best deals on proteins, produce, dairy and pantry first.`
 
 /** Is this photo a store flyer / weekly ad (many items with prices) rather than a single product? */
@@ -73,7 +73,16 @@ function normalize(j: unknown): { store: string; validFrom: string; validTo: str
   return { store: String(o.store ?? '').trim(), validFrom: dateOrEmpty(o.validFrom), validTo: dateOrEmpty(o.validTo), items: items.slice(0, 80) }
 }
 const str = (v: unknown) => (v == null ? undefined : String(v).trim() || undefined)
-const dateOrEmpty = (v: unknown) => (/^\d{4}-\d{2}-\d{2}$/.test(String(v ?? '')) ? String(v) : '')
+// Flyers rarely print the year; the model guesses one. Pin it to this year (or next, around New Year).
+const dateOrEmpty = (v: unknown) => {
+  const t = String(v ?? '')
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(t)) return ''
+  const now = new Date(); const y = now.getFullYear()
+  const fixed = `${y}${t.slice(4)}`
+  const d = new Date(fixed + 'T00:00:00Z')
+  if (now.getMonth() === 11 && d.getMonth() === 0) return `${y + 1}${t.slice(4)}`
+  return fixed
+}
 
 /** Save a sales set for the planner (replaces any earlier set for the same store this week). */
 export async function saveSales(admin: SupabaseClient, p: { userId: string; householdId: string | null; store: string; validFrom: string; validTo: string; source: string; items: SaleItem[]; addedBy?: string }) {
