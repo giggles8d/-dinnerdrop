@@ -28,6 +28,7 @@ export interface Meal {
   fromLibrary?: boolean // a proven dinner pulled from the library rather than freshly generated
   suggestedNight?: string // e.g. "Tuesday" — matched to that night's cook-time budget
   leftoverFriendly?: boolean
+  saleItems?: string[]  // "chicken thighs $1.99/lb" — sale items this dinner was built around
 }
 
 export interface Ingredient {

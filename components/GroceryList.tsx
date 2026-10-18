@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Plus, X } from 'lucide-react'
 import { CATEGORY_ORDER, CATEGORY_EMOJI, type ListItem } from '@/lib/list'
 import type { GroceryCategory } from '@/types'
+import type { SaleItem } from '@/lib/sales'
 
 // Display helper: "0.625 lbs" -> "5/8 lb", "1 lbs" -> "1 lb", "2 cloves" stays.
 const FRACTIONS: Array<[number, string]> = [
@@ -45,13 +46,15 @@ interface GroceryListProps {
   onToggleHave: (item: ListItem) => void
   onRemove: (item: ListItem) => void
   onAdd: (name: string, category?: GroceryCategory) => Promise<void> | void
+  /** When this week's flyer is loaded: the sale entry matching a list line, for the 🏷️ tag. */
+  saleFor?: (name: string) => SaleItem | null
 }
 
 const SOURCE_LABEL: Partial<Record<ListItem['source'], string>> = {
   manual: 'added', sms: 'texted', staples: 'staple', extra: 'basics',
 }
 
-export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd }: GroceryListProps) {
+export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, saleFor }: GroceryListProps) {
   const [draft, setDraft] = useState('')
   const [adding, setAdding] = useState(false)
 
@@ -111,6 +114,7 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                     <span onClick={() => onToggleChecked(item)} className={`text-sm flex-1 cursor-pointer transition-colors ${muted ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                       {item.name}
                       {SOURCE_LABEL[item.source] && <span className="ml-2 text-[10px] uppercase tracking-wide text-muted-foreground/70 no-underline">{SOURCE_LABEL[item.source]}{item.added_by ? ` · ${item.added_by}` : ''}</span>}
+                      {(() => { const sale = saleFor?.(item.name); return sale ? <span className="ml-2 text-[10px] font-semibold text-primary no-underline" title={sale.note ?? ''}>🏷️ {sale.price}</span> : null })()}
                     </span>
                     {item.quantity && (
                       <span className={`text-xs font-medium ${muted ? 'text-muted-foreground/50' : 'text-muted-foreground'}`}>

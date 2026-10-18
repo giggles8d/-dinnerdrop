@@ -13,6 +13,7 @@ import { generateCandidates, savePlan } from '@/lib/autoplan'
 import { timeLabel, type PlanShape } from '@/lib/plan'
 import { guessCategory, normalizeItemName } from '@/lib/list'
 import { generateWithClaude, generateWithClaudeImage, parseClaudeJSON } from '@/lib/claude'
+import { looksLikeFlyer, salesFromImage, saveSales } from '@/lib/sales'
 import type { Meal } from '@/types'
 
 export interface MemberRow {
@@ -248,7 +249,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       await admin.from('household_members').update({ phone_opted_out: false, phone_opt_in_at: m.phone_opt_in_at ?? new Date().toISOString() }).eq('id', m.id)
       return { reply: `Welcome back, ${m.name}. Text MENU for this week's dinners or ADD + an item for the list.`, handled: true, member: m }
     case 'help':
-      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, AGAIN 1 3 to bring some back, ADD + items for the grocery list, MENU, LIST, STOP.`, handled: true, member: m }
+      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, AGAIN 1 3 to bring some back, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, MENU, LIST, STOP.`, handled: true, member: m }
     default:
       break
   }
@@ -597,8 +598,22 @@ async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply
   const weekStart = plan?.week_start ?? mondayOf(new Date())
   const media = await fetchMedia(m.sid)
   const added: string[] = []
+  // A store flyer (or "SALE" in the caption) loads this week's sales instead of adding a list item.
+  const caption = m.body?.trim() ?? ''
+  const saleHint = /\b(sale|sales|flyer|ad|deals|circular)\b/i.test(caption)
+  let saleCount = 0, saleStore = ''
   for (const img of media) {
-    const it = await itemFromPhoto(img, m.body?.trim() ?? '')
+    if (!(saleHint || (await looksLikeFlyer(img)))) continue
+    try {
+      const r = await salesFromImage(img, caption)
+      if (!r.items.length) continue
+      const saved = await saveSales(admin, { userId: owner.id, householdId: member.household_id, store: r.store, validFrom: r.validFrom, validTo: r.validTo, source: 'photo', items: r.items, addedBy: member.name })
+      saleCount = saved.items.length; saleStore = r.store
+    } catch (e) { console.error('flyer import failed', e) }
+  }
+  if (saleCount) return { reply: `Got this week's sales${saleStore ? ` at ${saleStore}` : ''} — ${saleCount} items. The next menu will be built around them. 🏷️`, householdId: member.household_id, memberId: member.id }
+  for (const img of media) {
+    const it = await itemFromPhoto(img, caption)
     if (!it) continue
     const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
     const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))

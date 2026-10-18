@@ -59,6 +59,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
               {(meal.tags ?? []).slice(0, 3).map(t => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
             </div>
           )}
+          {(meal.saleItems?.length ?? 0) > 0 && (
+            <div className="text-[11px] text-primary font-medium" title={meal.saleItems!.join(', ')}>🏷️ On sale: {meal.saleItems!.slice(0, 2).join(' · ')}{meal.saleItems!.length > 2 ? ` +${meal.saleItems!.length - 2}` : ''}</div>
+          )}
           <div className={`inline-block rounded-full px-3 py-1 text-xs font-semibold border
             ${selected ? 'bg-primary/10 text-primary border-primary/30' : 'bg-secondary text-primary border-primary/20'}`}>
             ${meal.estimatedCost.toFixed(2)}
@@ -122,6 +125,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
               {meal.fromLibrary && <span className="rounded-full bg-accent/15 text-accent-foreground px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Family favorite</span>}
               {(meal.tags ?? []).slice(0, 3).map(t => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
             </div>
+          )}
+          {(meal.saleItems?.length ?? 0) > 0 && (
+            <div className="text-[11px] text-primary font-medium" title={meal.saleItems!.join(', ')}>🏷️ On sale: {meal.saleItems!.slice(0, 2).join(' · ')}{meal.saleItems!.length > 2 ? ` +${meal.saleItems!.length - 2}` : ''}</div>
           )}
           {votes && (votes.keep + votes.skip + votes.again > 0) && (
             <div className="text-[11px] text-muted-foreground" title={votes.voters.join(', ')}>

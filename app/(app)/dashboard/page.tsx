@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
 import FamilyVoteCard from '@/components/FamilyVoteCard'
+import SalesCard from '@/components/SalesCard'
 import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 import { resolvePlanOwner } from '@/lib/household'
@@ -558,6 +559,7 @@ function DashboardContent() {
         </div>
 
         {!isPickingMeals && <FamilyVoteCard onClosed={() => loadExistingPlan()} />}
+        {!isPickingMeals && <div className="mb-6"><SalesCard compact /></div>}
 
         {/* First-plan auto-generation in progress */}
         {loading && !hasGenerated && !isPickingMeals && (

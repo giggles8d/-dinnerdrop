@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import SalesCard from '@/components/SalesCard'
 import { createClient } from '@/lib/supabase'
 import {
   mergeSettings, DEFAULT_SETTINGS, WEEKDAYS, WEEKDAY_LABEL, CUISINE_OPTIONS, PROTEIN_OPTIONS,
@@ -558,6 +559,8 @@ export default function SettingsPage() {
                   <Field label="Usual store" hint="Shown on the list; Instacart lets you pick at checkout."><input value={settings.stores.usualStore} onChange={(e) => patch((s) => { s.stores.usualStore = e.target.value })} placeholder="Wegmans, Kroger, Aldi…" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                 </div>
                 <p className="text-sm text-muted-foreground">Connect or disconnect Kroger from the <Link href="/grocery-list" className="text-primary underline">grocery list</Link> page.</p>
+                <Toggle checked={settings.food.useSales} onChange={(v) => patch((s) => { s.food.useSales = v })} label="Plan around this week's sales" hint="When a flyer is loaded, most dinners are built on sale proteins and produce, and sale items are tagged on the list." />
+                <SalesCard />
               </>
             )}
 

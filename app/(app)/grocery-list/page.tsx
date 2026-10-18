@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Copy, Printer, Share2, Check } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
+import { matchSale, type WeeklySales } from '@/lib/sales'
 import InstacartButton from '@/components/InstacartButton'
 import { mergeSettings } from '@/lib/settings'
 import { resolvePlanOwner } from '@/lib/household'
@@ -23,6 +24,7 @@ export default function GroceryListPage() {
   const [householdId, setHouseholdId] = useState<string | null>(null)
   const [weekStart, setWeekStart] = useState<string | null>(null)
   const [items, setItems] = useState<ListItem[]>([])
+  const [sales, setSales] = useState<WeeklySales[]>([])
   const [staples, setStaples] = useState<Staple[]>([])
   const [totalCost, setTotalCost] = useState(0)
   const [budget, setBudget] = useState<number>(0)
@@ -50,6 +52,7 @@ export default function GroceryListPage() {
     const uid = owner.ownerId   // partners share the household owner's plan and list
     setUserId(uid)
     setIsPartner(owner.isPartner)
+    fetch('/api/sales', { cache: 'no-store' }).then((r) => r.json()).then((j) => setSales(j.sets ?? [])).catch(() => {})
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -308,6 +311,7 @@ export default function GroceryListPage() {
 
         <GroceryList
           items={items}
+          saleFor={sales.length ? (name) => matchSale(name, sales) : undefined}
           onToggleChecked={toggleChecked}
           onToggleHave={toggleHave}
           onRemove={removeItem}
