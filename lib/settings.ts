@@ -19,6 +19,7 @@ export interface Settings {
     includeBreakfasts: boolean
     cookDays: Weekday[]             // which nights get a planned dinner
     weekdayCookTimes: Partial<Record<Weekday, number>>  // per-night max minutes (overrides max_cook_time)
+    maxLongCookNights: number       // slow-cooker / Instant Pot all-day dinners per week; -1 = no limit
   }
   food: {
     cuisines: string[]              // preferred cuisines (empty = mixed)
@@ -69,6 +70,7 @@ export const DEFAULT_SETTINGS: Settings = {
     includeBreakfasts: false,
     cookDays: ['mon', 'tue', 'wed', 'thu', 'fri'],
     weekdayCookTimes: {},
+    maxLongCookNights: 1,
   },
   food: {
     cuisines: [],

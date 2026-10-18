@@ -173,7 +173,9 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
     if (settings.food.cuisines.length) constraintLines.push(`Cuisines this family likes: ${settings.food.cuisines.join(', ')} (lean on these; one or two outside is fine).`)
     else if (profile.cuisinePreference && profile.cuisinePreference !== 'mixed') constraintLines.push(`Cuisine preference: ${profile.cuisinePreference}.`)
     constraintLines.push(`Spice level: ${settings.food.spice}${settings.food.spice === 'mild' ? ' (kids at the table; heat goes on the side)' : ''}.`)
-    if (settings.food.equipment.length) constraintLines.push(`Equipment to lean on: ${settings.food.equipment.join(', ')}. At least a third of the options should use one of these.`)
+    if (settings.food.equipment.length) constraintLines.push(`Equipment to lean on: ${settings.food.equipment.join(', ')}. Some options should use these, but keep most dinners stovetop/oven weeknight cooking.`)
+    const maxLong = settings.plan.maxLongCookNights
+    if (maxLong >= 0) constraintLines.push(maxLong === 0 ? `No slow-cooker or all-day dinners this week.` : `At most ${maxLong} slow-cooker / Instant-Pot all-day dinner${maxLong === 1 ? '' : 's'} (cookTime 90+ min) among the options.`)
     if (hasKids) constraintLines.push(`Kid-friendly by default: familiar flavors, components kept separate where possible, nothing "mixed" that a kid can't pick apart.`)
     if (settings.plan.leftoverNight) constraintLines.push(`Mark at least 2 options "leftoverFriendly": true — dinners that double well and reheat well (for the family's leftover night). Their servings should be ${profile.familySize * 2}.`)
     if (recentNames.length) constraintLines.push(`Do not repeat these recent dinners: ${recentNames.slice(0, 20).join(', ')}.`)
@@ -253,6 +255,15 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
       cookTime: Number(m.cookTime) || 30,
       prepTime: Number(m.prepTime) || 0,
     }))
+    // Enforce the all-day dinner cap (the model over-leans on slow cookers when they're listed).
+    if (maxLong >= 0) {
+      let longSeen = 0
+      generated = generated.filter((m) => {
+        if ((Number(m.cookTime) || 0) < 90) return true
+        longSeen++
+        return longSeen <= maxLong
+      })
+    }
     // De-dupe against library picks by name.
     const libNames = new Set(libraryMeals.map((m) => normalizeName(m.name)))
     generated = generated.filter((m) => !libNames.has(normalizeName(m.name)))

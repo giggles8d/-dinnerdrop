@@ -69,7 +69,7 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
         <input
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Add anything — milk, paper towels, snacks for the game…"
+          placeholder="Add anything — 2 gallons milk, paper towels, snacks for the game…"
           className="flex-1 rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
         <button type="submit" disabled={adding || !draft.trim()} className="inline-flex items-center gap-1 px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50">

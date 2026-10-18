@@ -173,3 +173,28 @@ export function listToText(items: ListItem[], formatQty: (q: string | number, u:
   }
   return lines.join('\n').trim()
 }
+
+const UNIT_WORDS: Record<string, string> = {
+  lb: 'lb', lbs: 'lb', pound: 'lb', pounds: 'lb', oz: 'oz', ounce: 'oz', ounces: 'oz',
+  gallon: 'gallon', gallons: 'gallon', gal: 'gallon', quart: 'quart', quarts: 'quart', pint: 'pint', pints: 'pint',
+  dozen: 'dozen', bunch: 'bunch', bunches: 'bunch', bag: 'bag', bags: 'bag', box: 'box', boxes: 'box',
+  can: 'can', cans: 'can', jar: 'jar', jars: 'jar', bottle: 'bottle', bottles: 'bottle', pack: 'pack', packs: 'pack',
+  loaf: 'loaf', loaves: 'loaf', head: 'head', heads: 'head', package: 'package', packages: 'package', pkg: 'package',
+  case: 'case', cases: 'case', carton: 'carton', cartons: 'carton', roll: 'roll', rolls: 'roll',
+}
+
+/** "2 gallons milk" → {name: "milk", quantity: "2", unit: "gallon"}; "bananas" → {name, "1", ""}. */
+export function parseTypedItem(raw: string): { name: string; quantity: string; unit: string } {
+  const t = raw.trim().replace(/\s+/g, ' ')
+  const m = t.match(/^(\d+(?:[.\/]\d+)?)\s*(?:x\s+)?([a-zA-Z-]+)?\s*(?:of\s+)?(.+)$/)
+  if (m) {
+    const qty = m[1]
+    const maybeUnit = (m[2] ?? '').toLowerCase()
+    const unit = UNIT_WORDS[maybeUnit]
+    if (unit) return { name: m[3].trim(), quantity: qty, unit }
+    // "2 bananas" — the second token is part of the name
+    const name = [m[2], m[3]].filter(Boolean).join(' ').trim()
+    return { name, quantity: qty, unit: '' }
+  }
+  return { name: t, quantity: '1', unit: '' }
+}

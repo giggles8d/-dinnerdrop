@@ -180,21 +180,26 @@ function splitItems(s: string): string[] {
 }
 
 
-/** "banannad" → "bananas", "Like kielbasa also" → "kielbasa", "zero suger doctor pepper" → "Dr Pepper Zero Sugar". */
-export async function cleanItems(raw: string[]): Promise<string[]> {
+export interface CleanItem { name: string; quantity: string; unit: string }
+
+/** "banannad" → bananas, 1 bunch · "2 gallons milk" → milk, 2 gallon · "Like kielbasa also" → kielbasa, 1 package. "" = not a grocery item. */
+export async function cleanItems(raw: string[]): Promise<CleanItem[]> {
   const items = raw.map((x) => x.trim()).filter(Boolean)
   if (!items.length) return []
   try {
     const text = await generateWithClaude(
-      `A family member texted these grocery items. Return each as a clean, shoppable product name (fix typos, drop filler words like "like", "also", "please", "some", keep brand names, plural for produce). Return ONLY a JSON array of strings in the same order; use "" for anything that isn't a grocery item.\n${JSON.stringify(items)}`,
-      300,
+      `A family member texted these grocery items. For each, return a clean shoppable product name (fix typos, drop filler like "like"/"also"/"please"/"some", keep brand names, plural for produce) and the quantity to buy: use the amount they wrote if any, otherwise a sensible single-purchase default (bananas → 1 bunch, milk → 1 gallon, eggs → 1 dozen, Dr Pepper → 1 12-pack, chicken → 1 lb, snack bars → 1 box, paper towels → 1 pack). Units from: whole, bunch, lb, oz, gallon, half-gallon, quart, dozen, bag, box, can, jar, bottle, pack, 12-pack, loaf, head, package. Return ONLY a JSON array in the same order, one object per input: {"name":"","quantity":"1","unit":"bunch"}; use {"name":""} for anything that isn't a grocery item.\n${JSON.stringify(items)}`,
+      500,
     )
-    const out = parseClaudeJSON<string[]>(text)
-    if (Array.isArray(out) && out.length === items.length) return out.map((x) => (typeof x === 'string' ? x.trim() : '')).filter(Boolean)
+    const out = parseClaudeJSON<Array<{ name?: string; quantity?: string | number; unit?: string }>>(text)
+    if (Array.isArray(out) && out.length === items.length) {
+      return out
+        .map((x) => ({ name: typeof x?.name === 'string' ? x.name.trim() : '', quantity: String(x?.quantity ?? '1').trim() || '1', unit: typeof x?.unit === 'string' ? x.unit.trim() : '' }))
+        .filter((x) => x.name)
+    }
   } catch { /* fall through */ }
-  return items
+  return items.map((name) => ({ name, quantity: '1', unit: '' }))
 }
-
 
 interface Understood { wants: number[]; dislikes: number[]; add: string[]; allGood: boolean; none: boolean; question: boolean }
 
@@ -202,7 +207,7 @@ interface Understood { wants: number[]; dislikes: number[]; add: string[]; allGo
 async function understandReply(body: string, candidates: Meal[]): Promise<Understood | null> {
   try {
     const text = await generateWithClaude(
-      `A family member replied to this text about next week's dinners. The numbered ideas were:\n${candidates.map((c, i) => `${i + 1}. ${c.name}`).join('\n')}\n\nTheir reply: """${body.trim()}"""\n\nInterpret it. "wants" = idea numbers they want/like/pick. "dislikes" = numbers they don't want, don't like, want changed/swapped, or dishes they named negatively (match to a number). "add" = grocery items they want added (clean product names). allGood = they're fine with everything. none = they don't want any / have no picks. question = they asked something or it's unrelated chatter.\nReturn ONLY JSON: {"wants":[],"dislikes":[],"add":[],"allGood":false,"none":false,"question":false}`,
+      `A family member replied to this text about next week's dinners. The numbered ideas were:\n${candidates.map((c, i) => `${i + 1}. ${c.name}`).join('\n')}\n\nTheir reply: """${body.trim()}"""\n\nInterpret it. "wants" = idea numbers they want/like/pick. "dislikes" = numbers they don't want, don't like, want changed/swapped, or dishes they named negatively (match to a number). "add" = grocery items they want added (as written, including any amount). allGood = they're fine with everything. none = they don't want any / have no picks. question = they asked something or it's unrelated chatter.\nReturn ONLY JSON: {"wants":[],"dislikes":[],"add":[],"allGood":false,"none":false,"question":false}`,
       200,
     )
     const u = parseClaudeJSON<Understood>(text)
@@ -308,11 +313,12 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const weekStart = plan?.week_start ?? mondayOf(new Date())
       const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
       const added: string[] = []
-      for (const item of await cleanItems(parsed.items)) {
-        const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(item))
-        if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id); added.push(item); continue }
-        await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: item, category: guessCategory(item), search_term: item, source: 'sms', added_by: m.name })
-        added.push(item)
+      for (const it of await cleanItems(parsed.items)) {
+        const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
+        const label = `${it.name}${it.unit ? ` (${it.quantity} ${it.unit})` : ''}`
+        if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id); added.push(label); continue }
+        await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
+        added.push(label)
       }
       return { reply: added.length ? `Added to the list: ${added.join(', ')}. ✅` : `Tell me what to add, like "add oat milk, bananas".`, handled: true, member: m }
     }
@@ -336,8 +342,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       let addedNote = ''
       if (u.add.length && m.can_add && owner) {
         const weekStart = plan?.week_start ?? mondayOf(new Date())
-        for (const item of await cleanItems(u.add)) {
-          await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: item, category: guessCategory(item), search_term: item, source: 'sms', added_by: m.name })
+        for (const it of await cleanItems(u.add)) {
+          await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
         }
         addedNote = ` Added to the list: ${u.add.join(', ')}.`
       }
@@ -354,14 +360,14 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
 
   // Unknown but short and food-ish? Treat as add when the member can add and said something list-like.
   if (m.can_add && body.trim().length <= 40 && !/\d/.test(body) && settings.texting.enabled) {
-    const [item] = await cleanItems([body.trim()])
-    if (owner && item) {
+    const [it] = await cleanItems([body.trim()])
+    if (owner && it) {
       const weekStart = plan?.week_start ?? mondayOf(new Date())
       const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
-      const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(item))
+      const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
       if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
-      else await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: item, category: guessCategory(item), search_term: item, source: 'sms', added_by: m.name })
-      return { reply: `Added "${item}" to the grocery list. (Text HELP for everything you can do.)`, handled: true, member: m }
+      else await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
+      return { reply: `Added ${it.name}${it.unit ? ` (${it.quantity} ${it.unit})` : ''} to the grocery list. (Text HELP for everything you can do.)`, handled: true, member: m }
     }
   }
   return { reply: `Didn't catch that. Reply numbers to skip dinners, ALL GOOD, ADD + items, MENU, LIST, or HELP.`, handled: true, member: m }

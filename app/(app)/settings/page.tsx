@@ -454,6 +454,9 @@ export default function SettingsPage() {
                     })}
                   </div>
                 </div>
+                <Field label="All-day dinners per week" hint="Slow cooker or Instant Pot dinners that cook for hours. Keeps the planner from filling the week with them.">
+                  <Select value={String(settings.plan.maxLongCookNights)} onChange={(v) => patch((s) => { s.plan.maxLongCookNights = Number(v) })} options={[{ value: '0', label: 'None' }, { value: '1', label: 'Up to 1' }, { value: '2', label: 'Up to 2' }, { value: '3', label: 'Up to 3' }, { value: '-1', label: 'No limit' }]} />
+                </Field>
                 <div className="space-y-3">
                   <Toggle checked={settings.plan.leftoverNight} onChange={(v) => patch((s) => { s.plan.leftoverNight = v })} label="Plan a leftover night" hint="One dinner is sized for two nights; the planner marks the second night 'leftovers'." />
                   <Toggle checked={settings.plan.includeLunches} onChange={(v) => patch((s) => { s.plan.includeLunches = v })} label="Add simple lunches to the grocery list" hint="Sandwich and wrap basics for the week, added to the same list and cart." />

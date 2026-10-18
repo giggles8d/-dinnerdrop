@@ -10,7 +10,7 @@ import { mergeSettings } from '@/lib/settings'
 import { resolvePlanOwner } from '@/lib/household'
 import {
   type ListItem, type Staple, rowsFromPlanList, dueStaples, basicsFor, REST_OF_WEEK, shoppableItems,
-  listToText, guessCategory, normalizeItemName,
+  listToText, guessCategory, normalizeItemName, parseTypedItem,
 } from '@/lib/list'
 import type { GroceryCategory, GroceryItem, Meal } from '@/types'
 
@@ -158,15 +158,16 @@ export default function GroceryListPage() {
     setItems((xs) => xs.filter((x) => x.id !== item.id))
     await supabase.from('list_items').delete().eq('id', item.id)
   }
-  async function addItem(name: string, category?: GroceryCategory, searchTerm?: string, source: ListItem['source'] = 'manual') {
+  async function addItem(raw: string, category?: GroceryCategory, searchTerm?: string, source: ListItem['source'] = 'manual') {
     if (!userId || !weekStart) return
+    const { name, quantity, unit } = source === 'manual' ? parseTypedItem(raw) : { name: raw, quantity: '1', unit: '' }
     const exists = items.find((i) => normalizeItemName(i.name) === normalizeItemName(name))
     if (exists) {
       if (exists.have) await toggleHave(exists)
       return
     }
     const { data } = await supabase.from('list_items').insert({
-      user_id: userId, household_id: householdId, week_start: weekStart, name, category: category ?? guessCategory(name),
+      user_id: userId, household_id: householdId, week_start: weekStart, name, quantity, unit: unit || null, category: category ?? guessCategory(name),
       search_term: searchTerm ?? name, source, added_by: null,
     }).select('*').single()
     if (data) setItems((xs) => [...xs, data as ListItem])
