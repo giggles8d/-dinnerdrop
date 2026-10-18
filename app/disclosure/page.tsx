@@ -4,10 +4,10 @@ import { ArrowLeft } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Affiliate Disclosure — DinnerDrop',
-  description: 'How DinnerDrop works with grocery partners like Instacart and Kroger, and how we may earn commissions.',
+  description: 'How DinnerDrop works with grocery partners like Instacart and Kroger, and how we earn commissions.',
   openGraph: {
     title: 'Affiliate Disclosure — DinnerDrop',
-    description: 'How DinnerDrop works with grocery partners like Instacart and Kroger, and how we may earn commissions.',
+    description: 'How DinnerDrop works with grocery partners like Instacart and Kroger, and how we earn commissions.',
     url: 'https://dinnerdrop.app/disclosure',
     siteName: 'DinnerDrop',
     type: 'website',
@@ -37,7 +37,7 @@ export default function DisclosurePage() {
         <h1 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-2">
           Affiliate Disclosure
         </h1>
-        <p className="text-sm text-muted-foreground mb-10">Last updated: June 2026</p>
+        <p className="text-sm text-muted-foreground mb-10">Last updated: October 18, 2026</p>
 
         <div className="space-y-8 text-sm text-foreground leading-relaxed">
           <section>
@@ -50,14 +50,15 @@ export default function DisclosurePage() {
 
           <section>
             <h2 className="text-xl font-heading font-semibold text-foreground mb-3">
-              How we may earn money from grocery links
+              How we earn money from grocery links
             </h2>
             <p>
               Some of the links DinnerDrop uses to send your grocery list to a store —
               including <strong>Instacart</strong> and <strong>Kroger</strong> — are affiliate
               links. This means that if you place an order after using one of those links,
-              DinnerDrop may earn a small commission from the retailer, at <strong>no extra cost
-              to you</strong>. The price you pay is the same whether or not you use our link.
+              DinnerDrop earns a small commission from the retailer, at <strong>no extra cost
+              to you</strong>. The price you pay is the same whether or not you use our link. This commission
+              is what keeps weekly planning and the grocery list free.
             </p>
           </section>
 

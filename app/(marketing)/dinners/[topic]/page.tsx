@@ -54,7 +54,7 @@ const TOPICS: Topic[] = [
     ],
     faq: [
       { q: 'What if my kids only eat five things?', a: 'Add those five as favorites (type the names; DinnerDrop rebuilds them as full recipes) and the planner builds weeks around them, introducing one new dinner at a time.' },
-      { q: 'Does it handle different preferences in one house?', a: 'Family size and dietary needs shape every plan today, and per-person preferences — each kid’s likes, won’t-eats, and allergies — are rolling out to Family plan members first.' },
+      { q: 'Does it handle different preferences in one house?', a: 'Yes. Family size and dietary needs shape every plan, and Family members get a profile for each person — each kid’s likes, won’t-eats, allergies, and safe foods — that the planner follows every week.' },
     ],
   },
   {
@@ -72,7 +72,7 @@ const TOPICS: Topic[] = [
     ],
     faq: [
       { q: 'Are the times realistic?', a: 'Each recipe lists prep and cook time separately and the plan respects your limit for the total. If one runs long for you, swap it in one tap and the planner learns.' },
-      { q: 'Can I set different limits for different nights?', a: 'Per-night cook times are rolling out to Family members first. Today one limit applies to the whole week.' },
+      { q: 'Can I set different limits for different nights?', a: 'Yes. In Settings you pick your cook nights and give each one its own minutes — 20 on soccer night, 45 on Sunday — and the planner matches each dinner to its night.' },
     ],
   },
   {

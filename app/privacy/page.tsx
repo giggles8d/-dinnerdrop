@@ -65,8 +65,23 @@ export default function PrivacyPage() {
                 plans, saved recipes, favorited meals, and grocery lists
               </li>
               <li>
+                <span className="font-medium text-foreground">Household and family texting (Family plan):</span> The
+                names, roles, likes, won&apos;t-eats, allergies and safe foods you enter for people in your
+                household; the mobile numbers you enter for yourself and for household members who opt in to
+                texts; the text messages and photos they send to DinnerDrop&apos;s number (votes, items to add,
+                pictures of products), and our replies. You are responsible for having each household
+                member&apos;s permission before entering their number; anyone can stop texts at any time by
+                replying STOP. We never sell phone numbers and never send marketing texts to household members.
+              </li>
+              <li>
+                <span className="font-medium text-foreground">Photos you choose to send:</span> Pantry photos and
+                product photos (from the app or by text) are used only to read what is in them — the items go on
+                your list or into your library — and are not used for advertising.
+              </li>
+              <li>
                 <span className="font-medium text-foreground">Usage data:</span> How you interact
-                with the Service, including pages visited, features used, and meal swaps
+                with the Service, including pages visited, features used, meal swaps, and grocery handoffs
+                (which store you sent a list to and when — not what you bought)
               </li>
             </ul>
           </section>

@@ -188,9 +188,24 @@ export default function TermsPage() {
             </h2>
             <p>
               These Terms shall be governed by and construed in accordance with the laws of the
-              United States. Any disputes arising under these Terms shall be resolved in the federal
-              or state courts located within the United States, and you consent to the personal
+              State of New York and the United States. Any disputes arising under these Terms shall be
+              resolved in the federal or state courts located in New York, and you consent to the personal
               jurisdiction of such courts.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-heading font-semibold text-foreground mb-3">
+              8a. Family texting
+            </h2>
+            <p className="mb-3">
+              The Family plan can send dinner ideas, reminders and replies by text message to you and to
+              household members whose mobile numbers you enter. By entering a household member&apos;s number
+              you confirm that you have their permission (and, for anyone under 18, that you are their parent
+              or guardian). Each number receives a one-time opt-in text first; nothing else is sent until that
+              person replies YES. Anyone can reply STOP at any time to end texts, or HELP for help. Message and
+              data rates may apply. Texts are limited to the dinner plan and grocery list — we do not send
+              marketing by text.
             </p>
           </section>
 

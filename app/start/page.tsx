@@ -123,7 +123,7 @@ export default function StartPage() {
                 <p className="text-sm text-gray-600 mt-1">or $39/year &middot; 14-day free trial &middot; cancel anytime</p>
               </div>
               <ul className="space-y-2 text-sm text-gray-600">
-                {['Everything in Free', 'Push straight to your Kroger cart', 'Priority support, answered by the founder', 'New family features first: text the week to everyone, per-person preferences, shared list, busy-night planning'].map((li) => (
+                {['Everything in Free', 'Family texting: the week’s dinner ideas go to everyone by text, they reply with the numbers they want, the top picks become the week', 'A profile for each person — likes, won’t-eats, allergies, kid-safe foods', 'Anyone can text an item (or a photo of one) onto the grocery list', 'Text reminders on your cook nights', 'Push straight to your Kroger cart', 'Priority support, answered by the founder'].map((li) => (
                   <li key={li} className="flex items-start gap-2"><span style={{ color: GREEN }}>✓</span>{li}</li>
                 ))}
               </ul>
@@ -185,7 +185,7 @@ export default function StartPage() {
             },
             {
               q: 'What does Family add, and what does it cost?',
-              a: 'Family is $4.99/month or $39/year after a 14-day free trial. It adds the Kroger cart push, priority support, and every new family feature first — texting the week’s dinners to everyone, per-person preferences, a shared list, and busy-night planning. You add a card to start the trial; nothing is charged for 14 days.',
+              a: 'Family is $4.99/month or $39/year after a 14-day free trial. It adds family texting (the week’s dinner ideas go to everyone by text, they reply with numbers, the top picks become the week, and anyone can text an item onto the list), a profile for each person, text reminders, the Kroger cart push, and priority support. You add a card to start the trial; nothing is charged for 14 days.',
             },
             {
               q: 'Will I be charged by surprise?',
