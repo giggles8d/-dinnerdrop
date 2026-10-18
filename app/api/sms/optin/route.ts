@@ -31,7 +31,7 @@ export async function POST() {
     } else {
       const { data: byPhone } = await admin.from('household_members').select('id').eq('household_id', profile.household_id).eq('phone', ownerPhone).limit(1)
       if (byPhone?.[0]) await admin.from('household_members').update({ profile_id: user.id, phone_opt_in_at: new Date().toISOString(), phone_opted_out: false }).eq('id', byPhone[0].id)
-      else await admin.from('household_members').insert({ household_id: profile.household_id, profile_id: user.id, name: (me?.full_name || 'Me').trim().split(' ')[0].replace(/^./, (c) => c.toUpperCase()), role: 'adult', age_band: 'adult', phone: ownerPhone, phone_opt_in_at: new Date().toISOString(), can_vote: true, can_add: true })
+      else await admin.from('household_members').insert({ household_id: profile.household_id, profile_id: user.id, name: (me?.full_name || 'Me').trim().split(' ')[0].replace(/^./, (c: string) => c.toUpperCase()), role: 'adult', age_band: 'adult', phone: ownerPhone, phone_opt_in_at: new Date().toISOString(), can_vote: true, can_add: true })
     }
   }
 
