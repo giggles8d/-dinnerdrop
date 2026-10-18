@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { createClient } from '@supabase/supabase-js'
 import { getPublishedPosts } from '@/lib/published-posts'
 
 const BASE = 'https://www.dinnerdrop.app'
@@ -6,7 +7,19 @@ const BASE = 'https://www.dinnerdrop.app'
 // Re-generate hourly so future-dated posts enter the sitemap on their publish date.
 export const revalidate = 3600
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Public recipe library pages (server-rendered since 2026-10-18).
+  let recipeEntries: MetadataRoute.Sitemap = []
+  try {
+    const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+    const { data } = await admin.from('recipes').select('slug, updated_at, created_at').order('kept_count', { ascending: false }).limit(500)
+    recipeEntries = (data ?? []).filter((r) => r.slug).map((r) => ({
+      url: `${BASE}/recipes/${r.slug}`,
+      lastModified: new Date(r.updated_at ?? r.created_at ?? Date.now()),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    }))
+  } catch { /* leave recipes out of this build of the sitemap */ }
   const blogEntries: MetadataRoute.Sitemap = getPublishedPosts().map((post) => ({
     url: `${BASE}/blog/${post.slug}`,
     lastModified: new Date(post.publishDate),
@@ -65,6 +78,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     ...blogEntries,
+    ...recipeEntries,
     {
       url: `${BASE}/terms`,
       lastModified: new Date(),
