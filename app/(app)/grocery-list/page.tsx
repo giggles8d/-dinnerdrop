@@ -29,6 +29,7 @@ export default function GroceryListPage() {
   const [weekStart, setWeekStart] = useState<string | null>(null)
   const [items, setItems] = useState<ListItem[]>([])
   const [sales, setSales] = useState<WeeklySales[]>([])
+  const [storeQuotes, setStoreQuotes] = useState<Array<{ store: string; total: number; item_count: number | null; missing: string[]; created_at: string }>>([])
   const [priceFactor, setPriceFactor] = useState(1)
   const [usuals, setUsuals] = useState<UsualItem[]>([])
   const [myStores, setMyStores] = useState<StorePref[]>([])
@@ -75,7 +76,7 @@ export default function GroceryListPage() {
     const uid = owner.ownerId   // partners share the household owner's plan and list
     setUserId(uid)
     setIsPartner(owner.isPartner)
-    fetch('/api/sales', { cache: 'no-store' }).then((r) => r.json()).then((j) => setSales(j.sets ?? [])).catch(() => {})
+    fetch('/api/sales', { cache: 'no-store' }).then((r) => r.json()).then((j) => { setSales(j.sets ?? []); setStoreQuotes(j.quotes ?? []) }).catch(() => {})
     supabase.from('grocery_handoffs').select('id, est_total, actual_total, created_at').eq('user_id', uid).order('created_at', { ascending: false }).limit(1)
       .then(({ data: hs }) => {
         const h = hs?.[0]
@@ -425,6 +426,7 @@ export default function GroceryListPage() {
           stores={myStores}
           sets={sales}
           globalFactor={priceFactor}
+          realQuotes={storeQuotes}
           split={split}
           onSplit={(assign, stores) => { setSplit(assign); setSplitStores(stores) }}
         />

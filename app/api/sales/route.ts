@@ -18,7 +18,12 @@ export async function GET() {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const { ownerId } = await resolvePlanOwner(admin, user.id)
   const sets = await currentSales(admin, ownerId)
-  return NextResponse.json({ sets })
+  // Real per-store basket quotes (from the Saturday price read), newest per store, last 7 days.
+  const since = new Date(Date.now() - 7 * 86400000).toISOString()
+  const { data: q } = await admin.from('store_quotes').select('store, total, item_count, missing, week_start, created_at').eq('user_id', ownerId).gte('created_at', since).order('created_at', { ascending: false }).limit(40)
+  const seen = new Set<string>()
+  const quotes = (q ?? []).filter((r) => { const k = r.store.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true })
+  return NextResponse.json({ sets, quotes })
 }
 
 export async function POST(req: NextRequest) {
