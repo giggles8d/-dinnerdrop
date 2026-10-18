@@ -27,6 +27,7 @@ export interface MemberRow {
   phone_opted_out: boolean
   can_vote: boolean
   can_add: boolean
+  profile_id?: string | null
 }
 
 interface OwnerRow {
