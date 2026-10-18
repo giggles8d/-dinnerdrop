@@ -4,6 +4,9 @@ import type { GroceryCategory, GroceryItem } from '@/types'
 
 type GroceryListResponse = Record<GroceryCategory, GroceryItem[]>
 
+// Big weeks (7 people, 5 dinners) produce 30–40 line items — needs room and time.
+export const maxDuration = 60
+
 export async function POST(request: Request) {
   try {
     const { meals, userId } = await request.json()
@@ -48,7 +51,7 @@ export async function POST(request: Request) {
 Ingredients:
 ${JSON.stringify(allIngredients, null, 2)}
 
-Return ONLY valid JSON, no markdown:
+Return ONLY valid, compact JSON (no pretty-printing, no comments), no markdown:
 {
   "Produce": [{ "name": "string", "quantity": "string", "unit": "string", "category": "Produce", "searchTerm": "string" }],
   "Meat & Seafood": [],
@@ -59,7 +62,7 @@ Return ONLY valid JSON, no markdown:
   "Beverages": []
 }`
 
-    const text = await generateWithClaude(prompt, 2000)
+    const text = await generateWithClaude(prompt, 6000)
     const groceryList = parseClaudeJSON<GroceryListResponse>(text)
 
     return Response.json(groceryList)
