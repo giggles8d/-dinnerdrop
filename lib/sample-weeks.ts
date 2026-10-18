@@ -88,7 +88,7 @@ export const SAMPLE_WEEKS: SampleWeek[] = [
         ingredients: [
           { name: 'ground turkey', quantity: '1', unit: 'lb', category: 'Meat & Seafood', searchTerm: 'ground turkey' },
           { name: 'breadcrumbs', quantity: '1/2', unit: 'cup', category: 'Pantry & Dry Goods', searchTerm: 'breadcrumbs' },
-          { name: 'egg', quantity: '1', unit: 'whole', category: 'Dairy & Eggs', searchTerm: 'eggs' },
+          { name: 'eggs', quantity: '1', unit: 'whole', category: 'Dairy & Eggs', searchTerm: 'eggs' },
           { name: 'honey', quantity: '1/4', unit: 'cup', category: 'Pantry & Dry Goods', searchTerm: 'honey' },
           { name: 'soy sauce', quantity: '3', unit: 'tbsp', category: 'Pantry & Dry Goods', searchTerm: 'soy sauce' },
           { name: 'garlic', quantity: '3', unit: 'clove', category: 'Produce', searchTerm: 'garlic' },
@@ -405,17 +405,32 @@ export function sampleWeekTotal(week: SampleWeek): number {
 }
 
 /** Deduplicated grocery list for a sample week, grouped by category. */
+const UNIT_RANK: Record<string, number> = { tsp: 1, tbsp: 2, oz: 3, cup: 4, whole: 5, lb: 6, can: 6, jar: 6, package: 6, bag: 6 }
+function toNumber(q: string): number {
+  const m = q.trim().match(/^(\d+)?\s*(?:(\d)\/(\d))?$/)
+  if (!m) return parseFloat(q)
+  return (m[1] ? Number(m[1]) : 0) + (m[2] ? Number(m[2]) / Number(m[3]) : 0)
+}
+
 export function sampleGroceryList(week: SampleWeek): Record<string, Array<{ name: string; quantity: string; unit: string }>> {
   const out: Record<string, Array<{ name: string; quantity: string; unit: string }>> = {}
   const seen = new Map<string, { name: string; quantity: string; unit: string; category: string }>()
   for (const meal of week.meals) {
     for (const ing of meal.ingredients) {
-      const k = `${ing.name.toLowerCase()}|${ing.unit}`
+      // One line per ingredient name. Same unit → quantities add; different units
+      // (1 tbsp honey + 1/4 cup honey) → keep the larger measure, since the shopper
+      // buys one jar either way.
+      const k = ing.name.toLowerCase()
       const prev = seen.get(k)
       if (prev) {
-        const a = parseFloat(prev.quantity.replace(/ (\d)\/(\d)/, (_, n, d) => `.${Math.round((n / d) * 100)}`))
-        const b = parseFloat(ing.quantity.replace(/ (\d)\/(\d)/, (_, n, d) => `.${Math.round((n / d) * 100)}`))
-        if (!Number.isNaN(a) && !Number.isNaN(b)) prev.quantity = String(Math.round((a + b) * 4) / 4)
+        const a = toNumber(prev.quantity)
+        const b = toNumber(ing.quantity)
+        if (prev.unit === ing.unit) {
+          if (!Number.isNaN(a) && !Number.isNaN(b)) prev.quantity = String(Math.round((a + b) * 4) / 4)
+        } else if ((UNIT_RANK[ing.unit] ?? 0) > (UNIT_RANK[prev.unit] ?? 0)) {
+          prev.quantity = ing.quantity
+          prev.unit = ing.unit
+        }
       } else {
         seen.set(k, { name: ing.name, quantity: ing.quantity, unit: ing.unit, category: ing.category })
       }
