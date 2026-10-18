@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import HeroClip from '@/components/HeroClip'
 import SampleWeek from '@/components/SampleWeek'
 import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, Clock3 } from 'lucide-react'
 
@@ -55,15 +56,8 @@ export default async function LandingPage() {
             </div>
 
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 rotate-1">
-                <Image
-                  src="/home-hero.jpg"
-                  alt="A family gathered around a weeknight dinner of skillet-roasted chicken, salads and fresh bread"
-                  width={1600}
-                  height={893}
-                  priority
-                  className="w-full h-auto object-cover"
-                />
+              <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 rotate-1 bg-white">
+                <HeroClip className="w-full h-auto block" />
               </div>
               {/* floating proof chips */}
               <div className="absolute -bottom-5 left-6 bg-white rounded-2xl shadow-lg px-5 py-3 flex items-center gap-3 ring-1 ring-black/5">
