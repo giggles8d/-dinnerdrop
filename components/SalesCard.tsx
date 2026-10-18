@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Tag, Camera, Link2, FileText, X, Loader2 } from 'lucide-react'
-import type { SaleItem, WeeklySales } from '@/lib/sales'
+import type { SaleItem, WeeklySales } from '@/lib/sales-shared'
 
 /**
  * "This week's sales" — load the store flyer (photos, a link, or pasted text) and the

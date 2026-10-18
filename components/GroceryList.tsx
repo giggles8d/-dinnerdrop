@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Plus, X } from 'lucide-react'
 import { CATEGORY_ORDER, CATEGORY_EMOJI, type ListItem } from '@/lib/list'
 import type { GroceryCategory } from '@/types'
-import type { SaleItem } from '@/lib/sales'
+import type { SaleItem } from '@/lib/sales-shared'
 
 // Display helper: "0.625 lbs" -> "5/8 lb", "1 lbs" -> "1 lb", "2 cloves" stays.
 const FRACTIONS: Array<[number, string]> = [
