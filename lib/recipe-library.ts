@@ -9,6 +9,15 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Meal } from '@/types'
 
+/** Drop time-claim tags the recipe's own numbers don't support ("15-min" on a 30-minute dinner). */
+export function honestTags(tags: string[], totalMinutes: number): string[] {
+  return tags.filter((t) => {
+    const m = t.match(/^(\d+)-?min/i)
+    if (!m) return true
+    return totalMinutes > 0 && totalMinutes <= Number(m[1])
+  })
+}
+
 export function normalizeName(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ')
 }
@@ -122,7 +131,7 @@ export async function upsertRecipes(
         estimated_cost: meal.estimatedCost,
         ingredients: meal.ingredients,
         steps: meal.steps,
-        tags: meal.tags ?? [],
+        tags: honestTags(meal.tags ?? [], (meal.cookTime ?? 0) + (meal.prepTime ?? 0)),
         dietary: opts.dietary ?? [],
         image_url: img?.url ?? null,
         image_credit: img?.credit ?? null,

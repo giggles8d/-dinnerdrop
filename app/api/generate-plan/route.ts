@@ -1,7 +1,7 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { createClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, type Settings, type Weekday } from '@/lib/settings'
-import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName } from '@/lib/recipe-library'
+import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName, honestTags } from '@/lib/recipe-library'
 import type { Meal } from '@/types'
 import { ensurePortions } from '@/lib/portions'
 import { currentSales, salesPromptBlock } from '@/lib/sales'
@@ -262,7 +262,7 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
       servings: m.leftoverFriendly ? profile.familySize * 2 : profile.familySize,
       cookTime: Number(m.cookTime) || 30,
       prepTime: Number(m.prepTime) || 0,
-    })).map(ensurePortions)
+    })).map(ensurePortions).map((m) => ({ ...m, tags: honestTags(m.tags ?? [], (m.cookTime ?? 0) + (m.prepTime ?? 0)) }))
     // Enforce the all-day dinner cap (the model over-leans on slow cookers when they're listed).
     if (maxLong >= 0) {
       let longSeen = 0
