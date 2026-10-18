@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DinnerDrop — AI Dinner Planning for Busy Families",
     description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DinnerDrop" }],
+    images: [{ url: "/og-image.png?v=3", width: 1200, height: 630, alt: "DinnerDrop" }],
     type: "website",
     url: "https://www.dinnerdrop.app",
   },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DinnerDrop — AI Dinner Planning for Busy Families",
     description: "Generate 5 personalized dinner plans, build your grocery list, and shop at your favorite store — all in one tap.",
-    images: ["/og-image.png"],
+    images: ["/og-image.png?v=3"],
   },
   metadataBase: new URL("https://www.dinnerdrop.app"),
   icons: {

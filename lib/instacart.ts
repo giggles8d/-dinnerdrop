@@ -85,7 +85,7 @@ export async function createInstacartLink(
 
   const payload: InstacartPayload = {
     title: 'DinnerDrop Weekly Groceries',
-    image_url: 'https://dinnerdrop.app/og-image.png?v=2',
+    image_url: 'https://dinnerdrop.app/og-image.png?v=3',
     link_type: 'shopping_list',
     expires_in: 7,
     line_items: items.map((item) => ({
