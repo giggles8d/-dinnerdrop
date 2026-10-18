@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import FamilyTextingSection from '@/components/FamilyTextingSection'
 
 // Primary conversion page for ads and campaigns.
 // Offer (2026-10-18): Free forever, no card — unlimited plans + one-tap Instacart cart.
@@ -139,6 +140,8 @@ export default function StartPage() {
       </main>
 
       {/* How it works */}
+      <FamilyTextingSection ctaHref={FAMILY_HREF} />
+
       <section className="container mx-auto px-4 py-16 max-w-3xl">
         <h2 className="text-3xl font-bold text-center mb-10" style={{ color: GREEN }}>
           How it works

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import HeroClip from '@/components/HeroClip'
+import FamilyTextingSection from '@/components/FamilyTextingSection'
 import SampleWeek from '@/components/SampleWeek'
 import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, Clock3 } from 'lucide-react'
 
@@ -184,6 +185,8 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+
+      <FamilyTextingSection ctaHref={'/signup?redirect=' + encodeURIComponent('/subscribe?auto=1')} />
 
       {/* Pricing */}
       <section id="pricing" className="container mx-auto px-4 py-20 max-w-4xl scroll-mt-20">

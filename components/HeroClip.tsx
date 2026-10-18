@@ -7,7 +7,16 @@ import { useEffect, useRef } from 'react'
  * A client component so `muted` is set before play() — React 18 drops the
  * attribute on the server, which blocks autoplay in Safari/Chrome.
  */
-export default function HeroClip({ className = '' }: { className?: string }) {
+interface Props {
+  className?: string
+  /** Base name under /public, e.g. "cart-clip" → cart-clip.webm, cart-clip.mp4, cart-clip-poster.jpg */
+  name?: string
+  width?: number
+  height?: number
+  label?: string
+}
+
+export default function HeroClip({ className = '', name = 'cart-clip', width = 1280, height = 720, label = 'DinnerDrop grocery list sent to an Instacart cart in one tap' }: Props) {
   const ref = useRef<HTMLVideoElement>(null)
   useEffect(() => {
     const v = ref.current
@@ -21,17 +30,17 @@ export default function HeroClip({ className = '' }: { className?: string }) {
     <video
       ref={ref}
       className={className}
-      poster="/cart-clip-poster.jpg"
-      width={1280}
-      height={720}
+      poster={`/${name}-poster.jpg`}
+      width={width}
+      height={height}
       loop
       muted
       playsInline
       preload="metadata"
-      aria-label="DinnerDrop grocery list sent to an Instacart cart in one tap"
+      aria-label={label}
     >
-      <source src="/cart-clip.webm" type="video/webm" />
-      <source src="/cart-clip.mp4" type="video/mp4" />
+      <source src={`/${name}.webm`} type="video/webm" />
+      <source src={`/${name}.mp4`} type="video/mp4" />
     </video>
   )
 }
