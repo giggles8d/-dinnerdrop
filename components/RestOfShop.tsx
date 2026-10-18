@@ -22,6 +22,9 @@ interface Props {
 export default function RestOfShop({ onList, usuals, lastWeekExtras, saleFor, onAdd, onAddMany }: Props) {
   const [aisle, setAisle] = useState<AisleKey | 'usuals'>(usuals.length ? 'usuals' : 'fruit')
   const [addedLast, setAddedLast] = useState(false)
+  const [showAll, setShowAll] = useState(false)
+  const [typed, setTyped] = useState('')
+  const [q, setQ] = useState('')
 
   const usualsByAisle = useMemo(() => {
     const m = new Map<AisleKey, UsualItem[]>()
@@ -37,7 +40,12 @@ export default function RestOfShop({ onList, usuals, lastWeekExtras, saleFor, on
     return [...mine, ...a.picks.filter((p) => !seen.has(normalizeItemName(p.name)))]
   }
 
-  const picks = picksFor(aisle)
+  const allPicks = picksFor(aisle)
+  const needle = q.trim().toLowerCase()
+  type Pick = AislePick & { usual?: boolean; times?: number }
+  const searched: Pick[] | null = needle ? (AISLES.flatMap((a) => a.picks) as Pick[]).concat(usuals.map((u) => ({ name: u.name, category: u.category, searchTerm: u.searchTerm, quantity: u.quantity, unit: u.unit, usual: true, times: u.times }))).filter((p, i, arr) => p.name.toLowerCase().includes(needle) && arr.findIndex((x) => normalizeItemName(x.name) === normalizeItemName(p.name)) === i) : null
+  const LIMIT = 16
+  const picks = searched ?? (showAll ? allPicks : allPicks.slice(0, LIMIT))
   const pendingLast = lastWeekExtras.filter((u) => !onList(u.name))
 
   return (
@@ -59,12 +67,20 @@ export default function RestOfShop({ onList, usuals, lastWeekExtras, saleFor, on
         )}
       </div>
 
-      <div className="flex flex-wrap gap-1.5 mt-4 mb-3">
+      <div className="mt-4 mb-3 flex flex-col sm:flex-row gap-2">
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search the aisles… (strawberries, K-cups, dog treats)" className="flex-1 rounded-lg border border-input bg-white px-3 py-2 text-sm" />
+        <form onSubmit={(e) => { e.preventDefault(); const t = typed.trim(); if (!t) return; onAdd({ name: t, category: 'Pantry & Dry Goods', searchTerm: t }); setTyped('') }} className="flex gap-2">
+          <input value={typed} onChange={(e) => setTyped(e.target.value)} placeholder="Not listed? Type it" className="w-44 rounded-lg border border-input bg-white px-3 py-2 text-sm" />
+          <button type="submit" disabled={!typed.trim()} className="px-3 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50">Add</button>
+        </form>
+      </div>
+
+      <div className="flex flex-wrap gap-1.5 mb-3">
         {usuals.length > 0 && (
-          <button type="button" onClick={() => setAisle('usuals')} className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${aisle === 'usuals' ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>⭐ Your usuals</button>
+          <button type="button" onClick={() => { setAisle('usuals'); setShowAll(false) }} className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${aisle === 'usuals' ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>⭐ Your usuals</button>
         )}
         {AISLES.map((a) => (
-          <button key={a.key} type="button" onClick={() => setAisle(a.key)} className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${aisle === a.key ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>{a.emoji} {a.label}</button>
+          <button key={a.key} type="button" onClick={() => { setAisle(a.key); setShowAll(false) }} className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${aisle === a.key ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>{a.emoji} {a.label}</button>
         ))}
       </div>
 
@@ -85,6 +101,12 @@ export default function RestOfShop({ onList, usuals, lastWeekExtras, saleFor, on
             </button>
           )
         })}
+        {!searched && allPicks.length > LIMIT && (
+          <button type="button" onClick={() => setShowAll((v) => !v)} className="px-3 py-1.5 rounded-full text-sm font-semibold text-primary hover:underline">
+            {showAll ? 'Show fewer' : `Show all ${allPicks.length}`}
+          </button>
+        )}
+        {searched && searched.length === 0 && <span className="text-sm text-muted-foreground self-center">Nothing by that name — type it in the box above and it goes on the list.</span>}
       </div>
     </div>
   )
