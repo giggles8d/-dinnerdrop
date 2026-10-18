@@ -88,7 +88,10 @@ export async function POST(request: Request) {
     const nightTimes = cookDays.map((d) => ({ day: d, label: WEEKDAY_LABEL[d], minutes: cookTimeFor(d, settings, profile.maxCookTime) }))
     const fastestNight = Math.min(...nightTimes.map((n) => n.minutes))
     const slowestNight = Math.max(...nightTimes.map((n) => n.minutes))
-    const budgetNumber = Number(String(profile.weeklyBudget).replace(/[^0-9.]/g, '')) || 100
+    // The family's budget is what they'll pay at their store; estimates are at typical prices,
+    // so plan to budget ÷ priceFactor (learned from their real orders; 1 until the first one).
+    const priceFactor = Number(settings.stores.priceFactor) > 0 ? Number(settings.stores.priceFactor) : 1
+    const budgetNumber = (Number(String(profile.weeklyBudget).replace(/[^0-9.]/g, '')) || 100) / priceFactor
     const perMealBudget = (budgetNumber / dinnersPerWeek).toFixed(0)
 
     // ---------- taste profile (learned) + recent plans, fetched together ----------
@@ -195,14 +198,14 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
 
 Family:
 - ${profile.familySize} people at dinner
-- Weekly dinner budget: ${profile.weeklyBudget} (about $${perMealBudget} per dinner)
+- Weekly dinner budget at typical prices: $${budgetNumber.toFixed(0)} (about $${perMealBudget} per dinner)
 - Default cook time: ${profile.maxCookTime} minutes
 - Dietary needs: ${profile.dietaryNeeds.length ? profile.dietaryNeeds.join(', ') : 'none'}
 ${peopleSection}${favoritesSection}${tasteProfileSection}${salesSection}
 Rules:
 ${constraintLines.map((l) => `- ${l}`).join('\n')}
 ${timeRule}
-- estimatedCost is the realistic grocery cost of the ingredients at typical US supermarket prices (most weeknight dinners for ${profile.familySize} run $12–$30); do not inflate it. The ${dinnersPerWeek} dinners they pick must fit in ${profile.weeklyBudget}, so keep every option under $${perMealBudget}
+- estimatedCost is the realistic grocery cost of the ingredients at typical US supermarket prices (most weeknight dinners for ${profile.familySize} run $12–$30); do not inflate it. The ${dinnersPerWeek} dinners they pick must fit in $${budgetNumber.toFixed(0)} at typical prices, so keep every option under $${perMealBudget}
 - Make the options diverse — different proteins, cuisines, and cooking styles; no two options share a main protein + style
 - Maximum 6 ingredients per dinner, maximum 4 short steps (one sentence each), written for a tired parent
 - cookTime = minutes until it's on the table; prepTime = hands-on minutes. A slow-cooker dinner is cookTime 480 with prepTime 15 — only offer those when the night allows it (the family has a slow cooker; assume it's started in the morning). Set "servings" to exactly ${profile.familySize}${settings.plan.leftoverNight ? ` (${profile.familySize * 2} for leftover-friendly ones)` : ''}

@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { groceryList } = await request.json()
+    const { groceryList, estTotal, weekStart } = await request.json()
 
     if (!groceryList || typeof groceryList !== 'object') {
       return NextResponse.json({ error: 'Invalid grocery list' }, { status: 400 })
@@ -33,6 +33,8 @@ export async function POST(request: Request) {
           user_id: user.id,
           store: 'Instacart',
           item_count: allItems.length,
+          est_total: Number(estTotal) > 0 ? Number(estTotal) : null,
+          week_start: typeof weekStart === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(weekStart) ? weekStart : null,
         })
       } catch (logErr) {
         console.error('[instacart] handoff log failed:', logErr)

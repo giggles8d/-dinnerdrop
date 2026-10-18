@@ -20,6 +20,7 @@ export interface ListItem {
   added_by: string | null
   have: boolean
   checked: boolean
+  est_price?: number | null   // typical-price estimate for non-plan lines
   created_at: string
 }
 

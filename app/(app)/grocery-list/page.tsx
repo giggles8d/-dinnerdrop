@@ -25,6 +25,10 @@ export default function GroceryListPage() {
   const [weekStart, setWeekStart] = useState<string | null>(null)
   const [items, setItems] = useState<ListItem[]>([])
   const [sales, setSales] = useState<WeeklySales[]>([])
+  const [priceFactor, setPriceFactor] = useState(1)
+  const [askActual, setAskActual] = useState<{ id: string; est: number | null } | null>(null)
+  const [actualDraft, setActualDraft] = useState('')
+  const [actualSaved, setActualSaved] = useState<string | null>(null)
   const [staples, setStaples] = useState<Staple[]>([])
   const [totalCost, setTotalCost] = useState(0)
   const [budget, setBudget] = useState<number>(0)
@@ -42,7 +46,16 @@ export default function GroceryListPage() {
 
   const loadItems = useCallback(async (uid: string, ws: string) => {
     const { data } = await supabase.from('list_items').select('*').eq('user_id', uid).eq('week_start', ws).order('created_at')
-    setItems((data as ListItem[]) ?? [])
+    const rows = (data as ListItem[]) ?? []
+    setItems(rows)
+    // Typical-price estimates for lines that don't come from the plan (texted, added, basics).
+    const missing = rows.filter((r) => r.source !== 'plan' && r.est_price == null).map((r) => r.id)
+    if (missing.length) {
+      fetch('/api/list/estimate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: missing }) })
+        .then((r) => r.json())
+        .then((j: { prices?: Record<string, number> }) => { if (j.prices) setItems((xs) => xs.map((x) => (j.prices![x.id] != null ? { ...x, est_price: j.prices![x.id] } : x))) })
+        .catch(() => {})
+    }
   }, [supabase])
 
   const load = useCallback(async () => {
@@ -53,6 +66,11 @@ export default function GroceryListPage() {
     setUserId(uid)
     setIsPartner(owner.isPartner)
     fetch('/api/sales', { cache: 'no-store' }).then((r) => r.json()).then((j) => setSales(j.sets ?? [])).catch(() => {})
+    supabase.from('grocery_handoffs').select('id, est_total, actual_total, created_at').eq('user_id', uid).order('created_at', { ascending: false }).limit(1)
+      .then(({ data: hs }) => {
+        const h = hs?.[0]
+        if (h && h.actual_total == null && Date.now() - new Date(h.created_at).getTime() < 5 * 86400000) setAskActual({ id: h.id, est: h.est_total == null ? null : Number(h.est_total) })
+      })
 
     const { data: profile } = await supabase
       .from('profiles')
@@ -61,6 +79,8 @@ export default function GroceryListPage() {
       .single()
 
     const settings = mergeSettings(profile?.settings)
+
+    setPriceFactor(Number(settings.stores.priceFactor) || 1)
     if (profile) {
       const tokenValid = profile.kroger_access_token &&
         (!profile.kroger_token_expires_at || new Date(profile.kroger_token_expires_at) > new Date())
@@ -272,7 +292,13 @@ export default function GroceryListPage() {
     )
   }
 
-  const over = budget > 0 && totalCost > budget
+  // Honest total: plan dinners (still to buy) + every other unchecked line with an estimate, at typical prices,
+  // then at this family's store (learned from real orders).
+  const extrasEst = items.filter((i) => i.source !== 'plan' && !i.have && !i.checked).reduce((n, i) => n + (Number(i.est_price) || 0), 0)
+  const unpricedExtras = items.filter((i) => i.source !== 'plan' && !i.have && !i.checked && !(Number(i.est_price) > 0)).length
+  const listEst = totalCost + extrasEst
+  const storeEst = listEst * (priceFactor || 1)
+  const over = budget > 0 && storeEst > budget
   const restChips = REST_OF_WEEK.filter((c) => !items.some((i) => normalizeItemName(i.name) === normalizeItemName(c.name)))
 
   return (
@@ -297,14 +323,14 @@ export default function GroceryListPage() {
         {budget > 0 && (
           <div className="mb-6 rounded-xl border border-border p-4 print:hidden">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Dinners this week (estimate)</span>
-              <span className={`font-semibold ${over ? 'text-destructive' : 'text-primary'}`}>${totalCost.toFixed(0)} of ${budget} budget</span>
+              <span className="text-muted-foreground">Everything on the list{priceFactor !== 1 ? ' (at your store)' : ' (estimate)'}</span>
+              <span className={`font-semibold ${over ? 'text-destructive' : 'text-primary'}`}>${storeEst.toFixed(0)} of ${budget} budget</span>
             </div>
             <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
-              <div className={`h-full ${over ? 'bg-destructive' : 'bg-primary'}`} style={{ width: `${Math.min(100, (totalCost / budget) * 100)}%` }} />
+              <div className={`h-full ${over ? 'bg-destructive' : 'bg-primary'}`} style={{ width: `${Math.min(100, (storeEst / budget) * 100)}%` }} />
             </div>
             <p className="text-[11px] text-muted-foreground mt-2">
-              {over ? 'A little over — swap one dinner for a budget pick on your dashboard, or mark pantry items you already have.' : `About $${Math.max(0, budget - totalCost).toFixed(0)} of room for the rest of the week.`}
+              {over ? 'Over — swap one dinner for a budget pick on your dashboard, or mark pantry items you already have.' : `About $${Math.max(0, budget - storeEst).toFixed(0)} of room for the rest of the week.`}
             </p>
           </div>
         )}
@@ -368,16 +394,28 @@ export default function GroceryListPage() {
 
         <div className="mt-8 p-5 rounded-xl bg-foreground print:hidden">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-primary-foreground/60">Dinner ingredients, estimated</span>
-            <span className="text-2xl font-heading font-bold text-primary-foreground">${totalCost.toFixed(2)}</span>
+            <span className="text-sm font-medium text-primary-foreground/60">{priceFactor !== 1 ? 'Expected at your store' : 'Whole list, estimated'}</span>
+            <span className="text-2xl font-heading font-bold text-primary-foreground">${storeEst.toFixed(2)}</span>
           </div>
-          <p className="text-[11px] text-primary-foreground/50 mt-1">{shoppableCount} items go to the cart{haveCount ? ` · ${haveCount} you already have stay off it` : ''}.</p>
+          <p className="text-[11px] text-primary-foreground/50 mt-1">
+            Dinners ${totalCost.toFixed(0)}{extrasEst > 0 ? ` + other items $${extrasEst.toFixed(0)}` : ''}{unpricedExtras ? ` (+${unpricedExtras} unpriced)` : ''} at typical prices
+            {priceFactor !== 1 ? ` × ${priceFactor.toFixed(2)} for your store and fees, learned from your orders` : ' — Instacart prices and fees usually run 20–30% higher'}.
+            {' '}{shoppableCount} items go to the cart{haveCount ? ` · ${haveCount} you already have stay off it` : ''}.
+          </p>
+          {askActual && !actualSaved && (
+            <form onSubmit={async (e) => { e.preventDefault(); const t = Number(actualDraft.replace(/[^0-9.]/g, '')); if (!t) return; const r = await fetch('/api/handoff/actual', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ total: t }) }); const j = await r.json(); if (r.ok) { setActualSaved(j.factor ? `Thanks — your store runs about ${j.factor.toFixed(2)}× our estimates. Future lists use that.` : 'Thanks — saved.'); if (j.factor) setPriceFactor(j.factor); setAskActual(null) } }} className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="text-xs text-primary-foreground/70">What did your last order come to{askActual.est ? ` (we estimated $${askActual.est.toFixed(0)})` : ''}?</span>
+              <input value={actualDraft} onChange={(e) => setActualDraft(e.target.value)} inputMode="decimal" placeholder="$0.00" className="w-28 rounded-md px-2 py-1 text-sm text-foreground" />
+              <button type="submit" className="px-3 py-1 rounded-md bg-primary-foreground text-foreground text-xs font-semibold">Save</button>
+            </form>
+          )}
+          {actualSaved && <p className="text-xs text-primary-foreground/80 mt-2">{actualSaved}</p>}
         </div>
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden">
           <p className="hidden sm:block text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>
           <div className="space-y-4">
-            <InstacartButton groceryList={shoppable} />
+            <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} />
             <div className="space-y-2">
               {krogerConnected ? (
                 <button onClick={handleKrogerCart} disabled={krogerLoading || shoppableCount === 0} className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] disabled:opacity-50 transition-colors shadow-lg">

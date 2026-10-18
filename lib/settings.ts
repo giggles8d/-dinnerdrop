@@ -55,6 +55,7 @@ export interface Settings {
     mode: 'instacart' | 'kroger' | 'instore'
     fulfillment: 'delivery' | 'pickup'
     usualStore: string
+    priceFactor: number             // what this family's store (+ Instacart fees) charges vs our typical-price estimates; learned from real orders
   }
   notifications: {
     email: boolean
@@ -107,6 +108,7 @@ export const DEFAULT_SETTINGS: Settings = {
     mode: 'instacart',
     fulfillment: 'delivery',
     usualStore: '',
+    priceFactor: 1,
   },
   notifications: {
     email: true,

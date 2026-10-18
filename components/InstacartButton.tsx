@@ -6,6 +6,8 @@ import type { GroceryCategory, GroceryItem } from '@/types'
 
 interface InstacartButtonProps {
   groceryList: Record<GroceryCategory, GroceryItem[]>
+  estTotal?: number
+  weekStart?: string
 }
 
 /**
@@ -18,7 +20,7 @@ interface InstacartButtonProps {
  *   - Approved button copy: "Shop ingredients"
  * Docs: https://docs.instacart.com/developer_platform_api/guide/concepts/design/cta_design
  */
-export default function InstacartButton({ groceryList }: InstacartButtonProps) {
+export default function InstacartButton({ groceryList, estTotal, weekStart }: InstacartButtonProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -30,7 +32,7 @@ export default function InstacartButton({ groceryList }: InstacartButtonProps) {
       const res = await fetch('/api/instacart', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ groceryList }),
+        body: JSON.stringify({ groceryList, estTotal, weekStart }),
       })
 
       const data = await res.json()
