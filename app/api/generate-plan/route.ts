@@ -81,7 +81,8 @@ export async function POST(request: Request) {
     // ---------- plan shape ----------
     const cookDays = settings.plan.cookDays.length ? settings.plan.cookDays : (['mon', 'tue', 'wed', 'thu', 'fri'] as Weekday[])
     const dinnersPerWeek = Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
-    const optionsCount = Math.min(Math.max(settings.plan.optionsCount, dinnersPerWeek, 5), 12)
+    const requested = Number(body.optionsCount) > 0 ? Number(body.optionsCount) : settings.plan.optionsCount
+    const optionsCount = Math.min(Math.max(requested, dinnersPerWeek, 5), 12)
     const nightTimes = cookDays.map((d) => ({ day: d, label: WEEKDAY_LABEL[d], minutes: cookTimeFor(d, settings, profile.maxCookTime) }))
     const fastestNight = Math.min(...nightTimes.map((n) => n.minutes))
     const slowestNight = Math.max(...nightTimes.map((n) => n.minutes))

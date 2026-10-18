@@ -180,11 +180,11 @@ export default function SettingsPage() {
       const j = await r.json()
       if (!r.ok) throw new Error(j.error || 'Failed')
       const bits: string[] = []
-      if (j.planned) bits.push(`picked the week of ${j.weekStart}`)
+      if (j.planned) bits.push(`new dinner ideas for the week of ${j.weekStart}`)
       if (j.optInsSent) bits.push(`opt-in text sent to ${j.optInsSent}`)
       if (j.voteTextsSent) bits.push(`menu sent to ${j.voteTextsSent}`)
       if (j.skipped?.length) bits.push(`skipped: ${j.skipped.join('; ')}`)
-      setRunMsg(bits.length ? `Done — ${bits.join(', ')}. Replies are checked every couple of minutes; you'll get a text when everyone has answered.` : 'Nothing to send right now.')
+      setRunMsg(bits.length ? `Done — ${bits.join(', ')}. Replies are checked every couple of minutes; when everyone has picked (or after 24h) the top picks become the week and you get a text.` : 'Nothing to send right now.')
       await load()
     } catch (e) {
       setRunMsg(e instanceof Error ? e.message : 'Failed')
@@ -529,7 +529,7 @@ export default function SettingsPage() {
                     <button type="button" onClick={runVoteNow} disabled={runBusy || dirty || !isFamily} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50">
                       {runBusy ? 'Texting…' : 'Text my family now'}
                     </button>
-                    <span className="text-xs text-muted-foreground">{dirty ? 'Save your changes first.' : 'Picks the week if it isn\'t planned yet, sends the opt-in to anyone new, and texts the menu to everyone who has joined.'}</span>
+                    <span className="text-xs text-muted-foreground">{dirty ? 'Save your changes first.' : `Generates ${Math.max(settings.texting.optionsToText, settings.plan.dinnersPerWeek)} dinner ideas, sends the opt-in to anyone new, and texts the ideas to everyone who has joined. The top ${settings.plan.dinnersPerWeek} picks become the week.`}</span>
                   </div>
                   {runMsg && <p className="text-sm text-foreground">{runMsg}</p>}
                 </div>
@@ -538,6 +538,7 @@ export default function SettingsPage() {
                   <Field label="'Bring it back?' day" hint="Everyone picks which dinners should return."><Select value={settings.texting.againDay} onChange={(v) => patch((s) => { s.texting.againDay = v })} options={DAY_OPTIONS} /></Field>
                   <Field label="Quiet hours start"><input type="time" value={settings.texting.quietStart} onChange={(e) => patch((s) => { s.texting.quietStart = e.target.value })} className="rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                   <Field label="Quiet hours end"><input type="time" value={settings.texting.quietEnd} onChange={(e) => patch((s) => { s.texting.quietEnd = e.target.value })} className="rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
+                  <Field label="Dinner ideas to text" hint={`The family picks from these; the top ${settings.plan.dinnersPerWeek} make the week.`}><Select value={String(Math.max(settings.texting.optionsToText, settings.plan.dinnersPerWeek))} onChange={(v) => patch((s) => { s.texting.optionsToText = Number(v) })} options={['5', '6', '7', '8', '9', '10', '12'].filter((n) => Number(n) >= settings.plan.dinnersPerWeek).map((n) => ({ value: n, label: n }))} /></Field>
                   <Field label="Max texts per person per week"><Select value={String(settings.texting.weeklyCap)} onChange={(v) => patch((s) => { s.texting.weeklyCap = Number(v) })} options={['2', '3', '4', '6', '8'].map((n) => ({ value: n, label: n }))} /></Field>
                 </div>
               </>
