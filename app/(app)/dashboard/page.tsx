@@ -9,20 +9,7 @@ import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
 import type { Meal } from '@/types'
-import { WEEKDAY_LABEL, type Weekday } from '@/lib/settings'
-
-interface PlanShape {
-  dinnersPerWeek: number
-  cookDays: Weekday[]
-  nightTimes: Array<{ day: Weekday; label: string; minutes: number }>
-  leftoverNight: boolean
-}
-const DEFAULT_SHAPE: PlanShape = {
-  dinnersPerWeek: 5,
-  cookDays: ['mon', 'tue', 'wed', 'thu', 'fri'],
-  nightTimes: [],
-  leftoverNight: false,
-}
+import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 
 export default function DashboardPage() {
   return (
@@ -30,33 +17,6 @@ export default function DashboardPage() {
       <DashboardContent />
     </Suspense>
   )
-}
-
-/**
- * Give each chosen dinner a night. Honors the family's cook days, uses the
- * planner's suggestedNight when it names one of those days, fills the rest in
- * order, and — with a leftover night on — the doubled dinner is followed by a
- * "Leftovers" marker night at the end of the week.
- */
-function assignNights(selected: Meal[], shape: PlanShape): Meal[] {
-  const days = (shape.cookDays.length ? shape.cookDays : DEFAULT_SHAPE.cookDays)
-  const labels = days.map(d => WEEKDAY_LABEL[d])
-  const free = [...labels]
-  const placed: Array<Meal | null> = new Array(labels.length).fill(null)
-  const rest: Meal[] = []
-  for (const m of selected) {
-    const idx = m.suggestedNight ? labels.indexOf(m.suggestedNight) : -1
-    if (idx >= 0 && placed[idx] === null) { placed[idx] = m; free.splice(free.indexOf(labels[idx]), 1) }
-    else rest.push(m)
-  }
-  const out: Meal[] = []
-  let r = 0
-  for (let i = 0; i < labels.length; i++) {
-    const m = placed[i] ?? rest[r++]
-    if (m) out.push({ ...m, day: labels[i] })
-  }
-  for (; r < rest.length; r++) out.push({ ...rest[r], day: `Day ${out.length + 1}` })
-  return out
 }
 
 function DashboardContent() {
@@ -74,6 +34,7 @@ function DashboardContent() {
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
   const [planCount, setPlanCount] = useState(0)
   const [planShape, setPlanShape] = useState<PlanShape>(DEFAULT_SHAPE)
+  const [votes, setVotes] = useState<Record<string, { keep: number; skip: number; again: number; voters: string[] }>>({})
   const [planMode, setPlanMode] = useState<'fresh' | 'favorites'>('fresh')
   // Instant first plan: brand-new users (no plan yet) get their first week
   // auto-generated with smart defaults — no quiz gate before seeing value.
@@ -137,6 +98,23 @@ function DashboardContent() {
         setTotalCost(plan.total_estimated_cost || 0)
         setHasGenerated(true)
         localStorage.setItem('current-meals', JSON.stringify(planMeals))
+
+        // Family votes (texted in) for this plan's week.
+        if (profile?.household_id && plan.week_start) {
+          const { data: voteRows } = await supabase
+            .from('meal_votes')
+            .select('meal_name, vote, member_id, household_members(name)')
+            .eq('household_id', profile.household_id)
+            .eq('week_start', plan.week_start)
+          const tally: Record<string, { keep: number; skip: number; again: number; voters: string[] }> = {}
+          for (const v of (voteRows ?? []) as Array<{ meal_name: string; vote: 'keep' | 'skip' | 'again'; household_members: { name: string } | { name: string }[] | null }>) {
+            const t = tally[v.meal_name] ?? (tally[v.meal_name] = { keep: 0, skip: 0, again: 0, voters: [] })
+            t[v.vote]++
+            const hm = Array.isArray(v.household_members) ? v.household_members[0] : v.household_members
+            if (hm?.name && !t.voters.includes(hm.name)) t.voters.push(hm.name)
+          }
+          setVotes(tally)
+        }
 
         if (plan.week_start) {
           const planWeekStart = new Date(plan.week_start)
@@ -604,6 +582,7 @@ function DashboardContent() {
             loading={initialLoading || loading}
             favoriteNames={favoriteNames}
             onToggleFavorite={toggleFavorite}
+            votes={votes}
           />
         )}
 

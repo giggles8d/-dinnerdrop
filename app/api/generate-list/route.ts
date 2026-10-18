@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       return Response.json({ error: 'No ingredients found in meals' }, { status: 400 })
     }
 
-    const prompt = `You are a grocery list optimizer. Take this list of ingredients from 5 dinner recipes and:
+    const prompt = `You are a grocery list optimizer. Take this list of ingredients from ${meals.length} dinner recipes and:
 1. Combine duplicates (e.g., 3 recipes need chicken → one line item with total quantity)
 2. Normalize units (convert all to the same unit type where possible)
 3. Use quantities a shopper can actually buy: whole counts for produce and packaged goods ("1 head garlic", "2 lemons", "1 bunch cilantro"), fractions no finer than 1/4 for weights ("1 1/4 lb", never "0.625 lbs"), tablespoons/teaspoons for spices and butter under 1/2 cup, and "1 can"/"1 jar"/"1 package" for pantry items. Use singular units ("lb", "cup", "clove") — never "lbs"
@@ -54,7 +54,9 @@ Return ONLY valid JSON, no markdown:
   "Meat & Seafood": [],
   "Dairy & Eggs": [],
   "Pantry & Dry Goods": [],
-  "Frozen": []
+  "Frozen": [],
+  "Bakery": [],
+  "Beverages": []
 }`
 
     const text = await generateWithClaude(prompt, 2000)

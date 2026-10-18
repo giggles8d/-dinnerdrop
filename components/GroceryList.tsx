@@ -1,39 +1,13 @@
 'use client'
 import { useState } from 'react'
-import { ExternalLink } from 'lucide-react'
-import { getStoreSearchUrl } from '@/lib/affiliate-links'
-import type { GroceryCategory, GroceryItem } from '@/types'
-
-interface GroceryListProps {
-  groceryList: Record<GroceryCategory, GroceryItem[]>
-  store?: string
-}
-
-const CATEGORY_ORDER: GroceryCategory[] = [
-  'Produce',
-  'Meat & Seafood',
-  'Dairy & Eggs',
-  'Pantry & Dry Goods',
-  'Frozen',
-  'Bakery',
-  'Beverages',
-]
-
-const CATEGORY_EMOJI: Record<GroceryCategory, string> = {
-  'Produce': '🥦',
-  'Meat & Seafood': '🥩',
-  'Dairy & Eggs': '🥛',
-  'Pantry & Dry Goods': '🫙',
-  'Frozen': '❄️',
-  'Bakery': '🍞',
-  'Beverages': '🧃',
-}
-
+import { Plus, X } from 'lucide-react'
+import { CATEGORY_ORDER, CATEGORY_EMOJI, type ListItem } from '@/lib/list'
+import type { GroceryCategory } from '@/types'
 
 // Display helper: "0.625 lbs" -> "5/8 lb", "1 lbs" -> "1 lb", "2 cloves" stays.
 const FRACTIONS: Array<[number, string]> = [
-  [0.125, '\u215b'], [0.25, '\u00bc'], [0.333, '\u2153'], [0.375, '\u215c'], [0.5, '\u00bd'],
-  [0.625, '\u215d'], [0.667, '\u2154'], [0.75, '\u00be'], [0.875, '\u215e'],
+  [0.125, '⅛'], [0.25, '¼'], [0.333, '⅓'], [0.375, '⅜'], [0.5, '½'],
+  [0.625, '⅝'], [0.667, '⅔'], [0.75, '¾'], [0.875, '⅞'],
 ]
 const PLURAL_TO_SINGULAR: Record<string, string> = {
   lbs: 'lb', pounds: 'lb', pound: 'lb', ounces: 'oz', ounce: 'oz', cups: 'cup', tablespoons: 'tbsp', tablespoon: 'tbsp',
@@ -58,100 +32,103 @@ export function formatQuantity(quantity: string | number, unit: string): string 
     if (fracText) qtyText = whole > 0 ? `${whole}${fracText}` : fracText
     else qtyText = String(Math.round(n * 100) / 100)
   }
-  // Pluralize count units when quantity > 1 ("2 cloves"), keep weight/volume units singular ("2 lb", "3 cup" -> "3 cups").
-  let unitText = base
-  if (!Number.isNaN(n) && n > 1) {
+  let unitText = base === 'whole' ? '' : base
+  if (!Number.isNaN(n) && n > 1 && unitText) {
     if (COUNT_UNITS.has(base) || base === 'cup') unitText = base === 'bunch' ? 'bunches' : base === 'box' ? 'boxes' : `${base}s`
   }
   return `${qtyText} ${unitText}`.trim()
 }
 
-export default function GroceryList({ groceryList, store = '' }: GroceryListProps) {
-  const [checked, setChecked] = useState<Set<string>>(new Set())
+interface GroceryListProps {
+  items: ListItem[]
+  onToggleChecked: (item: ListItem) => void
+  onToggleHave: (item: ListItem) => void
+  onRemove: (item: ListItem) => void
+  onAdd: (name: string, category?: GroceryCategory) => Promise<void> | void
+}
 
-  function toggleItem(key: string) {
-    setChecked((prev) => {
-      const next = new Set(prev)
-      if (next.has(key)) {
-        next.delete(key)
-      } else {
-        next.add(key)
-      }
-      return next
-    })
+const SOURCE_LABEL: Partial<Record<ListItem['source'], string>> = {
+  manual: 'added', sms: 'texted', staples: 'staple', extra: 'basics',
+}
+
+export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd }: GroceryListProps) {
+  const [draft, setDraft] = useState('')
+  const [adding, setAdding] = useState(false)
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault()
+    const name = draft.trim()
+    if (!name) return
+    setAdding(true)
+    try { await onAdd(name) } finally { setAdding(false); setDraft('') }
   }
 
   return (
     <div className="space-y-8">
-      {CATEGORY_ORDER.map((category) => {
-        const items = groceryList[category]
-        if (!items || items.length === 0) return null
-        const checkedCount = items.filter((_, i) => checked.has(`${category}-${i}`)).length
+      <form onSubmit={submit} className="flex gap-2 print:hidden">
+        <input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          placeholder="Add anything — milk, paper towels, snacks for the game…"
+          className="flex-1 rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+        />
+        <button type="submit" disabled={adding || !draft.trim()} className="inline-flex items-center gap-1 px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50">
+          <Plus className="w-4 h-4" /> Add
+        </button>
+      </form>
 
+      {CATEGORY_ORDER.map((category) => {
+        const rows = items.filter((i) => i.category === category)
+        if (!rows.length) return null
+        const need = rows.filter((r) => !r.have)
+        const done = need.filter((r) => r.checked).length
         return (
           <div key={category}>
             <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-primary/20">
               <div className="flex items-center gap-2">
                 <span className="text-base">{CATEGORY_EMOJI[category]}</span>
-                <h3 className="text-xs font-bold text-primary uppercase tracking-widest">
-                  {category}
-                </h3>
+                <h3 className="text-xs font-bold text-primary uppercase tracking-widest">{category}</h3>
               </div>
-              {checkedCount > 0 && (
-                <span className="text-xs font-medium text-muted-foreground">
-                  {checkedCount}/{items.length}
-                </span>
-              )}
+              {done > 0 && <span className="text-xs font-medium text-muted-foreground">{done}/{need.length}</span>}
             </div>
             <ul className="space-y-1">
-              {items.map((item, i) => {
-                const key = `${category}-${i}`
-                const isChecked = checked.has(key)
+              {rows.map((item) => {
+                const muted = item.checked || item.have
                 return (
-                  <li
-                    key={key}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                      isChecked ? 'bg-muted/50' : 'hover:bg-muted/30'
-                    }`}
-                  >
-                    <div
-                      onClick={() => toggleItem(key)}
-                      className={`w-5 h-5 rounded-md border-2 flex-shrink-0 flex items-center justify-center transition-all cursor-pointer ${
-                        isChecked
-                          ? 'bg-primary border-primary'
-                          : 'border-border hover:border-primary/50'
-                      }`}
+                  <li key={item.id} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${muted ? 'bg-muted/50' : 'hover:bg-muted/30'}`}>
+                    <button
+                      type="button"
+                      onClick={() => onToggleChecked(item)}
+                      aria-label={item.checked ? 'Mark not bought' : 'Mark bought'}
+                      className={`w-5 h-5 rounded-md border-2 flex-shrink-0 flex items-center justify-center transition-all ${item.checked ? 'bg-primary border-primary' : 'border-border hover:border-primary/50'}`}
                     >
-                      {isChecked && (
+                      {item.checked && (
                         <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                       )}
-                    </div>
-                    <span
-                      onClick={() => toggleItem(key)}
-                      className={`text-sm flex-1 transition-colors cursor-pointer ${
-                        isChecked ? 'line-through text-muted-foreground' : 'text-foreground'
-                      }`}
-                    >
+                    </button>
+                    <span onClick={() => onToggleChecked(item)} className={`text-sm flex-1 cursor-pointer transition-colors ${muted ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                       {item.name}
+                      {SOURCE_LABEL[item.source] && <span className="ml-2 text-[10px] uppercase tracking-wide text-muted-foreground/70 no-underline">{SOURCE_LABEL[item.source]}{item.added_by ? ` · ${item.added_by}` : ''}</span>}
                     </span>
-                    <span className={`text-xs font-medium transition-colors ${
-                      isChecked ? 'text-muted-foreground/50' : 'text-muted-foreground'
-                    }`}>
-                      {formatQuantity(item.quantity, item.unit)}
-                    </span>
-                    {store && store !== 'Kroger' && item.searchTerm && (
-                      <a
-                        href={getStoreSearchUrl(store, item.searchTerm)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="ml-1 text-muted-foreground hover:text-primary transition-colors flex-shrink-0"
-                        title={`Find at ${store}`}
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                    {item.quantity && (
+                      <span className={`text-xs font-medium ${muted ? 'text-muted-foreground/50' : 'text-muted-foreground'}`}>
+                        {formatQuantity(item.quantity, item.unit ?? '')}
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => onToggleHave(item)}
+                      title={item.have ? 'Need it after all' : 'Already have it — skip in the cart'}
+                      className={`print:hidden text-[11px] px-2 py-0.5 rounded-full border transition-colors ${item.have ? 'bg-secondary text-primary border-primary/30' : 'text-muted-foreground border-border hover:border-primary/40'}`}
+                    >
+                      {item.have ? 'have it' : 'have?'}
+                    </button>
+                    {item.source !== 'plan' && (
+                      <button type="button" onClick={() => onRemove(item)} aria-label="Remove" className="print:hidden text-muted-foreground hover:text-destructive">
+                        <X className="w-3.5 h-3.5" />
+                      </button>
                     )}
                   </li>
                 )

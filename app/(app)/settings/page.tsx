@@ -218,8 +218,19 @@ export default function SettingsPage() {
     setSaving(false)
     if (err) { setError(err.message); return }
     setDirty(false)
-    setSaved('Saved. Your next plan uses these settings.')
-    setTimeout(() => setSaved(null), 4000)
+    let note = 'Saved. Your next plan uses these settings.'
+    if (settings.texting.enabled && members.some((m) => m.phone && !m.phone_opt_in_at && !m.phone_opted_out)) {
+      try {
+        const r = await fetch('/api/sms/optin', { method: 'POST' })
+        const j = await r.json().catch(() => ({}))
+        if (j.sent) note = `Saved. Opt-in text sent to ${j.sent} ${j.sent === 1 ? 'person' : 'people'} — they reply YES to join.`
+        else if (j.reason === 'family_required') note = 'Saved. Family texting starts once your Family trial is on.'
+        else if (j.reason === 'sms_not_configured') note = 'Saved. Texting is being switched on — opt-in texts go out as soon as it is.'
+      } catch { /* ignore */ }
+      await load()
+    }
+    setSaved(note)
+    setTimeout(() => setSaved(null), 6000)
   }
 
   /* ---- members ---- */
