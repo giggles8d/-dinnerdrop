@@ -170,6 +170,26 @@ export default function SettingsPage() {
   const [error, setError] = useState<string | null>(null)
   const [dirty, setDirty] = useState(false)
   const [inviteUrl, setInviteUrl] = useState<string | null>(null)
+  const [runBusy, setRunBusy] = useState(false)
+  const [runMsg, setRunMsg] = useState<string | null>(null)
+
+  async function runVoteNow() {
+    setRunBusy(true); setRunMsg(null)
+    try {
+      const r = await fetch('/api/sms/run-vote', { method: 'POST' })
+      const j = await r.json()
+      if (!r.ok) throw new Error(j.error || 'Failed')
+      const bits: string[] = []
+      if (j.planned) bits.push(`picked the week of ${j.weekStart}`)
+      if (j.optInsSent) bits.push(`opt-in text sent to ${j.optInsSent}`)
+      if (j.voteTextsSent) bits.push(`menu sent to ${j.voteTextsSent}`)
+      if (j.skipped?.length) bits.push(`skipped: ${j.skipped.join('; ')}`)
+      setRunMsg(bits.length ? `Done — ${bits.join(', ')}. Replies are checked every couple of minutes; you'll get a text when everyone has answered.` : 'Nothing to send right now.')
+      await load()
+    } catch (e) {
+      setRunMsg(e instanceof Error ? e.message : 'Failed')
+    } finally { setRunBusy(false) }
+  }
   const [inviteBusy, setInviteBusy] = useState(false)
 
   async function makeInvite() {
@@ -500,6 +520,18 @@ export default function SettingsPage() {
                       </div>
                     ))}
                   </div>
+                </div>
+                <div className="rounded-xl border border-border p-4 space-y-3">
+                  <Field label="Your number" hint="Where the &quot;everyone&apos;s voted — add the rest and approve the order&quot; text goes.">
+                    <input value={settings.texting.ownerPhone} onChange={(e) => patch((s) => { s.texting.ownerPhone = e.target.value })} placeholder="+1 555 123 4567" className="w-full sm:w-72 rounded-md border border-input bg-background px-3 py-2 text-sm" />
+                  </Field>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <button type="button" onClick={runVoteNow} disabled={runBusy || dirty || !isFamily} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50">
+                      {runBusy ? 'Texting…' : 'Text my family now'}
+                    </button>
+                    <span className="text-xs text-muted-foreground">{dirty ? 'Save your changes first.' : 'Picks the week if it isn\'t planned yet, sends the opt-in to anyone new, and texts the menu to everyone who has joined.'}</span>
+                  </div>
+                  {runMsg && <p className="text-sm text-foreground">{runMsg}</p>}
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <Field label="Vote day" hint="The week's dinners are texted this day for keep/skip."><Select value={settings.texting.voteDay} onChange={(v) => patch((s) => { s.texting.voteDay = v })} options={DAY_OPTIONS} /></Field>

@@ -46,6 +46,7 @@ export interface Settings {
     quietStart: string              // 'HH:MM'
     quietEnd: string
     weeklyCap: number               // max texts per member per week
+    ownerPhone: string              // where "everyone's voted" + reminders for the planner go (E.164)
   }
   stores: {
     mode: 'instacart' | 'kroger' | 'instore'
@@ -94,6 +95,7 @@ export const DEFAULT_SETTINGS: Settings = {
     quietStart: '21:00',
     quietEnd: '07:00',
     weeklyCap: 4,
+    ownerPhone: '',
   },
   stores: {
     mode: 'instacart',

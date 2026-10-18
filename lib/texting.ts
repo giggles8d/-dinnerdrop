@@ -9,6 +9,7 @@ import { mergeSettings, type Settings } from '@/lib/settings'
 import { localNow, mondayOf } from '@/lib/plan'
 import { sendSms, smsConfigured, normalizePhone } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
+import { autoPlan } from '@/lib/autoplan'
 import { guessCategory, normalizeItemName } from '@/lib/list'
 import type { Meal } from '@/types'
 
@@ -114,18 +115,18 @@ export async function runTextingDay(admin: SupabaseClient, now: Date = new Date(
       const isAgain = settings.texting.againDay === weekday
       if (!isVote && !isAgain) continue
 
-      const plan = await latestPlan(admin, o.id)
-      if (!plan || !plan.meals.length) { report.skipped++; continue }
-      const { data: members } = await admin.from('household_members').select('*').eq('household_id', o.household_id).not('phone', 'is', null)
-      const voters = ((members ?? []) as MemberRow[]).filter((m) => m.can_vote && m.phone_opt_in_at && !m.phone_opted_out)
-      if (!voters.length) { report.skipped++; continue }
-      const family = (o.full_name || '').trim().split(' ')[0] || 'Your family'
-
+      // Vote day: auto-pick the week if needed, opt-in anyone new, text the menu.
       if (isVote && !(await alreadySent(admin, o.household_id, 'vote_request'))) {
-        const body = `DinnerDrop — ${family}'s dinners this week:\n${menuLines(plan.meals)}\n\nReply with the numbers you'd SKIP (e.g. "2 4"), or ALL GOOD. Text ADD + anything you need on the grocery list (e.g. "add oat milk").`
-        for (const m of voters) if (await textMember(admin, m, body, 'vote_request', settings.texting.weeklyCap)) report.voteTexts++
+        const r = await startVoteCycle(admin, o.id, { now })
+        report.voteTexts += r.voteTextsSent
+        if (r.skipped.length) report.skipped++
       }
+      // "Bring it back?" day: only to people already opted in, about the current plan.
       if (isAgain && !(await alreadySent(admin, o.household_id, 'again_request'))) {
+        const plan = await latestPlan(admin, o.id)
+        if (!plan || !plan.meals.length) { report.skipped++; continue }
+        const { data: members } = await admin.from('household_members').select('*').eq('household_id', o.household_id).not('phone', 'is', null)
+        const voters = ((members ?? []) as MemberRow[]).filter((m) => m.can_vote && m.phone_opt_in_at && !m.phone_opted_out)
         const body = `DinnerDrop — which dinners should come back soon?\n${menuLines(plan.meals)}\n\nReply AGAIN + numbers (e.g. "again 1 3"), or NONE.`
         for (const m of voters) if (await textMember(admin, m, body, 'again_request', settings.texting.weeklyCap)) report.againTexts++
       }
@@ -275,4 +276,190 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     }
   }
   return { reply: `Didn't catch that. Reply numbers to skip dinners, ALL GOOD, ADD + items, MENU, LIST, or HELP.`, handled: true, member: m }
+}
+
+/* ------------------------------------------------------------------ */
+/* Vote cycle: auto-pick the week, text the choices, watch for replies  */
+/* ------------------------------------------------------------------ */
+
+
+const APP_URL = 'https://www.dinnerdrop.app'
+
+export interface CycleReport { weekStart: string; planned: boolean; optInsSent: number; voteTextsSent: number; skipped: string[] }
+
+/** The planner's own number for "everyone's in" texts. */
+export async function ownerPhone(admin: SupabaseClient, owner: OwnerRow): Promise<string | null> {
+  const s = mergeSettings(owner.settings)
+  const fromSettings = normalizePhone(s.texting.ownerPhone)
+  if (fromSettings) return fromSettings
+  const { data } = await admin.from('household_members').select('phone').eq('household_id', owner.household_id).eq('profile_id', owner.id).limit(1)
+  return normalizePhone(data?.[0]?.phone ?? null)
+}
+
+/** Week a vote on `weekday` is for: Sat/Sun vote → the coming Monday; mid-week → this week. */
+export function targetWeekFor(now: Date, weekday: string): string {
+  if (weekday === 'sat' || weekday === 'sun') {
+    const d = new Date(now); d.setUTCDate(d.getUTCDate() + (weekday === 'sat' ? 2 : 1))
+    return mondayOf(d)
+  }
+  return mondayOf(now)
+}
+
+/**
+ * Start (or resume) the vote cycle for one household:
+ *  1. make sure a plan exists for the target week (auto-pick if not)
+ *  2. opt-in text to anyone with a number who hasn't joined
+ *  3. the week's dinners to everyone who has
+ */
+export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opts: { now?: Date; force?: boolean } = {}): Promise<CycleReport> {
+  const now = opts.now ?? new Date()
+  const { data: o } = await admin
+    .from('profiles')
+    .select('id, household_id, full_name, timezone, settings, subscription_status, is_beta_member, family_until, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs')
+    .eq('id', ownerId)
+    .single()
+  if (!o?.household_id) throw new Error('No household')
+  const settings = mergeSettings(o.settings)
+  const { weekday } = localNow(o.timezone || 'America/New_York', now)
+  const weekStart = targetWeekFor(now, weekday)
+  const report: CycleReport = { weekStart, planned: false, optInsSent: 0, voteTextsSent: 0, skipped: [] }
+  if (!smsConfigured()) { report.skipped.push('Twilio not configured'); return report }
+  if (!settings.texting.enabled) { report.skipped.push('texting off in settings'); return report }
+  if (!isFamilyProfile(o)) { report.skipped.push('family plan required'); return report }
+
+  // 1. plan for the target week
+  const { data: existing } = await admin.from('meal_plans').select('id, meals').eq('user_id', o.id).eq('week_start', weekStart).order('created_at', { ascending: false }).limit(1)
+  let meals: Meal[] = (existing?.[0]?.meals as Meal[]) ?? []
+  if (!meals.length) {
+    const planned = await autoPlan(admin, o, settings, weekStart)
+    if (!planned) { report.skipped.push('could not generate a plan'); return report }
+    meals = planned
+    report.planned = true
+  }
+
+  // 2 + 3. members
+  const { data: members } = await admin.from('household_members').select('*').eq('household_id', o.household_id).not('phone', 'is', null)
+  const family = (o.full_name || '').trim().split(' ')[0] || 'Your family'
+  const familyName = family.charAt(0).toUpperCase() + family.slice(1)
+  for (const m of (members ?? []) as MemberRow[]) {
+    const phone = normalizePhone(m.phone)
+    if (!phone) continue
+    if (phone !== m.phone) await admin.from('household_members').update({ phone }).eq('id', m.id)
+    const mm = { ...m, phone }
+    if (mm.phone_opted_out) continue
+    if (!mm.phone_opt_in_at) {
+      if (await sendOptIn(admin, mm, `${familyName}'s family`)) report.optInsSent++
+      continue
+    }
+    if (!mm.can_vote) continue
+    if (!opts.force && await alreadySentTo(admin, mm.id, 'vote_request', 1)) continue
+    const body = `DinnerDrop — ${familyName}'s dinners for the week of ${weekStart.slice(5).replace('-', '/')}:\n${menuLines(meals)}\n\nReply with the numbers you'd SKIP (e.g. "2 4"), or ALL GOOD. Text ADD + anything you need on the grocery list (e.g. "add oat milk").`
+    if (await textMember(admin, mm, body, 'vote_request', settings.texting.weeklyCap)) report.voteTextsSent++
+  }
+  return report
+}
+
+/* ---- polling Twilio for replies (no webhook change needed) ---- */
+
+interface TwilioMsg { sid: string; from: string; to: string; body: string; direction: string; date_sent: string }
+
+async function fetchInbound(sinceDays = 2): Promise<TwilioMsg[]> {
+  const sid = process.env.TWILIO_ACCOUNT_SID, token = process.env.TWILIO_AUTH_TOKEN, from = process.env.TWILIO_FROM_NUMBER
+  if (!sid || !token || !from) return []
+  const since = new Date(Date.now() - sinceDays * 86400000).toISOString().slice(0, 10)
+  const url = `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json?To=${encodeURIComponent(from)}&DateSent%3E=${since}&PageSize=100`
+  const res = await fetch(url, { headers: { Authorization: 'Basic ' + Buffer.from(`${sid}:${token}`).toString('base64') }, cache: 'no-store' })
+  if (!res.ok) throw new Error(`Twilio list ${res.status}`)
+  const json = await res.json()
+  return ((json.messages ?? []) as TwilioMsg[]).filter((m) => m.direction === 'inbound')
+}
+
+export interface PollReport { fetched: number; handled: number; replies: number; completions: number; errors: string[] }
+
+/** Read new inbound texts from Twilio, handle the ones from our members, reply, then check for finished votes. */
+export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
+  const report: PollReport = { fetched: 0, handled: 0, replies: 0, completions: 0, errors: [] }
+  let msgs: TwilioMsg[] = []
+  try { msgs = await fetchInbound() } catch (e) { report.errors.push(String(e)); return report }
+  report.fetched = msgs.length
+  if (msgs.length) {
+    const { data: seen } = await admin.from('sms_messages').select('twilio_sid').in('twilio_sid', msgs.map((m) => m.sid))
+    const seenSet = new Set((seen ?? []).map((r) => r.twilio_sid))
+    // oldest first so a YES followed by a vote is processed in order
+    for (const m of msgs.filter((x) => !seenSet.has(x.sid)).sort((a, b) => new Date(a.date_sent).getTime() - new Date(b.date_sent).getTime())) {
+      try {
+        const r = await handleInbound(admin, m.from, m.body, m.sid)
+        if (!r.handled || !r.member) continue   // not one of ours (FamCEO's traffic)
+        report.handled++
+        if (r.reply) {
+          const sent = await sendSms(m.from, r.reply)
+          await admin.from('sms_messages').insert({ household_id: r.member.household_id, member_id: r.member.id, direction: 'out', to_number: m.from, body: r.reply, intent: 'reply', twilio_sid: sent.sid ?? null })
+          report.replies++
+        }
+        // Just opted in while a vote is open? Send them the menu right away.
+        if (parseInbound(m.body).kind === 'optin') {
+          const open = await openVoteCycle(admin, r.member.household_id)
+          if (open) {
+            const owner = await ownerForHousehold(admin, r.member.household_id)
+            if (owner) await startVoteCycle(admin, owner.id)
+          }
+        }
+      } catch (e) {
+        report.errors.push(`${m.sid}: ${e instanceof Error ? e.message : String(e)}`)
+      }
+    }
+  }
+  try { report.completions = await checkVoteCompletion(admin) } catch (e) { report.errors.push(String(e)) }
+  return report
+}
+
+/** Household has a vote_request in the last 3 days that hasn't been closed out. */
+async function openVoteCycle(admin: SupabaseClient, householdId: string): Promise<{ since: string } | null> {
+  const since = new Date(Date.now() - 3 * 86400000).toISOString()
+  const { data: req } = await admin.from('sms_messages').select('created_at').eq('household_id', householdId).eq('intent', 'vote_request').gte('created_at', since).order('created_at', { ascending: true }).limit(1)
+  if (!req?.length) return null
+  const { data: done } = await admin.from('sms_messages').select('id').eq('household_id', householdId).eq('intent', 'vote_complete').gte('created_at', req[0].created_at).limit(1)
+  return done?.length ? null : { since: req[0].created_at }
+}
+
+/** When every voter has answered, text the planner: done — add the rest, approve the order. */
+export async function checkVoteCompletion(admin: SupabaseClient): Promise<number> {
+  const since = new Date(Date.now() - 3 * 86400000).toISOString()
+  const { data: reqs } = await admin.from('sms_messages').select('household_id').eq('intent', 'vote_request').gte('created_at', since)
+  const households = Array.from(new Set((reqs ?? []).map((r) => r.household_id).filter(Boolean))) as string[]
+  let n = 0
+  for (const hid of households) {
+    const open = await openVoteCycle(admin, hid)
+    if (!open) continue
+    const { data: asked } = await admin.from('sms_messages').select('member_id').eq('household_id', hid).eq('intent', 'vote_request').gte('created_at', open.since)
+    const askedIds = Array.from(new Set((asked ?? []).map((a) => a.member_id).filter(Boolean))) as string[]
+    if (!askedIds.length) continue
+    const { data: answered } = await admin.from('sms_messages').select('member_id, intent').eq('household_id', hid).eq('direction', 'in').gte('created_at', open.since).in('intent', ['allgood', 'skip', 'none', 'again'])
+    const answeredIds = new Set((answered ?? []).map((a) => a.member_id))
+    if (!askedIds.every((id) => answeredIds.has(id))) continue
+
+    const owner = await ownerForHousehold(admin, hid)
+    if (!owner) continue
+    const plan = await latestPlan(admin, owner.id)
+    const to = await ownerPhone(admin, owner)
+    const { data: votes } = await admin.from('meal_votes').select('meal_name, vote, household_members(name)').eq('household_id', hid).eq('week_start', plan?.week_start ?? '')
+    const skips: Record<string, string[]> = {}
+    for (const v of (votes ?? []) as Array<{ meal_name: string; vote: string; household_members: { name: string } | { name: string }[] | null }>) {
+      if (v.vote !== 'skip') continue
+      const hm = Array.isArray(v.household_members) ? v.household_members[0] : v.household_members
+      ;(skips[v.meal_name] ??= []).push(hm?.name ?? 'someone')
+    }
+    const { data: names } = await admin.from('household_members').select('name').in('id', askedIds)
+    const who = (names ?? []).map((x) => x.name).join(', ')
+    const skipLines = Object.entries(skips).map(([meal, ppl]) => `• ${meal} — skip (${ppl.join(', ')})`)
+    const body = `DinnerDrop: everyone's voted (${who}). ${skipLines.length ? `\n${skipLines.join('\n')}\nEverything else: keep.` : 'All dinners kept 🙌'}\n\nNext: add anything else you need to the list, then approve the order → ${APP_URL}/grocery-list`
+    if (to) {
+      const r = await sendSms(to, body)
+      await admin.from('sms_messages').insert({ household_id: hid, direction: 'out', to_number: to, body, intent: 'vote_complete', twilio_sid: r.sid ?? null })
+    } else {
+      await admin.from('sms_messages').insert({ household_id: hid, direction: 'out', to_number: null, body, intent: 'vote_complete' })
+    }
+    n++
+  }
+  return n
 }
