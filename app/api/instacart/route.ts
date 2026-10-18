@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { groceryList, estTotal, weekStart, store } = await request.json()
+    const { groceryList, estTotal, weekStart, store, quoteOnly } = await request.json()
     const storeName = typeof store === 'string' ? store.slice(0, 40) : ''
 
     if (!groceryList || typeof groceryList !== 'object') {
@@ -30,7 +30,8 @@ export async function POST(request: Request) {
     // Log the handoff (best-effort — never block the response on analytics).
     if (result.link && !result.fallback) {
       try {
-        await supabase.from('grocery_handoffs').insert({
+        // quoteOnly: the Saturday price read builds a list page just to read prices — not a handoff.
+        if (!quoteOnly) await supabase.from('grocery_handoffs').insert({
           user_id: user.id,
           store: storeName ? `Instacart · ${storeName}` : 'Instacart',
           item_count: allItems.length,
