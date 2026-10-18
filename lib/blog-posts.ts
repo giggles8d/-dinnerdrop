@@ -25,7 +25,7 @@ Here is what that means for a family that has leaned on Mealime for years, and w
 ## What you lose on October 21
 
 - **Your saved favorites and meal plans.** There is no export. Mealime has said plans, favorites and lists will not transfer.
-- **The free tier.** Meals Hub lives inside Albertsons' store apps and is built around shopping at those stores.
+- **A standalone app.** Meals Hub keeps free recipes, plans and lists, but it lives inside Albertsons' store apps (Safeway, Vons, Jewel-Osco…) and is built around shopping at those stores.
 - **The two things people actually loved:** pick a handful of dinners, get one combined grocery list organized by aisle, done.
 
 If you are an Albertsons-family shopper, Meals Hub may be fine. If you shop anywhere else, you need a new home for the weekly routine.
@@ -38,7 +38,7 @@ A note in your phone, a screenshot, an email to yourself. Just capture the names
 
 ## Rebuild the routine in DinnerDrop (free)
 
-[DinnerDrop](https://www.dinnerdrop.app/mealime) was built around the same loop Mealime had — choose the week, get one list — with one addition: the list goes into your **Instacart cart in one tap**, every item pre-loaded, at the store's normal prices. Planning and the cart are free, with no card.
+[DinnerDrop](https://www.dinnerdrop.app/mealime) was built around the same loop Mealime had — choose the week, get one list — with one addition: one tap opens the whole list in **Instacart with every item matched** — pick your store, add to cart, check out at Instacart's prices for that store. Planning and the cart are free, with no card.
 
 To move over:
 
@@ -46,26 +46,26 @@ To move over:
 2. Sign up with your email (no password, no card).
 3. DinnerDrop rebuilds each dinner as a full recipe for your family size — ingredients, steps, cook time — and saves it to your favorites.
 4. Generate your first week. Your favorites rotate in alongside new dinners that fit your budget, cook time and dietary needs.
-5. Tap **Shop ingredients**. The combined list opens in Instacart with everything in the cart.
+5. Tap **Shop ingredients**. The combined list opens in Instacart with every item matched; pick your store and add it all to your cart.
 
 ## How it compares
 
 | | Mealime (until Oct 21) | DinnerDrop |
 |---|---|---|
 | Pick dinners, get one list | Yes | Yes |
-| Recipe library to browse | Yes (500+) | No — it plans for you; add any dinner by name |
+| Recipe library to browse | Yes (500+) | Yes — a smaller, growing library of dinners families kept, free at [dinnerdrop.app/recipes](https://www.dinnerdrop.app/recipes); plus add any dinner by name |
 | Grocery handoff | Delivery partners | Instacart cart, pre-loaded; Kroger cart on Family |
 | Family size, budget, cook time | Pro | Free |
 | Dietary needs | Yes | Yes |
 | Swap a dinner | Limited | One tap, and it learns what you keep |
-| Price | Free / Pro $5.99/mo | Free; Family $4.99/mo or $39/yr |
+| Price | Free / Pro (paid upgrade) | Free; Family $4.99/mo or $39/yr |
 
-The honest difference: Mealime gave you a catalog to browse. DinnerDrop writes the week for you from what it knows about your family, and anything specific you want goes in by name. Families who kept a rotation of 10–15 proven dinners in Mealime will find that rotation is exactly what DinnerDrop is built to run.
+The honest difference: Mealime gave you a big catalog to browse. DinnerDrop's library is smaller; its job is to write the week for you from what it knows about your family, and anything specific you want goes in by name. Families who kept a rotation of 10–15 proven dinners in Mealime will find that rotation is exactly what DinnerDrop is built to run.
 
 ## Other options worth knowing
 
 - **Plan to Eat** ($5.95/month or $49/year) — the best choice if you want to import recipes from websites and drag them onto a calendar yourself. No cart handoff.
-- **Paprika** ($4.99 one-time per device) — a recipe manager first, with a grocery list. No planning, no cart.
+- **Paprika** ($4.99 one-time per platform) — a recipe manager with a weekly planner and grocery list. No AI, no cart handoff.
 - **Samsung Food** (free; Food+ $6.99/month) — recipe saving with a planner. Delivery partners vary.
 
 ## Do it before Tuesday
@@ -172,16 +172,18 @@ Either way: stop making the "what's for dinner?" decision at 5:47pm. That versio
   },
   {
     slug: 'best-meal-planning-app-for-families',
-    title: 'The 7 Best Meal Planning Apps for Families in 2026 (Ranked by Real Parents)',
+    title: 'The 7 Best Meal Planning Apps for Families in 2026 (Compared)',
     description:
-      "Tested 7 meal planning apps specifically for families — DinnerDrop, Mealime, Plan to Eat, " +
-      "Paprika, Whisk, Prepear, and Cozi — ranked by AI features, grocery integration, and real family use.",
+      "Seven meal planning apps for families — DinnerDrop, Mealime, Plan to Eat, " +
+      "Paprika, Samsung Food, Prepear, and Cozi — compared on AI features, grocery handoff, and price. Written by DinnerDrop's founder.",
     publishDate: '2026-05-14',
     readingTimeMinutes: 11,
     primaryKeyword: 'best meal planning app for families',
     content: `You\'ve probably Googled "best meal planning app" at least once, stared at a wall of options, and closed the tab without downloading anything.
 
-This roundup is different. We tested seven apps specifically for families — not single adults, not couples without kids, but households where at least one person is a picky eater, budgets are real, and 5pm comes fast.
+This roundup is different. It looks at seven apps through a family lens — not single adults, not couples without kids, but households where at least one person is a picky eater, budgets are real, and 5pm comes fast.
+
+**Who is writing this:** DinnerDrop's founder, a parent of three in upstate New York. We make one of the apps below, so read our #1 with that in mind. The others are described from their current app-store listings, pricing pages and our own use; prices were checked October 2026.
 
 Our ranking criteria: AI vs. manual, grocery integration, dietary filter support, price, and how quickly a total newcomer can get a usable dinner plan on a Tuesday night.
 
@@ -190,12 +192,12 @@ Our ranking criteria: AI vs. manual, grocery integration, dietary filter support
 | App | AI | Grocery Handoff | Price |
 |-----|-----|----------------|-------|
 | DinnerDrop | Yes (full) | Yes (Instacart one-tap cart; Kroger on Family) | Free / $4.99/mo Family |
-| Mealime | Partial | Shopping list only | Shutting down Oct 21, 2026 |
+| Mealime | Partial | Aisle-sorted list + grocery delivery partners | Shutting down Oct 21, 2026 |
 | Plan to Eat | No | Shopping list only | $5.95/mo or $49/yr |
 | Paprika | No | Shopping list only | $4.99 one-time |
-| Whisk | Partial | Some stores | Free |
+| Samsung Food (formerly Whisk) | In paid Food+ | Some stores | Free / Food+ $6.99/mo |
 | Prepear | No | Shopping list only | Free / $8/mo |
-| Cozi | No | Shopping list only | Free / $36/yr |
+| Cozi | No | Shopping list only | Free / Gold $29.99/yr |
 
 ## 1. DinnerDrop — Best Overall for AI-Powered Family Meal Planning
 
@@ -218,9 +220,9 @@ You enter your family size, weekly grocery budget, dietary restrictions, and pre
 
 ## 2. Mealime — Was the Best Free Option (Shutting Down October 21, 2026)
 
-**Price:** Was free (Pro: $5.99/month). Albertsons, which owns Mealime, is closing the app on October 21, 2026 and folding it into the "Meals Hub" inside its own grocery apps.
+**Price:** Was free, with a paid Pro upgrade. Albertsons, which owns Mealime, is closing the app on October 21, 2026 and folding it into the "Meals Hub" inside its own grocery apps.
 
-Mealime had been around since 2016 with a clean interface, a solid recipe library (500+ recipes), and shopping lists organized by grocery store section. It was the app parents recommended to each other most.
+Mealime had been around since 2016 with a clean interface, a solid recipe library (500+ recipes), shopping lists organized by grocery store section, and hand-offs to grocery delivery partners. It was the app parents recommended to each other most.
 
 **What worked:** Beautiful recipes, strong dietary filters (vegetarian, vegan, gluten-free, keto, etc.), a free tier that was genuinely useful.
 **What doesn\'t:** It is going away, and there is no export — saved plans, favorites, and lists don\'t transfer. If you are a Mealime family, [DinnerDrop](https://www.dinnerdrop.app/start) is free and you can rebuild your favorites by typing in their names.
@@ -243,14 +245,14 @@ Paprika has been around since 2010 with a one-time fee instead of a subscription
 **What works:** No subscription, excellent cross-platform sync, accurate recipe scaling, loyal community.
 **What doesn\'t:** No AI, no grocery cart handoff. Must build a library before it becomes useful.
 
-## 5. Whisk — Best Free Option for Casual Planners
+## 5. Samsung Food (formerly Whisk) — Best Free Option for Casual Planners
 
-**Price:** Free
+**Price:** Free (Food+ $6.99/month or $59.99/year)
 
-Whisk (owned by Samsung) is a free recipe-saving and meal planning app with basic grocery integration. Save recipes from the web, schedule on a weekly planner, generate a shopping list.
+Samsung Food — the app that used to be Whisk — is a recipe-saving and meal planning app with basic grocery integration. Save recipes from the web, schedule on a weekly planner, generate a shopping list. The paid Food+ tier adds AI personalization and weekly planning.
 
-**What works:** Completely free, good recipe import, Instacart integration in some markets.
-**What doesn\'t:** No AI, spotty grocery integration by region, limited recipe database.
+**What works:** A strong free tier, good recipe import, Instacart integration in some markets.
+**What doesn\'t:** AI is paywalled, grocery integration varies by region, and imported recipes send you back to the original website for the instructions.
 
 ## 6. Prepear — Best for Visual Planners
 
@@ -274,13 +276,13 @@ Cozi is a family organizer with meal planning as one feature. If you already use
 
 - **Want less than 2 minutes of weekly planning?** → DinnerDrop
 - **Have a recipe collection to organize?** → Plan to Eat or Paprika
-- **Want free and functional right now?** → DinnerDrop or Whisk
+- **Want free and functional right now?** → DinnerDrop or Samsung Food
 - **Both partners want a visual shared plan?** → Prepear
 - **Already use Cozi for family scheduling?** → Cozi (add DinnerDrop for AI meal generation)
 
 ## The Bottom Line
 
-Most apps on this list support a cook who is already doing the planning work. DinnerDrop eliminates the planning decision entirely — AI builds the plan, generates the grocery list, and sends it to your store. That\'s the meaningful distinction.
+Most apps on this list support a cook who is already doing the planning work. DinnerDrop eliminates the planning decision entirely — AI builds the plan, generates the grocery list, and opens it in Instacart with every item matched. That\'s the meaningful distinction.
 
 [DinnerDrop](https://www.dinnerdrop.app/start) is free, no card needed.
 
@@ -1197,11 +1199,11 @@ Most meal planning apps are freemium. That's not inherently bad — but you shou
 
 **Verdict:** Nice interface. The free tier is genuinely limited. Better suited for people who already know what they want to cook and need organization, not generation.
 
-### 4. Whisk (by Samsung Food)
+### 4. Samsung Food (formerly Whisk)
 
 **What's free:** Recipe saving from any website, basic grocery list, meal calendar.
 
-**What's paywalled:** Nothing major — Whisk is largely free and functional.
+**What's paywalled:** AI personalization and weekly planning sit in the paid Food+ tier; the recipe box and manual planner are free.
 
 **Verdict:** Best genuinely free option for recipe collectors. No AI meal generation. The grocery list is manual — you add recipes, it compiles ingredients. No store integration or cart handoff. Works well as a digital recipe box.
 
@@ -1248,7 +1250,7 @@ Yes. Planning, the grocery list, swaps, the pantry scan, favorites, and the one-
 
 Here's the decision tree:
 
-**You want to organize recipes you already have** → Whisk (free, no AI)
+**You want to organize recipes you already have** → Samsung Food (free tier; AI is in paid Food+)
 
 **You want a shared family calendar with light meal planning** → Cozi free tier
 
@@ -1522,14 +1524,14 @@ DinnerDrop was built specifically around this framework:
 
 ## How DinnerDrop Compares to Other Meal Planning Apps
 
-| Feature | DinnerDrop | Mealime | Plan to Eat | Whisk |
+| Feature | DinnerDrop | Mealime (closing Oct 21, 2026) | Plan to Eat | Samsung Food |
 |---------|-----------|---------|-------------|-------|
 | Generates plans from scratch | AI-generated | Recipe filters | Manual | Recipe saves |
 | Family-specific quantities | Scaled auto | Limited | Manual | No |
 | Weekly budget optimization | Built in | No | No | No |
-| One-tap grocery store handoff | 4 stores | No | No | Limited |
+| One-tap grocery store handoff | Instacart (any Instacart store); Kroger on Family | Delivery partners | No | Limited |
 | Learns from feedback | Yes | No | No | No |
-| Price | Free / $4.99 Family | Free–$6/mo | $6/mo | Free |
+| Price | Free / $4.99 Family | Free / paid Pro | $5.95/mo | Free / Food+ $6.99 |
 
 The honest difference: Mealime and Plan to Eat are excellent recipe organizers. They don't generate budgeted, family-specific, store-connected plans from scratch.
 
