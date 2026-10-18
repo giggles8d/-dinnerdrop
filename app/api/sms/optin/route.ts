@@ -22,7 +22,8 @@ export async function POST() {
   if (!smsConfigured()) return NextResponse.json({ sent: 0, reason: 'sms_not_configured' })
 
   const { data: members } = await admin.from('household_members').select('*').eq('household_id', profile.household_id).not('phone', 'is', null)
-  const family = `${(profile.full_name || '').trim().split(' ')[0] || 'Your family'}`
+  const first = (profile.full_name || '').trim().split(' ')[0]
+  const family = first ? `${first.charAt(0).toUpperCase() + first.slice(1)}'s family` : 'Your family'
   let sent = 0
   for (const m of (members ?? []) as MemberRow[]) {
     const norm = normalizePhone(m.phone)

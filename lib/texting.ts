@@ -11,6 +11,7 @@ import { sendSms, smsConfigured, normalizePhone } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
 import { autoPlan } from '@/lib/autoplan'
 import { guessCategory, normalizeItemName } from '@/lib/list'
+import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
 
 export interface MemberRow {
@@ -176,6 +177,22 @@ function splitItems(s: string): string[] {
   return s.split(/,|\band\b|&|\n|;/i).map((x) => x.trim().replace(/[.!]+$/, '')).filter((x) => x.length >= 2 && x.length <= 60)
 }
 
+
+/** "banannad" → "bananas", "Like kielbasa also" → "kielbasa", "zero suger doctor pepper" → "Dr Pepper Zero Sugar". */
+export async function cleanItems(raw: string[]): Promise<string[]> {
+  const items = raw.map((x) => x.trim()).filter(Boolean)
+  if (!items.length) return []
+  try {
+    const text = await generateWithClaude(
+      `A family member texted these grocery items. Return each as a clean, shoppable product name (fix typos, drop filler words like "like", "also", "please", "some", keep brand names, plural for produce). Return ONLY a JSON array of strings in the same order; use "" for anything that isn't a grocery item.\n${JSON.stringify(items)}`,
+      300,
+    )
+    const out = parseClaudeJSON<string[]>(text)
+    if (Array.isArray(out) && out.length === items.length) return out.map((x, i) => (typeof x === 'string' && x.trim() ? x.trim() : items[i]))
+  } catch { /* fall through */ }
+  return items
+}
+
 export interface InboundResult { reply: string; handled: boolean; member?: MemberRow }
 
 /** Handle a text from a known member. Returns the reply to send (via TwiML). */
@@ -189,7 +206,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'in', from_number: phone, body, intent: parsed.kind, twilio_sid: sid })
 
   const owner = await ownerForHousehold(admin, m.household_id)
-  const family = (owner?.full_name || '').trim().split(' ')[0] || 'your family'
+  const rawFirst = (owner?.full_name || '').trim().split(' ')[0]
+  const family = rawFirst ? rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1) : 'your family'
   const settings = mergeSettings(owner?.settings)
 
   switch (parsed.kind) {
@@ -255,7 +273,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const weekStart = plan?.week_start ?? mondayOf(new Date())
       const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
       const added: string[] = []
-      for (const item of parsed.items) {
+      for (const item of await cleanItems(parsed.items)) {
         const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(item))
         if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id); added.push(item); continue }
         await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: item, category: guessCategory(item), search_term: item, source: 'sms', added_by: m.name })
@@ -268,10 +286,13 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   }
   // Unknown but short and food-ish? Treat as add when the member can add and said something list-like.
   if (m.can_add && body.trim().length <= 40 && !/\d/.test(body) && settings.texting.enabled) {
-    const item = body.trim()
-    if (owner) {
+    const [item] = await cleanItems([body.trim()])
+    if (owner && item) {
       const weekStart = plan?.week_start ?? mondayOf(new Date())
-      await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: item, category: guessCategory(item), search_term: item, source: 'sms', added_by: m.name })
+      const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
+      const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(item))
+      if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
+      else await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: item, category: guessCategory(item), search_term: item, source: 'sms', added_by: m.name })
       return { reply: `Added "${item}" to the grocery list. (Text HELP for everything you can do.)`, handled: true, member: m }
     }
   }
@@ -335,6 +356,11 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     if (!planned) { report.skipped.push('could not generate a plan'); return report }
     meals = planned
     report.planned = true
+  }
+
+  // Mark the cycle open so anyone who opts in later gets the menu right away.
+  if (opts.force || !(await alreadySent(admin, o.household_id, 'vote_cycle', 1))) {
+    await admin.from('sms_messages').insert({ household_id: o.household_id, direction: 'out', body: `vote cycle for ${weekStart}`, intent: 'vote_cycle' })
   }
 
   // 2 + 3. members
@@ -416,7 +442,7 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
 /** Household has a vote_request in the last 3 days that hasn't been closed out. */
 async function openVoteCycle(admin: SupabaseClient, householdId: string): Promise<{ since: string } | null> {
   const since = new Date(Date.now() - 3 * 86400000).toISOString()
-  const { data: req } = await admin.from('sms_messages').select('created_at').eq('household_id', householdId).eq('intent', 'vote_request').gte('created_at', since).order('created_at', { ascending: true }).limit(1)
+  const { data: req } = await admin.from('sms_messages').select('created_at').eq('household_id', householdId).in('intent', ['vote_cycle', 'vote_request']).gte('created_at', since).order('created_at', { ascending: true }).limit(1)
   if (!req?.length) return null
   const { data: done } = await admin.from('sms_messages').select('id').eq('household_id', householdId).eq('intent', 'vote_complete').gte('created_at', req[0].created_at).limit(1)
   return done?.length ? null : { since: req[0].created_at }
@@ -425,7 +451,7 @@ async function openVoteCycle(admin: SupabaseClient, householdId: string): Promis
 /** When every voter has answered, text the planner: done — add the rest, approve the order. */
 export async function checkVoteCompletion(admin: SupabaseClient): Promise<number> {
   const since = new Date(Date.now() - 3 * 86400000).toISOString()
-  const { data: reqs } = await admin.from('sms_messages').select('household_id').eq('intent', 'vote_request').gte('created_at', since)
+  const { data: reqs } = await admin.from('sms_messages').select('household_id').in('intent', ['vote_cycle', 'vote_request']).gte('created_at', since)
   const households = Array.from(new Set((reqs ?? []).map((r) => r.household_id).filter(Boolean))) as string[]
   let n = 0
   for (const hid of households) {
