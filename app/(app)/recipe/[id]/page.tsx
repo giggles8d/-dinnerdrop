@@ -1,17 +1,20 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'next/navigation'
+import { Suspense, useCallback, useEffect, useState } from 'react'
+import { useParams, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Clock, Heart, RefreshCw, Users } from 'lucide-react'
+import { ArrowLeft, Clock, Heart, RefreshCw, Users, ChefHat } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
 import { recordMealSignal } from '@/lib/taste-profile'
+import CookMode from '@/components/CookMode'
 import type { Meal } from '@/types'
 
-function HeroImage({ mealName }: { mealName: string }) {
-  const { photo, loading } = useUnsplashPhoto(mealName)
+function HeroImage({ mealName, imageUrl }: { mealName: string; imageUrl?: string }) {
+  const lookup = useUnsplashPhoto(imageUrl ? '' : mealName)
+  const photo = imageUrl ? { url: imageUrl, alt: `Photo of ${mealName}`, credit: null } : (lookup.photo ? { ...lookup.photo, credit: lookup.photo.credit } : null)
+  const loading = imageUrl ? false : lookup.loading
 
   return (
     <div className="relative h-[300px] sm:h-[400px] w-full rounded-xl overflow-hidden mb-8">
@@ -27,14 +30,16 @@ function HeroImage({ mealName }: { mealName: string }) {
             className="object-cover"
             priority
           />
-          <a
-            href={`${photo.credit.link}?utm_source=dinnerdrop&utm_medium=referral`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-2 right-3 text-[10px] text-white/70 hover:text-white transition-colors"
-          >
-            Photo by {photo.credit.name} on Unsplash
-          </a>
+          {photo.credit && (
+            <a
+              href={`${photo.credit.link}?utm_source=dinnerdrop&utm_medium=referral`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute bottom-2 right-3 text-[10px] text-white/70 hover:text-white transition-colors"
+            >
+              Photo by {photo.credit.name} on Unsplash
+            </a>
+          )}
         </>
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-950 dark:to-orange-900" />
@@ -45,8 +50,18 @@ function HeroImage({ mealName }: { mealName: string }) {
 }
 
 export default function RecipePage() {
+  return (
+    <Suspense>
+      <RecipeContent />
+    </Suspense>
+  )
+}
+
+function RecipeContent() {
   const params = useParams()
+  const searchParams = useSearchParams()
   const id = params.id as string
+  const [cooking, setCooking] = useState(searchParams.get('cook') === '1')
 
   const [meal, setMeal] = useState<Meal | null>(null)
   const [mealLoading, setMealLoading] = useState(true)
@@ -71,14 +86,32 @@ export default function RecipePage() {
   }, [supabase])
 
   useEffect(() => {
-    const stored = localStorage.getItem(`meal-${id}`)
-    if (stored) {
-      const parsed = JSON.parse(stored) as Meal
-      setMeal(parsed)
-      checkFavorite(parsed.name)
+    let active = true
+    async function load() {
+      const stored = localStorage.getItem(`meal-${id}`)
+      if (stored) {
+        const parsed = JSON.parse(stored) as Meal
+        setMeal(parsed)
+        checkFavorite(parsed.name)
+        setMealLoading(false)
+        return
+      }
+      // Opened from an email or another device: find the night in the latest plan.
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: plan } = await supabase.from('meal_plans').select('meals').eq('user_id', user.id).order('created_at', { ascending: false }).limit(1).single()
+        const found = ((plan?.meals as Meal[]) ?? []).find((m) => m.day.toLowerCase() === id.toLowerCase())
+        if (found && active) {
+          localStorage.setItem(`meal-${id}`, JSON.stringify(found))
+          setMeal(found)
+          checkFavorite(found.name)
+        }
+      }
+      if (active) setMealLoading(false)
     }
-    setMealLoading(false)
-  }, [id, checkFavorite])
+    load()
+    return () => { active = false }
+  }, [id, checkFavorite, supabase])
 
   async function toggleFavorite() {
     if (!meal || favoriting) return
@@ -236,8 +269,10 @@ export default function RecipePage() {
           Back to meal plan
         </Link>
 
+        {cooking && <CookMode meal={meal} onClose={() => setCooking(false)} />}
+
         {/* Hero image */}
-        <HeroImage mealName={meal.name} />
+        <HeroImage mealName={meal.name} imageUrl={meal.imageUrl} />
 
         {/* Header */}
         <div className="flex items-start justify-between gap-4 mb-6">
@@ -278,6 +313,14 @@ export default function RecipePage() {
           <div className="flex items-center gap-1.5 bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold">
             ${meal.estimatedCost.toFixed(2)}
           </div>
+          {meal.nutrition && (
+            <div className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">
+              {meal.nutrition.calories} cal · {meal.nutrition.protein}g protein
+            </div>
+          )}
+          <button onClick={() => setCooking(true)} className="ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90">
+            <ChefHat className="w-4 h-4" /> Cook mode
+          </button>
         </div>
 
         {/* Ingredients */}

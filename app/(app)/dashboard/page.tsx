@@ -10,6 +10,7 @@ import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
 import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
+import { resolvePlanOwner } from '@/lib/household'
 
 export default function DashboardPage() {
   return (
@@ -34,6 +35,8 @@ function DashboardContent() {
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
   const [planCount, setPlanCount] = useState(0)
   const [planShape, setPlanShape] = useState<PlanShape>(DEFAULT_SHAPE)
+  const [isPartner, setIsPartner] = useState(false)
+  const [referralCode, setReferralCode] = useState<string | null>(null)
   const [votes, setVotes] = useState<Record<string, { keep: number; skip: number; again: number; voters: string[] }>>({})
   const [planMode, setPlanMode] = useState<'fresh' | 'favorites'>('fresh')
   // Instant first plan: brand-new users (no plan yet) get their first week
@@ -46,8 +49,9 @@ function DashboardContent() {
   const supabase = createClient()
 
   const [isFoundingMember, setIsFoundingMember] = useState(false)
+  const [familyCredit, setFamilyCredit] = useState(false)
   // Founding families have Family free for their first year (through 2027-10-18).
-  const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing' || isFoundingMember
+  const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing' || isFoundingMember || familyCredit
   // Free plan includes unlimited weekly plans (2026-10-18). Only past_due is blocked, handled in generatePlan.
   const canGenerate = true
   const isPickingMeals = pendingMeals.length > 0
@@ -73,18 +77,28 @@ function DashboardContent() {
         setBudget(profile.weekly_budget)
         setSubscriptionStatus(profile.subscription_status || 'free')
         setIsFoundingMember(profile.is_beta_member === true)
+        setFamilyCredit(!!profile.family_until && new Date(profile.family_until) > new Date())
         // Don't gate the dashboard behind the quiz anymore — show the product
         // first, offer personalization after. (This was where 95% of signups
         // used to vanish.)
         setNeedsPersonalize(!profile.onboarding_complete)
       }
 
+      // Referral attribution (no-op without the dd_ref cookie).
+      if (document.cookie.includes('dd_ref=')) fetch('/api/referrals/attach', { method: 'POST' }).catch(() => {})
+      if (profile?.referral_code) setReferralCode(profile.referral_code)
+
+      // Partners who joined by invite see the household owner's plan.
+      const owner = await resolvePlanOwner(supabase, user.id)
+      setIsPartner(owner.isPartner)
+      const planUserId = owner.ownerId
+
       // Run remaining queries in parallel — no dependency between them
       const [favoritesRes, planRes, countRes] = await Promise.all([
         supabase.from('favorites').select('meal_name').eq('user_id', user.id),
-        supabase.from('meal_plans').select('*').eq('user_id', user.id)
+        supabase.from('meal_plans').select('*').eq('user_id', planUserId)
           .order('created_at', { ascending: false }).limit(1).single(),
-        supabase.from('meal_plans').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+        supabase.from('meal_plans').select('id', { count: 'exact', head: true }).eq('user_id', planUserId),
       ])
 
       if (favoritesRes.data) {
@@ -130,7 +144,7 @@ function DashboardContent() {
 
       // First-ever visit with no plan: kick off generation automatically so the
       // user's first experience is watching their dinners appear.
-      if (!plan && (countRes.count ?? 0) === 0) {
+      if (!plan && (countRes.count ?? 0) === 0 && !owner.isPartner) {
         setShouldAutoGen(true)
       }
     } catch (err) {
@@ -163,12 +177,13 @@ function DashboardContent() {
         if (!user) return
         const { data: profile } = await supabase
           .from('profiles')
-          .select('subscription_status, is_beta_member')
+          .select('subscription_status, is_beta_member, family_until')
           .eq('id', user.id)
           .single()
         if (profile) {
           setSubscriptionStatus(profile.subscription_status || 'free')
           setIsFoundingMember(profile.is_beta_member === true)
+          setFamilyCredit(!!profile.family_until && new Date(profile.family_until) > new Date())
         }
       }
       refresh()
@@ -510,6 +525,8 @@ function DashboardContent() {
                 {loading ? 'Saving...' : `Confirm ${selectedMeals.length} meal${selectedMeals.length !== 1 ? 's' : ''} →`}
               </button>
             </div>
+          ) : isPartner ? (
+            <p className="text-xs text-muted-foreground max-w-xs">Shared household plan. Swaps and new weeks happen from the planner&apos;s account; you can edit the grocery list and vote by text.</p>
           ) : (
             <div className="flex flex-col sm:flex-row sm:items-center gap-2">
               {favoriteNames.size >= 3 && !loading && (
@@ -621,10 +638,10 @@ function DashboardContent() {
               </Link>
               <div className="mt-6 p-4 rounded-xl border border-accent/30 bg-accent/5 text-center">
                 <p className="text-sm font-semibold text-foreground mb-1">Know someone who dreads the dinner question?</p>
-                <p className="text-xs text-muted-foreground mb-3">Share DinnerDrop — it&apos;s free, no card needed</p>
+                <p className="text-xs text-muted-foreground mb-3">Share your link — it&apos;s free for them, and when they start Family you both get a month of Family free.</p>
                 <button
                   onClick={() => {
-                    navigator.clipboard.writeText('https://www.dinnerdrop.app/start?utm_source=referral&utm_medium=dashboard')
+                    navigator.clipboard.writeText(referralCode ? `https://www.dinnerdrop.app/start?ref=${referralCode}` : 'https://www.dinnerdrop.app/start?utm_source=referral&utm_medium=dashboard')
                     alert('Link copied! Share it — DinnerDrop is free for them too.')
                   }}
                   className="px-5 py-2 rounded-lg border border-accent text-accent text-xs font-semibold hover:bg-accent/10 transition-colors"

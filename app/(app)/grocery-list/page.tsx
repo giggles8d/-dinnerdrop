@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import InstacartButton from '@/components/InstacartButton'
 import { mergeSettings } from '@/lib/settings'
+import { resolvePlanOwner } from '@/lib/household'
 import {
   type ListItem, type Staple, rowsFromPlanList, dueStaples, basicsFor, REST_OF_WEEK, shoppableItems,
   listToText, guessCategory, normalizeItemName,
@@ -18,6 +19,7 @@ type GroceryListData = Record<GroceryCategory, GroceryItem[]>
 export default function GroceryListPage() {
   const supabase = useMemo(() => createClient(), [])
   const [userId, setUserId] = useState<string | null>(null)
+  const [isPartner, setIsPartner] = useState(false)
   const [householdId, setHouseholdId] = useState<string | null>(null)
   const [weekStart, setWeekStart] = useState<string | null>(null)
   const [items, setItems] = useState<ListItem[]>([])
@@ -44,12 +46,15 @@ export default function GroceryListPage() {
   const load = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setLoading(false); return }
-    setUserId(user.id)
+    const owner = await resolvePlanOwner(supabase, user.id)
+    const uid = owner.ownerId   // partners share the household owner's plan and list
+    setUserId(uid)
+    setIsPartner(owner.isPartner)
 
     const { data: profile } = await supabase
       .from('profiles')
       .select('kroger_access_token, kroger_token_expires_at, subscription_status, is_beta_member, family_until, household_id, settings, weekly_budget, family_size')
-      .eq('id', user.id)
+      .eq('id', uid)
       .single()
 
     const settings = mergeSettings(profile?.settings)
@@ -67,7 +72,7 @@ export default function GroceryListPage() {
     const { data: plan } = await supabase
       .from('meal_plans')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', uid)
       .order('created_at', { ascending: false })
       .limit(1)
       .single()
@@ -84,7 +89,7 @@ export default function GroceryListPage() {
         const res = await fetch('/api/generate-list', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ meals: plan.meals as Meal[], userId: user.id }),
+          body: JSON.stringify({ meals: plan.meals as Meal[], userId: uid }),
         })
         if (!res.ok) throw new Error(`status ${res.status}`)
         planList = await res.json()
@@ -99,9 +104,9 @@ export default function GroceryListPage() {
 
     // 2. Materialize rows for this week if the plan is newer than the rows we have.
     const [{ data: existing }, { data: pantryItems }, { data: stapleRows }] = await Promise.all([
-      supabase.from('list_items').select('id, source, created_at').eq('user_id', user.id).eq('week_start', ws),
-      supabase.from('pantry_items').select('name').eq('user_id', user.id),
-      supabase.from('staples').select('*').eq('user_id', user.id).order('created_at'),
+      supabase.from('list_items').select('id, source, created_at').eq('user_id', uid).eq('week_start', ws),
+      supabase.from('pantry_items').select('name').eq('user_id', uid),
+      supabase.from('staples').select('*').eq('user_id', uid).order('created_at'),
     ])
     setStaples((stapleRows as Staple[]) ?? [])
     const planRows = (existing ?? []).filter((r) => r.source === 'plan')
@@ -111,14 +116,14 @@ export default function GroceryListPage() {
     if (planIsNewer && planList) {
       if (planRows.length) await supabase.from('list_items').delete().in('id', planRows.map((r) => r.id))
       const pantryNames = new Set((pantryItems ?? []).map((p: { name: string }) => normalizeItemName(p.name)))
-      const rows = rowsFromPlanList(planList, { userId: user.id, householdId: profile?.household_id ?? null, weekStart: ws, pantryNames })
+      const rows = rowsFromPlanList(planList, { userId: uid, householdId: profile?.household_id ?? null, weekStart: ws, pantryNames })
 
       // Staples due this week + lunch/breakfast basics (only on first materialization for the week).
       const firstTime = !(existing ?? []).length
       if (firstTime) {
         const due = dueStaples((stapleRows as Staple[]) ?? [], ws)
         for (const s of due) {
-          rows.push({ user_id: user.id, household_id: profile?.household_id ?? null, week_start: ws, name: s.name, quantity: s.quantity, unit: s.unit, category: s.category, search_term: s.name, source: 'staples', added_by: null, have: false, checked: false })
+          rows.push({ user_id: uid, household_id: profile?.household_id ?? null, week_start: ws, name: s.name, quantity: s.quantity, unit: s.unit, category: s.category, search_term: s.name, source: 'staples', added_by: null, have: false, checked: false })
         }
         if (due.length) await supabase.from('staples').update({ last_added_week: ws }).in('id', due.map((s) => s.id))
         const extras: GroceryItem[] = [
@@ -128,13 +133,13 @@ export default function GroceryListPage() {
         const have = new Set(rows.map((r) => normalizeItemName(r.name)))
         for (const e of extras) {
           if (have.has(normalizeItemName(e.name))) continue
-          rows.push({ user_id: user.id, household_id: profile?.household_id ?? null, week_start: ws, name: e.name, quantity: e.quantity, unit: e.unit, category: e.category, search_term: e.searchTerm, source: 'extra', added_by: null, have: false, checked: false })
+          rows.push({ user_id: uid, household_id: profile?.household_id ?? null, week_start: ws, name: e.name, quantity: e.quantity, unit: e.unit, category: e.category, search_term: e.searchTerm, source: 'extra', added_by: null, have: false, checked: false })
         }
       }
       if (rows.length) await supabase.from('list_items').insert(rows)
     }
 
-    await loadItems(user.id, ws)
+    await loadItems(uid, ws)
     setLoading(false)
   }, [supabase, loadItems])
 
@@ -274,7 +279,7 @@ export default function GroceryListPage() {
             <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Grocery list</p>
             <h1 className="text-4xl font-heading font-bold text-foreground">Your grocery list</h1>
             <p className="text-muted-foreground mt-2">
-              This week&apos;s dinners plus anything else your house needs. Tap <em>have?</em> on what&apos;s already in the kitchen — it stays off the cart.
+              {isPartner ? 'Shared with your household — anything either of you adds shows up for both. ' : ''}This week&apos;s dinners plus anything else your house needs. Tap <em>have?</em> on what&apos;s already in the kitchen — it stays off the cart.
             </p>
           </div>
           <div className="flex gap-1 print:hidden">

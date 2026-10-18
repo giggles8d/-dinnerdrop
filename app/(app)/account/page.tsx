@@ -11,6 +11,8 @@ interface Profile {
   trial_ends_at: string | null
   full_name: string | null
   is_beta_member: boolean | null
+  family_until: string | null
+  referral_code: string | null
 }
 
 export default function AccountPage() {
@@ -31,7 +33,7 @@ export default function AccountPage() {
 
       const { data, error: profileError } = await supabase
         .from('profiles')
-        .select('subscription_status, trial_ends_at, full_name, is_beta_member')
+        .select('subscription_status, trial_ends_at, full_name, is_beta_member, family_until, referral_code')
         .eq('id', user.id)
         .single()
 
@@ -124,6 +126,9 @@ export default function AccountPage() {
     ? new Date(profile.trial_ends_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
     : null
   const isFoundingMember = profile?.is_beta_member === true
+  const familyCreditUntil = profile?.family_until && new Date(profile.family_until) > new Date()
+    ? new Date(profile.family_until).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+    : null
 
   // active/past_due — portal redirect is fired in useEffect; show spinner while it happens
   if (status === 'active' || status === 'past_due') {
@@ -244,6 +249,21 @@ export default function AccountPage() {
                 Kroger cart push, priority support, and every new family feature first
               </div>
             </div>
+          </div>
+        )}
+
+        {familyCreditUntil && (
+          <div className="bg-white rounded-2xl border border-primary/30 p-5">
+            <p className="font-semibold text-foreground">Family credit through {familyCreditUntil}</p>
+            <p className="text-xs text-muted-foreground mt-1">From a referral. Kroger cart push and family texting are on until then, no charge.</p>
+          </div>
+        )}
+
+        {profile?.referral_code && (
+          <div className="bg-white rounded-2xl border border-border p-5">
+            <p className="font-semibold text-foreground">Give a month, get a month</p>
+            <p className="text-xs text-muted-foreground mt-1 mb-2">When a family you invite starts Family, you both get 30 days of Family free.</p>
+            <code className="block text-xs bg-muted rounded-md px-3 py-2 break-all">https://www.dinnerdrop.app/start?ref={profile.referral_code}</code>
           </div>
         )}
 

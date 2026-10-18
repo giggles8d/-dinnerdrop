@@ -31,3 +31,25 @@ export function parseClaudeJSON<T>(text: string): T {
     throw new Error('No JSON found in model response')
   }
 }
+
+/** Same model, with one image attached (recipe cards, cookbook pages, screenshots). */
+export async function generateWithClaudeImage(
+  prompt: string,
+  image: { base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' },
+  maxTokens: number = 3000
+): Promise<string> {
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: maxTokens,
+    messages: [{
+      role: 'user',
+      content: [
+        { type: 'image', source: { type: 'base64', media_type: image.mediaType, data: image.base64 } },
+        { type: 'text', text: prompt },
+      ],
+    }],
+  })
+  const text = message.content[0].type === 'text' ? message.content[0].text : ''
+  if (!text) throw new Error('Empty response from AI model')
+  return text
+}

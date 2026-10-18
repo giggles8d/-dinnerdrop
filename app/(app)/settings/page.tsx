@@ -169,6 +169,20 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [dirty, setDirty] = useState(false)
+  const [inviteUrl, setInviteUrl] = useState<string | null>(null)
+  const [inviteBusy, setInviteBusy] = useState(false)
+
+  async function makeInvite() {
+    setInviteBusy(true)
+    try {
+      const r = await fetch('/api/household/invite', { method: 'POST' })
+      const j = await r.json()
+      if (j.url) {
+        setInviteUrl(j.url)
+        try { await navigator.clipboard.writeText(j.url) } catch { /* ignore */ }
+      }
+    } finally { setInviteBusy(false) }
+  }
 
   const load = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
@@ -338,6 +352,14 @@ export default function SettingsPage() {
                       </div>
                     ))}
                   </div>
+                </div>
+
+                <div className="rounded-xl border border-dashed border-primary/40 bg-primary/5 p-4">
+                  <h2 className="font-heading font-semibold text-foreground">Share with your partner</h2>
+                  <p className="text-xs text-muted-foreground mt-1 mb-3">They get their own login, see the same week and the same grocery list, and anything either of you adds shows up for both.</p>
+                  <button onClick={makeInvite} disabled={inviteBusy} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50">{inviteBusy ? 'Making link…' : inviteUrl ? 'Copied — make another' : 'Get an invite link'}</button>
+                  {inviteUrl && <code className="block mt-3 text-xs bg-white border border-border rounded-md px-3 py-2 break-all">{inviteUrl}</code>}
+                  {inviteUrl && <p className="text-[11px] text-muted-foreground mt-1">Copied to your clipboard. Text or email it; the link works for 30 days.</p>}
                 </div>
 
                 <div>

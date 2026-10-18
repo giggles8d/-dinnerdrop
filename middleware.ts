@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 const protectedPaths = [
   '/dashboard', '/grocery-list', '/favorites', '/recipe',
-  '/onboarding', '/pantry', '/history', '/account',
+  '/onboarding', '/pantry', '/history', '/account', '/settings', '/recipes', '/join',
 ]
 const authPaths = ['/login', '/signup']
 
@@ -13,9 +13,15 @@ export async function middleware(request: NextRequest) {
   const isProtectedRoute = protectedPaths.some(path => pathname.startsWith(path))
   const isAuthRoute = authPaths.some(path => pathname.startsWith(path))
 
+  // Referral capture: ?ref=CODE on any page → 30-day cookie, attached at signup.
+  const ref = request.nextUrl.searchParams.get('ref')
+  const refCookie = ref && /^[A-Z0-9]{6,12}$/i.test(ref) ? ref.toUpperCase() : null
+
   // Skip auth check for routes that don't need it
   if (!isProtectedRoute && !isAuthRoute) {
-    return NextResponse.next()
+    const res = NextResponse.next()
+    if (refCookie) res.cookies.set('dd_ref', refCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
+    return res
   }
 
   // Use Supabase SSR to properly validate session and refresh expired tokens
@@ -59,6 +65,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl)
   }
 
+  if (refCookie) response.cookies.set('dd_ref', refCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
   return response
 }
 
