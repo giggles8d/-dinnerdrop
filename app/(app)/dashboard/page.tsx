@@ -12,6 +12,7 @@ import FamilyVoteCard from '@/components/FamilyVoteCard'
 import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 import { resolvePlanOwner } from '@/lib/household'
+import { attachLibraryImages } from '@/lib/library-images'
 
 export default function DashboardPage() {
   return (
@@ -108,7 +109,7 @@ function DashboardContent() {
 
       const plan = planRes.data
       if (plan) {
-        const planMeals = plan.meals as Meal[]
+        const planMeals = await attachLibraryImages(supabase, plan.meals as Meal[])
         setMeals(planMeals)
         setTotalCost(plan.total_estimated_cost || 0)
         setHasGenerated(true)

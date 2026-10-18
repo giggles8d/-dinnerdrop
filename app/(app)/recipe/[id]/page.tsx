@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
 import { recordMealSignal } from '@/lib/taste-profile'
 import CookMode from '@/components/CookMode'
+import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
 
@@ -95,6 +96,7 @@ function RecipeContent() {
         setMeal(parsed)
         checkFavorite(parsed.name)
         setMealLoading(false)
+        if (!parsed.imageUrl) { const [withImg] = await attachLibraryImages(supabase, [parsed]); if (withImg?.imageUrl && active) setMeal(withImg) }
         return
       }
       // Opened from an email or another device: find the night in the latest plan.

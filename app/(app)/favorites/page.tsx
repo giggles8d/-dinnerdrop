@@ -6,6 +6,7 @@ import { Heart, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import { recordMealSignal } from '@/lib/taste-profile'
+import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
 
 interface FavoriteRow {
@@ -68,7 +69,9 @@ export default function FavoritesPage() {
       .order('created_at', { ascending: false })
 
     if (data) {
-      setFavorites(data as FavoriteRow[])
+      const rows = data as FavoriteRow[]
+      const withImages = await attachLibraryImages(supabase, rows.map((r) => r.meal_data))
+      setFavorites(rows.map((r, i) => ({ ...r, meal_data: withImages[i] ?? r.meal_data })))
     }
     setLoading(false)
   }, [supabase])
@@ -186,7 +189,7 @@ export default function FavoritesPage() {
                     onClick={() => localStorage.setItem(`meal-${mealId}`, JSON.stringify(meal))}
                     className="block"
                   >
-                    <MealCardImage mealName={meal.name} dayLabel={meal.day} />
+                    <MealCardImage mealName={meal.name} dayLabel={meal.day} imageUrl={meal.imageUrl} />
                   </Link>
 
                   <div className="relative">
