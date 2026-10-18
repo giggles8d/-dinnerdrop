@@ -32,22 +32,26 @@ export default function StoreCompare({ items, baseline, stores, sets, globalFact
     // list has changed too much (e.g. the read was of last week's list) we fall back to the estimate.
     const merged = est.map((q) => {
       const real = realQuotes.find((r) => r.store.toLowerCase() === q.store.toLowerCase())
-      if (!real) return { ...q, real: false, missing: [] as string[], readAt: '', added: 0 }
+      if (!real) return { ...q, real: false, missing: [] as string[], readAt: '', added: 0, subs: 0 }
       const priced = new Set((real.items ?? []).map((x) => normalizeItemName(x.name)))
-      let covered = 0, addedCost = 0, added = 0
+      // Lines Instacart couldn't match exactly at this store ("show alternatives") aren't in the read
+      // total — add a typical-price estimate for each so a store isn't cheaper just for missing a match.
+      const missNorm = (real.missing ?? []).map((m) => normalizeItemName(m.replace(/\s*\(.*\)\s*$/, '')))
+      const isMissing = (name: string) => { const n = normalizeItemName(name); return missNorm.some((m) => m && (m === n || n.includes(m) || m.includes(n))) }
+      let covered = 0, addedCost = 0, added = 0, subCost = 0, subs = 0
       if (priced.size) {
         for (const it of open) {
-          if (priced.has(normalizeItemName(it.name))) covered++
+          if (priced.has(normalizeItemName(it.name))) { covered++; if (isMissing(it.name)) { subs++; subCost += baseline(it) * q.factor } }
           else { added++; addedCost += baseline(it) * q.factor }
         }
         const fresh = open.length === 0 || covered / open.length >= 0.7
-        if (!fresh) return { ...q, real: false, missing: [] as string[], readAt: '', added: 0 }
+        if (!fresh) return { ...q, real: false, missing: [] as string[], readAt: '', added: 0, subs: 0 }
       } else {
         // Older quote rows don't say what they priced — trust them only if the count is close.
         const n = real.item_count ?? 0
-        if (Math.abs(n - open.length) > 5) return { ...q, real: false, missing: [] as string[], readAt: '', added: 0 }
+        if (Math.abs(n - open.length) > 5) return { ...q, real: false, missing: [] as string[], readAt: '', added: 0, subs: 0 }
       }
-      return { ...q, total: Math.round((Number(real.total) + addedCost) * 100) / 100, real: true, missing: real.missing ?? [], readAt: real.created_at, added }
+      return { ...q, total: Math.round((Number(real.total) + addedCost + subCost) * 100) / 100, real: true, missing: real.missing ?? [], readAt: real.created_at, added, subs }
     })
     const known = (q: { store: string; real: boolean }) => q.real || !!stores.find((s) => s.name === q.store)?.factor
     return merged.sort((a, b) => Number(known(b)) - Number(known(a)) || a.total - b.total)
@@ -88,7 +92,7 @@ export default function StoreCompare({ items, baseline, stores, sets, globalFact
               {unknown
                 ? 'not on Instacart — no prices yet. After you shop there, tell DinnerDrop the total and it learns.'
                 : q.real
-                ? `read from Instacart ${new Date(q.readAt).toLocaleDateString(undefined, { weekday: 'short' })}${q.added ? ` · +${q.added} added since (estimated)` : ''}${q.missing.length ? ` · doesn't carry: ${q.missing.slice(0, 3).join(', ')}${q.missing.length > 3 ? ` +${q.missing.length - 3}` : ''}` : ' · everything in stock'}`
+                ? `read from Instacart ${new Date(q.readAt).toLocaleDateString(undefined, { weekday: 'short' })}${q.added ? ` · +${q.added} added since (estimated)` : ''}${q.missing.length ? ` · ${q.missing.length} need a store-brand swap (${q.missing.slice(0, 3).join(', ')}${q.missing.length > 3 ? ` +${q.missing.length - 3}` : ''}) — counted at typical price` : ' · every item matched'}`
                 : `${q.onSale > 0 ? `${q.onSale} items on sale · saves ≈ $${q.saleSavings.toFixed(0)}` : 'estimate'}${q.factor !== 1 ? ` · runs ${q.factor.toFixed(2)}× typical` : ''}`}
             </p>
           </div>
