@@ -10,7 +10,8 @@ const authPaths = ['/login', '/signup']
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  const isProtectedRoute = protectedPaths.some(path => pathname.startsWith(path))
+  // Exact segment match, so '/recipe' (the plan's recipe pages) does not capture the public '/recipes' library.
+  const isProtectedRoute = protectedPaths.some(path => pathname === path || pathname.startsWith(path + '/'))
   const isAuthRoute = authPaths.some(path => pathname.startsWith(path))
 
   // Referral capture: ?ref=CODE on any page → 30-day cookie, attached at signup.
