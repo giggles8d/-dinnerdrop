@@ -79,7 +79,7 @@ export default function StartPage() {
         {/* Cart mechanics — the question every parent asks */}
         <div className="rounded-2xl border bg-white p-5 mb-12 text-left text-sm text-gray-600 leading-relaxed" style={{ borderColor: '#e8e8e8' }}>
           <p className="font-bold mb-1" style={{ color: GREEN }}>How the cart works</p>
-          DinnerDrop fills the cart in your own Instacart or Kroger account. You review every item and check out there, at the store&apos;s normal prices. We never charge your grocery account and never mark anything up.
+          DinnerDrop fills the cart in your own Instacart or Kroger account. You review every item and check out there at Instacart&apos;s or Kroger&apos;s prices for that store (plus their fees). We never charge your grocery account and never mark anything up.
         </div>
 
         {/* Social proof */}
@@ -196,7 +196,7 @@ export default function StartPage() {
             },
             {
               q: 'Does the Instacart cart really work in one tap?',
-              a: 'Yes. DinnerDrop is built on the Instacart Developer Platform. Tap “Shop ingredients” and your full, deduplicated list opens in Instacart with every item pre-loaded. You pick your store, review the items, and check out at the store’s normal prices.',
+              a: 'Yes. DinnerDrop is built on the Instacart Developer Platform. Tap “Shop ingredients” and your full, deduplicated list opens in Instacart with every item pre-loaded. You pick your store, review the items, and check out at Instacart’s prices for that store — we add nothing.',
             },
             {
               q: 'What if my family is picky?',

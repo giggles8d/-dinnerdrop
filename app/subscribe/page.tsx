@@ -121,8 +121,8 @@ function SubscribeContent() {
                   <Users className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">New family features, first</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">The week&apos;s dinners texted to everyone to vote on, a shared list anyone can text foods to, and per-person preferences ship to Family members first.</p>
+                  <p className="font-semibold text-foreground text-sm">The family features</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">The week&apos;s dinners texted to everyone to vote on, a shared list anyone can text foods to, per-person preferences, and a text the day before shopping asking what each person wants.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">

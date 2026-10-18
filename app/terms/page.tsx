@@ -89,8 +89,8 @@ export default function TermsPage() {
               </li>
               <li>
                 <span className="font-medium text-foreground">Family ($4.99/month or $39/year):</span>{' '}
-                Everything in Free, plus Kroger cart push, priority support, and early access to new
-                family features. Family starts with a 14-day free trial; a payment method is
+                Everything in Free, plus the household texting features (voting, shared list, reminders),
+                per-person profiles, Kroger cart push, and priority support. Family starts with a 14-day free trial; a payment method is
                 required to begin the trial and nothing is charged until the trial ends.
               </li>
             </ul>

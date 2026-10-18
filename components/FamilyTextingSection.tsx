@@ -9,7 +9,7 @@ import HeroClip from '@/components/HeroClip'
 export default function FamilyTextingSection({ ctaHref }: { ctaHref: string }) {
   const points = [
     { icon: MessageSquareText, title: 'Everyone gets the ideas by text', body: 'On the day you choose, DinnerDrop texts 8 dinner ideas to each person in your house. They reply with the numbers they want.' },
-    { icon: Users, title: 'The top picks become the week', body: 'When everyone has answered, the most-voted five are your week — assigned to your cook nights, grocery list built. You get a text that it\u2019s done.' },
+    { icon: Users, title: 'The top picks become the week', body: 'When everyone has answered — or after 24 hours, whoever has replied — the most-voted five are your week — assigned to your cook nights, grocery list built. You get a text that it\u2019s done.' },
     { icon: ListPlus, title: 'Anyone can add to the list', body: 'Text "ADD oat milk, bananas" or a photo of the box and it lands on the grocery list with a quantity.' },
     { icon: BellRing, title: 'Reminders when they help', body: 'A text when the plan is ready, when it\u2019s time to shop, and on cook nights.' },
   ]

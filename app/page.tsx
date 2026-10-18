@@ -152,7 +152,7 @@ export default async function LandingPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { Icon: Sparkles, title: 'AI meal planning', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },
-            { Icon: ShoppingCart, title: 'Auto-cart at Instacart or Kroger', description: 'Your full shopping list lands in your Instacart cart in one tap — or, on Family, straight in your Kroger cart. No retyping. No missed items.' },
+            { Icon: ShoppingCart, title: 'Auto-cart at Instacart or Kroger', description: 'One tap opens your full list in Instacart with every item matched — pick your store, glance, add to cart. On Family it goes straight into your Kroger cart. No retyping. No missed items.' },
             { Icon: Heart, title: 'Picky-eater friendly', description: "Swap any meal you don't love in one tap. DinnerDrop learns your family's tastes over time." },
             { Icon: PiggyBank, title: 'Built to your budget', description: 'Set your weekly food budget. Every plan targets it and shows an estimated total before you shop; store prices and package sizes set the final number.' },
           ].map(({ Icon, title, description }) => (
@@ -254,7 +254,7 @@ export default async function LandingPage() {
               { q: 'Is it really free?', a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart cart are free, with no card. Instacart pays us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.' },
               { q: 'How do I cancel Family?', a: 'From your Account page, in one tap. No calls, no hidden steps. Cancel during the 14-day trial and you pay nothing.' },
               { q: 'Will I be charged by surprise?', a: 'No. We email you on day 11 of a Family trial, three days before the first charge, and Account shows your exact billing date. Payments are processed by Stripe; we never see or store your card number.' },
-              { q: 'Does DinnerDrop charge my grocery account?', a: 'Never. It fills the cart in your own Instacart or Kroger account; you review the items and check out there at the store\u2019s normal prices. Nothing is marked up.' },
+              { q: 'Does DinnerDrop charge my grocery account?', a: 'Never. It fills the cart in your own Instacart or Kroger account; you review the items and check out there. We add nothing to the price; what you pay is Instacart\u2019s or Kroger\u2019s price for that store plus their fees, which can differ from in-store shelf prices.' },
             ].map((item) => (
               <div key={item.q} className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
                 <h3 className="font-heading font-semibold text-foreground mb-2">{item.q}</h3>
