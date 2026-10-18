@@ -68,7 +68,7 @@ const TOPICS: Topic[] = [
       'Times are total, from first chop to the table, not just the cook step.',
       'Shortcuts that hold up: rotisserie chicken, microwave rice, refrigerated tortellini, bagged salad kits.',
       'Leftover-aware pairs: Tuesday’s chicken becomes Thursday’s flatbreads.',
-      'Busy-night scheduling — a 15-minute dinner on practice night, a 40-minute one on Sunday — is coming to Family plan members first.',
+      'Busy-night scheduling: give each cook night its own minutes in Settings — a 15-minute dinner on practice night, a 40-minute one on Sunday — and the planner matches each dinner to its night.',
     ],
     faq: [
       { q: 'Are the times realistic?', a: 'Each recipe lists prep and cook time separately and the plan respects your limit for the total. If one runs long for you, swap it in one tap and the planner learns.' },
