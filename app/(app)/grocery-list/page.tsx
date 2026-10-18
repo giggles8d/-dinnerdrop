@@ -323,9 +323,11 @@ export default function GroceryListPage() {
 
   // Honest total: plan dinners (still to buy) + every other unchecked line with an estimate, at typical prices,
   // then at this family's store (learned from real orders).
-  const extrasEst = items.filter((i) => i.source !== 'plan' && !i.have && !i.checked).reduce((n, i) => n + (Number(i.est_price) || 0), 0)
-  const unpricedExtras = items.filter((i) => i.source !== 'plan' && !i.have && !i.checked && !(Number(i.est_price) > 0)).length
-  const listEst = totalCost + extrasEst
+  const openRows = items.filter((i) => !i.have && !i.checked)
+  const dinnersEst = openRows.filter((i) => i.source === 'plan').reduce((n, i) => n + baseline(i), 0)
+  const extrasEst = openRows.filter((i) => i.source !== 'plan').reduce((n, i) => n + baseline(i), 0)
+  const unpricedExtras = openRows.filter((i) => i.source !== 'plan' && !(baseline(i) > 0)).length
+  const listEst = dinnersEst + extrasEst
   const storeEst = listEst * (priceFactor || 1)
   const over = budget > 0 && storeEst > budget
 
@@ -433,7 +435,7 @@ export default function GroceryListPage() {
             <span className="text-2xl font-heading font-bold text-primary-foreground">${storeEst.toFixed(2)}</span>
           </div>
           <p className="text-[11px] text-primary-foreground/50 mt-1">
-            Dinners ${totalCost.toFixed(0)}{extrasEst > 0 ? ` + other items $${extrasEst.toFixed(0)}` : ''}{unpricedExtras ? ` (+${unpricedExtras} unpriced)` : ''} at typical prices
+            Dinners ${dinnersEst.toFixed(0)}{extrasEst > 0 ? ` + other items $${extrasEst.toFixed(0)}` : ''}{unpricedExtras ? ` (+${unpricedExtras} unpriced)` : ''} at typical prices
             {priceFactor !== 1 ? ` × ${priceFactor.toFixed(2)} for your store and fees, learned from your orders` : ' — Instacart prices and fees usually run 20–30% higher'}.
             {' '}{shoppableCount} items go to the cart{haveCount ? ` · ${haveCount} you already have stay off it` : ''}.
           </p>
