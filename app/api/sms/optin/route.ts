@@ -21,6 +21,20 @@ export async function POST() {
   if (!isFamilyProfile(profile)) return NextResponse.json({ sent: 0, reason: 'family_required' })
   if (!smsConfigured()) return NextResponse.json({ sent: 0, reason: 'sms_not_configured' })
 
+  // The planner's own number (Settings → Family texting → Your number) joins the household automatically, opted in.
+  const { data: me } = await admin.from('profiles').select('settings, full_name').eq('id', user.id).single()
+  const ownerPhone = normalizePhone((me?.settings as { texting?: { ownerPhone?: string } } | null)?.texting?.ownerPhone)
+  if (ownerPhone) {
+    const { data: existingOwner } = await admin.from('household_members').select('id, phone').eq('household_id', profile.household_id).eq('profile_id', user.id).limit(1)
+    if (existingOwner?.[0]) {
+      if (existingOwner[0].phone !== ownerPhone) await admin.from('household_members').update({ phone: ownerPhone, phone_opt_in_at: new Date().toISOString(), phone_opted_out: false }).eq('id', existingOwner[0].id)
+    } else {
+      const { data: byPhone } = await admin.from('household_members').select('id').eq('household_id', profile.household_id).eq('phone', ownerPhone).limit(1)
+      if (byPhone?.[0]) await admin.from('household_members').update({ profile_id: user.id, phone_opt_in_at: new Date().toISOString(), phone_opted_out: false }).eq('id', byPhone[0].id)
+      else await admin.from('household_members').insert({ household_id: profile.household_id, profile_id: user.id, name: (me?.full_name || 'Me').trim().split(' ')[0].replace(/^./, (c) => c.toUpperCase()), role: 'adult', age_band: 'adult', phone: ownerPhone, phone_opt_in_at: new Date().toISOString(), can_vote: true, can_add: true })
+    }
+  }
+
   const { data: members } = await admin.from('household_members').select('*').eq('household_id', profile.household_id).not('phone', 'is', null)
   const first = (profile.full_name || '').trim().split(' ')[0]
   const family = first ? `${first.charAt(0).toUpperCase() + first.slice(1)}'s family` : 'Your family'

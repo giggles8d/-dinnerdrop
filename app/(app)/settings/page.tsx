@@ -253,7 +253,7 @@ export default function SettingsPage() {
     if (err) { setError(err.message); return }
     setDirty(false)
     let note = 'Saved. Your next plan uses these settings.'
-    if (settings.texting.enabled && members.some((m) => m.phone && !m.phone_opt_in_at && !m.phone_opted_out)) {
+    if (settings.texting.enabled && (settings.texting.ownerPhone || members.some((m) => m.phone && !m.phone_opt_in_at && !m.phone_opted_out))) {
       try {
         const r = await fetch('/api/sms/optin', { method: 'POST' })
         const j = await r.json().catch(() => ({}))
