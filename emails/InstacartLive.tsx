@@ -5,7 +5,7 @@ import * as React from 'react'
 
 interface InstacartLiveProps {
   firstName?: string
-  /** true = one of the 228 founding families (6 months free stands) */
+  /** true = one of the first families in (their free months stand) */
   isFoundingMember?: boolean
   /** true = joined the waitlist, never created an account */
   isWaitlist?: boolean
@@ -16,16 +16,16 @@ interface InstacartLiveProps {
 // One-shot announcement (Oct 2026): the Instacart production integration is
 // live. Sent via /api/admin/instacart-live to every signup + waitlist contact.
 // Every promise here must be TRUE at send time: the one-tap Instacart list is
-// on production, founding members are still free, new users get a 14-day trial.
+// on production; early families keep their free months, everyone else gets the free plan.
 export default function InstacartLive({
   firstName = 'there',
   isFoundingMember = false,
   isWaitlist = false,
-  ctaUrl = 'https://dinnerdrop.app/start?utm_source=email&utm_medium=instacart_live',
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  ctaUrl = 'https://www.dinnerdrop.app/start?utm_source=email&utm_medium=instacart_live',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: InstacartLiveProps) {
   const preview = isFoundingMember
-    ? 'Your grocery list now lands in your Instacart cart in one tap — and your 6 months free still stand'
+    ? 'Your grocery list now lands in your Instacart cart in one tap — and your free months still stand'
     : 'One tap, your whole grocery list in your Instacart cart. It is live.'
 
   return (
@@ -51,9 +51,9 @@ export default function InstacartLive({
 
             {isFoundingMember && (
               <>
-                <Text style={heading}>Your founding deal has not changed</Text>
+                <Text style={heading}>Your deal has not changed</Text>
                 <Text style={paragraph}>
-                  You were one of the first families in, and your <strong>6 months free still stand</strong> —
+                  You were one of the first families in, and your <strong>free months still stand</strong> —
                   nothing to do, nothing to add. The only thing that changed is that the part we promised
                   you at the start finally works the way it should. Sign in and try it this week.
                 </Text>
@@ -62,34 +62,34 @@ export default function InstacartLive({
 
             {!isFoundingMember && isWaitlist && (
               <>
-                <Text style={heading}>You were on the waitlist — the door is open</Text>
+                <Text style={heading}>You asked us to let you know — the door is open</Text>
                 <Text style={paragraph}>
-                  Our first 100 spots filled, and we have been building since. You can now try DinnerDrop
-                  <strong> free for 14 days</strong>: five dinners planned for your family and budget,
-                  grocery list in your cart in one tap. $0 today, $9/month after, cancel anytime.
+                  DinnerDrop is now <strong>free, no card needed</strong>: five dinners planned for your
+                  family and budget every week, and your grocery list in your Instacart cart in one tap.
+                  Takes two minutes to set up.
                 </Text>
               </>
             )}
 
             {!isFoundingMember && !isWaitlist && (
               <>
-                <Text style={heading}>Try it free for 14 days</Text>
+                <Text style={heading}>It&apos;s free now, too</Text>
                 <Text style={paragraph}>
-                  You signed up a while back, before the cart was ready. It is now. Start a
-                  <strong> 14-day free trial</strong> — five dinners planned for your family and budget,
-                  grocery list in your Instacart cart in one tap. $0 today, $9/month after, cancel anytime.
+                  You signed up a while back, before the cart was ready. It is now, and planning plus the
+                  Instacart cart are <strong>free, no card needed</strong> — five dinners planned for your
+                  family and budget, grocery list in your cart in one tap. Sign in and plan this week.
                 </Text>
               </>
             )}
 
             <Section style={ctaSection}>
               <Button style={button} href={ctaUrl}>
-                {isFoundingMember ? 'Plan this week’s dinners →' : 'Start my 14-day free trial →'}
+                {isFoundingMember ? 'Plan this week’s dinners →' : 'Plan this week’s dinners →'}
               </Button>
               <Text style={ctaSubtext}>
                 {isFoundingMember
                   ? 'One-click sign in · no password · still free'
-                  : '$0 today · cancel anytime · takes 2 minutes'}
+                  : 'Free · no card · takes 2 minutes'}
               </Text>
             </Section>
 
@@ -106,7 +106,7 @@ export default function InstacartLive({
             <Text style={footerText}>
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
               {' · '}
-              <Link href="https://dinnerdrop.app/privacy" style={footerLink}>Privacy</Link>
+              <Link href="https://www.dinnerdrop.app/privacy" style={footerLink}>Privacy</Link>
             </Text>
           </Section>
         </Container>

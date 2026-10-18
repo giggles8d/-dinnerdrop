@@ -21,7 +21,7 @@ interface WelcomeBetaProps {
 export default function WelcomeBeta({
   firstName = 'there',
   trialEndsDate = 'in 6 months',
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: WelcomeBetaProps) {
   return (
     <Html>
@@ -90,7 +90,7 @@ export default function WelcomeBeta({
             </div>
 
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/dashboard">
+              <Button style={button} href="https://www.dinnerdrop.app/dashboard">
                 Get my first meal plan →
               </Button>
             </Section>
@@ -128,11 +128,11 @@ export default function WelcomeBeta({
               Your 6 months free are confirmed and locked in. You won't be charged for 6 months.
             </Text>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app/dashboard" style={footerLink}>
+              <Link href="https://www.dinnerdrop.app/dashboard" style={footerLink}>
                 Go to dashboard
               </Link>
               {' · '}
-              <Link href="https://dinnerdrop.app/privacy" style={footerLink}>
+              <Link href="https://www.dinnerdrop.app/privacy" style={footerLink}>
                 Privacy
               </Link>
               {' · '}

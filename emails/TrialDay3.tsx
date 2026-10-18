@@ -10,7 +10,7 @@ interface TrialDay3Props {
 
 export default function TrialDay3({
   firstName = 'there',
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: TrialDay3Props) {
   return (
     <Html>
@@ -41,7 +41,7 @@ export default function TrialDay3({
               also available if you've linked your Kroger account.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/grocery-list">
+              <Button style={button} href="https://www.dinnerdrop.app/grocery-list">
                 Try the grocery list now →
               </Button>
             </Section>
@@ -60,7 +60,7 @@ export default function TrialDay3({
           </Section>
           <Section style={footerSection}>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
+              <Link href="https://www.dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
               {' · '}
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
             </Text>

@@ -25,7 +25,7 @@ export default function Newsletter({
   issue,
   feature,
   blogPosts = [],
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: NewsletterProps) {
   return (
     <Html>
@@ -48,7 +48,7 @@ export default function Newsletter({
               </Text>
             ))}
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/dashboard">
+              <Button style={button} href="https://www.dinnerdrop.app/dashboard">
                 Generate my own 5-dinner plan →
               </Button>
             </Section>
@@ -63,7 +63,7 @@ export default function Newsletter({
                 <Text style={heading}>📰 New on the blog</Text>
                 {blogPosts.map((p) => (
                   <Text key={p.slug} style={paragraph}>
-                    <Link href={`https://dinnerdrop.app/blog/${p.slug}`} style={blogLink}>
+                    <Link href={`https://www.dinnerdrop.app/blog/${p.slug}`} style={blogLink}>
                       {p.title}
                     </Link>
                     <br />
@@ -83,16 +83,16 @@ export default function Newsletter({
             <Hr style={hr} />
             {isBetaMember ? (
               <>
-                <Text style={heading}>💬 Founding corner</Text>
+                <Text style={heading}>💬 From Sarah</Text>
                 <Text style={paragraph}>
-                  You&apos;re one of our founding families, and your feedback genuinely shapes
-                  what gets built next. Hit reply with anything — a meal that missed, a feature
-                  you wish existed, a grocery-handoff hiccup. I read every response.
+                  You were one of the first families in, and your feedback shapes what gets
+                  built next. Hit reply with anything — a meal that missed, a feature you wish
+                  existed, a grocery-handoff hiccup. I read every response.
                 </Text>
                 <Text style={paragraph}>
-                  Know a family drowning in the 5pm scramble? They can try DinnerDrop free for 14 days —{' '}
-                  <Link href="https://dinnerdrop.app/start?utm_source=newsletter" style={blogLink}>
-                    send them to the 6-months-free offer
+                  Know a family drowning in the 5pm scramble? DinnerDrop is free for them too —{' '}
+                  <Link href="https://www.dinnerdrop.app/start?utm_source=newsletter" style={blogLink}>
+                    send them here
                   </Link>.
                 </Text>
                 <Text style={paragraph}>— Sarah, founder</Text>
@@ -102,12 +102,11 @@ export default function Newsletter({
                 <Text style={heading}>🛒 The one-tap Instacart cart is live</Text>
                 <Text style={paragraph}>
                   DinnerDrop plans 5 personalized weeknight dinners and drops your whole grocery
-                  list into your Instacart or Kroger cart in one tap.
-                  Try it free for 14 days — then $9/month, cancel anytime.
+                  list into your Instacart cart in one tap. It&apos;s free, no card needed.
                 </Text>
                 <Section style={ctaSection}>
-                  <Button style={button} href="https://dinnerdrop.app/start?utm_source=newsletter">
-                    Start my 14-day free trial →
+                  <Button style={button} href="https://www.dinnerdrop.app/start?utm_source=newsletter">
+                    Start free →
                   </Button>
                 </Section>
               </>
@@ -119,7 +118,7 @@ export default function Newsletter({
               signed up on dinnerdrop.app.
             </Text>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
+              <Link href="https://www.dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
               {' · '}
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
             </Text>

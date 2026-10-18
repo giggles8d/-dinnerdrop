@@ -82,7 +82,7 @@ async function handleTest(request: NextRequest) {
   const html = await render(
     React.createElement(WinBack, {
       firstName: 'Sarah',
-      unsubscribeUrl: 'https://dinnerdrop.app/unsubscribe',
+      unsubscribeUrl: 'https://www.dinnerdrop.app/unsubscribe',
       amazonPickUrl: amazonSearchUrl('nonstick sheet pan set'),
     })
   )
@@ -175,7 +175,7 @@ async function handle(request: NextRequest, dryRun: boolean) {
     isFirst = false
     if (!u.email) continue
 
-    const unsubscribeUrl = `https://dinnerdrop.app/unsubscribe?uid=${u.id}`
+    const unsubscribeUrl = `https://www.dinnerdrop.app/unsubscribe?uid=${u.id}`
     const raw = u.email.split('@')[0].replace(/[^a-zA-Z]/g, '') || 'there'
     const firstName = raw.charAt(0).toUpperCase() + raw.slice(1)
 

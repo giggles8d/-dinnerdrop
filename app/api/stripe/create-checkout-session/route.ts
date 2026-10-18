@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { FAMILY_TRIAL_DAYS, getFamilyPriceId, type FamilyInterval } from '@/lib/stripe'
 
 // Use the Stripe SDK default API version (pinned to the account in the Stripe dashboard).
 // Previously hardcoded to a non-existent version which made every checkout fail.
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY!)
 }
+
+// Legacy $9/mo price — only used by the BETA100 founding-family path so those
+// subscriptions keep their original terms. New checkouts use the Family prices.
+const LEGACY_PRICE_ID = 'price_1TBEm3BnujZBkm2Rdirr7XtN'
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,6 +24,7 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json().catch(() => ({}))
     const couponCode: string | undefined = body?.couponCode
+    const interval: FamilyInterval = body?.interval === 'yearly' ? 'yearly' : 'monthly'
 
     // Check if user already has a Stripe customer ID
     const { data: profile } = await supabase
@@ -45,19 +51,15 @@ export async function POST(req: NextRequest) {
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
 
-    // BETA100 = 6 months completely free with NO card collected.
-    // We implement this via a 180-day Stripe trial (rock-solid, no coupon required)
-    // and `payment_method_collection: 'if_required'` so the user can check out
-    // without entering a card. We email them before the trial ends to add one.
-    //
-    // Any other coupon code falls back to the legacy discount flow.
+    // BETA100 = the closed founding-family offer (6 months free, no card).
+    // Kept so existing links keep working; new visitors never see it.
     let sessionParams: Stripe.Checkout.SessionCreateParams
 
     if (couponCode === 'BETA100') {
       sessionParams = {
         customer: customerId,
         mode: 'subscription',
-        line_items: [{ price: 'price_1TBEm3BnujZBkm2Rdirr7XtN', quantity: 1 }],
+        line_items: [{ price: LEGACY_PRICE_ID, quantity: 1 }],
         success_url: `${appUrl}/dashboard?subscribed=true&beta=1`,
         cancel_url: `${appUrl}/subscribe?coupon=BETA100`,
         subscription_data: {
@@ -68,17 +70,23 @@ export async function POST(req: NextRequest) {
         allow_promotion_codes: false,
       }
     } else {
+      // Family tier: $4.99/mo or $39/yr, 14-day free trial, card at signup.
+      const priceId = await getFamilyPriceId(stripe, interval)
       sessionParams = {
         customer: customerId,
         mode: 'subscription',
-        line_items: [{ price: 'price_1TBEm3BnujZBkm2Rdirr7XtN', quantity: 1 }],
+        line_items: [{ price: priceId, quantity: 1 }],
         success_url: `${appUrl}/dashboard?subscribed=true`,
-        cancel_url: `${appUrl}/dashboard`,
-        // 14-day trial (was 7) — standard offer since 2026-10-16.
-        subscription_data: { trial_period_days: 14 },
+        cancel_url: `${appUrl}/subscribe`,
+        subscription_data: {
+          trial_period_days: FAMILY_TRIAL_DAYS,
+          metadata: { tier: 'family', interval },
+        },
+        allow_promotion_codes: true,
       }
       if (couponCode) {
         sessionParams.discounts = [{ coupon: couponCode }]
+        delete sessionParams.allow_promotion_codes
       }
     }
 

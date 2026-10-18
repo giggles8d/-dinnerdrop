@@ -12,7 +12,7 @@ interface ActivateDay3Props {
 // generated a plan. Angle: the 5pm problem they signed up to solve.
 export default function ActivateDay3({
   firstName = 'there',
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: ActivateDay3Props) {
   return (
     <Html>
@@ -38,7 +38,7 @@ export default function ActivateDay3({
               30 seconds. Every meal under 30 minutes, built around a weekly budget.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/dashboard">
+              <Button style={button} href="https://www.dinnerdrop.app/dashboard">
                 Answer the dinner question →
               </Button>
             </Section>
@@ -56,7 +56,7 @@ export default function ActivateDay3({
           </Section>
           <Section style={footerSection}>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
+              <Link href="https://www.dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
               {' · '}
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
             </Text>

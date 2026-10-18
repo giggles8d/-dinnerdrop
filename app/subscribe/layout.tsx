@@ -1,20 +1,22 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Start Your Free Trial — DinnerDrop',
-  description: 'Join DinnerDrop. AI-powered dinner planning for busy families — 5 personalized meals and a grocery list in your Instacart cart in one tap. 14-day free trial, then $9/month.',
+  title: 'DinnerDrop Family — 14-Day Free Trial',
+  description: 'Add the whole household: Kroger cart push, priority support, and new family features first. $4.99/month or $39/year after a 14-day free trial. Cancel anytime.',
+  alternates: { canonical: 'https://www.dinnerdrop.app/subscribe' },
+  robots: { index: false, follow: true },
   openGraph: {
-    title: 'Start Your Free Trial — DinnerDrop',
-    description: 'Get 5 personalized dinners + a one-tap Instacart cart. 14-day free trial, $0 today, cancel anytime.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop — Start Free Trial' }],
-    url: 'https://dinnerdrop.app/subscribe',
+    title: 'DinnerDrop Family — 14-Day Free Trial',
+    description: '$4.99/month or $39/year after a 14-day free trial. $0 today, cancel anytime.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop Family' }],
+    url: 'https://www.dinnerdrop.app/subscribe',
     siteName: 'DinnerDrop',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Start Your Free Trial — DinnerDrop',
-    description: '5 dinners planned in 30 seconds. One-tap Instacart cart. Try it free for 14 days.',
+    title: 'DinnerDrop Family — 14-Day Free Trial',
+    description: '$4.99/month or $39/year after a 14-day free trial. $0 today, cancel anytime.',
     images: ['/og-image.png'],
   },
 }

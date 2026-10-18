@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
   }
 
   const config = EMAIL_CONFIG[emailNumber as EmailNumber]
-  const unsubscribeUrl = `https://dinnerdrop.app/unsubscribe?uid=${userId}`
+  const unsubscribeUrl = `https://www.dinnerdrop.app/unsubscribe?uid=${userId}`
 
   const html = await render(
     React.createElement(config.Template, {

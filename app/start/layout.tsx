@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 
-const title = "DinnerDrop — Try AI Dinner Planning Free for 14 Days";
+const title = "DinnerDrop — Free Weekly Dinner Plans + One-Tap Instacart Cart";
 const description =
-  "Five weeknight dinners planned for your family and budget, and your whole grocery list in your Instacart cart in one tap. 14-day free trial, then $9/month. Cancel anytime.";
+  "Five weeknight dinners planned for your family and budget, and your whole grocery list in your Instacart cart in one tap. Free, no card needed. Family plan $4.99/month with a 14-day free trial.";
 
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "https://dinnerdrop.app/start" },
+  alternates: { canonical: "https://www.dinnerdrop.app/start" },
   openGraph: {
     title,
     description,
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DinnerDrop — Dinner, handled" }],
-    url: "https://dinnerdrop.app/start",
+    url: "https://www.dinnerdrop.app/start",
     siteName: "DinnerDrop",
     type: "website",
   },

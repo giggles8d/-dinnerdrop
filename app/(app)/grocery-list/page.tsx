@@ -14,6 +14,8 @@ export default function GroceryListPage() {
   const [loading, setLoading] = useState(true)
   const [generateError, setGenerateError] = useState(false)
   const [krogerConnected, setKrogerConnected] = useState(false)
+  // Kroger cart push is a Family feature (2026-10-18). Anyone already connected keeps it.
+  const [isFamily, setIsFamily] = useState(true)
   const [krogerLoading, setKrogerLoading] = useState(false)
   const [krogerResult, setKrogerResult] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
   const supabase = createClient()
@@ -24,7 +26,7 @@ export default function GroceryListPage() {
 
     const { data: profile } = await supabase
       .from('profiles')
-      .select('kroger_access_token, kroger_token_expires_at')
+      .select('kroger_access_token, kroger_token_expires_at, subscription_status, is_beta_member')
       .eq('id', user.id)
       .single()
 
@@ -32,6 +34,8 @@ export default function GroceryListPage() {
       const tokenValid = profile.kroger_access_token &&
         (!profile.kroger_token_expires_at || new Date(profile.kroger_token_expires_at) > new Date())
       setKrogerConnected(!!tokenValid)
+      const status = profile.subscription_status
+      setIsFamily(status === 'active' || status === 'trialing' || status === 'past_due' || !!profile.is_beta_member || !!profile.kroger_access_token)
     }
 
     const { data: plan } = await supabase
@@ -230,6 +234,13 @@ export default function GroceryListPage() {
                 >
                   {krogerLoading ? 'Adding to cart...' : 'Send to Kroger cart'}
                 </button>
+              ) : !isFamily ? (
+                <a
+                  href="/subscribe"
+                  className="inline-block w-full sm:w-auto text-center px-8 py-3 rounded-lg border-2 border-[#0067A0] text-[#0067A0] font-semibold text-base hover:bg-[#0067A0]/5 transition-colors"
+                >
+                  Kroger cart push &mdash; included with Family
+                </a>
               ) : (
                 <button
                   onClick={() => { window.location.href = '/api/kroger/auth' }}
@@ -245,14 +256,15 @@ export default function GroceryListPage() {
               )}
               {!krogerResult && (
                 <p className="text-[11px] text-muted-foreground">
-                  Pushes ingredients directly into your Kroger.com cart.
+                  {isFamily || krogerConnected
+                    ? 'Pushes ingredients directly into your Kroger.com cart. You review and check out there.'
+                    : 'Family is $4.99/month or $39/year after a 14-day free trial.'}
                 </p>
               )}
             </div>
           </div>
           <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
-            DinnerDrop may earn a commission when you shop through our Instacart or Kroger links,
-            at no extra cost to you.{' '}
+            Your cart fills in your own Instacart or Kroger account; you review every item and check out there at the store&apos;s normal prices. DinnerDrop may earn a commission when you shop through these links, at no extra cost to you.{' '}
             <a href="/disclosure" className="underline hover:text-foreground">Learn more</a>.
           </p>
         </div>

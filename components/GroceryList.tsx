@@ -29,6 +29,43 @@ const CATEGORY_EMOJI: Record<GroceryCategory, string> = {
   'Beverages': '🧃',
 }
 
+
+// Display helper: "0.625 lbs" -> "5/8 lb", "1 lbs" -> "1 lb", "2 cloves" stays.
+const FRACTIONS: Array<[number, string]> = [
+  [0.125, '\u215b'], [0.25, '\u00bc'], [0.333, '\u2153'], [0.375, '\u215c'], [0.5, '\u00bd'],
+  [0.625, '\u215d'], [0.667, '\u2154'], [0.75, '\u00be'], [0.875, '\u215e'],
+]
+const PLURAL_TO_SINGULAR: Record<string, string> = {
+  lbs: 'lb', pounds: 'lb', pound: 'lb', ounces: 'oz', ounce: 'oz', cups: 'cup', tablespoons: 'tbsp', tablespoon: 'tbsp',
+  teaspoons: 'tsp', teaspoon: 'tsp', cloves: 'clove', cans: 'can', jars: 'jar', packages: 'package', bunches: 'bunch', heads: 'head',
+}
+const COUNT_UNITS = new Set(['clove', 'can', 'jar', 'package', 'bunch', 'head', 'whole', 'piece', 'bag', 'box', 'bottle', 'loaf', 'dozen'])
+
+export function formatQuantity(quantity: string | number, unit: string): string {
+  const raw = String(quantity ?? '').trim()
+  const n = Number(raw)
+  const u = (unit ?? '').trim().toLowerCase()
+  const base = PLURAL_TO_SINGULAR[u] ?? u
+  let qtyText = raw
+  if (!Number.isNaN(n) && raw !== '') {
+    const whole = Math.floor(n)
+    const frac = n - whole
+    let fracText = ''
+    if (frac > 0.05) {
+      const match = FRACTIONS.reduce((best, cur) => (Math.abs(cur[0] - frac) < Math.abs(best[0] - frac) ? cur : best))
+      fracText = Math.abs(match[0] - frac) < 0.07 ? match[1] : ''
+    }
+    if (fracText) qtyText = whole > 0 ? `${whole}${fracText}` : fracText
+    else qtyText = String(Math.round(n * 100) / 100)
+  }
+  // Pluralize count units when quantity > 1 ("2 cloves"), keep weight/volume units singular ("2 lb", "3 cup" -> "3 cups").
+  let unitText = base
+  if (!Number.isNaN(n) && n > 1) {
+    if (COUNT_UNITS.has(base) || base === 'cup') unitText = base === 'bunch' ? 'bunches' : base === 'box' ? 'boxes' : `${base}s`
+  }
+  return `${qtyText} ${unitText}`.trim()
+}
+
 export default function GroceryList({ groceryList, store = '' }: GroceryListProps) {
   const [checked, setChecked] = useState<Set<string>>(new Set())
 
@@ -102,7 +139,7 @@ export default function GroceryList({ groceryList, store = '' }: GroceryListProp
                     <span className={`text-xs font-medium transition-colors ${
                       isChecked ? 'text-muted-foreground/50' : 'text-muted-foreground'
                     }`}>
-                      {item.quantity} {item.unit}
+                      {formatQuantity(item.quantity, item.unit)}
                     </span>
                     {store && store !== 'Kroger' && item.searchTerm && (
                       <a

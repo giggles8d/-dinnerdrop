@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getPublishedPosts } from '@/lib/published-posts'
 
-const BASE = 'https://dinnerdrop.app'
+const BASE = 'https://www.dinnerdrop.app'
 
 // Re-generate hourly so future-dated posts enter the sitemap on their publish date.
 export const revalidate = 3600
@@ -28,12 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${BASE}/subscribe`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
       url: `${BASE}/blog`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -52,12 +46,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     ...blogEntries,
-    {
-      url: `${BASE}/waitlist`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
     {
       url: `${BASE}/terms`,
       lastModified: new Date(),

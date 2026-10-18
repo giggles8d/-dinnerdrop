@@ -8,10 +8,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Privacy Policy — DinnerDrop',
     description: 'DinnerDrop privacy policy — how we collect, use, and protect your data.',
-    url: 'https://dinnerdrop.app/privacy',
+    url: 'https://www.dinnerdrop.app/privacy',
     siteName: 'DinnerDrop',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }],
   },
+  alternates: { canonical: 'https://www.dinnerdrop.app/privacy' },
 }
 
 export default function PrivacyPage() {
@@ -37,7 +39,7 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="text-sm text-muted-foreground mb-10">
-          Last updated: March 2026
+          Last updated: October 18, 2026
         </p>
 
         <div className="space-y-8 text-sm text-foreground leading-relaxed">
@@ -108,12 +110,25 @@ export default function PrivacyPage() {
                 your cart
               </li>
               <li>
-                <span className="font-medium text-foreground">Kroger:</span> Grocery pricing and
-                product matching
+                <span className="font-medium text-foreground">Kroger:</span> Cart push and
+                product matching — if you connect a Kroger account, your grocery list is sent to
+                Kroger when you choose to push it to your cart
               </li>
               <li>
                 <span className="font-medium text-foreground">Stripe:</span> Payment processing
-                for paid subscriptions — we do not store your full credit card number
+                for the Family plan — we never see or store your card number
+              </li>
+              <li>
+                <span className="font-medium text-foreground">Resend:</span> Transactional email
+                (account, billing, and plan notifications)
+              </li>
+              <li>
+                <span className="font-medium text-foreground">Vercel:</span> Hosting and
+                privacy-friendly site analytics
+              </li>
+              <li>
+                <span className="font-medium text-foreground">Google Ads, Meta, and Pinterest:</span>{' '}
+                Advertising measurement — see section 6
               </li>
             </ul>
           </section>
@@ -172,10 +187,27 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-heading font-semibold text-foreground mb-3">
               6. Cookies
             </h2>
+            <p className="mb-3">
+              DinnerDrop uses essential cookies to manage authentication sessions and remember your
+              preferences. These are required for the Service to function and cannot be disabled.
+            </p>
+            <p className="mb-3">
+              We also use advertising measurement tags from Google Ads, Meta (Facebook and
+              Instagram), and Pinterest on our public marketing pages. These set third-party
+              cookies and may collect your IP address, device identifiers, and the pages you
+              visit, so that we can measure whether our ads led to signups and show relevant ads
+              on those platforms. They are not used to track you inside the app after you sign in,
+              and we never share your meal plans, grocery lists, or dietary information with
+              advertising platforms.
+            </p>
             <p>
-              DinnerDrop uses cookies to manage authentication sessions and remember your
-              preferences. We do not use third-party advertising or tracking cookies. Essential
-              cookies are required for the Service to function and cannot be disabled.
+              You can opt out of interest-based advertising through your browser&rsquo;s cookie
+              settings, Google&rsquo;s{' '}
+              <a href="https://adssettings.google.com" className="text-primary underline" target="_blank" rel="noopener noreferrer">Ads Settings</a>,
+              Meta&rsquo;s{' '}
+              <a href="https://www.facebook.com/adpreferences" className="text-primary underline" target="_blank" rel="noopener noreferrer">Ad Preferences</a>,
+              and Pinterest&rsquo;s privacy settings, or through the{' '}
+              <a href="https://optout.aboutads.info" className="text-primary underline" target="_blank" rel="noopener noreferrer">Digital Advertising Alliance</a>.
             </p>
           </section>
 

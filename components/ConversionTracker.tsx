@@ -68,7 +68,7 @@ export default function ConversionTracker({ value = 54, currency = 'USD' }: { va
       window.fbq('track', 'CompleteRegistration', {
         value,
         currency,
-        content_name: 'DinnerDrop Beta Signup',
+        content_name: 'DinnerDrop Signup',
       })
     }, 'Meta Pixel')
 
@@ -78,7 +78,7 @@ export default function ConversionTracker({ value = 54, currency = 'USD' }: { va
       window.pintrk('track', 'lead', {
         value,
         currency,
-        lead_type: 'beta_signup',
+        lead_type: 'signup',
       })
     }, 'Pinterest Tag')
 

@@ -41,8 +41,9 @@ export async function POST(request: Request) {
     const prompt = `You are a grocery list optimizer. Take this list of ingredients from 5 dinner recipes and:
 1. Combine duplicates (e.g., 3 recipes need chicken → one line item with total quantity)
 2. Normalize units (convert all to the same unit type where possible)
-3. Organize by store section
-4. Create a clean, shopper-friendly search term for each item
+3. Use quantities a shopper can actually buy: whole counts for produce and packaged goods ("1 head garlic", "2 lemons", "1 bunch cilantro"), fractions no finer than 1/4 for weights ("1 1/4 lb", never "0.625 lbs"), tablespoons/teaspoons for spices and butter under 1/2 cup, and "1 can"/"1 jar"/"1 package" for pantry items. Use singular units ("lb", "cup", "clove") — never "lbs"
+4. Organize by store section
+5. Create a clean, shopper-friendly search term for each item
 
 Ingredients:
 ${JSON.stringify(allIngredients, null, 2)}

@@ -119,10 +119,10 @@ export default function AccountPage() {
 
   const status = profile?.subscription_status ?? 'free'
   const daysLeft = getTrialDaysRemaining()
-  const emailPrefix = userEmail?.split('@')[0]?.replace(/[^a-zA-Z]/g, '') || ''
-  const firstName =
-    profile?.full_name?.split(' ')[0]
-    ?? (emailPrefix ? emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1) : 'there')
+  const firstName = profile?.full_name?.trim().split(/\s+/)[0] || 'there'
+  const trialEndDate = profile?.trial_ends_at
+    ? new Date(profile.trial_ends_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+    : null
   const isFoundingMember = profile?.is_beta_member === true
 
   // active/past_due — portal redirect is fired in useEffect; show spinner while it happens
@@ -165,23 +165,20 @@ export default function AccountPage() {
                 <Clock className="w-5 h-5" style={{ color: '#1a5c38' }} />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Founding family — active</p>
-                <p className="text-xs text-muted-foreground">6 months free, then $9/month</p>
+                <p className="font-semibold text-foreground">{isFoundingMember ? 'Family — 6 free months' : 'Family — free trial'}</p>
+                <p className="text-xs text-muted-foreground">{isFoundingMember ? 'Then $4.99/month. Cancel anytime.' : '$4.99/month after your trial. Cancel anytime.'}</p>
               </div>
             </div>
 
             <div className="rounded-xl p-4" style={{ backgroundColor: '#f0faf4', border: '1px solid #bbf7d0' }}>
               <p className="text-sm font-semibold mb-1" style={{ color: '#1a5c38' }}>
-                {daysLeft > 30
-                  ? `${daysLeft} days remaining in your beta`
-                  : daysLeft > 7
-                  ? `${daysLeft} days left — you’re locked in!`
-                  : daysLeft > 0
-                  ? `${daysLeft} day${daysLeft === 1 ? '' : 's'} left in your trial`
-                  : 'Your trial ends today'}
+                {daysLeft > 0
+                  ? `${daysLeft} free day${daysLeft === 1 ? '' : 's'} left`
+                  : 'Your free period ends today'}
+                {trialEndDate ? ` · first charge on ${trialEndDate}` : ''}
               </p>
               <p className="text-xs" style={{ color: '#166534' }}>
-                We&apos;ll email you 7 days before billing starts. Cancel anytime.
+                We email you three days before any charge. Cancel in one tap below.
               </p>
             </div>
 
@@ -221,8 +218,8 @@ export default function AccountPage() {
                 <CheckCircle className="w-5 h-5" style={{ color: '#1a5c38' }} />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Founding family — active</p>
-                <p className="text-xs text-muted-foreground">6 months free · No card on file</p>
+                <p className="font-semibold text-foreground">Family — included</p>
+                <p className="text-xs text-muted-foreground">No card on file</p>
               </div>
             </div>
 
@@ -252,16 +249,16 @@ export default function AccountPage() {
               </div>
               <div>
                 <p className="font-semibold text-foreground">Free plan</p>
-                <p className="text-xs text-muted-foreground">1 meal plan to try it out</p>
+                <p className="text-xs text-muted-foreground">Unlimited weekly plans, grocery list, and one-tap Instacart cart</p>
               </div>
             </div>
 
             <div className="rounded-xl p-4 bg-secondary border border-border">
               <p className="text-sm font-semibold text-foreground mb-1">
-                Unlock unlimited meal plans
+                Add the whole household with Family
               </p>
               <p className="text-xs text-muted-foreground">
-                14-day free trial, then $9/month. Nothing charged today — cancel anytime from this page.
+                Kroger cart push, priority support, and every new family feature first. $4.99/month or $39/year after a 14-day free trial. Nothing charged today — cancel anytime from this page.
               </p>
             </div>
 
@@ -271,11 +268,11 @@ export default function AccountPage() {
               className="block w-full text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors disabled:opacity-50"
               style={{ backgroundColor: '#1a5c38' }}
             >
-              {claimLoading ? 'Opening secure checkout…' : 'Start my 14-day free trial →'}
+              {claimLoading ? 'Opening secure checkout…' : 'Try Family free for 14 days →'}
             </button>
 
             <p className="text-xs text-center text-muted-foreground">
-              $0 today — Secure checkout by Stripe — Cancel anytime
+              $0 today · Payments by Stripe · Cancel anytime
             </p>
           </div>
         )}
@@ -288,8 +285,8 @@ export default function AccountPage() {
                 <CreditCard className="w-5 h-5 text-muted-foreground" />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Subscription canceled</p>
-                <p className="text-xs text-muted-foreground">Your plan has been canceled</p>
+                <p className="font-semibold text-foreground">Family canceled</p>
+                <p className="text-xs text-muted-foreground">You&apos;re on the Free plan — planning and your Instacart cart still work</p>
               </div>
             </div>
 
@@ -298,7 +295,7 @@ export default function AccountPage() {
                 Want to come back?
               </p>
               <p className="text-xs text-muted-foreground">
-                Resubscribe anytime to get 5 personalized dinners and your grocery list every week.
+                Restart Family anytime for the Kroger cart push, priority support, and new family features first.
               </p>
             </div>
 
@@ -307,11 +304,11 @@ export default function AccountPage() {
               className="block text-center px-4 py-3 rounded-xl text-primary-foreground font-semibold transition-colors"
               style={{ backgroundColor: '#1a5c38' }}
             >
-              Restart my plan →
+              Restart Family →
             </Link>
 
             <p className="text-xs text-center text-muted-foreground">
-              14-day free trial · $9/month after · Cancel anytime
+              $4.99/month or $39/year · Cancel anytime
             </p>
           </div>
         )}

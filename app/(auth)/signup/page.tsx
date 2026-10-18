@@ -13,13 +13,9 @@ function SignupForm() {
   const [magicSent, setMagicSent] = useState(false)
   const searchParams = useSearchParams()
   const nextUrl = searchParams.get('redirect') || null
-  // Coming from /start: the next step is Stripe Checkout (14-day trial), so the
-  // "no credit card" line would be false here.
+  // Coming from a "Try Family" button: the next step is Stripe Checkout
+  // (14-day trial), so the "no card" line would be false here.
   const toTrial = !!nextUrl && nextUrl.startsWith('/subscribe')
-  // beta=1 means this user clicked through from the beta landing page. We mark
-  // them as a beta member (is_beta_member=true) in the auth callback, no Stripe
-  // checkout, no credit card collected. 6 months free is just &quot;free.&quot;
-  const isBeta = searchParams.get('beta') === '1'
 
   const supabase = createClient()
 
@@ -28,9 +24,7 @@ function SignupForm() {
   // quiz is offered after they've seen the plan — not as a gate before it.
   function buildCallbackUrl() {
     const destination = nextUrl && nextUrl.startsWith('/') ? nextUrl : '/dashboard?new=1'
-    return isBeta
-      ? `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(destination)}&beta=1`
-      : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(destination)}`
+    return `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(destination)}`
   }
 
   function postSignupDestination() {
@@ -72,13 +66,6 @@ function SignupForm() {
 
     // Session present → "Confirm email" is OFF, user is logged in instantly.
     if (data.session && data.user) {
-      if (isBeta) {
-        try {
-          await supabase.from('profiles').update({ is_beta_member: true }).eq('id', data.user.id)
-        } catch {
-          // Non-fatal — the flag can be backfilled; don't block entry.
-        }
-      }
       window.location.assign(postSignupDestination())
       return
     }
@@ -113,12 +100,6 @@ function SignupForm() {
             We sent a magic link to <strong className="text-foreground">{email}</strong>.
             <br />Click it to finish setting up your account.
           </p>
-          {isBeta && (
-            <div className="rounded-xl border-2 px-4 py-3" style={{borderColor:'#e8a838',backgroundColor:'#fef9ee'}}>
-              <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 Your 6 free months are locked in.</p>
-              <p className="text-xs mt-1" style={{color:'#1a5c38'}}>The moment you click the link, you&apos;re in. No card, no checkout.</p>
-            </div>
-          )}
           <p className="text-xs text-muted-foreground">
             Didn&apos;t get it? Check your spam folder, or{' '}
             <button onClick={() => setMagicSent(false)} className="text-primary hover:underline font-medium">
@@ -133,22 +114,14 @@ function SignupForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
-        {isBeta && (
-          <div className="rounded-xl border-2 px-4 py-3 text-center" style={{borderColor:'#e8a838',backgroundColor:'#fef9ee'}}>
-            <p className="text-sm font-bold" style={{color:'#1a5c38'}}>🎉 You&apos;re claiming your 6 free months</p>
-            <p className="text-xs mt-1" style={{color:'#1a5c38'}}>No credit card. No password. Just your email — and you&apos;re in instantly.</p>
-          </div>
-        )}
-        <div className="text-center">
+         <div className="text-center">
           <h1 className="text-3xl font-heading font-bold text-foreground">
-            {isBeta ? 'Claim your 6 free months' : toTrial ? 'Start your 14-day free trial' : 'Create your account'}
+            {toTrial ? 'Start your 14-day Family trial' : 'Create your free account'}
           </h1>
           <p className="mt-2 text-muted-foreground">
-            {isBeta
-              ? 'Just your email — no password, no card. Instant access.'
-              : toTrial
-                ? 'Step 1 of 2: your email. Step 2: add a card at secure checkout — $0 today.'
-                : 'Just your email. No password to remember.'}
+            {toTrial
+              ? 'Step 1 of 2: your email. Step 2: add a card at secure checkout — $0 today, $4.99/month after 14 days unless you cancel.'
+              : 'Just your email. No password, no card. Your first week of dinners is ready in seconds.'}
           </p>
         </div>
 
@@ -182,16 +155,14 @@ function SignupForm() {
           >
             {loading
               ? 'Setting up your account...'
-              : isBeta
-                ? 'Claim my 6 months free →'
-                : toTrial
-                  ? 'Continue to secure checkout →'
-                  : 'Create my account →'}
+              : toTrial
+                ? 'Continue to secure checkout →'
+                : 'Start free →'}
           </button>
           <p className="text-xs text-center text-muted-foreground">
             {toTrial
-              ? 'No password to remember. Nothing charged for 14 days. Cancel anytime.'
-              : 'No password. You\'re in instantly.'}
+              ? 'No password to remember. Nothing charged for 14 days. Cancel anytime from Account.'
+              : 'Free forever for planning and your Instacart cart. No password — you\'re in instantly.'}
           </p>
         </form>
       {!(isNativeApp() && nativePlatform() === 'ios') && (<>

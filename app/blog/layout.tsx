@@ -8,16 +8,17 @@ export const metadata: Metadata = {
   description:
     'Practical meal planning advice, dinner ideas, and AI-powered tips for busy families. ' +
     'Stop the 5pm scramble — plan smarter with DinnerDrop.',
+  alternates: { canonical: 'https://www.dinnerdrop.app/blog' },
   openGraph: {
     siteName: 'DinnerDrop',
     locale: 'en_US',
     type: 'website',
-    images: [{ url: 'https://dinnerdrop.app/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: 'https://www.dinnerdrop.app/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@dinnerdropapp',
-    images: ['https://dinnerdrop.app/og-image.png'],
+    images: ['https://www.dinnerdrop.app/og-image.png'],
   },
 }
 

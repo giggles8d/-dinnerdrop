@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [{ url: 'https://dinnerdrop.app/og-image.png', width: 1200, height: 630 }],
   },
-  alternates: { canonical: 'https://dinnerdrop.app/about' },
+  alternates: { canonical: 'https://www.dinnerdrop.app/about' },
 }
 
 export default function AboutPage() {
@@ -98,9 +98,10 @@ export default function AboutPage() {
               little time and a little sanity every week.
             </p>
             <p className="mb-3">
-              Over 200 families planned dinner with us in our founding chapter, and their feedback
-              shaped everything — including the one-tap Instacart cart that is now live. If you
-              have thoughts, I want to hear them.
+              Over 200 families plan dinner with DinnerDrop, and their feedback shapes
+              everything &mdash; including the one-tap Instacart cart. Planning and the cart are
+              free for every family; the Family plan adds the rest of the household. If you have
+              thoughts, I want to hear them.
             </p>
             <p className="text-muted-foreground">
               — Sarah, Founder ·{' '}
@@ -127,10 +128,10 @@ export default function AboutPage() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/start"
+            href="/signup"
             className="inline-block px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-sm"
           >
-            Start my 14-day free trial &rarr;
+            Start free &mdash; no card needed &rarr;
           </Link>
         </div>
       </main>
