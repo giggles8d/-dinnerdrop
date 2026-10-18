@@ -75,7 +75,7 @@ export default function LibraryRecipePage() {
       <div className="container mx-auto px-4 py-8 max-w-3xl">
         <Link href="/recipes" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6"><ArrowLeft className="w-4 h-4" /> Recipe library</Link>
         {cooking && <CookMode meal={meal} onClose={() => setCooking(false)} />}
-        <div className="rounded-xl overflow-hidden mb-6"><MealCardImage mealName={r.name} dayLabel={r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} /></div>
+        <div className="rounded-xl overflow-hidden mb-6"><MealCardImage mealName={r.name} dayLabel={r.source === 'user' && r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} /></div>
         <div className="flex items-start justify-between gap-4 mb-4">
           <h1 className="text-4xl font-heading font-bold text-foreground leading-tight">{r.name}</h1>
           <button onClick={toggleFav} className="p-2 rounded-full hover:bg-muted" aria-label="Favorite"><Heart className={`w-6 h-6 ${fav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} /></button>

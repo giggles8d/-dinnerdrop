@@ -63,7 +63,7 @@ export default function RecipesPage() {
   useEffect(() => { load() }, [load])
 
   const filtered = rows.filter((r) => {
-    if (mine && r.created_by !== userId) return false
+    if (mine && !(r.source === 'user' && r.created_by === userId)) return false
     if (maxTime && (r.cook_time ?? 0) + (r.prep_time ?? 0) > maxTime) return false
     if (tag && !(r.tags ?? []).includes(tag)) return false
     if (q) {
@@ -186,7 +186,7 @@ export default function RecipesPage() {
             {filtered.map((r) => (
               <div key={r.id} className="rounded-xl border border-border bg-card overflow-hidden group hover:shadow-md transition-shadow">
                 <Link href={`/recipes/${r.slug}`} className="block">
-                  <MealCardImage mealName={r.name} dayLabel={r.created_by === userId ? 'Yours' : ''} imageUrl={r.image_url ?? undefined} />
+                  <MealCardImage mealName={r.name} dayLabel={r.source === 'user' && r.created_by === userId ? 'Yours' : ''} imageUrl={r.image_url ?? undefined} />
                 </Link>
                 <div className="relative p-4 space-y-2">
                   <button onClick={() => toggleFavorite(r)} className="absolute top-3 right-3 p-1.5 rounded-full bg-background/80 hover:bg-background" aria-label="Favorite">
