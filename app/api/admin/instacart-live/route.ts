@@ -34,8 +34,8 @@ export const maxDuration = 60
  *   GET  /api/admin/instacart-live?confirm=send  → sends the next batch
  */
 
-const CTA_ACCOUNT = 'https://dinnerdrop.app/login?utm_source=email&utm_medium=instacart_live&utm_campaign=founding'
-const CTA_TRIAL = 'https://dinnerdrop.app/start?utm_source=email&utm_medium=instacart_live&utm_campaign=trial'
+const CTA_ACCOUNT = 'https://www.dinnerdrop.app/login?utm_source=email&utm_medium=instacart_live&utm_campaign=early'
+const CTA_TRIAL = 'https://www.dinnerdrop.app/login?utm_source=email&utm_medium=instacart_live&utm_campaign=free'
 
 async function checkAuth(request: NextRequest): Promise<{ ok: true } | { ok: false; reason: string }> {
   const secret = request.headers.get('x-admin-secret')
@@ -69,7 +69,7 @@ function firstNameFrom(email: string, fullName?: string | null) {
 
 function subjectFor(kind: 'founding' | 'returning' | 'waitlist') {
   if (kind === 'founding') return 'Your grocery list now lands in your Instacart cart in one tap'
-  if (kind === 'waitlist') return 'The waitlist is over — DinnerDrop is open (and the Instacart cart is live)'
+  if (kind === 'waitlist') return 'DinnerDrop is open — free, no card, and the Instacart cart is live'
   return 'One tap, your whole grocery list in your Instacart cart — it’s live'
 }
 
@@ -205,8 +205,8 @@ async function handle(request: NextRequest, dryRun: boolean) {
     if (!first) await sleep(250)
     first = false
     const unsubscribeUrl = t.profileId
-      ? `https://dinnerdrop.app/unsubscribe?uid=${t.profileId}`
-      : `https://dinnerdrop.app/unsubscribe?email=${encodeURIComponent(t.email)}`
+      ? `https://www.dinnerdrop.app/unsubscribe?uid=${t.profileId}`
+      : `https://www.dinnerdrop.app/unsubscribe?email=${encodeURIComponent(t.email)}`
     try {
       const html = await render(
         React.createElement(InstacartLive, {

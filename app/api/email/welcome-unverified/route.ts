@@ -34,8 +34,8 @@ export async function POST(request: NextRequest) {
   }
 
   const unsubscribeUrl = userId
-    ? `https://dinnerdrop.app/unsubscribe?uid=${userId}`
-    : 'https://dinnerdrop.app/unsubscribe'
+    ? `https://www.dinnerdrop.app/unsubscribe?uid=${userId}`
+    : 'https://www.dinnerdrop.app/unsubscribe'
 
   const html = await render(React.createElement(WelcomeUnverified, { unsubscribeUrl }))
 

@@ -31,7 +31,6 @@ function DashboardContent() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [favoriteNames, setFavoriteNames] = useState<Set<string>>(new Set())
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
-  const [isBetaMember, setIsBetaMember] = useState(false)
   const [planCount, setPlanCount] = useState(0)
   // Instant first plan: brand-new users (no plan yet) get their first week
   // auto-generated with smart defaults — no quiz gate before seeing value.
@@ -43,7 +42,8 @@ function DashboardContent() {
   const supabase = createClient()
 
   const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing'
-  const canGenerate = isSubscribed || planCount === 0 || isBetaMember
+  // Free plan includes unlimited weekly plans (2026-10-18). Only past_due is blocked, handled in generatePlan.
+  const canGenerate = true
   const isPickingMeals = pendingMeals.length > 0
   const selectedMeals = pendingMeals.filter(m => selectedIds.has(m.day))
 
@@ -66,7 +66,6 @@ function DashboardContent() {
       if (profile) {
         setBudget(profile.weekly_budget)
         setSubscriptionStatus(profile.subscription_status || 'free')
-        setIsBetaMember(profile.is_beta_member || false)
         // Don't gate the dashboard behind the quiz anymore — show the product
         // first, offer personalization after. (This was where 95% of signups
         // used to vanish.)
@@ -395,12 +394,12 @@ function DashboardContent() {
             <div className="flex items-center gap-3">
               <Sparkles className="w-5 h-5 text-accent flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold">Unlock unlimited meal plans</p>
-                <p className="text-xs text-primary-foreground/60 mt-0.5">14-day free trial · $9/mo after · Cancel anytime</p>
+                <p className="text-sm font-semibold">Add the whole household with Family</p>
+                <p className="text-xs text-primary-foreground/60 mt-0.5">Kroger cart push, priority support, new family features first · $4.99/mo · 14 days free</p>
               </div>
             </div>
             <span className="text-xs font-semibold text-accent flex-shrink-0">
-              Start free trial &rarr;
+              Try Family free &rarr;
             </span>
           </Link>
         )}
@@ -581,11 +580,11 @@ function DashboardContent() {
               </Link>
               <div className="mt-6 p-4 rounded-xl border border-accent/30 bg-accent/5 text-center">
                 <p className="text-sm font-semibold text-foreground mb-1">Know someone who dreads the dinner question?</p>
-                <p className="text-xs text-muted-foreground mb-3">Share DinnerDrop — they get 14 days free</p>
+                <p className="text-xs text-muted-foreground mb-3">Share DinnerDrop — it&apos;s free, no card needed</p>
                 <button
                   onClick={() => {
-                    navigator.clipboard.writeText('https://dinnerdrop.app/start?utm_source=referral&utm_medium=dashboard')
-                    alert('Link copied! Share it — they get a 14-day free trial.')
+                    navigator.clipboard.writeText('https://www.dinnerdrop.app/start?utm_source=referral&utm_medium=dashboard')
+                    alert('Link copied! Share it — DinnerDrop is free for them too.')
                   }}
                   className="px-5 py-2 rounded-lg border border-accent text-accent text-xs font-semibold hover:bg-accent/10 transition-colors"
                 >

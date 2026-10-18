@@ -13,7 +13,7 @@ interface ActivateDay1Props {
 // where their first plan now auto-generates.
 export default function ActivateDay1({
   firstName = 'there',
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: ActivateDay1Props) {
   return (
     <Html>
@@ -36,7 +36,7 @@ export default function ActivateDay1({
               takes about 30 seconds.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/dashboard">
+              <Button style={button} href="https://www.dinnerdrop.app/dashboard">
                 Show me my dinners →
               </Button>
             </Section>
@@ -52,7 +52,7 @@ export default function ActivateDay1({
           </Section>
           <Section style={footerSection}>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
+              <Link href="https://www.dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
               {' · '}
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
             </Text>

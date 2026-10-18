@@ -99,7 +99,7 @@ The decision isn't whether you can afford to plan dinner. It's whether you can a
 
 If you want to try the manual approach: block Sunday morning, plan five dinners, write out the grocery list, and commit. You'll feel the difference by Wednesday.
 
-If you want to skip the planning work entirely, [DinnerDrop is in public beta](https://dinnerdrop.app/beta) — first 100 families get 6 months completely free. No credit card required.
+If you want to skip the planning work entirely, [DinnerDrop](https://www.dinnerdrop.app/start) is free, no card needed.
 
 Either way: stop making the "what's for dinner?" decision at 5:47pm. That version of you does not have the bandwidth.`,
   },
@@ -122,9 +122,9 @@ Our ranking criteria: AI vs. manual, grocery integration, dietary filter support
 
 | App | AI | Grocery Handoff | Price |
 |-----|-----|----------------|-------|
-| DinnerDrop | Yes (full) | Yes (5 stores) | $9/mo (6-mo beta free) |
-| Mealime | Partial | Shopping list only | Free / $6/mo |
-| Plan to Eat | No | Shopping list only | $8/mo |
+| DinnerDrop | Yes (full) | Yes (Instacart one-tap cart; Kroger on Family) | Free / $4.99/mo Family |
+| Mealime | Partial | Shopping list only | Shutting down Oct 21, 2026 |
+| Plan to Eat | No | Shopping list only | $5.95/mo or $49/yr |
 | Paprika | No | Shopping list only | $4.99 one-time |
 | Whisk | Partial | Some stores | Free |
 | Prepear | No | Shopping list only | Free / $8/mo |
@@ -132,7 +132,7 @@ Our ranking criteria: AI vs. manual, grocery integration, dietary filter support
 
 ## 1. DinnerDrop — Best Overall for AI-Powered Family Meal Planning
 
-**Price:** $9/month (currently free for 6 months during beta)
+**Price:** Free (unlimited plans + one-tap Instacart cart). Family plan $4.99/month or $39/year.
 
 DinnerDrop takes a completely different approach than every other app on this list. Instead of asking you to search recipes, save them, and schedule them manually — DinnerDrop generates everything from your family profile.
 
@@ -140,27 +140,27 @@ You enter your family size, weekly grocery budget, dietary restrictions, and pre
 
 **What makes it different:**
 - AI builds the plan from your family profile, not a recipe database you browse
-- One-tap grocery handoff to 5 major stores
+- One-tap grocery handoff: your whole list pre-loaded in your Instacart cart, or pushed to a Kroger cart on Family
 - Picky eater swap: tap any meal you don\'t love, get a replacement in seconds
 - Budget optimization: every plan is built to hit your weekly food number
 - Learns your family\'s taste preferences over time
 
-**Real talk:** DinnerDrop launched in beta in May 2026. You get 6 months free while it\'s still in beta — the recipe variety will grow as the user base grows.
+**Real talk:** DinnerDrop plans dinners with AI, so every week is built for your family rather than pulled from a fixed catalog — and the plans get better as it learns what your family keeps and skips.
 
-[Try DinnerDrop free →](https://dinnerdrop.app/beta)
+[Try DinnerDrop free →](https://www.dinnerdrop.app/start)
 
-## 2. Mealime — Best Free Option for Small Families
+## 2. Mealime — Was the Best Free Option (Shutting Down October 21, 2026)
 
-**Price:** Free (Pro: $5.99/month)
+**Price:** Was free (Pro: $5.99/month). Albertsons, which owns Mealime, is closing the app on October 21, 2026 and folding it into the "Meals Hub" inside its own grocery apps.
 
-Mealime has been around since 2016 with a clean interface, solid recipe library (500+ recipes), and shopping lists organized by grocery store section.
+Mealime had been around since 2016 with a clean interface, a solid recipe library (500+ recipes), and shopping lists organized by grocery store section. It was the app parents recommended to each other most.
 
-**What works:** Beautiful recipes, strong dietary filters (vegetarian, vegan, gluten-free, keto, etc.), free tier is genuinely useful.
-**What doesn\'t:** No grocery cart handoff. You shop manually from the app. Less useful for families of 4+.
+**What worked:** Beautiful recipes, strong dietary filters (vegetarian, vegan, gluten-free, keto, etc.), a free tier that was genuinely useful.
+**What doesn\'t:** It is going away, and there is no export — saved plans, favorites, and lists don\'t transfer. If you are a Mealime family, [DinnerDrop](https://www.dinnerdrop.app/start) is free and you can rebuild your favorites by typing in their names.
 
 ## 3. Plan to Eat — Best for Recipe Collectors
 
-**Price:** $8/month or $60/year
+**Price:** $5.95/month or $49/year (14-day free trial, no card)
 
 Plan to Eat is a recipe management system with meal planning on top. Import recipes from any website, organize in your personal library, drag them onto a weekly calendar, generate a shopping list.
 
@@ -207,7 +207,7 @@ Cozi is a family organizer with meal planning as one feature. If you already use
 
 - **Want less than 2 minutes of weekly planning?** → DinnerDrop
 - **Have a recipe collection to organize?** → Plan to Eat or Paprika
-- **Want free and functional right now?** → Mealime or Whisk
+- **Want free and functional right now?** → DinnerDrop or Whisk
 - **Both partners want a visual shared plan?** → Prepear
 - **Already use Cozi for family scheduling?** → Cozi (add DinnerDrop for AI meal generation)
 
@@ -215,9 +215,9 @@ Cozi is a family organizer with meal planning as one feature. If you already use
 
 Most apps on this list support a cook who is already doing the planning work. DinnerDrop eliminates the planning decision entirely — AI builds the plan, generates the grocery list, and sends it to your store. That\'s the meaningful distinction.
 
-[DinnerDrop is in public beta](https://dinnerdrop.app/beta) — first 100 families get 6 months completely free. No credit card required.
+[DinnerDrop](https://www.dinnerdrop.app/start) is free, no card needed.
 
-[Claim your beta spot →](https://dinnerdrop.app/beta)`,
+[Start free →](https://www.dinnerdrop.app/start)`,
   },
   {
     slug: 'hellofresh-alternative-cheaper',
@@ -301,9 +301,9 @@ DinnerDrop works differently. Answer a short quiz once: family size, dietary res
 
 Dietary filters are specific enough to actually matter: nut-free, dairy-free, gluten-free, vegetarian all work independently or in combination. The grocery list integrates with Instacart and Kroger for delivery — or you shop yourself.
 
-Monthly cost: **$9/month**. Compare that to $564/month for HelloFresh. The first 100 families to sign up get 6 months completely free through the beta program.
+Monthly cost: **$0** for planning and the Instacart cart (the Family plan is $4.99/month). Compare that to $564/month for HelloFresh.
 
-[See how DinnerDrop generates a week of dinners →](https://dinnerdrop.app/beta)
+[See how DinnerDrop generates a week of dinners →](https://www.dinnerdrop.app/start)
 
 ## How to Make the Switch This Weekend
 
@@ -327,7 +327,7 @@ The transition takes one weekend. The savings start immediately.
 - **Marley Spoon** — Martha Stewart partnership. Higher price, better recipe quality.
 
 **If you want the planning removed but prefer to shop yourself:**
-- **DinnerDrop** — AI weekly plan + grocery list, $9/month, free to try
+- **DinnerDrop** — AI weekly plan + grocery list + one-tap Instacart cart, free; Family $4.99/month
 - **Mealime** — Recipe-library approach, free tier available, manual recipe selection
 - **Plan to Eat** — Great for recipe collectors building their own rotation
 
@@ -339,7 +339,7 @@ AI meal planning removes the same decision fatigue at a fraction of the cost. Yo
 
 For most families, switching from HelloFresh to an AI meal planner saves **$1,300–$2,400 per year** while covering more nights per week, not fewer.
 
-[Claim a free beta spot →](https://dinnerdrop.app/beta)`,
+[Start free →](https://www.dinnerdrop.app/start)`,
   },
   {
     slug: 'how-to-plan-a-week-of-dinners',
@@ -394,7 +394,7 @@ The result: most families eventually give up on structured planning and default 
 
 ## How to Plan a Week of Dinners with AI: Step by Step
 
-Here's exactly what happens when you generate a week of meals in [DinnerDrop](https://dinnerdrop.app/beta).
+Here's exactly what happens when you generate a week of meals in [DinnerDrop](https://www.dinnerdrop.app/start).
 
 ### Step 1: Set Your Family Profile (One Time Only)
 
@@ -430,7 +430,7 @@ A typical week for a family of four, 30-minute max cook time, one dairy-free mem
 | Thursday | One-pot pasta with turkey sausage + spinach | 25 min |
 | Friday | Honey garlic salmon + roasted sweet potatoes | 30 min |
 
-Grocery list: 31 items. Organized by section. Estimated cost at Walmart: $87 for the week — under $4.40 per person per dinner.
+Grocery list: 31 items. Organized by section. Estimated cost: $87 for the week — under $4.40 per person per dinner.
 
 ---
 
@@ -458,11 +458,11 @@ For families who do this every week, that's 43–73 hours of planning time per y
 
 ## Get Your First Week Free
 
-DinnerDrop is in beta. The first 100 families get **6 months completely free**.
+Planning and the one-tap Instacart cart are **free, no card needed**.
 
 Setup takes 3 minutes. Your first week of dinners is ready in 30 seconds.
 
-[Claim a free beta spot →](https://dinnerdrop.app/beta)`,
+[Start free →](https://www.dinnerdrop.app/start)`,
   },
   {
     slug: 'picky-eater-dinner-ideas-family',
@@ -647,9 +647,9 @@ That's what [DinnerDrop](https://dinnerdrop.app) does. You tell it your family s
 
 If you have a kid who won't eat anything with sauce, a dairy-free spouse, and a toddler who refuses anything green — DinnerDrop accounts for all of it. You get dinners your family will actually eat, without the 5pm mental inventory and the negotiation that follows.
 
-Beta members get **6 months completely free**. No credit card required to start.
+Planning and the one-tap Instacart cart are **free, no card needed**.
 
-[Claim your free beta spot](https://dinnerdrop.app/beta)
+[Start free](https://www.dinnerdrop.app/start)
 `,
   },
   {
@@ -747,7 +747,7 @@ Not rigidly — life happens, and you can swap nights — but the default answer
 
 If 10 minutes still feels like a lot — or if the planning process itself is where you consistently get stuck — there is a faster path.
 
-[DinnerDrop](https://dinnerdrop.app/beta) is an AI dinner planning tool that does the entire process in about 30 seconds. You tell it your family size, dietary restrictions, cooking time preferences, and any foods to avoid once. Every week, it generates five personalized dinners and builds the complete grocery list automatically.
+[DinnerDrop](https://www.dinnerdrop.app/start) is an AI dinner planning tool that does the entire process in about 30 seconds. You tell it your family size, dietary restrictions, cooking time preferences, and any foods to avoid once. Every week, it generates five personalized dinners and builds the complete grocery list automatically.
 
 The grocery list connects directly to Instacart or Kroger — so you are not manually transferring items from a screen to a store app. You tap one button and your cart is ready.
 
@@ -761,7 +761,7 @@ $1,200 per year — or roughly $100 per month — is a conservative estimate of 
 
 Start this weekend. Pick five dinners. Build the list. Buy what is on it. Come back next Sunday and do it again.
 
-[Try DinnerDrop free for 6 months →](https://dinnerdrop.app/beta)
+[Start free — no card needed →](https://www.dinnerdrop.app/start)
 `,
   },
   {
@@ -822,7 +822,7 @@ When you swap a meal — chicken tonight, pasta tomorrow — the list should upd
 
 ## How DinnerDrop Approaches This
 
-[DinnerDrop](https://dinnerdrop.app/beta) is built around this model: dinner planning first, grocery list second, store connection third.
+[DinnerDrop](https://www.dinnerdrop.app/start) is built around this model: dinner planning first, grocery list second, store connection third.
 
 The process takes about 30 seconds:
 
@@ -870,9 +870,9 @@ If you're evaluating options, here's a quick checklist:
 
 The tools worth using are the ones that solve the whole problem: what are we eating this week, what do we need to buy, and how do we get those items into a cart without a second trip to the keyboard.
 
-If that's what you're looking for, [DinnerDrop has a free 6-month beta](https://dinnerdrop.app/beta) open right now. Set up your family profile, get your first week of dinners generated, and see what your grocery list looks like when it's actually built around your meals.
+If that's what you're looking for, [DinnerDrop is free](https://www.dinnerdrop.app/start) — no card needed. Set up your family profile, get your first week of dinners generated, and see what your grocery list looks like when it's actually built around your meals.
 
-[Try DinnerDrop free for 6 months ->](https://dinnerdrop.app/beta)
+[Start free -- no card needed ->](https://www.dinnerdrop.app/start)
 `,
   },
 
@@ -1017,7 +1017,7 @@ needs, or strong opinions about what counts as dinner.
 Most people burn 20-30 minutes every week staring at recipe apps and making lists. That
 friction is what kills meal prep habits. The cooking is easy. The decision-making is exhausting.
 
-[DinnerDrop](https://dinnerdrop.app/beta) solves exactly this. You build a family profile —
+[DinnerDrop](https://www.dinnerdrop.app/start) solves exactly this. You build a family profile —
 family size, cook time preferences, dietary needs, picky eaters — and it generates 5 personalized
 dinners plus a complete grocery list in under 30 seconds. Not a list of random recipes. Actual
 meals filtered for your family, with one grocery list already built.
@@ -1027,7 +1027,7 @@ grocery list goes straight to your cart. No writing anything down. No app-switch
 
 From there, Sunday component prep is just following through on a plan that already exists.
 
-The [beta is free for 6 months](https://dinnerdrop.app/beta) right now — first 100 families.
+It's [free, no card needed](https://www.dinnerdrop.app/start).
 
 ## Common Beginner Questions
 
@@ -1062,10 +1062,10 @@ Start with the four-step system: pick meals, shop from a list, do component prep
 right. Give it three Sundays before you decide whether it works for you.
 
 If the planning part is where you get stuck every week — staring at the fridge trying to
-decide what to make — [DinnerDrop generates your week's dinners and grocery list in 30 seconds](https://dinnerdrop.app/beta).
+decide what to make — [DinnerDrop generates your week's dinners and grocery list in 30 seconds](https://www.dinnerdrop.app/start).
 Sunday prep starts with a plan already made.
 
-[Claim your free 6-month beta spot ->](https://dinnerdrop.app/beta)
+[Start free -- no card needed ->](https://www.dinnerdrop.app/start)
 `,
   },
 
@@ -1074,7 +1074,7 @@ Sunday prep starts with a plan already made.
     title: 'The Only Free Meal Planning App Worth Using in 2026 (No Hidden Paywalls)',
     description:
       'Most "free" meal planning apps hit you with a paywall the moment you try to do anything useful. ' +
-      "Here's how to find one that's actually free — and why DinnerDrop's beta offer beats them all.",
+      "Here's how to find one that's actually free — and why DinnerDrop's free plan changes the math.",
     publishDate: '2026-06-16',
     readingTimeMinutes: 6,
     primaryKeyword: 'meal planning app free',
@@ -1090,7 +1090,7 @@ And there it is: the paywall.
 
 You've been bait-and-switched. Again.
 
-This guide breaks down what "free" actually means for the most popular meal planning apps in 2026 — and explains why one beta offer completely changes the math.
+This guide breaks down what "free" actually means for the most popular meal planning apps in 2026 — and explains why one free plan changes the math.
 
 ## What "Free" Usually Means in Meal Planning Apps
 
@@ -1116,7 +1116,7 @@ Most meal planning apps are freemium. That's not inherently bad — but you shou
 
 ### 2. Plan to Eat
 
-**What's free:** 30-day free trial only. After that, $4.95/month (annual) or $8.95/month (monthly).
+**What's free:** A 14-day free trial only. After that, $5.95/month or $49/year.
 
 **What's paywalled:** Everything — there is no permanent free tier.
 
@@ -1151,35 +1151,31 @@ Most meal planning apps are freemium. That's not inherently bad — but you shou
 Here's the honest gap in the free meal planning market in 2026:
 
 - **AI-generated meal plans** — No free app generates a personalized weekly dinner plan from scratch. This is uniformly a paid feature.
-- **One-tap grocery cart handoff** — Sending your list directly to Instacart or Kroger requires a paid tier on every app that offers it.
+- **One-tap grocery cart handoff** — Sending your list directly to Instacart or Kroger requires a paid tier on nearly every app that offers it.
 - **Picky-eater meal swapping** — The ability to reject a meal and get an instant replacement that respects your family's preferences is paywalled everywhere.
 - **Budget optimization** — Building a plan around a specific weekly grocery budget requires premium on Mealime and others.
 
 If you want all four of these features, you're looking at $6–$15/month on any existing app.
 
-## The Beta Loophole: 6 Months Free, No Catch
+## The Exception: DinnerDrop's Free Plan
 
-DinnerDrop launched a public beta in May 2026 with one offer: the first 100 families get 6 months completely free.
+DinnerDrop's planning and one-tap Instacart cart are free — not a trial, not a limited tier that expires. No card, no spots, no catch. Instacart pays DinnerDrop a small commission when you shop through it, at no extra cost to you, and that is what keeps the free plan free.
 
-No credit card charged for 6 months. Full access to every feature. After 6 months, $9/month — but you'll have had half a year to decide if it's worth it.
-
-What you get during the free period:
+What you get for free:
 
 **AI meal generation** — Tell DinnerDrop your family size, budget, dietary needs, and how much time you have to cook. It generates 5 personalized dinners for the week. Takes 30 seconds.
 
-**One-tap grocery handoff** — Your full shopping list, deduplicated and organized by section, sent directly to your cart at Instacart or Kroger.
+**One-tap grocery handoff** — Your full shopping list, deduplicated and organized by section, pre-loaded in your Instacart cart (Kroger cart push is part of Family).
 
 **Picky-eater meal swapping** — Don't like a meal? Swap it in one tap. DinnerDrop learns your family's preferences over time and stops suggesting meals you've rejected.
 
 **Budget optimization** — Set a weekly grocery budget. Every plan is built to hit your number.
 
-This is the feature set that costs $6–$15/month on premium tiers of other apps — available free for 6 months.
+This is the feature set that costs $6–$15/month on premium tiers of other apps.
 
 ## Is DinnerDrop Actually Free?
 
-The beta offer requires a credit card to set up (for the $9/month subscription that starts after 6 months), but you're not charged anything for 6 months. You'll receive an email before billing begins.
-
-If you cancel before month 7, you pay nothing. If you stay, you pay $9/month — less than most streaming services and a fraction of what most families spend on unplanned takeout in a single week.
+Yes. Planning, the grocery list, swaps, the pantry scan, favorites, and the one-tap Instacart cart are free, with no card on file. The Family plan — $4.99/month or $39/year after a 14-day free trial — adds the Kroger cart push, priority support, and new family features first (the week's dinners texted to everyone, a shared list anyone can add to, per-person preferences). You add a card only if you start a Family trial, and you get an email three days before any charge.
 
 ## Which Free Meal Planning App Should You Use?
 
@@ -1189,15 +1185,13 @@ Here's the decision tree:
 
 **You want a shared family calendar with light meal planning** → Cozi free tier
 
-**You want AI-generated meals and a grocery handoff for free** → DinnerDrop beta (6 months free, 100 spots)
+**You want AI-generated meals and a grocery handoff for free** → DinnerDrop (free, no card)
 
 **You're willing to pay $5–$15/month immediately** → Plan to Eat or Mealime Pro
 
-The DinnerDrop beta won't last. 100 spots. Once they're gone, the $9/month price applies from day one.
+[Start free — no card needed →](https://www.dinnerdrop.app/start)
 
-[Claim your 6-month free beta spot →](https://dinnerdrop.app/beta)
-
-*No charge for 6 months. Cancel anytime before month 7 and you pay nothing.*
+*Free forever for planning and your Instacart cart. Family is $4.99/month after a 14-day trial, cancel anytime.*
 `,
   },
 
@@ -1371,9 +1365,9 @@ The families that stick with meal planning long-term either have a rigid rotatio
 
 DinnerDrop is built for the second group. Tell it your family size, weekly budget, dietary restrictions, and how much time you want to spend cooking each night. It generates 5 personalized dinner ideas and builds your grocery list automatically -- organized by store section, with quantities calculated for your family. The whole process takes about 30 seconds.
 
-Beta members (first 100 families) get the app free for 6 months, including one-tap grocery handoff to Instacart or Kroger.
+Planning and the one-tap Instacart cart are free; the Family plan ($4.99/month) adds the Kroger cart push.
 
-Try DinnerDrop free: /beta
+Start free: dinnerdrop.app/start
 
 ---
 
@@ -1399,7 +1393,7 @@ Use these weeks as your rotation. Swap in your own favorites. Retire the ones th
 
 And when you're ready to stop building the plan yourself every week -- let an AI do it for you.
 
-Grab a 6-month free beta spot while they're still available.`,
+It's free, no card needed.`,
   },
     {
     slug: 'ai-meal-planner',
@@ -1468,7 +1462,7 @@ DinnerDrop was built specifically around this framework:
 | Weekly budget optimization | Built in | No | No | No |
 | One-tap grocery store handoff | 4 stores | No | No | Limited |
 | Learns from feedback | Yes | No | No | No |
-| Price | $9/mo (beta: free) | Free–$6/mo | $6/mo | Free |
+| Price | Free / $4.99 Family | Free–$6/mo | $6/mo | Free |
 
 The honest difference: Mealime and Plan to Eat are excellent recipe organizers. They don't generate budgeted, family-specific, store-connected plans from scratch.
 
@@ -1510,7 +1504,7 @@ Quantities are scaled to your family size and consolidated across all five meals
 
 The bottom line: most "AI meal planners" are recipe apps with a marketing upgrade. A real AI meal planner generates a family-specific, budget-optimized, store-connected weekly plan that gets better every week you use it.
 
-DinnerDrop is currently in beta — the first 100 families get six months completely free. [Claim your beta spot →](https://dinnerdrop.app/beta)
+[Start free →](https://www.dinnerdrop.app/start)
 `,
   },
   {
@@ -1689,7 +1683,7 @@ Meal prepping full meals (cooking 6 identical containers) is hard to sustain. Bu
 
 The best weeknight dinner system is the one you'll actually use. Start with 5-7 meals your family genuinely likes. Rotate them. Add 2-3 new ones every month. Keep a grocery list that reflects the plan. That's the whole system.
 
-[**DinnerDrop automates the weekly planning step →**](https://dinnerdrop.app/beta)
+[**DinnerDrop automates the weekly planning step →**](https://www.dinnerdrop.app/start)
 `,
   },
 
@@ -1850,7 +1844,7 @@ Plan five and leave two nights as intentional flex nights — leftovers, eating 
 
 ---
 
-The system that makes family dinners sustainable is simple: a fixed rotation of meals your family genuinely likes, planned once per week, with a grocery list that matches the plan. The 16 recipes above are the raw material. The weekly planning habit — whether you do it manually on Sunday or use [DinnerDrop](https://dinnerdrop.app/beta) to automate it — is what makes those recipes actually useful week after week.
+The system that makes family dinners sustainable is simple: a fixed rotation of meals your family genuinely likes, planned once per week, with a grocery list that matches the plan. The 16 recipes above are the raw material. The weekly planning habit — whether you do it manually on Sunday or use [DinnerDrop](https://www.dinnerdrop.app/start) to automate it — is what makes those recipes actually useful week after week.
 `,
   },
   {
@@ -1858,7 +1852,7 @@ The system that makes family dinners sustainable is simple: a fixed rotation of 
     title: "25 Healthy Family Dinners Everyone Will Actually Eat (30 Minutes or Less)",
     description:
       "Healthy family dinners don't have to mean separate meals or standoffs at the table. " +
-      "Here are 25 nutritionist-approved dinners under 30 minutes that kids and adults both enjoy.",
+      "Here are 25 balanced family dinners — most under 30 minutes — that kids and adults both enjoy.",
     publishDate: '2026-07-21',
     readingTimeMinutes: 7,
     primaryKeyword: 'healthy family dinners',
@@ -1866,7 +1860,7 @@ The system that makes family dinners sustainable is simple: a fixed rotation of 
 
 The good news: healthy family dinners don't require gourmet skill, expensive ingredients, or separate meals for adults and kids. They require the right recipe bank — ones that are nutrient-dense but also actually taste good to people under the age of twelve.
 
-These 25 dinners are the ones families keep coming back to. Under 30 minutes, made with standard grocery store ingredients, and nutritionist-approved without tasting like "health food."
+These 25 dinners are the ones families keep coming back to. Most are under 30 minutes (a few sheet-pan and oven dinners run 35–40, with almost no hands-on time), made with standard grocery store ingredients, and balanced without tasting like "health food." Times are total, from first chop to the table.
 
 ## What Makes a Dinner Actually Healthy (Without Being Boring)
 
@@ -1885,7 +1879,7 @@ With that in mind, here are 25 dinners that check all three boxes.
 ### Sheet Pan Meals (Set It and Walk Away)
 
 **1. Sheet Pan Chicken Thighs with Roasted Broccoli**
-Season bone-in thighs with olive oil, garlic, paprika, salt. Roast at 425F for 35 minutes alongside broccoli florets. The rendered chicken fat bastes the broccoli — kids who "hate broccoli" routinely eat it this way. 280 calories per serving, 32g protein.
+Season bone-in thighs with olive oil, garlic, paprika, salt. Roast at 425F for 35 minutes alongside broccoli florets (about 40 minutes total, 5 of them hands-on). The rendered chicken fat bastes the broccoli — kids who "hate broccoli" routinely eat it this way. 280 calories per serving, 32g protein.
 
 **2. Sheet Pan Sausage and Vegetables**
 Italian turkey sausage, bell peppers, zucchini, onion, olive oil, Italian seasoning. One pan, 25 minutes, virtually no prep. Serve over polenta or in a hoagie roll. Works for kids who won't touch "mixed" food because every component is visible and separate.
@@ -2007,7 +2001,7 @@ Healthy family dinners become sustainable when you stop treating "healthy" as a 
 
 The other piece is the planning habit. Deciding all five dinners on Sunday — and building the grocery list at the same time — removes 95% of the friction that makes eating healthy as a family feel impossible by Wednesday.
 
-If you want to skip the Sunday planning session entirely, [DinnerDrop](https://dinnerdrop.app/beta) generates a full week of personalized family dinners in 30 seconds — tailored to your family's dietary needs, preferred stores, and cook time tolerance. The beta is free for 6 months.
+If you want to skip the Sunday planning session entirely, [DinnerDrop](https://www.dinnerdrop.app/start) generates a full week of personalized family dinners in 30 seconds — tailored to your family's dietary needs, preferred stores, and cook time tolerance. It's free — no card needed.
 `,
   },
   {
@@ -2030,7 +2024,7 @@ This list solves the deciding problem. Fifty dinners, organized so you can scan 
 
 Scan the categories. Pick a protein category based on what you have or what sounds good. Find a specific dinner. Done. The deciding takes 90 seconds. The cooking takes 30 minutes.
 
-If you want to stop making this decision every week, [DinnerDrop](https://dinnerdrop.app/beta) generates five personalized family dinners in 30 seconds — with a complete grocery list automatically attached. The beta is free for 6 months.
+If you want to stop making this decision every week, [DinnerDrop](https://www.dinnerdrop.app/start) generates five personalized family dinners in 30 seconds — with a complete grocery list automatically attached. It's free — no card needed.
 
 ---
 
@@ -2224,7 +2218,7 @@ The typical sequence looks like this: you get home at 5:30, open the fridge, fee
 
 The only real fix is to decide before hunger is in the room. Sunday planning — picking all five dinners for the week — takes 10 minutes when no one is hungry or tired. Tuesday-at-5pm planning takes 20 minutes minimum and produces worse decisions.
 
-If you want to skip the Sunday planning session entirely: [DinnerDrop](https://dinnerdrop.app/beta) generates a personalized week of dinners in 30 seconds. Tell it your family size, cook time tolerance, dietary needs, and preferred store. It builds the full meal plan and grocery list automatically. The beta is free for 6 months — no credit card required for 6 months.
+If you want to skip the Sunday planning session entirely: [DinnerDrop](https://www.dinnerdrop.app/start) generates a personalized week of dinners in 30 seconds. Tell it your family size, cook time tolerance, dietary needs, and preferred store. It builds the full meal plan and grocery list automatically. It's free — no card needed.
 
 ## Frequently Asked Questions
 
@@ -2380,7 +2374,7 @@ The meals above average about $5-7 for a family of four. Getting consistent abou
 
 **Cook in batches.** Rice, beans, roasted vegetables, and cooked grains all reheat well. Making double quantities when you're already cooking means faster assembly later in the week.
 
-If you want the weekly planning done automatically: [DinnerDrop](https://dinnerdrop.app/beta) generates five personalized budget-friendly dinners in 30 seconds — tailored to your family size, dietary needs, preferred store, and weekly budget. It builds the grocery list and sends it directly to Instacart or Kroger. The beta is free for 6 months.
+If you want the weekly planning done automatically: [DinnerDrop](https://www.dinnerdrop.app/start) generates five personalized budget-friendly dinners in 30 seconds — tailored to your family size, dietary needs, preferred store, and weekly budget. It builds the grocery list and sends it directly to Instacart or Kroger. It's free — no card needed.
 
 ## Frequently Asked Questions
 
@@ -2523,7 +2517,7 @@ Eating cheaply doesn't require eating badly. It requires knowing which ingredien
 <p><strong>Batch cook the proteins:</strong> Brown 2 pounds of ground beef on Sunday. Refrigerate half. Use each half in a different one pot recipe during the week.</p>
 <p><strong>Double the soups and stews:</strong> Almost every soup and stew on this list improves on day two and freezes for up to 3 months. Make extra while you’re already cleaning one pot.</p>
 <p><strong>Keep a pantry stash:</strong> Canned tomatoes, chicken broth, beans, rice, and pasta cover 80% of this list. Shop fresh proteins weekly. Keep the rest stocked.</p>
-<p><strong>Let the app handle the planning:</strong> <a href="https://dinnerdrop.app/beta">DinnerDrop</a> generates a full week of family dinners — including one pot meals — in under 30 seconds, matched to your family size, dietary needs, and what sounds good this week. The grocery list builds automatically. Try it free.</p>
+<p><strong>Let the app handle the planning:</strong> <a href="https://www.dinnerdrop.app/start">DinnerDrop</a> generates a full week of family dinners — including one pot meals — in under 30 seconds, matched to your family size, dietary needs, and what sounds good this week. The grocery list builds automatically. Try it free.</p>
 
 <h2>Frequently Asked Questions</h2>
 
@@ -2542,7 +2536,7 @@ Eating cheaply doesn't require eating badly. It requires knowing which ingredien
 <h2>The Bottom Line</h2>
 <p>One pot meals aren’t a compromise. They’re a category of cooking that produces genuinely excellent dinners with the least possible friction. Less setup, less cleanup, less mental load on a Tuesday when you’ve already made 200 decisions.</p>
 <p>Pick 5 from this list. Make a rotation. Let the one pot do the work.</p>
-<p>And if you want AI to pick the 5 that fit your family’s taste, dietary needs, and current pantry, <a href="https://dinnerdrop.app/beta">try DinnerDrop free</a> — 5 personalized dinners and a full grocery list, built in under 30 seconds.</p>
+<p>And if you want AI to pick the 5 that fit your family’s taste, dietary needs, and current pantry, <a href="https://www.dinnerdrop.app/start">try DinnerDrop free</a> — 5 personalized dinners and a full grocery list, built in under 30 seconds.</p>
 `,
   },
 
@@ -2683,9 +2677,9 @@ One can of chickpeas, one can of coconut milk, curry paste, spinach, and diced s
 
 The real challenge with cooking for two isn't the recipes — it's the planning. Most groceries come in quantities sized for families: a full head of cabbage, eight chicken thighs, a 28-ounce can of tomatoes when you need 14 ounces.
 
-The workaround is planning meals that share ingredients throughout the week. If you buy a head of cabbage, plan a slaw, a stir fry, and a soup that all use it. If you buy cilantro, plan two or three meals before it wilts. That kind of coordinated planning is exactly what [DinnerDrop](https://dinnerdrop.app/beta) does automatically.
+The workaround is planning meals that share ingredients throughout the week. If you buy a head of cabbage, plan a slaw, a stir fry, and a soup that all use it. If you buy cilantro, plan two or three meals before it wilts. That kind of coordinated planning is exactly what [DinnerDrop](https://www.dinnerdrop.app/start) does automatically.
 
-Tell it your household size, dietary preferences, and how much time you have to cook each night, and it generates five matched dinners plus a complete, deduplicated grocery list in under 30 seconds. No more half-used produce going bad in the crisper drawer. [Try it free.](https://dinnerdrop.app/beta)
+Tell it your household size, dietary preferences, and how much time you have to cook each night, and it generates five matched dinners plus a complete, deduplicated grocery list in under 30 seconds. No more half-used produce going bad in the crisper drawer. [Try it free.](https://www.dinnerdrop.app/start)
 
 ## Frequently Asked Questions
 
@@ -2705,7 +2699,7 @@ Tell it your household size, dietary preferences, and how much time you have to 
 
 Pick five from this list. Build a week around them. Grocery shop for just those five meals.
 
-If planning is the hard part, [DinnerDrop](https://dinnerdrop.app/beta) handles it automatically — five personalized dinners and a complete grocery list sized for your household, built in under 30 seconds. Free.
+If planning is the hard part, [DinnerDrop](https://www.dinnerdrop.app/start) handles it automatically — five personalized dinners and a complete grocery list sized for your household, built in under 30 seconds. Free.
 `,
   },
 
@@ -2860,7 +2854,7 @@ A single pound of beef stretched with lentils or mushrooms can feed a family of 
 
 Ground beef is the most versatile weeknight protein. One pound gives you 25 completely different dinners across every cooking style — skillet meals, pasta, tacos, casseroles, and soups.
 
-If deciding what to make is the hard part, [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner plan for your family in under 30 seconds — including a complete grocery list. Free, no credit card required.
+If deciding what to make is the hard part, [DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized five-dinner plan for your family in under 30 seconds — including a complete grocery list. Free, no card needed.
 `,
   },
 
@@ -3060,9 +3054,9 @@ The pattern that works for busy families:
 
 The challenge is not knowing what to cook. It is making the decision without spending 20 minutes in your head on Tuesday at 5pm.
 
-That is what [DinnerDrop](https://dinnerdrop.app/beta) solves. Tell it your family's preferences, dietary needs, and weekly schedule -- it builds five personalized dinners in under 30 seconds, with a complete grocery list organized by store section. Filter for crockpot-only meals, quick weeknight recipes, or anything in between.
+That is what [DinnerDrop](https://www.dinnerdrop.app/start) solves. Tell it your family's preferences, dietary needs, and weekly schedule -- it builds five personalized dinners in under 30 seconds, with a complete grocery list organized by store section. Filter for crockpot-only meals, quick weeknight recipes, or anything in between.
 
-Try it free. No credit card required. [dinnerdrop.app/beta](https://dinnerdrop.app/beta)
+Free, no card needed. [dinnerdrop.app](https://www.dinnerdrop.app/start)
 
 ---
 
@@ -3072,7 +3066,7 @@ The crockpot earns its counter space when you use it strategically. A handful of
 
 Set it before the school run. Come home to dinner already done.
 
-If choosing which five meals to make this week is where you stall, [DinnerDrop](https://dinnerdrop.app/beta) picks them for you based on what your family actually likes -- and builds the grocery list too.
+If choosing which five meals to make this week is where you stall, [DinnerDrop](https://www.dinnerdrop.app/start) picks them for you based on what your family actually likes -- and builds the grocery list too.
 `,
   },
 
@@ -3260,9 +3254,9 @@ A useful structure:
 
 The problem is not picking the right recipes. It is making the decision every single week without burning mental energy on it.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your five dinners for the week automatically, based on what your family likes, your weekly schedule, and your budget. It generates the grocery list at the same time and sends it to your store of choice. The decision is made in under 30 seconds.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your five dinners for the week automatically, based on what your family likes, your weekly schedule, and your budget. It generates the grocery list at the same time and sends it to your store of choice. The decision is made in under 30 seconds.
 
-[Try it free -- no credit card required.](https://dinnerdrop.app/beta)
+[Start free -- no card needed.](https://www.dinnerdrop.app/start)
 
 ---
 
@@ -3286,9 +3280,9 @@ For boneless cuts served as a main dish, plan 1.5 pounds for four people. For bo
 
 Chicken dinners do not have to mean the same three recipes rotating every week. With the right list sorted by cook method and time, you can match the recipe to your evening -- slow cooker for long days, sheet pan for medium evenings, quick skillet for late nights.
 
-The decision of which chicken dinner to make is the bottleneck. [DinnerDrop](https://dinnerdrop.app/beta) removes it -- five personalized dinners built in 30 seconds, grocery list included, sent to your preferred store.
+The decision of which chicken dinner to make is the bottleneck. [DinnerDrop](https://www.dinnerdrop.app/start) removes it -- five personalized dinners built in 30 seconds, grocery list included, sent to your preferred store.
 
-[Try DinnerDrop free at dinnerdrop.app/beta](https://dinnerdrop.app/beta)
+[Start free at dinnerdrop.app](https://www.dinnerdrop.app/start)
 `,
   },
 
@@ -3479,9 +3473,9 @@ A better system is to match recipes to your schedule:
 - **Thursday:** Pasta night
 - **Friday:** Casserole or leftovers
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds this rotation for you automatically. Answer five questions about your family's preferences and schedule, and it generates five dinners for the week plus a complete grocery list. The decision is made in under 30 seconds.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds this rotation for you automatically. Answer five questions about your family's preferences and schedule, and it generates five dinners for the week plus a complete grocery list. The decision is made in under 30 seconds.
 
-[Try it free -- no credit card required.](https://dinnerdrop.app/beta)
+[Start free -- no card needed.](https://www.dinnerdrop.app/start)
 
 ---
 
@@ -3510,9 +3504,9 @@ Easy dinner recipes are a sustainable approach to feeding a family on weeknights
 
 The 40 recipes above cover every protein, every major cooking method, and every weeknight scenario from "I have 15 minutes" to "I need to set it and forget it." Find 5 to 7 that your family eats and rotate through them.
 
-[DinnerDrop](https://dinnerdrop.app/beta) does the rotation for you. Five personalized weeknight dinners built around your family's preferences, with a grocery list sent to your store. Dinner decided in 30 seconds.
+[DinnerDrop](https://www.dinnerdrop.app/start) does the rotation for you. Five personalized weeknight dinners built around your family's preferences, with a grocery list sent to your store. Dinner decided in 30 seconds.
 
-[Try DinnerDrop free at dinnerdrop.app/beta](https://dinnerdrop.app/beta)
+[Start free at dinnerdrop.app](https://www.dinnerdrop.app/start)
 `,
   },
   {
@@ -3528,7 +3522,7 @@ The 40 recipes above cover every protein, every major cooking method, and every 
 <h2>Why Most "Healthy Dinner" Lists Miss the Point</h2>
 <p>You search for healthy dinner ideas and get back quinoa grain bowls with seventeen ingredients and a prep time listed as "30 minutes" — which somehow doesn't account for the 20 minutes of chopping. Real healthy dinners for families need to be fast, require ingredients your kids will touch, and not require a culinary degree to pull off on a Tuesday night.</p>
 <p>These 30 healthy dinner ideas are built around that reality. Each one uses whole ingredients, keeps sodium and processed foods minimal, and — most importantly — has been tested on actual humans who will push a plate away if something looks "too healthy."</p>
-<p><strong>DinnerDrop generates 5 personalized healthy dinner picks for your family every week — plus a grocery list. <a href="https://dinnerdrop.app/beta">Try it free →</a></strong></p>
+<p><strong>DinnerDrop generates 5 personalized healthy dinner picks for your family every week — plus a grocery list. <a href="https://www.dinnerdrop.app/start">Try it free →</a></strong></p>
 
 <h2>Quick Healthy Weeknight Dinners (Under 30 Minutes)</h2>
 
@@ -3640,7 +3634,7 @@ The 40 recipes above cover every protein, every major cooking method, and every 
   <li><strong>1 soup or grain bowl night</strong> (great for using up produce)</li>
 </ul>
 <p>Once you have the structure, the specific meals rotate. You never eat the same thing too often, you reduce food waste, and the grocery list is manageable because you're only shopping for 5 dinners.</p>
-<p><strong>DinnerDrop does this automatically — 5 healthy dinners chosen for your family's preferences every week, with a single-tap grocery list. <a href="https://dinnerdrop.app/beta">Try DinnerDrop free →</a></strong></p>
+<p><strong>DinnerDrop does this automatically — 5 healthy dinners chosen for your family's preferences every week, with a single-tap grocery list. <a href="https://www.dinnerdrop.app/start">Try DinnerDrop free →</a></strong></p>
 
 <h2>Frequently Asked Questions</h2>
 
@@ -3670,7 +3664,7 @@ The 40 recipes above cover every protein, every major cooking method, and every 
 <h2>Why Pasta Is the Best Weeknight Dinner Base</h2>
 <p>Pasta gets a bad reputation it doesn't deserve. It's fast, affordable, endlessly versatile, and — when paired with protein and vegetables — a complete meal in one pan. The real problem isn't pasta. It's running out of ideas and rotating through spaghetti and marinara every single week.</p>
 <p>These 35 pasta dinner ideas solve that. They span quick weeknight dishes, hearty baked casseroles, creamy one-pot meals, and lighter options that feel less heavy. Every one is family-tested and realistic for a Tuesday night.</p>
-<p><strong>DinnerDrop picks 5 pasta-friendly dinners for your family each week and builds the grocery list automatically. <a href="https://dinnerdrop.app/beta">Try it free →</a></strong></p>
+<p><strong>DinnerDrop picks 5 pasta-friendly dinners for your family each week and builds the grocery list automatically. <a href="https://www.dinnerdrop.app/start">Try it free →</a></strong></p>
 
 <h2>Quick Pasta Dinners (Under 30 Minutes)</h2>
 
@@ -3796,7 +3790,7 @@ The 40 recipes above cover every protein, every major cooking method, and every 
   <li><strong>Baked</strong> (ziti, stuffed shells, mac and cheese)</li>
 </ul>
 <p>One from each category across the month means 4 completely different pasta experiences — and you can swap shapes (spaghetti vs. rigatoni vs. penne) to keep it feeling fresh even with the same sauce.</p>
-<p><strong>DinnerDrop plans your family's week of dinners automatically — including pasta nights — with a grocery list ready in seconds. <a href="https://dinnerdrop.app/beta">Try DinnerDrop free →</a></strong></p>
+<p><strong>DinnerDrop plans your family's week of dinners automatically — including pasta nights — with a grocery list ready in seconds. <a href="https://www.dinnerdrop.app/start">Try DinnerDrop free →</a></strong></p>
 
 <h2>Frequently Asked Questions</h2>
 
@@ -3991,9 +3985,9 @@ Deciding which of these 30 recipes to make — and when — is exactly the kind 
 
 DinnerDrop does it for you. Tell it your family size, dietary preferences, budget, and cook time. It generates a full week of personalized dinners and sends the grocery list straight to Instacart or Kroger.
 
-[Try DinnerDrop free →](/beta)
+[Try DinnerDrop free →](/start)
 
-First 100 families get 6 months completely free. No credit card required to start.`,
+Free, no card needed.`,
   },
   {
     slug: 'chicken-breast-recipes',
@@ -4162,9 +4156,9 @@ Knowing 25 chicken breast recipes is only half the problem. The other half is de
 
 DinnerDrop handles that automatically. Tell it your family size, how much time you have each night, dietary preferences, and budget. It generates a full personalized weekly dinner plan and sends the grocery list straight to Instacart or Kroger.
 
-[Try DinnerDrop free →](/beta)
+[Try DinnerDrop free →](/start)
 
-First 100 families get 6 months completely free. No credit card required to start.`,
+Free, no card needed.`,
   },
   {
     slug: 'family-meal-prep',
@@ -4315,9 +4309,9 @@ DinnerDrop eliminates that entire decision. Tell it your family size, dietary pr
 time you have each night. It generates 5 personalized dinners in seconds and sends the full grocery list
 straight to your preferred store (Instacart or Kroger).
 
-[Try DinnerDrop free ->](/beta)
+[Try DinnerDrop free ->](/start)
 
-First 100 families get 6 months completely free.
+Free, no card needed.
 
 ---
 
@@ -4347,9 +4341,9 @@ Same prep, three different plates - one child eats chicken and rice plain, anoth
 
 Let DinnerDrop build your weekly plan automatically - then Sunday prep becomes fast, focused, and worth it.
 
-[Try DinnerDrop free ->](/beta)
+[Try DinnerDrop free ->](/start)
 
-No credit card required. First 100 families get 6 months completely free.`,
+Free, no card needed.`,
   },
   {
     slug: 'instant-pot-dinner-ideas',
@@ -4551,9 +4545,9 @@ DinnerDrop handles that. Tell it your family size, dietary preferences, how much
 it generates 5 personalized dinners in seconds — Instant Pot-friendly options included. The full grocery
 list goes straight to your preferred store.
 
-[Try DinnerDrop free ->](/beta)
+[Try DinnerDrop free ->](/start)
 
-First 100 families get 6 months completely free.
+Free, no card needed.
 
 ---
 
@@ -4581,9 +4575,9 @@ covers 2-3 dinners during the week. The 6-quart model handles meals for 4-6 peop
 Put any of these 30 Instant Pot dinner ideas in your weekly rotation — and let DinnerDrop plan which
 five your family eats this week.
 
-[Try DinnerDrop free ->](/beta)
+[Try DinnerDrop free ->](/start)
 
-No credit card required. First 100 families get 6 months completely free.`,
+Free, no card needed.`,
   },
   {
     slug: 'sheet-pan-dinners',
@@ -4774,9 +4768,9 @@ Sheet pan dinners solve the cooking problem, but you still have to decide which 
 
 DinnerDrop generates a full week of personalized dinners for your family in 30 seconds. Tell it your dietary preferences, your family size, and what stores you use, and it builds a complete meal plan with a grocery list ready to go.
 
-**[Get your free meal plan](https://dinnerdrop.app/beta)**
+**[Get your free meal plan](https://www.dinnerdrop.app/start)**
 
-Beta spots are limited. First 100 families get 6 months completely free.
+Free, no card needed.
 `,
   },
 
@@ -4961,9 +4955,9 @@ DinnerDrop handles the decision. Tell it your family size, dietary needs, and wh
 
 Every dinner on this list works in the air fryer. DinnerDrop just tells you which one to make tonight.
 
-**[Get your free meal plan](https://dinnerdrop.app/beta)**
+**[Get your free meal plan](https://www.dinnerdrop.app/start)**
 
-Beta spots are limited. First 100 families get 6 months completely free.`,
+Free, no card needed.`,
   },
 
   {
@@ -5133,9 +5127,9 @@ DinnerDrop handles that part. Tell it your family size, what your household eats
 
 Every recipe on this list can be in your rotation. DinnerDrop just picks the right five for this week.
 
-**[Get your free meal plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your free meal plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 
-Beta spots are limited. First 100 families get 6 months completely free.`,
+Free, no card needed.`,
   },
 
   {
@@ -5331,9 +5325,9 @@ That's the decision fatigue that hits at 5pm when you haven't planned. The slow 
 
 DinnerDrop solves that part. Tell it your family size, dietary needs, and preferred stores. It generates five personalized dinner plans in 30 seconds and builds a grocery list organized by store section. Pick from your slow cooker rotation or let it pick for you. Either way, dinner is handled before you leave the house in the morning.
 
-**[Get your free week at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your free week at DinnerDrop](https://www.dinnerdrop.app/start)**
 
-First 100 families get 6 months completely free. No credit card charged for 6 months.`,
+Free, no card needed.`,
   },
 
 
@@ -5526,9 +5520,9 @@ Keto dinners work best when they stop feeling like a special diet and start feel
 
 The part that breaks keto fastest: standing in the kitchen at 5pm with nothing planned. A week of dinners decided on Sunday — with a grocery list built from that plan — removes 95% of the friction that makes eating keto feel unsustainable by Wednesday.
 
-[DinnerDrop](https://dinnerdrop.app/beta) generates a personalized weekly dinner plan in 30 seconds, including keto and dietary-specific options tailored to your family size, cook time tolerance, and preferred stores. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) generates a personalized weekly dinner plan in 30 seconds, including keto and dietary-specific options tailored to your family size, cook time tolerance, and preferred stores. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
 
   {
@@ -5723,9 +5717,9 @@ Tacos work for weeknights because the format absorbs variation. The protein chan
 
 The only thing that makes taco night feel like a chore is deciding what kind to make while standing in the kitchen at 5pm. Having a plan removes the decision entirely.
 
-[DinnerDrop](https://dinnerdrop.app/beta) generates a personalized 5-dinner week plan in 30 seconds, including taco variations tailored to your family size, dietary preferences, and preferred grocery store. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) generates a personalized 5-dinner week plan in 30 seconds, including taco variations tailored to your family size, dietary preferences, and preferred grocery store. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
 
   {
@@ -5909,9 +5903,9 @@ Most of them. The reliably kid-friendly options: quesadillas, pasta in any form,
 
 Every family has a different threshold for how many meatless nights feel normal. The 30 dinners above work across that range because they are built around flavor, not restraint.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds personalized weekly dinner plans that account for dietary preferences including vegetarian, vegan, gluten-free, and dairy-free — and generates the grocery list automatically. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds personalized weekly dinner plans that account for dietary preferences including vegetarian, vegan, gluten-free, and dairy-free — and generates the grocery list automatically. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
 
   {
@@ -6080,9 +6074,9 @@ Yes. Make a simple substitute: melt 3 tablespoons butter, whisk in 3 tablespoons
 
 The 30 casseroles above cover every scenario: quick weeknight assembly, make-ahead prep, freezer stocking, protein variety, and meatless options. Each one improves the next day after the flavors have had time to settle.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds personalized weekly dinner plans based on your family's preferences — including casserole-style comfort food — and generates the grocery list automatically. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds personalized weekly dinner plans based on your family's preferences — including casserole-style comfort food — and generates the grocery list automatically. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
 
   {
@@ -6241,9 +6235,9 @@ Yes. Substitute vegetable broth for chicken or beef broth in any recipe. Omit ba
 
 The 30 soups above cover every season and scenario: quick weeknight solutions, classic comfort food, lighter blended options, protein-dense bean soups, and hands-off slow cooker versions. Most improve overnight, freeze well, and stretch easily for larger families.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your full week of dinners based on your family size, budget, and preferences — including soup-heavy weeks for fall and winter — and generates the grocery list automatically. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your full week of dinners based on your family size, budget, and preferences — including soup-heavy weeks for fall and winter — and generates the grocery list automatically. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
 
   {
@@ -6408,9 +6402,9 @@ If a child is eating fewer than 20 different foods, refusing entire food categor
 
 The 30 dinners above cover every picky-eater scenario: the child who only eats beige foods, the one who refuses mixed dishes, the one who accepts a food one week and rejects it the next. None of them require deception or elaborate techniques. They require a rotation that removes the nightly guesswork.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your full week of dinners based on your family's preferences, dietary needs, and picky-eater constraints — then generates the grocery list automatically. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your full week of dinners based on your family's preferences, dietary needs, and picky-eater constraints — then generates the grocery list automatically. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
   {
     title: '30 Salmon Recipes for Easy Weeknight Dinners',
@@ -6574,9 +6568,9 @@ Salmon is among the most nutritionally dense proteins available for everyday coo
 
 The 30 salmon recipes above cover every weeknight scenario: fast 15-minute dinners, hands-off baked preparations, sheet pan meals, and flavorful glazed fillets that work for guests. None of them require specialty equipment or ingredients outside a standard grocery run.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your weekly meal plan around salmon, chicken, beef, or any mix of proteins — then generates the complete grocery list in one tap. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your weekly meal plan around salmon, chicken, beef, or any mix of proteins — then generates the complete grocery list in one tap. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
   {
     title: '30 Ground Turkey Recipes for Easy Weeknight Dinners',
@@ -6591,7 +6585,7 @@ Ground turkey is one of the most underrated proteins in the grocery store. It co
 
 This list fixes that. Thirty ground turkey recipes organized by cooking method and flavor profile — Italian, Mexican, Asian, comfort food, and everything in between. Every recipe works on a busy weeknight, most come together in under 30 minutes, and all of them taste like you meant to use turkey.
 
-**[DinnerDrop](https://dinnerdrop.app/beta) generates a complete weekly dinner plan using ground turkey and any other proteins you choose — plus the full grocery list — in one tap. Try it free for 6 months.**
+**[DinnerDrop](https://www.dinnerdrop.app/start) generates a complete weekly dinner plan using ground turkey and any other proteins you choose — plus the full grocery list — in one tap. It's free, no card needed.**
 
 ---
 
@@ -6748,9 +6742,9 @@ In the refrigerator overnight is best. For same-day cooking, seal the package in
 
 Thirty ground turkey recipes cover every major weeknight category: Italian, Mexican, Asian, comfort food, soups, and one-pan skillets. The protein costs less than beef, cooks in 30 minutes or less, and handles bold seasoning better than any other everyday protein.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your week around ground turkey, chicken, salmon, or any combination of proteins — then builds the complete grocery list automatically. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your week around ground turkey, chicken, salmon, or any combination of proteins — then builds the complete grocery list automatically. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
   {
     title: '30 Baked Chicken Thigh Recipes: Crispy, Juicy Results Every Time',
@@ -6763,7 +6757,7 @@ Thirty ground turkey recipes cover every major weeknight category: Italian, Mexi
 
 Baked chicken thighs are the most forgiving protein in the kitchen. Unlike chicken breasts, which turn dry the moment they hit 165°F, thighs stay juicy even when cooked to 175°F or higher. The fat content protects them. They cost less than breasts, have more flavor, and produce better leftovers. This guide covers 30 baked chicken thigh recipes across every major flavor category — from the basic crispy oven thigh to sheet pan dinners, saucy braises, and international variations.
 
-**Want DinnerDrop to plan a week of chicken thigh dinners automatically?** [Claim your free 6-month beta access here](https://dinnerdrop.app/beta).
+**Want DinnerDrop to plan a week of chicken thigh dinners automatically?** [Start free here](https://www.dinnerdrop.app/start).
 
 ---
 
@@ -6922,9 +6916,9 @@ Thaw completely first for best results. Baking from frozen adds 50% to cooking t
 
 Thirty baked chicken thigh recipes cover every weeknight situation: quick glazed thighs for Tuesday, sheet pan dinners for Wednesday, saucy braises for Sunday. The cut is forgiving, affordable, and full of flavor — the gap between a mediocre dinner and a great one is almost entirely technique, not ingredients.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your chicken thigh dinners for the week automatically — five meals, complete grocery list, ready in 30 seconds. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your chicken thigh dinners for the week automatically — five meals, complete grocery list, ready in 30 seconds. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
   {
     title: 'Chicken Thigh Recipes: 40 Easy Dinners Your Family Will Actually Love',
@@ -6937,7 +6931,7 @@ Thirty baked chicken thigh recipes cover every weeknight situation: quick glazed
 
 Chicken thighs are the most versatile protein in the grocery store. They are cheaper than chicken breasts, harder to overcook, and more flavorful in every cooking method. A boneless skinless thigh takes 6 minutes per side in a hot skillet. A bone-in thigh braises for 45 minutes in a slow cooker with almost no effort. This guide covers 40 chicken thigh recipes across every method your kitchen uses — stovetop, oven, slow cooker, Instant Pot, air fryer, and grill.
 
-**Want DinnerDrop to plan a full week of chicken thigh dinners automatically?** [Claim your free 6-month beta access here](https://dinnerdrop.app/beta).
+**Want DinnerDrop to plan a full week of chicken thigh dinners automatically?** [Start free here](https://www.dinnerdrop.app/start).
 
 ---
 
@@ -7141,9 +7135,9 @@ Chicken thighs pair with almost anything: white rice, brown rice, egg noodles, m
 
 Forty chicken thigh recipes — 8 per cooking method — gives you the flexibility to match the technique to the time you have. A weeknight with 15 minutes available is a stovetop or air fryer situation. A Sunday when you want dinner ready with no effort is a slow cooker day. All 40 recipes produce dinner your family will eat without complaints, which is the actual goal.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your weekly chicken thigh dinner plan automatically — five meals, complete grocery list, 30 seconds. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your weekly chicken thigh dinner plan automatically — five meals, complete grocery list, 30 seconds. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
 
   {
@@ -7157,7 +7151,7 @@ Forty chicken thigh recipes — 8 per cooking method — gives you the flexibili
 
 Air fryer chicken thighs solve the problem that every other cooking method creates: getting crispy skin without standing over a skillet full of hot oil, or waiting 40 minutes for the oven to do the same job. Bone-in thighs take 24 to 26 minutes at 400°F. Boneless thighs take 18 to 20 minutes at 380°F. Both come out with a crackling exterior and meat that stays moist because chicken thighs have enough fat to withstand the circulating heat without drying out.
 
-**Want DinnerDrop to plan a full week of air fryer dinners automatically?** [Claim your free 6-month beta access here](https://dinnerdrop.app/beta).
+**Want DinnerDrop to plan a full week of air fryer dinners automatically?** [Start free here](https://www.dinnerdrop.app/start).
 
 ---
 
@@ -7292,9 +7286,9 @@ The USDA minimum is 165°F at the thickest point, away from the bone. For bone-i
 
 ---
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your full weekly dinner plan around your family's preferences — including air fryer nights — and generates a complete grocery list in one tap. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your full weekly dinner plan around your family's preferences — including air fryer nights — and generates a complete grocery list in one tap. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
 
 
@@ -7491,9 +7485,9 @@ Yes, but spread them out fully and add 5-10 extra minutes. They release moisture
 
 ---
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your full weekly dinner plan -- including sheet pan nights -- around your family's preferences and dietary needs, then generates the complete grocery list in one tap. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your full weekly dinner plan -- including sheet pan nights -- around your family's preferences and dietary needs, then generates the complete grocery list in one tap. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
 
 
@@ -7658,9 +7652,9 @@ The butter brush immediately after baking adds flavor, creates a slight sheen, a
 
 ---
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your full week of dinners -- including nights when homemade rolls are on the menu -- around your family's preferences, then generates the complete grocery list in one tap. The beta is free for 6 months for the first 100 families.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your full week of dinners -- including nights when homemade rolls are on the menu -- around your family's preferences, then generates the complete grocery list in one tap. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**`,
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**`,
   },
   {
     slug: 'ground-beef-recipes-for-dinner',
@@ -7820,9 +7814,9 @@ Start with a hot pan before adding the beef, and resist stirring for the first 2
 
 Thirty ground beef dinner recipes cover every weeknight situation from 15-minute skillets to hands-off casseroles. The cut is affordable, fast, and endlessly adaptable — the right seasoning turns the same pound of beef into Korean bowls on Monday, tacos on Wednesday, and chili on Friday.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your weekly dinner plan automatically — five personalized meals, complete grocery list, ready in 30 seconds. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your weekly dinner plan automatically — five personalized meals, complete grocery list, ready in 30 seconds. It's free — no card needed.
 
-**[Claim your free 6 months at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Start free at DinnerDrop — no card needed](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -7998,16 +7992,16 @@ Black bean quesadillas (recipe 3) require four ingredients, zero special skills,
 Chicken fajitas (recipe 17), beef stroganoff (recipe 35), chicken pot pie skillet (recipe 30), and mac and cheese (recipe 13) are the strongest family-of-four options. All scale easily to 6 servings by increasing protein by 50% and adding one extra side.
 
 **How do I stop the dinner panic every night?**
-A weekly meal plan solves the problem at the root. Knowing Monday is pasta, Tuesday is chicken, and Wednesday is soup eliminates the 5pm decision entirely. [DinnerDrop](https://dinnerdrop.app/beta) generates a personalized 5-meal plan with a complete grocery list in about 30 seconds — the beta is open now and free for 6 months.
+A weekly meal plan solves the problem at the root. Knowing Monday is pasta, Tuesday is chicken, and Wednesday is soup eliminates the 5pm decision entirely. [DinnerDrop](https://www.dinnerdrop.app/start) generates a personalized 5-meal plan with a complete grocery list in about 30 seconds — free, no card needed.
 
 
 ---
 
 Thirty-five dinner ideas for tonight cover every situation — the nights you have 15 minutes, the nights you want something impressive without effort, and the nights nothing sounds good until you start cooking. The right dinner is always the one that matches what you have, how much time you have, and how much cleanup you want afterward.
 
-[DinnerDrop](https://dinnerdrop.app/beta) removes the nightly question entirely. Tell it your preferences and dietary restrictions once, and it builds a personalized 5-meal plan with a complete grocery list — ready in 30 seconds. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) removes the nightly question entirely. Tell it your preferences and dietary restrictions once, and it builds a personalized 5-meal plan with a complete grocery list — ready in 30 seconds. It's free — no card needed.
 
-**[Get your personalized dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -8157,7 +8151,7 @@ A 30-minute meal is a dinner that goes from refrigerator to table in 30 minutes 
 Korean ground beef bowls (recipe 16), honey garlic chicken thighs (recipe 7), and black bean tacos (recipe 26) consistently run under 20 minutes. They require minimal prep and mostly hands-off cooking time.
 
 **How do I cook dinner faster every night?**
-Commit to a weekly meal plan before the week starts. When Monday arrives, you open the fridge knowing exactly what you are cooking. [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized 5-meal plan with a complete grocery list in about 30 seconds. The beta is open now and free for 6 months.
+Commit to a weekly meal plan before the week starts. When Monday arrives, you open the fridge knowing exactly what you are cooking. [DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized 5-meal plan with a complete grocery list in about 30 seconds. It's free — no card needed.
 
 **What 30-minute meals can I make with chicken?**
 The six chicken recipes cover every scenario: crispy honey garlic thighs (recipe 7), quick stir-fry (recipe 8), sheet pan with potatoes (recipe 9), white bean Tuscan chicken (recipe 10), buffalo wraps (recipe 11), and fried rice (recipe 12). All use common grocery store cuts and standard pantry ingredients.
@@ -8171,9 +8165,9 @@ Thirty dinners, all on the table in 30 minutes or less. The list covers every pr
 
 The hardest part of a 30-minute dinner is not the cooking. It is deciding what to make before you are already standing in front of the open refrigerator at 5pm. A weekly plan eliminates that moment entirely.
 
-[DinnerDrop](https://dinnerdrop.app/beta) generates a personalized 5-meal plan with a complete grocery list in 30 seconds. Every meal is selected based on your dietary preferences, your family size, and your picky eaters. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) generates a personalized 5-meal plan with a complete grocery list in 30 seconds. Every meal is selected based on your dietary preferences, your family size, and your picky eaters. It's free — no card needed.
 
-**[Get your personalized weekly meal plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly meal plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -8357,7 +8351,7 @@ The problem is not finding what to make for dinner tonight. The problem is havin
 
 The fix is simple: decide what you are making for dinner on Sunday before the week starts, when you have mental energy and the grocery store is accessible. A five-night plan decided in advance eliminates the 5pm panic entirely.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds a personalized 5-meal plan for your family in about 30 seconds. You answer a few questions about your family size, dietary preferences, picky eaters, and how much time you want to spend cooking. It generates five dinners, organized by day, with a complete grocery list you can shop from once. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized 5-meal plan for your family in about 30 seconds. You answer a few questions about your family size, dietary preferences, picky eaters, and how much time you want to spend cooking. It generates five dinners, organized by day, with a complete grocery list you can shop from once. It's free — no card needed.
 
 ---
 
@@ -8382,9 +8376,9 @@ Smash burgers (recipe 5), beef tacos (recipe 9), mac and cheese from scratch (re
 
 Forty dinners, every situation covered. The next time you are standing in front of the refrigerator at 5pm, you have a list.
 
-But the better solution is to never be in that position. A weekly plan decided on Sunday means Monday through Friday you open the fridge knowing exactly what you are making. [DinnerDrop](https://dinnerdrop.app/beta) builds that plan for you in 30 seconds — personalized to your family, your dietary needs, and your picky eaters. The beta is open now and free for 6 months.
+But the better solution is to never be in that position. A weekly plan decided on Sunday means Monday through Friday you open the fridge knowing exactly what you are making. [DinnerDrop](https://www.dinnerdrop.app/start) builds that plan for you in 30 seconds — personalized to your family, your dietary needs, and your picky eaters. It's free — no card needed.
 
-**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -8520,7 +8514,7 @@ Caramelize 2 large sliced onions in butter and olive oil over medium-low heat fo
 
 ## Let DinnerDrop Plan Your Week
 
-The hard part of weeknight cooking is not the cooking — it is deciding what to make, in what order, with what sides, based on what is already in the refrigerator. [DinnerDrop](https://dinnerdrop.app/beta) builds a complete five-meal weekly plan for your family in 30 seconds. Answer a few questions about family size, dietary preferences, picky eaters, and cooking time. It generates five dinners with a complete grocery list you shop from once. The beta is open now and free for 6 months.
+The hard part of weeknight cooking is not the cooking — it is deciding what to make, in what order, with what sides, based on what is already in the refrigerator. [DinnerDrop](https://www.dinnerdrop.app/start) builds a complete five-meal weekly plan for your family in 30 seconds. Answer a few questions about family size, dietary preferences, picky eaters, and cooking time. It generates five dinners with a complete grocery list you shop from once. It's free — no card needed.
 
 ---
 
@@ -8545,9 +8539,9 @@ Yes. Add liquid (broth, soup, or sauce), cook on LOW rather than HIGH, and check
 
 Twenty-five pork chop recipes from 15-minute skillet to all-day slow cooker. The same protein, every method covered.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner weekly plan for your family in 30 seconds — with a complete grocery list you shop from once. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized five-dinner weekly plan for your family in 30 seconds — with a complete grocery list you shop from once. It's free — no card needed.
 
-**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -8674,7 +8668,7 @@ For fried rice specifically: use chilled or day-old rice. Freshly cooked rice is
 
 ## Let DinnerDrop Plan Your Week
 
-Picking the right chicken and rice recipe for a given night — based on what you have in the fridge, how much time you have, and what everyone will actually eat — is harder than it sounds. [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner weekly plan in 30 seconds. Answer questions about family size, dietary preferences, picky eaters, and cooking time. It generates five dinners with a complete grocery list you shop from once. The beta is open now and free for 6 months.
+Picking the right chicken and rice recipe for a given night — based on what you have in the fridge, how much time you have, and what everyone will actually eat — is harder than it sounds. [DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized five-dinner weekly plan in 30 seconds. Answer questions about family size, dietary preferences, picky eaters, and cooking time. It generates five dinners with a complete grocery list you shop from once. It's free — no card needed.
 
 ---
 
@@ -8699,9 +8693,9 @@ Long-grain white rice or jasmine works in almost all of these recipes. Basmati i
 
 Twenty-five chicken and rice recipes covering every method: one-pot, baked, fried, soup, slow cooker, and international.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan in 30 seconds — five meals, complete grocery list, ready to shop. The beta is open now and free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your personalized weekly dinner plan in 30 seconds — five meals, complete grocery list, ready to shop. It's free — no card needed.
 
-**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -8844,7 +8838,7 @@ Add 1.5 pounds chicken thighs, 3 diced Yukon Gold potatoes, 3 sliced carrots, 2 
 
 ## Let DinnerDrop Build Your Plan
 
-Choosing which Instant Pot chicken recipe fits tonight -- based on what is in the fridge, how much time you have, and what everyone will eat -- is the hard part. [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner weekly plan in 30 seconds. Tell it your family size, dietary preferences, picky-eater constraints, and available time. It generates five dinners with a complete grocery list you shop from once. The beta is open now and free for 6 months.
+Choosing which Instant Pot chicken recipe fits tonight -- based on what is in the fridge, how much time you have, and what everyone will eat -- is the hard part. [DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized five-dinner weekly plan in 30 seconds. Tell it your family size, dietary preferences, picky-eater constraints, and available time. It generates five dinners with a complete grocery list you shop from once. It's free — no card needed.
 
 ---
 
@@ -8869,9 +8863,9 @@ Minimum 1 cup of liquid to build pressure safely. For most chicken breast or thi
 
 Twenty-five Instant Pot chicken recipes covering shredding, soups, pasta, whole chicken, and one-pot bowls -- all done in under 30 minutes of active time.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan in 30 seconds -- five meals with a complete grocery list, ready to shop. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your personalized weekly dinner plan in 30 seconds -- five meals with a complete grocery list, ready to shop. It's free — no card needed.
 
-**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -9034,9 +9028,9 @@ Within each category, rotate two or three recipes that your family already likes
 
 ## How DinnerDrop Handles This Automatically
 
-Choosing between 30 recipes every Sunday is the same decision fatigue that makes weeknight dinners hard in the first place. [DinnerDrop](https://dinnerdrop.app/beta) builds a personalized 5-dinner weekly plan in 30 seconds. Tell it your family size, dietary preferences, picky-eater constraints, and maximum cook time. It generates five dinners with a complete grocery list you shop from once.
+Choosing between 30 recipes every Sunday is the same decision fatigue that makes weeknight dinners hard in the first place. [DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized 5-dinner weekly plan in 30 seconds. Tell it your family size, dietary preferences, picky-eater constraints, and maximum cook time. It generates five dinners with a complete grocery list you shop from once.
 
-The beta is open and free for 6 months.
+It's free — no card needed.
 
 ---
 
@@ -9061,9 +9055,9 @@ Yes. The highest-leverage prep: cook rice or grains on Sunday, marinate chicken 
 
 Thirty easy weeknight dinners across every protein and flavor profile -- all ready in 30 minutes or less. Pick five, put them on a rotation, and stop making the dinner decision every day.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan in 30 seconds. Five dinners, a complete grocery list, and no decision fatigue. The beta is free for 6 months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your personalized weekly dinner plan in 30 seconds. Five dinners, a complete grocery list, and no decision fatigue. It's free — no card needed.
 
-**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -9206,9 +9200,9 @@ The two biggest inefficiencies when cooking for two:
 
 ## How DinnerDrop Handles Dinner for Two
 
-The meal planning problem for two-person households is that every recipe requires you to do the math -- halving ingredients, adjusting cooking times, figuring out what to do with the other half of everything. [DinnerDrop](https://dinnerdrop.app/beta) generates a personalized five-dinner plan for your household size, dietary preferences, and cook time limit. A complete grocery list is included so you buy exactly what you need and nothing extra.
+The meal planning problem for two-person households is that every recipe requires you to do the math -- halving ingredients, adjusting cooking times, figuring out what to do with the other half of everything. [DinnerDrop](https://www.dinnerdrop.app/start) generates a personalized five-dinner plan for your household size, dietary preferences, and cook time limit. A complete grocery list is included so you buy exactly what you need and nothing extra.
 
-The beta is open and free for six months.
+It's free — no card needed.
 
 ---
 
@@ -9233,9 +9227,9 @@ Yes -- and it is more efficient for two than for larger households because you u
 
 Twenty-five easy dinner recipes for two -- sized for two people, ready in 30 minutes or less, and designed to avoid the ingredient waste problem that makes cooking for smaller households frustrating.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner plan for your household size in 30 seconds -- complete grocery list included. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized five-dinner plan for your household size in 30 seconds -- complete grocery list included. It's free — no card needed.
 
-**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -9379,9 +9373,9 @@ Ground chicken cooks faster than beef and dries out more easily. Three rules for
 
 ## How DinnerDrop Plans Ground Chicken Into Your Week
 
-The hardest part of cooking with ground chicken is not the cooking -- it is figuring out which recipes to make and building a grocery list around them. [DinnerDrop](https://dinnerdrop.app/beta) generates a personalized five-dinner plan every week based on your household size, dietary preferences, and cook time limit. Ground chicken can be your preferred protein and the app will rotate it intelligently across different cuisines so you are not eating the same taco bowl five nights in a row.
+The hardest part of cooking with ground chicken is not the cooking -- it is figuring out which recipes to make and building a grocery list around them. [DinnerDrop](https://www.dinnerdrop.app/start) generates a personalized five-dinner plan every week based on your household size, dietary preferences, and cook time limit. Ground chicken can be your preferred protein and the app will rotate it intelligently across different cuisines so you are not eating the same taco bowl five nights in a row.
 
-The beta is free for six months.
+It's free — no card needed.
 
 ---
 
@@ -9406,9 +9400,9 @@ Three to four days in an airtight container. Ground chicken reheats well in a sk
 
 Twenty-five ground chicken recipes -- tacos, meatballs, stir-fry, lettuce wraps, pasta, comfort food casseroles, and healthy bowls -- all designed for weeknight cooking.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds a personalized five-dinner plan based on your family's preferences. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds a personalized five-dinner plan based on your family's preferences. It's free — no card needed.
 
-**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -9426,7 +9420,7 @@ Chicken casseroles are the most practical category of weeknight dinners. You ass
 
 This guide covers 25 chicken casserole recipes across five categories: classic comfort casseroles, broccoli and vegetable bakes, pasta and rice casseroles, enchilada and Mexican-style bakes, and lighter options for families who want something satisfying without a pound of cheese. Each recipe is designed for a 9x13 inch baking dish and serves four to six people.
 
-[DinnerDrop](https://dinnerdrop.app/beta) can plan your casserole nights automatically -- five meals, a grocery list, and zero decision fatigue. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) can plan your casserole nights automatically -- five meals, a grocery list, and zero decision fatigue. It's free — no card needed.
 
 ---
 
@@ -9541,9 +9535,9 @@ Cook quinoa in chicken broth. Toss with shredded chicken, chopped kale (stems re
 
 ## How DinnerDrop Plans Casserole Nights
 
-The hardest part of weeknight cooking is not the cooking -- it is deciding what to make and making sure you have the right ingredients. [DinnerDrop](https://dinnerdrop.app/beta) generates a five-meal weekly plan based on your preferences and builds the complete grocery list automatically. You can weight your plan toward casseroles, specify which nights you want a one-dish dinner, and have everything organized by store aisle before you shop.
+The hardest part of weeknight cooking is not the cooking -- it is deciding what to make and making sure you have the right ingredients. [DinnerDrop](https://www.dinnerdrop.app/start) generates a five-meal weekly plan based on your preferences and builds the complete grocery list automatically. You can weight your plan toward casseroles, specify which nights you want a one-dish dinner, and have everything organized by store aisle before you shop.
 
-The beta is free for six months.
+It's free — no card needed.
 
 ---
 
@@ -9568,9 +9562,9 @@ Three to four days in an airtight container. Reheat individual portions covered 
 
 Twenty-five chicken casserole recipes covering classic comfort bakes, vegetable casseroles, pasta and rice bakes, Mexican-style enchilada casseroles, and lighter one-dish dinners.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan in 30 seconds -- five meals with a complete grocery list, ready to shop. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your personalized weekly dinner plan in 30 seconds -- five meals with a complete grocery list, ready to shop. It's free — no card needed.
 
-**[Get your personalized weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your personalized weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -9713,9 +9707,9 @@ Use boneless skinless chicken breasts cut into small pieces instead of whole thi
 
 ## How DinnerDrop Plans Soup Nights
 
-Planning a week of dinners that includes soup nights -- when to make a quick 20-minute version vs. when to start a slow cooker batch -- is the kind of detail that [DinnerDrop](https://dinnerdrop.app/beta) handles automatically. You enter your preferences (cook time per night, number of people, dietary restrictions), and DinnerDrop generates five personalized dinners with a complete grocery list built around what you actually need.
+Planning a week of dinners that includes soup nights -- when to make a quick 20-minute version vs. when to start a slow cooker batch -- is the kind of detail that [DinnerDrop](https://www.dinnerdrop.app/start) handles automatically. You enter your preferences (cook time per night, number of people, dietary restrictions), and DinnerDrop generates five personalized dinners with a complete grocery list built around what you actually need.
 
-The beta is free for six months. No credit card required to get started.
+It's free — no card needed.
 
 ---
 
@@ -9740,9 +9734,9 @@ Three things: brown the aromatics before adding liquid, use bone-in chicken rath
 
 Twenty-five chicken soup recipes across five categories: classic broths and noodle soups, creamy chicken soups, global-style soups, hearty one-pot meals, and quick weeknight versions your family can have on the table in 30 minutes or less.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan -- five meals with a complete grocery list in 30 seconds. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your personalized weekly dinner plan -- five meals with a complete grocery list in 30 seconds. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -9873,9 +9867,9 @@ Cube 1.5 pounds of chuck roast into small bite-size pieces. Combine in the slow 
 
 ## How DinnerDrop Plans Slow Cooker Nights
 
-Knowing which nights of the week work for slow cooker dinners -- when you can prep in the morning vs. when you need a 30-minute meal -- is exactly the kind of scheduling [DinnerDrop](https://dinnerdrop.app/beta) handles automatically. You enter your preferences once and DinnerDrop generates five personalized dinners with a complete grocery list.
+Knowing which nights of the week work for slow cooker dinners -- when you can prep in the morning vs. when you need a 30-minute meal -- is exactly the kind of scheduling [DinnerDrop](https://www.dinnerdrop.app/start) handles automatically. You enter your preferences once and DinnerDrop generates five personalized dinners with a complete grocery list.
 
-The beta is free for six months. No credit card required.
+It's free — no card needed.
 
 ---
 
@@ -9900,9 +9894,9 @@ Yes. Most recipes calling for 8 hours on low can be done in 4 to 5 hours on high
 
 Twenty-five slow cooker beef recipes across five categories: classic comfort, shredded beef, soups and chilis, international flavors, and easy weeknight dinners.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your personalized weekly dinner plan -- five meals with a complete grocery list in 30 seconds. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your personalized weekly dinner plan -- five meals with a complete grocery list in 30 seconds. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -9922,7 +9916,7 @@ Shrimp pasta is one of the fastest weeknight dinners you can make. Shrimp cooks 
 
 This list covers 25 shrimp pasta recipes across five categories: classic Italian-style, creamy sauces, light and fresh, Asian-inspired noodle dishes, and quick weeknight one-pan meals. All 25 are family-friendly and use ingredients available at any grocery store.
 
-If you want AI to pick the right shrimp pasta recipe for your week -- based on what your family likes and what is already in your fridge -- [DinnerDrop](https://dinnerdrop.app/beta) handles the full weekly plan for free during the beta.
+If you want AI to pick the right shrimp pasta recipe for your week -- based on what your family likes and what is already in your fridge -- [DinnerDrop](https://www.dinnerdrop.app/start) handles the full weekly plan for free.
 
 ---
 
@@ -9998,7 +9992,7 @@ A combination of the best Mediterranean flavors: roasted red peppers, artichoke 
 
 ---
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five dinners like these each week -- personalized to your family's preferences, with a complete grocery list. The beta is free for six months. No credit card required.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five dinners like these each week -- personalized to your family's preferences, with a complete grocery list. It's free — no card needed.
 
 ---
 
@@ -10066,9 +10060,9 @@ Cherry tomatoes cooked in olive oil and garlic until they burst and release thei
 
 ## How DinnerDrop Handles Shrimp Nights
 
-Knowing which nights work for a 20-minute shrimp scampi versus a longer Cajun pasta is exactly what [DinnerDrop](https://dinnerdrop.app/beta) handles automatically. It generates five personalized dinner plans each week -- including seafood nights -- with a complete grocery list so you buy the right amount of shrimp for exactly the recipes you are making.
+Knowing which nights work for a 20-minute shrimp scampi versus a longer Cajun pasta is exactly what [DinnerDrop](https://www.dinnerdrop.app/start) handles automatically. It generates five personalized dinner plans each week -- including seafood nights -- with a complete grocery list so you buy the right amount of shrimp for exactly the recipes you are making.
 
-The beta is free for six months. No credit card required.
+It's free — no card needed.
 
 ---
 
@@ -10093,9 +10087,9 @@ Crisp, dry white wines work best: Pinot Grigio, Sauvignon Blanc, unoaked Chardon
 
 Twenty-five shrimp pasta recipes from classic Italian scampi to Cajun cream, Tuscan, Greek, and quick Asian noodle dishes.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized dinners each week with a complete grocery list -- including shrimp nights when they fit your schedule. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five personalized dinners each week with a complete grocery list -- including shrimp nights when they fit your schedule. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -10242,9 +10236,9 @@ Every successful one pot pasta follows the same structure:
 
 ## How DinnerDrop Plans Your One Pot Week
 
-One pot pasta is exactly the kind of dinner [DinnerDrop](https://dinnerdrop.app/beta) plans for automatically -- fast enough for weeknights, minimal dishes, and flexible for almost any dietary preference. Each week, DinnerDrop generates five personalized dinner ideas with a complete grocery list, including which nights call for a fast 20-minute one pot and which nights have more time for a slower Tuscan version.
+One pot pasta is exactly the kind of dinner [DinnerDrop](https://www.dinnerdrop.app/start) plans for automatically -- fast enough for weeknights, minimal dishes, and flexible for almost any dietary preference. Each week, DinnerDrop generates five personalized dinner ideas with a complete grocery list, including which nights call for a fast 20-minute one pot and which nights have more time for a slower Tuscan version.
 
-The beta is free for six months. No credit card required.
+It's free — no card needed.
 
 ---
 
@@ -10269,9 +10263,9 @@ Rotini, penne, rigatoni, and shells are the most forgiving. Orzo is ideal for so
 
 Twenty-five one pot pasta recipes from classic Italian to creamy Cajun, cheesy mac, and 15-minute garlic butter spaghetti.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized weeknight dinners each week with a complete grocery list -- including one pot nights when you need dinner fast and cleanup faster. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five personalized weeknight dinners each week with a complete grocery list -- including one pot nights when you need dinner fast and cleanup faster. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -10418,9 +10412,9 @@ The failure modes for stuffed peppers are consistent across all recipes:
 
 ## How DinnerDrop Plans Your Stuffed Pepper Week
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds five personalized dinner ideas each week based on your family size, dietary preferences, and weekly food budget -- automatically including stuffed pepper nights when they fit your schedule. A stuffed pepper dinner can be fully prepped on Sunday and baked on a busy Wednesday, which is exactly the kind of planning DinnerDrop accounts for.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds five personalized dinner ideas each week based on your family size, dietary preferences, and weekly food budget -- automatically including stuffed pepper nights when they fit your schedule. A stuffed pepper dinner can be fully prepped on Sunday and baked on a busy Wednesday, which is exactly the kind of planning DinnerDrop accounts for.
 
-Each weekly plan includes a complete grocery list -- no hunting through recipes and combining ingredient lists yourself. The beta is free for six months. No credit card required.
+Each weekly plan includes a complete grocery list -- no hunting through recipes and combining ingredient lists yourself. It's free — no card needed.
 
 ---
 
@@ -10445,9 +10439,9 @@ Bell peppers are standard -- red and orange for sweetness, green for a slightly 
 
 Twenty-five stuffed pepper recipes from classic beef and rice to shakshuka-style baked eggs, Thai peanut chicken, and keto Philly cheesesteak.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized weeknight dinners each week with a complete grocery list -- including stuffed pepper nights timed to your schedule so prep happens on Sunday and dinner is on the table in 45 minutes on Wednesday. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five personalized weeknight dinners each week with a complete grocery list -- including stuffed pepper nights timed to your schedule so prep happens on Sunday and dinner is on the table in 45 minutes on Wednesday. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -10573,7 +10567,7 @@ Most Mexican dinner ingredients cross over between recipes, which is what makes 
 
 ## How DinnerDrop Plans Your Mexican Dinner Week
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds five personalized dinners each week based on your family size, dietary preferences, and what you have on hand -- automatically mixing Mexican dinners into your week at a frequency that works for your family. Each weekly plan includes a full grocery list. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds five personalized dinners each week based on your family size, dietary preferences, and what you have on hand -- automatically mixing Mexican dinners into your week at a frequency that works for your family. Each weekly plan includes a full grocery list. It's free — no card needed.
 
 ---
 
@@ -10598,9 +10592,9 @@ Use mild salsa and mild enchilada sauce. Skip chipotle peppers. Reduce chili pow
 
 Twenty-five Mexican dinner ideas from quick weeknight tacos and sheet pan fajitas to slow cooker carnitas, pozole rojo, and chicken tortilla soup.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan -- five dinners, grocery list included -- in under a minute. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's weekly dinner plan -- five dinners, grocery list included -- in under a minute. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -10619,7 +10613,7 @@ Chicken stir fry is the weeknight dinner format that rewards you every time you 
 
 The challenge is that most stir fry recipes fall into the same narrow lane: chicken, broccoli, soy sauce. This list covers the full range -- takeout-style classics, teriyaki and sweet glazes, spicy regional recipes, vegetable-loaded dinners, and quick 20-minute versions when you have even less time than usual.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds five dinners like these into a personalized weekly plan for your family, grocery list included. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds five dinners like these into a personalized weekly plan for your family, grocery list included. It's free — no card needed.
 
 ---
 
@@ -10734,7 +10728,7 @@ Most home stir fries taste flat compared to restaurant versions for one reason: 
 
 ## How DinnerDrop Plans Your Stir Fry Rotation
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds five personalized weeknight dinners each week, including stir fry nights balanced against your family's preferences, cook time constraints, and dietary needs. The weekly plan comes with a full grocery list so you always have the right sauce ingredients and proteins stocked. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds five personalized weeknight dinners each week, including stir fry nights balanced against your family's preferences, cook time constraints, and dietary needs. The weekly plan comes with a full grocery list so you always have the right sauce ingredients and proteins stocked. It's free — no card needed.
 
 ---
 
@@ -10759,9 +10753,9 @@ Best choices: broccoli, bell peppers, snap peas, snow peas, bok choy, asparagus,
 
 Twenty-five chicken stir fry recipes -- from takeout-style chicken and broccoli to Szechuan, Thai basil, Korean gochujang, and quick 15-minute weeknight versions.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan -- five dinners, grocery list included -- in under a minute. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's weekly dinner plan -- five dinners, grocery list included -- in under a minute. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -10890,7 +10884,7 @@ The technique gap between restaurant fried rice and home fried rice is almost en
 
 ## How DinnerDrop Plans Your Dinner Rotation
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds five personalized weeknight dinners each week, including fried rice nights balanced with your family's other preferences, cook time limits, and available ingredients. The weekly plan generates a complete grocery list so the cold rice you need on Friday is already planned for on Sunday. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds five personalized weeknight dinners each week, including fried rice nights balanced with your family's other preferences, cook time limits, and available ingredients. The weekly plan generates a complete grocery list so the cold rice you need on Friday is already planned for on Sunday. It's free — no card needed.
 
 ---
 
@@ -10915,9 +10909,9 @@ About three-quarters of a cup of cooked rice per person as a side dish, or one t
 
 Twenty-five fried rice recipes -- from classic egg fried rice and Yang Chow to kimchi fried rice, Hawaiian pineapple, hibachi-style, and quick 15-minute weeknight versions.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan -- five dinners, complete grocery list -- in under a minute. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's weekly dinner plan -- five dinners, complete grocery list -- in under a minute. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 ,
@@ -10936,7 +10930,7 @@ These 25 chili recipes are organized by type so you can jump straight to what yo
 
 ---
 
-**Tired of figuring out dinner from scratch every week?** [DinnerDrop plans 5 personalized meals for your family — including classics like chili — and builds the grocery list automatically. Try it free →](/beta)
+**Tired of figuring out dinner from scratch every week?** [DinnerDrop plans 5 personalized meals for your family — including classics like chili — and builds the grocery list automatically. Try it free →](/start)
 
 ---
 
@@ -11147,7 +11141,7 @@ Classic toppings: sour cream, shredded cheddar, diced onion, sliced jalapeños, 
 
 ---
 
-**Want personalized dinner plans that include crowd-pleasers like chili — already matched to your family's taste, budget, and schedule?** [DinnerDrop builds your weekly meal plan and grocery list in one tap. 6 months free in beta, no credit card needed →](/beta)
+**Want personalized dinner plans that include crowd-pleasers like chili — already matched to your family's taste, budget, and schedule?** [DinnerDrop builds your weekly meal plan and grocery list in one tap. Free, no card needed →](/start)
 `,
   },
   ,
@@ -11374,7 +11368,7 @@ Absolutely — beef stew is one of the best make-ahead meals. The flavors deepen
 
 ---
 
-**Want a weekly meal plan that includes hearty dinners like beef stew — already personalized to your family's tastes, budget, and schedule?** [DinnerDrop builds your 5-meal weekly plan and grocery list in one tap. 6 months free in beta, no credit card needed →](/beta)
+**Want a weekly meal plan that includes hearty dinners like beef stew — already personalized to your family's tastes, budget, and schedule?** [DinnerDrop builds your 5-meal weekly plan and grocery list in one tap. Free, no card needed →](/start)
 `,
   },
 
@@ -11392,7 +11386,7 @@ Mac and cheese is the universal family dinner — beloved by toddlers and adults
 
 This guide covers 25 recipes across five categories: classic stovetop, baked casseroles, protein and veggie mix-ins, gourmet upgrades, and quick budget versions. Every recipe is built around the same promise: creamy, cheesy pasta that disappears from the pan.
 
-**Short on weeknight dinner inspiration?** [DinnerDrop generates your 5-meal weekly plan and grocery list in one tap. 6 months free in beta, no credit card needed →](/beta)
+**Short on weeknight dinner inspiration?** [DinnerDrop generates your 5-meal weekly plan and grocery list in one tap. Free, no card needed →](/start)
 
 ---
 
@@ -11599,7 +11593,7 @@ Baked mac and cheese freezes well before baking — assemble, cover tightly, fre
 
 ---
 
-**Want a weekly dinner plan that includes family favorites like mac and cheese — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 6 months free in beta, no credit card needed →](/beta)
+**Want a weekly dinner plan that includes family favorites like mac and cheese — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. Free, no card needed →](/start)
 `,
   },
 ,
@@ -11819,7 +11813,7 @@ Keep the dish covered with foil until the final 15 minutes of baking. If the top
 
 ---
 
-**Want a weekly dinner plan that includes family favorites like pasta bakes — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 6 months free in beta, no credit card needed →](/beta)
+**Want a weekly dinner plan that includes family favorites like pasta bakes — already personalized to your family's tastes, budget, and picky-eater requirements?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. Free, no card needed →](/start)
 `,
   },
   ,
@@ -12040,7 +12034,7 @@ Two techniques: First, pat the chicken completely dry before breading — any mo
 
 ---
 
-**Want air fryer chicken nights planned for you automatically — with a personalized weekly meal plan and grocery list that accounts for your family's tastes and schedule?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. 6 months free in beta, no credit card needed →](/beta)
+**Want air fryer chicken nights planned for you automatically — with a personalized weekly meal plan and grocery list that accounts for your family's tastes and schedule?** [DinnerDrop builds your 5-meal plan and grocery list in one tap. Free, no card needed →](/start)
 `,
   },
 
@@ -12056,7 +12050,7 @@ Two techniques: First, pat the chicken completely dry before breading — any mo
 
 Pork chops are one of the most versatile — and underrated — proteins in the weeknight dinner rotation. They cook faster than a roast, cost less than beef, and absorb flavor from virtually any seasoning or sauce. The challenge most home cooks face is avoiding dry, tough chops — a problem that disappears once you understand a few key techniques. Whether you want a fast skillet dinner in 15 minutes, a hands-off slow cooker meal, or smoky grilled chops for a weekend cookout, this collection covers all of it.
 
-[DinnerDrop plans your family's pork chop nights automatically — 5 personalized meals and a full grocery list in one tap. Try it free →](/beta)
+[DinnerDrop plans your family's pork chop nights automatically — 5 personalized meals and a full grocery list in one tap. Try it free →](/start)
 
 Here are 25 pork chop recipes organized by cooking method so you can find exactly what fits your schedule.
 
@@ -12104,7 +12098,7 @@ The key to juicy baked chops is a quick sear before the oven. Season bone-in cho
 
 **Why families love it:** This method is nearly foolproof — the oven does the work while you prepare sides.
 
-[Planning weeknight dinners around what your family actually eats is the hard part. DinnerDrop handles it automatically — 5 meals, grocery list, done. Try free →](/beta)
+[Planning weeknight dinners around what your family actually eats is the hard part. DinnerDrop handles it automatically — 5 meals, grocery list, done. Try free →](/start)
 
 ### 7. Parmesan-Crusted Baked Pork Chops
 
@@ -12166,7 +12160,7 @@ A dump-and-cook slow cooker recipe with three main ingredients: pork chops, dry 
 
 ---
 
-[DinnerDrop takes the daily "what's for dinner?" decision completely off your plate — personalized 5-meal plans, grocery list auto-built, ready in one tap. free to try →](/beta)
+[DinnerDrop takes the daily "what's for dinner?" decision completely off your plate — personalized 5-meal plans, grocery list auto-built, ready in one tap. free to try →](/start)
 
 ## Grilled and Marinated Pork Chops
 
@@ -12269,7 +12263,7 @@ The oven at 275°F with a splash of broth in a covered dish is the best method �
 
 ---
 
-**Want your family's pork chop nights planned automatically — with the right recipe selected for your schedule, a personalized weekly meal plan, and a grocery list auto-built for pickup or delivery?** [DinnerDrop builds your 5-meal plan in one tap. 6 months free in beta, no credit card needed →](/beta)
+**Want your family's pork chop nights planned automatically — with the right recipe selected for your schedule, a personalized weekly meal plan, and a grocery list auto-built for pickup or delivery?** [DinnerDrop builds your 5-meal plan in one tap. Free, no card needed →](/start)
 `,
   },
 
@@ -12501,7 +12495,7 @@ Eggs poached in a spiced tomato and pepper sauce. Serve with whole grain bread f
 
 **5. Use your meal plan so you shop with intention.** Buying groceries without a plan leads to waste, missing ingredients mid-recipe, and defaulting to takeout. A weekly meal plan solves all three problems at once.
 
-Want a meal plan built around these recipes — with a grocery list already sorted by store section? [Try DinnerDrop free](/beta)
+Want a meal plan built around these recipes — with a grocery list already sorted by store section? [Try DinnerDrop free](/start)
 
 ---
 
@@ -12524,7 +12518,7 @@ Start with familiar flavors in healthier formats: taco bowls instead of tacos, c
 
 ---
 
-Thirty healthy dinner recipes is a good start. A plan that turns them into a weekly routine — with a grocery list, timing, and no decisions required at 5pm — is better. [DinnerDrop handles that part for you.](/beta)
+Thirty healthy dinner recipes is a good start. A plan that turns them into a weekly routine — with a grocery list, timing, and no decisions required at 5pm — is better. [DinnerDrop handles that part for you.](/start)
 `,
   },
     {
@@ -12675,7 +12669,7 @@ Coat thighs in a mixture of dry ranch seasoning, olive oil, and a squeeze of lem
 
 **5. Rest before cutting.** Five minutes of resting allows juices to redistribute through the meat. Cutting immediately lets those juices run out onto the cutting board.
 
-Planning meals around baked chicken thighs is easy — picking different recipes every night of the week is the harder part. [DinnerDrop builds a weekly plan with a grocery list for you.](/beta)
+Planning meals around baked chicken thighs is easy — picking different recipes every night of the week is the harder part. [DinnerDrop builds a weekly plan with a grocery list for you.](/start)
 
 ---
 
@@ -12698,7 +12692,7 @@ Baked chicken thighs reheat better than any other cut of chicken. Store in an ai
 
 ---
 
-Twenty-five baked chicken thigh recipes gives you nearly a month of weeknight dinners without repeating. If you want those recipes turned into a personalized weekly plan with a pre-sorted grocery list, [DinnerDrop has you covered.](/beta)
+Twenty-five baked chicken thigh recipes gives you nearly a month of weeknight dinners without repeating. If you want those recipes turned into a personalized weekly plan with a pre-sorted grocery list, [DinnerDrop has you covered.](/start)
 `,
   },
 
@@ -12715,7 +12709,7 @@ Twenty-five baked chicken thigh recipes gives you nearly a month of weeknight di
 
 The challenge is variety. The same lemon-herb fillet every Tuesday gets old. This list gives you 25 baked salmon recipes across five categories — classics, sheet pan meals, glazed versions, family-friendly options, and quick weeknight rescues — so you can rotate through a month of salmon dinners without repetition.
 
-[DinnerDrop turns any of these into a full weekly plan with a ready-to-shop grocery list in one tap.](/beta)
+[DinnerDrop turns any of these into a full weekly plan with a ready-to-shop grocery list in one tap.](/start)
 
 ---
 
@@ -12836,7 +12830,7 @@ Technically not baked, but faster and with better exterior texture than traditio
 
 **5. Let it rest 3 minutes before serving.** Carryover cooking continues after you pull salmon from the oven. A brief rest also lets the juices redistribute so the fish stays moist when portioned.
 
-Choosing which of these to cook on any given night is the one part of dinner that still takes mental energy. [DinnerDrop picks the recipe, builds the weekly plan, and sends you out with a grocery list.](/beta)
+Choosing which of these to cook on any given night is the one part of dinner that still takes mental energy. [DinnerDrop picks the recipe, builds the weekly plan, and sends you out with a grocery list.](/start)
 
 ---
 
@@ -12859,7 +12853,7 @@ Salmon pairs with almost any side: roasted vegetables, rice, quinoa, couscous, m
 
 ---
 
-Twenty-five recipes gives you five weeks of salmon dinners before repetition. If you want those recipes organized into a personalized weekly plan with a sorted grocery list, [DinnerDrop handles the planning for you.](/beta)
+Twenty-five recipes gives you five weeks of salmon dinners before repetition. If you want those recipes organized into a personalized weekly plan with a sorted grocery list, [DinnerDrop handles the planning for you.](/start)
 `,
   },
 
@@ -12873,7 +12867,7 @@ Twenty-five recipes gives you five weeks of salmon dinners before repetition. If
     primaryKeyword: 'steak dinner ideas',
     content: `Steak dinners do not have to mean expensive restaurants or complicated technique. Most cuts cook in under 20 minutes with equipment you already own, and a $12 ribeye from the grocery store beats most mid-range restaurant versions when cooked correctly at home. The variables that matter — resting the meat, managing heat, and seasoning properly — are simple once you understand them.
 
-These 25 steak dinner ideas cover the full range: quick weeknight options under 20 minutes, sheet pan and skillet meals that add vegetables to the same pan, international preparations from around the world, and slow-cooked methods for tougher cuts that convert cheap beef into something exceptional. [DinnerDrop can build any of these into a weekly dinner plan with a sorted grocery list so planning is off your plate.](/beta)
+These 25 steak dinner ideas cover the full range: quick weeknight options under 20 minutes, sheet pan and skillet meals that add vegetables to the same pan, international preparations from around the world, and slow-cooked methods for tougher cuts that convert cheap beef into something exceptional. [DinnerDrop can build any of these into a weekly dinner plan with a sorted grocery list so planning is off your plate.](/start)
 
 ---
 
@@ -12994,7 +12988,7 @@ Cube round or chuck steak into 2-inch pieces. Combine with sliced mushrooms, bee
 
 **5. Match the cooking method to the cut.** Tender cuts (ribeye, strip, tenderloin) thrive with high heat and short cooking times. Tough cuts (chuck, round, flank) need either a marinade and quick cooking or a long, low braise. Cooking a chuck steak like a ribeye produces a disappointing result from a cut that would be excellent braised.
 
-A personalized weekly dinner rotation that includes steak alongside the other proteins your family actually eats — chicken, ground beef, pasta, fish — prevents the repetition that makes everyone dread the question "what's for dinner?" [DinnerDrop builds that rotation automatically, with a weekly grocery list to match.](/beta)
+A personalized weekly dinner rotation that includes steak alongside the other proteins your family actually eats — chicken, ground beef, pasta, fish — prevents the repetition that makes everyone dread the question "what's for dinner?" [DinnerDrop builds that rotation automatically, with a weekly grocery list to match.](/start)
 
 ---
 
@@ -13017,7 +13011,7 @@ Steak pairs with almost any side: roasted potatoes, mashed potatoes, roasted veg
 
 ---
 
-Twenty-five steak dinner ideas — from 15-minute weeknight skillets to Sunday braises — mean steak works at every budget and time constraint your week throws at you. If rotating through them on a schedule with a matching grocery list sounds like the part you would rather hand off, [DinnerDrop handles the planning so you handle the cooking.](/beta)
+Twenty-five steak dinner ideas — from 15-minute weeknight skillets to Sunday braises — mean steak works at every budget and time constraint your week throws at you. If rotating through them on a schedule with a matching grocery list sounds like the part you would rather hand off, [DinnerDrop handles the planning so you handle the cooking.](/start)
 `,
   },
 
@@ -13034,7 +13028,7 @@ Twenty-five steak dinner ideas — from 15-minute weeknight skillets to Sunday b
 
 The reason sheet pan chicken dominates family dinner planning is simple math. You get protein, vegetables, and sides all cooked simultaneously at the same temperature. There is no standing over the stove, no monitoring multiple burners, and no timing coordination between dishes. You set a timer and walk away.
 
-These 25 sheet pan chicken recipes cover every angle — classic herb-roasted, glazed and saucy, spiced and international, with vegetables you already have, and meals that reheat perfectly for next-day lunches. [DinnerDrop automatically builds a weekly dinner rotation around recipes like these, with a grocery list that covers every ingredient.](/beta)
+These 25 sheet pan chicken recipes cover every angle — classic herb-roasted, glazed and saucy, spiced and international, with vegetables you already have, and meals that reheat perfectly for next-day lunches. [DinnerDrop automatically builds a weekly dinner rotation around recipes like these, with a grocery list that covers every ingredient.](/start)
 
 ---
 
@@ -13145,7 +13139,7 @@ Toss chicken thighs, cauliflower florets, and drained chickpeas with olive oil, 
 
 **5. Line the pan with parchment or foil for easy cleanup.** Cleanup is the only disadvantage of sheet pan cooking — and it disappears entirely if you line the pan. Parchment handles temperatures up to 425°F; foil works at any temperature. Remove the liner when done, and the pan needs only a rinse.
 
-Planning a week of sheet pan chicken dinners — one each night, with different vegetables and seasonings — is exactly the kind of system that makes weeknight cooking predictable in a good way. [DinnerDrop builds that rotation automatically, picking five dinners from your family's preferences and generating the complete grocery list.](/beta)
+Planning a week of sheet pan chicken dinners — one each night, with different vegetables and seasonings — is exactly the kind of system that makes weeknight cooking predictable in a good way. [DinnerDrop builds that rotation automatically, picking five dinners from your family's preferences and generating the complete grocery list.](/start)
 
 ---
 
@@ -13168,7 +13162,7 @@ At 400–425°F for 35–40 minutes (matching bone-in thighs): broccoli florets,
 
 ---
 
-Twenty-five sheet pan chicken recipes mean you can cook a different dinner every weeknight for five weeks without repeating. If rotating through them on a planned schedule — matched to what your family actually likes and what is already in the refrigerator — sounds better than deciding at 5pm, [DinnerDrop builds that plan for you every week.](/beta)
+Twenty-five sheet pan chicken recipes mean you can cook a different dinner every weeknight for five weeks without repeating. If rotating through them on a planned schedule — matched to what your family actually likes and what is already in the refrigerator — sounds better than deciding at 5pm, [DinnerDrop builds that plan for you every week.](/start)
 `,
   },
 
@@ -13184,7 +13178,7 @@ Twenty-five sheet pan chicken recipes mean you can cook a different dinner every
 
 Each recipe is tested for realistic weeknight timing — including the time to pressurize and release — and scaled for families of four to six.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan and grocery list in under a minute. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's weekly dinner plan and grocery list in under a minute. It's free — no card needed.
 
 ---
 
@@ -13299,7 +13293,7 @@ Toast dried ancho and guajillo chiles in a dry skillet, then simmer in water 5 m
 
 ## How DinnerDrop Builds Your Weekly Instant Pot Rotation
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized dinners per week based on your family's preferences, dietary needs, and the appliances you actually want to use. Tell it you prefer Instant Pot meals and it automatically weights your plan toward pressure cooker-friendly recipes — with a full grocery list included. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five personalized dinners per week based on your family's preferences, dietary needs, and the appliances you actually want to use. Tell it you prefer Instant Pot meals and it automatically weights your plan toward pressure cooker-friendly recipes — with a full grocery list included. It's free — no card needed.
 
 ---
 
@@ -13324,9 +13318,9 @@ The burn error means the bottom of the pot is too hot and liquid has evaporated 
 
 Twenty-five Instant Pot recipes across chicken, beef, soups, pasta, and pork — built for families who want real meals on real weeknight timelines.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner weekly plan and full grocery list in under a minute. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's five-dinner weekly plan and full grocery list in under a minute. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -13341,7 +13335,7 @@ Twenty-five Instant Pot recipes across chicken, beef, soups, pasta, and pork —
 
 All 25 recipes are designed for a 6-quart slow cooker and serve a family of four to six.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan and grocery list in under a minute. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's weekly dinner plan and grocery list in under a minute. It's free — no card needed.
 
 ---
 
@@ -13456,7 +13450,7 @@ Place boneless chicken thighs in the slow cooker with half a cup of Caesar dress
 
 ## How DinnerDrop Plans Your Crockpot Week
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds five personalized dinners every week based on your family's preferences, the appliances you use, and your schedule. Tell it you prefer slow cooker meals and it weights your plan toward crockpot-friendly recipes -- with the full grocery list included. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds five personalized dinners every week based on your family's preferences, the appliances you use, and your schedule. Tell it you prefer slow cooker meals and it weights your plan toward crockpot-friendly recipes -- with the full grocery list included. It's free — no card needed.
 
 ---
 
@@ -13481,9 +13475,9 @@ Two forks, directly in the pot, after the chicken has cooked fully. The chicken 
 
 Twenty-five crockpot chicken recipes -- classics, creamy dinners, international sauces, soups, and five-ingredient weeknight solutions. The slow cooker is at its best when it handles dinner while you handle everything else.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your family's five-dinner week and full grocery list automatically. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your family's five-dinner week and full grocery list automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -13631,7 +13625,7 @@ Cold meatloaf sliced thin between white bread with ketchup and yellow mustard is
 
 ## How DinnerDrop Handles Your Weekly Dinner Planning
 
-If meatloaf is one of your family's favorite meals, [DinnerDrop](https://dinnerdrop.app/beta) will include it in your weekly rotation. Tell it your household preferences — protein types, dietary restrictions, cook time — and it generates five personalized dinners plus a complete grocery list every week. The beta is free for six months.
+If meatloaf is one of your family's favorite meals, [DinnerDrop](https://www.dinnerdrop.app/start) will include it in your weekly rotation. Tell it your household preferences — protein types, dietary restrictions, cook time — and it generates five personalized dinners plus a complete grocery list every week. It's free — no card needed.
 
 ---
 
@@ -13656,9 +13650,9 @@ Cracking is normal and not a sign of a problem. The surface of the loaf dries an
 
 Classic meatloaf is one of the most efficient family dinners you can make: inexpensive, hands-off after it goes in the oven, good the next day, and freezable in either direction. Master the fat ratio and the panade and you will have a recipe worth putting on permanent rotation.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week and complete grocery list automatically. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's five-dinner week and complete grocery list automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -13673,7 +13667,7 @@ Classic meatloaf is one of the most efficient family dinners you can make: inexp
 
 This recipe works for weeknights (40 minutes start to finish) and is just as good for a Sunday dinner when you have a little more time.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your family's full dinner week and builds the grocery list. Free for six months during beta.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your family's full dinner week and builds the grocery list. It's free — no card needed.
 
 ---
 
@@ -13768,7 +13762,7 @@ Layer 4 cups of cooked penne or rigatoni in a 9x13 baking dish with 2 cups of ma
 
 ## How DinnerDrop Plans Your Chicken Parmesan Week
 
-If chicken parmesan is a regular in your household, [DinnerDrop](https://dinnerdrop.app/beta) will build it into your weekly rotation alongside four other dinners your family actually likes. Enter your preferences -- protein types, dietary restrictions, max cook time -- and get a full week of personalized meals plus a complete grocery list in under a minute. The beta is free for six months.
+If chicken parmesan is a regular in your household, [DinnerDrop](https://www.dinnerdrop.app/start) will build it into your weekly rotation alongside four other dinners your family actually likes. Enter your preferences -- protein types, dietary restrictions, max cook time -- and get a full week of personalized meals plus a complete grocery list in under a minute. It's free — no card needed.
 
 ---
 
@@ -13964,7 +13958,7 @@ Lasagna is one of the best dishes to make ahead because it actually improves ove
 
 ## How DinnerDrop Handles Your Weekly Dinners
 
-If lasagna is a family favorite, [DinnerDrop](https://dinnerdrop.app/beta) puts it in your weekly rotation and builds the complete grocery list automatically. You tell it your family's preferences — proteins, dietary needs, how much time you have to cook — and every week it generates five personalized dinners plus a shopping list organized by store section. The beta is completely free for six months, no credit card required.
+If lasagna is a family favorite, [DinnerDrop](https://www.dinnerdrop.app/start) puts it in your weekly rotation and builds the complete grocery list automatically. You tell it your family's preferences — proteins, dietary needs, how much time you have to cook — and every week it generates five personalized dinners plus a shopping list organized by store section. It's free — no card needed.
 
 ---
 
@@ -13989,9 +13983,9 @@ Refrigerated in an airtight container, 4 to 5 days. The flavor actually peaks on
 
 Lasagna rewards patience in two places: simmering the sauce long enough to concentrate it, and resting the finished dish long enough to slice cleanly. Get those right and everything else follows.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your family's full dinner week and generates the grocery list automatically. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your family's full dinner week and generates the grocery list automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -14115,7 +14109,7 @@ The dish is rich, so sides that cut through the richness work best. Garlic bread
 
 ## How DinnerDrop Plans Rich Dinners Like This
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's weekly dinner plan around meals your family actually likes. If chicken alfredo is a regular request at your table, it goes in the rotation. You get five personalized dinners each week plus a complete grocery list with quantities — everything you need, nothing you don't. The beta is completely free for six months, no credit card required.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's weekly dinner plan around meals your family actually likes. If chicken alfredo is a regular request at your table, it goes in the rotation. You get five personalized dinners each week plus a complete grocery list with quantities — everything you need, nothing you don't. It's free — no card needed.
 
 ---
 
@@ -14140,9 +14134,9 @@ Absolutely. Broccoli, peas, asparagus, and spinach all work well. Add blanched o
 
 Chicken alfredo rewards attention to two details: good parmesan and the pasta water. Get those right, and the rest of the recipe comes together easily. The whole thing is on the table in 30 minutes.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your family's full dinner week and builds the grocery list automatically. The beta is free for six months — no credit card required.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your family's full dinner week and builds the grocery list automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -14289,7 +14283,7 @@ Use your preferred bottled BBQ sauce, or combine: 1 cup ketchup, 2 tablespoons b
 
 ## How DinnerDrop Handles Your Weekly Dinner Planning
 
-If pulled pork is part of your family's rotation, [DinnerDrop](https://dinnerdrop.app/beta) will include it in your weekly plan. Tell it your family size, budget, cook time preferences, and dietary needs — and it generates five personalized dinners plus a complete grocery list every week. The beta is free for six months.
+If pulled pork is part of your family's rotation, [DinnerDrop](https://www.dinnerdrop.app/start) will include it in your weekly plan. Tell it your family size, budget, cook time preferences, and dietary needs — and it generates five personalized dinners plus a complete grocery list every week. It's free — no card needed.
 
 ---
 
@@ -14314,9 +14308,9 @@ They are the same cut — both terms refer to the upper portion of the front leg
 
 Pulled pork is one of the highest-return proteins in the family kitchen: minimal hands-on time, low cost per serving, multiple meal applications from a single cook, and reliable results whether you use an oven, slow cooker, or Instant Pot. Master the dry rub and the temperature target and you have a recipe worth making on a monthly rotation.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week and complete grocery list automatically. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's five-dinner week and complete grocery list automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },,
   {
@@ -14331,7 +14325,7 @@ Pulled pork is one of the highest-return proteins in the family kitchen: minimal
 
 This recipe works in a Dutch oven, a roasting pan, or a slow cooker. All three methods are covered below.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five personalized family dinners and your complete grocery list every week. It's free — no card needed.
 
 ---
 
@@ -14416,7 +14410,7 @@ Leftover ideas: pot roast tacos with shredded beef and corn tortillas, pot roast
 
 ## How DinnerDrop Uses This
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week based on your preferences, including how much active cooking time you have. Tell it you prefer set-and-forget dinners and it plans slow cooker and braise recipes like this one -- with the full grocery list for your family size included. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's five-dinner week based on your preferences, including how much active cooking time you have. Tell it you prefer set-and-forget dinners and it plans slow cooker and braise recipes like this one -- with the full grocery list for your family size included. It's free — no card needed.
 `,
   },
   {
@@ -14432,7 +14426,7 @@ Chicken pot pie is the definition of comfort food. A buttery flaky crust, creamy
 
 This guide covers the full classic version, a 30-minute shortcut using rotisserie chicken and store-bought crust, a crustless skillet version for weeknights, and every tip for a filling that is rich but not gluey.
 
-> **Need your whole week planned, not just tonight?** [DinnerDrop builds your 5-meal weekly plan and grocery list in under 60 seconds — try it free](/beta)
+> **Need your whole week planned, not just tonight?** [DinnerDrop builds your 5-meal weekly plan and grocery list in under 60 seconds — try it free](/start)
 
 ---
 
@@ -14568,9 +14562,9 @@ Chicken pot pie is a complete meal on its own — protein, vegetables, and carbs
 
 Pot roast is one of the few dinners where the hands-off time is an advantage rather than a compromise. Three and a half hours in a low oven produces something genuinely impressive with fewer than 30 minutes of actual work.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five personalized family dinners and your complete grocery list every week. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 
 **Can I use canned chicken for pot pie?**
 You can, but the texture will be mushier than rotisserie or poached chicken. If using canned, drain thoroughly and break up any large chunks. Rotisserie chicken is the superior shortcut.
@@ -14591,9 +14585,9 @@ Absolutely. Diced potatoes, corn, green beans, mushrooms, and parsnips all work 
 
 ## Stop Asking "What Is for Dinner" Every Single Night
 
-Chicken pot pie is exactly the kind of dinner that deserves a spot on the weekly rotation — but planning five nights from scratch every week takes time you do not have. [DinnerDrop generates your personalized 5-meal week plus a complete grocery list in under 60 seconds.](/beta) Tell it your preferences, dietary needs, and preferred stores once. It handles the rest.
+Chicken pot pie is exactly the kind of dinner that deserves a spot on the weekly rotation — but planning five nights from scratch every week takes time you do not have. [DinnerDrop generates your personalized 5-meal week plus a complete grocery list in under 60 seconds.](/start) Tell it your preferences, dietary needs, and preferred stores once. It handles the rest.
 
-[Try DinnerDrop free at DinnerDrop](/beta)
+[Try DinnerDrop free at DinnerDrop](/start)
 `,
   },
   {
@@ -14701,7 +14695,7 @@ Chicken is done at 165 degrees F internally with deep golden brown coating. Drai
 
 ## How DinnerDrop Plans Dinners Like This
 
-If fried chicken is a family tradition, [DinnerDrop](https://dinnerdrop.app/beta) builds your weekly dinner plan around meals your family actually wants. Tell it your preferences and it generates five personalized dinners plus a complete grocery list every week. The beta is free for six months.
+If fried chicken is a family tradition, [DinnerDrop](https://www.dinnerdrop.app/start) builds your weekly dinner plan around meals your family actually wants. Tell it your preferences and it generates five personalized dinners plus a complete grocery list every week. It's free — no card needed.
 
 ---
 
@@ -14721,9 +14715,9 @@ If fried chicken is a family tradition, [DinnerDrop](https://dinnerdrop.app/beta
 
 Classic fried chicken rewards good technique but forgives imperfect execution. The buttermilk marinade and correct oil temperature are the two variables that separate average from excellent fried chicken.
 
-[DinnerDrop](https://dinnerdrop.app/beta) handles your five-dinner week and full grocery list automatically. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) handles your five-dinner week and full grocery list automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -14738,7 +14732,7 @@ Classic fried chicken rewards good technique but forgives imperfect execution. T
       'and perfectly cooked pasta. Make-ahead friendly, freezer-ready, feeds a crowd.',
     content: `Spaghetti and meatballs is the dinner that gets requested every birthday. It is weeknight-doable once you know the method: mix gently, rest before cooking, finish in the sauce. The result is tender instead of dense.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five family dinners automatically and builds your grocery list in one tap. Beta access is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five family dinners automatically and builds your grocery list in one tap. It's free — no card needed.
 
 ## What Makes Homemade Meatballs Different
 
@@ -14808,9 +14802,9 @@ Double the batch — the extra effort is minimal, and frozen meatballs are one o
 
 Spaghetti and meatballs scales beautifully — double the batch and freeze half. The sauce improves every day in the fridge.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your family's five dinners for the week and builds the grocery list automatically. Beta access is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your family's five dinners for the week and builds the grocery list automatically. It's free — no card needed.
 
-**[Plan this week's dinners at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Plan this week's dinners at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -14921,9 +14915,9 @@ Remove bay leaves. Stir in fresh parsley. Squeeze in half a lemon for brightness
 
 ## Let DinnerDrop Plan Your Soup Nights
 
-If deciding what to make five nights a week sounds like more effort than it should be, [DinnerDrop](https://dinnerdrop.app/beta) handles it for you -- 5 personalized meals with a one-tap grocery list. Free.
+If deciding what to make five nights a week sounds like more effort than it should be, [DinnerDrop](https://www.dinnerdrop.app/start) handles it for you -- 5 personalized meals with a one-tap grocery list. Free.
 
-**[Try DinnerDrop free](https://dinnerdrop.app/beta)**
+**[Try DinnerDrop free](https://www.dinnerdrop.app/start)**
 
 ---
 
@@ -15134,7 +15128,7 @@ Brown the meat, drain fat, add a jar of good marinara (Rao's, Victoria, Carbone)
 
 ## How DinnerDrop Uses This
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five family dinners per week based on your preferences, cook time, and family size. Tell it you want classic Italian comfort food and it builds plans around dishes like spaghetti with meat sauce — with the grocery list already built and quantities adjusted for your family size. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five family dinners per week based on your preferences, cook time, and family size. Tell it you want classic Italian comfort food and it builds plans around dishes like spaghetti with meat sauce — with the grocery list already built and quantities adjusted for your family size. It's free — no card needed.
 
 ---
 
@@ -15168,9 +15162,9 @@ Brown the meat, drain fat, add a jar of good marinara (Rao's, Victoria, Carbone)
 
 Spaghetti is the dinner that taught most families how to cook. The classic meat sauce version takes 30 minutes, feeds everyone reliably, and improves every time you make it. Master the core technique — salt the water, save the pasta water, finish in the sauce — and every variation becomes simple.
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five family dinners and your complete grocery list every week. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five family dinners and your complete grocery list every week. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -15180,7 +15174,7 @@ Spaghetti is the dinner that taught most families how to cook. The classic meat 
     publishDate: '2027-12-21',
     readingTimeMinutes: 8,
     primaryKeyword: 'baked ziti recipe',
-    content: `Baked ziti is what happens when pasta becomes a proper casserole: tube-shaped pasta layered with ricotta, mozzarella, and marinara, baked until the cheese is bubbling and golden, the edges crisped, and the whole thing sliceable like lasagna but with about a third of the effort. It is one of the great family pasta bakes — feeds a crowd, works as leftovers, freezes well, and kids reliably eat it without negotiation. [DinnerDrop can build baked ziti into your weekly dinner rotation with a complete grocery list.](/beta)
+    content: `Baked ziti is what happens when pasta becomes a proper casserole: tube-shaped pasta layered with ricotta, mozzarella, and marinara, baked until the cheese is bubbling and golden, the edges crisped, and the whole thing sliceable like lasagna but with about a third of the effort. It is one of the great family pasta bakes — feeds a crowd, works as leftovers, freezes well, and kids reliably eat it without negotiation. [DinnerDrop can build baked ziti into your weekly dinner rotation with a complete grocery list.](/start)
 
 The recipe below takes about 45 minutes total, including 25 minutes of mostly-unattended baking time. Make it ahead and the actual work on dinner night drops to zero.
 
@@ -15274,7 +15268,7 @@ For weeknight simplicity: a bagged salad kit and store-bought garlic bread handl
 
 ## How DinnerDrop Handles Pasta Night
 
-If baked ziti is in your family's rotation, [DinnerDrop](https://dinnerdrop.app/beta) builds it into your weekly plan alongside four other dinners matched to your household. It generates a complete, sorted grocery list covering every ingredient so you shop once and cook all week. The beta is free for six months.
+If baked ziti is in your family's rotation, [DinnerDrop](https://www.dinnerdrop.app/start) builds it into your weekly plan alongside four other dinners matched to your household. It generates a complete, sorted grocery list covering every ingredient so you shop once and cook all week. It's free — no card needed.
 
 ---
 
@@ -15299,9 +15293,9 @@ Up to 24 hours in the refrigerator, unbaked. Up to 3 months in the freezer. Both
 
 Baked ziti is one of the most practical family dinners you can add to a rotation: it scales easily, tolerates substitutions, pleases picky eaters, and the leftovers are as good as the original. The freezer version makes it genuinely useful for meal prep in a way most casseroles are not.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's full five-dinner week and grocery list automatically. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's full five-dinner week and grocery list automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -15316,7 +15310,7 @@ Baked ziti is one of the most practical family dinners you can add to a rotation
 
 <p>A great homemade burger beats any drive-through version. The difference is knowing two things: what fat percentage to use and how to form the patty without overworking the meat. Fix both and you have restaurant-quality burgers in 15 minutes with ingredients from any grocery store.</p>
 
-<p><strong>DinnerDrop builds your weekly family dinner plan automatically — including burger nights — with a complete grocery list. <a href="https://dinnerdrop.app/beta">Try it free.</a></strong></p>
+<p><strong>DinnerDrop builds your weekly family dinner plan automatically — including burger nights — with a complete grocery list. <a href="https://www.dinnerdrop.app/start">Try it free.</a></strong></p>
 
 <hr/>
 
@@ -15447,7 +15441,7 @@ Baked ziti is one of the most practical family dinners you can add to a rotation
 
 <hr/>
 
-<p><strong>DinnerDrop plans five family dinners per week automatically — burger nights included — with a complete grocery list ready in seconds. <a href="https://dinnerdrop.app/beta">Try DinnerDrop free.</a></strong></p>
+<p><strong>DinnerDrop plans five family dinners per week automatically — burger nights included — with a complete grocery list ready in seconds. <a href="https://www.dinnerdrop.app/start">Try DinnerDrop free.</a></strong></p>
 
 <hr/>
 
@@ -15469,9 +15463,9 @@ Baked ziti is one of the most practical family dinners you can add to a rotation
 
 <p>The classic hamburger is one of the most forgiving dinners in existence. Wrong technique still produces an edible burger. Right technique produces a great one. The two rules that matter most: use 80/20 beef and do not overwork it.</p>
 
-<p><a href="https://dinnerdrop.app/beta">DinnerDrop</a> plans your family's five dinners per week and builds the complete grocery list automatically. The beta is free for six months.</p>
+<p><a href="https://www.dinnerdrop.app/start">DinnerDrop</a> plans your family's five dinners per week and builds the complete grocery list automatically. It's free — no card needed.</p>
 
-<p><strong><a href="https://dinnerdrop.app/beta">Get your weekly dinner plan at DinnerDrop</a></strong></p>
+<p><strong><a href="https://www.dinnerdrop.app/start">Get your weekly dinner plan at DinnerDrop</a></strong></p>
 `,
   },
 
@@ -15532,7 +15526,7 @@ Homemade burgers are one of the highest-return family dinners: fast to make, uni
 
 ## 15 Burger Variations Your Family Will Actually Eat
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans your full five-dinner week — including burger nights — with a complete grocery list. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans your full five-dinner week — including burger nights — with a complete grocery list. It's free — no card needed.
 
 ### Classic Burgers (5)
 
@@ -15639,9 +15633,9 @@ Basic special sauce: 1/2 cup mayo, 2 tablespoons ketchup, 1 tablespoon yellow mu
 
 Homemade burgers consistently outperform restaurant versions when the technique is right — better fat content, better seasoning control, and straight from the pan to the bun. Master the 80/20 patty and the smash burger technique and you have two completely different burger nights in your rotation.
 
-[DinnerDrop](https://dinnerdrop.app/beta) builds your family's five-dinner week — including burger nights — and generates the complete grocery list automatically. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's five-dinner week — including burger nights — and generates the complete grocery list automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -15655,7 +15649,7 @@ Homemade burgers consistently outperform restaurant versions when the technique 
 
 This is the recipe that actually works on a Tuesday night — one pan, a simple marinade that you can skip in a pinch, and a method that produces juicy chicken and properly charred vegetables every time.
 
-**[DinnerDrop builds your full five-dinner week automatically — try it free for 6 months.](https://dinnerdrop.app/beta)**
+**[DinnerDrop builds your full five-dinner week automatically — it's free, no card needed.](https://www.dinnerdrop.app/start)**
 
 ---
 
@@ -15799,9 +15793,9 @@ Fajita seasoning leans heavier on cumin and chili powder, often with less oregan
 
 Chicken fajitas are worth keeping in regular rotation because they hit every practical weeknight requirement: fast prep, one pan to clean, universally liked, endlessly reschedulable (you can marinate Monday and cook Thursday if plans change). Once you have the method down, it takes as long as it takes to heat a skillet.
 
-[DinnerDrop](https://dinnerdrop.app/beta) generates your family's full five-dinner week and matching grocery list in under a minute. The beta is free for six months — no credit card charge until month seven.
+[DinnerDrop](https://www.dinnerdrop.app/start) generates your family's full five-dinner week and matching grocery list in under a minute. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 
@@ -15818,7 +15812,7 @@ Teriyaki chicken is one of the most universally liked dinners in any family rota
 
 This guide covers the stovetop glaze method, the oven bake method, the slow cooker version for set-and-forget dinners, and every tip for getting that glossy, lacquered finish that makes teriyaki so appealing.
 
-> **Dinner planned and groceries listed in 60 seconds:** [DinnerDrop builds your 5-meal weekly plan and grocery list automatically — try it free](/beta)
+> **Dinner planned and groceries listed in 60 seconds:** [DinnerDrop builds your 5-meal weekly plan and grocery list automatically — try it free](/start)
 
 ---
 
@@ -15988,9 +15982,9 @@ Two reasons: either the heat is too low (sauce needs to actively bubble to reduc
 
 ## How DinnerDrop Uses This
 
-[DinnerDrop](https://dinnerdrop.app/beta) plans five personalized family dinners and your complete grocery list every week. Tell it your family preferences -- including quick weeknight dinners, slow cooker options, or both -- and it builds the week automatically. The beta is free for six months.
+[DinnerDrop](https://www.dinnerdrop.app/start) plans five personalized family dinners and your complete grocery list every week. Tell it your family preferences -- including quick weeknight dinners, slow cooker options, or both -- and it builds the week automatically. It's free — no card needed.
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
   {
@@ -16006,7 +16000,7 @@ Chicken enchiladas are one of the most satisfying family dinners you can make at
 
 This recipe takes about 45 minutes start to finish, makes enough for six servings, and reheats perfectly the next day. You can use store-bought rotisserie chicken to cut the time to 30 minutes.
 
-[DinnerDrop](https://dinnerdrop.app/beta) can build chicken enchiladas into your weekly dinner plan with a complete, sorted grocery list ready for your store.
+[DinnerDrop](https://www.dinnerdrop.app/start) can build chicken enchiladas into your weekly dinner plan with a complete, sorted grocery list ready for your store.
 
 ---
 
@@ -16095,9 +16089,9 @@ Toppings bar approach: Set out sour cream, guacamole or sliced avocado, salsa, p
 
 ## How DinnerDrop Handles Taco Night and Beyond
 
-If Mexican-style dinners are a weekly staple in your house, [DinnerDrop](https://dinnerdrop.app/beta) builds a varied rotation of five dinners per week — so you get the chicken enchiladas one week, something different the next, without the mental work of planning. The grocery list is sorted by store section and sent directly to your preferred store. The beta is free for six months.
+If Mexican-style dinners are a weekly staple in your house, [DinnerDrop](https://www.dinnerdrop.app/start) builds a varied rotation of five dinners per week — so you get the chicken enchiladas one week, something different the next, without the mental work of planning. The grocery list is sorted by store section and sent directly to your preferred store. It's free — no card needed.
 
-**[Plan your weekly dinners at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Plan your weekly dinners at DinnerDrop](https://www.dinnerdrop.app/start)**
 
 ---
 
@@ -16322,9 +16316,9 @@ Yes — the shortcut version mixes cream of mushroom soup with beef broth and so
 
 ## Make Dinner Planning as Easy as This Recipe
 
-Beef stroganoff is perfect for rotation — quick on weeknights, impressive enough for guests, and excellent as leftovers. The problem is that planning five nights like this every week takes more time than it should. [DinnerDrop builds your personalized 5-meal week including pasta, beef, chicken, and more, with a full grocery list in one tap.](/beta) Set your family's preferences once. It does the rest.
+Beef stroganoff is perfect for rotation — quick on weeknights, impressive enough for guests, and excellent as leftovers. The problem is that planning five nights like this every week takes more time than it should. [DinnerDrop builds your personalized 5-meal week including pasta, beef, chicken, and more, with a full grocery list in one tap.](/start) Set your family's preferences once. It does the rest.
 
-[Try DinnerDrop free at DinnerDrop](/beta)
+[Try DinnerDrop free at DinnerDrop](/start)
 `,
   },
 
@@ -16480,9 +16474,9 @@ Yes. Cook fully, cool, and store in portioned containers for up to 4 days. The s
 
 ## Make Dinner Planning as Easy as This Recipe
 
-Honey garlic chicken is a perfect weekly staple — fast, crowd-pleasing, and customizable for picky eaters. The challenge is having five dinners this reliable every week without spending Sunday afternoon planning. [DinnerDrop builds your personalized 5-meal week, including recipes like this one, with a grocery list pushed directly to your preferred store — all in one tap.](/beta) Set your family's preferences once. Everything else is handled.
+Honey garlic chicken is a perfect weekly staple — fast, crowd-pleasing, and customizable for picky eaters. The challenge is having five dinners this reliable every week without spending Sunday afternoon planning. [DinnerDrop builds your personalized 5-meal week, including recipes like this one, with a grocery list pushed directly to your preferred store — all in one tap.](/start) Set your family's preferences once. Everything else is handled.
 
-[Try DinnerDrop free at DinnerDrop](/beta)
+[Try DinnerDrop free at DinnerDrop](/start)
 `,
   },
   {
@@ -16498,7 +16492,7 @@ Honey garlic chicken is a perfect weekly staple — fast, crowd-pleasing, and cu
 
 This is pure weeknight comfort food, the kind that makes a cold evening feel instantly better.
 
-[CTA]Want DinnerDrop to plan a full week of dinners like this one — complete with your grocery list? [Try it free →](/beta)[/CTA]
+[CTA]Want DinnerDrop to plan a full week of dinners like this one — complete with your grocery list? [Try it free →](/start)[/CTA]
 
 ## Why This Potato Soup Recipe Works
 
@@ -16570,7 +16564,7 @@ If you need soup on the table fast, the Instant Pot cuts the cooking time to abo
 7. Stir in milk and cream. Use the Sauté function on LOW for 2-3 minutes until heated through.
 8. Serve with all toppings.
 
-[CTA]DinnerDrop builds meals like this into your weekly plan — 5 dinners, one grocery list, delivered to your store. [Join free →](/beta)[/CTA]
+[CTA]DinnerDrop builds meals like this into your weekly plan — 5 dinners, one grocery list, delivered to your store. [Join free →](/start)[/CTA]
 
 ## Which Potato Should You Use?
 
@@ -16640,7 +16634,7 @@ Potato soup is filling enough to stand alone, but pairing it elevates the meal:
 
 **Dairy curdled or separated:** This happens when the soup is brought to a hard boil after adding milk or cream. Always add dairy over low to medium-low heat, and never let it boil again after that point.
 
-[CTA]Stop guessing what's for dinner. DinnerDrop plans your whole week — dinners like this one, plus your grocery list. [Try free →](/beta)[/CTA]
+[CTA]Stop guessing what's for dinner. DinnerDrop plans your whole week — dinners like this one, plus your grocery list. [Try free →](/start)[/CTA]
 
 ## FAQ
 
@@ -16683,7 +16677,7 @@ The best taco soup has three things: bold seasoning built in layers, a base that
 
 The seasoning goes in twice: once when you brown the meat, once when you add the liquids. This layering is what separates flat taco soup from one that tastes like it simmered all day.
 
-[CTA]Let DinnerDrop plan this week's dinners — taco soup, grocery list included. [Try free](/beta)[/CTA]
+[CTA]Let DinnerDrop plan this week's dinners — taco soup, grocery list included. [Try free](/start)[/CTA]
 
 ## The Classic Taco Soup Recipe
 
@@ -16757,7 +16751,7 @@ A lighter, creamier version. Use shredded rotisserie chicken, white beans instea
 
 Drop the meat entirely. Add an extra can of black beans, a can of pinto beans, and one diced zucchini or a cup of frozen fire-roasted corn. Use vegetable broth instead of beef broth. The beans provide more than enough protein and substance. Most meat-eaters will not feel like they are missing anything.
 
-[CTA]Stop figuring out dinner every single night. DinnerDrop builds your weekly plan and grocery list automatically. [Try free](/beta)[/CTA]
+[CTA]Stop figuring out dinner every single night. DinnerDrop builds your weekly plan and grocery list automatically. [Try free](/start)[/CTA]
 
 ## The Toppings Bar: What to Set Out
 
@@ -16799,7 +16793,7 @@ Three options: (1) Simmer longer uncovered — more liquid evaporates and the so
 
 Use mild Rotel or plain diced tomatoes. Let kids pick their own toppings. Serve over rice to dilute the heat. Set out tortilla chips for dipping — kids who will not eat soup will eat soup that comes with chips.
 
-[CTA]DinnerDrop plans family-friendly dinners like this one every week. No repeats, no stress, grocery list ready to go. [Start free](/beta)[/CTA]
+[CTA]DinnerDrop plans family-friendly dinners like this one every week. No repeats, no stress, grocery list ready to go. [Start free](/start)[/CTA]
 
 ## FAQ
 
@@ -16840,7 +16834,7 @@ This guide covers the best methods for cooking the fish (pan-fried, baked, and a
 
 **Picky eaters often take to them.** The mild flavor of white fish, the crunch of the slaw, and the familiar taco format make this a reliable option for families with mixed tastes.
 
-**[DinnerDrop](https://dinnerdrop.app/beta) builds your family's whole week of dinners and generates the grocery list automatically. The beta is free for six months.**
+**[DinnerDrop](https://www.dinnerdrop.app/start) builds your family's whole week of dinners and generates the grocery list automatically. It's free — no card needed.**
 
 ---
 
@@ -16966,9 +16960,9 @@ Traditionalists say corn. Families with texture preferences often prefer flour. 
 
 Fish tacos are one of the best weeknight dinners precisely because they feel like more effort than they require. Under 30 minutes, affordable, crowd-pleasing, and genuinely delicious.
 
-**[DinnerDrop](https://dinnerdrop.app/beta) plans five dinners per week for your family and builds the complete grocery list — including taco nights. The beta is free for six months.**
+**[DinnerDrop](https://www.dinnerdrop.app/start) plans five dinners per week for your family and builds the complete grocery list — including taco nights. It's free — no card needed.**
 
-**[Get your weekly dinner plan at DinnerDrop](https://dinnerdrop.app/beta)**
+**[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
 ] as BlogPost[]

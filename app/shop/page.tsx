@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Shop — Printable Meal Planners & Family Kitchen Downloads | DinnerDrop',
   description:
     'Instant-download meal planners, grocery checklists, and meal-prep printables for busy families. Buy once, download instantly.',
-  alternates: { canonical: 'https://dinnerdrop.app/shop' },
+  alternates: { canonical: 'https://www.dinnerdrop.app/shop' },
 }
 
 export default function ShopPage() {

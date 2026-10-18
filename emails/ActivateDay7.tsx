@@ -9,10 +9,10 @@ interface ActivateDay7Props {
 }
 
 // Activation email #3 — sent 7 days after signup, last nudge in the sequence.
-// Honest founder note + the founding-family hook.
+// Honest founder note.
 export default function ActivateDay7({
   firstName = 'there',
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: ActivateDay7Props) {
   return (
     <Html>
@@ -35,14 +35,13 @@ export default function ActivateDay7({
               list</strong>, planned around your budget. That&apos;s the entire ask.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/dashboard">
+              <Button style={button} href="https://www.dinnerdrop.app/dashboard">
                 Get my week of dinners →
               </Button>
             </Section>
             <Text style={paragraph}>
-              And because you joined during our founding-family window, everything is
-              free for you — no card, no catch. You&apos;re helping us build this; the
-              least we can do is plan your dinners.
+              Planning and the one-tap Instacart cart are free for you — no card, no catch.
+              Your feedback shapes what we build next; the least we can do is plan your dinners.
             </Text>
             <Hr style={hr} />
             <Text style={paragraph}>
@@ -54,7 +53,7 @@ export default function ActivateDay7({
           </Section>
           <Section style={footerSection}>
             <Text style={footerText}>
-              <Link href="https://dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
+              <Link href="https://www.dinnerdrop.app/account" style={footerLink}>Manage your account</Link>
               {' · '}
               <Link href={unsubscribeUrl} style={footerLink}>Unsubscribe</Link>
             </Text>

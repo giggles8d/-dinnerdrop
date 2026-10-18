@@ -20,7 +20,7 @@ interface PaymentFailedProps {
 
 export default function PaymentFailed({
   firstName = 'there',
-  updatePaymentUrl = 'https://dinnerdrop.app/account',
+  updatePaymentUrl = 'https://www.dinnerdrop.app/account',
 }: PaymentFailedProps) {
   return (
     <Html>

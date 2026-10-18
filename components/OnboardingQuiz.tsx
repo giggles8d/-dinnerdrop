@@ -65,14 +65,12 @@ const STEPS = [
     ],
   },
   {
-    question: 'Where do you usually shop for groceries?',
+    question: 'How do you usually get groceries?',
     field: 'preferredStore' as const,
     options: [
-      { label: 'Walmart', value: 'Walmart' },
-      { label: 'Amazon Fresh', value: 'Amazon Fresh' },
-      { label: 'Instacart', value: 'Instacart' },
-      { label: 'Target', value: 'Target' },
+      { label: 'Instacart (delivery or pickup)', value: 'Instacart' },
       { label: 'Kroger', value: 'Kroger' },
+      { label: 'I shop in store', value: 'In store' },
     ],
   },
 ]
@@ -213,7 +211,7 @@ function OnboardingQuizInner() {
         <div className="flex flex-wrap justify-center gap-3">
           {currentStep.options.map((option) => (
             <button
-              key={String(option.value)}
+              key={option.label}
               onClick={() => handleSelect(option.value)}
               className={`px-6 py-3 rounded-full border text-sm font-medium transition-all ${
                 isSelected(option.value)

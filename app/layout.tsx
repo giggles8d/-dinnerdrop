@@ -6,13 +6,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DinnerDrop — AI Dinner Planning for Busy Families",
-  description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Try it free for 14 days.",
+  description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
   openGraph: {
     title: "DinnerDrop — AI Dinner Planning for Busy Families",
-    description: "Generate 5 personalized dinner plans, build your grocery list, and shop at Instacart or Kroger in one tap. Try it free for 14 days.",
+    description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DinnerDrop" }],
     type: "website",
-    url: "https://dinnerdrop.app",
+    url: "https://www.dinnerdrop.app",
   },
   twitter: {
     card: "summary_large_image",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description: "Generate 5 personalized dinner plans, build your grocery list, and shop at your favorite store — all in one tap.",
     images: ["/og-image.png"],
   },
-  metadataBase: new URL("https://dinnerdrop.app"),
+  metadataBase: new URL("https://www.dinnerdrop.app"),
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -66,14 +66,12 @@ export default function RootLayout({
               "name": "DinnerDrop",
               "applicationCategory": "LifestyleApplication",
               "operatingSystem": "Web",
-              "url": "https://dinnerdrop.app",
-              "description": "AI-powered weekly dinner planning for busy families. Get 5 personalized meals and a one-tap grocery list in seconds.",
-              "offers": {
-                "@type": "Offer",
-                "price": "9",
-                "priceCurrency": "USD",
-                "description": "14-day free trial, then $9/month. Cancel anytime."
-              },
+              "url": "https://www.dinnerdrop.app",
+              "description": "Weekly dinner planning for busy families. Five personalized dinners, a deduplicated grocery list, and a one-tap Instacart cart.",
+              "offers": [
+                { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD", "description": "Unlimited weekly dinner plans, grocery list, and one-tap Instacart cart. No card needed." },
+                { "@type": "Offer", "name": "Family", "price": "4.99", "priceCurrency": "USD", "description": "$4.99/month or $39/year after a 14-day free trial. Cancel anytime." }
+              ],
               "featureList": [
                 "AI meal planning personalized for your family",
                 "One-tap grocery list generation",

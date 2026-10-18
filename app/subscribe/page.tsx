@@ -4,29 +4,32 @@ import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { openExternal } from '@/lib/native'
-import { ArrowLeft, Check, Clock, ShoppingCart, Sparkles, TrendingDown } from 'lucide-react'
+import { ArrowLeft, Check, MessageSquareText, ShoppingCart, Users, CalendarClock } from 'lucide-react'
+
+type Interval = 'monthly' | 'yearly'
 
 function SubscribeContent() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [couponCode, setCouponCode] = useState('')
+  const [interval, setInterval] = useState<Interval>('monthly')
   const searchParams = useSearchParams()
 
   const autoCheckout = searchParams.get('auto') === '1'
 
   useEffect(() => {
     const coupon = searchParams.get('coupon')
-    // The founding (BETA100) offer is fulfilled as of 2026-10-16. Any legacy
-    // /subscribe?coupon=BETA100 bookmark now lands on the standard trial.
+    // The founding offer (BETA100) closed on 2026-10-16. Legacy bookmarks land on /start.
     if (coupon === 'BETA100') {
       window.location.replace('/start')
       return
     }
     if (coupon) setCouponCode(coupon)
+    if (searchParams.get('plan') === 'yearly') setInterval('yearly')
   }, [searchParams])
 
-  // /start → /signup → /subscribe?auto=1: the user already clicked "Start my
-  // 14-day free trial", so go straight to Stripe Checkout instead of asking twice.
+  // /start → /signup → /subscribe?auto=1: the user already chose "Try Family free",
+  // so go straight to Stripe Checkout instead of asking twice.
   useEffect(() => {
     if (autoCheckout) handleCheckout()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,11 +42,10 @@ function SubscribeContent() {
       const res = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ couponCode: couponCode || undefined }),
+        body: JSON.stringify({ couponCode: couponCode || undefined, interval }),
       })
       if (res.status === 401) {
-        // Not logged in — redirect to signup, then back here (auto-checkout on return)
-        const dest = '/subscribe?auto=1' + (couponCode ? '&coupon=' + couponCode : '')
+        const dest = '/subscribe?auto=1' + (interval === 'yearly' ? '&plan=yearly' : '') + (couponCode ? '&coupon=' + couponCode : '')
         window.location.href = '/signup?redirect=' + encodeURIComponent(dest)
         return
       }
@@ -60,6 +62,8 @@ function SubscribeContent() {
     }
   }
 
+  const firstCharge = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-white">
@@ -69,11 +73,11 @@ function SubscribeContent() {
             <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
           </div>
           <Link
-            href="/"
+            href="/dashboard"
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Maybe later
+            Keep using Free
           </Link>
         </div>
       </header>
@@ -84,108 +88,101 @@ function SubscribeContent() {
           {/* Left: value prop */}
           <div>
             <p className="text-xs font-bold text-primary uppercase tracking-widest mb-4">
-              DinnerDrop Basic
+              DinnerDrop Family
             </p>
             <h1 className="text-5xl font-heading font-bold text-foreground leading-tight mb-6">
-              Dinner, handled.<br />Every week.
+              Get the whole<br />household in on it.
             </h1>
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-              Stop staring at the fridge at 5pm. DinnerDrop plans your week, builds your grocery list, and drops it into your Instacart cart in one tap. Try it free for 14 days.
+              Planning and your Instacart cart stay free. Family adds everything that makes dinner a shared job instead of yours alone. Try it free for 14 days.
             </p>
 
             <div className="space-y-5">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground text-sm">AI meal plans that learn your taste</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">5 dinners every week, personalized to your family size, budget, and preferences.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
                   <ShoppingCart className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">One tap to your Instacart cart</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">Your full grocery list, deduplicated and organized, pre-loaded in Instacart — or pushed to your Kroger cart.</p>
+                  <p className="font-semibold text-foreground text-sm">Push straight to your Kroger cart</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">Connect Kroger once; every list lands in your cart with quantities set.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
-                  <TrendingDown className="w-5 h-5 text-primary" />
+                  <MessageSquareText className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">Stay under budget, every week</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">Meals planned around your grocery budget with overlapping ingredients to cut waste.</p>
+                  <p className="font-semibold text-foreground text-sm">Priority support from the founder</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">Email goes straight to Sarah, answered first.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-5 h-5 text-primary" />
+                  <Users className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">30 minutes or less, every night</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">Every meal is designed for a tired parent on a weeknight. No complicated recipes.</p>
+                  <p className="font-semibold text-foreground text-sm">New family features, first</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">The week&apos;s dinners texted to everyone to vote on, a shared list anyone can text foods to, and per-person preferences ship to Family members first.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
+                  <CalendarClock className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground text-sm">Cancel in one tap</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">From your Account page. No calls, no hoops. We email you three days before any charge.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right: social proof + pricing card */}
+          {/* Right: pricing card */}
           <div className="lg:sticky lg:top-8">
-            {/* Social proof */}
-            <div className="space-y-3 mb-6">
-              {[
-                { quote: "45 minutes deciding what to cook every night — now zero.", name: "James L.", location: "Family of 2" },
-                { quote: "It respects our dietary preferences, which makes weekly planning so much easier.", name: "Priya K.", location: "Family of 3" },
-                { quote: "The grocery list dropping straight into my Instacart cart is the feature I didn't know I needed.", name: "Amanda R.", location: "Colorado" },
-              ].map((t) => (
-                <div key={t.name} className="rounded-xl border border-border bg-secondary/40 px-4 py-3">
-                  <p className="text-sm text-foreground leading-snug">&ldquo;{t.quote}&rdquo;</p>
-                  <p className="text-xs text-muted-foreground mt-1.5 font-medium">{t.name} &middot; {t.location}</p>
-                </div>
-              ))}
-            </div>
             <div className="rounded-2xl border-2 border-primary bg-white p-8 shadow-sm">
-              {couponCode === 'BETA100' && (
-                <div className="mb-6 -mt-2 -mx-2 px-4 py-3 rounded-xl text-sm font-semibold text-center" style={{backgroundColor:'#dcfce7',color:'#166534',border:'1px solid #bbf7d0'}}>
-                  🎉 Founding offer applied — 6 months completely free
-                </div>
-              )}
+              {/* Interval toggle */}
+              <div className="flex rounded-xl bg-secondary p-1 mb-6 text-sm font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setInterval('monthly')}
+                  className={`flex-1 py-2 rounded-lg transition-colors ${interval === 'monthly' ? 'bg-white text-primary shadow-sm' : 'text-muted-foreground'}`}
+                >
+                  Monthly
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setInterval('yearly')}
+                  className={`flex-1 py-2 rounded-lg transition-colors ${interval === 'yearly' ? 'bg-white text-primary shadow-sm' : 'text-muted-foreground'}`}
+                >
+                  Yearly <span className="text-xs font-bold text-accent-foreground bg-accent px-1.5 py-0.5 rounded ml-1">save 35%</span>
+                </button>
+              </div>
+
               <div className="mb-6">
                 <div className="flex items-baseline gap-1 mb-1">
-                  {couponCode === 'BETA100' ? (
+                  {interval === 'monthly' ? (
                     <>
-                      <span className="text-3xl font-heading font-bold text-muted-foreground line-through">$9</span>
-                      <span className="text-5xl font-heading font-bold ml-2" style={{color:'#166534'}}>$0</span>
-                      <span className="text-muted-foreground text-lg">/mo for 6 months</span>
+                      <span className="text-5xl font-heading font-bold text-foreground">$4.99</span>
+                      <span className="text-muted-foreground text-lg">/month</span>
                     </>
                   ) : (
                     <>
-                      <span className="text-5xl font-heading font-bold text-foreground">$9</span>
-                      <span className="text-muted-foreground text-lg">/month</span>
+                      <span className="text-5xl font-heading font-bold text-foreground">$39</span>
+                      <span className="text-muted-foreground text-lg">/year</span>
                     </>
                   )}
                 </div>
                 <div className="inline-block bg-secondary text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 mt-2">
-                  {couponCode === 'BETA100' ? 'Founding offer: 6 months completely free' : '14-day free trial — nothing charged today'}
+                  14-day free trial &mdash; $0 today
                 </div>
               </div>
-                {couponCode === 'BETA100' && (
-                  <p className="text-xs text-muted-foreground mt-3 text-center">
-                    After 6 months, just $9/month. We&apos;ll email you 7 days before billing starts &mdash; cancel anytime.
-                  </p>
-                )}
 
               <ul className="space-y-3 mb-8">
                 {[
-                  'Unlimited weekly meal plans',
-                  'AI personalization that improves weekly',
-                  'One-tap grocery store handoff',
-                  'Pantry tracker with photo scan',
-                  'Meal swap anytime',
+                  'Everything in Free',
+                  'Kroger cart push',
+                  'Priority support',
+                  'New family features first',
                   'Cancel anytime',
                 ].map((feature) => (
                   <li key={feature} className="flex items-center gap-3">
@@ -202,21 +199,19 @@ function SubscribeContent() {
                 disabled={loading}
                 className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
               >
-                {loading ? 'Redirecting to checkout...' : couponCode === 'BETA100' ? 'Claim my 6 months free →' : 'Start my 14-day free trial →'}
+                {loading ? 'Opening secure checkout...' : 'Start my 14-day free trial →'}
               </button>
 
               {error && (
                 <p className="mt-3 text-sm text-destructive text-center">{error}</p>
               )}
 
-              <p className="text-xs text-muted-foreground text-center mt-3 font-medium">
-                {couponCode === 'BETA100'
-                  ? "You'll enter your card at Stripe checkout — no charge for 6 months. We'll email you before billing starts."
-                  : "You’ll be redirected to Stripe’s secure checkout. Add a card, pay $0 today, and your 14-day trial starts immediately. We email you 3 days before it ends."}
+              <p className="text-sm text-muted-foreground text-center mt-4 leading-snug">
+                Card required. $0 today. First charge of {interval === 'monthly' ? '$4.99' : '$39'} on {firstCharge} unless you cancel. We email you three days before.
               </p>
 
               <p className="text-xs text-muted-foreground text-center mt-4">
-                Secure payment by Stripe · Cancel anytime · No commitments
+                Payments processed by Stripe &middot; We never see your card number &middot; info@dinnerdrop.app
               </p>
             </div>
 

@@ -8,10 +8,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Terms of Service — DinnerDrop',
     description: 'DinnerDrop terms of service and user agreement.',
-    url: 'https://dinnerdrop.app/terms',
+    url: 'https://www.dinnerdrop.app/terms',
     siteName: 'DinnerDrop',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }],
   },
+  alternates: { canonical: 'https://www.dinnerdrop.app/terms' },
 }
 
 export default function TermsPage() {
@@ -37,7 +39,7 @@ export default function TermsPage() {
           Terms of Service
         </h1>
         <p className="text-sm text-muted-foreground mb-10">
-          Last updated: March 15, 2026
+          Last updated: October 18, 2026
         </p>
 
         <div className="space-y-8 text-sm text-foreground leading-relaxed">
@@ -77,22 +79,31 @@ export default function TermsPage() {
               3. Subscription and Payment Terms
             </h2>
             <p className="mb-3">
-              DinnerDrop offers a free tier and a paid subscription plan:
+              DinnerDrop offers a free plan and a paid Family plan:
             </p>
             <ul className="list-disc pl-5 space-y-1 text-muted-foreground mb-3">
               <li>
-                <span className="font-medium text-foreground">Free:</span> 1 meal plan per month,
-                5 dinners per plan, grocery list generation (no cart push)
+                <span className="font-medium text-foreground">Free:</span> Unlimited weekly meal
+                plans, grocery list generation, one-tap Instacart shopping list, meal swaps, pantry
+                scan, favorites and meal history. No payment method is required.
               </li>
               <li>
-                <span className="font-medium text-foreground">Basic ($9/month):</span> Weekly meal
-                plans, 5 dinners per plan, Instacart cart push, budget optimization
+                <span className="font-medium text-foreground">Family ($4.99/month or $39/year):</span>{' '}
+                Everything in Free, plus Kroger cart push, priority support, and early access to new
+                family features. Family starts with a 14-day free trial; a payment method is
+                required to begin the trial and nothing is charged until the trial ends.
               </li>
             </ul>
+            <p className="mb-3">
+              Family subscriptions renew automatically at the end of each billing period (monthly
+              or yearly) until canceled. We email you three days before your trial ends and before
+              each renewal. You may cancel at any time from your Account page; you keep Family
+              features through the end of the current billing period, and your account then
+              continues on the Free plan. Refunds are not provided for partial billing periods.
+            </p>
             <p>
-              Paid subscriptions are billed monthly. You may cancel your subscription at any time,
-              and you will retain access to paid features through the end of your current billing
-              period. Refunds are not provided for partial billing periods.
+              Households that joined under an earlier offer keep the free period they were
+              promised; their plan then continues at the current Family price unless canceled.
             </p>
           </section>
 
@@ -126,8 +137,8 @@ export default function TermsPage() {
                 delivery and pickup ordering
               </li>
               <li>
-                <span className="font-medium text-foreground">Kroger:</span> For grocery pricing
-                and availability
+                <span className="font-medium text-foreground">Kroger:</span> For adding your
+                grocery list to your Kroger cart (Family plan, with a connected Kroger account)
               </li>
             </ul>
             <p>
@@ -164,7 +175,8 @@ export default function TermsPage() {
               We reserve the right to suspend or terminate your account at any time if you violate
               these Terms of Service or engage in conduct that we determine, in our sole discretion,
               to be harmful to the Service, other users, or third parties. You may delete your
-              account at any time through your account settings. Upon termination, your right to
+              account at any time by emailing info@dinnerdrop.app from the address on your account
+              (see our Privacy Policy for details). Upon termination, your right to
               use the Service will immediately cease, and we may delete your data in accordance
               with our Privacy Policy.
             </p>

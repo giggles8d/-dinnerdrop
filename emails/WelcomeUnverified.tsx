@@ -17,7 +17,7 @@ interface WelcomeUnverifiedProps {
 }
 
 export default function WelcomeUnverified({
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: WelcomeUnverifiedProps) {
   return (
     <Html>

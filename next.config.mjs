@@ -17,6 +17,7 @@ const nextConfig = {
       { source: '/beta', destination: '/start', permanent: true },
       { source: '/beta-v2', destination: '/start', permanent: true },
       { source: '/waitlist', destination: '/start', permanent: true },
+      { source: '/pricing', destination: '/#pricing', permanent: true },
     ]
   },
 };

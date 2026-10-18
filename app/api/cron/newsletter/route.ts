@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
       email: p.email,
       firstName: p.full_name ? p.full_name.split(' ')[0] : undefined,
       isBetaMember: !!p.is_beta_member,
-      unsubscribeUrl: `https://dinnerdrop.app/unsubscribe?uid=${p.id}`,
+      unsubscribeUrl: `https://www.dinnerdrop.app/unsubscribe?uid=${p.id}`,
     })
   }
 
@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
     recipients.set(key, {
       email: w.email,
       isBetaMember: false,
-      unsubscribeUrl: `https://dinnerdrop.app/unsubscribe?email=${encodeURIComponent(w.email)}`,
+      unsubscribeUrl: `https://www.dinnerdrop.app/unsubscribe?email=${encodeURIComponent(w.email)}`,
     })
   }
 
@@ -134,7 +134,7 @@ export async function GET(request: NextRequest) {
         email: PREVIEW_RECIPIENT,
         firstName: 'Sarah',
         isBetaMember: true,
-        unsubscribeUrl: 'https://dinnerdrop.app/unsubscribe',
+        unsubscribeUrl: 'https://www.dinnerdrop.app/unsubscribe',
       }]
     : Array.from(recipients.values())
 

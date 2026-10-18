@@ -15,7 +15,7 @@ interface WinBackProps {
 // magic link.
 export default function WinBack({
   firstName = 'there',
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
   amazonPickUrl = 'https://www.amazon.com/s?k=nonstick+sheet+pan+set&tag=dinnerdrop-20',
 }: WinBackProps) {
   return (
@@ -42,7 +42,7 @@ export default function WinBack({
               About 30 seconds, start to finish.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/login">
+              <Button style={button} href="https://www.dinnerdrop.app/login">
                 See my week of dinners →
               </Button>
             </Section>
@@ -51,9 +51,9 @@ export default function WinBack({
               sign-in link.
             </Text>
             <Text style={paragraph}>
-              And you&apos;re one of our founding families, so everything is still{' '}
-              <strong>completely free for 6 months</strong>. No card, no catch — you were
-              here first, and that promise stands.
+              Everything you had is still there, and planning plus the one-tap Instacart cart
+              are <strong>free</strong> — no card, no catch. Whatever you were promised when you
+              joined still stands.
             </Text>
             <Hr style={hr} />
             <Text style={heading}>One thing worth owning this week 🍳</Text>

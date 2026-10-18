@@ -109,7 +109,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
       "servings": ${profile.familySize},
       "estimatedCost": 18.50,
       "ingredients": [
-        { "name": "string", "quantity": "1.5", "unit": "lbs", "category": "Meat & Seafood", "searchTerm": "chicken breast" }
+        { "name": "string", "quantity": "1 1/2", "unit": "lb", "category": "Meat & Seafood", "searchTerm": "chicken breast" }
       ],
       "steps": ["Step 1", "Step 2", "Step 3"]
     }

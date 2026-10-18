@@ -25,19 +25,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://dinnerdrop.app/blog/${post.slug}`,
+      url: `https://www.dinnerdrop.app/blog/${post.slug}`,
       siteName: 'DinnerDrop',
       type: 'article',
       publishedTime: post.publishDate,
-      images: [{ url: 'https://dinnerdrop.app/og-image.png', width: 1200, height: 630 }],
+      modifiedTime: post.publishDate < '2026-10-18' ? '2026-10-18' : post.publishDate,
+      images: [{ url: 'https://www.dinnerdrop.app/og-image.png', width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: ['https://dinnerdrop.app/og-image.png'],
+      images: ['https://www.dinnerdrop.app/og-image.png'],
     },
-    alternates: { canonical: `https://dinnerdrop.app/blog/${post.slug}` },
+    alternates: { canonical: `https://www.dinnerdrop.app/blog/${post.slug}` },
   }
 }
 
@@ -170,21 +171,27 @@ export default function BlogPostPage({ params }: Props) {
   // Internal links to other posts — improves SEO crawl/link equity and dwell time.
   const related = getPublishedPosts().filter((p) => p.slug !== post!.slug).slice(0, 3)
 
+  // Every published post was reviewed and updated on 2026-10-18 (offer, pricing,
+  // store copy). Posts published after that date carry their own publish date.
+  const SITE_REVIEW_DATE = '2026-10-18'
+  const updatedOn = post!.publishDate < SITE_REVIEW_DATE ? SITE_REVIEW_DATE : post!.publishDate
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post!.title,
     description: post!.description,
     datePublished: post!.publishDate,
+    dateModified: updatedOn,
     author: { '@type': 'Organization', name: 'DinnerDrop' },
     publisher: {
       '@type': 'Organization',
       name: 'DinnerDrop',
-      logo: { '@type': 'ImageObject', url: 'https://dinnerdrop.app/og-image.png' },
+      logo: { '@type': 'ImageObject', url: 'https://www.dinnerdrop.app/og-image.png' },
     },
-    image: 'https://dinnerdrop.app/og-image.png',
-    url: `https://dinnerdrop.app/blog/${post!.slug}`,
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://dinnerdrop.app/blog/${post!.slug}` },
+    image: 'https://www.dinnerdrop.app/og-image.png',
+    url: `https://www.dinnerdrop.app/blog/${post!.slug}`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.dinnerdrop.app/blog/${post!.slug}` },
   }
 
   return (
@@ -206,7 +213,10 @@ export default function BlogPostPage({ params }: Props) {
           <p className="text-gray-300 mt-3 text-sm">
             {new Date(post!.publishDate).toLocaleDateString('en-US', {
               month: 'long', day: 'numeric', year: 'numeric',
-            })}{' '}
+            })}
+            {updatedOn !== post!.publishDate && (
+              <> &middot; Updated {new Date(updatedOn).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</>
+            )}{' '}
             &middot; {post!.readingTimeMinutes} min read
           </p>
         </div>

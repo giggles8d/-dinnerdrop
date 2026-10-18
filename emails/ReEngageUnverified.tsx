@@ -21,7 +21,7 @@ interface ReEngageProps {
 export default function ReEngageUnverified({
   firstName = 'there',
   betaSpotsRemaining = 99,
-  unsubscribeUrl = 'https://dinnerdrop.app/unsubscribe',
+  unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: ReEngageProps) {
   return (
     <Html>
@@ -65,7 +65,7 @@ export default function ReEngageUnverified({
             </Text>
 
             <Section style={ctaSection}>
-              <Button style={button} href="https://dinnerdrop.app/signup?beta=1&utm_source=resend&utm_campaign=re_engage_v1">
+              <Button style={button} href="https://www.dinnerdrop.app/signup?beta=1&utm_source=resend&utm_campaign=re_engage_v1">
                 Finish my signup →
               </Button>
               <Text style={ctaSubtext}>No credit card · 6 months free · Cancel anytime</Text>
