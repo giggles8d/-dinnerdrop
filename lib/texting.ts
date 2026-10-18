@@ -190,9 +190,25 @@ export async function cleanItems(raw: string[]): Promise<string[]> {
       300,
     )
     const out = parseClaudeJSON<string[]>(text)
-    if (Array.isArray(out) && out.length === items.length) return out.map((x, i) => (typeof x === 'string' && x.trim() ? x.trim() : items[i]))
+    if (Array.isArray(out) && out.length === items.length) return out.map((x) => (typeof x === 'string' ? x.trim() : '')).filter(Boolean)
   } catch { /* fall through */ }
   return items
+}
+
+
+interface Understood { wants: number[]; dislikes: number[]; add: string[]; allGood: boolean; none: boolean; question: boolean }
+
+/** Free-text reply → structured intent, judged against the numbered ideas. */
+async function understandReply(body: string, candidates: Meal[]): Promise<Understood | null> {
+  try {
+    const text = await generateWithClaude(
+      `A family member replied to this text about next week's dinners. The numbered ideas were:\n${candidates.map((c, i) => `${i + 1}. ${c.name}`).join('\n')}\n\nTheir reply: """${body.trim()}"""\n\nInterpret it. "wants" = idea numbers they want/like/pick. "dislikes" = numbers they don't want, don't like, want changed/swapped, or dishes they named negatively (match to a number). "add" = grocery items they want added (clean product names). allGood = they're fine with everything. none = they don't want any / have no picks. question = they asked something or it's unrelated chatter.\nReturn ONLY JSON: {"wants":[],"dislikes":[],"add":[],"allGood":false,"none":false,"question":false}`,
+      200,
+    )
+    const u = parseClaudeJSON<Understood>(text)
+    const nums = (a: unknown) => (Array.isArray(a) ? a.map(Number).filter((n) => n >= 1 && n <= candidates.length) : [])
+    return { wants: nums(u.wants), dislikes: nums(u.dislikes), add: Array.isArray(u.add) ? u.add.filter((x) => typeof x === 'string' && x.trim()).map((x) => x.trim()) : [], allGood: !!u.allGood, none: !!u.none, question: !!u.question }
+  } catch { return null }
 }
 
 export interface InboundResult { reply: string; handled: boolean; member?: MemberRow }
@@ -303,6 +319,39 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     default:
       break
   }
+  // Open vote + free text ("i don't like 7", "change 4", "1 2 and the tacos"): let Claude read it.
+  if (round && m.can_vote) {
+    const u = await understandReply(body, round.candidates)
+    if (u && (u.wants.length || u.dislikes.length || u.allGood || u.none || u.add.length)) {
+      const cands = round.candidates
+      const rows: Array<{ household_id: string; member_id: string; week_start: string; meal_name: string; vote: string }> = []
+      const wantNames = (u.allGood ? cands.map((_, i) => i + 1) : u.wants).map((n) => cands[n - 1]?.name).filter((x): x is string => !!x)
+      const dislikeNames = u.dislikes.map((n) => cands[n - 1]?.name).filter((x): x is string => !!x)
+      wantNames.forEach((name) => rows.push({ household_id: m.household_id, member_id: m.id, week_start: round.week_start, meal_name: name, vote: 'keep' }))
+      dislikeNames.forEach((name) => rows.push({ household_id: m.household_id, member_id: m.id, week_start: round.week_start, meal_name: name, vote: 'skip' }))
+      if (wantNames.length || u.allGood || u.none) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', round.week_start).eq('vote', 'keep')
+      if (dislikeNames.length) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', round.week_start).eq('vote', 'skip').in('meal_name', dislikeNames)
+      if (rows.length) await admin.from('meal_votes').insert(rows)
+      await admin.from('sms_messages').update({ intent: u.dislikes.length && !u.wants.length && !u.allGood ? 'dislike' : 'pick' }).eq('twilio_sid', sid ?? '')
+      let addedNote = ''
+      if (u.add.length && m.can_add && owner) {
+        const weekStart = plan?.week_start ?? mondayOf(new Date())
+        for (const item of await cleanItems(u.add)) {
+          await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: item, category: guessCategory(item), search_term: item, source: 'sms', added_by: m.name })
+        }
+        addedNote = ` Added to the list: ${u.add.join(', ')}.`
+      }
+      const parts: string[] = []
+      if (u.allGood) parts.push("they all work for you")
+      else if (wantNames.length) parts.push(`your picks: ${wantNames.join(', ')}`)
+      if (dislikeNames.length) parts.push(`not ${dislikeNames.map((n) => `#${cands.findIndex((c) => c.name === n) + 1} ${n}`).join(' or ')}`)
+      if (u.none && !wantNames.length) parts.push('no picks from you this week')
+      const ask = !wantNames.length && !u.allGood && !u.none ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
+      return { reply: `Got it, ${m.name} — ${parts.join('; ')}.${addedNote}${ask}`, handled: true, member: m }
+    }
+    if (u?.question) return { reply: `I'm just the dinner bot 🙂 Reply numbers for the dinners you want (e.g. "1 3 5"), or text ${family} directly.`, handled: true, member: m }
+  }
+
   // Unknown but short and food-ish? Treat as add when the member can add and said something list-like.
   if (m.can_add && body.trim().length <= 40 && !/\d/.test(body) && settings.texting.enabled) {
     const [item] = await cleanItems([body.trim()])
@@ -500,7 +549,7 @@ export async function checkVoteCompletion(admin: SupabaseClient, opts: { maxAgeH
     const askedIds = Array.from(new Set((asked ?? []).map((a) => a.member_id).filter(Boolean))) as string[]
     const expired = Date.now() - new Date(round.created_at).getTime() > maxAge
     if (!askedIds.length && !expired) continue
-    const { data: answered } = await admin.from('sms_messages').select('member_id').eq('household_id', round.household_id).eq('direction', 'in').gte('created_at', round.created_at).in('intent', ['allgood', 'skip', 'none', 'pick'])
+    const { data: answered } = await admin.from('sms_messages').select('member_id').eq('household_id', round.household_id).eq('direction', 'in').gte('created_at', round.created_at).in('intent', ['allgood', 'skip', 'none', 'pick', 'dislike'])
     const answeredIds = new Set((answered ?? []).map((a) => a.member_id))
     const everyone = askedIds.length > 0 && askedIds.every((id) => answeredIds.has(id))
     if (!everyone && !expired) continue
@@ -514,15 +563,17 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const owner = await ownerForHousehold(admin, round.household_id)
   if (!owner) return
   const settings = mergeSettings(owner.settings)
-  const { data: votes } = await admin.from('meal_votes').select('meal_name, vote, member_id, household_members(name)').eq('household_id', round.household_id).eq('week_start', round.week_start).eq('vote', 'keep').gte('created_at', round.created_at)
+  const { data: votes } = await admin.from('meal_votes').select('meal_name, vote, member_id, household_members(name)').eq('household_id', round.household_id).eq('week_start', round.week_start).in('vote', ['keep', 'skip']).gte('created_at', round.created_at)
   const tally: Record<string, number> = {}
   const voters: Record<string, string[]> = {}
   for (const c of round.candidates) tally[c.name] = 0
-  for (const v of (votes ?? []) as Array<{ meal_name: string; household_members: { name: string } | { name: string }[] | null }>) {
+  for (const v of (votes ?? []) as Array<{ meal_name: string; vote: string; household_members: { name: string } | { name: string }[] | null }>) {
     if (!(v.meal_name in tally)) continue
-    tally[v.meal_name]++
-    const hm = Array.isArray(v.household_members) ? v.household_members[0] : v.household_members
-    ;(voters[v.meal_name] ??= []).push(hm?.name ?? 'someone')
+    tally[v.meal_name] += v.vote === 'skip' ? -1 : 1
+    if (v.vote === 'keep') {
+      const hm = Array.isArray(v.household_members) ? v.household_members[0] : v.household_members
+      ;(voters[v.meal_name] ??= []).push(hm?.name ?? 'someone')
+    }
   }
   // top N by votes; ties keep the planner's order (candidate index)
   const ranked = round.candidates.map((c, i) => ({ c, i, votes: tally[c.name] ?? 0 })).sort((a, b) => b.votes - a.votes || a.i - b.i)

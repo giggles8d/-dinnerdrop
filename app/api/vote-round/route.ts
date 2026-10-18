@@ -23,8 +23,8 @@ export async function GET() {
   if (!round) return NextResponse.json({ round: null })
   const [{ data: asked }, { data: answered }, { data: votes }, { data: members }] = await Promise.all([
     c.admin.from('sms_messages').select('member_id').eq('intent', `vote_request:${round.id}`),
-    c.admin.from('sms_messages').select('member_id').eq('household_id', round.household_id).eq('direction', 'in').gte('created_at', round.created_at).in('intent', ['allgood', 'skip', 'none', 'pick']),
-    c.admin.from('meal_votes').select('meal_name, member_id').eq('household_id', round.household_id).eq('week_start', round.week_start).eq('vote', 'keep').gte('created_at', round.created_at),
+    c.admin.from('sms_messages').select('member_id').eq('household_id', round.household_id).eq('direction', 'in').gte('created_at', round.created_at).in('intent', ['allgood', 'skip', 'none', 'pick', 'dislike']),
+    c.admin.from('meal_votes').select('meal_name, member_id, vote').eq('household_id', round.household_id).eq('week_start', round.week_start).in('vote', ['keep', 'skip']).gte('created_at', round.created_at),
     c.admin.from('household_members').select('id, name, phone, phone_opt_in_at, phone_opted_out, can_vote').eq('household_id', round.household_id),
   ])
   const askedIds = new Set((asked ?? []).map((a) => a.member_id))
@@ -34,6 +34,7 @@ export async function GET() {
   for (const cnd of round.candidates) tally[cnd.name] = { votes: 0, by: [] }
   for (const v of votes ?? []) {
     const t = tally[v.meal_name]; if (!t) continue
+    if (v.vote === 'skip') { t.votes--; continue }
     t.votes++; const nm = byId.get(v.member_id)?.name; if (nm && !t.by.includes(nm)) t.by.push(nm)
   }
   const people = (members ?? []).filter((m) => m.phone).map((m) => ({

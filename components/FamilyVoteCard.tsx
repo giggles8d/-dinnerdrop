@@ -27,7 +27,7 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
   if (!loaded || !round) return null
   const answered = people.filter((p) => p.status === 'answered').length
   const waiting = people.filter((p) => p.status === 'sent, waiting' || p.status === 'waiting for YES')
-  const max = Math.max(1, ...round.candidates.map((c) => c.votes))
+  const max = Math.max(1, ...round.candidates.map((c) => Math.max(0, c.votes)))
   const ranked = [...round.candidates].map((c, i) => ({ ...c, i })).sort((a, b) => b.votes - a.votes || a.i - b.i)
   const cutoff = ranked[round.picks_needed - 1]?.votes ?? 0
 
@@ -62,7 +62,7 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
               <span className="text-muted-foreground">{i + 1}.</span>
               <div className="min-w-0">
                 <div className={`truncate ${inTop ? 'font-semibold text-foreground' : 'text-foreground'}`}>{c.name}{c.cookTime ? <span className="text-xs text-muted-foreground"> · {c.cookTime} min</span> : null}</div>
-                <div className="h-1.5 rounded-full bg-muted mt-1 overflow-hidden"><div className={`h-full ${inTop ? 'bg-primary' : 'bg-muted-foreground/40'}`} style={{ width: `${(c.votes / max) * 100}%` }} /></div>
+                <div className="h-1.5 rounded-full bg-muted mt-1 overflow-hidden"><div className={`h-full ${inTop ? 'bg-primary' : 'bg-muted-foreground/40'}`} style={{ width: `${(Math.max(0, c.votes) / max) * 100}%` }} /></div>
               </div>
               <span className="text-xs text-muted-foreground whitespace-nowrap" title={c.by.join(', ')}>{c.votes} {c.votes === 1 ? 'vote' : 'votes'}{c.by.length ? ` · ${c.by.join(', ')}` : ''}</span>
             </li>
