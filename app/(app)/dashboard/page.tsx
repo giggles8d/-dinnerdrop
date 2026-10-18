@@ -8,6 +8,7 @@ import { recordMealSignal } from '@/lib/taste-profile'
 import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
+import FamilyVoteCard from '@/components/FamilyVoteCard'
 import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 import { resolvePlanOwner } from '@/lib/household'
@@ -554,6 +555,8 @@ function DashboardContent() {
             </div>
           )}
         </div>
+
+        {!isPickingMeals && <FamilyVoteCard onClosed={() => loadExistingPlan()} />}
 
         {/* First-plan auto-generation in progress */}
         {loading && !hasGenerated && !isPickingMeals && (
