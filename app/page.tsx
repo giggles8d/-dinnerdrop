@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import SampleWeek from '@/components/SampleWeek'
 import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, Clock3 } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -46,8 +47,8 @@ export default async function LandingPage() {
                 <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
                   Start free &mdash; no card needed &rarr;
                 </Link>
-                <a href="#how-it-works" className="px-8 py-4 rounded-xl border-2 border-primary/15 bg-white text-foreground font-semibold text-base hover:border-primary/40 transition-colors">
-                  See how it works
+                <a href="#sample-week" className="px-8 py-4 rounded-xl border-2 border-primary/15 bg-white text-foreground font-semibold text-base hover:border-primary/40 transition-colors">
+                  See a sample week
                 </a>
               </div>
               <p className="text-sm text-muted-foreground mt-4">Free forever for planning and your Instacart cart &middot; Family plan $4.99/month, 14 days free</p>
@@ -87,6 +88,18 @@ export default async function LandingPage() {
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
         <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart or Kroger account. You review every item and check out there at the store&apos;s normal prices. We never charge your grocery account and never mark anything up. Over 200 families plan dinner with DinnerDrop.
       </p>
+
+      {/* Sample week — the product, before any signup */}
+      <section id="sample-week" className="container mx-auto px-4 py-20 max-w-6xl">
+        <p className="text-xs font-bold text-primary uppercase tracking-widest mb-4">See a week</p>
+        <h2 className="text-3xl font-heading font-bold text-foreground mb-3 max-w-2xl leading-tight">
+          What a week looks like before you ever sign up
+        </h2>
+        <p className="text-muted-foreground mb-8 max-w-2xl">
+          Example weeks for a family of four, in the same format the planner gives you: five dinners, honest total times, and one combined grocery list ready for your cart. Your own week is built around your family, budget, and schedule.
+        </p>
+        <SampleWeek initial="kid" />
+      </section>
 
       {/* How it works — photo + steps */}
       <section id="how-it-works" className="border-y border-border" style={{backgroundColor:'#FBF8F1'}}>
@@ -133,9 +146,12 @@ export default async function LandingPage() {
       {/* Features */}
       <section className="container mx-auto px-4 py-20 max-w-6xl">
         <p className="text-xs font-bold text-primary uppercase tracking-widest mb-4">What you get</p>
-        <h2 className="text-3xl font-heading font-bold text-foreground mb-12 max-w-lg leading-tight">
+        <h2 className="text-3xl font-heading font-bold text-foreground mb-4 max-w-lg leading-tight">
           Everything a busy family needs. Nothing you don&apos;t.
         </h2>
+        <p className="text-muted-foreground mb-12 max-w-2xl">
+          Works at any store, not just one chain. Learns what your family keeps and what it skips. Keeps the dinners you come back to in the rotation instead of starting from scratch every week.
+        </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { Icon: Sparkles, title: 'AI meal planning', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },

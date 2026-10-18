@@ -28,6 +28,7 @@ export interface Ingredient {
   quantity: string
   unit: string
   category: GroceryCategory
+  searchTerm?: string   // normalized term for store lookup (the planner fills this in)
 }
 
 export type GroceryCategory =

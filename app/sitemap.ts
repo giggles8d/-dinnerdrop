@@ -33,6 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    ...['gluten-free-family-dinners', 'picky-eater-dinners', 'dinners-under-30-minutes', 'family-dinners-under-100'].map((slug) => ({
+      url: `${BASE}/dinners/${slug}`,
+      lastModified: new Date('2026-10-18'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
     {
       url: `${BASE}/blog`,
       lastModified: new Date(),
