@@ -6,11 +6,12 @@
  * more than once a day.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { mergeSettings, WEEKDAY_LABEL, type Settings, type Channel } from '@/lib/settings'
+import { mergeSettings, WEEKDAY_LABEL, WEEKDAYS, type Settings, type Channel } from '@/lib/settings'
 import { localNow, mondayOf, timeLabel } from '@/lib/plan'
 import { autoPlan } from '@/lib/autoplan'
 import { sendEmail, sendSms, emailShell, smsConfigured } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
+import { textMember, type MemberRow } from '@/lib/texting'
 import type { Meal } from '@/types'
 
 const APP = 'https://www.dinnerdrop.app'
@@ -112,8 +113,24 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
         }
       }
 
-      // ---- time to shop ----
+      // ---- "anything else?" — the day before shopping day, ask the whole household (not just adults) ----
       const shop = settings.schedule.reminders.shopBy
+      if (shop.channel !== 'off' && settings.texting.enabled && family && smsConfigured() && p.household_id) {
+        const dayBefore = WEEKDAYS[(WEEKDAYS.indexOf(shop.day) + 6) % 7]
+        if (dayBefore === weekday) {
+          const { data: mem } = await admin.from('household_members').select('*').eq('household_id', p.household_id).not('phone', 'is', null)
+          const since = new Date(now.getTime() - 6 * 86400000).toISOString()
+          const { count: asked } = await admin.from('sms_messages').select('id', { count: 'exact', head: true }).eq('household_id', p.household_id).eq('intent', 'anything_else').gte('created_at', since)
+          if (!asked) {
+            for (const m of (mem ?? []) as MemberRow[]) {
+              if (!m.can_add) continue
+              await textMember(admin, m, `DinnerDrop: ${firstName(p)} sends the grocery order tomorrow. Anything you want this week? Reply ADD + items (or send a photo of it).`, 'anything_else', settings.texting.weeklyCap)
+            }
+          }
+        }
+      }
+
+      // ---- time to shop ----
       if (shop.channel !== 'off' && shop.day === weekday) {
         const { data: plan } = await admin.from('meal_plans').select('id, meals, created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1).single()
         if (plan) {

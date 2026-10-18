@@ -6,11 +6,13 @@ import { Copy, Printer, Share2, Check } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import { matchSale, type WeeklySales } from '@/lib/sales-shared'
+import RestOfShop from '@/components/RestOfShop'
+import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
 import { mergeSettings } from '@/lib/settings'
 import { resolvePlanOwner } from '@/lib/household'
 import {
-  type ListItem, type Staple, rowsFromPlanList, dueStaples, basicsFor, REST_OF_WEEK, shoppableItems,
+  type ListItem, type Staple, rowsFromPlanList, dueStaples, basicsFor, shoppableItems,
   listToText, guessCategory, normalizeItemName, parseTypedItem,
 } from '@/lib/list'
 import type { GroceryCategory, GroceryItem, Meal } from '@/types'
@@ -26,6 +28,8 @@ export default function GroceryListPage() {
   const [items, setItems] = useState<ListItem[]>([])
   const [sales, setSales] = useState<WeeklySales[]>([])
   const [priceFactor, setPriceFactor] = useState(1)
+  const [usuals, setUsuals] = useState<UsualItem[]>([])
+  const [lastWeekExtras, setLastWeekExtras] = useState<UsualItem[]>([])
   const [askActual, setAskActual] = useState<{ id: string; est: number | null } | null>(null)
   const [actualDraft, setActualDraft] = useState('')
   const [actualSaved, setActualSaved] = useState<string | null>(null)
@@ -164,6 +168,16 @@ export default function GroceryListPage() {
 
     await loadItems(uid, ws)
     setLoading(false)
+    // The family's usuals: non-dinner lines from earlier weeks.
+    supabase.from('list_items').select('name, category, search_term, quantity, unit, week_start, source')
+      .eq('user_id', uid).neq('week_start', ws).in('source', ['manual', 'sms', 'extra', 'staples']).order('created_at', { ascending: false }).limit(400)
+      .then(({ data: hist }) => {
+        const rows = (hist ?? []) as Parameters<typeof familyUsuals>[0]
+        setUsuals(familyUsuals(rows))
+        const weeks = rows.map((r) => r.week_start ?? '').filter(Boolean).sort().reverse()
+        const prev = weeks[0]
+        setLastWeekExtras(prev ? familyUsuals(rows.filter((r) => r.week_start === prev)) : [])
+      })
   }, [supabase, loadItems])
 
   useEffect(() => { load() }, [load])
@@ -181,9 +195,9 @@ export default function GroceryListPage() {
     setItems((xs) => xs.filter((x) => x.id !== item.id))
     await supabase.from('list_items').delete().eq('id', item.id)
   }
-  async function addItem(raw: string, category?: GroceryCategory, searchTerm?: string, source: ListItem['source'] = 'manual') {
+  async function addItem(raw: string, category?: GroceryCategory, searchTerm?: string, source: ListItem['source'] = 'manual', qty?: { quantity?: string; unit?: string }) {
     if (!userId || !weekStart) return
-    const { name, quantity, unit } = source === 'manual' ? parseTypedItem(raw) : { name: raw, quantity: '1', unit: '' }
+    const { name, quantity, unit } = source === 'manual' ? parseTypedItem(raw) : { name: raw, quantity: qty?.quantity ?? '1', unit: qty?.unit ?? '' }
     const exists = items.find((i) => normalizeItemName(i.name) === normalizeItemName(name))
     if (exists) {
       if (exists.have) await toggleHave(exists)
@@ -299,7 +313,6 @@ export default function GroceryListPage() {
   const listEst = totalCost + extrasEst
   const storeEst = listEst * (priceFactor || 1)
   const over = budget > 0 && storeEst > budget
-  const restChips = REST_OF_WEEK.filter((c) => !items.some((i) => normalizeItemName(i.name) === normalizeItemName(c.name)))
 
   return (
     <div className="min-h-screen bg-background">
@@ -344,20 +357,15 @@ export default function GroceryListPage() {
           onAdd={(name, category) => addItem(name, category)}
         />
 
-        {/* Rest of your week */}
-        {restChips.length > 0 && (
-          <div className="mt-10 rounded-2xl border border-accent/30 bg-accent/5 p-5 print:hidden">
-            <h2 className="font-heading font-semibold text-foreground">Add the rest of your week</h2>
-            <p className="text-xs text-muted-foreground mt-1 mb-3">One cart, one delivery. Tap what you&apos;re running low on and it rides along with the dinner ingredients.</p>
-            <div className="flex flex-wrap gap-2">
-              {restChips.slice(0, 14).map((c) => (
-                <button key={c.name} onClick={() => addItem(c.name, c.category, c.searchTerm, 'extra')} className="px-3 py-1.5 rounded-full border border-border bg-white text-sm text-foreground hover:border-primary/50 hover:text-primary">
-                  + {c.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* The rest of the shop */}
+        <RestOfShop
+          onList={(name) => items.some((i) => normalizeItemName(i.name) === normalizeItemName(name) && !i.have)}
+          usuals={usuals}
+          lastWeekExtras={lastWeekExtras}
+          saleFor={sales.length ? (name) => matchSale(name, sales) : undefined}
+          onAdd={(p) => addItem(p.name, p.category, p.searchTerm, 'extra', { quantity: p.quantity, unit: p.unit })}
+          onAddMany={async (ps) => { for (const p of ps) await addItem(p.name, p.category, p.searchTerm, 'extra', { quantity: p.quantity, unit: p.unit }) }}
+        />
 
         {/* Staples */}
         <div className="mt-6 rounded-2xl border border-border p-5 print:hidden">
