@@ -39,10 +39,8 @@ function getInstacartBaseUrl(): string {
 
 /**
  * Instacart affiliate attribution (Impact.com, IDP affiliate program — Partner ID 7359743,
- * campaign 20313, approved 2026-10-17). Instacart appends these parameters to every
- * products_link URL it returns, so NEVER call this on an API-created link (duplicates
- * break attribution, per Instacart's docs). It is only for our own fallback links —
- * search pages and the homepage — which would otherwise carry no tracking at all.
+ * campaign 20313, approved 2026-10-17). Safe on any instacart.com link: it does nothing
+ * when the link already carries utm_* (i.e. once Instacart tags products_link URLs itself).
  */
 const AFFILIATE_PARTNER_ID = process.env.INSTACART_AFFILIATE_PARTNER_ID || '7359743' // Impact media partner (irmp)
 const AFFILIATE_CAMPAIGN_ID = process.env.INSTACART_AFFILIATE_CAMPAIGN_ID || '20313'
@@ -135,7 +133,10 @@ export async function createInstacartLink(
         fallback: true,
       }
     }
-    return { link: data.products_link_url, fallback: false }
+    // 2026-10-18: Instacart had not yet attached affiliate tracking to API links ~42h after
+    // approval, so we add Impact's universal tracking ourselves. withInstacartAffiliate() is
+    // a no-op once a link already carries utm_* params, so there is no double-tagging later.
+    return { link: withInstacartAffiliate(data.products_link_url), fallback: false }
   } catch (err) {
     console.error('Instacart API call threw:', err)
     return {
