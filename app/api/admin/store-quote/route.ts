@@ -25,7 +25,9 @@ async function authorized(request: NextRequest): Promise<boolean> {
  * the family's Instacart list page, which already reflects each store's current/sale prices).
  *
  * GET ?email=            → the family's open list (name, quantity, unit) + their stores, so the reader knows what to price
- * POST { email, weekStart, quotes: [{ store, total, itemCount, missing: [names], items: [{name, price}] }] }
+ * POST { email, weekStart, listed: [open item names at read time], quotes: [{ store, total, itemCount, missing: [names], items?: [{name, price}] }] }
+ *   `listed` is stored on every quote as its items so the list page can tell what the quote covered
+ *   (items added later are estimated on top; a list that has changed too much falls back to estimates).
  */
 export async function GET(request: NextRequest) {
   if (!(await authorized(request))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -41,14 +43,15 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   if (!(await authorized(request))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const body = await request.json().catch(() => ({})) as { email?: string; weekStart?: string; quotes?: Array<{ store: string; total: number; itemCount?: number; missing?: string[]; items?: Array<{ name: string; price: number }> }> }
+  const body = await request.json().catch(() => ({})) as { email?: string; weekStart?: string; listed?: string[]; quotes?: Array<{ store: string; total: number; itemCount?: number; missing?: string[]; items?: Array<{ name: string; price?: number }> }> }
+  const listed = Array.isArray(body.listed) ? body.listed.filter((n) => typeof n === 'string' && n.trim()).slice(0, 200).map((n) => ({ name: n.trim() })) : []
   const email = (body.email ?? ADMIN_EMAIL).toLowerCase()
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const { data: prof } = await admin.from('profiles').select('id').eq('email', email).single()
   if (!prof) return NextResponse.json({ error: 'No such user' }, { status: 404 })
   const quotes = (body.quotes ?? []).filter((q) => q.store && Number(q.total) > 0)
   if (!quotes.length) return NextResponse.json({ error: 'quotes required' }, { status: 400 })
-  const rows = quotes.map((q) => ({ user_id: prof.id, week_start: body.weekStart ?? null, store: q.store.slice(0, 40), total: Math.round(Number(q.total) * 100) / 100, item_count: q.itemCount ?? null, missing: q.missing ?? [], items: (q.items ?? []).slice(0, 200), source: 'instacart' }))
+  const rows = quotes.map((q) => ({ user_id: prof.id, week_start: body.weekStart ?? null, store: q.store.slice(0, 40), total: Math.round(Number(q.total) * 100) / 100, item_count: q.itemCount ?? null, missing: q.missing ?? [], items: (q.items?.length ? q.items : listed).slice(0, 200), source: 'instacart' }))
   const { error } = await admin.from('store_quotes').insert(rows)
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ ok: true, saved: rows.length })
