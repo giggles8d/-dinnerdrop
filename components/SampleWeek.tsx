@@ -16,6 +16,14 @@ interface Props {
   ctaHref?: string
 }
 
+/** Landing page for each sample week, so the homepage tabs lead somewhere. */
+const LANDING: Record<string, string> = {
+  kid: '/dinners/picky-eater-dinners',
+  fast: '/dinners/dinners-under-30-minutes',
+  budget: '/dinners/family-dinners-under-100',
+  glutenfree: '/dinners/gluten-free-family-dinners',
+}
+
 export default function SampleWeek({ keys, initial, hideToggle, ctaHref = '/signup' }: Props) {
   const weeks = keys ? SAMPLE_WEEKS.filter((w) => keys.includes(w.key)) : SAMPLE_WEEKS
   const [active, setActive] = useState(initial && weeks.some((w) => w.key === initial) ? initial : weeks[0].key)
@@ -48,7 +56,12 @@ export default function SampleWeek({ keys, initial, hideToggle, ctaHref = '/sign
         <span className="inline-flex items-center gap-1.5"><Clock3 className="w-4 h-4" />{week.cookTime}</span>
         <span className="inline-flex items-center gap-1.5"><ShoppingCart className="w-4 h-4" />Budget {week.budget}{week.dietary !== 'none' ? ` · ${week.dietary}` : ''}</span>
       </div>
-      <p className="text-foreground font-medium mb-5">{week.tagline}</p>
+      <p className="text-foreground font-medium mb-5">
+        {week.tagline}
+        {!hideToggle && LANDING[week.key] && (
+          <>{' '}<Link href={LANDING[week.key]} className="text-primary underline underline-offset-2 font-semibold">More {week.label.toLowerCase()} dinners &rarr;</Link></>
+        )}
+      </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
         {week.meals.map((m) => (

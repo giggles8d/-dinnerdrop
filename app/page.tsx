@@ -22,7 +22,7 @@ export default async function LandingPage() {
           <div className="flex items-center gap-3">
             <Link href="/blog" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
             <Link href="/shop" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Shop</Link>
-            <Link href="/#pricing" className="hidden md:block px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Pricing</Link>
+            <Link href="/start" className="hidden md:block px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Pricing</Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
             <Link href="/signup" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Start free</Link>
           </div>
@@ -42,7 +42,7 @@ export default async function LandingPage() {
                 Dinner,<br />handled.
               </h1>
               <p className="text-xl text-muted-foreground max-w-xl leading-relaxed mb-9">
-                Five weeknight dinners planned around your family and your budget. Tap once — your whole grocery list lands in your Instacart cart, ready to check out. Free, no card needed.
+                Five weeknight dinners planned around your family and your budget. Tap once and your whole list opens in Instacart with every item matched — pick your store, review, check out. Free, no card needed.
               </p>
               <div className="flex flex-col sm:flex-row items-start gap-3">
                 <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
@@ -80,7 +80,7 @@ export default async function LandingPage() {
       </section>
 
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
-        <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart or Kroger account. You review every item and check out there at the store&apos;s normal prices. We never charge your grocery account and never mark anything up. Over 200 families plan dinner with DinnerDrop.
+        <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop builds the list in your own Instacart or Kroger account. You review every item and check out there at Instacart&apos;s or Kroger&apos;s prices for that store. We never charge your grocery account and never add to the price. Over 200 families plan dinner with DinnerDrop.
       </p>
 
       {/* Sample week — the product, before any signup */}
@@ -113,13 +113,13 @@ export default async function LandingPage() {
             <div className="order-1 lg:order-2">
               <p className="text-xs font-bold text-primary uppercase tracking-widest mb-4">How it works</p>
               <h2 className="text-4xl font-heading font-bold text-foreground mb-10 leading-tight">
-                From nothing to groceries in 3 minutes
+                From nothing to groceries in about two minutes
               </h2>
               <div className="space-y-8">
                 {[
                   { step: '1', title: 'Tell us about your family', description: 'Budget, family size, dietary needs, how much time you have to cook. Takes 2 minutes.' },
                   { step: '2', title: 'Get 5 personalized dinners', description: 'AI builds a full week of budget-friendly meals your family will actually eat.' },
-                  { step: '3', title: 'One tap. List in your cart.', description: 'Tap Instacart and your full list auto-loads — pick a store, review, check out. Family members can push straight to a Kroger cart.' },
+                  { step: '3', title: 'One tap. List in your cart.', description: 'Tap Instacart and your full list opens with every item matched — pick a store, review, check out. Family members can push straight to a Kroger cart.' },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-5">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-primary-foreground font-heading font-bold flex items-center justify-center shadow-sm">
@@ -224,7 +224,7 @@ export default async function LandingPage() {
               </p>
             </div>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
-              {['Everything in Free', 'Push straight to your Kroger cart', 'Priority support, answered by the founder', 'New family features first: text the week to everyone, per-person preferences, shared list, busy-night planning'].map((li) => (
+              {['Everything in Free', 'Family texting: the week’s dinner ideas go to everyone by text, they reply with the numbers they want, the top picks become the week', 'A profile for each person — likes, won’t-eats, allergies, kid-safe foods', 'Anyone can text an item (or a photo of one) onto the grocery list', 'Text reminders on your cook nights', 'Push straight to your Kroger cart', 'Priority support, answered by the founder'].map((li) => (
                 <li key={li} className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />{li}
                 </li>

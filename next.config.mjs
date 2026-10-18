@@ -21,7 +21,10 @@ const nextConfig = {
       { source: '/beta', destination: '/start', permanent: true },
       { source: '/beta-v2', destination: '/start', permanent: true },
       { source: '/waitlist', destination: '/start', permanent: true },
-      { source: '/pricing', destination: '/#pricing', permanent: true },
+      { source: '/pricing', destination: '/start', permanent: true },
+      // Old label used in ads/links; the landing page is picky-eater-dinners.
+      { source: '/dinners/kid-friendly-dinners', destination: '/dinners/picky-eater-dinners', permanent: true },
+      { source: '/dinners/kid', destination: '/dinners/picky-eater-dinners', permanent: true },
     ]
   },
 };

@@ -246,7 +246,7 @@ export default function AccountPage() {
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                Kroger cart push, priority support, and every new family feature first
+                Family texting, per-person profiles, text reminders, Kroger cart push, priority support
               </div>
             </div>
           </div>
@@ -285,7 +285,7 @@ export default function AccountPage() {
                 Add the whole household with Family
               </p>
               <p className="text-xs text-muted-foreground">
-                Kroger cart push, priority support, and every new family feature first. $4.99/month or $39/year after a 14-day free trial. Nothing charged today — cancel anytime from this page.
+                Family texting, per-person profiles, text reminders, Kroger cart push, priority support. $4.99/month or $39/year after a 14-day free trial. Nothing charged today — cancel anytime from this page.
               </p>
             </div>
 

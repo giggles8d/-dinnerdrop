@@ -182,7 +182,9 @@ function SubscribeContent() {
                   'Everything in Free',
                   'Kroger cart push',
                   'Priority support',
-                  'New family features first',
+                  'Family texting: everyone votes on the week by text',
+                  'A profile for each person',
+                  'Text reminders on cook nights',
                   'Cancel anytime',
                 ].map((feature) => (
                   <li key={feature} className="flex items-center gap-3">

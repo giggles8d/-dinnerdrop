@@ -28,7 +28,7 @@ export const SAMPLE_WEEKS: SampleWeek[] = [
     tagline: 'Familiar flavors, one safe thing on every plate.',
     household: 'Family of 4',
     budget: '$100/week',
-    cookTime: '30 min or less',
+    cookTime: '35 min or less',
     dietary: 'none',
     meals: sw([
       {
@@ -217,7 +217,7 @@ export const SAMPLE_WEEKS: SampleWeek[] = [
     tagline: 'Five dinners, one list, under $75 at the register.',
     household: 'Family of 4',
     budget: '$75/week',
-    cookTime: '30 min or less',
+    cookTime: '40 min or less',
     dietary: 'none',
     meals: sw([
       {
@@ -307,7 +307,7 @@ export const SAMPLE_WEEKS: SampleWeek[] = [
     tagline: 'Naturally gluten-free dinners, no specialty aisle required.',
     household: 'Family of 4',
     budget: '$100/week',
-    cookTime: '30 min or less',
+    cookTime: '40 min or less',
     dietary: 'Gluten-free',
     meals: sw([
       {
