@@ -49,7 +49,8 @@ export default function StoreCompare({ items, baseline, stores, sets, globalFact
       }
       return { ...q, total: Math.round((Number(real.total) + addedCost) * 100) / 100, real: true, missing: real.missing ?? [], readAt: real.created_at, added }
     })
-    return merged.sort((a, b) => a.total - b.total)
+    const known = (q: { store: string; real: boolean }) => q.real || !!stores.find((s) => s.name === q.store)?.factor
+    return merged.sort((a, b) => Number(known(b)) - Number(known(a)) || a.total - b.total)
   }, [items, baseline, stores, sets, globalFactor, realQuotes])
   const anyReal = quotes.some((q) => q.real)
   const [pair, setPair] = useState<[string, string] | null>(null)
@@ -75,19 +76,24 @@ export default function StoreCompare({ items, baseline, stores, sets, globalFact
         {anyReal && <span className="text-[11px] text-primary font-medium">real prices from Instacart, sales included</span>}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        {quotes.map((q, i) => (
-          <div key={q.store} className={`rounded-xl border p-3 bg-white ${i === 0 ? 'border-primary' : 'border-border'}`}>
+        {quotes.map((q, i) => {
+          const unknown = !q.real && !(stores.find((s) => s.name === q.store)?.factor)   // never priced: no read, no learned factor
+          return (
+          <div key={q.store} className={`rounded-xl border p-3 bg-white ${i === 0 && !unknown ? 'border-primary' : 'border-border'}`}>
             <div className="flex items-baseline justify-between">
-              <span className="font-semibold text-foreground">{q.store}{i === 0 ? <span className="ml-2 text-[10px] uppercase tracking-wide text-primary font-bold">cheapest</span> : null}</span>
-              <span className="text-lg font-heading font-bold text-foreground">${q.total.toFixed(0)}</span>
+              <span className="font-semibold text-foreground">{q.store}{i === 0 && !unknown ? <span className="ml-2 text-[10px] uppercase tracking-wide text-primary font-bold">cheapest</span> : null}</span>
+              <span className="text-lg font-heading font-bold text-foreground">{unknown ? '—' : `$${q.total.toFixed(0)}`}</span>
             </div>
             <p className="text-[11px] text-muted-foreground mt-0.5">
-              {q.real
+              {unknown
+                ? 'not on Instacart — no prices yet. After you shop there, tell DinnerDrop the total and it learns.'
+                : q.real
                 ? `read from Instacart ${new Date(q.readAt).toLocaleDateString(undefined, { weekday: 'short' })}${q.added ? ` · +${q.added} added since (estimated)` : ''}${q.missing.length ? ` · doesn't carry: ${q.missing.slice(0, 3).join(', ')}${q.missing.length > 3 ? ` +${q.missing.length - 3}` : ''}` : ' · everything in stock'}`
                 : `${q.onSale > 0 ? `${q.onSale} items on sale · saves ≈ $${q.saleSavings.toFixed(0)}` : 'estimate'}${q.factor !== 1 ? ` · runs ${q.factor.toFixed(2)}× typical` : ''}`}
             </p>
           </div>
-        ))}
+          )
+        })}
       </div>
 
       {quotes.length >= 2 && !split && (
