@@ -69,7 +69,7 @@ async function fetchUnsplash(name: string): Promise<{ url: string; credit: strin
   try {
     const res = await fetch(
       `https://api.unsplash.com/search/photos?query=${encodeURIComponent(`${name} dinner food`)}&per_page=1&orientation=landscape&client_id=${key}`,
-      { cache: 'no-store' }
+      { cache: 'no-store', signal: AbortSignal.timeout(2500) }
     )
     if (!res.ok) return null
     const data = await res.json()
@@ -99,14 +99,13 @@ export async function upsertRecipes(
   const byName = new Map<string, { id: string; image_url: string | null; times_planned: number }>()
   for (const r of existing ?? []) byName.set(r.normalized_name, r)
 
-  const out: Meal[] = []
-  for (const meal of meals) {
+  // Everything in parallel: image lookups and inserts are independent per meal.
+  const out = await Promise.all(meals.map(async (meal): Promise<Meal> => {
     const norm = normalizeName(meal.name)
     const hit = byName.get(norm)
     if (hit) {
       await supabase.from('recipes').update({ times_planned: hit.times_planned + 1, updated_at: new Date().toISOString() }).eq('id', hit.id)
-      out.push({ ...meal, recipeId: hit.id, imageUrl: hit.image_url ?? meal.imageUrl })
-      continue
+      return { ...meal, recipeId: hit.id, imageUrl: hit.image_url ?? meal.imageUrl }
     }
     const img = opts.fetchImages === false ? null : await fetchUnsplash(meal.name)
     const { data: inserted } = await supabase
@@ -135,8 +134,8 @@ export async function upsertRecipes(
       })
       .select('id')
       .single()
-    out.push({ ...meal, recipeId: inserted?.id, imageUrl: img?.url ?? meal.imageUrl })
-  }
+    return { ...meal, recipeId: inserted?.id, imageUrl: img?.url ?? meal.imageUrl }
+  }))
   return out
 }
 

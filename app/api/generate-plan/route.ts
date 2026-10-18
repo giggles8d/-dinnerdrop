@@ -27,6 +27,7 @@ function list(a: string[] | null | undefined): string {
 }
 
 export async function POST(request: Request) {
+  const startedAt = Date.now()
   try {
     const body = await request.json()
 
@@ -87,13 +88,12 @@ export async function POST(request: Request) {
     const budgetNumber = Number(String(profile.weeklyBudget).replace(/[^0-9.]/g, '')) || 100
     const perMealBudget = (budgetNumber / dinnersPerWeek).toFixed(0)
 
-    // ---------- taste profile (learned) ----------
+    // ---------- taste profile (learned) + recent plans, fetched together ----------
+    const [{ data: tasteProfile }, { data: recentPlans }] = await Promise.all([
+      supabase.from('taste_profiles').select('*').eq('user_id', profile.userId).single(),
+      supabase.from('meal_plans').select('meals').eq('user_id', profile.userId).order('created_at', { ascending: false }).limit(3),
+    ])
     let tasteProfileSection = ''
-    const { data: tasteProfile } = await supabase
-      .from('taste_profiles')
-      .select('*')
-      .eq('user_id', profile.userId)
-      .single()
 
     if (tasteProfile && tasteProfile.total_signals >= 3) {
       const cuisineScores: Record<string, number> = tasteProfile.cuisine_scores ?? {}
@@ -109,12 +109,6 @@ export async function POST(request: Request) {
     }
 
     // ---------- recent plans: don't repeat ----------
-    const { data: recentPlans } = await supabase
-      .from('meal_plans')
-      .select('meals')
-      .eq('user_id', profile.userId)
-      .order('created_at', { ascending: false })
-      .limit(3)
     const recentNames = Array.from(new Set(
       (recentPlans ?? []).flatMap((p) => ((p.meals as Meal[]) ?? []).map((m) => m.name)).filter(Boolean)
     ))
@@ -188,7 +182,7 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
       ? `- Every dinner must be completable in ${slowestNight} minutes or less, prep included.`
       : `- Cook nights and the time available each night:\n${nightLines}\n- At least ${Math.max(2, Math.ceil(generateCount / 3))} options must take ${fastestNight} minutes or less (for the fastest nights). No option may exceed ${slowestNight} minutes. Set "suggestedNight" to the night each dinner fits best.`
 
-    const nutritionField = settings.food.nutritionInfo ? `,\n      "nutrition": { "calories": 520, "protein": 34 }` : ''
+    const nutritionField = settings.food.nutritionInfo
 
     const prompt = `You are the meal planner for DinnerDrop. Generate exactly ${generateCount} diverse weeknight dinner options for one family to choose ${dinnersPerWeek} from.
 
@@ -203,7 +197,7 @@ ${constraintLines.map((l) => `- ${l}`).join('\n')}
 ${timeRule}
 - Each dinner costs at most about $${perMealBudget} for ${profile.familySize} servings
 - Make the options diverse — different proteins, cuisines, and cooking styles; no two options share a main protein + style
-- Maximum 7 ingredients per dinner, maximum 5 steps, written for a tired parent
+- Maximum 6 ingredients per dinner, maximum 4 short steps (one sentence each), written for a tired parent
 - Ingredient quantities must be shoppable (what you'd buy: "1" "lb", "2" "cans", "1" "bunch"), with a "searchTerm" that matches a grocery product name
 - Give each dinner 1–3 short tags from: quick, sheet-pan, one-pot, air-fryer, slow-cooker, instant-pot, grill, kid-favorite, leftover-friendly, budget, high-protein, vegetarian, 15-min
 ${settings.food.nutritionInfo ? '- Estimate nutrition per serving (calories, grams of protein)' : ''}
@@ -222,8 +216,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
       "estimatedCost": 18.50,
       "tags": ["quick", "kid-favorite"],
       "suggestedNight": "Tuesday",
-      "leftoverFriendly": false,
-      "kidNote": "plain pasta on the side for Max"${nutritionField},
+      "leftoverFriendly": false,${kidSafeFoods.length ? '\n      "kidNote": "plain rice on the side for Max",' : ''}${nutritionField ? '\n      "nutrition": { "calories": 520, "protein": 34 },' : ''}
       "ingredients": [
         { "name": "string", "quantity": "1 1/2", "unit": "lb", "category": "Meat & Seafood", "searchTerm": "chicken breast" }
       ],
@@ -236,7 +229,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
 Categories must be one of: Produce, Meat & Seafood, Dairy & Eggs, Pantry & Dry Goods, Frozen, Bakery, Beverages.
 Use "day" values "1" through "${generateCount}" as unique identifiers.`
 
-    const text = await generateWithClaude(prompt, 9000)
+    const text = await generateWithClaude(prompt, 7000)
     let planData: GeneratePlanResponse
     try {
       planData = parseClaudeJSON<GeneratePlanResponse>(text)
@@ -255,11 +248,17 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
     const libNames = new Set(libraryMeals.map((m) => normalizeName(m.name)))
     generated = generated.filter((m) => !libNames.has(normalizeName(m.name)))
 
-    // Store generated dinners in the library (once each) and pick up stored images.
-    try {
-      generated = await upsertRecipes(supabase, generated, { userId: profile.userId, dietary: profile.dietaryNeeds })
-    } catch (e) {
-      console.error('recipe upsert failed', e)
+    // Store generated dinners in the library (once each) and pick up stored images —
+    // unless generation already used most of the 60s budget, in which case respond first.
+    const elapsed = Date.now() - startedAt
+    if (elapsed < 46000) {
+      try {
+        generated = await upsertRecipes(supabase, generated, { userId: profile.userId, dietary: profile.dietaryNeeds, fetchImages: elapsed < 40000 })
+      } catch (e) {
+        console.error('recipe upsert failed', e)
+      }
+    } else {
+      console.warn(`[generate-plan] skipped library upsert, generation took ${elapsed}ms`)
     }
 
     const meals = [...generated, ...libraryMeals]
