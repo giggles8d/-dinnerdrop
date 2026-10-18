@@ -25,7 +25,7 @@ export default function InstacartLive({
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
 }: InstacartLiveProps) {
   const preview = isFoundingMember
-    ? 'Your grocery list now lands in your Instacart cart in one tap — and your free months still stand'
+    ? 'Your grocery list now lands in your Instacart cart in one tap — and Family is free for you for a full year'
     : 'One tap, your whole grocery list in your Instacart cart. It is live.'
 
   return (
@@ -51,11 +51,13 @@ export default function InstacartLive({
 
             {isFoundingMember && (
               <>
-                <Text style={heading}>Your deal has not changed</Text>
+                <Text style={heading}>Family is yours, free, for a full year</Text>
                 <Text style={paragraph}>
-                  You were one of the first families in, and your <strong>free months still stand</strong> —
-                  nothing to do, nothing to add. The only thing that changed is that the part we promised
-                  you at the start finally works the way it should. Sign in and try it this week.
+                  You were one of the first families in. As a thank-you, the <strong>Family plan is free for
+                  you through October 18, 2027</strong> — nothing to do, nothing to add, no card needed. That
+                  includes the Kroger cart push and every new family feature as it ships: the week&apos;s
+                  dinners texted to everyone to vote on, a shared list anyone can text foods to, and
+                  per-person preferences. Sign in and plan this week.
                 </Text>
               </>
             )}

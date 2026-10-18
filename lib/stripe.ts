@@ -22,6 +22,9 @@ export const FAMILY_PRICING = {
 
 export const FAMILY_TRIAL_DAYS = 14
 
+/** Founding families get Family free for their first year (Sarah, 2026-10-18): through midnight ET on Oct 18, 2027. */
+export const FOUNDING_FAMILY_YEAR_END = '2027-10-18T04:00:00.000Z'
+
 const FAMILY_PRODUCT_NAME = 'DinnerDrop Family'
 
 async function findOrCreateFamilyProduct(client: Stripe): Promise<string> {

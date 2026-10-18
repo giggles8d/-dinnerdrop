@@ -165,20 +165,23 @@ export default function AccountPage() {
                 <Clock className="w-5 h-5" style={{ color: '#1a5c38' }} />
               </div>
               <div>
-                <p className="font-semibold text-foreground">{isFoundingMember ? 'Family — 6 free months' : 'Family — free trial'}</p>
-                <p className="text-xs text-muted-foreground">{isFoundingMember ? 'Then $4.99/month. Cancel anytime.' : '$4.99/month after your trial. Cancel anytime.'}</p>
+                <p className="font-semibold text-foreground">{isFoundingMember ? 'Family — free for your first year' : 'Family — free trial'}</p>
+                <p className="text-xs text-muted-foreground">{isFoundingMember ? 'A thank-you for being one of the first families in. Then $4.99/month only if you keep it.' : '$4.99/month after your trial. Cancel anytime.'}</p>
               </div>
             </div>
 
             <div className="rounded-xl p-4" style={{ backgroundColor: '#f0faf4', border: '1px solid #bbf7d0' }}>
               <p className="text-sm font-semibold mb-1" style={{ color: '#1a5c38' }}>
-                {daysLeft > 0
-                  ? `${daysLeft} free day${daysLeft === 1 ? '' : 's'} left`
-                  : 'Your free period ends today'}
-                {trialEndDate ? ` · first charge on ${trialEndDate}` : ''}
+                {isFoundingMember
+                  ? `Family is free through ${trialEndDate ?? 'October 18, 2027'}`
+                  : daysLeft > 0
+                    ? `${daysLeft} free day${daysLeft === 1 ? '' : 's'} left${trialEndDate ? ` · first charge on ${trialEndDate}` : ''}`
+                    : 'Your free period ends today'}
               </p>
               <p className="text-xs" style={{ color: '#166534' }}>
-                We email you three days before any charge. Cancel in one tap below.
+                {isFoundingMember
+                  ? 'Nothing to do and nothing to add. We email you well before the year is up, and you can cancel in one tap below.'
+                  : 'We email you three days before any charge. Cancel in one tap below.'}
               </p>
             </div>
 
@@ -218,8 +221,8 @@ export default function AccountPage() {
                 <CheckCircle className="w-5 h-5" style={{ color: '#1a5c38' }} />
               </div>
               <div>
-                <p className="font-semibold text-foreground">Family — included</p>
-                <p className="text-xs text-muted-foreground">No card on file</p>
+                <p className="font-semibold text-foreground">Family — free for your first year</p>
+                <p className="text-xs text-muted-foreground">Through {trialEndDate ?? 'October 18, 2027'} · No card on file · A thank-you for being one of the first families in</p>
               </div>
             </div>
 
@@ -235,6 +238,10 @@ export default function AccountPage() {
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
                 Budget optimization + pantry subtraction
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                Kroger cart push, priority support, and every new family feature first
               </div>
             </div>
           </div>

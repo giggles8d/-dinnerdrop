@@ -68,7 +68,7 @@ function firstNameFrom(email: string, fullName?: string | null) {
 }
 
 function subjectFor(kind: 'founding' | 'returning' | 'waitlist') {
-  if (kind === 'founding') return 'Your grocery list now lands in your Instacart cart in one tap'
+  if (kind === 'founding') return 'Family is yours free for a year — and the one-tap Instacart cart is live'
   if (kind === 'waitlist') return 'DinnerDrop is open — free, no card, and the Instacart cart is live'
   return 'One tap, your whole grocery list in your Instacart cart — it’s live'
 }

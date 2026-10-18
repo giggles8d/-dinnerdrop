@@ -41,7 +41,9 @@ function DashboardContent() {
   const searchParams = useSearchParams()
   const supabase = createClient()
 
-  const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing'
+  const [isFoundingMember, setIsFoundingMember] = useState(false)
+  // Founding families have Family free for their first year (through 2027-10-18).
+  const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing' || isFoundingMember
   // Free plan includes unlimited weekly plans (2026-10-18). Only past_due is blocked, handled in generatePlan.
   const canGenerate = true
   const isPickingMeals = pendingMeals.length > 0
@@ -66,6 +68,7 @@ function DashboardContent() {
       if (profile) {
         setBudget(profile.weekly_budget)
         setSubscriptionStatus(profile.subscription_status || 'free')
+        setIsFoundingMember(profile.is_beta_member === true)
         // Don't gate the dashboard behind the quiz anymore — show the product
         // first, offer personalization after. (This was where 95% of signups
         // used to vanish.)
@@ -139,11 +142,12 @@ function DashboardContent() {
         if (!user) return
         const { data: profile } = await supabase
           .from('profiles')
-          .select('subscription_status')
+          .select('subscription_status, is_beta_member')
           .eq('id', user.id)
           .single()
         if (profile) {
           setSubscriptionStatus(profile.subscription_status || 'free')
+          setIsFoundingMember(profile.is_beta_member === true)
         }
       }
       refresh()
