@@ -46,7 +46,7 @@ export default function StorePriceExample({ ctaHref = '/signup', tone = 'default
             </div>
             <p className="text-xs text-muted-foreground mb-8 max-w-3xl">
               A real family of five in upstate New York — their {ex?.itemCount ?? ''}-item list for the week, read from Instacart on {readOn}.
-              {saves > 0 ? ` Cheapest store saved $${saves.toFixed(0)} against the priciest, before fees.` : ''} Prices are Instacart&apos;s for each store and change weekly; items a store doesn&apos;t carry are counted at a typical price so no store wins by missing a match.
+              {saves > 0 ? ` Cheapest store saved $${saves.toFixed(0)} against the priciest, before fees.` : ''} Prices are Instacart&apos;s for each store and change weekly. &ldquo;Store-brand swaps&rdquo; are items that store didn&apos;t match exactly; they aren&apos;t in that store&apos;s total here, and inside the app they&apos;re counted at a typical price so no store wins by missing a match.
             </p>
           </>
         )}
