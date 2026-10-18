@@ -50,7 +50,7 @@ export default function MealimePage() {
           Mealime is closing on October 21. <span style={{ color: GOLD }}>Your dinners don&apos;t have to go with it.</span>
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed mb-8">
-          Albertsons is shutting Mealime down and folding it into its own grocery apps, with no way to export your plans, favorites, or lists. DinnerDrop does the part you relied on &mdash; pick dinners, get one combined grocery list &mdash; and then puts that list in your Instacart cart in one tap. It&apos;s free, with no card.
+          Albertsons is shutting Mealime down on October 21 and moving its recipes into its own Meals Hub, with no way to export your plans, favorites, or lists. DinnerDrop does the part you relied on &mdash; pick dinners, get one combined grocery list &mdash; and then opens that list in your Instacart cart in one tap, at any store. It&apos;s free, with no card.
         </p>
 
         <MealimeImportForm />

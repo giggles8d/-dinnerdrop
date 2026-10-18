@@ -19,7 +19,7 @@ export default function MealimeImportForm() {
     <div className="rounded-2xl border-2 bg-white p-6 sm:p-8 shadow-sm" style={{ borderColor: GREEN }}>
       <h2 className="text-xl font-bold mb-1" style={{ color: GREEN }}>Bring your Mealime favorites</h2>
       <p className="text-sm text-gray-600 mb-4">
-        Type the names of the dinners your family keeps coming back to, one per line. After you sign up (just an email, no card), DinnerDrop rebuilds each one as a full recipe for your family size and keeps it in your rotation.
+        Type the names of the dinners your family keeps coming back to, one per line. After you sign up (just an email, no card), DinnerDrop writes a new version of each one &mdash; same dish, sized for your family &mdash; and keeps it in your rotation. Your list is saved the moment you finish signup. Want the exact recipe, not a new version? Paste its link, text, or a photo on your Recipes page and it comes in as written.
       </p>
       <textarea
         value={names}

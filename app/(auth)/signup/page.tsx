@@ -184,6 +184,11 @@ function SignupForm() {
         </button>
       </>)}
 
+        <p className="text-center text-xs text-muted-foreground">
+          By creating an account you agree to our{' '}
+          <Link href="/terms" className="underline hover:text-foreground">Terms</Link> and{' '}
+          <Link href="/privacy" className="underline hover:text-foreground">Privacy Policy</Link>.
+        </p>
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{' '}
           <Link href="/login" className="text-primary hover:underline font-medium">

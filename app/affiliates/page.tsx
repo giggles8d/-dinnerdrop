@@ -28,7 +28,7 @@ export default function AffiliatesPage() {
       </header>
       <main className="container mx-auto px-4 py-12 max-w-3xl">
         <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Affiliate program</p>
-        <h1 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-3">Recommend the dinner planner parents actually keep. Earn 30%.</h1>
+        <h1 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-3">Recommend the dinner planner the whole family votes on. Earn 30%.</h1>
         <p className="text-lg text-muted-foreground mb-10">If your audience is parents who are tired of the 5pm dinner question, this is an easy one to share: answer a short quiz, get a week of dinners, one tap sends the groceries to the cart. Free to start, Family is $4.99 a month.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
