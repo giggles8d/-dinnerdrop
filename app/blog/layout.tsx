@@ -32,6 +32,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
             <span className="font-bold text-lg text-green-900">DinnerDrop</span>
           </a>
           <nav className="flex items-center gap-4 text-sm font-medium text-gray-500">
+            <a href="/recipes" className="hover:text-gray-900 transition-colors">Recipes</a>
             <a href="/blog" className="hover:text-gray-900 transition-colors">Blog</a>
             <a href="/start" className="px-4 py-1.5 rounded-lg bg-green-800 text-white text-sm font-semibold hover:bg-green-700 transition-colors">Start free</a>
           </nav>

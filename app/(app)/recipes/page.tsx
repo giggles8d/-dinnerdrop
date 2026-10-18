@@ -124,11 +124,17 @@ export default function RecipesPage() {
         <div className="mb-6">
           <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Recipe library</p>
           <h1 className="text-3xl font-heading font-bold text-foreground">Dinners families actually kept</h1>
-          <p className="text-muted-foreground mt-1">Every dinner the planner has made, ranked by how often families kept it — plus your own. Heart one and it rotates into your weeks.</p>
+          <p className="text-muted-foreground mt-1">Every dinner the planner has made, ranked by how often families kept it — plus your own. Heart one and it rotates into your weeks; every one comes with a grocery list for your Instacart cart.</p>
         </div>
 
-        {/* Add your own */}
-        <div className="rounded-2xl border border-border bg-white p-5 mb-8">
+        {/* Add your own (signed in) / invitation (signed out) */}
+        {!userId && !loading && (
+          <div className="rounded-2xl border border-primary/20 bg-secondary/60 p-5 mb-8 flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+            <p className="text-sm text-foreground">Every recipe here comes with a grocery list that lands in your Instacart cart in one tap. Free, no card.</p>
+            <Link href="/signup?redirect=%2Frecipes" className="inline-flex justify-center px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 whitespace-nowrap">Start free &rarr;</Link>
+          </div>
+        )}
+        {userId && <div className="rounded-2xl border border-border bg-white p-5 mb-8">
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <h2 className="font-heading font-semibold text-foreground mr-2">Add your own recipe</h2>
             {([['link', Link2, 'Paste a link'], ['text', FileText, 'Paste the text'], ['photo', Camera, 'Snap a photo']] as const).map(([k, Icon, label]) => (
@@ -157,7 +163,7 @@ export default function RecipesPage() {
             </div>
           )}
           {msg && <p className="text-sm mt-3 text-foreground">{msg}</p>}
-        </div>
+        </div>}
 
         {/* Filters */}
         <div className="flex flex-wrap items-center gap-2 mb-5">
@@ -172,7 +178,7 @@ export default function RecipesPage() {
             <option value="">Any style</option>
             {TAGS.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
-          <label className="flex items-center gap-1.5 text-sm text-muted-foreground"><input type="checkbox" checked={mine} onChange={(e) => setMine(e.target.checked)} className="accent-[#1a5c38]" /> My recipes</label>
+          {userId && <label className="flex items-center gap-1.5 text-sm text-muted-foreground"><input type="checkbox" checked={mine} onChange={(e) => setMine(e.target.checked)} className="accent-[#1a5c38]" /> My recipes</label>}
         </div>
 
         {loading ? (
@@ -189,7 +195,7 @@ export default function RecipesPage() {
                   <MealCardImage mealName={r.name} dayLabel={r.source === 'user' && r.created_by === userId ? 'Yours' : ''} imageUrl={r.image_url ?? undefined} />
                 </Link>
                 <div className="relative p-4 space-y-2">
-                  <button onClick={() => toggleFavorite(r)} className="absolute top-3 right-3 p-1.5 rounded-full bg-background/80 hover:bg-background" aria-label="Favorite">
+                  <button onClick={() => (userId ? toggleFavorite(r) : (window.location.href = `/signup?redirect=${encodeURIComponent('/recipes/' + r.slug)}`))} className="absolute top-3 right-3 p-1.5 rounded-full bg-background/80 hover:bg-background" aria-label="Favorite">
                     <Heart className={`w-4 h-4 ${favNames.has(r.name) ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
                   </button>
                   <Link href={`/recipes/${r.slug}`} className="block pr-8">
