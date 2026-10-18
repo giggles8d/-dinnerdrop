@@ -65,3 +65,15 @@ export function localNow(timezone: string, at: Date = new Date()): { weekday: We
   const minute = Number(get('minute'))
   return { weekday, hour, minute, dateStr: `${get('year')}-${get('month')}-${get('day')}` }
 }
+
+/** "25 min" · "8 hr slow cooker (15 min hands-on)" — honest time labels for set-and-forget dinners. */
+export function timeLabel(meal: { cookTime: number; prepTime?: number; tags?: string[] }): string {
+  const total = (meal.cookTime || 0)
+  const prep = meal.prepTime || 0
+  if (total >= 90) {
+    const hrs = Math.round(total / 30) / 2
+    const how = (meal.tags ?? []).includes('slow-cooker') ? 'slow cooker' : (meal.tags ?? []).includes('instant-pot') ? 'pressure cook' : 'hands-off'
+    return `${hrs} hr ${how}${prep ? ` · ${prep} min hands-on` : ''}`
+  }
+  return `${total + prep} min`
+}

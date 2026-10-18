@@ -7,7 +7,7 @@
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, WEEKDAY_LABEL, type Settings, type Channel } from '@/lib/settings'
-import { localNow, mondayOf } from '@/lib/plan'
+import { localNow, mondayOf, timeLabel } from '@/lib/plan'
 import { autoPlan } from '@/lib/autoplan'
 import { sendEmail, sendSms, emailShell, smsConfigured } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
@@ -143,7 +143,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
         const { data: plan } = await admin.from('meal_plans').select('meals').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1).single()
         const tonight = ((plan?.meals as Meal[]) ?? []).find((m) => m.day === todayLabel)
         if (tonight) {
-          const line = `${tonight.name} — about ${tonight.cookTime} min${tonight.prepTime ? ` (${tonight.prepTime} min prep)` : ''}`
+          const line = `${tonight.name} — ${timeLabel(tonight)}`
           if (wantsEmail(cook.channel) && canEmail) {
             await sendEmail(p.email!, `Tonight: ${tonight.name}`, emailShell(
               `Tonight's dinner`,

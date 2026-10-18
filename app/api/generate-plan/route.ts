@@ -199,6 +199,7 @@ ${timeRule}
 - estimatedCost is the realistic grocery cost of the ingredients at typical US supermarket prices (most weeknight dinners for ${profile.familySize} run $12–$30); do not inflate it. The ${dinnersPerWeek} dinners they pick must fit in ${profile.weeklyBudget}, so keep every option under $${perMealBudget}
 - Make the options diverse — different proteins, cuisines, and cooking styles; no two options share a main protein + style
 - Maximum 6 ingredients per dinner, maximum 4 short steps (one sentence each), written for a tired parent
+- cookTime = minutes until it's on the table; prepTime = hands-on minutes. A slow-cooker dinner is cookTime 480 with prepTime 15 — only offer those when the night allows it (the family has a slow cooker; assume it's started in the morning). Set "servings" to exactly ${profile.familySize}${settings.plan.leftoverNight ? ` (${profile.familySize * 2} for leftover-friendly ones)` : ''}
 - Ingredient quantities must be shoppable (what you'd buy: "1" "lb", "2" "cans", "1" "bunch"), with a "searchTerm" that matches a grocery product name
 - Give each dinner 1–3 short tags from: quick, sheet-pan, one-pot, air-fryer, slow-cooker, instant-pot, grill, kid-favorite, leftover-friendly, budget, high-protein, vegetarian, 15-min
 ${settings.food.nutritionInfo ? '- Estimate nutrition per serving (calories, grams of protein)' : ''}
@@ -245,6 +246,13 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
       const hay = `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
       return !excl.some((w) => w && hay.includes(w))
     })
+    // Pin servings to the family (the model drifts); leftover-friendly dinners are sized for two nights.
+    generated = generated.map((m) => ({
+      ...m,
+      servings: m.leftoverFriendly ? profile.familySize * 2 : profile.familySize,
+      cookTime: Number(m.cookTime) || 30,
+      prepTime: Number(m.prepTime) || 0,
+    }))
     // De-dupe against library picks by name.
     const libNames = new Set(libraryMeals.map((m) => normalizeName(m.name)))
     generated = generated.filter((m) => !libNames.has(normalizeName(m.name)))

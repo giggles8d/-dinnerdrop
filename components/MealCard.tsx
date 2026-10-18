@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Heart, RefreshCw, Check } from 'lucide-react'
 import MealCardImage from './MealCardImage'
 import type { Meal } from '@/types'
+import { timeLabel } from '@/lib/plan'
 
 interface MealCardProps {
   meal: Meal
@@ -47,7 +48,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             {meal.name}
           </h3>
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <span>{meal.cookTime} min</span>
+            <span>{timeLabel(meal)}</span>
             <span>&middot;</span>
             <span>{meal.servings} servings</span>
             {meal.nutrition && <><span>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
@@ -111,7 +112,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             {meal.name}
           </h3>
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <span>{meal.cookTime} min</span>
+            <span>{timeLabel(meal)}</span>
             <span>&middot;</span>
             <span>{meal.servings} servings</span>
             {meal.nutrition && <><span>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}

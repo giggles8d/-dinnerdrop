@@ -10,6 +10,7 @@ import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
 import { recordMealSignal } from '@/lib/taste-profile'
 import CookMode from '@/components/CookMode'
 import type { Meal } from '@/types'
+import { timeLabel } from '@/lib/plan'
 
 function HeroImage({ mealName, imageUrl }: { mealName: string; imageUrl?: string }) {
   const lookup = useUnsplashPhoto(imageUrl ? '' : mealName)
@@ -304,7 +305,7 @@ function RecipeContent() {
         <div className="flex flex-wrap items-center gap-2 mb-8 pb-6 border-b border-border">
           <div className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">
             <Clock className="w-3.5 h-3.5" />
-            <span>{meal.prepTime + meal.cookTime} min total</span>
+            <span>{timeLabel(meal)}</span>
           </div>
           <div className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">
             <Users className="w-3.5 h-3.5" />

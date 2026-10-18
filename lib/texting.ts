@@ -10,7 +10,7 @@ import { localNow, mondayOf } from '@/lib/plan'
 import { sendSms, smsConfigured, normalizePhone } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
 import { generateCandidates, savePlan } from '@/lib/autoplan'
-import type { PlanShape } from '@/lib/plan'
+import { timeLabel, type PlanShape } from '@/lib/plan'
 import { guessCategory, normalizeItemName } from '@/lib/list'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
@@ -412,7 +412,7 @@ export async function openRound(admin: SupabaseClient, householdId: string): Pro
 }
 
 function pickLines(meals: Meal[]): string {
-  return meals.map((m, i) => `${i + 1}. ${m.name}${m.cookTime ? ` (${m.cookTime} min)` : ''}`).join('\n')
+  return meals.map((m, i) => `${i + 1}. ${m.name}${m.cookTime ? ` (${timeLabel(m)})` : ''}`).join('\n')
 }
 
 function voteBody(familyName: string, round: VoteRound): string {
