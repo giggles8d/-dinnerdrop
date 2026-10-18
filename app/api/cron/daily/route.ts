@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { runDailyReminders } from '@/lib/reminders'
 import { runTextingDay } from '@/lib/texting'
 import { creditReferrals } from '@/lib/referrals'
+import { backfillImages } from '@/lib/recipe-library'
 
 export const maxDuration = 300
 
@@ -26,6 +27,7 @@ export async function GET(request: NextRequest) {
   try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
   try { out.texting = await runTextingDay(admin, now) } catch (e) { out.texting = { error: String(e) } }
   try { out.referrals = await creditReferrals(admin) } catch (e) { out.referrals = { error: String(e) } }
+  try { out.recipeImages = await backfillImages(admin) } catch (e) { out.recipeImages = { error: String(e) } }
 
   const base = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
   const headers = { authorization: `Bearer ${process.env.CRON_SECRET}` }

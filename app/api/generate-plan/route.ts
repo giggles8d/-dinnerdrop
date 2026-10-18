@@ -195,7 +195,7 @@ ${peopleSection}${favoritesSection}${tasteProfileSection}
 Rules:
 ${constraintLines.map((l) => `- ${l}`).join('\n')}
 ${timeRule}
-- Each dinner costs at most about $${perMealBudget} for ${profile.familySize} servings
+- estimatedCost is the realistic grocery cost of the ingredients at typical US supermarket prices (most weeknight dinners for ${profile.familySize} run $12–$30); do not inflate it. The ${dinnersPerWeek} dinners they pick must fit in ${profile.weeklyBudget}, so keep every option under $${perMealBudget}
 - Make the options diverse — different proteins, cuisines, and cooking styles; no two options share a main protein + style
 - Maximum 6 ingredients per dinner, maximum 4 short steps (one sentence each), written for a tired parent
 - Ingredient quantities must be shoppable (what you'd buy: "1" "lb", "2" "cans", "1" "bunch"), with a "searchTerm" that matches a grocery product name

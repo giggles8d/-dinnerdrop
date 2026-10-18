@@ -178,3 +178,16 @@ export async function pickLibraryRecipes(
   })
   return rows.slice(0, opts.limit)
 }
+
+/** Daily: give library recipes that were stored without a photo one (Unsplash, once). */
+export async function backfillImages(supabase: SupabaseClient, limit = 40): Promise<number> {
+  const { data } = await supabase.from('recipes').select('id, name').is('image_url', null).order('times_planned', { ascending: false }).limit(limit)
+  let n = 0
+  for (const r of data ?? []) {
+    const img = await fetchUnsplash(r.name)
+    if (!img) continue
+    await supabase.from('recipes').update({ image_url: img.url, image_credit: img.credit }).eq('id', r.id)
+    n++
+  }
+  return n
+}
