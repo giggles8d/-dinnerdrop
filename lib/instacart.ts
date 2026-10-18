@@ -72,7 +72,8 @@ function fallbackSearch(term: string): string {
 }
 
 export async function createInstacartLink(
-  items: GroceryItem[]
+  items: GroceryItem[],
+  title = 'DinnerDrop Weekly Groceries'
 ): Promise<{ link: string; fallback: boolean }> {
   const apiKey = process.env.INSTACART_API_KEY
   if (!apiKey) {
@@ -84,7 +85,7 @@ export async function createInstacartLink(
   }
 
   const payload: InstacartPayload = {
-    title: 'DinnerDrop Weekly Groceries',
+    title,
     image_url: 'https://dinnerdrop.app/og-image.png?v=3',
     link_type: 'shopping_list',
     expires_in: 7,

@@ -48,13 +48,16 @@ interface GroceryListProps {
   onAdd: (name: string, category?: GroceryCategory) => Promise<void> | void
   /** When this week's flyer is loaded: the sale entry matching a list line, for the 🏷️ tag. */
   saleFor?: (name: string) => SaleItem | null
+  /** Split orders: which store a line is assigned to, and a tap to move it. */
+  storeFor?: (item: ListItem) => string | null
+  onMoveStore?: (item: ListItem) => void
 }
 
 const SOURCE_LABEL: Partial<Record<ListItem['source'], string>> = {
   manual: 'added', sms: 'texted', staples: 'staple', extra: 'basics',
 }
 
-export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, saleFor }: GroceryListProps) {
+export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, saleFor, storeFor, onMoveStore }: GroceryListProps) {
   const [draft, setDraft] = useState('')
   const [adding, setAdding] = useState(false)
 
@@ -121,6 +124,7 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                         {formatQuantity(item.quantity, item.unit ?? '')}
                       </span>
                     )}
+                    {storeFor && !muted && (() => { const st = storeFor(item); return st ? <button type="button" onClick={() => onMoveStore?.(item)} title="Tap to move to the other store" className="print:hidden text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent-foreground font-semibold whitespace-nowrap">{st}</button> : null })()}
                     <button
                       type="button"
                       onClick={() => onToggleHave(item)}

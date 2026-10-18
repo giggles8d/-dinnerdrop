@@ -4,7 +4,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { resolvePlanOwner } from '@/lib/household'
 import { estimatePrices } from '@/lib/prices'
 
-/** POST { ids: string[] } → estimates est_price for those list lines (non-plan) and returns {prices: {id: number}}. */
+/** POST { ids: string[] } → estimates est_price for those list lines and returns {prices: {id: number}}. */
 export async function POST(req: NextRequest) {
   const auth = createServerSupabaseClient()
   const { data: { user } } = await auth.auth.getUser()

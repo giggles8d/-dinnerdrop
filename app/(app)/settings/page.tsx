@@ -559,6 +559,12 @@ export default function SettingsPage() {
                   <Field label="Usual store" hint="Shown on the list; Instacart lets you pick at checkout."><input value={settings.stores.usualStore} onChange={(e) => patch((s) => { s.stores.usualStore = e.target.value })} placeholder="Wegmans, Kroger, Aldi…" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                 </div>
                 <p className="text-sm text-muted-foreground">Connect or disconnect Kroger from the <Link href="/grocery-list" className="text-primary underline">grocery list</Link> page.</p>
+                <Field label="My stores" hint="The stores you compare. Load each one's flyer and the grocery list shows which is cheapest this week; tell DinnerDrop the total after each order and it learns each store's prices.">
+                  <TagInput value={settings.stores.myStores.map((s) => s.name)} onChange={(names) => patch((s) => { s.stores.myStores = names.map((n) => s.stores.myStores.find((x) => x.name === n) ?? { name: n }) })} placeholder="Wegmans, Tops, Aldi, Sam's Club" />
+                  {settings.stores.myStores.some((s) => s.factor) && (
+                    <p className="text-[11px] text-muted-foreground mt-1">Learned so far: {settings.stores.myStores.filter((s) => s.factor).map((s) => `${s.name} ${s.factor!.toFixed(2)}×`).join(' · ')}</p>
+                  )}
+                </Field>
                 <Toggle checked={settings.food.useSales} onChange={(v) => patch((s) => { s.food.useSales = v })} label="Plan around this week's sales" hint="When a flyer is loaded, most dinners are built on sale proteins and produce, and sale items are tagged on the list." />
                 <SalesCard />
               </>

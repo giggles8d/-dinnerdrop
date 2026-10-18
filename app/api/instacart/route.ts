@@ -12,7 +12,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { groceryList, estTotal, weekStart } = await request.json()
+    const { groceryList, estTotal, weekStart, store } = await request.json()
+    const storeName = typeof store === 'string' ? store.slice(0, 40) : ''
 
     if (!groceryList || typeof groceryList !== 'object') {
       return NextResponse.json({ error: 'Invalid grocery list' }, { status: 400 })
@@ -24,14 +25,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Grocery list is empty' }, { status: 400 })
     }
 
-    const result = await createInstacartLink(allItems)
+    const result = await createInstacartLink(allItems, storeName ? `DinnerDrop — ${storeName} list` : 'DinnerDrop Weekly Groceries')
 
     // Log the handoff (best-effort — never block the response on analytics).
     if (result.link && !result.fallback) {
       try {
         await supabase.from('grocery_handoffs').insert({
           user_id: user.id,
-          store: 'Instacart',
+          store: storeName ? `Instacart · ${storeName}` : 'Instacart',
           item_count: allItems.length,
           est_total: Number(estTotal) > 0 ? Number(estTotal) : null,
           week_start: typeof weekStart === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(weekStart) ? weekStart : null,

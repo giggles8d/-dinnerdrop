@@ -8,6 +8,8 @@ interface InstacartButtonProps {
   groceryList: Record<GroceryCategory, GroceryItem[]>
   estTotal?: number
   weekStart?: string
+  /** For split orders: the store this subset is for (shown on the button and in the list title). */
+  store?: string
 }
 
 /**
@@ -20,7 +22,7 @@ interface InstacartButtonProps {
  *   - Approved button copy: "Shop ingredients"
  * Docs: https://docs.instacart.com/developer_platform_api/guide/concepts/design/cta_design
  */
-export default function InstacartButton({ groceryList, estTotal, weekStart }: InstacartButtonProps) {
+export default function InstacartButton({ groceryList, estTotal, weekStart, store }: InstacartButtonProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -32,7 +34,7 @@ export default function InstacartButton({ groceryList, estTotal, weekStart }: In
       const res = await fetch('/api/instacart', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ groceryList, estTotal, weekStart }),
+        body: JSON.stringify({ groceryList, estTotal, weekStart, store }),
       })
 
       const data = await res.json()
@@ -72,7 +74,7 @@ export default function InstacartButton({ groceryList, estTotal, weekStart }: In
           <path d="M36.4,8.6c-2.3,0-4,1-5.5,3.2l-4.4,6.4V0H15.9v18.2l-4.4-6.4C9.9,9.6,8.2,8.6,5.9,8.6C2.4,8.6,0,11.2,0,14.4c0,2.7,1.3,4.5,4,6.3l17.1,11l17.1-11c2.7-1.8,4-3.5,4-6.3C42.3,11.2,39.9,8.6,36.4,8.6z" fill="#0AAD0A" />
           <path d="M21.1,34.4c10.2,0,18.5,7.6,18.5,18.5h-37C2.6,42,11,34.4,21.1,34.4z" fill="#FF7009" />
         </svg>
-        <span>{loading ? 'Creating your list…' : 'Shop ingredients'}</span>
+        <span>{loading ? 'Creating your list…' : store ? `Shop ${store} list` : 'Shop ingredients'}</span>
       </button>
 
       <p className="text-[11px] text-muted-foreground">

@@ -152,7 +152,7 @@ export type Parsed =
   | { kind: 'allgood' } | { kind: 'none' }
   | { kind: 'skip'; numbers: number[] } | { kind: 'again'; numbers: number[] }
   | { kind: 'add'; items: string[] }
-  | { kind: 'order_total'; total: number }
+  | { kind: 'order_total'; total: number; store?: string }
   | { kind: 'unknown' }
 
 export function parseInbound(raw: string): Parsed {
@@ -167,8 +167,8 @@ export function parseInbound(raw: string): Parsed {
   if (/^(ALL ?GOOD|ALL|GOOD|KEEP ?ALL|LOOKS GOOD|👍|LGTM|FINE)\b/.test(u)) return { kind: 'allgood' }
   if (/^(NONE|NO|NOPE|NAH)\b/.test(u)) return { kind: 'none' }
   // "ORDER 317.97", "total 317.97", "it came to $317.97", "order was $317" — the planner recording the real bill.
-  const order = t.match(/^(?:order|total|order total|bill|it came to|came to|cost|spent|paid)\s*(?:was|is|came to|:)?\s*\$?\s*(\d{1,4}(?:[.,]\d{2})?)\s*$/i)
-  if (order) return { kind: 'order_total', total: Number(order[1].replace(',', '.')) }
+  const order = t.match(/^(?:order|total|order total|bill|it came to|came to|cost|spent|paid)\s*(?:was|is|came to|:)?\s*\$?\s*(\d{1,4}(?:[.,]\d{2})?)\s*(?:(?:at|@|from)\s+)?([A-Za-z'&. ]{2,30})?\s*$/i)
+  if (order) return { kind: 'order_total', total: Number(order[1].replace(',', '.')), store: order[2]?.trim() || undefined }
   const again = u.match(/^(AGAIN|REPEAT|BRING BACK)\s*[:\-]?\s*([\d\s,and&]+)$/)
   if (again) return { kind: 'again', numbers: numbersIn(again[2]) }
   const add = t.match(/^(?:add|\+|need|we need|we'?re out of|out of|get|buy|pick up|grab)\s*[:\-]?\s*(.+)$/i)
@@ -258,11 +258,18 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const { data: hs } = await admin.from('grocery_handoffs').select('id, est_total').eq('user_id', owner.id).order('created_at', { ascending: false }).limit(1)
       const h = hs?.[0]
       if (!h) return { reply: `I don't see a recent order to attach $${parsed.total.toFixed(2)} to. Send the list to Instacart first, then text me the total after checkout.`, handled: true, member: m }
-      await admin.from('grocery_handoffs').update({ actual_total: parsed.total }).eq('id', h.id)
+      await admin.from('grocery_handoffs').update({ actual_total: parsed.total, ...(parsed.store ? { store: `Instacart · ${parsed.store}` } : {}) }).eq('id', h.id)
       if (h.est_total && Number(h.est_total) > 0) {
-        const f = blendFactor(settings.stores.priceFactor, parsed.total / Number(h.est_total))
-        await admin.from('profiles').update({ settings: { ...((owner.settings as object) ?? {}), stores: { ...settings.stores, priceFactor: f } } }).eq('id', owner.id)
-        return { reply: `Got it — $${parsed.total.toFixed(2)}. Your store runs about ${f.toFixed(2)}× our estimates; future lists and budgets use that.`, handled: true, member: m }
+        const observed = parsed.total / Number(h.est_total)
+        const f = blendFactor(settings.stores.priceFactor, observed)
+        const myStores = [...settings.stores.myStores]
+        if (parsed.store) {
+          const i = myStores.findIndex((x) => x.name.toLowerCase() === parsed.store!.toLowerCase())
+          if (i >= 0) myStores[i] = { ...myStores[i], factor: blendFactor(myStores[i].factor, observed) }
+          else myStores.push({ name: parsed.store, factor: blendFactor(undefined, observed) })
+        }
+        await admin.from('profiles').update({ settings: { ...((owner.settings as object) ?? {}), stores: { ...settings.stores, priceFactor: f, myStores } } }).eq('id', owner.id)
+        return { reply: `Got it — $${parsed.total.toFixed(2)}${parsed.store ? ` at ${parsed.store}` : ''}. ${parsed.store || 'Your store'} runs about ${(parsed.store ? blendFactor(undefined, observed) : f).toFixed(2)}× our estimates; future lists and budgets use that.`, handled: true, member: m }
       }
       return { reply: `Got it — $${parsed.total.toFixed(2)} saved for that order.`, handled: true, member: m }
     }

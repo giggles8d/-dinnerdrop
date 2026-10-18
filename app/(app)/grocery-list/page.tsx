@@ -7,6 +7,8 @@ import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import { matchSale, type WeeklySales } from '@/lib/sales-shared'
 import RestOfShop from '@/components/RestOfShop'
+import StoreCompare from '@/components/StoreCompare'
+import type { StorePref } from '@/lib/compare'
 import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
 import { mergeSettings } from '@/lib/settings'
@@ -29,6 +31,10 @@ export default function GroceryListPage() {
   const [sales, setSales] = useState<WeeklySales[]>([])
   const [priceFactor, setPriceFactor] = useState(1)
   const [usuals, setUsuals] = useState<UsualItem[]>([])
+  const [myStores, setMyStores] = useState<StorePref[]>([])
+  const [split, setSplit] = useState<Record<string, string> | null>(null)
+  const [splitStores, setSplitStores] = useState<[string, string] | null>(null)
+  const [actualStore, setActualStore] = useState('')
   const [lastWeekExtras, setLastWeekExtras] = useState<UsualItem[]>([])
   const [askActual, setAskActual] = useState<{ id: string; est: number | null } | null>(null)
   const [actualDraft, setActualDraft] = useState('')
@@ -53,7 +59,7 @@ export default function GroceryListPage() {
     const rows = (data as ListItem[]) ?? []
     setItems(rows)
     // Typical-price estimates for lines that don't come from the plan (texted, added, basics).
-    const missing = rows.filter((r) => r.source !== 'plan' && r.est_price == null).map((r) => r.id)
+    const missing = rows.filter((r) => r.est_price == null).map((r) => r.id)
     if (missing.length) {
       fetch('/api/list/estimate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: missing }) })
         .then((r) => r.json())
@@ -85,6 +91,7 @@ export default function GroceryListPage() {
     const settings = mergeSettings(profile?.settings)
 
     setPriceFactor(Number(settings.stores.priceFactor) || 1)
+    setMyStores(Array.isArray(settings.stores.myStores) ? settings.stores.myStores : [])
     if (profile) {
       const tokenValid = profile.kroger_access_token &&
         (!profile.kroger_token_expires_at || new Date(profile.kroger_token_expires_at) > new Date())
@@ -244,6 +251,14 @@ export default function GroceryListPage() {
 
   /* ---------- Kroger ---------- */
   const shoppable = useMemo(() => shoppableItems(items), [items])
+  const planCount = items.filter((i) => i.source === 'plan' && !i.have).length || 1
+  const baseline = useCallback((i: ListItem): number => (Number(i.est_price) > 0 ? Number(i.est_price) : i.source === 'plan' ? totalCost / planCount : 0), [totalCost, planCount])
+  const splitLists = useMemo(() => {
+    if (!split || !splitStores) return null
+    const [a, b] = splitStores
+    const pick = (store: string) => shoppableItems(items.filter((i) => (split[i.id] ?? a) === store))
+    return { [a]: pick(a), [b]: pick(b) } as Record<string, ReturnType<typeof shoppableItems>>
+  }, [split, splitStores, items])
   const shoppableCount = Object.values(shoppable).reduce((n, arr) => n + arr.length, 0)
   const haveCount = items.filter((i) => i.have).length
 
@@ -351,6 +366,8 @@ export default function GroceryListPage() {
         <GroceryList
           items={items}
           saleFor={sales.length ? (name) => matchSale(name, sales) : undefined}
+          storeFor={split && splitStores ? (i) => split[i.id] ?? splitStores[0] : undefined}
+          onMoveStore={split && splitStores ? (i) => setSplit((m) => ({ ...(m ?? {}), [i.id]: (m?.[i.id] ?? splitStores[0]) === splitStores[0] ? splitStores[1] : splitStores[0] })) : undefined}
           onToggleChecked={toggleChecked}
           onToggleHave={toggleHave}
           onRemove={removeItem}
@@ -400,6 +417,16 @@ export default function GroceryListPage() {
           )}
         </div>
 
+        <StoreCompare
+          items={items}
+          baseline={baseline}
+          stores={myStores}
+          sets={sales}
+          globalFactor={priceFactor}
+          split={split}
+          onSplit={(assign, stores) => { setSplit(assign); setSplitStores(stores) }}
+        />
+
         <div className="mt-8 p-5 rounded-xl bg-foreground print:hidden">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-primary-foreground/60">{priceFactor !== 1 ? 'Expected at your store' : 'Whole list, estimated'}</span>
@@ -411,9 +438,15 @@ export default function GroceryListPage() {
             {' '}{shoppableCount} items go to the cart{haveCount ? ` · ${haveCount} you already have stay off it` : ''}.
           </p>
           {askActual && !actualSaved && (
-            <form onSubmit={async (e) => { e.preventDefault(); const t = Number(actualDraft.replace(/[^0-9.]/g, '')); if (!t) return; const r = await fetch('/api/handoff/actual', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ total: t }) }); const j = await r.json(); if (r.ok) { setActualSaved(j.factor ? `Thanks — your store runs about ${j.factor.toFixed(2)}× our estimates. Future lists use that.` : 'Thanks — saved.'); if (j.factor) setPriceFactor(j.factor); setAskActual(null) } }} className="mt-3 flex flex-wrap items-center gap-2">
+            <form onSubmit={async (e) => { e.preventDefault(); const t = Number(actualDraft.replace(/[^0-9.]/g, '')); if (!t) return; const r = await fetch('/api/handoff/actual', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ total: t, store: actualStore || undefined }) }); const j = await r.json(); if (r.ok) { setActualSaved(j.factor ? `Thanks — your store runs about ${j.factor.toFixed(2)}× our estimates. Future lists use that.` : 'Thanks — saved.'); if (j.factor) setPriceFactor(j.factor); setAskActual(null) } }} className="mt-3 flex flex-wrap items-center gap-2">
               <span className="text-xs text-primary-foreground/70">What did your last order come to{askActual.est ? ` (we estimated $${askActual.est.toFixed(0)})` : ''}?</span>
               <input value={actualDraft} onChange={(e) => setActualDraft(e.target.value)} inputMode="decimal" placeholder="$0.00" className="w-28 rounded-md px-2 py-1 text-sm text-foreground" />
+              {myStores.length > 0 && (
+                <select value={actualStore} onChange={(e) => setActualStore(e.target.value)} className="rounded-md px-2 py-1 text-sm text-foreground">
+                  <option value="">which store?</option>
+                  {myStores.map((st) => <option key={st.name} value={st.name}>{st.name}</option>)}
+                </select>
+              )}
               <button type="submit" className="px-3 py-1 rounded-md bg-primary-foreground text-foreground text-xs font-semibold">Save</button>
             </form>
           )}
@@ -423,7 +456,21 @@ export default function GroceryListPage() {
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden">
           <p className="hidden sm:block text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>
           <div className="space-y-4">
-            <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} />
+            {splitLists && splitStores ? (
+              <div className="space-y-3">
+                {splitStores.map((st) => {
+                  const n = Object.values(splitLists[st]).reduce((k, arr) => k + arr.length, 0)
+                  return (
+                    <div key={st} className="flex flex-wrap items-center gap-3">
+                      <InstacartButton groceryList={splitLists[st]} estTotal={undefined} weekStart={weekStart ?? undefined} store={st} />
+                      <span className="text-xs text-muted-foreground">{n} items · pick {st} when the list opens</span>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} />
+            )}
             <div className="space-y-2">
               {krogerConnected ? (
                 <button onClick={handleKrogerCart} disabled={krogerLoading || shoppableCount === 0} className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] disabled:opacity-50 transition-colors shadow-lg">

@@ -56,6 +56,7 @@ export interface Settings {
     fulfillment: 'delivery' | 'pickup'
     usualStore: string
     priceFactor: number             // what this family's store (+ Instacart fees) charges vs our typical-price estimates; learned from real orders
+    myStores: Array<{ name: string; factor?: number }>   // the stores they compare (Wegmans, Tops, Aldi…), each with its own learned factor
   }
   notifications: {
     email: boolean
@@ -109,6 +110,7 @@ export const DEFAULT_SETTINGS: Settings = {
     fulfillment: 'delivery',
     usualStore: '',
     priceFactor: 1,
+    myStores: [],
   },
   notifications: {
     email: true,
