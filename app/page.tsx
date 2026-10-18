@@ -83,6 +83,7 @@ export default async function LandingPage() {
 
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
         <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop builds the list in your own Instacart or Kroger account. You review every item and check out there at Instacart&apos;s or Kroger&apos;s prices for that store. We never charge your grocery account and never add to the price. Over 200 families plan dinner with DinnerDrop.
+        {' '}<span className="font-semibold text-foreground">On your phone:</span> open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em> — it works like an app, nothing to download.
       </p>
 
       {/* Sample week — the product, before any signup */}

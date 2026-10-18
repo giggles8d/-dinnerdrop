@@ -212,6 +212,7 @@ export default function StartPage() {
       </section>
 
       {/* Footer */}
+      <p className="container mx-auto px-4 max-w-3xl text-center text-xs text-gray-500 pb-8">Works on your phone: open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em>. No app store, nothing to download.</p>
       <footer className="border-t border-gray-200 bg-white mt-20 pb-20 sm:pb-0">
         <div className="container mx-auto px-4 py-6 max-w-5xl flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center gap-2">
