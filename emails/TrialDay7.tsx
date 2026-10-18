@@ -30,7 +30,7 @@ export default function TrialDay7({
             <Text style={paragraph}>
               After that, your DinnerDrop account will be paused and your meal plans will be archived.
             </Text>
-            <Text style={upgradeStatement}>Upgrade now and keep everything — $9/month, cancel anytime.</Text>
+            <Text style={upgradeStatement}>Upgrade now and keep everything — $4.99/month, cancel anytime.</Text>
             <Section style={ctaSection}>
               <Button style={button} href="https://www.dinnerdrop.app/subscribe?utm_source=email&utm_medium=email&utm_campaign=trial_day7">Complete my upgrade now →</Button>
             </Section>
@@ -44,12 +44,12 @@ export default function TrialDay7({
               <Text style={fenceText}>
                 But if the past week felt easier — if you opened the app instead of staring at the
                 fridge, if your grocery run was faster, if dinner just <em>happened</em> — then
-                $9/month is a pretty easy call.
+                $4.99/month is a pretty easy call.
               </Text>
               <Text style={fenceText}>Most families who cancel say the same thing: <em>"I wish I'd kept it."</em></Text>
             </Section>
             <Hr style={hr} />
-            <Text style={benefitsHeading}>What you get at $9/month:</Text>
+            <Text style={benefitsHeading}>What you get at $4.99/month:</Text>
             <Text style={benefitItem}>→ Weekly AI dinner plans (personalized to your family size and preferences)</Text>
             <Text style={benefitItem}>→ Auto-generated grocery lists with store handoff</Text>
             <Text style={benefitItem}>→ Unlimited meal regeneration — don't like a suggestion? Swap it</Text>

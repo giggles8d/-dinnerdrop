@@ -39,7 +39,7 @@ export default function TrialDay6({
               be waiting for you if you decide to come back.
             </Text>
             <Text style={valueStatement}>
-              Keep all of it for $9/month — that's less than one takeout order.
+              Keep all of it for $4.99/month — that's less than one takeout order.
             </Text>
             <Section style={ctaSection}>
               <Button style={primaryButton} href="https://www.dinnerdrop.app/subscribe?utm_source=email&utm_medium=email&utm_campaign=trial_day6">
@@ -57,7 +57,7 @@ export default function TrialDay6({
               DinnerDrop cuts that to under 2 minutes — and eliminates the 6pm "what's for dinner?"
               spiral entirely.
             </Text>
-            <Text style={paragraph}>At $9/month, that's <strong>$0.30 per day</strong> to have dinner handled.</Text>
+            <Text style={paragraph}>At $4.99/month, that's <strong>$0.17 per day</strong> to have dinner handled.</Text>
             <Section style={ctaSection}>
               <Button style={secondaryButton} href="https://www.dinnerdrop.app/subscribe?utm_source=email&utm_medium=email&utm_campaign=trial_day6">
                 Continue my subscription →
