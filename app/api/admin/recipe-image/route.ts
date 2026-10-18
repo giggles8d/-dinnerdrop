@@ -10,6 +10,13 @@ const ADMIN_EMAIL = 'setzl1979@gmail.com'
 async function authorized(request: NextRequest): Promise<boolean> {
   const secret = request.headers.get('x-admin-secret')
   if (secret && process.env.SETUP_SECRET && secret === process.env.SETUP_SECRET) return true
+  // Image pipeline token (app_kv.recipe_image_token, generated in the database; used by the scheduled photo task).
+  const imgToken = request.headers.get('x-image-token')
+  if (imgToken && imgToken.length >= 32) {
+    const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+    const { data } = await admin.from('app_kv').select('value').eq('key', 'recipe_image_token').maybeSingle()
+    if (data?.value && (data.value as { token?: string }).token === imgToken) return true
+  }
   try {
     const sb = createServerSupabaseClient()
     const { data: { user } } = await sb.auth.getUser()
