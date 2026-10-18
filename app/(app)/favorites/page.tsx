@@ -1,8 +1,8 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { Heart } from 'lucide-react'
+import { Heart, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import { recordMealSignal } from '@/lib/taste-profile'
@@ -22,7 +22,40 @@ function getFavMealId(fav: FavoriteRow) {
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState<FavoriteRow[]>([])
   const [loading, setLoading] = useState(true)
+  const [importText, setImportText] = useState('')
+  const [importing, setImporting] = useState(false)
+  const [importMsg, setImportMsg] = useState<string | null>(null)
+  const [showImport, setShowImport] = useState(false)
+  const loadFavoritesRef = useRef<null | (() => Promise<void>)>(null)
   const supabase = createClient()
+
+  // "Bring your favorites": names typed on /mealime (or here) are rebuilt as full
+  // recipes for this family and saved. Names left on /mealime before signup are
+  // picked up from localStorage on first visit.
+  const runImport = useCallback(async (names: string) => {
+    if (!names.trim()) return
+    setImporting(true)
+    setImportMsg(null)
+    try {
+      const res = await fetch('/api/import-favorites', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ names }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Import failed')
+      setImportMsg(data.imported > 0
+        ? `Added ${data.imported} dinner${data.imported === 1 ? '' : 's'} to your favorites${data.skipped ? ` (${data.skipped} already there)` : ''}. They'll rotate into your weekly plans.`
+        : 'Those dinners are already in your favorites.')
+      setImportText('')
+      setShowImport(false)
+      await loadFavoritesRef.current?.()
+    } catch (err) {
+      setImportMsg(err instanceof Error ? err.message : 'Import failed — please try again.')
+    } finally {
+      setImporting(false)
+    }
+  }, [])
 
   const loadFavorites = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
@@ -40,9 +73,22 @@ export default function FavoritesPage() {
     setLoading(false)
   }, [supabase])
 
+  loadFavoritesRef.current = loadFavorites
+
   useEffect(() => {
     loadFavorites()
   }, [loadFavorites])
+
+  useEffect(() => {
+    try {
+      const pending = localStorage.getItem('dd_import_names')
+      if (pending && pending.trim()) {
+        localStorage.removeItem('dd_import_names')
+        setShowImport(true)
+        runImport(pending)
+      }
+    } catch { /* storage unavailable */ }
+  }, [runImport])
 
   async function removeFavorite(e: React.MouseEvent, id: string) {
     e.preventDefault()
@@ -79,6 +125,36 @@ export default function FavoritesPage() {
           <p className="text-muted-foreground mt-1">
             Meals you love will be included in future plans automatically.
           </p>
+          <button
+            onClick={() => setShowImport((v) => !v)}
+            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+          >
+            <Download className="w-4 h-4" />
+            Bring dinners you already love (from Mealime, a notebook, anywhere)
+          </button>
+          {showImport && (
+            <div className="mt-3 rounded-xl border border-border bg-card p-4 max-w-2xl">
+              <p className="text-sm text-muted-foreground mb-2">
+                Type or paste the names, one per line. We rebuild each one as a full recipe for your family size and add it here.
+              </p>
+              <textarea
+                value={importText}
+                onChange={(e) => setImportText(e.target.value)}
+                rows={5}
+                placeholder={'Sheet pan lemon chicken\nTaco bowls\nOne-pot sausage pasta'}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+              <button
+                onClick={() => runImport(importText)}
+                disabled={importing || !importText.trim()}
+                className="mt-2 px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+              >
+                {importing ? 'Rebuilding your recipes…' : 'Add to my favorites'}
+              </button>
+            </div>
+          )}
+          {importMsg && <p className="mt-3 text-sm text-foreground">{importMsg}</p>}
+          {importing && !showImport && <p className="mt-3 text-sm text-muted-foreground">Rebuilding the dinners you brought with you…</p>}
         </div>
 
         {favorites.length === 0 ? (

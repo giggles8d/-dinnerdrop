@@ -10,6 +10,73 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'mealime-shutting-down-alternative',
+    title: 'Mealime Is Shutting Down October 21 — How to Move Your Family Dinners (Free)',
+    description:
+      'Albertsons is closing Mealime on October 21, 2026, with no export. ' +
+      "Here's what's happening, what you lose, and a free way to rebuild your favorite dinners and keep the one-list, one-cart routine.",
+    publishDate: '2026-10-18',
+    readingTimeMinutes: 5,
+    primaryKeyword: 'mealime alternative',
+    content: `If you open Mealime this week you will see the notice: the app shuts down on **October 21, 2026**. Albertsons, which bought Mealime, is folding it into "Meals Hub" inside its own grocery apps (Safeway, Albertsons, Vons, Jewel-Osco and the rest of the family). [Mealime's own announcement](https://www.mealime.com/closing) is short; the r/mealplanning thread about it is not.
+
+Here is what that means for a family that has leaned on Mealime for years, and what to do before Tuesday.
+
+## What you lose on October 21
+
+- **Your saved favorites and meal plans.** There is no export. Mealime has said plans, favorites and lists will not transfer.
+- **The free tier.** Meals Hub lives inside Albertsons' store apps and is built around shopping at those stores.
+- **The two things people actually loved:** pick a handful of dinners, get one combined grocery list organized by aisle, done.
+
+If you are an Albertsons-family shopper, Meals Hub may be fine. If you shop anywhere else, you need a new home for the weekly routine.
+
+## Save your favorites first (two minutes)
+
+Before the app goes dark, open your Mealime favorites and **write down the names**. That is all you need. The names are the part that matters — recipes themselves are easy to rebuild, and most families have a short list of dinners that everyone actually eats.
+
+A note in your phone, a screenshot, an email to yourself. Just capture the names.
+
+## Rebuild the routine in DinnerDrop (free)
+
+[DinnerDrop](https://www.dinnerdrop.app/mealime) was built around the same loop Mealime had — choose the week, get one list — with one addition: the list goes into your **Instacart cart in one tap**, every item pre-loaded, at the store's normal prices. Planning and the cart are free, with no card.
+
+To move over:
+
+1. Go to [dinnerdrop.app/mealime](https://www.dinnerdrop.app/mealime) and paste the dinner names you saved, one per line.
+2. Sign up with your email (no password, no card).
+3. DinnerDrop rebuilds each dinner as a full recipe for your family size — ingredients, steps, cook time — and saves it to your favorites.
+4. Generate your first week. Your favorites rotate in alongside new dinners that fit your budget, cook time and dietary needs.
+5. Tap **Shop ingredients**. The combined list opens in Instacart with everything in the cart.
+
+## How it compares
+
+| | Mealime (until Oct 21) | DinnerDrop |
+|---|---|---|
+| Pick dinners, get one list | Yes | Yes |
+| Recipe library to browse | Yes (500+) | No — it plans for you; add any dinner by name |
+| Grocery handoff | Delivery partners | Instacart cart, pre-loaded; Kroger cart on Family |
+| Family size, budget, cook time | Pro | Free |
+| Dietary needs | Yes | Yes |
+| Swap a dinner | Limited | One tap, and it learns what you keep |
+| Price | Free / Pro $5.99/mo | Free; Family $4.99/mo or $39/yr |
+
+The honest difference: Mealime gave you a catalog to browse. DinnerDrop writes the week for you from what it knows about your family, and anything specific you want goes in by name. Families who kept a rotation of 10–15 proven dinners in Mealime will find that rotation is exactly what DinnerDrop is built to run.
+
+## Other options worth knowing
+
+- **Plan to Eat** ($5.95/month or $49/year) — the best choice if you want to import recipes from websites and drag them onto a calendar yourself. No cart handoff.
+- **Paprika** ($4.99 one-time per device) — a recipe manager first, with a grocery list. No planning, no cart.
+- **Samsung Food** (free; Food+ $6.99/month) — recipe saving with a planner. Delivery partners vary.
+
+## Do it before Tuesday
+
+The only irreversible part is losing the names of the dinners your family eats. Save those today. The rest takes two minutes whenever you are ready.
+
+[Bring your Mealime favorites to DinnerDrop — free, no card →](https://www.dinnerdrop.app/mealime)
+`,
+  },
+
+  {
     slug: 'dinner-decision-fatigue',
     title: "Dinner Decision Fatigue Is Real — Here's How 5 Minutes on Sunday Fixes It",
     description:
