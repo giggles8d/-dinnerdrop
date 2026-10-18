@@ -12,7 +12,7 @@ import { isFamilyProfile } from '@/lib/access'
 import { generateCandidates, savePlan } from '@/lib/autoplan'
 import { timeLabel, type PlanShape } from '@/lib/plan'
 import { guessCategory, normalizeItemName } from '@/lib/list'
-import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { generateWithClaude, generateWithClaudeImage, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
 
 export interface MemberRow {
@@ -490,7 +490,41 @@ async function sentForRound(admin: SupabaseClient, memberId: string, roundId: st
 
 /* ---- polling Twilio for replies (no webhook change needed) ---- */
 
-interface TwilioMsg { sid: string; from: string; to: string; body: string; direction: string; date_sent: string }
+interface TwilioMsg { sid: string; from: string; to: string; body: string; direction: string; date_sent: string; num_media?: string }
+
+/** Download the pictures attached to an MMS (Twilio media needs account auth). */
+async function fetchMedia(sid: string): Promise<Array<{ base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' }>> {
+  const acct = process.env.TWILIO_ACCOUNT_SID, token = process.env.TWILIO_AUTH_TOKEN
+  if (!acct || !token) return []
+  const auth = { Authorization: 'Basic ' + Buffer.from(`${acct}:${token}`).toString('base64') }
+  const list = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${acct}/Messages/${sid}/Media.json`, { headers: auth, cache: 'no-store' })
+  if (!list.ok) return []
+  const json = await list.json()
+  const out: Array<{ base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' }> = []
+  for (const m of (json.media_list ?? []).slice(0, 4) as Array<{ uri: string; content_type: string }>) {
+    const ct = (m.content_type || '').toLowerCase()
+    if (!/^image\/(jpeg|png|webp|gif)$/.test(ct)) continue
+    const res = await fetch(`https://api.twilio.com${m.uri.replace(/\.json$/, '')}`, { headers: auth, redirect: 'follow', cache: 'no-store' })
+    if (!res.ok) continue
+    const buf = Buffer.from(await res.arrayBuffer())
+    if (buf.length > 6 * 1024 * 1024) continue
+    out.push({ base64: buf.toString('base64'), mediaType: ct as 'image/jpeg' })
+  }
+  return out
+}
+
+/** A picture of a product / label / empty box → the grocery item to buy. */
+async function itemFromPhoto(img: { base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' }, caption: string): Promise<CleanItem | null> {
+  try {
+    const text = await generateWithClaudeImage(
+      `This photo was texted to a family grocery list. Identify the grocery product to buy (brand and size if visible, e.g. "Chobani Vanilla Greek Yogurt 32 oz", "Purina Pro Plan Chicken & Rice dog food 35 lb"). ${caption ? `The sender also wrote: "${caption}".` : ''} Return ONLY JSON {"name":"<product>","quantity":"1","unit":"<whole|bag|box|can|jar|bottle|pack|lb|oz|gallon|dozen>"}; if it isn't a grocery/household product, return {"name":""}.`,
+      img, 200,
+    )
+    const j = parseClaudeJSON<{ name?: string; quantity?: string | number; unit?: string }>(text)
+    if (!j?.name?.trim()) return null
+    return { name: j.name.trim(), quantity: String(j.quantity ?? '1'), unit: (j.unit ?? '').trim() }
+  } catch { return null }
+}
 
 async function fetchInbound(sinceDays = 2): Promise<TwilioMsg[]> {
   const sid = process.env.TWILIO_ACCOUNT_SID, token = process.env.TWILIO_AUTH_TOKEN, from = process.env.TWILIO_FROM_NUMBER
@@ -517,6 +551,11 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
     // oldest first so a YES followed by a vote is processed in order
     for (const m of msgs.filter((x) => !seenSet.has(x.sid)).sort((a, b) => new Date(a.date_sent).getTime() - new Date(b.date_sent).getTime())) {
       try {
+        if (Number(m.num_media) > 0) {
+          const pr = await handlePhoto(admin, m)
+          if (pr) { report.handled++; if (pr.reply) { const sent = await sendSms(m.from, pr.reply); await admin.from('sms_messages').insert({ household_id: pr.householdId, member_id: pr.memberId, direction: 'out', to_number: m.from, body: pr.reply, intent: 'reply', twilio_sid: sent.sid ?? null }); report.replies++ } }
+          if (!m.body.trim() || pr) continue
+        }
         const r = await handleInbound(admin, m.from, m.body, m.sid)
         if (!r.handled || !r.member) continue   // not one of ours (FamCEO's traffic)
         report.handled++
@@ -540,6 +579,35 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
   }
   try { report.completions = await checkVoteCompletion(admin) } catch (e) { report.errors.push(String(e)) }
   return report
+}
+
+
+/** MMS from a member: every attached picture becomes a grocery item (with the caption as a hint). */
+async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply: string; householdId: string; memberId: string } | null> {
+  const phone = normalizePhone(m.from) ?? m.from
+  const { data: rows } = await admin.from('household_members').select('*').eq('phone', phone).limit(1)
+  const member = rows?.[0] as MemberRow | undefined
+  if (!member) return null
+  await admin.from('sms_messages').insert({ household_id: member.household_id, member_id: member.id, direction: 'in', from_number: phone, body: m.body || '[photo]', intent: 'photo', twilio_sid: m.sid })
+  if (!member.phone_opt_in_at || member.phone_opted_out) return { reply: 'Reply YES to join the family texts first, then send the photo again.', householdId: member.household_id, memberId: member.id }
+  if (!member.can_add) return { reply: `Adding to the list is turned off for you, ${member.name}.`, householdId: member.household_id, memberId: member.id }
+  const owner = await ownerForHousehold(admin, member.household_id)
+  if (!owner) return null
+  const plan = await latestPlan(admin, owner.id)
+  const weekStart = plan?.week_start ?? mondayOf(new Date())
+  const media = await fetchMedia(m.sid)
+  const added: string[] = []
+  for (const img of media) {
+    const it = await itemFromPhoto(img, m.body?.trim() ?? '')
+    if (!it) continue
+    const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
+    const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
+    if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
+    else await admin.from('list_items').insert({ user_id: owner.id, household_id: member.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: member.name })
+    added.push(`${it.name}${it.unit && it.unit !== 'whole' ? ` (${it.quantity} ${it.unit})` : ''}`)
+  }
+  if (!added.length) return { reply: media.length ? `I couldn't tell what to buy from that photo — text me the name instead (e.g. "add Cheerios").` : `I couldn't open that picture. Try sending it again, or text the name.`, householdId: member.household_id, memberId: member.id }
+  return { reply: `Added from your photo: ${added.join(', ')}. ✅`, householdId: member.household_id, memberId: member.id }
 }
 
 /**
