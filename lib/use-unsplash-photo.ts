@@ -28,7 +28,7 @@ export function useUnsplashPhoto(query: string): {
     }
 
     const key = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY
-    if (!key) {
+    if (!key || !query) {
       cache.set(query, null)
       setLoading(false)
       return

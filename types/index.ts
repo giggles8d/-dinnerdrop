@@ -19,8 +19,15 @@ export interface Meal {
   ingredients: Ingredient[]
   steps: string[]
   prepTime: number
-cuisine?: string      // e.g. "Italian", "Mexican"
+  cuisine?: string      // e.g. "Italian", "Mexican"
   protein?: string      // e.g. "chicken", "beef", "tofu"
+  tags?: string[]       // 'quick' | 'leftover-friendly' | 'kid-favorite' | 'sheet-pan' | ...
+  nutrition?: { calories: number; protein: number }   // per serving, when the family wants it
+  imageUrl?: string     // stored once in the recipe library (skips the Unsplash lookup)
+  recipeId?: string     // public.recipes.id
+  fromLibrary?: boolean // a proven dinner pulled from the library rather than freshly generated
+  suggestedNight?: string // e.g. "Tuesday" — matched to that night's cook-time budget
+  leftoverFriendly?: boolean
 }
 
 export interface Ingredient {

@@ -6,10 +6,13 @@ import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
 interface MealCardImageProps {
   mealName: string
   dayLabel: string
+  imageUrl?: string   // stored once in the recipe library; skips the lookup
 }
 
-export default function MealCardImage({ mealName, dayLabel }: MealCardImageProps) {
-  const { photo, loading } = useUnsplashPhoto(mealName)
+export default function MealCardImage({ mealName, dayLabel, imageUrl }: MealCardImageProps) {
+  const lookup = useUnsplashPhoto(imageUrl ? '' : mealName)
+  const photo = imageUrl ? { url: imageUrl, alt: `Photo of ${mealName}` } : lookup.photo
+  const loading = imageUrl ? false : lookup.loading
 
   return (
     <div className="relative h-[200px] w-full overflow-hidden">

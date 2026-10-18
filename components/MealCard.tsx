@@ -34,7 +34,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
       >
         {/* Selection badge */}
         <div className="relative">
-          <MealCardImage mealName={meal.name} dayLabel="" />
+          <MealCardImage mealName={meal.name} dayLabel="" imageUrl={meal.imageUrl} />
           <div className={`absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-all
             ${selected ? 'bg-primary text-primary-foreground' : 'bg-background/80 border-2 border-muted-foreground/30'}`}>
             {selected && <Check className="w-4 h-4" strokeWidth={3} />}
@@ -49,7 +49,14 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             <span>{meal.cookTime} min</span>
             <span>&middot;</span>
             <span>{meal.servings} servings</span>
+            {meal.nutrition && <><span>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
           </div>
+          {(meal.tags?.length || meal.fromLibrary) && (
+            <div className="flex flex-wrap gap-1">
+              {meal.fromLibrary && <span className="rounded-full bg-accent/15 text-accent-foreground px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Family favorite</span>}
+              {(meal.tags ?? []).slice(0, 3).map(t => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
+            </div>
+          )}
           <div className={`inline-block rounded-full px-3 py-1 text-xs font-semibold border
             ${selected ? 'bg-primary/10 text-primary border-primary/30' : 'bg-secondary text-primary border-primary/20'}`}>
             ${meal.estimatedCost.toFixed(2)}
@@ -62,7 +69,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
   return (
     <div className="rounded-xl border border-border bg-card hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden group">
       <Link href={`/recipe/${getMealId(meal)}`} onClick={handleClick} className="block">
-        <MealCardImage mealName={meal.name} dayLabel={meal.day} />
+        <MealCardImage mealName={meal.name} dayLabel={meal.day} imageUrl={meal.imageUrl} />
       </Link>
       <div className="relative">
         {/* Swap affordance — top-left, revealed on card hover */}
@@ -106,7 +113,14 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             <span>{meal.cookTime} min</span>
             <span>&middot;</span>
             <span>{meal.servings} servings</span>
+            {meal.nutrition && <><span>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
           </div>
+          {(meal.tags?.length || meal.fromLibrary) && (
+            <div className="flex flex-wrap gap-1">
+              {meal.fromLibrary && <span className="rounded-full bg-accent/15 text-accent-foreground px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Family favorite</span>}
+              {(meal.tags ?? []).slice(0, 3).map(t => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
+            </div>
+          )}
           <div className="inline-block rounded-full bg-secondary text-primary px-3 py-1 text-xs font-semibold border border-primary/20">
             ${meal.estimatedCost.toFixed(2)}
           </div>

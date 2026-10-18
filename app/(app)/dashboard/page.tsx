@@ -9,6 +9,20 @@ import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
 import type { Meal } from '@/types'
+import { WEEKDAY_LABEL, type Weekday } from '@/lib/settings'
+
+interface PlanShape {
+  dinnersPerWeek: number
+  cookDays: Weekday[]
+  nightTimes: Array<{ day: Weekday; label: string; minutes: number }>
+  leftoverNight: boolean
+}
+const DEFAULT_SHAPE: PlanShape = {
+  dinnersPerWeek: 5,
+  cookDays: ['mon', 'tue', 'wed', 'thu', 'fri'],
+  nightTimes: [],
+  leftoverNight: false,
+}
 
 export default function DashboardPage() {
   return (
@@ -16,6 +30,33 @@ export default function DashboardPage() {
       <DashboardContent />
     </Suspense>
   )
+}
+
+/**
+ * Give each chosen dinner a night. Honors the family's cook days, uses the
+ * planner's suggestedNight when it names one of those days, fills the rest in
+ * order, and — with a leftover night on — the doubled dinner is followed by a
+ * "Leftovers" marker night at the end of the week.
+ */
+function assignNights(selected: Meal[], shape: PlanShape): Meal[] {
+  const days = (shape.cookDays.length ? shape.cookDays : DEFAULT_SHAPE.cookDays)
+  const labels = days.map(d => WEEKDAY_LABEL[d])
+  const free = [...labels]
+  const placed: Array<Meal | null> = new Array(labels.length).fill(null)
+  const rest: Meal[] = []
+  for (const m of selected) {
+    const idx = m.suggestedNight ? labels.indexOf(m.suggestedNight) : -1
+    if (idx >= 0 && placed[idx] === null) { placed[idx] = m; free.splice(free.indexOf(labels[idx]), 1) }
+    else rest.push(m)
+  }
+  const out: Meal[] = []
+  let r = 0
+  for (let i = 0; i < labels.length; i++) {
+    const m = placed[i] ?? rest[r++]
+    if (m) out.push({ ...m, day: labels[i] })
+  }
+  for (; r < rest.length; r++) out.push({ ...rest[r], day: `Day ${out.length + 1}` })
+  return out
 }
 
 function DashboardContent() {
@@ -32,6 +73,8 @@ function DashboardContent() {
   const [favoriteNames, setFavoriteNames] = useState<Set<string>>(new Set())
   const [subscriptionStatus, setSubscriptionStatus] = useState<string>('free')
   const [planCount, setPlanCount] = useState(0)
+  const [planShape, setPlanShape] = useState<PlanShape>(DEFAULT_SHAPE)
+  const [planMode, setPlanMode] = useState<'fresh' | 'favorites'>('fresh')
   // Instant first plan: brand-new users (no plan yet) get their first week
   // auto-generated with smart defaults — no quiz gate before seeing value.
   const [needsPersonalize, setNeedsPersonalize] = useState(false)
@@ -236,7 +279,7 @@ function DashboardContent() {
 
       // Generation occasionally fails on the first attempt — auto-retry once,
       // transparently, so users don't get stranded with no plan.
-      let data: { meals?: Meal[]; error?: string } | null = null
+      let data: { meals?: Meal[]; plan?: PlanShape; error?: string } | null = null
       let lastErr: unknown = null
       for (let attempt = 0; attempt < 2; attempt++) {
         const controller = new AbortController()
@@ -254,6 +297,7 @@ function DashboardContent() {
               dietaryNeeds: profile.dietary_needs || [],
               favoriteMeals,
               userId: user.id,
+              mode: planMode,
             }),
           })
           const json = await res.json()
@@ -273,13 +317,15 @@ function DashboardContent() {
       }
 
       if (data.meals) {
+        const shape = data.plan ?? DEFAULT_SHAPE
+        setPlanShape(shape)
         setPendingMeals(data.meals)
-        // First plan ever: pre-select 5 so one tap confirms — new users should
-        // be one click from done, not facing 10 unchecked boxes. Returning
+        // First plan ever: pre-select the week so one tap confirms — new users
+        // should be one click from done, not facing unchecked boxes. Returning
         // users regenerating start empty and choose deliberately.
         setSelectedIds(
           planCount === 0 && !hasGenerated
-            ? new Set(data.meals.slice(0, 5).map(m => m.day))
+            ? new Set(data.meals.slice(0, shape.dinnersPerWeek).map(m => m.day))
             : new Set()
         )
         setGenerateError('')
@@ -314,12 +360,15 @@ function DashboardContent() {
     setLoading(true)
     setGenerateError('')
     try {
-      const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-      const confirmed = selectedMeals.map((meal, i) => ({
-        ...meal,
-        day: DAY_NAMES[i] ?? `Day ${i + 1}`,
-      }))
+      const confirmed = assignNights(selectedMeals, planShape)
       const confirmedCost = confirmed.reduce((sum, m) => sum + m.estimatedCost, 0)
+
+      // Library signal: what this family kept vs. passed on (fire and forget).
+      const kept = selectedMeals.map(m => m.recipeId).filter((x): x is string => !!x)
+      const skipped = pendingMeals.filter(m => !selectedIds.has(m.day)).map(m => m.recipeId).filter((x): x is string => !!x)
+      if (kept.length || skipped.length) {
+        fetch('/api/recipes/signal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kept, skipped }) }).catch(() => {})
+      }
 
       const { data: { session } } = await supabase.auth.getSession()
       const user = session?.user ?? null
@@ -460,8 +509,8 @@ function DashboardContent() {
             <p className="text-muted-foreground mt-2">
               {isPickingMeals
                 ? planCount === 0
-                  ? `We picked 5 to get you started — tap any to swap · ${selectedMeals.length} selected`
-                  : `Tap the dinners you want this week — pick about 5 · ${selectedMeals.length} selected`
+                  ? `We picked ${planShape.dinnersPerWeek} to get you started — tap any to swap · ${selectedMeals.length} selected`
+                  : `Tap the dinners you want this week — pick about ${planShape.dinnersPerWeek} · ${selectedMeals.length} selected`
                 : meals.length > 0
                   ? `${meals.length} dinners planned around your budget and preferences`
                   : 'Planned around your budget and preferences'}
@@ -484,21 +533,30 @@ function DashboardContent() {
               </button>
             </div>
           ) : (
-            <button
-              onClick={generatePlan}
-              disabled={loading || initialLoading}
-              className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
-            >
-              {initialLoading
-                ? 'Loading...'
-                : loading
-                ? 'Generating...'
-                : !canGenerate
-                  ? 'Upgrade to generate'
-                  : hasGenerated
-                    ? 'Generate new week'
-                    : 'Generate my plan'}
-            </button>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              {favoriteNames.size >= 3 && !loading && (
+                <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
+                  <input type="checkbox" checked={planMode === 'favorites'} onChange={(e) => setPlanMode(e.target.checked ? 'favorites' : 'fresh')} className="accent-[#1a5c38]" />
+                  Build from my favorites
+                </label>
+              )}
+              <button
+                onClick={generatePlan}
+                disabled={loading || initialLoading}
+                className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
+              >
+                {initialLoading
+                  ? 'Loading...'
+                  : loading
+                  ? 'Generating...'
+                  : !canGenerate
+                    ? 'Upgrade to generate'
+                    : hasGenerated
+                      ? 'Generate new week'
+                      : 'Generate my plan'}
+              </button>
+              <Link href="/settings" className="text-xs text-muted-foreground hover:text-primary underline-offset-2 hover:underline sm:ml-1">Settings</Link>
+            </div>
           )}
         </div>
 
@@ -510,8 +568,8 @@ function DashboardContent() {
               Building your first week of dinners&hellip;
             </h2>
             <p className="text-muted-foreground text-sm max-w-md mx-auto">
-              Our AI is planning 10 weeknight dinners around your budget and cook
-              time. Takes about 30 seconds — worth the wait.
+              Planning a week of dinners around your budget, cook time, and who&apos;s
+              at the table. Takes about 30 seconds — worth the wait.
             </p>
           </div>
         )}
@@ -521,10 +579,10 @@ function DashboardContent() {
             <div className="text-3xl mb-3">&#127858;</div>
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">Welcome to DinnerDrop!</h2>
             <p className="text-muted-foreground text-sm max-w-md mx-auto mb-4">
-              Your family&apos;s personal dinner planner is ready. Tap &ldquo;Generate my plan&rdquo; above to get 10 AI-planned dinner ideas — personalized to your budget, cook time, and tastes — then pick your favorites for the week.
+              Your family&apos;s personal dinner planner is ready. Tap &ldquo;Generate my plan&rdquo; above to get a week of dinner ideas — planned around your budget, cook time, and who&apos;s at the table — then pick the ones you want.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">&#10003; 10 dinner ideas to choose from</span>
+              <span className="flex items-center gap-1">&#10003; A week of dinner ideas to choose from</span>
               <span className="hidden sm:block">·</span>
               <span className="flex items-center gap-1">&#10003; Budget-tracked grocery list</span>
               <span className="hidden sm:block">·</span>
