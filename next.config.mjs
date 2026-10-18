@@ -25,6 +25,8 @@ const nextConfig = {
       // Old label used in ads/links; the landing page is picky-eater-dinners.
       { source: '/dinners/kid-friendly-dinners', destination: '/dinners/picky-eater-dinners', permanent: true },
       { source: '/dinners/kid', destination: '/dinners/picky-eater-dinners', permanent: true },
+      { source: '/dinners/30-minute-dinners', destination: '/dinners/dinners-under-30-minutes', permanent: true },
+      { source: '/dinners/under-30-minutes', destination: '/dinners/dinners-under-30-minutes', permanent: true },
     ]
   },
 };
