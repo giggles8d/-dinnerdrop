@@ -4,6 +4,7 @@ import Image from 'next/image'
 import HeroClip from '@/components/HeroClip'
 import FamilyTextingSection from '@/components/FamilyTextingSection'
 import StorePriceExample from '@/components/StorePriceExample'
+import { InstacartCarrot, InstacartBand, PoweredByInstacart } from '@/components/InstacartMark'
 import SampleWeek from '@/components/SampleWeek'
 import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, Clock3 } from 'lucide-react'
 
@@ -37,15 +38,18 @@ export default async function LandingPage() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-16 pb-20">
             <div>
-              <div className="inline-flex items-center gap-2 bg-white text-primary text-xs font-bold px-3 py-1.5 rounded-full border border-primary/20 mb-6 shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
-                Free weekly dinner plans + one-tap Instacart cart
+              <div className="flex flex-wrap items-center gap-2 mb-6">
+                <PoweredByInstacart />
+                <span className="inline-flex items-center gap-2 bg-white text-primary text-xs font-bold px-3 py-1.5 rounded-full border border-primary/20 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+                  Free weekly dinner plans
+                </span>
               </div>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-heading font-bold text-foreground leading-[1.05] mb-6">
                 Dinner,<br />handled.
               </h1>
               <p className="text-xl text-muted-foreground max-w-xl leading-relaxed mb-9">
-                Five weeknight dinners planned around your family and your budget. Tap once and your whole list opens in Instacart with every item matched — pick your store, review, check out. Free, no card needed.
+                Five weeknight dinners planned around your family and your budget. Tap once and your whole list opens in <span className="font-semibold text-foreground">your Instacart cart</span> with every item matched — pick your store, review, check out. Free, no card needed.
               </p>
               <div className="flex flex-col sm:flex-row items-start gap-3">
                 <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
@@ -55,7 +59,7 @@ export default async function LandingPage() {
                   See a sample week
                 </a>
               </div>
-              <p className="text-sm text-muted-foreground mt-4">Free forever for planning and your Instacart cart &middot; Family plan $4.99/month, 14 days free</p>
+              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-2"><InstacartCarrot height={14} /> Works with your Instacart account and every store on it &middot; Free forever &middot; Family plan $4.99/month, 14 days free</p>
             </div>
 
             <div className="relative">
@@ -64,10 +68,10 @@ export default async function LandingPage() {
               </div>
               {/* floating proof chips */}
               <div className="absolute -bottom-5 left-6 bg-white rounded-2xl shadow-lg px-5 py-3 flex items-center gap-3 ring-1 ring-black/5">
-                <ShoppingCart className="w-6 h-6 text-primary" />
+                <InstacartCarrot height={28} />
                 <div>
-                  <p className="font-heading font-bold text-primary leading-none">One tap</p>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">whole list in your Instacart cart</p>
+                  <p className="font-heading font-bold text-primary leading-none">One tap → Instacart</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">whole list in your cart, every item matched</p>
                 </div>
               </div>
               <div className="absolute -top-4 right-6 bg-white rounded-2xl shadow-lg px-5 py-3 flex items-center gap-3 ring-1 ring-black/5">
@@ -81,6 +85,8 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+
+      <InstacartBand />
 
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
         <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop builds the list in your own Instacart or Kroger account. You review every item and check out there at Instacart&apos;s or Kroger&apos;s prices for that store. We never charge your grocery account and never add to the price. Over 200 families plan dinner with DinnerDrop.
@@ -123,7 +129,7 @@ export default async function LandingPage() {
                 {[
                   { step: '1', title: 'Tell us about your family', description: 'Budget, family size, dietary needs, how much time you have to cook. Takes 2 minutes.' },
                   { step: '2', title: 'Get 5 personalized dinners', description: 'AI builds a full week of budget-friendly meals your family will actually eat.' },
-                  { step: '3', title: 'One tap. List in your cart.', description: 'Tap Instacart and your full list opens with every item matched — pick a store, review, check out. Family members can push straight to a Kroger cart.' },
+                  { step: '3', title: 'One tap. It\u2019s in your Instacart cart.', description: 'DinnerDrop is built on the Instacart Developer Platform: tap once and your full list opens in your own Instacart account with every item matched — pick a store, review, check out. Family members can push straight to a Kroger cart.' },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-5">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-primary-foreground font-heading font-bold flex items-center justify-center shadow-sm">
@@ -156,7 +162,7 @@ export default async function LandingPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { Icon: Sparkles, title: 'AI meal planning', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },
-            { Icon: ShoppingCart, title: 'Auto-cart at Instacart or Kroger', description: 'One tap opens your full list in Instacart with every item matched — pick your store, glance, add to cart. On Family it goes straight into your Kroger cart. No retyping. No missed items.' },
+            { Icon: ShoppingCart, title: 'Instacart built in', description: 'One tap opens your full list in your Instacart cart with every item matched — pick your store, glance, check out. Every Instacart store near you, no retyping, no missed items. On Family it can go straight into your Kroger cart too.' },
             { Icon: Heart, title: 'Picky-eater friendly', description: "Swap any meal you don't love in one tap. DinnerDrop learns your family's tastes over time." },
             { Icon: PiggyBank, title: 'Built to your budget', description: 'Set your weekly food budget. Every plan targets it, builds around your store\u2019s weekly sales, and prices the list at each store you shop so you can pick the cheapest.' },
           ].map(({ Icon, title, description }) => (
@@ -255,6 +261,7 @@ export default async function LandingPage() {
           <h2 className="text-3xl font-heading font-bold text-center text-foreground mb-10">Questions parents ask</h2>
           <div className="space-y-4">
             {[
+              { q: 'How does the Instacart integration work?', a: 'DinnerDrop is built on the Instacart Developer Platform. When your week is planned, tap “Shop on Instacart” and your full, deduplicated list opens in your own Instacart account with every item already matched to a product — no retyping, no searching item by item. You pick any Instacart store near you (Wegmans, Aldi, Tops, Price Chopper, Target, Costco and more), swap anything you like, and check out there. Instacart handles delivery or pickup and payment; DinnerDrop never sees your card.' },
               { q: 'Is it really free?', a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart cart are free, with no card. Instacart pays us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.' },
               { q: 'How do I cancel Family?', a: 'From your Account page, in one tap. No calls, no hidden steps. Cancel during the 14-day trial and you pay nothing.' },
               { q: 'Will I be charged by surprise?', a: 'No. We email you on day 11 of a Family trial, three days before the first charge, and Account shows your exact billing date. Payments are processed by Stripe; we never see or store your card number.' },

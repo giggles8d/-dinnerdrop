@@ -5,10 +5,10 @@ import PwaRegister from "@/components/PwaRegister";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DinnerDrop — AI Dinner Planning for Busy Families",
+  title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart Cart",
   description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
   openGraph: {
-    title: "DinnerDrop — AI Dinner Planning for Busy Families",
+    title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart Cart",
     description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
     images: [{ url: "/og-image.png?v=3", width: 1200, height: 630, alt: "DinnerDrop" }],
     type: "website",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "DinnerDrop — AI Dinner Planning for Busy Families",
-    description: "Generate 5 personalized dinner plans, build your grocery list, and shop at your favorite store — all in one tap.",
+    title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart Cart",
+    description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
     images: ["/og-image.png?v=3"],
   },
   metadataBase: new URL("https://www.dinnerdrop.app"),

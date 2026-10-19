@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import StorePriceExample from '@/components/StorePriceExample'
+import { InstacartCarrot, PoweredByInstacart } from '@/components/InstacartMark'
 import FamilyTextingSection from '@/components/FamilyTextingSection'
 
 // Primary conversion page for ads and campaigns.
@@ -37,15 +38,18 @@ export default function StartPage() {
 
       {/* Hero */}
       <main className="container mx-auto px-4 py-8 sm:py-20 max-w-3xl text-center">
-        <div className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border mb-4 sm:mb-6" style={{ backgroundColor: '#fef9ee', borderColor: GOLD, color: GREEN }}>
-          <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ backgroundColor: GOLD }} />
-          Over 200 families plan dinner with DinnerDrop
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-4 sm:mb-6">
+          <PoweredByInstacart />
+          <span className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD, color: GREEN }}>
+            <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ backgroundColor: GOLD }} />
+            Over 200 families plan dinner with DinnerDrop
+          </span>
         </div>
         <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: GREEN }}>
           Dinner, handled. <span style={{ color: GOLD }}>Free.</span>
         </h1>
         <p className="text-sm sm:text-base font-semibold text-gray-700 max-w-xl mx-auto leading-relaxed mb-5">
-          Five weeknight dinners planned for your family, and your whole grocery list in your Instacart cart in one tap. No card needed.
+          Five weeknight dinners planned for your family, and your whole grocery list in <strong>your Instacart cart</strong> in one tap. No card needed.
         </p>
 
         {/* Primary CTA — above the fold on mobile */}
@@ -53,8 +57,8 @@ export default function StartPage() {
           <Link href={FREE_HREF} className="px-10 py-4 rounded-xl text-white font-bold text-lg transition-colors shadow-sm hover:opacity-90 w-full sm:w-auto" style={{ backgroundColor: GREEN }}>
             Start free &mdash; no card needed &rarr;
           </Link>
-          <p className="text-sm text-gray-600">
-            Free forever for planning and your Instacart cart &middot; Family plan $4.99/month, 14 days free
+          <p className="text-sm text-gray-600 flex items-center justify-center gap-2 flex-wrap">
+            <InstacartCarrot height={14} /> Works with your Instacart account and every store on it &middot; Free forever &middot; Family plan $4.99/month, 14 days free
           </p>
         </div>
 
