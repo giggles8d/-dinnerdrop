@@ -11,7 +11,7 @@ export function InstacartCarrot({ height = 22, className = '' }: { height?: numb
 
 export function PoweredByInstacart({ className = '', text = 'Powered by Instacart' }: { className?: string; text?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 rounded-full border border-[#003D29]/15 bg-white px-3 py-1.5 text-xs font-bold text-[#003D29] shadow-sm ${className}`}>
+    <span className={`inline-flex shrink-0 whitespace-nowrap items-center gap-2 rounded-full border border-[#003D29]/15 bg-white px-3 py-1.5 text-xs font-bold text-[#003D29] shadow-sm ${className}`}>
       <InstacartCarrot height={16} />
       {text}
     </span>
