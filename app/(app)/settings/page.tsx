@@ -287,6 +287,25 @@ export default function SettingsPage() {
     await supabase.from('household_members').delete().eq('id', id)
   }
 
+  const [promoInput, setPromoInput] = useState('')
+  const [promoBusy, setPromoBusy] = useState(false)
+  const [promoMsg, setPromoMsg] = useState('')
+  async function redeemCode(e: React.FormEvent) {
+    e.preventDefault()
+    setPromoBusy(true); setPromoMsg('')
+    try {
+      const j = await fetch('/api/promo/redeem', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: promoInput.trim() }) }).then((r) => r.json())
+      if (j?.ok) {
+        setPromoMsg(`Code ${j.code} applied — Family is on through ${new Date(j.until + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}.`)
+        setProfile((p) => (p ? { ...p, family_until: j.until } : p))
+        setPromoInput('')
+      } else {
+        const why: Record<string, string> = { invalid: 'That code isn\u2019t one we recognize.', expired: 'That code has expired.', exhausted: 'That code has been fully claimed.', already_redeemed: 'A code has already been used on this account.', has_subscription: 'You\u2019re already on a paid Family plan — nothing to add.' }
+        setPromoMsg(why[j?.reason] ?? 'Could not apply that code.')
+      }
+    } catch { setPromoMsg('Could not apply that code. Try again.') }
+    setPromoBusy(false)
+  }
   const isFamily = !!profile && (
     profile.subscription_status === 'active' || profile.subscription_status === 'trialing' || profile.is_beta_member === true ||
     (!!profile.family_until && new Date(profile.family_until) > new Date())
@@ -582,6 +601,15 @@ export default function SettingsPage() {
                   <h2 className="font-heading font-semibold text-foreground mb-1">Invite your family</h2>
                   <p className="text-xs text-muted-foreground mb-2">Share this link and they get DinnerDrop free too. When they start Family, you both get a month of Family free.</p>
                   {referralUrl && <code className="block text-xs bg-muted rounded-md px-3 py-2 break-all">{referralUrl}</code>}
+                </div>
+                <div>
+                  <h2 className="font-heading font-semibold text-foreground mb-1">Have a code?</h2>
+                  <p className="text-xs text-muted-foreground mb-2">Promo codes add Family-plan time to your account — no card needed.{profile.family_until && new Date(profile.family_until) > new Date() ? ` Family is on through ${new Date(profile.family_until).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}.` : ''}</p>
+                  <form onSubmit={redeemCode} className="flex gap-2 max-w-sm">
+                    <input value={promoInput} onChange={(e) => setPromoInput(e.target.value.toUpperCase())} placeholder="MEALIME" className="flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm uppercase tracking-wide" maxLength={20} />
+                    <button type="submit" disabled={promoBusy || !promoInput.trim()} className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50">{promoBusy ? 'Checking…' : 'Apply'}</button>
+                  </form>
+                  {promoMsg && <p className="text-xs mt-2 text-foreground">{promoMsg}</p>}
                 </div>
                 <div>
                   <h2 className="font-heading font-semibold text-foreground mb-1">Your data</h2>

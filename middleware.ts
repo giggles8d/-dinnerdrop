@@ -17,11 +17,15 @@ export async function middleware(request: NextRequest) {
   // Referral capture: ?ref=CODE on any page → 30-day cookie, attached at signup.
   const ref = request.nextUrl.searchParams.get('ref')
   const refCookie = ref && /^[A-Z0-9]{6,12}$/i.test(ref) ? ref.toUpperCase() : null
+  // Promo capture: ?code=MEALIME (or ?promo=) on any page → 30-day cookie, redeemed on first dashboard load.
+  const promo = request.nextUrl.searchParams.get('code') ?? request.nextUrl.searchParams.get('promo')
+  const promoCookie = promo && /^[A-Z0-9]{3,20}$/i.test(promo) ? promo.toUpperCase() : null
 
   // Skip auth check for routes that don't need it
   if (!isProtectedRoute && !isAuthRoute) {
     const res = NextResponse.next()
     if (refCookie) res.cookies.set('dd_ref', refCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
+    if (promoCookie) res.cookies.set('dd_promo', promoCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
     return res
   }
 
@@ -67,6 +71,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (refCookie) response.cookies.set('dd_ref', refCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
+  if (promoCookie) response.cookies.set('dd_promo', promoCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
   return response
 }
 

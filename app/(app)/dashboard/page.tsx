@@ -53,6 +53,7 @@ function DashboardContent() {
 
   const [isFoundingMember, setIsFoundingMember] = useState(false)
   const [familyCredit, setFamilyCredit] = useState(false)
+  const [promoApplied, setPromoApplied] = useState<{ code: string; until: string; days: number } | null>(null)
   // Founding families have Family free for their first year (through 2027-10-18).
   const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing' || isFoundingMember || familyCredit
   // Free plan includes unlimited weekly plans (2026-10-18). Only past_due is blocked, handled in generatePlan.
@@ -89,6 +90,12 @@ function DashboardContent() {
 
       // Referral attribution (no-op without the dd_ref cookie).
       if (document.cookie.includes('dd_ref=')) fetch('/api/referrals/attach', { method: 'POST' }).catch(() => {})
+      // Promo code picked up from ?code=XXX on the way in (no-op without the dd_promo cookie).
+      if (document.cookie.includes('dd_promo=')) {
+        fetch('/api/promo/redeem', { method: 'POST' }).then((r) => r.json()).then((j) => {
+          if (j?.ok) { setFamilyCredit(true); setPromoApplied({ code: j.code, until: j.until, days: j.days }) }
+        }).catch(() => {})
+      }
       if (profile?.referral_code) setReferralCode(profile.referral_code)
 
       // Partners who joined by invite see the household owner's plan.
@@ -453,6 +460,11 @@ function DashboardContent() {
           </Link>
         )}
 
+        {promoApplied && (
+          <div className="mb-5 px-4 py-3 rounded-lg bg-accent/15 border border-accent/40 text-sm text-foreground">
+            <span className="font-semibold">Code {promoApplied.code} applied.</span> The Family plan is yours free through {new Date(promoApplied.until + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} — family texting, per-person profiles and reminders included. No card, nothing to cancel.
+          </div>
+        )}
         {/* Personalization nudge — user is on smart defaults, quiz is optional */}
         {needsPersonalize && !initialLoading && (
           <div className="mb-5 flex items-center justify-between px-4 py-3 rounded-lg bg-primary/5 border border-primary/20">

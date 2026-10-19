@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { Suspense, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import StorePriceExample from '@/components/StorePriceExample'
 import { InstacartCarrot, PoweredByInstacart } from '@/components/InstacartMark'
 import FamilyTextingSection from '@/components/FamilyTextingSection'
@@ -14,6 +16,24 @@ const FAMILY_HREF = '/signup?redirect=' + encodeURIComponent('/subscribe?auto=1'
 
 const GREEN = '#1a5c38'
 const GOLD = '#e8a838'
+
+function PromoBanner() {
+  const params = useSearchParams()
+  const code = (params.get('code') || params.get('promo') || '').toUpperCase()
+  const [promo, setPromo] = useState<{ code: string; days: number; label: string } | null>(null)
+  useEffect(() => {
+    if (!code) return
+    fetch(`/api/promo/check?code=${encodeURIComponent(code)}`).then((r) => r.json()).then((j) => { if (j?.ok) setPromo(j) }).catch(() => {})
+  }, [code])
+  if (!promo) return null
+  const months = Math.round(promo.days / 30)
+  return (
+    <div className="mx-auto max-w-2xl mb-5 sm:mb-6 rounded-2xl border-2 px-5 py-4 text-left shadow-sm" style={{ borderColor: GOLD, backgroundColor: '#fff8e8' }}>
+      <p className="text-sm font-bold" style={{ color: GREEN }}>Code {promo.code} is on — {months} month{months === 1 ? '' : 's'} of the Family plan free, no card needed.</p>
+      <p className="text-sm text-gray-700 mt-1">Sign up below and it applies automatically: family texting, per-person profiles and reminders, on top of the free plans and your one-tap Instacart cart. Nothing to cancel when it ends — you just go back to the free plan.</p>
+    </div>
+  )
+}
 
 export default function StartPage() {
   return (
@@ -45,6 +65,7 @@ export default function StartPage() {
             Over 200 families plan dinner with DinnerDrop
           </span>
         </div>
+        <Suspense fallback={null}><PromoBanner /></Suspense>
         <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: GREEN }}>
           Dinner, handled. <span style={{ color: GOLD }}>Free.</span>
         </h1>
