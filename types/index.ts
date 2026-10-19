@@ -29,6 +29,7 @@ export interface Meal {
   suggestedNight?: string // e.g. "Tuesday" — matched to that night's cook-time budget
   leftoverFriendly?: boolean
   saleItems?: string[]  // "chicken thighs $1.99/lb" — sale items this dinner was built around
+  safeBite?: string     // the one plain component a picky eater can eat on its own ("plain rice")
 }
 
 export interface Ingredient {

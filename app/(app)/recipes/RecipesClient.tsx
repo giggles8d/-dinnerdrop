@@ -6,6 +6,7 @@ import { Heart, Link2, FileText, Camera, Search } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import type { Meal } from '@/types'
+import { safeBite, cookware } from '@/lib/meal-insights'
 
 interface RecipeRow {
   id: string
@@ -204,7 +205,8 @@ export default function RecipesClient({ initialRows = [] }: { initialRows?: Reci
                   <Link href={`/recipes/${r.slug}`} className="block pr-8">
                     <h3 className="font-heading font-semibold leading-tight text-card-foreground group-hover:text-primary">{r.name}</h3>
                   </Link>
-                  <div className="text-xs text-muted-foreground">{(r.cook_time ?? 0) + (r.prep_time ?? 0)} min · {r.servings ?? 4} servings{r.kept_count > 0 ? ` · kept by ${r.kept_count} ${r.kept_count === 1 ? 'family' : 'families'}` : ''}</div>
+                  <div className="text-xs text-muted-foreground">{(r.cook_time ?? 0) + (r.prep_time ?? 0)} min · {r.servings ?? 4} servings · 🍳 {cookware({ name: r.name, ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [] }).label}{r.kept_count > 0 ? ` · kept by ${r.kept_count} ${r.kept_count === 1 ? 'family' : 'families'}` : ''}</div>
+                  {safeBite({ name: r.name, ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [] }) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite({ name: r.name, ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [] })}</div>}
                   {(r.tags ?? []).length > 0 && <div className="flex flex-wrap gap-1">{(r.tags ?? []).slice(0, 3).map((t) => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}</div>}
                 </div>
               </div>

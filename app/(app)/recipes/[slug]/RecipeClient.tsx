@@ -9,6 +9,7 @@ import CookMode from '@/components/CookMode'
 import { formatQuantity } from '@/components/GroceryList'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
+import { safeBite, cookware } from '@/lib/meal-insights'
 
 interface RecipeRow {
   id: string; name: string; slug: string; cuisine: string | null; protein: string | null
@@ -84,6 +85,8 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
         <div className="flex flex-wrap items-center gap-2 mb-6 pb-6 border-b border-border">
           <span className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground"><Clock className="w-3.5 h-3.5" />{timeLabel(meal)}</span>
           <span className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground"><Users className="w-3.5 h-3.5" />{meal.servings} servings</span>
+          <span className="bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground" title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
+          {safeBite(meal) && <span className="bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold" title="The one plain component a picky eater can have on its own">Picky-eater safe bet: {safeBite(meal)}</span>}
           {meal.estimatedCost > 0 && <span className="bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold">${meal.estimatedCost.toFixed(2)}</span>}
           {meal.nutrition && <span className="bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span>}
           {r.kept_count > 0 && <span className="text-xs text-muted-foreground">kept by {r.kept_count} {r.kept_count === 1 ? 'family' : 'families'}</span>}

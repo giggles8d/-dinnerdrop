@@ -210,6 +210,7 @@ ${timeRule}
 - Maximum 6 ingredients per dinner, maximum 4 short steps (one sentence each), written for a tired parent
 - cookTime = minutes until it's on the table; prepTime = hands-on minutes. A slow-cooker dinner is cookTime 480 with prepTime 15 — only offer those when the night allows it (the family has a slow cooker; assume it's started in the morning). Set "servings" to exactly ${profile.familySize}${settings.plan.leftoverNight ? ` (${profile.familySize * 2} for leftover-friendly ones)` : ''}
 - Ingredient quantities must be shoppable (what you'd buy: "1" "lb", "2" "cans", "1" "bunch"), with a "searchTerm" that matches a grocery product name
+- "safeBite" is the one plain component of that dinner a picky eater can have on its own, in 2–4 words ("plain rice", "a plain tortilla", "chicken, sauce on the side"); every dinner must have one.
 - Size every ingredient for the dinner's servings — this is a real family, not a recipe for 4. Per serving buy at least 6 oz raw boneless meat or fish (8 oz bone-in, 5 1/2 oz ground meat), 3 1/2 oz dry pasta or 1/2 cup dry rice, 1/2 lb potatoes, and 1 cup of vegetables. So ${profile.familySize} servings needs about ${(Math.ceil((profile.familySize * 6) / 4) / 4).toFixed(2).replace(/\.?0+$/, '')} lb of boneless meat${settings.plan.leftoverNight ? `, and a leftover-friendly dinner (${profile.familySize * 2} servings) needs double that` : ''}.
 - Give each dinner 1–3 short tags from: quick, sheet-pan, one-pot, air-fryer, slow-cooker, instant-pot, grill, kid-favorite, leftover-friendly, budget, high-protein, vegetarian, 15-min
 ${settings.food.nutritionInfo ? '- Estimate nutrition per serving (calories, grams of protein)' : ''}
@@ -228,7 +229,8 @@ Return ONLY valid JSON with this exact structure, no markdown:
       "estimatedCost": 18.50,
       "tags": ["quick", "kid-favorite"],
       "suggestedNight": "Tuesday",
-      "leftoverFriendly": false,${salesSection ? '\n      "saleItems": ["chicken thighs $1.99/lb"],' : ''}${kidSafeFoods.length ? '\n      "kidNote": "plain rice on the side for Max",' : ''}${nutritionField ? '\n      "nutrition": { "calories": 520, "protein": 34 },' : ''}
+      "leftoverFriendly": false,
+      "safeBite": "plain rice",${salesSection ? '\n      "saleItems": ["chicken thighs $1.99/lb"],' : ''}${kidSafeFoods.length ? '\n      "kidNote": "plain rice on the side for Max",' : ''}${nutritionField ? '\n      "nutrition": { "calories": 520, "protein": 34 },' : ''}
       "ingredients": [
         { "name": "string", "quantity": "1 1/2", "unit": "lb", "category": "Meat & Seafood", "searchTerm": "chicken breast" }
       ],
