@@ -7,8 +7,9 @@ name: Mobile — iOS (TestFlight)
 #   APP_STORE_CONNECT_ISSUER_ID    – App Store Connect API issuer ID
 #   APP_STORE_CONNECT_KEY_P8       – the full text of the AuthKey_XXXX.p8 file (BEGIN…END lines included)
 #   (APP_STORE_CONNECT_KEY_P8_B64 – base64 of the .p8 – still accepted as an alternative)
-# Signing uses Xcode's automatic cloud signing with the API key, so no
-# certificates or provisioning profiles need to be exported by hand.
+# The archive is built unsigned (a development profile would need a registered
+# device); the export step then signs it for App Store distribution with Xcode's
+# cloud signing via the API key — no certificates or profiles to manage by hand.
 
 on:
   workflow_dispatch:
@@ -72,6 +73,7 @@ jobs:
             -authenticationKeyIssuerID "$ISSUER_ID" \
             DEVELOPMENT_TEAM="$TEAM_ID" \
             CODE_SIGN_STYLE=Automatic \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             archive > "$RUNNER_TEMP/archive.log" 2>&1 || { grep -E "error:|warning: .*(sign|provision)|Signing|No profiles|requires a development team" "$RUNNER_TEMP/archive.log" | tail -40; tail -60 "$RUNNER_TEMP/archive.log"; exit 1; }
 
       - name: Export IPA
