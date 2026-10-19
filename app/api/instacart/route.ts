@@ -3,6 +3,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { createInstacartLink } from '@/lib/instacart'
 import { createClient } from '@supabase/supabase-js'
 import { sendWeekRecipes } from '@/lib/recipe-email'
+import { stockStaplesFromList } from '@/lib/pantry'
 import type { GroceryItem } from '@/types'
 
 export async function POST(request: Request) {
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
       if (!quoteOnly) {
         try {
           const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+          await stockStaplesFromList(admin, user.id, typeof weekStart === 'string' ? weekStart : null).catch((e) => console.error('[instacart] staple stock failed:', e))
           await sendWeekRecipes(admin, user.id)
         } catch (mailErr) {
           console.error('[instacart] recipe email failed:', mailErr)

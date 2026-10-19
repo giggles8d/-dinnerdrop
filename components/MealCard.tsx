@@ -66,6 +66,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
           {(meal.saleItems?.length ?? 0) > 0 && (
             <div className="text-[11px] text-primary font-medium" title={meal.saleItems!.join(', ')}>🏷️ On sale: {meal.saleItems!.slice(0, 2).join(' · ')}{meal.saleItems!.length > 2 ? ` +${meal.saleItems!.length - 2}` : ''}</div>
           )}
+          {(meal.usesPantry?.length ?? 0) > 0 && (
+            <div className="text-[11px] text-amber-700 font-medium" title={meal.usesPantry!.join(', ')}>🥫 Uses up: {meal.usesPantry!.slice(0, 2).join(' · ')}{meal.usesPantry!.length > 2 ? ` +${meal.usesPantry!.length - 2}` : ''}</div>
+          )}
           <div className={`inline-block rounded-full px-3 py-1 text-xs font-semibold border
             ${selected ? 'bg-primary/10 text-primary border-primary/30' : 'bg-secondary text-primary border-primary/20'}`}>
             ${meal.estimatedCost.toFixed(2)}
@@ -135,6 +138,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
           )}
           {(meal.saleItems?.length ?? 0) > 0 && (
             <div className="text-[11px] text-primary font-medium" title={meal.saleItems!.join(', ')}>🏷️ On sale: {meal.saleItems!.slice(0, 2).join(' · ')}{meal.saleItems!.length > 2 ? ` +${meal.saleItems!.length - 2}` : ''}</div>
+          )}
+          {(meal.usesPantry?.length ?? 0) > 0 && (
+            <div className="text-[11px] text-amber-700 font-medium" title={meal.usesPantry!.join(', ')}>🥫 Uses up: {meal.usesPantry!.slice(0, 2).join(' · ')}{meal.usesPantry!.length > 2 ? ` +${meal.usesPantry!.length - 2}` : ''}</div>
           )}
           {votes && (votes.keep + votes.skip + votes.again > 0) && (
             <div className="text-[11px] text-muted-foreground" title={votes.voters.join(', ')}>

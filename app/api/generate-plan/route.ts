@@ -5,6 +5,7 @@ import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName, honestT
 import type { Meal } from '@/types'
 import { ensurePortions } from '@/lib/portions'
 import { currentSales, salesPromptBlock } from '@/lib/sales'
+import { loadPantry, pantryPromptBlock } from '@/lib/pantry'
 
 // Extend serverless timeout — AI generation needs up to 55s
 export const maxDuration = 60
@@ -95,12 +96,14 @@ export async function POST(request: Request) {
     const perMealBudget = (budgetNumber / dinnersPerWeek).toFixed(0)
 
     // ---------- taste profile (learned) + recent plans, fetched together ----------
-    const [{ data: tasteProfile }, { data: recentPlans }, saleSets] = await Promise.all([
+    const [{ data: tasteProfile }, { data: recentPlans }, saleSets, pantryRows] = await Promise.all([
       supabase.from('taste_profiles').select('*').eq('user_id', profile.userId).single(),
       supabase.from('meal_plans').select('meals').eq('user_id', profile.userId).order('created_at', { ascending: false }).limit(3),
       settings.food.useSales ? currentSales(supabase, profile.userId).catch(() => []) : Promise.resolve([]),
+      loadPantry(supabase, profile.userId).catch(() => []),
     ])
     const salesSection = salesPromptBlock(saleSets, dinnersPerWeek)
+    const pantrySection = pantryPromptBlock(pantryRows, dinnersPerWeek)
     let tasteProfileSection = ''
 
     if (tasteProfile && tasteProfile.total_signals >= 3) {
@@ -201,7 +204,7 @@ Family:
 - Weekly dinner budget at typical prices: $${budgetNumber.toFixed(0)} (about $${perMealBudget} per dinner)
 - Default cook time: ${profile.maxCookTime} minutes
 - Dietary needs: ${profile.dietaryNeeds.length ? profile.dietaryNeeds.join(', ') : 'none'}
-${peopleSection}${favoritesSection}${tasteProfileSection}${salesSection}
+${peopleSection}${favoritesSection}${tasteProfileSection}${salesSection}${pantrySection}
 Rules:
 ${constraintLines.map((l) => `- ${l}`).join('\n')}
 ${timeRule}
@@ -230,7 +233,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
       "tags": ["quick", "kid-favorite"],
       "suggestedNight": "Tuesday",
       "leftoverFriendly": false,
-      "safeBite": "plain rice",${salesSection ? '\n      "saleItems": ["chicken thighs $1.99/lb"],' : ''}${kidSafeFoods.length ? '\n      "kidNote": "plain rice on the side for Max",' : ''}${nutritionField ? '\n      "nutrition": { "calories": 520, "protein": 34 },' : ''}
+      "safeBite": "plain rice",${pantrySection ? '\n      "usesPantry": ["chicken thighs"],' : ''}${salesSection ? '\n      "saleItems": ["chicken thighs $1.99/lb"],' : ''}${kidSafeFoods.length ? '\n      "kidNote": "plain rice on the side for Max",' : ''}${nutritionField ? '\n      "nutrition": { "calories": 520, "protein": 34 },' : ''}
       "ingredients": [
         { "name": "string", "quantity": "1 1/2", "unit": "lb", "category": "Meat & Seafood", "searchTerm": "chicken breast" }
       ],

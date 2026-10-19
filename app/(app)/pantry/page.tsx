@@ -12,6 +12,10 @@ interface PantryItem {
   name: string
   quantity: string | null
   unit: string | null
+  use_soon?: boolean
+  expires_on?: string | null
+  source?: string
+  last_seen?: string
 }
 
 interface ScannedItem {
@@ -79,6 +83,20 @@ export default function PantryPage() {
     await supabase.from('pantry_items').delete().eq('id', id).eq('user_id', user.id)
     setItems(prev => prev.filter(i => i.id !== id))
   }
+  async function toggleUseSoon(item: PantryItem) {
+    const next = !item.use_soon
+    setItems((cur) => cur.map((x) => (x.id === item.id ? { ...x, use_soon: next } : x)))
+    await supabase.from('pantry_items').update({ use_soon: next }).eq('id', item.id)
+  }
+  async function setExpires(item: PantryItem, date: string) {
+    setItems((cur) => cur.map((x) => (x.id === item.id ? { ...x, expires_on: date || null } : x)))
+    await supabase.from('pantry_items').update({ expires_on: date || null }).eq('id', item.id)
+  }
+  const soonCutoff = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10)
+  const isSoon = (x: PantryItem) => !!x.use_soon || (!!x.expires_on && x.expires_on <= soonCutoff)
+  const useSoon = items.filter(isSoon)
+  const rest = items.filter((x) => !isSoon(x))
+
 
   async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -152,7 +170,7 @@ export default function PantryPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-heading font-bold text-foreground">My pantry</h1>
-            <p className="text-muted-foreground mt-1">Items here get subtracted from your grocery list</p>
+            <p className="text-muted-foreground mt-1">What&apos;s in the house comes off your grocery list. Flag anything to <strong>use up</strong> and next week&apos;s dinners get built around it.</p>
           </div>
           <button
             onClick={() => fileInputRef.current?.click()}
@@ -265,27 +283,18 @@ export default function PantryPage() {
             <p className="text-muted-foreground text-xs mt-1">Add items manually or scan a photo.</p>
           </div>
         ) : (
-          <ul className="space-y-2">
-            {items.map(item => (
-              <li
-                key={item.id}
-                className="flex items-center justify-between px-4 py-3 rounded-lg border border-border bg-card"
-              >
-                <span className="text-sm text-foreground">
-                  {item.quantity && item.unit ? (
-                    <span className="text-muted-foreground mr-2">{item.quantity} {item.unit}</span>
-                  ) : null}
-                  {item.name}
-                </span>
-                <button
-                  onClick={() => removeItem(item.id)}
-                  className="p-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-destructive"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </li>
-            ))}
-          </ul>
+          <>
+            {useSoon.length > 0 && (
+              <div className="mb-6 rounded-2xl border border-amber-300 bg-amber-50 p-4">
+                <p className="text-sm font-semibold text-amber-900">🥫 Use up this week ({useSoon.length})</p>
+                <p className="text-xs text-amber-800 mt-0.5 mb-3">Your next plan builds at least a couple of dinners around these, and they stay off the shopping list.</p>
+                <ul className="space-y-2">{useSoon.map((item) => <Row key={item.id} item={item} onToggle={toggleUseSoon} onExpires={setExpires} onRemove={removeItem} />)}</ul>
+              </div>
+            )}
+            {rest.length > 0 && (
+              <ul className="space-y-2">{rest.map((item) => <Row key={item.id} item={item} onToggle={toggleUseSoon} onExpires={setExpires} onRemove={removeItem} />)}</ul>
+            )}
+          </>
         )}
 
         <div className="mt-10">
@@ -297,5 +306,28 @@ export default function PantryPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function Row({ item, onToggle, onExpires, onRemove }: { item: PantryItem; onToggle: (i: PantryItem) => void; onExpires: (i: PantryItem, d: string) => void; onRemove: (id: string) => void }) {
+  const from = item.source === 'order' ? `from your ${item.last_seen ? new Date(item.last_seen).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ''} order` : item.source === 'scan' ? 'from a photo' : ''
+  return (
+    <li className="flex flex-wrap items-center gap-2 px-4 py-3 rounded-lg border border-border bg-card">
+      <button type="button" onClick={() => onToggle(item)} title={item.use_soon ? 'Planned around — tap to unflag' : 'Use it up this week'} className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${item.use_soon ? 'bg-amber-200 border-amber-400 text-amber-900' : 'bg-white border-border text-muted-foreground hover:border-amber-400'}`}>
+        {item.use_soon ? '🥫 use up' : 'use up?'}
+      </button>
+      <span className="text-sm text-foreground flex-1 min-w-[140px]">
+        {item.quantity && item.unit ? <span className="text-muted-foreground mr-2">{item.quantity} {item.unit}</span> : null}
+        {item.name}
+        {from && <span className="ml-2 text-[11px] text-muted-foreground">{from}</span>}
+      </span>
+      <label className="text-[11px] text-muted-foreground flex items-center gap-1">
+        by
+        <input type="date" value={item.expires_on ?? ''} onChange={(e) => onExpires(item, e.target.value)} className="rounded border border-input bg-white px-1.5 py-0.5 text-[11px]" />
+      </label>
+      <button onClick={() => onRemove(item.id)} className="p-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-destructive" aria-label="Remove">
+        <Trash2 className="w-4 h-4" />
+      </button>
+    </li>
   )
 }

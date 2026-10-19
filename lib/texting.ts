@@ -154,6 +154,7 @@ export type Parsed =
   | { kind: 'skip'; numbers: number[] } | { kind: 'again'; numbers: number[] }
   | { kind: 'add'; items: string[] }
   | { kind: 'order_total'; total: number; store?: string }
+  | { kind: 'use_up'; items: string[] }
   | { kind: 'unknown' }
 
 export function parseInbound(raw: string): Parsed {
@@ -172,6 +173,8 @@ export function parseInbound(raw: string): Parsed {
   if (order) return { kind: 'order_total', total: Number(order[1].replace(',', '.')), store: order[2]?.trim() || undefined }
   const again = u.match(/^(AGAIN|REPEAT|BRING BACK)\s*[:\-]?\s*([\d\s,and&]+)$/)
   if (again) return { kind: 'again', numbers: numbersIn(again[2]) }
+  const useup = t.match(/^(?:use up|use first|expiring|going bad|have to use|must use|in the fridge)\s*[:\-]?\s*(.+)$/i)
+  if (useup) return { kind: 'use_up', items: splitItems(useup[1]) }
   const add = t.match(/^(?:add|\+|need|we need|we'?re out of|out of|get|buy|pick up|grab)\s*[:\-]?\s*(.+)$/i)
   if (add) return { kind: 'add', items: splitItems(add[1]) }
   const skip = u.match(/^(?:SKIP|NOT|NO|DROP)?\s*[:\-]?\s*([\d\s,and&]+)$/)
@@ -274,8 +277,21 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       }
       return { reply: `Got it — $${parsed.total.toFixed(2)} saved for that order.`, handled: true, member: m }
     }
+    case 'use_up': {
+      if (!owner) return { reply: '', handled: false }
+      const items = parsed.items.map((x) => x.trim()).filter(Boolean).slice(0, 10)
+      if (!items.length) return { reply: `Tell me what to use up, like "use up chicken thighs, spinach".`, handled: true, member: m }
+      const { data: have } = await admin.from('pantry_items').select('id, name').eq('user_id', owner.id)
+      const byName = new Map((have ?? []).map((h) => [normalizeItemName(h.name), h.id]))
+      for (const it of items) {
+        const id = byName.get(normalizeItemName(it))
+        if (id) await admin.from('pantry_items').update({ use_soon: true, last_seen: new Date().toISOString() }).eq('id', id)
+        else await admin.from('pantry_items').insert({ user_id: owner.id, name: it, use_soon: true, source: 'sms' })
+      }
+      return { reply: `Got it — ${items.join(', ')} flagged to use up. The next plan builds dinners around ${items.length === 1 ? 'it' : 'them'} and keeps ${items.length === 1 ? 'it' : 'them'} off the shopping list.`, handled: true, member: m }
+    }
     case 'help':
-      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, AGAIN 1 3 to bring some back, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, MENU, LIST, STOP.`, handled: true, member: m }
+      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, AGAIN 1 3 to bring some back, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items to plan around what's in the fridge, MENU, LIST, STOP.`, handled: true, member: m }
     default:
       break
   }
