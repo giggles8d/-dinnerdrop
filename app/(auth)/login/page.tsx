@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { isNativeApp, nativePlatform } from '@/lib/native'
+import EmailCodeSignIn from '@/components/EmailCodeSignIn'
 
 function LoginForm() {
   const [email, setEmail] = useState('')
@@ -13,6 +14,7 @@ function LoginForm() {
   const [loading, setLoading] = useState(false)
   const [magicSent, setMagicSent] = useState(false)
   const [usePassword, setUsePassword] = useState(false)
+  const [codeSent, setCodeSent] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/dashboard'
@@ -23,6 +25,17 @@ function LoginForm() {
     e.preventDefault()
     setLoading(true)
     setError('')
+
+    // In the phone app a magic link would open Safari (the session would land there,
+    // not in the app), so the app signs in with an emailed 6-digit code instead.
+    if (isNativeApp()) {
+      const r = await fetch('/api/auth/email-code', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) })
+      const j = await r.json().catch(() => ({}))
+      setLoading(false)
+      if (!r.ok) { setError(j.error || 'Could not send a code. Try again.'); return }
+      setCodeSent(true)
+      return
+    }
 
     const callbackUrl = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(redirect)}`
     const { error } = await supabase.auth.signInWithOtp({
@@ -75,6 +88,10 @@ function LoginForm() {
     }
   }
 
+  if (codeSent) {
+    return <EmailCodeSignIn email={email} onBack={() => setCodeSent(false)} onDone={() => window.location.assign(redirect)} />
+  }
+
   if (magicSent) {
     return (
       <div className="w-full max-w-md space-y-6 text-center">
@@ -101,7 +118,7 @@ function LoginForm() {
         <p className="mt-2 text-muted-foreground">
           {usePassword
             ? 'Sign in with your password.'
-            : "We'll email you a one-click sign-in link."}
+            : isNativeApp() ? "We'll email you a 6-digit sign-in code." : "We'll email you a one-click sign-in link."}
         </p>
       </div>
 
@@ -186,7 +203,7 @@ function LoginForm() {
             disabled={loading}
             className="w-full rounded-md bg-primary px-4 py-3 text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
           >
-            {loading ? 'Sending link...' : 'Email me a magic link →'}
+            {loading ? 'Sending…' : isNativeApp() ? 'Email me a sign-in code →' : 'Email me a magic link →'}
           </button>
           <button
             type="button"

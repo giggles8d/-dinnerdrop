@@ -5,12 +5,14 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { isNativeApp, nativePlatform } from '@/lib/native'
+import EmailCodeSignIn from '@/components/EmailCodeSignIn'
 
 function SignupForm() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [magicSent, setMagicSent] = useState(false)
+  const [codeSent, setCodeSent] = useState(false)
   const searchParams = useSearchParams()
   const nextUrl = searchParams.get('redirect') || null
   // Coming from a "Try Family" button: the next step is Stripe Checkout
@@ -49,7 +51,17 @@ function SignupForm() {
     })
 
     if (signUpError) {
-      // Most likely an existing account — send a one-click sign-in link instead.
+      // Most likely an existing account. In the phone app, sign in with an emailed code
+      // (a magic link would open Safari, not the app).
+      if (isNativeApp()) {
+        const r = await fetch('/api/auth/email-code', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, create: true }) })
+        const j = await r.json().catch(() => ({}))
+        setLoading(false)
+        if (!r.ok) { setError(j.error || 'Could not send a code. Try again.'); return }
+        setCodeSent(true)
+        return
+      }
+      // Website: send a one-click sign-in link instead.
       const { error: otpError } = await supabase.auth.signInWithOtp({
         email,
         options: { emailRedirectTo: buildCallbackUrl(), shouldCreateUser: true },
@@ -88,6 +100,14 @@ function SignupForm() {
     if (error) {
       setError(error.message)
     }
+  }
+
+  if (codeSent) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background px-4">
+        <EmailCodeSignIn email={email} onBack={() => setCodeSent(false)} onDone={() => window.location.assign(postSignupDestination())} />
+      </div>
+    )
   }
 
   if (magicSent) {
