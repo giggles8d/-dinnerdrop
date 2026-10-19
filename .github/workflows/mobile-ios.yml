@@ -34,6 +34,14 @@ jobs:
           cache: npm
           cache-dependency-path: apps/mobile/package-lock.json
 
+      - name: Select Xcode 26 (App Store requires the iOS 26 SDK)
+        working-directory: .
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$X" ]; then echo "No Xcode 26 on this runner:"; ls -d /Applications/Xcode*.app; exit 1; fi
+          sudo xcode-select -s "$X/Contents/Developer"
+          xcodebuild -version
+
       - name: Install
         run: npm ci
 
