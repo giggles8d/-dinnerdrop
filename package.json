@@ -10,22 +10,23 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
+    "@react-email/components": "^0.0.26",
+    "@react-email/render": "^0.0.17",
     "@stripe/stripe-js": "^8.9.0",
     "@supabase/ssr": "^0.9.0",
     "@supabase/supabase-js": "^2.99.1",
+    "@vercel/analytics": "^1.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.577.0",
     "next": "14.2.35",
+    "pdf-lib": "^1.17.1",
     "react": "^18",
     "react-dom": "^18",
+    "resend": "^3.2.0",
     "stripe": "^20.4.1",
     "tailwind-merge": "^3.5.0",
-    "tailwindcss-animate": "^1.0.7",
-    "resend": "^3.2.0",
-    "@react-email/components": "^0.0.26",
-    "@react-email/render": "^0.0.17",
-    "@vercel/analytics": "^1.4.1"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",

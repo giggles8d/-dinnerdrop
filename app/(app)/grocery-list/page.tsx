@@ -51,6 +51,11 @@ export default function GroceryListPage() {
   const [isFamily, setIsFamily] = useState(true)
   const [krogerLoading, setKrogerLoading] = useState(false)
   const [krogerResult, setKrogerResult] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [recipesMail, setRecipesMail] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  async function emailRecipes() {
+    setRecipesMail('sending')
+    try { const r = await fetch('/api/email/recipes', { method: 'POST' }); setRecipesMail(r.ok ? 'sent' : 'error') } catch { setRecipesMail('error') }
+  }
   const [copied, setCopied] = useState(false)
   const [stapleDraft, setStapleDraft] = useState('')
   const [showStaples, setShowStaples] = useState(false)
@@ -501,8 +506,14 @@ export default function GroceryListPage() {
               )}
             </div>
           </div>
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
+            <button type="button" onClick={emailRecipes} disabled={recipesMail === 'sending'} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-white text-foreground text-xs font-semibold hover:border-primary/50 disabled:opacity-60">
+              📄 {recipesMail === 'sending' ? 'Sending…' : recipesMail === 'sent' ? 'Sent — check your inbox' : recipesMail === 'error' ? 'Couldn\u2019t send — try again' : 'Email me this week\u2019s recipes (PDFs)'}
+            </button>
+            <span className="text-[11px] text-muted-foreground">One printable card per dinner. They&apos;re also sent automatically when your list goes to a store.</span>
+          </div>
           <p className="text-[11px] text-muted-foreground mt-3 leading-relaxed">
-            Your cart fills in your own Instacart or Kroger account; you review every item and check out there at the store&apos;s normal prices. DinnerDrop may earn a commission when you shop through these links, at no extra cost to you.{' '}
+            Your cart fills in your own Instacart or Kroger account; you review every item and check out there at Instacart&apos;s or Kroger&apos;s prices for that store. DinnerDrop may earn a commission when you shop through these links, at no extra cost to you.{' '}
             <a href="/disclosure" className="underline hover:text-foreground">Learn more</a>.
           </p>
         </div>

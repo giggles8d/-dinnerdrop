@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { createInstacartLink } from '@/lib/instacart'
+import { createClient } from '@supabase/supabase-js'
+import { sendWeekRecipes } from '@/lib/recipe-email'
 import type { GroceryItem } from '@/types'
 
 export async function POST(request: Request) {
@@ -40,6 +42,15 @@ export async function POST(request: Request) {
         })
       } catch (logErr) {
         console.error('[instacart] handoff log failed:', logErr)
+      }
+      // The week's recipe cards go out once the groceries are on their way (once per plan).
+      if (!quoteOnly) {
+        try {
+          const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+          await sendWeekRecipes(admin, user.id)
+        } catch (mailErr) {
+          console.error('[instacart] recipe email failed:', mailErr)
+        }
       }
     }
 
