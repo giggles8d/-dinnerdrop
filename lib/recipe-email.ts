@@ -28,7 +28,7 @@ export async function sendWeekRecipes(admin: SupabaseClient, userId: string, opt
   const familyName = (prof.full_name as string | null)?.trim() ? `${(prof.full_name as string).trim().split(' ')[0]}'s family` : undefined
 
   const attachments = await Promise.all(meals.map(async (m) => ({
-    filename: recipeFileName(m),
+    filename: recipeFileName(m, m.day),
     content: Buffer.from(await recipePdf(m, { familyName, weekLabel, nightLabel: m.day })).toString('base64'),
   })))
 

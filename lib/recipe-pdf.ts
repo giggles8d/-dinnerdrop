@@ -68,7 +68,7 @@ export async function recipePdf(meal: Meal, opts: RecipePdfOptions = {}): Promis
   // Header band
   page.drawRectangle({ x: 0, y: PAGE_H - 28, width: PAGE_W, height: 28, color: GREEN })
   page.drawText('DinnerDrop', { x: MARGIN, y: PAGE_H - 19, size: 12, font: bold, color: GOLD })
-  const night = clean(opts.nightLabel ?? meal.suggestedNight ?? meal.day ?? '')
+  const night = clean(opts.nightLabel ?? meal.day ?? meal.suggestedNight ?? '')
   if (night) page.drawText(night.toUpperCase(), { x: PAGE_W - MARGIN - bold.widthOfTextAtSize(night.toUpperCase(), 10), y: PAGE_H - 18, size: 10, font: bold, color: rgb(1, 1, 1) })
   y -= 10
 
@@ -146,7 +146,7 @@ export async function recipePdf(meal: Meal, opts: RecipePdfOptions = {}): Promis
 
 /** A short, filesystem-safe name: "Mon-Beef-Chili.pdf" */
 export function recipeFileName(meal: Meal, night?: string): string {
-  const d = clean(night ?? meal.suggestedNight ?? meal.day ?? '').slice(0, 3)
+  const d = clean(night ?? meal.day ?? meal.suggestedNight ?? '').slice(0, 3)
   const n = clean(meal.name).replace(/[^A-Za-z0-9 ]/g, '').trim().split(/\s+/).slice(0, 5).join('-')
   return `${d ? `${d}-` : ''}${n}.pdf`
 }
