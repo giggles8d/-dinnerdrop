@@ -125,11 +125,19 @@ export default function RootLayout({
         {/* Pinterest Tag */}
         <Script id="pinterest-tag" strategy="afterInteractive">
           {`
-            !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments)
-            },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.pinimg.com/js/pintrk.js'
-            ,a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+            !function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
+            n=window.pintrk;n.queue=[],n.version="3.0";var t=document.createElement("script");t.async=!0,t.src=e;var
+            r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
             pintrk('load', '2612772503928');
             pintrk('page');
+          `}
+        </Script>
+        {/* Reddit Pixel */}
+        <Script id="reddit-pixel" strategy="afterInteractive">
+          {`
+            !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
+            rdt('init','a2_j0xlhb9uvlwt');
+            rdt('track','PageVisit');
           `}
         </Script>
         <noscript>
@@ -141,27 +149,6 @@ export default function RootLayout({
             src="https://ct.pinterest.com/v3/?event=init&tid=2612772503928&noscript=1"
           />
         </noscript>
-        {/* Reddit Pixel — gated on env var; once NEXT_PUBLIC_REDDIT_PIXEL_ID is set in Vercel, this fires without redeploy. */}
-        {process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID && (
-          <>
-            <Script id="reddit-pixel" strategy="afterInteractive">
-              {`
-                !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
-                rdt('init', '${process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID}');
-                rdt('track', 'PageVisit');
-              `}
-            </Script>
-            <noscript>
-              <img
-                height="1"
-                width="1"
-                style={{ display: "none" }}
-                alt=""
-                src={`https://alb.reddit.com/snoo.gif?q=CAAHAAABAAoACQAAAAA&s=${process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID}`}
-              />
-            </noscript>
-          </>
-        )}
         {children}
         <Analytics />
         <PwaRegister />

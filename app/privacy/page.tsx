@@ -142,7 +142,7 @@ export default function PrivacyPage() {
                 privacy-friendly site analytics
               </li>
               <li>
-                <span className="font-medium text-foreground">Google Ads, Meta, and Pinterest:</span>{' '}
+                <span className="font-medium text-foreground">Google Ads, Meta, Pinterest, and Reddit:</span>{' '}
                 Advertising measurement — see section 6
               </li>
             </ul>
@@ -208,10 +208,11 @@ export default function PrivacyPage() {
             </p>
             <p className="mb-3">
               We also use advertising measurement tags from Google Ads, Meta (Facebook and
-              Instagram), and Pinterest on our public marketing pages. These set third-party
+              Instagram), Pinterest, and Reddit on our public marketing pages. These set third-party
               cookies and may collect your IP address, device identifiers, and the pages you
               visit, so that we can measure whether our ads led to signups and show relevant ads
-              on those platforms. They are not used to track you inside the app after you sign in,
+              on those platforms. Apart from a single &ldquo;signed up&rdquo; event when you first create
+              your account, they are not used to track what you do inside the app,
               and we never share your meal plans, grocery lists, or dietary information with
               advertising platforms.
             </p>
@@ -221,7 +222,7 @@ export default function PrivacyPage() {
               <a href="https://adssettings.google.com" className="text-primary underline" target="_blank" rel="noopener noreferrer">Ads Settings</a>,
               Meta&rsquo;s{' '}
               <a href="https://www.facebook.com/adpreferences" className="text-primary underline" target="_blank" rel="noopener noreferrer">Ad Preferences</a>,
-              and Pinterest&rsquo;s privacy settings, or through the{' '}
+              Pinterest&rsquo;s and Reddit&rsquo;s privacy settings, or through the{' '}
               <a href="https://optout.aboutads.info" className="text-primary underline" target="_blank" rel="noopener noreferrer">Digital Advertising Alliance</a>.
             </p>
           </section>
