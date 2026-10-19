@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import MealimeImportForm from './MealimeImportForm'
+import MealimeDeadline from '@/components/MealimeDeadline'
 
 const title = 'Mealime is closing — bring your dinners to DinnerDrop (free)'
 const description =
@@ -43,6 +44,7 @@ export default function MealimePage() {
       </header>
 
       <main className="container mx-auto px-4 py-10 sm:py-16 max-w-3xl">
+        <MealimeDeadline />
         <div className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border mb-5" style={{ backgroundColor: '#fef9ee', borderColor: GOLD, color: GREEN }}>
           For Mealime families
         </div>
