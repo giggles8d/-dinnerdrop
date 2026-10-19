@@ -48,13 +48,13 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             ${selected ? 'text-primary' : 'text-card-foreground'}`}>
             {meal.name}
           </h3>
-          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm text-muted-foreground [&>span]:whitespace-nowrap">
+          <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <span>{timeLabel(meal)}</span>
-            <span aria-hidden>&middot;</span>
+            <span>&middot;</span>
             <span>{meal.servings} servings</span>
-            <span aria-hidden>&middot;</span>
+            <span>&middot;</span>
             <span title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
-            {meal.nutrition && <><span aria-hidden>&middot;</span><span>{meal.nutrition.calories} cal</span></>}
+            {meal.nutrition && <><span>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
           </div>
           {safeBite(meal) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite(meal)}</div>}
           {(meal.tags?.length || meal.fromLibrary) && (
@@ -88,7 +88,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
         <Link
           href={`/recipe/${getMealId(meal)}`}
           onClick={handleClick}
-          className={`absolute top-3 ${onToggleFavorite ? 'right-12' : 'right-3'} p-1.5 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-all z-10 sm:opacity-0 sm:group-hover:opacity-100`}
+          className="absolute top-3 left-3 p-1.5 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background transition-all z-10 opacity-0 group-hover:opacity-100"
           aria-label="Swap this meal"
           title="Click to swap this meal"
         >
@@ -118,16 +118,16 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
           onClick={handleClick}
           className="block p-4 space-y-2"
         >
-          <h3 className="text-base font-heading font-semibold text-card-foreground leading-tight pr-20 group-hover:text-primary transition-colors">
+          <h3 className="text-base font-heading font-semibold text-card-foreground leading-tight pr-8 group-hover:text-primary transition-colors">
             {meal.name}
           </h3>
-          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm text-muted-foreground [&>span]:whitespace-nowrap">
+          <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <span>{timeLabel(meal)}</span>
-            <span aria-hidden>&middot;</span>
+            <span>&middot;</span>
             <span>{meal.servings} servings</span>
-            <span aria-hidden>&middot;</span>
+            <span>&middot;</span>
             <span title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
-            {meal.nutrition && <><span aria-hidden>&middot;</span><span>{meal.nutrition.calories} cal</span></>}
+            {meal.nutrition && <><span>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
           </div>
           {safeBite(meal) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite(meal)}</div>}
           {(meal.tags?.length || meal.fromLibrary) && (

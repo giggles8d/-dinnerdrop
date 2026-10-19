@@ -69,7 +69,7 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
         onClick={handleSendToInstacart}
         disabled={loading}
         style={{ backgroundColor: '#003D29', color: '#FAF1E5', height: '46px', paddingLeft: '18px', paddingRight: '18px' }}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full font-semibold text-base hover:opacity-90 disabled:opacity-50 transition-opacity shadow-md"
+        className="inline-flex items-center justify-center gap-2 rounded-full font-semibold text-base hover:opacity-90 disabled:opacity-50 transition-opacity shadow-lg"
         aria-label="Shop ingredients on Instacart"
       >
         {/* Official Instacart carrot mark (from Instacart logo kit), 22px tall */}

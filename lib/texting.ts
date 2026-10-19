@@ -423,13 +423,6 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
 
 const APP_URL = 'https://www.dinnerdrop.app'
 
-/** Shorter dish name for texts: "Slow Cooker Beef Chili with Cornbread" → "Slow Cooker Beef Chili". */
-export function smsMealName(name: string): string {
-  let n = name.replace(/\s+(with|over|on|served with)\s+.*$/i, '').replace(/\s+and\s+/gi, ' & ').trim()
-  if (n.length < 6) n = name
-  return n.length > 34 ? n.slice(0, 33).trimEnd() + '…' : n
-}
-
 export interface CycleReport { weekStart: string; planned: boolean; optInsSent: number; voteTextsSent: number; skipped: string[] }
 
 /** The planner's own number for "everyone's in" texts. */
@@ -722,12 +715,9 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
 
   const { data: names } = ctx.askedIds.length ? await admin.from('household_members').select('name').in('id', ctx.askedIds) : { data: [] as Array<{ name: string }> }
   const who = (names ?? []).map((x) => x.name).join(', ')
-  const lines = saved.map((m) => {
-    const fans = voters[m.name]?.length ? `  👍 ${voters[m.name].join(', ')}` : ''
-    return `${m.day.slice(0, 3)} · ${smsMealName(m.name)}${fans}`
-  })
-  const head = ctx.everyone ? `🍽️ DinnerDrop: everyone's in${who ? ` (${who})` : ''}!` : `🍽️ DinnerDrop: voting's closed${who ? ` (heard from ${who})` : ''}.`
-  const body = `${head}\n\nThis week:\n${lines.join('\n')}\n\nNeed anything else? Text it here and it goes on the list. Then order:\n${APP_URL.replace('https://www.', '')}/grocery-list`
+  const lines = saved.map((m) => `• ${m.day.slice(0, 3)}: ${m.name}${tally[m.name] ? ` (${tally[m.name]} ${tally[m.name] === 1 ? 'vote' : 'votes'}${voters[m.name]?.length ? ` — ${voters[m.name].join(', ')}` : ''})` : ''}`)
+  const head = ctx.everyone ? `DinnerDrop: everyone's voted${who ? ` (${who})` : ''}.` : `DinnerDrop: voting closed${who ? ` — heard from ${who}` : ''}.`
+  const body = `${head} The week is set:\n${lines.join('\n')}\n\nNext: add anything else you need to the list, then approve the order → ${APP_URL}/grocery-list`
   const to = await ownerPhone(admin, owner)
   const r = to ? await sendSms(to, body) : { sid: undefined }
   await admin.from('sms_messages').insert({ household_id: round.household_id, direction: 'out', to_number: to, body, intent: 'vote_complete', twilio_sid: r.sid ?? null })
