@@ -13,7 +13,7 @@ const SAFE: Array<[RegExp, string]> = [
   [/\b(white |jasmine |basmati |plain )?rice\b(?!\s*vinegar)/i, 'plain rice'],
   [/\b(flour |corn )?tortillas?\b/i, 'a plain tortilla'],
   [/\b(pasta|penne|spaghetti|linguine|rotini|macaroni|noodles?|tortellini|ravioli)\b/i, 'plain noodles'],
-  [/\b(buns?|rolls?|bread|baguette|english muffins?|pita|naan)\b/i, 'plain bread or a bun'],
+  [/\b(buns?|rolls?|bread|baguette|english muffins?|pita|naan|cornbread|biscuits?)\b/i, 'plain bread or a bun'],
   [/\b(potato(es)?|fries|tots)\b/i, 'plain potatoes'],
   [/\b(corn|corn on the cob)\b(?!\s*(starch|tortilla|flour))/i, 'corn'],
   [/\b(cheddar|mozzarella|cheese)\b/i, 'cheese'],
@@ -45,15 +45,18 @@ const WARE: Array<[RegExp, string, 'pan' | 'pot' | 'dish' | 'bowl']> = [
 export function cookware(meal: Lite): { label: string; pans: number; bowls: number } {
   const tags = (meal.tags ?? []).map((t) => t.toLowerCase())
   const text = (meal.steps ?? []).join(' ')
-  const found = new Set<string>(); let bowls = 0
+  const found = new Set<string>(); let bowls = 0; let appliance = ''
   for (const [re, label, kind] of WARE) {
-    if (!re.test(text)) continue
+    const m = text.match(re)
+    if (!m) continue
     if (kind === 'bowl') bowls = 1
+    else if (label === 'one appliance') appliance = m[0].toLowerCase().replace('crockpot', 'crock pot')
     else found.add(label)
   }
+  if (!appliance && tags.some((t) => /slow-cooker|instant-pot|air-fryer/.test(t))) appliance = tags.find((t) => /slow-cooker|instant-pot|air-fryer/.test(t))!.replace('-', ' ')
   let pans = found.size
-  if (tags.some((t) => /one-pot|one-pan|sheet-pan|slow-cooker|instant-pot|air-fryer/.test(t))) pans = Math.min(Math.max(pans, 1), 1)
-  if (pans === 0) pans = 1
-  const label = `${pans} ${pans === 1 ? 'pan' : 'pans'}${bowls ? ' + 1 bowl' : ''}`
-  return { label, pans, bowls }
+  if (tags.some((t) => /one-pot|one-pan|sheet-pan/.test(t))) pans = 1
+  if (pans === 0 && !appliance) pans = 1
+  const parts = [pans ? `${pans} ${pans === 1 ? 'pan' : 'pans'}` : '', appliance, bowls ? '1 bowl' : ''].filter(Boolean)
+  return { label: parts.join(' + '), pans, bowls }
 }
