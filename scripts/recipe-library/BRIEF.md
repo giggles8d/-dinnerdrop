@@ -43,3 +43,8 @@ Validate the file is parseable JSON before you finish (e.g. `node -e "JSON.parse
 
 ## Wave 2+ (you choose the dishes)
 When your prompt gives you a THEME instead of a dish list: choose the dishes yourself. Pick dishes real US families actually cook on weeknights (well-known, recognizable, made with supermarket ingredients), within your theme. Each must be clearly different from every name in `existing.txt` in this folder (not just a reworded title — a different dish or a meaningfully different main protein/method). Avoid near-duplicates within your own batch too. Vary cuisines across the five allowed. Mark `kid-favorite` only where it's true.
+
+## Dietary label precision
+- Keto: under ~15 g net carbs per serving — no rice, pasta, bread, tortillas, potatoes, corn, beans, sugar/honey; cauliflower rice, zucchini noodles fine.
+- Halal: only if no pork, no alcohol (incl. wine/mirin/beer), no gelatin, AND the dish is meatless or seafood-only (we can't guarantee meat sourcing).
+- Vegan: no meat, fish, dairy, eggs, honey, fish sauce, Worcestershire (contains anchovy).

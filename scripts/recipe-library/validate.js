@@ -20,7 +20,7 @@ for(const f of files){for(const r of JSON.parse(fs.readFileSync(f,'utf8'))){
  if(!Array.isArray(r.tags))e.push('tags'); if(!Array.isArray(r.dietary)||r.dietary.some(d=>!DI.includes(d)))e.push('dietary '+r.dietary);
  const ingText=(r.ingredients||[]).map(i=>i.name+' '+i.searchTerm).join(' | ');
  if((r.dietary||[]).some(d=>d==='Vegetarian'||d==='Vegan')&&MEAT.test(ingText))e.push('veg-but-meat');
- if((r.dietary||[]).includes('Gluten-free')&&GLU.test(ingText)&&!/gluten-free|tamari|corn tortilla/i.test(ingText.match(GLU)?.input||''))e.push('GF? '+ingText.match(GLU)[0]);
+ if((r.dietary||[]).includes('Gluten-free')&&GLU.test(ingText)&&!/gluten-free|tamari|corn tortilla|almond flour|coconut flour|spaghetti squash|cauliflower crust/i.test(ingText.match(GLU)?.input||''))e.push('GF? '+ingText.match(GLU)[0]);
  if((r.dietary||[]).some(d=>d==='Dairy-free'||d==='Vegan')&&DAIRY.test(ingText.replace(/peanut butter|coconut milk|coconut cream|almond milk|oat milk|non-dairy|dairy-free|vegan/gi,'')))e.push('DF? '+ingText.match(DAIRY)[0]);
  const tot=r.cook_time+r.prep_time;
  if(r.tags?.includes('quick')&&tot>30)e.push('quick but '+tot); if(r.tags?.includes('20-min')&&tot>20)e.push('20min but '+tot);
