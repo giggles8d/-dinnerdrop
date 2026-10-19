@@ -4,7 +4,7 @@
  *  - pantryPromptBlock(): tells the planner what's on hand and what must be used up this week
  *  - stockStaplesFromList(): after a real grocery handoff, long-life staples on that list (oils,
  *    spices, condiments, flour, rice…) are added to the pantry so next week's list doesn't re-buy them
- *  - useSoonItems(): the items flagged use_soon or expiring within 7 days
+ *  - itemsToUseSoon(): the items flagged use_soon or expiring within 7 days
  * Server-only (Supabase admin client).
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
@@ -17,7 +17,7 @@ export async function loadPantry(db: SupabaseClient, userId: string): Promise<Pa
   return (data as PantryRow[]) ?? []
 }
 
-export function useSoonItems(rows: PantryRow[], days = 7): PantryRow[] {
+export function itemsToUseSoon(rows: PantryRow[], days = 7): PantryRow[] {
   const cutoff = new Date(Date.now() + days * 86400000).toISOString().slice(0, 10)
   return rows.filter((r) => r.use_soon || (r.expires_on && r.expires_on <= cutoff))
 }
@@ -25,7 +25,7 @@ export function useSoonItems(rows: PantryRow[], days = 7): PantryRow[] {
 /** Prompt block for generate-plan. Empty string when the pantry is empty. */
 export function pantryPromptBlock(rows: PantryRow[], dinners: number): string {
   if (!rows.length) return ''
-  const soon = useSoonItems(rows)
+  const soon = itemsToUseSoon(rows)
   const have = rows.filter((r) => !soon.includes(r)).map((r) => r.name).slice(0, 40)
   const line = (r: PantryRow) => `${r.quantity && r.unit ? `${r.quantity} ${r.unit} ` : ''}${r.name}${r.expires_on ? ` (by ${r.expires_on.slice(5)})` : ''}`
   const min = Math.min(dinners, Math.max(1, Math.ceil(soon.length / 2)), 3)
