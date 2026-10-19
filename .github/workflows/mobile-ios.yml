@@ -5,7 +5,8 @@ name: Mobile — iOS (TestFlight)
 #   APPLE_TEAM_ID                  – 10-char team ID from developer.apple.com
 #   APP_STORE_CONNECT_KEY_ID       – App Store Connect API key ID
 #   APP_STORE_CONNECT_ISSUER_ID    – App Store Connect API issuer ID
-#   APP_STORE_CONNECT_KEY_P8_B64   – the .p8 key, base64-encoded
+#   APP_STORE_CONNECT_KEY_P8       – the full text of the AuthKey_XXXX.p8 file (BEGIN…END lines included)
+#   (APP_STORE_CONNECT_KEY_P8_B64 – base64 of the .p8 – still accepted as an alternative)
 # Signing uses Xcode's automatic cloud signing with the API key, so no
 # certificates or provisioning profiles need to be exported by hand.
 
@@ -40,11 +41,14 @@ jobs:
 
       - name: Write App Store Connect API key
         env:
+          P8: ${{ secrets.APP_STORE_CONNECT_KEY_P8 }}
           P8_B64: ${{ secrets.APP_STORE_CONNECT_KEY_P8_B64 }}
           KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
         run: |
           mkdir -p ~/.appstoreconnect/private_keys
-          echo "$P8_B64" | base64 -d > ~/.appstoreconnect/private_keys/AuthKey_${KEY_ID}.p8
+          OUT=~/.appstoreconnect/private_keys/AuthKey_${KEY_ID}.p8
+          if [ -n "$P8" ]; then printf '%s\n' "$P8" > "$OUT"; else echo "$P8_B64" | base64 -d > "$OUT"; fi
+          grep -q "BEGIN PRIVATE KEY" "$OUT" || { echo "App Store Connect key secret is missing or malformed"; exit 1; }
           echo "KEY_PATH=$HOME/.appstoreconnect/private_keys/AuthKey_${KEY_ID}.p8" >> $GITHUB_ENV
 
       - name: Set build number
