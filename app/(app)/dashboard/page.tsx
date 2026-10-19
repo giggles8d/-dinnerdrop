@@ -421,6 +421,8 @@ function DashboardContent() {
     <div className="min-h-screen bg-background">
       {/* Fire ad-platform conversion pings on successful Stripe return */}
       {searchParams.get('subscribed') === 'true' && <ConversionTracker />}
+      {/* Free signups (no card) are the main conversion now — count them on every ad platform, once per browser. */}
+      {searchParams.get('new') === '1' && searchParams.get('subscribed') !== 'true' && <ConversionTracker value={10} onceKey="dd_signup_conv" />}
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Past due payment banner */}
         {subscriptionStatus === 'past_due' && (

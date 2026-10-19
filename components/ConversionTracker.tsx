@@ -31,10 +31,14 @@ declare global {
  * lifetime equivalent of 6 months × $9/mo) so the platforms can optimize toward
  * higher-LTV signups.
  */
-export default function ConversionTracker({ value = 54, currency = 'USD' }: { value?: number; currency?: string }) {
+export default function ConversionTracker({ value = 54, currency = 'USD', onceKey }: { value?: number; currency?: string; onceKey?: string }) {
   useEffect(() => {
     if (typeof window === 'undefined') return
     if (window.__ddConversionFired) return
+    // onceKey: fire at most once per browser (free signups land on /dashboard?new=1, which can be reloaded).
+    if (onceKey) {
+      try { if (localStorage.getItem(onceKey)) return; localStorage.setItem(onceKey, String(Date.now())) } catch { /* storage blocked: fire anyway */ }
+    }
     window.__ddConversionFired = true
 
     const safeFire = (fn: (() => void), label: string) => {
@@ -91,7 +95,7 @@ export default function ConversionTracker({ value = 54, currency = 'USD' }: { va
         currency,
       })
     }, 'Reddit Pixel')
-  }, [value, currency])
+  }, [value, currency, onceKey])
 
   return null
 }
