@@ -72,7 +72,7 @@ jobs:
             -authenticationKeyIssuerID "$ISSUER_ID" \
             DEVELOPMENT_TEAM="$TEAM_ID" \
             CODE_SIGN_STYLE=Automatic \
-            archive | xcpretty || (echo "archive failed"; exit 1)
+            archive > "$RUNNER_TEMP/archive.log" 2>&1 || { grep -E "error:|warning: .*(sign|provision)|Signing|No profiles|requires a development team" "$RUNNER_TEMP/archive.log" | tail -40; tail -60 "$RUNNER_TEMP/archive.log"; exit 1; }
 
       - name: Export IPA
         env:
