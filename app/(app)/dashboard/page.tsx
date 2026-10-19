@@ -508,12 +508,12 @@ function DashboardContent() {
           </div>
         )}
 
-        <div className="flex items-start justify-between mb-8 pb-6 border-b border-border">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8 pb-6 border-b border-border">
           <div>
             <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">
               {isPickingMeals ? 'Pick your meals' : 'Weekly meal plan'}
             </p>
-            <h1 className="text-4xl font-heading font-bold text-foreground leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-heading font-bold text-foreground leading-tight">
               {isPickingMeals ? 'Choose your favorites' : "This week's dinners"}
             </h1>
             <p className="text-muted-foreground mt-2">
@@ -545,7 +545,7 @@ function DashboardContent() {
           ) : isPartner ? (
             <p className="text-xs text-muted-foreground max-w-xs">Shared household plan. Swaps and new weeks happen from the planner&apos;s account; you can edit the grocery list and vote by text.</p>
           ) : (
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
               {favoriteNames.size >= 3 && !loading && (
                 <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
                   <input type="checkbox" checked={planMode === 'favorites'} onChange={(e) => setPlanMode(e.target.checked ? 'favorites' : 'fresh')} className="accent-[#1a5c38]" />
@@ -555,7 +555,7 @@ function DashboardContent() {
               <button
                 onClick={generatePlan}
                 disabled={loading || initialLoading}
-                className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
+                className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold whitespace-nowrap hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
               >
                 {initialLoading
                   ? 'Loading...'
@@ -567,7 +567,7 @@ function DashboardContent() {
                       ? 'Generate new week'
                       : 'Generate my plan'}
               </button>
-              <Link href="/settings" className="text-xs text-muted-foreground hover:text-primary underline-offset-2 hover:underline sm:ml-1">Settings</Link>
+              <Link href="/settings" className="text-xs text-muted-foreground hover:text-primary underline-offset-2 hover:underline">Settings</Link>
             </div>
           )}
         </div>

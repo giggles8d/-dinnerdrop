@@ -64,7 +64,7 @@ export default function SalesCard({ compact = false, onChange }: { compact?: boo
         <Tag className="w-4 h-4 text-primary" />
         <h2 className="font-heading font-semibold text-foreground">This week&apos;s sales</h2>
         {!loading && total > 0 && <span className="text-xs text-muted-foreground">{total} items{sets[0]?.store ? ` · ${sets.map((s) => s.store).filter(Boolean).join(', ')}` : ''}</span>}
-        <div className="ml-auto flex gap-1.5">
+        <div className="w-full sm:w-auto sm:ml-auto flex flex-wrap gap-1.5 mt-1 sm:mt-0">
           {([['photo', Camera, 'Flyer photos'], ['link', Link2, 'Ad link'], ['text', FileText, 'Paste text']] as const).map(([k, Icon, label]) => (
             <button key={k} type="button" onClick={() => (k === 'photo' ? fileRef.current?.click() : setTab(tab === k ? null : k))} disabled={busy}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${tab === k ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>

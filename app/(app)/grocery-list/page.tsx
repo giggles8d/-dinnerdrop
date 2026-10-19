@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { Copy, Printer, Share2, Check } from 'lucide-react'
+import { Copy, Printer, Share2, Check, Mail } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import { matchSale, type WeeklySales } from '@/lib/sales-shared'
@@ -528,16 +528,16 @@ export default function GroceryListPage() {
             )}
             <div className="space-y-2">
               {krogerConnected ? (
-                <button onClick={handleKrogerCart} disabled={krogerLoading || shoppableCount === 0} className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] disabled:opacity-50 transition-colors shadow-lg">
+                <button onClick={handleKrogerCart} disabled={krogerLoading || shoppableCount === 0} className="w-full sm:w-auto h-[46px] px-6 rounded-full bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] disabled:opacity-50 transition-colors shadow-md">
                   {krogerLoading ? 'Adding to cart...' : 'Send to Kroger cart'}
                 </button>
               ) : !isFamily ? (
-                <Link href="/subscribe" className="inline-block w-full sm:w-auto text-center px-8 py-3 rounded-lg border-2 border-[#0067A0] text-[#0067A0] font-semibold text-base hover:bg-[#0067A0]/5 transition-colors">
+                <Link href="/subscribe" className="inline-flex items-center justify-center w-full sm:w-auto h-[46px] px-6 rounded-full border-2 border-[#0067A0] text-[#0067A0] font-semibold text-base hover:bg-[#0067A0]/5 transition-colors">
                   Kroger cart push &mdash; included with Family
                 </Link>
               ) : (
-                <button onClick={() => { window.location.href = '/api/kroger/auth' }} className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] transition-colors shadow-lg">
-                  Connect Kroger to send to cart
+                <button onClick={() => { window.location.href = '/api/kroger/auth' }} className="w-full sm:w-auto h-[46px] px-6 rounded-full border-2 border-[#0067A0] bg-white text-[#0067A0] font-semibold text-base hover:bg-[#0067A0]/5 transition-colors">
+                  Connect Kroger cart
                 </button>
               )}
               {krogerResult && (
@@ -554,7 +554,7 @@ export default function GroceryListPage() {
           </div>
           <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
             <button type="button" onClick={emailRecipes} disabled={recipesMail === 'sending'} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-white text-foreground text-xs font-semibold hover:border-primary/50 disabled:opacity-60">
-              📄 {recipesMail === 'sending' ? 'Sending…' : recipesMail === 'sent' ? 'Sent — check your inbox' : recipesMail === 'error' ? 'Couldn\u2019t send — try again' : 'Email me this week\u2019s recipes (PDFs)'}
+              <Mail className="w-3.5 h-3.5 text-primary" aria-hidden /> {recipesMail === 'sending' ? 'Sending…' : recipesMail === 'sent' ? 'Sent — check your inbox' : recipesMail === 'error' ? 'Couldn\u2019t send — try again' : 'Email me this week\u2019s recipes (PDFs)'}
             </button>
             <span className="text-[11px] text-muted-foreground">One printable card per dinner. They&apos;re also sent automatically when your list goes to a store.</span>
           </div>
