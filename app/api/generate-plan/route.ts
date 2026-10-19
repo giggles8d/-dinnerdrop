@@ -126,10 +126,11 @@ export async function POST(request: Request) {
 
     // ---------- library picks: proven dinners that fit, no generation needed ----------
     let libraryMeals: Meal[] = []
-    if (mode === 'fresh' && optionsCount >= 8) {
+    if (mode === 'fresh') {
       try {
         const picks = await pickLibraryRecipes(supabase, {
-          limit: 2,
+          // About half the week's options come straight from the curated library.
+          limit: Math.floor(optionsCount / 2),
           maxCookTime: slowestNight,
           dietary: profile.dietaryNeeds,
           excludeWords: [...hardExclusions, ...allDislikes],

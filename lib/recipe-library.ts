@@ -149,8 +149,10 @@ export async function upsertRecipes(
 }
 
 /**
- * Proven dinners from the library that fit this family's hard constraints.
- * Ordered by how often families kept them. Excludes anything containing an
+ * Dinners from the shared library that fit this family's hard constraints.
+ * Every public recipe is eligible; kept / photographed dinners are favored,
+ * often-skipped ones are not, and picks are spread across proteins so the week
+ * doesn't come back as four chicken dinners. Excludes anything containing an
  * excluded ingredient word, and anything this family has seen recently.
  */
 export async function pickLibraryRecipes(
@@ -167,25 +169,46 @@ export async function pickLibraryRecipes(
   if (opts.limit <= 0) return []
   let q = supabase
     .from('recipes')
-    .select('*')
+    .select('id, normalized_name, name, cuisine, protein, ingredients, kept_count, skipped_count, image_url')
     .eq('is_public', true)
     .lte('cook_time', opts.maxCookTime)
-    .gte('kept_count', 1)
-    .order('kept_count', { ascending: false })
-    .order('times_planned', { ascending: false })
-    .limit(opts.limit * 6)
+    .limit(2000)
   if (opts.dietary.length) q = q.contains('dietary', opts.dietary)
   const { data } = await q
+  type Lite = Pick<RecipeRow, 'id' | 'normalized_name' | 'name' | 'cuisine' | 'protein' | 'ingredients' | 'kept_count' | 'skipped_count' | 'image_url'>
   const excludeNorm = new Set(opts.excludeNames.map(normalizeName))
   const words = opts.excludeWords.map((w) => w.toLowerCase().trim()).filter(Boolean)
-  const cuisines = (opts.cuisines ?? []).map((c) => c.toLowerCase())
-  const rows = ((data ?? []) as RecipeRow[]).filter((r) => {
+  const cuisines = (opts.cuisines ?? []).map((c) => c.toLowerCase()).filter((c) => c && c !== 'mixed')
+  const pool = ((data ?? []) as Lite[]).filter((r) => {
     if (excludeNorm.has(r.normalized_name)) return false
     if (cuisines.length && r.cuisine && !cuisines.includes(r.cuisine.toLowerCase())) return false
     const hay = `${r.name} ${(r.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
     return !words.some((w) => hay.includes(w))
   })
-  return rows.slice(0, opts.limit)
+  const scored = pool
+    .map((r) => ({
+      r,
+      score: Math.random() + Math.min(r.kept_count ?? 0, 5) * 0.3 - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0),
+    }))
+    .sort((a, b) => b.score - a.score)
+  // One dinner per main protein first; repeat proteins only if the pool runs short.
+  const chosen: Lite[] = []
+  const usedProteins = new Set<string>()
+  for (const { r } of scored) {
+    if (chosen.length >= opts.limit) break
+    const p = (r.protein ?? '').toLowerCase()
+    if (p && usedProteins.has(p)) continue
+    chosen.push(r)
+    if (p) usedProteins.add(p)
+  }
+  for (const { r } of scored) {
+    if (chosen.length >= opts.limit) break
+    if (!chosen.includes(r)) chosen.push(r)
+  }
+  if (!chosen.length) return []
+  const { data: full } = await supabase.from('recipes').select('*').in('id', chosen.map((c) => c.id))
+  const byId = new Map(((full ?? []) as RecipeRow[]).map((r) => [r.id, r]))
+  return chosen.map((c) => byId.get(c.id)).filter((r): r is RecipeRow => !!r)
 }
 
 /** Daily: give library recipes that were stored without a photo one (Unsplash, once). */
