@@ -111,13 +111,12 @@ export async function recipePdf(meal: Meal, opts: RecipePdfOptions = {}): Promis
     if (col === 0 && i === 0) colStartY = y
     const x = MARGIN + col * (colW + 18)
     const row = col ? i - perCol : i
-    let yy = colStartY - row * 16
+    const yy = colStartY - row * 16
     // rough multi-line: shrink long names instead of wrapping to keep rows aligned
     let size = 11
     while (reg.widthOfTextAtSize(`• ${t}`, size) > colW && size > 8) size -= 0.5
     page.drawText(`• ${t}`, { x, y: yy - 11, size, font: reg, color: INK })
     maxDrop = Math.max(maxDrop, (row + 1) * 16)
-    void yy
   })
   y = colStartY - maxDrop - 10
   page.drawLine({ start: { x: MARGIN, y }, end: { x: PAGE_W - MARGIN, y }, thickness: 1, color: rgb(0.9, 0.9, 0.9) })
