@@ -7,7 +7,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Meal } from '@/types'
 import { recipePdf, recipeFileName } from '@/lib/recipe-pdf'
 
-export async function sendWeekRecipes(admin: SupabaseClient, userId: string, opts: { force?: boolean; planId?: string } = {}): Promise<{ sent: boolean; reason?: string; count?: number; to?: string }> {
+export async function sendWeekRecipes(admin: SupabaseClient, userId: string, opts: { force?: boolean; planId?: string } = {}): Promise<{ sent: boolean; reason?: string; count?: number; to?: string; id?: string; bytes?: number }> {
   if (!process.env.RESEND_API_KEY) return { sent: false, reason: 'no_resend_key' }
   const { data: prof } = await admin.from('profiles').select('email, full_name, settings').eq('id', userId).single()
   if (!prof?.email) return { sent: false, reason: 'no_email' }
@@ -46,7 +46,7 @@ export async function sendWeekRecipes(admin: SupabaseClient, userId: string, opt
   </div></body></html>`
 
   const resend = new Resend(process.env.RESEND_API_KEY)
-  const { error } = await resend.emails.send({
+  const { data, error } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',
     to: prof.email as string,
     subject: `Your recipes for the week — ${meals.length} dinners, one card each`,
@@ -56,7 +56,7 @@ export async function sendWeekRecipes(admin: SupabaseClient, userId: string, opt
   })
   if (error) return { sent: false, reason: typeof error === 'string' ? error : JSON.stringify(error) }
   await admin.from('profiles').update({ settings: { ...settings, recipesEmailed: { ...emailed, [plan.id]: new Date().toISOString() } } }).eq('id', userId)
-  return { sent: true, count: meals.length, to: prof.email as string }
+  return { sent: true, count: meals.length, to: prof.email as string, id: data?.id, bytes: attachments.reduce((n, a) => n + a.content.length, 0) }
 }
 
 const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string))
