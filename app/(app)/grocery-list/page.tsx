@@ -57,13 +57,18 @@ export default function GroceryListPage() {
     try { const r = await fetch('/api/email/recipes', { method: 'POST' }); setRecipesMail(r.ok ? 'sent' : 'error') } catch { setRecipesMail('error') }
   }
   const [copied, setCopied] = useState(false)
+  const [ordered, setOrdered] = useState<ListItem[]>([])
+  const [showOrdered, setShowOrdered] = useState(false)
   const [stapleDraft, setStapleDraft] = useState('')
   const [showStaples, setShowStaples] = useState(false)
 
   const loadItems = useCallback(async (uid: string, ws: string) => {
     const { data } = await supabase.from('list_items').select('*').eq('user_id', uid).eq('week_start', ws).order('created_at')
-    const rows = (data as ListItem[]) ?? []
+    const all = (data as ListItem[]) ?? []
+    // Lines already sent to a store leave the active list; new texts/adds start a fresh one.
+    const rows = all.filter((r) => !r.ordered_at)
     setItems(rows)
+    setOrdered(all.filter((r) => !!r.ordered_at).sort((a, b) => (b.ordered_at! > a.ordered_at! ? 1 : -1)))
     // Typical-price estimates for lines that don't come from the plan (texted, added, basics).
     const missing = rows.filter((r) => r.est_price == null).map((r) => r.id)
     if (missing.length) {
@@ -144,7 +149,7 @@ export default function GroceryListPage() {
 
     // 2. Materialize rows for this week if the plan is newer than the rows we have.
     const [{ data: existing }, { data: pantryItems }, { data: stapleRows }] = await Promise.all([
-      supabase.from('list_items').select('id, source, created_at').eq('user_id', uid).eq('week_start', ws),
+      supabase.from('list_items').select('id, source, created_at, ordered_at').eq('user_id', uid).eq('week_start', ws),
       supabase.from('pantry_items').select('name').eq('user_id', uid),
       supabase.from('staples').select('*').eq('user_id', uid).order('created_at'),
     ])
@@ -154,13 +159,19 @@ export default function GroceryListPage() {
     const planIsNewer = !planRows.length || plan.created_at > newestPlanRow
 
     if (planIsNewer && planList) {
-      if (planRows.length) await supabase.from('list_items').delete().in('id', planRows.map((r) => r.id))
+      // Only replace plan lines that are still on the list — ordered ones are history.
+      const openPlanRows = planRows.filter((r) => !r.ordered_at)
+      if (openPlanRows.length) await supabase.from('list_items').delete().in('id', openPlanRows.map((r) => r.id))
       const pantryNames = new Set((pantryItems ?? []).map((p: { name: string }) => normalizeItemName(p.name)))
       const rows = rowsFromPlanList(planList, { userId: uid, householdId: profile?.household_id ?? null, weekStart: ws, pantryNames })
 
       // Staples due this week + lunch/breakfast basics (only on first materialization for the week).
       const firstTime = !(existing ?? []).length
       if (firstTime) {
+        // Carry over what the family added after the last order (texted or typed) into the new week.
+        await supabase.from('list_items').update({ week_start: ws })
+          .eq('user_id', uid).neq('week_start', ws).is('ordered_at', null).eq('have', false).eq('checked', false)
+          .in('source', ['sms', 'manual']).gte('created_at', new Date(Date.now() - 21 * 86400000).toISOString())
         const due = dueStaples((stapleRows as Staple[]) ?? [], ws)
         for (const s of due) {
           rows.push({ user_id: uid, household_id: profile?.household_id ?? null, week_start: ws, name: s.name, quantity: s.quantity, unit: s.unit, category: s.category, search_term: s.name, source: 'staples', added_by: null, have: false, checked: false })
@@ -222,6 +233,14 @@ export default function GroceryListPage() {
     }).select('*').single()
     if (data) setItems((xs) => [...xs, data as ListItem])
   }
+
+  /* ---------- ordered (sent to a store) ---------- */
+  async function putBack(ids: string[]) {
+    if (!ids.length) return
+    await supabase.from('list_items').update({ ordered_at: null }).in('id', ids)
+    if (userId && weekStart) await loadItems(userId, weekStart)
+  }
+  const afterSent = () => { if (userId && weekStart) setTimeout(() => loadItems(userId, weekStart), 1500) }
 
   /* ---------- staples ---------- */
   async function addStaple(e: React.FormEvent) {
@@ -286,6 +305,7 @@ export default function GroceryListPage() {
       }
       if (!res.ok) throw new Error(data.error || 'Failed to add to cart')
       setKrogerResult({ type: 'success', message: `Added ${data.added} of ${data.total} items to your Kroger cart.` })
+      if (userId && weekStart) loadItems(userId, weekStart)
     } catch (error) {
       setKrogerResult({ type: 'error', message: error instanceof Error ? error.message : 'Failed to add items to Kroger cart.' })
     } finally {
@@ -368,6 +388,32 @@ export default function GroceryListPage() {
             <p className="text-[11px] text-muted-foreground mt-2">
               {over ? 'Over — swap one dinner for a budget pick on your dashboard, or mark pantry items you already have.' : `About $${Math.max(0, budget - storeEst).toFixed(0)} of room for the rest of the week.`}
             </p>
+          </div>
+        )}
+
+        {ordered.length > 0 && (
+          <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-4 print:hidden">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm text-foreground">
+                <span className="font-semibold">✓ {ordered.length} item{ordered.length === 1 ? '' : 's'} sent to the store</span>
+                {' '}{new Date(ordered[0].ordered_at!).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} — off the list.
+                {items.length === 0 ? ' Anything your family texts or you add now starts the next list.' : ''}
+              </p>
+              <div className="flex gap-3 text-xs font-semibold">
+                <button onClick={() => setShowOrdered((v) => !v)} className="text-primary hover:underline">{showOrdered ? 'Hide' : 'Show'}</button>
+                <button onClick={() => { if (confirm('Put every sent item back on the list? Use this if the order didn\u2019t go through.')) putBack(ordered.map((o) => o.id)) }} className="text-muted-foreground hover:text-foreground">Didn&apos;t order? Put them back</button>
+              </div>
+            </div>
+            {showOrdered && (
+              <ul className="mt-3 grid sm:grid-cols-2 gap-x-6 gap-y-1">
+                {ordered.map((o) => (
+                  <li key={o.id} className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
+                    <span className="truncate">{o.name}{o.quantity ? ` · ${formatQuantity(o.quantity, o.unit ?? '')}` : ''}</span>
+                    <button onClick={() => putBack([o.id])} className="shrink-0 text-xs text-primary hover:underline">put back</button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         )}
 
@@ -471,14 +517,14 @@ export default function GroceryListPage() {
                   const n = Object.values(splitLists[st]).reduce((k, arr) => k + arr.length, 0)
                   return (
                     <div key={st} className="flex flex-wrap items-center gap-3">
-                      <InstacartButton groceryList={splitLists[st]} estTotal={undefined} weekStart={weekStart ?? undefined} store={st} />
+                      <InstacartButton groceryList={splitLists[st]} estTotal={undefined} weekStart={weekStart ?? undefined} store={st} onSent={afterSent} />
                       <span className="text-xs text-muted-foreground">{n} items · pick {st} when the list opens</span>
                     </div>
                   )
                 })}
               </div>
             ) : (
-              <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} />
+              <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={afterSent} />
             )}
             <div className="space-y-2">
               {krogerConnected ? (

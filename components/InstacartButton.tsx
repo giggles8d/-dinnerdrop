@@ -10,6 +10,8 @@ interface InstacartButtonProps {
   weekStart?: string
   /** For split orders: the store this subset is for (shown on the button and in the list title). */
   store?: string
+  /** Called after the list was handed to Instacart (not on the fallback search). */
+  onSent?: () => void
 }
 
 /**
@@ -22,7 +24,7 @@ interface InstacartButtonProps {
  *   - Approved button copy: "Shop ingredients"
  * Docs: https://docs.instacart.com/developer_platform_api/guide/concepts/design/cta_design
  */
-export default function InstacartButton({ groceryList, estTotal, weekStart, store }: InstacartButtonProps) {
+export default function InstacartButton({ groceryList, estTotal, weekStart, store, onSent }: InstacartButtonProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -49,6 +51,7 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
           setError('Instacart had a hiccup — opening a search instead.')
         }
         await openExternal(data.link)
+        if (!data.fallback) onSent?.()
       } else {
         setError('No shopping link returned. Please try again.')
       }

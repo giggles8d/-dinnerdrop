@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
   const { data: prof } = await admin.from('profiles').select('id, settings').eq('email', email).single()
   if (!prof) return NextResponse.json({ error: 'No such user' }, { status: 404 })
   const { data: plan } = await admin.from('meal_plans').select('week_start').eq('user_id', prof.id).order('created_at', { ascending: false }).limit(1).single()
-  const { data: rows } = await admin.from('list_items').select('name, quantity, unit, category').eq('user_id', prof.id).eq('week_start', plan?.week_start ?? '').eq('have', false).eq('checked', false)
+  const { data: rows } = await admin.from('list_items').select('name, quantity, unit, category').eq('user_id', prof.id).eq('week_start', plan?.week_start ?? '').eq('have', false).eq('checked', false).is('ordered_at', null)
   const stores = ((prof.settings as { stores?: { myStores?: Array<{ name: string }> } })?.stores?.myStores ?? []).map((s) => s.name)
   return NextResponse.json({ weekStart: plan?.week_start ?? null, items: rows ?? [], stores })
 }

@@ -44,7 +44,7 @@ const SHELF_DAYS: Array<[RegExp, number]> = [[/broth|coconut milk|salsa|mayo|may
  * or refresh last_seen if already there. Returns how many were added.
  */
 export async function stockStaplesFromList(db: SupabaseClient, userId: string, weekStart: string | null): Promise<number> {
-  const q = db.from('list_items').select('name, quantity, unit, category').eq('user_id', userId).eq('have', false)
+  const q = db.from('list_items').select('name, quantity, unit, category').eq('user_id', userId).eq('have', false).is('ordered_at', null)
   const { data: rows } = weekStart ? await q.eq('week_start', weekStart) : await q
   const staples = (rows ?? []).filter((r) => STAPLE.test(r.name))
   if (!staples.length) return 0

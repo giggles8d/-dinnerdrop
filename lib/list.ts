@@ -21,6 +21,7 @@ export interface ListItem {
   have: boolean
   checked: boolean
   est_price?: number | null   // typical-price estimate for non-plan lines
+  ordered_at?: string | null  // set when the line went to a store; null = still on the active list
   created_at: string
 }
 

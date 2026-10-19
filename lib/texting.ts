@@ -309,7 +309,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       return { reply: meals.length ? `This week:\n${menuLines(meals)}` : `No dinners planned yet — ${family} hasn't built this week.`, handled: true, member: m }
     case 'list': {
       if (!owner) break
-      const { data: items } = await admin.from('list_items').select('name, quantity, unit, have, checked').eq('user_id', owner.id).eq('week_start', plan?.week_start ?? mondayOf(new Date())).order('category')
+      const { data: items } = await admin.from('list_items').select('name, quantity, unit, have, checked').eq('user_id', owner.id).eq('week_start', plan?.week_start ?? mondayOf(new Date())).is('ordered_at', null).order('category')
       const need = (items ?? []).filter((i) => !i.have && !i.checked)
       return { reply: need.length ? `Grocery list (${need.length}):\n${need.slice(0, 30).map((i) => `• ${i.name}${i.quantity ? ` (${i.quantity} ${i.unit ?? ''})`.replace(/\s+\)/, ')') : ''}`).join('\n')}${need.length > 30 ? `\n…and ${need.length - 30} more` : ''}` : `The list is empty right now. Text ADD + anything to put it on.`, handled: true, member: m }
     }
@@ -354,7 +354,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       if (!m.can_add) return { reply: `Adding to the list is turned off for you, ${m.name}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
       if (!owner) break
       const weekStart = plan?.week_start ?? mondayOf(new Date())
-      const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
+      const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
       const added: string[] = []
       for (const it of await cleanItems(parsed.items)) {
         const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
@@ -406,7 +406,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     const [it] = await cleanItems([body.trim()])
     if (owner && it) {
       const weekStart = plan?.week_start ?? mondayOf(new Date())
-      const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
+      const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
       const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
       if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
       else await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
@@ -657,7 +657,7 @@ async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply
   for (const img of media) {
     const it = await itemFromPhoto(img, caption)
     if (!it) continue
-    const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart)
+    const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
     const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
     if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
     else await admin.from('list_items').insert({ user_id: owner.id, household_id: member.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: member.name })

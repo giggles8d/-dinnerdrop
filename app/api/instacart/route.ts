@@ -4,6 +4,7 @@ import { createInstacartLink } from '@/lib/instacart'
 import { createClient } from '@supabase/supabase-js'
 import { sendWeekRecipes } from '@/lib/recipe-email'
 import { stockStaplesFromList } from '@/lib/pantry'
+import { markListOrdered } from '@/lib/list-ordered'
 import type { GroceryItem } from '@/types'
 
 export async function POST(request: Request) {
@@ -49,6 +50,8 @@ export async function POST(request: Request) {
         try {
           const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
           await stockStaplesFromList(admin, user.id, typeof weekStart === 'string' ? weekStart : null).catch((e) => console.error('[instacart] staple stock failed:', e))
+          // These lines are on their way — take them off the active list so the family's texts start a fresh one.
+          await markListOrdered(admin, user.id, allItems.map((i) => i.name)).catch((e) => console.error('[instacart] mark ordered failed:', e))
           await sendWeekRecipes(admin, user.id)
         } catch (mailErr) {
           console.error('[instacart] recipe email failed:', mailErr)
