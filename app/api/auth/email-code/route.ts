@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   const { data: prof } = await admin.from('profiles').select('id').eq('email', email).maybeSingle()
   if (!prof) {
-    if (!body.create) return NextResponse.json({ error: 'No DinnerDrop account uses that email yet — tap "Create a free account" below.' }, { status: 404 })
+    if (!body.create) return NextResponse.json({ error: 'No DinnerDrop account uses that email yet — tap "Sign up" below to create one (free).' }, { status: 404 })
     const { error: cErr } = await admin.auth.admin.createUser({ email, email_confirm: true })
     if (cErr && !/already|registered|exists/i.test(cErr.message)) return NextResponse.json({ error: cErr.message }, { status: 500 })
   }
