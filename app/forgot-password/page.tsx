@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
@@ -10,27 +9,17 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-  const supabase = createClient()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
 
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent('/reset-password')}`,
-    })
-
+    // Our own reset email (works in any browser) — see app/api/auth/reset/route.ts
+    const res = await fetch('/api/auth/reset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) })
+    const j = await res.json().catch(() => ({}))
     setLoading(false)
-    if (resetError) {
-      // Never reveal whether the email exists — show success either way (Supabase will silently
-      // do nothing for non-existent emails). Only surface real errors (rate limit etc.).
-      if (resetError.message.toLowerCase().includes('rate')) {
-        setError('Too many attempts. Try again in a few minutes.')
-        return
-      }
-      // For any other error, still show the generic success state to avoid leaking user info
-    }
+    if (!res.ok && j?.error) { setError(j.error); return }
     setSubmitted(true)
   }
 

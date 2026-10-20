@@ -20,6 +20,15 @@ export default function ResetPasswordPage() {
   useEffect(() => {
     let cancelled = false
     ;(async () => {
+      // Link from our reset email: /reset-password?token_hash=…&type=recovery (works in any browser)
+      const qs = new URLSearchParams(window.location.search)
+      const tokenHash = qs.get('token_hash')
+      if (tokenHash) {
+        const { error: vErr } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: 'recovery' })
+        if (cancelled) return
+        if (vErr) { router.replace('/forgot-password?expired=1'); return }
+        window.history.replaceState(null, '', '/reset-password')
+      }
       const { data } = await supabase.auth.getSession()
       if (cancelled) return
       if (!data.session) {
