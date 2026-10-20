@@ -73,10 +73,10 @@ async function alreadySent(admin: SupabaseClient, householdId: string, intent: s
   return (count ?? 0) > 0
 }
 
-export async function textMember(admin: SupabaseClient, m: MemberRow, body: string, intent: string, cap?: number): Promise<boolean> {
+export async function textMember(admin: SupabaseClient, m: MemberRow, body: string, intent: string, cap?: number, mediaUrl?: string): Promise<boolean> {
   if (!m.phone || !m.phone_opt_in_at || m.phone_opted_out) return false
   if (cap !== undefined && (await sentThisWeek(admin, m.id)) >= cap) return false
-  const r = await sendSms(m.phone, body)
+  const r = await sendSms(m.phone, body, mediaUrl)
   await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: m.phone, body, intent, twilio_sid: r.sid ?? null })
   return r.ok
 }
@@ -464,6 +464,12 @@ function pickLines(meals: Meal[]): string {
   return meals.map((m, i) => `${i + 1}. ${m.name}${m.cookTime ? ` (${timeLabel(m)})` : ''}`).join('\n')
 }
 
+/** The numbered photo collage of the choices, texted with the vote (see app/api/sms/menu-image). */
+function menuImageUrl(roundId: string): string {
+  const base = (process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app').replace(/\/$/, '')
+  return `${base}/api/sms/menu-image/${roundId}`
+}
+
 function voteBody(familyName: string, round: VoteRound): string {
   return `DinnerDrop — ${familyName}'s dinner ideas for the week of ${round.week_start.slice(5).replace('-', '/')}:\n${pickLines(round.candidates)}\n\nReply with the numbers you WANT (pick up to ${round.picks_needed}, e.g. "1 3 5"). The top picks make the week. Text ADD + anything for the grocery list.`
 }
@@ -521,7 +527,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     }
     if (!mm.can_vote) continue
     if (!opts.force && await sentForRound(admin, mm.id, round.id)) continue
-    if (await textMember(admin, mm, voteBody(familyName, round), `vote_request:${round.id}`, settings.texting.weeklyCap)) report.voteTextsSent++
+    if (await textMember(admin, mm, voteBody(familyName, round), `vote_request:${round.id}`, settings.texting.weeklyCap, menuImageUrl(round.id))) report.voteTextsSent++
   }
   return report
 }

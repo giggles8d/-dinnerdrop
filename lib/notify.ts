@@ -50,7 +50,7 @@ export function normalizePhone(raw: string | null | undefined): string | null {
   return null
 }
 
-export async function sendSms(to: string, body: string): Promise<{ ok: boolean; sid?: string; error?: string }> {
+export async function sendSms(to: string, body: string, mediaUrl?: string): Promise<{ ok: boolean; sid?: string; error?: string }> {
   const sid = process.env.TWILIO_ACCOUNT_SID
   const token = process.env.TWILIO_AUTH_TOKEN
   const from = process.env.TWILIO_FROM_NUMBER
@@ -58,15 +58,19 @@ export async function sendSms(to: string, body: string): Promise<{ ok: boolean; 
     console.log('[notify] Twilio not configured — would text', to, body.slice(0, 60))
     return { ok: false, error: 'Twilio not configured' }
   }
+  const params = new URLSearchParams({ To: to, From: from, Body: body })
+  if (mediaUrl) params.append('MediaUrl', mediaUrl)
   const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
     method: 'POST',
     headers: {
       Authorization: 'Basic ' + Buffer.from(`${sid}:${token}`).toString('base64'),
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: new URLSearchParams({ To: to, From: from, Body: body }),
+    body: params,
   })
   const json = await res.json().catch(() => ({}))
+  // A picture should never cost someone the text: if the MMS is refused, send it as plain SMS.
+  if (!res.ok && mediaUrl) return sendSms(to, body)
   if (!res.ok) return { ok: false, error: json.message || `Twilio ${res.status}` }
   return { ok: true, sid: json.sid }
 }
