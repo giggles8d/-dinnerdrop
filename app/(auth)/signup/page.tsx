@@ -43,7 +43,7 @@ function SignupForm() {
     // strong random one they never see; returning users sign in via magic link).
     // This requires Supabase "Confirm email" to be OFF. If it's still on, or the
     // account already exists, we fall back to a one-click email link so nothing breaks.
-    const password = `${crypto.randomUUID()}-${crypto.randomUUID()}`
+    const password = `${crypto.randomUUID()}${crypto.randomUUID()}`.replace(/-/g, "").slice(0, 64) // Supabase max is 72
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
