@@ -116,15 +116,6 @@ export default function RootLayout({
             }
           `}
         </Script>
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=2031808580404505&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
         {/* Pinterest Tag */}
         <Script id="pinterest-tag" strategy="afterInteractive">
           {`
@@ -147,15 +138,6 @@ export default function RootLayout({
             }
           `}
         </Script>
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            alt=""
-            src="https://ct.pinterest.com/v3/?event=init&tid=2612772503928&noscript=1"
-          />
-        </noscript>
         {children}
         <Analytics />
         <PwaRegister />
