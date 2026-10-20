@@ -39,7 +39,7 @@ export default function PrivacyPage() {
           Privacy Policy
         </h1>
         <p className="text-sm text-muted-foreground mb-10">
-          Last updated: October 18, 2026
+          Last updated: October 19, 2026
         </p>
 
         <div className="space-y-8 text-sm text-foreground leading-relaxed">
@@ -179,7 +179,8 @@ export default function PrivacyPage() {
               </li>
               <li id="delete">
                 <span className="font-medium text-foreground">Delete your account:</span> Permanently
-                delete your account and all associated personal data. Email{' '}
+                delete your account and all associated personal data yourself from Settings &rarr; Data &rarr; Delete account (in the
+                app or on the website); billing stops immediately. Or email{' '}
                 <a href="mailto:info@dinnerdrop.app?subject=Delete%20my%20DinnerDrop%20account" className="text-primary underline">info@dinnerdrop.app</a>{' '}
                 from the address on your account with the subject &ldquo;Delete my DinnerDrop account&rdquo; and
                 we will delete your profile, meal plans, favorites, pantry, and grocery-handoff records within 30 days
@@ -211,8 +212,8 @@ export default function PrivacyPage() {
               Instagram), Pinterest, and Reddit on our public marketing pages. These set third-party
               cookies and may collect your IP address, device identifiers, and the pages you
               visit, so that we can measure whether our ads led to signups and show relevant ads
-              on those platforms. Apart from a single &ldquo;signed up&rdquo; event when you first create
-              your account, they are not used to track what you do inside the app,
+              on those platforms. They do not load at all inside the DinnerDrop iPhone or Android app. Apart from a single &ldquo;signed up&rdquo; event when you first create
+              your account on the website, they are not used to track what you do inside the app,
               and we never share your meal plans, grocery lists, or dietary information with
               advertising platforms.
             </p>

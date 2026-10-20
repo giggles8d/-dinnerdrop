@@ -87,22 +87,22 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         {/* Google Ads Tag */}
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-18170234265"
-          strategy="afterInteractive"
-        />
+        {/* Ad tags never load inside the native app (no cross-app tracking → no ATT prompt needed). */}
         <Script id="google-ads-tag" strategy="afterInteractive">
           {`
+            if(!/DinnerDropApp/.test(navigator.userAgent)){
+            var g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id=AW-18170234265';document.head.appendChild(g);
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+            window.gtag = function(){dataLayer.push(arguments);};
             gtag('js', new Date());
             gtag('config', 'AW-18170234265');
+            }
           `}
         </Script>
         {/* Meta Pixel */}
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
+            if(!/DinnerDropApp/.test(navigator.userAgent)){
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -113,6 +113,7 @@ export default function RootLayout({
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '2031808580404505');
             fbq('track', 'PageView');
+            }
           `}
         </Script>
         <noscript>
@@ -127,19 +128,23 @@ export default function RootLayout({
         {/* Pinterest Tag */}
         <Script id="pinterest-tag" strategy="afterInteractive">
           {`
+            if(!/DinnerDropApp/.test(navigator.userAgent)){
             !function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
             n=window.pintrk;n.queue=[],n.version="3.0";var t=document.createElement("script");t.async=!0,t.src=e;var
             r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
             pintrk('load', '2612772503928');
             pintrk('page');
+            }
           `}
         </Script>
         {/* Reddit Pixel */}
         <Script id="reddit-pixel" strategy="afterInteractive">
           {`
+            if(!/DinnerDropApp/.test(navigator.userAgent)){
             !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
             rdt('init','a2_j0xlhb9uvlwt');
             rdt('track','PageVisit');
+            }
           `}
         </Script>
         <noscript>

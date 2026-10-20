@@ -1,19 +1,19 @@
 # DinnerDrop — store listing copy (Google Play + App Store)
 
-Last updated 2026-10-16. Same facts on both stores. Nothing here promises what the app cannot do today.
+Last updated 2026-10-19. Same facts on both stores. Nothing here promises what the app cannot do today.
 
 ## Name
 DinnerDrop — Dinner, handled
 
 ## Short description (Play, ≤80 chars) / Subtitle (App Store, ≤30 chars)
 - Play: Five weeknight dinners planned for your family, grocery list in your cart in one tap.
-- App Store subtitle: AI dinner plans + one-tap cart
+- App Store subtitle: Family dinners + Instacart
 
 ## Full description (Play ≤4000 chars / App Store ≤4000 chars)
 
 Dinner, handled.
 
-DinnerDrop plans five weeknight dinners for your family — around your budget, your cook time, and what your kids will actually eat — then builds a deduplicated grocery list and drops it into your Instacart cart in one tap. Kroger shoppers can push straight to their Kroger cart.
+DinnerDrop plans five weeknight dinners for your family — around your budget, your cook time, and what your kids will actually eat — then builds one combined grocery list and opens it in Instacart in one tap, every item matched. Kroger shoppers can push straight to their Kroger cart.
 
 HOW IT WORKS
 1. Tell us about your family (or skip it and get a plan right away): household size, weekly grocery budget, how long you have to cook, any dietary needs.
@@ -26,11 +26,13 @@ WHAT YOU GET
 • Swap any dinner you don't love — DinnerDrop learns your family's tastes over time
 • Budget optimization: set a weekly number and plans are built to hit it
 • Pantry scan: photograph what you have and plans use it first
+• Your family votes on dinners by text, and anyone can text an item to add it to the list
+• Share the grocery list or any recipe with the native share sheet
 • Favorites and meal history
 • Dietary needs respected on every plan: gluten-free, dairy-free, vegetarian, nut allergies, and more
 
-PRICING
-Your first meal plan is free. Unlimited plans are part of a DinnerDrop subscription, managed on dinnerdrop.app. This app does not sell subscriptions.
+FREE TO USE
+Weekly plans, the grocery list and the one-tap Instacart cart are free. Some household features are part of the Family plan, which is managed on our website. This app does not sell subscriptions.
 
 Built by a parent who was tired of the 5pm "what's for dinner" scramble. If something doesn't work the way you expect, email info@dinnerdrop.app — it goes straight to the founder.
 
@@ -46,7 +48,7 @@ meal planner,dinner,grocery list,instacart,family meals,weeknight,budget,recipes
 ## URLs
 - Privacy policy: https://dinnerdrop.app/privacy
 - Terms: https://dinnerdrop.app/terms
-- Support: https://dinnerdrop.app/about (email info@dinnerdrop.app)
+- Support: https://www.dinnerdrop.app/about (email info@dinnerdrop.app)
 - Marketing: https://dinnerdrop.app
 
 ## Content rating
@@ -55,15 +57,26 @@ Everyone / 4+. No user-generated content, no ads, no gambling, no violence.
 ## Play Data safety (must match the live site)
 Collected: email address (account), name (optional), app activity (meal plans, favorites, pantry), device/other IDs (analytics via Meta Pixel, Google tag, Pinterest tag loaded by the web app), purchase history (Stripe, web only).
 Shared: analytics identifiers with Google, Meta, Pinterest; grocery list contents with Instacart/Kroger only when the user taps the handoff.
-Encrypted in transit: yes. Deletion: users can request deletion at info@dinnerdrop.app (account deletion in-app is on the roadmap — Play requires a deletion URL: use https://dinnerdrop.app/privacy#delete).
+Encrypted in transit: yes. Deletion: in-app at Settings → Data → Delete account (also on the website); deletion URL for Play: https://www.dinnerdrop.app/privacy#delete.
 
-## App Store privacy nutrition labels
-Data linked to you: Contact info (email, name), Identifiers (user ID), Usage data (product interaction), Purchases (subscription status).
-Data not linked to you: Diagnostics.
-Tracking: Yes — Meta Pixel / Google / Pinterest tags on the web content (declare "used for advertising"; ATT prompt not required because tracking occurs in the embedded web content only via cookies the WebView controls — confirm during review).
+## App Store privacy nutrition labels (answers for App Store Connect → App Privacy)
+Ad tags (Google, Meta, Pinterest, Reddit) do NOT load inside the app (UA check, 2026-10-19), so: **Tracking = No**, no ATT prompt.
+Data linked to the user, all for **App Functionality** only (not advertising, not tracking):
+- Contact Info: Email Address, Name, Phone Number (optional, Family texting)
+- User Content: Photos (pantry/flyer photos the user chooses to send), Other User Content (meal plans, lists)
+- Identifiers: User ID
+- Purchases: Purchase History (plan status — purchases happen on the website)
+- Usage Data: Product Interaction (grocery handoffs)
+Data not collected: Location, Health, Financial info (Stripe holds cards, on the web), Browsing history, Contacts, Diagnostics.
 
 ## Reviewer notes (both stores)
-DinnerDrop is a native shell around our production web app with native push notifications, share sheet, haptics, and offline grocery list. Demo account: (create one at review time; email + password sign-in is available on /login under "Or sign in with password"). Subscriptions are purchased and managed on our website only; the app contains no purchase links. Grocery checkout happens in Instacart/Kroger in the system browser.
+DinnerDrop plans a family's weeknight dinners and turns them into one grocery list that opens in Instacart (or a Kroger cart). It uses native share sheet, haptics, splash screen and the system browser for store checkout.
+
+Demo account — tap "Or sign in with password" on the sign-in screen:
+  Email: [demo email]   Password: [demo password]
+The account already has a week of dinners and a grocery list. Try: open a dinner → share icon (native share sheet); Grocery List → "Shop ingredients" (opens Instacart in the system browser); Settings → Data → Delete account (in-app account deletion; please don't delete the demo account itself).
+
+The app does not sell anything. Some household features belong to a Family plan purchased on our website; the app shows only the user's current plan status and contains no prices, purchase buttons or links to purchase (guideline 3.1.3(b)).
 
 ## Screenshots (6 per store; phone frames via Canva)
 1. Dashboard with this week's five dinners — caption "Five dinners, planned in seconds"
