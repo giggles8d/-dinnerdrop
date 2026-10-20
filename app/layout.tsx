@@ -49,12 +49,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-site-verification" content="aRL3GZUE7P9djb-TJ4-DGsySJ-a4ga092frVWuHVvmo" />
         <meta name="p:domain_verify" content="427458932d59da42a3de89511f35be98" />
         {/* Impact.com domain verification — uses the non-standard `value=` attribute per their docs, so we spread to bypass React's strict <meta> types */}
         <meta {...({ name: 'impact-site-verification', value: '873816be-9855-4c55-995a-412f97a0bbac' } as React.MetaHTMLAttributes<HTMLMetaElement>)} />
+        {/* In the native app, mark <html data-native> before first paint so .web-only (anything that sells the subscription) never flashes. */}
+        <script dangerouslySetInnerHTML={{ __html: "try{if(/DinnerDropApp/.test(navigator.userAgent)||(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform()))document.documentElement.setAttribute('data-native','1')}catch(e){}" }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script

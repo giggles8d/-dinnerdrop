@@ -37,3 +37,8 @@
     @apply font-heading;
   }
 }
+
+/* Native app (Capacitor shell): hide anything that sells or prices the subscription. */
+html[data-native] .web-only { display: none !important; }
+.native-only { display: none !important; }
+html[data-native] .native-only { display: revert !important; }

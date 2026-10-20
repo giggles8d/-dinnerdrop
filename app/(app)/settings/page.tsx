@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import DeleteAccount from '@/components/DeleteAccount'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import SalesCard from '@/components/SalesCard'
@@ -522,7 +523,8 @@ export default function SettingsPage() {
               <>
                 {!isFamily && (
                   <div className="rounded-xl border border-accent/40 bg-accent/10 p-4 text-sm">
-                    Family texting is part of the Family plan. <Link href="/subscribe" className="font-semibold text-primary underline">Try Family free for 14 days</Link> — $4.99/month after, cancel anytime.
+                    <span className="native-only">Family texting is included with the Family plan.</span>
+                    <span className="web-only">Family texting is part of the Family plan. <Link href="/subscribe" className="font-semibold text-primary underline">Try Family free for 14 days</Link> — $4.99/month after, cancel anytime.</span>
                   </div>
                 )}
                 <Toggle checked={settings.texting.enabled} onChange={(v) => patch((s) => { s.texting.enabled = v })} label="Text the household" hint="Everyone with a number gets the week's dinners to vote on, and can text a food to add it to the list." />
@@ -597,12 +599,12 @@ export default function SettingsPage() {
                   <p className="text-xs text-muted-foreground mb-2">Subscribe in Google Calendar, Apple Calendar, or a kitchen display. Each cook night shows the dinner and its time.</p>
                   {calendarUrl && <code className="block text-xs bg-muted rounded-md px-3 py-2 break-all">{calendarUrl}</code>}
                 </div>
-                <div>
+                <div className="web-only">
                   <h2 className="font-heading font-semibold text-foreground mb-1">Invite your family</h2>
                   <p className="text-xs text-muted-foreground mb-2">Share this link and they get DinnerDrop free too. When they start Family, you both get a month of Family free.</p>
                   {referralUrl && <code className="block text-xs bg-muted rounded-md px-3 py-2 break-all">{referralUrl}</code>}
                 </div>
-                <div>
+                <div className="web-only">
                   <h2 className="font-heading font-semibold text-foreground mb-1">Have a code?</h2>
                   <p className="text-xs text-muted-foreground mb-2">Promo codes add Family-plan time to your account — no card needed.{profile.family_until && new Date(profile.family_until) > new Date() ? ` Family is on through ${new Date(profile.family_until).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}.` : ''}</p>
                   <form onSubmit={redeemCode} className="flex gap-2 max-w-sm">
@@ -616,10 +618,7 @@ export default function SettingsPage() {
                   <p className="text-xs text-muted-foreground mb-2">Download everything — profile, plans, favorites, lists — any time.</p>
                   <a href="/api/export" className="inline-block px-4 py-2 rounded-md border border-border text-sm font-medium hover:bg-muted">Download my data (JSON)</a>
                 </div>
-                <div>
-                  <h2 className="font-heading font-semibold text-foreground mb-1">Delete account</h2>
-                  <p className="text-xs text-muted-foreground">Email <a href="mailto:info@dinnerdrop.app?subject=Delete%20my%20DinnerDrop%20account" className="text-primary underline">info@dinnerdrop.app</a> from this address and we delete everything within 30 days and confirm by email.</p>
-                </div>
+                <DeleteAccount />
               </>
             )}
           </div>

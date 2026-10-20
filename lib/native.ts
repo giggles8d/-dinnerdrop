@@ -22,6 +22,7 @@ function cap(): CapacitorGlobal | null {
 }
 
 export function isNativeApp(): boolean {
+  if (typeof navigator !== 'undefined' && navigator.userAgent.includes('DinnerDropApp')) return true
   return !!cap()?.isNativePlatform?.()
 }
 

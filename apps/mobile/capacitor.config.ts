@@ -10,6 +10,9 @@ import type { CapacitorConfig } from '@capacitor/cli'
 const config: CapacitorConfig = {
   appId: 'app.dinnerdrop.mobile',
   appName: 'DinnerDrop',
+  // Lets the web app (server + client) recognise the native shell and hide
+  // anything that sells the subscription (App Store guideline 3.1.1).
+  appendUserAgent: 'DinnerDropApp',
   webDir: 'www',
   server: {
     url: 'https://www.dinnerdrop.app/dashboard?utm_source=app',

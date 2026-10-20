@@ -447,7 +447,7 @@ function DashboardContent() {
         {!isSubscribed && subscriptionStatus !== 'past_due' && planCount > 0 && (
           <Link
             href="/subscribe"
-            className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-foreground text-primary-foreground hover:bg-foreground/90 transition-colors"
+            className="web-only flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-foreground text-primary-foreground hover:bg-foreground/90 transition-colors"
           >
             <div className="flex items-center gap-3">
               <Sparkles className="w-5 h-5 text-accent flex-shrink-0" />

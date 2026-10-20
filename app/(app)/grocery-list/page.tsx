@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Copy, Printer, Share2, Check } from 'lucide-react'
+import { nativeShare, tapHaptic } from '@/lib/native'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import { matchSale, type WeeklySales } from '@/lib/sales-shared'
@@ -208,10 +209,12 @@ export default function GroceryListPage() {
 
   /* ---------- item actions ---------- */
   async function toggleChecked(item: ListItem) {
+    tapHaptic()
     setItems((xs) => xs.map((x) => (x.id === item.id ? { ...x, checked: !x.checked } : x)))
     await supabase.from('list_items').update({ checked: !item.checked }).eq('id', item.id)
   }
   async function toggleHave(item: ListItem) {
+    tapHaptic()
     setItems((xs) => xs.map((x) => (x.id === item.id ? { ...x, have: !x.have } : x)))
     await supabase.from('list_items').update({ have: !item.have }).eq('id', item.id)
   }
@@ -268,9 +271,7 @@ export default function GroceryListPage() {
   }
   async function shareList() {
     const payload = { title: 'This week\'s grocery list', text: `DinnerDrop grocery list\n\n${text}` }
-    if (typeof navigator !== 'undefined' && 'share' in navigator) {
-      try { await navigator.share(payload); return } catch { /* cancelled */ }
-    }
+    if (await nativeShare(payload)) return
     await copyList()
   }
 
@@ -532,7 +533,7 @@ export default function GroceryListPage() {
                   {krogerLoading ? 'Adding to cart...' : 'Send to Kroger cart'}
                 </button>
               ) : !isFamily ? (
-                <Link href="/subscribe" className="inline-block w-full sm:w-auto text-center px-8 py-3 rounded-lg border-2 border-[#0067A0] text-[#0067A0] font-semibold text-base hover:bg-[#0067A0]/5 transition-colors">
+                <Link href="/subscribe" className="web-only inline-block w-full sm:w-auto text-center px-8 py-3 rounded-lg border-2 border-[#0067A0] text-[#0067A0] font-semibold text-base hover:bg-[#0067A0]/5 transition-colors">
                   Kroger cart push &mdash; included with Family
                 </Link>
               ) : (
@@ -544,7 +545,7 @@ export default function GroceryListPage() {
                 <p className={`text-sm ${krogerResult.type === 'success' ? 'text-green-600' : 'text-destructive'}`}>{krogerResult.message}</p>
               )}
               {!krogerResult && (
-                <p className="text-[11px] text-muted-foreground">
+                <p className={`text-[11px] text-muted-foreground ${isFamily || krogerConnected ? '' : 'web-only'}`}>
                   {isFamily || krogerConnected
                     ? 'Pushes ingredients directly into your Kroger.com cart. You review and check out there.'
                     : 'Family is $4.99/month or $39/year after a 14-day free trial.'}

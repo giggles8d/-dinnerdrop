@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { openExternal } from '@/lib/native'
+import { openExternal, tapHaptic } from '@/lib/native'
 import type { GroceryCategory, GroceryItem } from '@/types'
 
 interface InstacartButtonProps {
@@ -29,6 +29,7 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
   const [error, setError] = useState<string | null>(null)
 
   async function handleSendToInstacart() {
+    tapHaptic()
     setLoading(true)
     setError(null)
 

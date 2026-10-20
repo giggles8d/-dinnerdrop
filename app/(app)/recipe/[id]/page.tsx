@@ -4,7 +4,8 @@ import { Suspense, useCallback, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Clock, Heart, RefreshCw, Users, ChefHat } from 'lucide-react'
+import { ArrowLeft, Clock, Heart, RefreshCw, Users, ChefHat, Share2 } from 'lucide-react'
+import { nativeShare, tapHaptic } from '@/lib/native'
 import { createClient } from '@/lib/supabase'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
 import { recordMealSignal } from '@/lib/taste-profile'
@@ -287,8 +288,21 @@ function RecipeContent() {
               {meal.name}
             </h1>
           </div>
+          <div className="flex items-center gap-1 flex-shrink-0">
           <button
-            onClick={toggleFavorite}
+            onClick={async () => {
+              const text = `${meal.name}\n\nIngredients:\n${meal.ingredients.map((i) => `• ${[i.quantity, i.unit, i.name].filter(Boolean).join(' ')}`).join('\n')}\n\nSteps:\n${meal.steps.map((st, n) => `${n + 1}. ${st}`).join('\n')}\n\nPlanned with DinnerDrop — dinnerdrop.app`
+              if (!(await nativeShare({ title: meal.name, text }))) {
+                try { await navigator.clipboard.writeText(text); alert('Recipe copied') } catch { /* ignore */ }
+              }
+            }}
+            className="p-2 rounded-full hover:bg-muted transition-colors"
+            aria-label="Share this recipe"
+          >
+            <Share2 className="w-5 h-5 text-muted-foreground" />
+          </button>
+          <button
+            onClick={() => { tapHaptic(); toggleFavorite() }}
             disabled={favoriting}
             className="p-2 rounded-full hover:bg-muted transition-colors flex-shrink-0 disabled:opacity-50"
             aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
@@ -301,6 +315,7 @@ function RecipeContent() {
               }`}
             />
           </button>
+          </div>
         </div>
 
         {/* Metadata */}

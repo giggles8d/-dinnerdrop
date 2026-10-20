@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
+import { isNativeApp } from '@/lib/native'
+import DeleteAccount from '@/components/DeleteAccount'
 import { AlertCircle, Clock, CheckCircle, CreditCard, LogOut } from 'lucide-react'
 
 interface Profile {
@@ -46,7 +48,8 @@ export default function AccountPage() {
 
       // Auto-redirect active/past_due users straight to portal — same as before
       const status = data?.subscription_status
-      if (status === 'active' || status === 'past_due') {
+      // Never bounce into Stripe from inside the iOS/Android app (guideline 3.1.1).
+      if ((status === 'active' || status === 'past_due') && !isNativeApp()) {
         openPortal()
       }
     }
@@ -130,8 +133,10 @@ export default function AccountPage() {
     ? new Date(profile.family_until).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
     : null
 
+  const inApp = isNativeApp()
+
   // active/past_due — portal redirect is fired in useEffect; show spinner while it happens
-  if (status === 'active' || status === 'past_due') {
+  if ((status === 'active' || status === 'past_due') && !inApp) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -162,6 +167,27 @@ export default function AccountPage() {
           </div>
         )}
 
+        {/* Native app: plan status only — nothing that sells or prices the subscription. */}
+        {inApp && (
+          <div className="bg-white rounded-2xl border border-border p-6 space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: '#e8f5ef' }}>
+                <CheckCircle className="w-5 h-5" style={{ color: '#1a5c38' }} />
+              </div>
+              <div>
+                <p className="font-semibold text-foreground">
+                  {status === 'active' || status === 'trialing' || familyCreditUntil || isFoundingMember ? 'Family plan' : 'Free plan'}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {familyCreditUntil ? `Family features are on through ${familyCreditUntil}.` : status === 'trialing' && trialEndDate ? `Trial through ${trialEndDate}.` : status === 'active' || isFoundingMember ? 'Family features are on.' : 'Weekly plans, grocery list and one-tap Instacart cart.'}
+                </p>
+              </div>
+            </div>
+            <DeleteAccount />
+          </div>
+        )}
+
+        <div className={inApp ? 'hidden' : ''}>
         {/* Trialing */}
         {status === 'trialing' && (
           <div className="bg-white rounded-2xl border border-border p-6 space-y-5">
@@ -339,6 +365,8 @@ export default function AccountPage() {
             </p>
           </div>
         )}
+
+        </div>
 
         <div className="mt-6 flex items-center justify-center gap-6">
           <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
