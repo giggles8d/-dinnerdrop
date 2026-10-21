@@ -25,12 +25,16 @@ function SignupForm() {
   // week of dinners auto-generates with smart defaults. The personalization
   // quiz is offered after they've seen the plan — not as a gate before it.
   function buildCallbackUrl() {
-    const destination = nextUrl && nextUrl.startsWith('/') ? nextUrl : '/dashboard?new=1'
+    const destination = postSignupDestination()
     return `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(destination)}`
   }
 
+  // Always carry new=1: that's what fires the ad platforms' signup conversion on landing
+  // (the /start ads send ?redirect=/dashboard, which used to drop it).
   function postSignupDestination() {
-    return nextUrl && nextUrl.startsWith('/') ? nextUrl : '/dashboard?new=1'
+    if (!nextUrl || !nextUrl.startsWith('/')) return '/dashboard?new=1'
+    if (/[?&]new=1(&|$)/.test(nextUrl)) return nextUrl
+    return nextUrl + (nextUrl.includes('?') ? '&' : '?') + 'new=1'
   }
 
   async function handleSignup(e: React.FormEvent) {

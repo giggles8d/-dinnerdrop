@@ -33,9 +33,9 @@ export default function ActivateDay3({
               <strong>&ldquo;What&apos;s for dinner?&rdquo;</strong>
             </Text>
             <Text style={paragraph}>
-              That&apos;s the exact moment DinnerDrop was built for. Open your dashboard and
-              you&apos;ll have 5 weeknight dinners — with a complete grocery list — in about
-              30 seconds. Every meal under 30 minutes, built around a weekly budget.
+              That&apos;s the exact moment DinnerDrop was built for. Your 5 weeknight
+              dinners and their complete grocery list are already on your dashboard.
+              Every meal under 30 minutes, built around a weekly budget.
             </Text>
             <Section style={ctaSection}>
               <Button style={button} href="https://www.dinnerdrop.app/dashboard">

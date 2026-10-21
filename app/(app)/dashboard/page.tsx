@@ -14,6 +14,7 @@ import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 import { resolvePlanOwner } from '@/lib/household'
 import { attachLibraryImages } from '@/lib/library-images'
+import { trackOnce } from '@/lib/activation'
 
 export default function DashboardPage() {
   return (
@@ -168,15 +169,41 @@ function DashboardContent() {
     loadExistingPlan()
   }, [loadExistingPlan])
 
-  // Auto-generate the first plan exactly once per visit (guarded by ref so it
-  // can't loop). If it fails, the normal welcome card + button is the fallback.
+  // First visit with no plan: the first week appears instantly from the recipe
+  // library and is saved on the spot (no AI wait, nothing to confirm), so a family
+  // that leaves and comes back finds their dinners waiting. Falls back to AI
+  // generation if the library can't fill the week. Guarded so it runs once.
   useEffect(() => {
     if (!initialLoading && shouldAutoGen && !autoGenFired.current) {
       autoGenFired.current = true
-      generatePlan()
+      instantFirstPlan()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialLoading, shouldAutoGen])
+
+  useEffect(() => { trackOnce('dashboard_view') }, [])
+
+  async function instantFirstPlan() {
+    setLoading(true)
+    try {
+      const res = await fetch('/api/first-plan', { method: 'POST' })
+      const r = await res.json().catch(() => null) as { ok?: boolean; meals?: Meal[]; totalCost?: number } | null
+      if (r?.ok && r.meals?.length) {
+        setMeals(r.meals)
+        setTotalCost(r.totalCost ?? r.meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0))
+        setHasGenerated(true)
+        setIsPlanStale(false)
+        setPlanCount(1)
+        localStorage.setItem('current-meals', JSON.stringify(r.meals))
+        setLoading(false)
+        return
+      }
+    } catch {
+      // fall through to AI generation
+    }
+    setLoading(false)
+    generatePlan()
+  }
 
   // Refresh subscription status when returning from Stripe
   useEffect(() => {

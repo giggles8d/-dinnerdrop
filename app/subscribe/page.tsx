@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { openExternal } from '@/lib/native'
+import ConversionTracker from '@/components/ConversionTracker'
 import { ArrowLeft, Check, MessageSquareText, ShoppingCart, Users, CalendarClock } from 'lucide-react'
 
 type Interval = 'monthly' | 'yearly'
@@ -66,6 +67,8 @@ function SubscribeContent() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Just signed up on the way to the Family trial: report the signup to the ad platforms. */}
+      {searchParams.get('new') === '1' && <ConversionTracker value={10} onceKey="dd_signup_conv" />}
       <header className="border-b border-border bg-white">
         <div className="container mx-auto px-4 py-4 max-w-5xl flex items-center justify-between">
           <div className="flex items-center gap-2">

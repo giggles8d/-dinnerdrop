@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Copy, Printer, Share2, Check } from 'lucide-react'
 import { nativeShare, tapHaptic } from '@/lib/native'
+import { trackOnce } from '@/lib/activation'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import { matchSale, type WeeklySales } from '@/lib/sales-shared'
@@ -206,6 +207,7 @@ export default function GroceryListPage() {
   }, [supabase, loadItems])
 
   useEffect(() => { load() }, [load])
+  useEffect(() => { trackOnce('grocery_list_view') }, [])
 
   /* ---------- item actions ---------- */
   async function toggleChecked(item: ListItem) {

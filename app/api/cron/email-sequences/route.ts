@@ -7,8 +7,8 @@ import { NextRequest, NextResponse } from 'next/server'
 // ACTIVATION SEQUENCE (2026-07 rewrite): the old version targeted
 // subscription_status='trialing', but 226/227 users are 'free' — it never sent
 // anything. This version nudges free users who haven't generated a meal plan
-// yet, at Day 1 / 3 / 7 after signup. Users who have a plan are activated and
-// are skipped; the newsletter takes over from there.
+// yet, at Day 1 / 3 / 7 after signup. Users who have opened their plan are
+// activated and are skipped; the newsletter takes over from there.
 export async function GET(request: NextRequest) {
   // Auth check FIRST — do not reveal RESEND_API_KEY config status to unauthenticated callers
   const authHeader = request.headers.get('authorization')
@@ -52,14 +52,15 @@ export async function GET(request: NextRequest) {
     }
     if (!users || users.length === 0) continue
 
-    // Skip activated users — anyone who already generated a meal plan doesn't
-    // need activation nudges.
+    // Skip activated users. Every new account now gets a saved first plan
+    // automatically, so "has a plan" no longer means engaged: a family counts as
+    // activated once they've opened a recipe or their grocery list, or sent a list to a store.
     const userIds = users.map(u => u.id)
-    const { data: planRows } = await supabase
-      .from('meal_plans')
-      .select('user_id')
-      .in('user_id', userIds)
-    const activated = new Set((planRows || []).map(r => r.user_id))
+    const [{ data: seen }, { data: handoffs }] = await Promise.all([
+      supabase.from('activation_events').select('user_id').in('user_id', userIds).in('step', ['recipe_view', 'grocery_list_view']),
+      supabase.from('grocery_handoffs').select('user_id').in('user_id', userIds),
+    ])
+    const activated = new Set([...(seen || []), ...(handoffs || [])].map(r => r.user_id))
 
     for (const user of users) {
       if (activated.has(user.id)) continue

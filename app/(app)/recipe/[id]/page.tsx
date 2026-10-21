@@ -9,6 +9,7 @@ import { nativeShare, tapHaptic } from '@/lib/native'
 import { createClient } from '@/lib/supabase'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
 import { recordMealSignal } from '@/lib/taste-profile'
+import { trackOnce } from '@/lib/activation'
 import CookMode from '@/components/CookMode'
 import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
@@ -62,6 +63,7 @@ export default function RecipePage() {
 
 function RecipeContent() {
   const params = useParams()
+  useEffect(() => { trackOnce('recipe_view') }, [])
   const searchParams = useSearchParams()
   const id = params.id as string
   const [cooking, setCooking] = useState(searchParams.get('cook') === '1')

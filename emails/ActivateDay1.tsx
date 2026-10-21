@@ -8,9 +8,9 @@ interface ActivateDay1Props {
   unsubscribeUrl?: string
 }
 
-// Activation email #1 — sent 1 day after signup to users who haven't
-// generated a meal plan yet. One job: get them back to the dashboard,
-// where their first plan now auto-generates.
+// Activation email #1 — sent 1 day after signup to users who haven't opened
+// their plan yet. One job: get them back to the dashboard, where their first
+// week (saved automatically at signup) is waiting.
 export default function ActivateDay1({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
@@ -18,7 +18,7 @@ export default function ActivateDay1({
   return (
     <Html>
       <Head />
-      <Preview>Your 5 dinners for this week are one tap away</Preview>
+      <Preview>Your first week of dinners is saved and waiting</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
@@ -27,13 +27,12 @@ export default function ActivateDay1({
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
-              You signed up for DinnerDrop yesterday — and your first week of dinners
-              is sitting there waiting for you.
+              You signed up for DinnerDrop yesterday, so we went ahead and planned your
+              first week: <strong>5 weeknight dinners</strong>, each under 30 minutes, with
+              photos and step-by-step recipes. They&apos;re saved and waiting for you.
             </Text>
             <Text style={paragraph}>
-              No quiz, no setup. Open your dashboard and our AI builds{' '}
-              <strong>5 weeknight dinners</strong> around a family budget while you watch —
-              takes about 30 seconds.
+              Don&apos;t love one? Tap it and swap it for something else. No quiz, no setup.
             </Text>
             <Section style={ctaSection}>
               <Button style={button} href="https://www.dinnerdrop.app/dashboard">
