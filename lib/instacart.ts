@@ -134,10 +134,10 @@ export async function createInstacartLink(
         fallback: true,
       }
     }
-    // 2026-10-18: Instacart had not yet attached affiliate tracking to API links ~42h after
-    // approval, so we add Impact's universal tracking ourselves. withInstacartAffiliate() is
-    // a no-op once a link already carries utm_* params, so there is no double-tagging later.
-    return { link: withInstacartAffiliate(data.products_link_url), fallback: false }
+    // Instacart appends the affiliate parameters (partner 7359743) to API links itself and
+    // warns that adding them by hand duplicates them and breaks order attribution
+    // (docs: launch_activities/conversions_and_payments). Verified present 2026-10-21. Leave untouched.
+    return { link: data.products_link_url, fallback: false }
   } catch (err) {
     console.error('Instacart API call threw:', err)
     return {

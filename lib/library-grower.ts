@@ -52,7 +52,7 @@ function dietViolation(diet: string, m: Meal): string | null {
   if ((diet === 'Vegetarian' || diet === 'Vegan') && MEAT.test(hay)) return `${diet} but has meat/fish`
   if (diet === 'Vegan' && ANIMAL.test(hay)) return 'Vegan but has animal products'
   if (diet === 'Halal' && PORK.test(hay)) return 'Halal but has pork'
-  if (diet === 'Halal' && /\b(chicken|beef|lamb|turkey|goat|veal|steak)\b/i.test(hay) && !(m.ingredients ?? []).some((i) => /halal/i.test(`${i.name} ${i.searchTerm}`))) return 'Halal meat not specified as halal'
+  if (diet === 'Halal' && /\b(chicken|beef|lamb|turkey|goat|veal)\b/i.test(hay) && !(m.ingredients ?? []).some((i) => /halal/i.test(`${i.name} ${i.searchTerm}`))) return 'Halal meat not specified as halal'
   if (diet === 'Gluten-free' && GLUTEN.test(hay) && !/gluten-free/i.test(hay)) return 'Gluten-free but has gluten'
   if (diet === 'Dairy-free' && DAIRY.test(hay) && !/dairy-free|vegan/i.test(hay)) return 'Dairy-free but has dairy'
   if (diet === 'Keto' && /\b(rice|pasta|potato|bread|tortilla|noodle|sugar|beans|corn)\b/i.test(hay) && !/cauliflower rice|low-carb/i.test(hay)) return 'Keto but has starch'
