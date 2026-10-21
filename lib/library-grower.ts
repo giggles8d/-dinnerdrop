@@ -52,6 +52,7 @@ function dietViolation(diet: string, m: Meal): string | null {
   if ((diet === 'Vegetarian' || diet === 'Vegan') && MEAT.test(hay)) return `${diet} but has meat/fish`
   if (diet === 'Vegan' && ANIMAL.test(hay)) return 'Vegan but has animal products'
   if (diet === 'Halal' && PORK.test(hay)) return 'Halal but has pork'
+  if (diet === 'Halal' && /\b(chicken|beef|lamb|turkey|goat|veal|steak)\b/i.test(hay) && !(m.ingredients ?? []).some((i) => /halal/i.test(`${i.name} ${i.searchTerm}`))) return 'Halal meat not specified as halal'
   if (diet === 'Gluten-free' && GLUTEN.test(hay) && !/gluten-free/i.test(hay)) return 'Gluten-free but has gluten'
   if (diet === 'Dairy-free' && DAIRY.test(hay) && !/dairy-free|vegan/i.test(hay)) return 'Dairy-free but has dairy'
   if (diet === 'Keto' && /\b(rice|pasta|potato|bread|tortilla|noodle|sugar|beans|corn)\b/i.test(hay) && !/cauliflower rice|low-carb/i.test(hay)) return 'Keto but has starch'
@@ -66,7 +67,8 @@ function check(m: Meal & { dietary?: string[] }, maxMinutes: number): string | n
   for (const i of ings) {
     if (!i.name || !i.searchTerm) return `ingredient missing name/searchTerm`
     if (!CATEGORIES.has(i.category)) return `bad category "${i.category}"`
-    if (parseQuantity(i.quantity) == null) return `unshoppable quantity "${i.quantity}" ${i.unit}`
+    const seasoning = /taste|pinch|dash/i.test(`${i.quantity} ${i.unit}`) && /salt|pepper|spice|seasoning|herb|flakes/i.test(i.name)
+    if (parseQuantity(i.quantity) == null && !seasoning) return `unshoppable quantity "${i.quantity}" ${i.unit}`
   }
   const steps = m.steps ?? []
   if (steps.length < 2 || steps.length > 6) return `${steps.length} steps`
@@ -103,7 +105,7 @@ Rules:
 - Servings: exactly 4. Realistic US supermarket cost for the whole dinner (most run $10–$24 for 4); do not inflate.
 - 4–8 ingredients with shoppable quantities ("1" "lb", "1" "can", "1" "bunch"), each with a "searchTerm" that matches a grocery product. Per serving at least 6 oz raw boneless meat/fish (5.5 oz ground) when there is meat.
 - 3–5 short steps, one sentence each, for a tired parent.
-- "dietary": list EVERY one of these the recipe truly complies with: ${DIETS.join(', ')} (empty list if none).
+- "dietary": list EVERY one of these the recipe truly complies with: ${DIETS.join(', ')} (empty list if none). Halal dinners with meat must call for halal meat by name (e.g. "halal chicken thighs").
 - 1–3 tags from: quick, sheet-pan, one-pot, air-fryer, grill, kid-favorite, budget, high-protein, vegetarian, 15-min
 - Different proteins and cuisines across the ${perBatch}; none may be a version of these existing dinners: ${avoid.join('; ')}
 
