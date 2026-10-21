@@ -91,3 +91,20 @@ export function ensurePortions(meal: Meal): Meal {
   const cost = Number(meal.estimatedCost) || 0
   return { ...meal, ingredients, estimatedCost: cost ? Math.round(cost * f * 100) / 100 : cost }
 }
+
+/**
+ * Resize a stored recipe to a family's servings (up or down): every scalable
+ * ingredient and the cost estimate move together. Quantities round up to what
+ * you'd actually buy. Used when a library recipe written for 4 lands on a
+ * family of 2 or 6.
+ */
+export function scaleMeal(meal: Meal, factor: number): Meal {
+  if (!Number.isFinite(factor) || factor <= 0 || Math.abs(factor - 1) < 0.05) return meal
+  const ingredients = (meal.ingredients ?? []).map((i) => {
+    const n = parseQuantity(i.quantity)
+    if (n == null || NO_SCALE.test((i.unit || '').trim())) return i
+    return { ...i, quantity: formatQuantity(n * factor, i.unit) }
+  })
+  const cost = Number(meal.estimatedCost) || 0
+  return { ...meal, ingredients, estimatedCost: cost ? Math.round(cost * factor * 100) / 100 : cost }
+}

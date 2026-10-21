@@ -8,6 +8,7 @@
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Meal } from '@/types'
+import { ensurePortions, scaleMeal } from '@/lib/portions'
 
 /** Drop time-claim tags the recipe's own numbers don't support ("15-min" on a 30-minute dinner). */
 export function honestTags(tags: string[], totalMinutes: number): string[] {
@@ -53,6 +54,14 @@ export interface RecipeRow {
 }
 
 export function recipeToMeal(r: RecipeRow, day: string, servings?: number): Meal {
+  const base = recipeAsStored(r, day)
+  // Resize to the family: a recipe stored for 4 is half the groceries (and cost) for 2.
+  const stored = Number(r.servings) || 4
+  if (!servings || servings === stored) return base
+  return ensurePortions(scaleMeal({ ...base, servings }, servings / stored))
+}
+
+function recipeAsStored(r: RecipeRow, day: string): Meal {
   return {
     day,
     name: r.name,
@@ -60,7 +69,7 @@ export function recipeToMeal(r: RecipeRow, day: string, servings?: number): Meal
     protein: r.protein ?? undefined,
     cookTime: r.cook_time ?? 30,
     prepTime: r.prep_time ?? 10,
-    servings: servings ?? r.servings ?? 4,
+    servings: r.servings ?? 4,
     estimatedCost: Number(r.estimated_cost ?? 0),
     ingredients: r.ingredients ?? [],
     steps: r.steps ?? [],
@@ -222,4 +231,23 @@ export async function backfillImages(supabase: SupabaseClient, limit = 40): Prom
     n++
   }
   return n
+}
+
+/**
+ * Take `count` dinners from `pool` (in preference order) that fit the weekly budget:
+ * while over budget, swap the priciest chosen dinner for the cheapest unused one.
+ */
+export function fitBudget(pool: Meal[], count: number, budget: number): Meal[] {
+  const cost = (m: Meal) => Number(m.estimatedCost) || 0
+  const chosen = pool.slice(0, count)
+  const spares = pool.slice(count).sort((a, b) => cost(a) - cost(b))
+  let total = chosen.reduce((s, m) => s + cost(m), 0)
+  while (total > budget && spares.length) {
+    const i = chosen.reduce((best, m, idx) => (cost(m) > cost(chosen[best]) ? idx : best), 0)
+    if (cost(spares[0]) >= cost(chosen[i])) break
+    const swapIn = spares.shift()!
+    total += cost(swapIn) - cost(chosen[i])
+    chosen[i] = swapIn
+  }
+  return chosen
 }

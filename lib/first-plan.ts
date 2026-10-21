@@ -1,11 +1,11 @@
 /**
  * Instant first week for a brand-new family: picked from the recipe library
- * (tested recipes with real photos) and saved right away — no AI wait, no
+ * (recipes with real photos) and saved right away — no AI wait, no
  * confirm step. If they leave and come back, their dinners are already there.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, type Weekday } from '@/lib/settings'
-import { pickLibraryRecipes, recipeToMeal } from '@/lib/recipe-library'
+import { pickLibraryRecipes, recipeToMeal, fitBudget } from '@/lib/recipe-library'
 import { DEFAULT_SHAPE, mondayOf, type PlanShape } from '@/lib/plan'
 import { savePlan } from '@/lib/autoplan'
 import { trackStep } from '@/lib/activation'
@@ -35,28 +35,17 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
     excludeNames: [],
     cuisines: settings.food.cuisines,
   })
-  // First impressions: dinners with a photo first.
-  const pool = [...picks.filter((r) => r.image_url), ...picks.filter((r) => !r.image_url)]
-  const ordered = pool.slice(0, dinners)
-  // Stay within the family's weekly budget: swap the priciest pick for a cheaper spare until it fits.
+  // First impressions: dinners with a photo first. Sized to the family (cost included).
+  const size = p.family_size || 4
+  const pool = [...picks.filter((r) => r.image_url), ...picks.filter((r) => !r.image_url)].map((r, i) => recipeToMeal(r, `L${i + 1}`, size))
   const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 100
-  const cost = (r: (typeof pool)[number]) => Number(r.estimated_cost) || 0
-  const spares = pool.slice(dinners).sort((a, b) => cost(a) - cost(b))
-  let total = ordered.reduce((s, r) => s + cost(r), 0)
-  while (total > budget && spares.length) {
-    const i = ordered.reduce((best, r, idx) => (cost(r) > cost(ordered[best]) ? idx : best), 0)
-    if (cost(spares[0]) >= cost(ordered[i])) break
-    const swapIn = spares.shift()!
-    total += cost(swapIn) - cost(ordered[i])
-    ordered[i] = swapIn
-  }
-  if (ordered.length < Math.min(3, dinners)) {
-    await trackStep(admin, userId, 'first_plan_failed', { found: ordered.length })
+  const meals = fitBudget(pool, dinners, budget)
+  if (meals.length < Math.min(3, dinners)) {
+    await trackStep(admin, userId, 'first_plan_failed', { found: meals.length })
     return { ok: false, reason: 'not enough library recipes' }
   }
 
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
-  const meals = ordered.map((r, i) => recipeToMeal(r, `L${i + 1}`, p.family_size || 4))
   const saved = await savePlan(admin, userId, mondayOf(new Date()), meals, shape)
   const totalCost = saved.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   await trackStep(admin, userId, 'first_plan_saved', { source: 'library', count: saved.length })

@@ -125,24 +125,39 @@ export async function POST(request: Request) {
     ))
 
     // ---------- library picks: proven dinners that fit, no generation needed ----------
+    // Library first (instant): the library is grown nightly by /api/cron/grow-library, so
+    // most weeks are filled entirely from it. AI writes live only to cover what the library
+    // can't (tight diets / allergy combos), and those dinners join the library for next time.
     let libraryMeals: Meal[] = []
     if (mode === 'fresh') {
       try {
         const picks = await pickLibraryRecipes(supabase, {
-          // About half the week's options come straight from the curated library.
-          limit: Math.floor(optionsCount / 2),
+          limit: optionsCount + 8,
           maxCookTime: slowestNight,
           dietary: profile.dietaryNeeds,
           excludeWords: [...hardExclusions, ...allDislikes],
           excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name)],
           cuisines: settings.food.cuisines,
         })
-        libraryMeals = picks.map((r, i) => recipeToMeal(r, `L${i + 1}`, profile.familySize))
+        // Sized to the family; skip dinners far over the per-dinner budget.
+        const perDinner = Number(perMealBudget) || 20
+        libraryMeals = picks
+          .map((r, i) => recipeToMeal(r, `L${i + 1}`, profile.familySize))
+          .filter((m) => (Number(m.estimatedCost) || 0) <= perDinner * 1.4)
+          .slice(0, optionsCount)
       } catch (e) {
         console.error('library picks failed', e)
       }
     }
-    const generateCount = Math.max(optionsCount - libraryMeals.length, 3)
+    if (mode === 'fresh' && libraryMeals.length >= optionsCount) {
+      return Response.json({
+        meals: libraryMeals,
+        totalEstimatedCost: libraryMeals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0),
+        plan: { dinnersPerWeek, cookDays, nightTimes, leftoverNight: settings.plan.leftoverNight },
+        source: 'library',
+      })
+    }
+    const generateCount = mode === 'fresh' ? Math.max(optionsCount - libraryMeals.length, 2) : Math.max(optionsCount, 3)
 
     // ---------- favorites ----------
     let favoritesSection = ''
