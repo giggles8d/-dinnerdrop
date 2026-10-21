@@ -44,3 +44,6 @@ cleanup*.js
 fix_*.js  
 check_*.js  
 _commit_*.txt 
+
+# App Review screen recordings (large, contain personal emails)
+apps/mobile/store/review/
