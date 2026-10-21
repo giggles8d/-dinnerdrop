@@ -17,6 +17,18 @@ export async function middleware(request: NextRequest) {
     const u = request.nextUrl.clone(); u.pathname = '/account'; u.search = ''
     return NextResponse.redirect(u)
   }
+  // The website's marketing/pricing pages aren't part of the app: go straight to the family's
+  // dinners (signed-out users land on sign-in from there). Keeps prices out of the app.
+  const marketing = ['/', '/start', '/mealime', '/affiliates', '/beta', '/beta-v2', '/pricing']
+  if (inApp && marketing.includes(pathname)) {
+    const u = request.nextUrl.clone(); u.pathname = '/dashboard'; u.search = ''
+    return NextResponse.redirect(u)
+  }
+  // Sign-up headed to the Family trial checkout: in the app it's a plain free sign-up.
+  if (inApp && pathname === '/signup' && /subscribe/.test(request.nextUrl.searchParams.get('redirect') ?? '')) {
+    const u = request.nextUrl.clone(); u.search = ''
+    return NextResponse.redirect(u)
+  }
 
   // Exact segment match, so '/recipe' (the plan's recipe pages) does not capture the public '/recipes' library.
   const isProtectedRoute = protectedPaths.some(path => pathname === path || pathname.startsWith(path + '/'))
