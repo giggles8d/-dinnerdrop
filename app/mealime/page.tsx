@@ -3,9 +3,9 @@ import Link from 'next/link'
 import MealimeImportForm from './MealimeImportForm'
 import MealimeDeadline from '@/components/MealimeDeadline'
 
-const title = 'Mealime is closing — bring your dinners to DinnerDrop (free)'
+const title = 'Mealime has closed — bring your dinners to DinnerDrop (free)'
 const description =
-  'Mealime shuts down on October 21, 2026 with no export. Type the names of the dinners your family loves and DinnerDrop rebuilds them, plans your week, and puts the grocery list in your Instacart cart. Free, no card needed.'
+  'Mealime shut down on October 21, 2026 with no export. Type the names of the dinners your family loves and DinnerDrop rebuilds them, plans your week, and puts the grocery list in your Instacart cart. Free, no card needed.'
 
 export const metadata: Metadata = {
   title,
@@ -49,10 +49,10 @@ export default function MealimePage() {
           For Mealime families
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4" style={{ color: GREEN }}>
-          Mealime is closing on October 21. <span style={{ color: GOLD }}>Your dinners don&apos;t have to go with it.</span>
+          Mealime has closed. <span style={{ color: GOLD }}>Your dinners don&apos;t have to go with it.</span>
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed mb-8">
-          Albertsons is shutting Mealime down on October 21 and moving its recipes into its own Meals Hub, with no way to export your plans, favorites, or lists. DinnerDrop does the part you relied on &mdash; pick dinners, get one combined grocery list &mdash; and then opens that list in your Instacart cart in one tap, at any store. It&apos;s free, with no card.
+          Albertsons shut Mealime down on October 21 and moved its recipes into its own Meals Hub, with no way to export your plans, favorites, or lists. DinnerDrop does the part you relied on &mdash; pick dinners, get one combined grocery list &mdash; and then opens that list in your Instacart cart in one tap, at any store. It&apos;s free, with no card.
         </p>
 
         <MealimeImportForm />
