@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Heart, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
+import ConversionTracker from '@/components/ConversionTracker'
 import { recordMealSignal } from '@/lib/taste-profile'
 import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
@@ -29,6 +30,9 @@ export default function FavoritesPage() {
   const [showImport, setShowImport] = useState(false)
   const loadFavoritesRef = useRef<null | (() => Promise<void>)>(null)
   const supabase = createClient()
+  // New signups from /mealime land here with ?new=1 — fire the same ad signup conversion as /dashboard.
+  const [isNewSignup, setIsNewSignup] = useState(false)
+  useEffect(() => { setIsNewSignup(new URLSearchParams(window.location.search).get('new') === '1') }, [])
 
   // "Bring your favorites": names typed on /mealime (or here) are rebuilt as full
   // recipes for this family and saved. Names left on /mealime before signup are
@@ -120,6 +124,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {isNewSignup && <ConversionTracker value={10} onceKey="dd_signup_conv" />}
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <div className="mb-8">
           <h1 className="text-3xl font-heading font-bold text-foreground">
