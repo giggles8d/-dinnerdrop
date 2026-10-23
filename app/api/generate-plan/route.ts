@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     const profile = {
       userId: body.userId as string,
       familySize: Number(body.familySize) > 0 ? Number(body.familySize) : (profileRow.family_size || 4),
-      weeklyBudget: body.weeklyBudget || profileRow.weekly_budget || '$100',
+      weeklyBudget: body.weeklyBudget || profileRow.weekly_budget || '$150',
       maxCookTime: Number(body.maxCookTime) > 0 ? Number(body.maxCookTime) : (profileRow.max_cook_time || 30),
       cuisinePreference: body.cuisinePreference || profileRow.cuisine_preference || 'mixed',
       dietaryNeeds: Array.isArray(body.dietaryNeeds) ? body.dietaryNeeds as string[] : (profileRow.dietary_needs || []),

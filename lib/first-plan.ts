@@ -38,7 +38,7 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
   // First impressions: dinners with a photo first. Sized to the family (cost included).
   const size = p.family_size || 4
   const pool = [...picks.filter((r) => r.image_url), ...picks.filter((r) => !r.image_url)].map((r, i) => recipeToMeal(r, `L${i + 1}`, size))
-  const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 100
+  const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 150
   const meals = fitBudget(pool, dinners, budget)
   if (meals.length < Math.min(3, dinners)) {
     await trackStep(admin, userId, 'first_plan_failed', { found: meals.length })

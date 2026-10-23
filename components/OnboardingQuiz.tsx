@@ -87,8 +87,8 @@ interface Answers {
 function OnboardingQuizInner() {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Answers>({
-    familySize: 2,
-    weeklyBudget: '$100',
+    familySize: 4,
+    weeklyBudget: '$150',
     maxCookTime: 30,
     cuisinePreference: [],
     dietaryNeeds: [],

@@ -10,6 +10,8 @@ export const ACTIVATION_STEPS = [
   'first_plan_failed',   // instant plan couldn't be built; fell back to AI generation
   'recipe_view',         // opened a recipe (once per session)
   'grocery_list_view',   // opened the grocery list (once per session)
+  'quick_setup_done',    // answered the 3 first-visit questions (size, budget, avoid)
+  'quick_setup_skipped', // skipped them (planned for the default family of 4)
 ] as const
 export type ActivationStep = (typeof ACTIVATION_STEPS)[number]
 

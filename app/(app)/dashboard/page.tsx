@@ -10,6 +10,7 @@ import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
 import FamilyVoteCard from '@/components/FamilyVoteCard'
 import SalesCard from '@/components/SalesCard'
+import QuickSetup from '@/components/QuickSetup'
 import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 import { resolvePlanOwner } from '@/lib/household'
@@ -49,6 +50,8 @@ function DashboardContent() {
   // auto-generated with smart defaults — no quiz gate before seeing value.
   const [needsPersonalize, setNeedsPersonalize] = useState(false)
   const [shouldAutoGen, setShouldAutoGen] = useState(false)
+  // First visit, not personalized yet: ask 3 quick questions before building week one.
+  const [showQuickSetup, setShowQuickSetup] = useState(false)
   const autoGenFired = useRef(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -164,7 +167,8 @@ function DashboardContent() {
       // First-ever visit with no plan: kick off generation automatically so the
       // user's first experience is watching their dinners appear.
       if (!plan && (countRes.count ?? 0) === 0 && !owner.isPartner) {
-        setShouldAutoGen(true)
+        if (profile && !profile.onboarding_complete) setShowQuickSetup(true)
+        else setShouldAutoGen(true)
       }
     } catch (err) {
       console.error('Dashboard load error:', err)
@@ -523,7 +527,7 @@ function DashboardContent() {
           </div>
         )}
         {/* Personalization nudge — user is on smart defaults, quiz is optional */}
-        {needsPersonalize && !initialLoading && (
+        {needsPersonalize && !initialLoading && !showQuickSetup && (
           <div className="mb-5 flex items-center justify-between px-4 py-3 rounded-lg bg-primary/5 border border-primary/20">
             <p className="text-sm text-foreground/70">
               {isPickingMeals || hasGenerated || loading
@@ -627,8 +631,18 @@ function DashboardContent() {
           )}
         </div>
 
-        {!isPickingMeals && <FamilyVoteCard onClosed={() => loadExistingPlan()} />}
-        {!isPickingMeals && <div className="mb-6"><SalesCard compact /></div>}
+        {showQuickSetup && (
+          <QuickSetup
+            onDone={(a) => {
+              setBudget(a.weeklyBudget)
+              setNeedsPersonalize(false)
+              setShowQuickSetup(false)
+              setShouldAutoGen(true)
+            }}
+          />
+        )}
+        {!isPickingMeals && !showQuickSetup && <FamilyVoteCard onClosed={() => loadExistingPlan()} />}
+        {!isPickingMeals && !showQuickSetup && <div className="mb-6"><SalesCard compact /></div>}
 
         {/* First-plan auto-generation in progress */}
         {loading && !hasGenerated && !isPickingMeals && (
@@ -644,7 +658,7 @@ function DashboardContent() {
           </div>
         )}
 
-                {!hasGenerated && !initialLoading && !loading && !isPickingMeals && (
+                {!hasGenerated && !initialLoading && !loading && !isPickingMeals && !showQuickSetup && (
           <div className="mb-8 p-6 rounded-2xl border border-accent/30 bg-accent/5 text-center">
             <div className="text-3xl mb-3">&#127858;</div>
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">Welcome to DinnerDrop!</h2>
