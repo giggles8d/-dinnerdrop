@@ -60,7 +60,9 @@ export async function GET(request: NextRequest) {
       supabase.from('activation_events').select('user_id').in('user_id', userIds).in('step', ['recipe_view', 'grocery_list_view']),
       supabase.from('grocery_handoffs').select('user_id').in('user_id', userIds),
     ])
-    const activated = new Set([...(seen || []), ...(handoffs || [])].map(r => r.user_id))
+    // Day 1 is the "your list is ready" email, so it goes to everyone who hasn't
+    // sent a list to a store yet, even if they looked at a recipe or the list.
+    const activated = new Set([...(emailNumber === 1 ? [] : (seen || [])), ...(handoffs || [])].map(r => r.user_id))
 
     for (const user of users) {
       if (activated.has(user.id)) continue

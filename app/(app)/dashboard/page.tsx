@@ -43,6 +43,8 @@ function DashboardContent() {
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [votes, setVotes] = useState<Record<string, { keep: number; skip: number; again: number; voters: string[] }>>({})
   const [planMode, setPlanMode] = useState<'fresh' | 'favorites'>('fresh')
+  // null = unknown yet; false = this week's list hasn't gone to a store (drives the sticky "list is ready" bar).
+  const [listSent, setListSent] = useState<boolean | null>(null)
   // Instant first plan: brand-new users (no plan yet) get their first week
   // auto-generated with smart defaults — no quiz gate before seeing value.
   const [needsPersonalize, setNeedsPersonalize] = useState(false)
@@ -124,6 +126,12 @@ function DashboardContent() {
         setHasGenerated(true)
         localStorage.setItem('current-meals', JSON.stringify(planMeals))
 
+        // Has this plan's list been sent to a store yet? Most new families never find the
+        // list button at the bottom of the page, so we pin one until they do.
+        supabase.from('grocery_handoffs').select('created_at').eq('user_id', planUserId)
+          .order('created_at', { ascending: false }).limit(1)
+          .then(({ data: hs }) => setListSent(!!hs?.[0] && hs[0].created_at >= plan.created_at))
+
         // Family votes (texted in) for this plan's week.
         if (profile?.household_id && plan.week_start) {
           const { data: voteRows } = await supabase
@@ -190,6 +198,7 @@ function DashboardContent() {
       const r = await res.json().catch(() => null) as { ok?: boolean; meals?: Meal[]; totalCost?: number } | null
       if (r?.ok && r.meals?.length) {
         setMeals(r.meals)
+        setListSent(false)
         setTotalCost(r.totalCost ?? r.meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0))
         setHasGenerated(true)
         setIsPlanStale(false)
@@ -417,6 +426,7 @@ function DashboardContent() {
       })
 
       setMeals(confirmed)
+      setListSent(false)
       setTotalCost(confirmedCost)
       setHasGenerated(true)
       setIsPlanStale(false)
@@ -444,13 +454,31 @@ function DashboardContent() {
     }
   }
 
+  const showListBar = hasGenerated && meals.length > 0 && !isPickingMeals && !loading && listSent === false
+
   return (
     <div className="min-h-screen bg-background">
       {/* Fire ad-platform conversion pings on successful Stripe return */}
       {searchParams.get('subscribed') === 'true' && <ConversionTracker />}
       {/* Free signups (no card) are the main conversion now — count them on every ad platform, once per browser. */}
       {searchParams.get('new') === '1' && searchParams.get('subscribed') !== 'true' && <ConversionTracker value={10} onceKey="dd_signup_conv" />}
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+      {showListBar && (
+        <div className="fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur px-4 py-3 print:hidden">
+          <div className="mx-auto max-w-6xl flex items-center gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-foreground">Your grocery list is ready</p>
+              <p className="text-xs text-muted-foreground truncate">{meals.length} dinners, one list, one tap to Instacart</p>
+            </div>
+            <Link
+              href="/grocery-list"
+              className="shrink-0 px-5 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm"
+            >
+              Shop my list &rarr;
+            </Link>
+          </div>
+        </div>
+      )}
+      <div className={`container mx-auto px-4 py-8 max-w-6xl${showListBar ? ' pb-32' : ''}`}>
         {/* Past due payment banner */}
         {subscriptionStatus === 'past_due' && (
           <div className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-red-50 border border-red-200">
