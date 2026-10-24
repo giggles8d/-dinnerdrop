@@ -53,3 +53,23 @@ export async function generateWithClaudeImage(
   if (!text) throw new Error('Empty response from AI model')
   return text
 }
+
+export type ClaudeImage = { base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' }
+
+/** Same model, several images in one request (receipt screenshots that span pages). */
+export async function generateWithClaudeImages(prompt: string, images: ClaudeImage[], maxTokens: number = 4000): Promise<string> {
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: maxTokens,
+    messages: [{
+      role: 'user',
+      content: [
+        ...images.map((image) => ({ type: 'image' as const, source: { type: 'base64' as const, media_type: image.mediaType, data: image.base64 } })),
+        { type: 'text' as const, text: prompt },
+      ],
+    }],
+  })
+  const text = message.content[0].type === 'text' ? message.content[0].text : ''
+  if (!text) throw new Error('Empty response from AI model')
+  return text
+}

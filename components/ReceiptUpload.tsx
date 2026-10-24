@@ -1,0 +1,82 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import { Receipt, Loader2, Check, X } from 'lucide-react'
+
+interface Result { store: string | null; total: number | null; items: number; bought: number; replaced: number; refunded: number; missing: number; restored: string[]; matchedHandoff: boolean }
+
+/**
+ * "Upload your receipt": screenshot(s) of the Instacart / Kroger order → what was actually bought.
+ * Anything the store didn't have goes back on the active list; the real total tunes price estimates.
+ * Renders only when /api/receipts/upload says the feature is on for this account.
+ */
+export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void }) {
+  const [enabled, setEnabled] = useState(false)
+  const [files, setFiles] = useState<File[]>([])
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [result, setResult] = useState<Result | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    fetch('/api/receipts/upload').then((r) => r.json()).then((j) => setEnabled(!!j?.enabled)).catch(() => setEnabled(false))
+  }, [])
+  if (!enabled) return null
+
+  async function submit() {
+    if (!files.length || busy) return
+    setBusy(true); setError(null)
+    try {
+      const fd = new FormData()
+      files.slice(0, 4).forEach((f) => fd.append('images', f))
+      const r = await fetch('/api/receipts/upload', { method: 'POST', body: fd })
+      const j = await r.json()
+      if (!r.ok) { setError(j?.error || 'Something went wrong.'); return }
+      setResult(j as Result); setFiles([])
+      onDone?.(j as Result)
+    } catch { setError('Something went wrong. Try again.') } finally { setBusy(false) }
+  }
+
+  return (
+    <div className="mt-6 p-5 rounded-xl border border-border bg-card print:hidden">
+      <div className="flex items-start gap-3">
+        <div className="shrink-0 w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center"><Receipt className="w-5 h-5" /></div>
+        <div className="flex-1 min-w-0">
+          <p className="font-heading font-semibold text-foreground">Got your groceries? Upload the receipt.</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Screenshot your Instacart or Kroger order (the order details or receipt screen — up to 4 shots if it&rsquo;s long). We&rsquo;ll mark what came, put anything the store didn&rsquo;t have back on your list, and use the real total to sharpen next week&rsquo;s estimates.</p>
+
+          {result ? (
+            <div className="mt-3 rounded-lg bg-muted/50 p-3 text-sm">
+              <p className="font-medium text-foreground flex items-center gap-1.5"><Check className="w-4 h-4 text-primary" /> Got {result.store ? `your ${result.store} receipt` : 'your receipt'}{result.total ? ` — $${result.total.toFixed(2)}` : ''}</p>
+              <ul className="mt-1.5 text-muted-foreground space-y-0.5">
+                <li>{result.bought} bought as planned{result.replaced ? ` · ${result.replaced} replaced` : ''}{result.refunded ? ` · ${result.refunded} refunded` : ''}</li>
+                {result.restored.length > 0
+                  ? <li className="text-foreground"><b>Back on your list:</b> {result.restored.join(', ')} — send just those to another store below.</li>
+                  : <li>Nothing was missing — your list is clear.</li>}
+                {!result.matchedHandoff && <li className="text-xs">We couldn&rsquo;t find a recent order to match this to, so only the total and pantry were updated.</li>}
+              </ul>
+              <button type="button" onClick={() => setResult(null)} className="mt-2 text-xs text-primary underline">Upload another</button>
+            </div>
+          ) : (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <input ref={inputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => { setFiles(Array.from(e.target.files ?? []).slice(0, 4)); setError(null) }} />
+              <button type="button" onClick={() => inputRef.current?.click()} disabled={busy} className="px-3 py-1.5 rounded-md border border-border bg-background text-sm font-medium hover:bg-muted">
+                {files.length ? `${files.length} screenshot${files.length === 1 ? '' : 's'} chosen` : 'Choose screenshot(s)'}
+              </button>
+              {files.length > 0 && (
+                <>
+                  <button type="button" onClick={submit} disabled={busy} className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-sm font-semibold inline-flex items-center gap-1.5 disabled:opacity-60">
+                    {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Reading…</> : 'Upload receipt'}
+                  </button>
+                  <button type="button" onClick={() => { setFiles([]); if (inputRef.current) inputRef.current.value = '' }} disabled={busy} className="p-1.5 text-muted-foreground hover:text-foreground" aria-label="Clear"><X className="w-4 h-4" /></button>
+                </>
+              )}
+              {error && <p className="w-full text-sm text-destructive">{error}</p>}
+              {busy && <p className="w-full text-xs text-muted-foreground">Reading the receipt usually takes 10–20 seconds.</p>}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

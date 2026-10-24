@@ -9,13 +9,16 @@
  *   - put anything the store didn't have back on the ACTIVE list (so it goes with the next send)
  *   - stock long-life staples that were actually bought into the pantry
  *
- * Gated: RECEIPT_INBOUND_ALLOWLIST — comma-separated substrings matched against the sender's
- * email (e.g. "setzl"), or "*" for everyone. Unset = feature off.
+ * Also: POST /api/receipts/upload — the same pipeline from screenshot(s) uploaded on the grocery
+ * list page (no email needed).
+ *
+ * Gated: RECEIPT_INBOUND_ALLOWLIST — comma-separated substrings matched against the user's
+ * email (e.g. "setzl"), or "*" for everyone. Unset = Sarah's account only.
  * Server-only (admin client).
  */
 import { createHmac, timingSafeEqual } from 'crypto'
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { generateWithClaude, generateWithClaudeImages, parseClaudeJSON, type ClaudeImage } from '@/lib/claude'
 import { normalizeItemName, guessCategory } from '@/lib/list'
 import { recordActualTotal } from '@/lib/handoff-actual'
 import { stockStaplesFromReceipt } from '@/lib/pantry'
@@ -109,10 +112,7 @@ export type ReceiptLineStatus = 'bought' | 'replaced' | 'refunded'
 export interface ReceiptLine { name: string; qty: number | null; price: number | null; status: ReceiptLineStatus; replacedWith?: string | null; note?: string | null }
 export interface ParsedReceipt { store: string | null; service: 'Instacart' | 'Kroger' | 'Other'; orderedOn: string | null; total: number | null; items: ReceiptLine[] }
 
-export async function parseReceipt(text: string): Promise<ParsedReceipt> {
-  const prompt = `This is a grocery order receipt email (often forwarded, so ignore the forwarding header). Extract what was actually bought.
-
-Return ONLY JSON:
+const RECEIPT_SCHEMA = `Return ONLY JSON:
 {"store": "retailer name (e.g. Aldi, Wegmans, Kroger) or null",
  "service": "Instacart" | "Kroger" | "Other",
  "orderedOn": "YYYY-MM-DD or null",
@@ -123,12 +123,9 @@ Return ONLY JSON:
             "replacedWith": "what was substituted, plain name, only when status is replaced, else null",
             "note": "short note only if useful, else null"}]}
 
-Rules: one entry per line item. "replaced" = the shopper substituted another product (name = what was ORDERED, replacedWith = what they got). "refunded" = the item was out of stock / not found / refunded, so the family does NOT have it. Fees, tips, taxes, credits and delivery lines are not items. Keep names short and generic.
+Rules: one entry per line item. "replaced" = the shopper substituted another product (name = what was ORDERED, replacedWith = what they got). "refunded" = the item was out of stock / not found / refunded, so the family does NOT have it. Fees, tips, taxes, credits and delivery lines are not items. Keep names short and generic.`
 
-RECEIPT:
-${text}`
-  const out = await generateWithClaude(prompt, 4000)
-  const p = parseClaudeJSON<Partial<ParsedReceipt>>(out)
+function normalizeParsed(p: Partial<ParsedReceipt>): ParsedReceipt {
   const items: ReceiptLine[] = Array.isArray(p.items) ? p.items.filter((i) => i && typeof i.name === 'string' && i.name.trim()).map((i) => ({
     name: String(i.name).trim().slice(0, 80),
     qty: Number.isFinite(Number(i.qty)) && i.qty !== null ? Number(i.qty) : null,
@@ -144,6 +141,25 @@ ${text}`
     total: Number.isFinite(Number(p.total)) && p.total !== null ? Math.round(Number(p.total) * 100) / 100 : null,
     items,
   }
+}
+
+export async function parseReceipt(text: string): Promise<ParsedReceipt> {
+  const out = await generateWithClaude(`This is a grocery order receipt email (often forwarded, so ignore the forwarding header). Extract what was actually bought.\n\n${RECEIPT_SCHEMA}\n\nRECEIPT:\n${text}`, 4000)
+  return normalizeParsed(parseClaudeJSON<Partial<ParsedReceipt>>(out))
+}
+
+/** Screenshots of an Instacart / Kroger order (one or several, in order). */
+export async function parseReceiptImages(images: ClaudeImage[]): Promise<ParsedReceipt> {
+  const out = await generateWithClaudeImages(`These are screenshot(s) of a grocery order receipt from a store app (Instacart, Kroger, etc.), possibly several pages of the same order in order. Extract what was actually bought. Look for "replaced", "refunded", "out of stock", "not found", strikethrough or similar markers next to items. If the screenshots are not a grocery receipt, return {"store":null,"service":"Other","orderedOn":null,"total":null,"items":[]}.\n\n${RECEIPT_SCHEMA}`, images, 4000)
+  return normalizeParsed(parseClaudeJSON<Partial<ParsedReceipt>>(out))
+}
+
+/** Who gets the receipt features (upload + forwarding). Unset env = Sarah only; "*" = everyone. */
+export function receiptFeatureAllowed(email: string | null | undefined): boolean {
+  if (!email) return false
+  const raw = (process.env.RECEIPT_INBOUND_ALLOWLIST ?? '').trim()
+  if (!raw) return email.toLowerCase() === 'setzl1979@gmail.com'
+  return receiptInboundAllowed(email)
 }
 
 // ---------------------------------------------------------------- match receipt lines to list lines

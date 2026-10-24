@@ -10,6 +10,7 @@ import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import { matchSale, type WeeklySales } from '@/lib/sales-shared'
 import RestOfShop from '@/components/RestOfShop'
 import StoreCompare from '@/components/StoreCompare'
+import ReceiptUpload from '@/components/ReceiptUpload'
 import type { StorePref } from '@/lib/compare'
 import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
@@ -510,6 +511,8 @@ export default function GroceryListPage() {
           )}
           {actualSaved && <p className="text-xs text-primary-foreground/80 mt-2">{actualSaved}</p>}
         </div>
+
+        <ReceiptUpload onDone={() => { setAskActual(null); load() }} />
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden">
           <p className="hidden sm:block text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>

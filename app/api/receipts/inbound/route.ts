@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 import { resolvePlanOwner } from '@/lib/household'
-import { bareEmail, fetchReceivedEmail, looksLikeReceipt, parseReceipt, receiptInboundAllowed, receiptText, reconcileReceipt, verifyResendSignature, type ReconcileResult } from '@/lib/receipts'
+import { bareEmail, fetchReceivedEmail, looksLikeReceipt, parseReceipt, receiptFeatureAllowed, receiptText, reconcileReceipt, verifyResendSignature, type ReconcileResult } from '@/lib/receipts'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
   if (event.type !== 'email.received' || !event.data?.email_id) return NextResponse.json({ ok: true, ignored: event.type ?? 'unknown' })
 
   const fromEmail = bareEmail(event.data.from ?? '')
-  if (!fromEmail || !receiptInboundAllowed(fromEmail)) return NextResponse.json({ ok: true, ignored: 'not_allowed' })
+  if (!fromEmail || !receiptFeatureAllowed(fromEmail)) return NextResponse.json({ ok: true, ignored: 'not_allowed' })
 
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const { data: prof } = await admin.from('profiles').select('id, email').ilike('email', fromEmail).limit(1).maybeSingle()
