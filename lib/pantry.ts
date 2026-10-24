@@ -4,6 +4,7 @@
  *  - pantryPromptBlock(): tells the planner what's on hand and what must be used up this week
  *  - stockStaplesFromList(): after a real grocery handoff, long-life staples on that list (oils,
  *    spices, condiments, flour, rice…) are added to the pantry so next week's list doesn't re-buy them
+ *  - stockStaplesFromReceipt(): same, from the lines on a forwarded store receipt
  *  - itemsToUseSoon(): the items flagged use_soon or expiring within 7 days
  * Server-only (Supabase admin client).
  */
@@ -46,7 +47,16 @@ const SHELF_DAYS: Array<[RegExp, number]> = [[/broth|coconut milk|salsa|mayo|may
 export async function stockStaplesFromList(db: SupabaseClient, userId: string, weekStart: string | null): Promise<number> {
   const q = db.from('list_items').select('name, quantity, unit, category').eq('user_id', userId).eq('have', false).is('ordered_at', null)
   const { data: rows } = weekStart ? await q.eq('week_start', weekStart) : await q
-  const staples = (rows ?? []).filter((r) => STAPLE.test(r.name))
+  return stockStaples(db, userId, (rows ?? []).map((r) => ({ name: r.name, quantity: r.quantity, unit: r.unit })))
+}
+
+/** Same, from the names on a forwarded receipt (what was actually bought). */
+export async function stockStaplesFromReceipt(db: SupabaseClient, userId: string, names: string[]): Promise<number> {
+  return stockStaples(db, userId, names.map((name) => ({ name, quantity: null, unit: null })))
+}
+
+async function stockStaples(db: SupabaseClient, userId: string, rows: Array<{ name: string; quantity: string | null; unit: string | null }>): Promise<number> {
+  const staples = rows.filter((r) => STAPLE.test(r.name))
   if (!staples.length) return 0
   const existing = await loadPantry(db, userId)
   const byName = new Map(existing.map((e) => [normalizeItemName(e.name), e]))
