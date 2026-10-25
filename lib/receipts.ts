@@ -250,19 +250,25 @@ export async function reconcileReceipt(admin: SupabaseClient, ownerId: string, p
   // The handoff this receipt belongs to: most recent send within 14 days (prefer same service).
   const since = new Date(Date.now() - 14 * 86400000).toISOString()
   const { data: handoffs } = await admin.from('grocery_handoffs').select('id, store, created_at, week_start, est_total').eq('user_id', ownerId).gte('created_at', since).order('created_at', { ascending: false }).limit(5)
-  const handoff = (handoffs ?? []).find((h) => parsed.service !== 'Other' && String(h.store).toLowerCase().includes(parsed.service.toLowerCase())) ?? (handoffs ?? [])[0] ?? null
+  // The order this receipt belongs to: the latest send on or before the receipt's order date
+  // (the store label on a send gets renamed to the real store, so never match on it).
+  const hs = handoffs ?? []
+  const on = parsed.orderedOn
+  const dayAfter = on ? new Date(new Date(on + 'T12:00:00Z').getTime() + 86400000).toISOString().slice(0, 10) : null
+  const handoff = (on && dayAfter
+    ? (hs.find((h) => (h.created_at as string).slice(0, 10) <= on) ?? hs.find((h) => (h.created_at as string).slice(0, 10) <= dayAfter) ?? null)
+    : null) ?? hs[0] ?? null
 
-  // A re-upload of the same order (better screenshots, pasted text) replaces the previous receipt:
-  // undo the lines it put back on the list and its history rows, then apply fresh.
-  const prevQ = admin.from('receipts').select('id, created_at').eq('user_id', ownerId).gte('created_at', new Date(Date.now() - 48 * 3600000).toISOString()).order('created_at', { ascending: false }).limit(1)
-  const { data: prev } = handoff ? await prevQ.eq('handoff_id', handoff.id).maybeSingle() : await prevQ.maybeSingle()
-  if (prev) await undoReceipt(admin, ownerId, prev.id as string, prev.created_at as string)
+  // A re-upload (better screenshots, pasted text) replaces every read from the last two days:
+  // undo the lines they put back on the list and their history rows, then apply fresh.
+  const { data: prevs } = await admin.from('receipts').select('id, created_at').eq('user_id', ownerId).gte('created_at', new Date(Date.now() - 48 * 3600000).toISOString()).order('created_at', { ascending: true })
+  for (const prev of prevs ?? []) await undoReceipt(admin, ownerId, prev.id as string, prev.created_at as string)
 
   // The lines that went to the store for that handoff (sent within ±1 day of it, or the whole week when no handoff).
   let sent: SentLine[] = []
   if (handoff) {
     const t = new Date(handoff.created_at as string).getTime()
-    const lo = new Date(t - 86400000).toISOString(), hi = new Date(t + 86400000).toISOString()
+    const lo = new Date(t - 2 * 86400000).toISOString(), hi = new Date(t + 2 * 86400000).toISOString()
     const { data } = await admin.from('list_items').select('id, name, search_term, quantity, unit, category, week_start, household_id').eq('user_id', ownerId).not('ordered_at', 'is', null).gte('ordered_at', lo).lte('ordered_at', hi)
     sent = (data as SentLine[]) ?? []
   }
