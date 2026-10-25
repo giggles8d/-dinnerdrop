@@ -1,4 +1,5 @@
 import type { GroceryItem } from '@/types'
+import { parseQuantity } from '@/lib/portions'
 
 /**
  * Instacart Developer Platform — Create Shopping List Page
@@ -77,6 +78,14 @@ function fallbackSearch(term: string): string {
 const PACKAGE_UNITS = new Set(['bag', 'bags', 'box', 'boxes', 'pack', 'packs', 'package', 'packages', 'pkg', 'jar', 'jars', 'can', 'cans', 'bottle', 'bottles', 'carton', 'cartons', 'container', 'containers', 'tub', 'tubs', 'loaf', 'loaves', 'roll', 'rolls', 'case', 'cases', 'sleeve', 'sleeves', 'block', 'blocks', 'stick', 'sticks', 'bar', 'bars', 'tube', 'tubes', 'pouch', 'pouches', 'dozen', '12-pack', '6-pack', '24-pack', 'variety pack', 'multipack', 'kit', 'kits', 'set', 'sets'])
 const COUNT_UNITS = new Set(['', 'whole', 'each', 'count', 'ct', 'piece', 'pieces', 'item', 'items', 'unit', 'units', 'head', 'heads', 'bunch', 'bunches', 'ear', 'ears', 'stalk', 'stalks'])
 const MEASURE_UNITS = new Set(['lb', 'lbs', 'pound', 'pounds', 'oz', 'ounce', 'ounces', 'fl oz', 'gallon', 'gallons', 'quart', 'quarts', 'pint', 'pints', 'liter', 'liters', 'l', 'ml', 'kg', 'g', 'gram', 'grams', 'cup', 'cups', 'tbsp', 'tsp', 'tablespoon', 'tablespoons', 'teaspoon', 'teaspoons'])
+/** "lemons" → "lemon": a plural search term for a counted item tends to match a whole bag. */
+export function singularSearchTerm(term: string): string {
+  const t = term.trim()
+  if (/\s/.test(t) || !/[a-z]s$/i.test(t) || /ss$/i.test(t)) return t
+  if (/oes$/i.test(t)) return t.slice(0, -2)
+  return t.slice(0, -1)
+}
+
 export function instacartUnit(unit: string | null | undefined): string {
   const u = (unit ?? '').trim().toLowerCase()
   if (PACKAGE_UNITS.has(u)) return 'package'
@@ -104,12 +113,13 @@ export async function createInstacartLink(
     link_type: 'shopping_list',
     expires_in: 7,
     line_items: items.map((item) => {
-      const qty = parseFloat(item.quantity) || 1
+      // "3/4" and "1 1/2" must stay fractions (parseFloat("3/4") is 3, which tripled produce orders).
+      const qty = parseQuantity(item.quantity) || 1
       const unit = instacartUnit(item.unit)
       // Small ingredient counts ("3 cloves garlic", "2 slices") mean one package, not three.
       const quantity = unit === 'package' && !PACKAGE_UNITS.has((item.unit ?? '').trim().toLowerCase()) ? 1 : qty
       return {
-        name: item.searchTerm || item.name,
+        name: unit === 'each' ? singularSearchTerm(item.searchTerm || item.name) : item.searchTerm || item.name,
         quantity,
         unit,
         display_text: `${item.quantity} ${item.unit} ${item.name}`.replace(/\s+/g, ' ').trim(),

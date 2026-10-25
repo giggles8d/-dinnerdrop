@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { parseQuantity } from '@/lib/portions'
 import { createClient } from '@supabase/supabase-js'
 import { sendWeekRecipes } from '@/lib/recipe-email'
 import { stockStaplesFromList } from '@/lib/pantry'
@@ -60,7 +61,7 @@ export async function POST(request: Request) {
         sentNames.push(item.name)
         cartItems.push({
           productId: product.productId,
-          quantity: Math.ceil(parseFloat(item.quantity) || 1),
+          quantity: Math.ceil(parseQuantity(item.quantity) || 1),
         })
       }
     }
