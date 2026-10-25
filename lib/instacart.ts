@@ -71,6 +71,20 @@ function fallbackSearch(term: string): string {
   return withInstacartAffiliate(`https://www.instacart.com/products/search?q=${encodeURIComponent(term)}`)
 }
 
+// Instacart only understands its own units. Anything that means "a package of it" (bag, box, jar,
+// 12-pack…) is sent as "package" so the quantity means packages; count words become "each";
+// weights/volumes pass through. An unknown unit makes Instacart add ONE package regardless of quantity.
+const PACKAGE_UNITS = new Set(['bag', 'bags', 'box', 'boxes', 'pack', 'packs', 'package', 'packages', 'pkg', 'jar', 'jars', 'can', 'cans', 'bottle', 'bottles', 'carton', 'cartons', 'container', 'containers', 'tub', 'tubs', 'loaf', 'loaves', 'roll', 'rolls', 'case', 'cases', 'sleeve', 'sleeves', 'block', 'blocks', 'stick', 'sticks', 'bar', 'bars', 'tube', 'tubes', 'pouch', 'pouches', 'dozen', '12-pack', '6-pack', '24-pack', 'variety pack', 'multipack', 'kit', 'kits', 'set', 'sets'])
+const COUNT_UNITS = new Set(['', 'whole', 'each', 'count', 'ct', 'piece', 'pieces', 'item', 'items', 'unit', 'units', 'head', 'heads', 'bunch', 'bunches', 'ear', 'ears', 'stalk', 'stalks'])
+const MEASURE_UNITS = new Set(['lb', 'lbs', 'pound', 'pounds', 'oz', 'ounce', 'ounces', 'fl oz', 'gallon', 'gallons', 'quart', 'quarts', 'pint', 'pints', 'liter', 'liters', 'l', 'ml', 'kg', 'g', 'gram', 'grams', 'cup', 'cups', 'tbsp', 'tsp', 'tablespoon', 'tablespoons', 'teaspoon', 'teaspoons'])
+export function instacartUnit(unit: string | null | undefined): string {
+  const u = (unit ?? '').trim().toLowerCase()
+  if (PACKAGE_UNITS.has(u)) return 'package'
+  if (COUNT_UNITS.has(u)) return 'each'
+  if (MEASURE_UNITS.has(u)) return u
+  return 'package'   // "clove", "slice", "handful"… — safest is one package of it
+}
+
 export async function createInstacartLink(
   items: GroceryItem[],
   title = 'DinnerDrop Weekly Groceries'
@@ -89,12 +103,18 @@ export async function createInstacartLink(
     image_url: 'https://dinnerdrop.app/og-image.png?v=3',
     link_type: 'shopping_list',
     expires_in: 7,
-    line_items: items.map((item) => ({
-      name: item.searchTerm || item.name,
-      quantity: parseFloat(item.quantity) || 1,
-      unit: item.unit || null,
-      display_text: `${item.quantity} ${item.unit} ${item.name}`.trim(),
-    })),
+    line_items: items.map((item) => {
+      const qty = parseFloat(item.quantity) || 1
+      const unit = instacartUnit(item.unit)
+      // Small ingredient counts ("3 cloves garlic", "2 slices") mean one package, not three.
+      const quantity = unit === 'package' && !PACKAGE_UNITS.has((item.unit ?? '').trim().toLowerCase()) ? 1 : qty
+      return {
+        name: item.searchTerm || item.name,
+        quantity,
+        unit,
+        display_text: `${item.quantity} ${item.unit} ${item.name}`.replace(/\s+/g, ' ').trim(),
+      }
+    }),
     landing_page_configuration: {
       partner_linkback_url: 'https://dinnerdrop.app/grocery-list',
       enable_pantry_items: true,
