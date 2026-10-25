@@ -182,7 +182,7 @@ export function receiptFeatureAllowed(email: string | null | undefined): boolean
 
 // ---------------------------------------------------------------- match receipt lines to list lines
 
-const NOISE = new Set(['organic', 'fresh', 'large', 'small', 'medium', 'whole', 'pack', 'bag', 'box', 'can', 'jar', 'bunch', 'lb', 'lbs', 'oz', 'ct', 'each', 'of', 'the', 'and', 'with', 'a', 'in', 'brand', 'store', 'premium', 'natural', 'raw', 'ripe', 'sliced', 'shredded', 'diced', 'chopped', 'ground', 'boneless', 'skinless', 'fat', 'free', 'low', 'unsalted', 'salted'])
+const NOISE = new Set(['or', 'organic', 'fresh', 'large', 'small', 'medium', 'whole', 'pack', 'bag', 'box', 'can', 'jar', 'bunch', 'lb', 'lbs', 'oz', 'ct', 'each', 'of', 'the', 'and', 'with', 'a', 'in', 'brand', 'store', 'premium', 'natural', 'raw', 'ripe', 'sliced', 'shredded', 'diced', 'chopped', 'ground', 'boneless', 'skinless', 'fat', 'free', 'low', 'unsalted', 'salted'])
 const SINGULAR: Array<[RegExp, string]> = [[/ies$/, 'y'], [/oes$/, 'o'], [/ches$/, 'ch'], [/shes$/, 'sh'], [/sses$/, 'ss'], [/s$/, '']]
 function stem(w: string): string {
   if (w.length <= 3) return w
@@ -195,12 +195,18 @@ export function itemTokens(name: string): Set<string> {
 export function itemSimilarity(a: string, b: string): number {
   const A = itemTokens(a), B = itemTokens(b)
   if (!A.size || !B.size) return 0
+  // "cornstarch" vs "corn starch", "popsicles" vs "pop sicles": compare with spaces removed too.
+  const ja = Array.from(A).sort().join(''), jb = Array.from(B).sort().join('')
+  if (ja === jb) return 1
   let inter = 0
   A.forEach((t) => { if (B.has(t)) inter++ })
   if (!inter) return 0
   const containment = inter / Math.min(A.size, B.size)   // "chicken thighs" ⊂ "boneless chicken thighs"
   const jaccard = inter / (A.size + B.size - inter)
-  return Math.max(jaccard, containment * 0.9)
+  // The head noun (last token) is what the product IS: "cheese and garlic croutons" is croutons, not cheese.
+  const la = Array.from(A).pop(), lb = Array.from(B).pop()
+  const head = la === lb ? 0.08 : 0
+  return Math.min(1, Math.max(jaccard, containment * 0.9) + head + jaccard * 0.01)
 }
 
 export interface SentLine { id: string; name: string; search_term: string | null; quantity: string | null; unit: string | null; category: string; week_start: string | null; household_id: string | null }
@@ -220,11 +226,48 @@ export function matchLines(receipt: ReceiptLine[], sent: SentLine[]): { pairs: A
     usedR.add(c.r); usedS.add(c.s)
     pairs.push({ receipt: receipt[c.r], line: sent[c.s], score: c.score })
   }
+  // Duplicate list lines ("Bananas" twice, "Yogurt" + "Yogurt tubes") share the matched receipt line.
+  const byKey = new Map<string, ReceiptLine>()
+  for (const p of pairs) byKey.set(normalizeItemName(p.line.name), p.receipt)
+  sent.forEach((sl, i) => {
+    if (usedS.has(i)) return
+    const hit = byKey.get(normalizeItemName(sl.name))
+    if (hit) { usedS.add(i); pairs.push({ receipt: hit, line: sl, score: 0.5 }) }
+  })
   return {
     pairs,
     unmatchedReceipt: receipt.filter((_, i) => !usedR.has(i)),
     unmatchedSent: sent.filter((_, i) => !usedS.has(i)),
   }
+}
+
+/** Verify low-confidence pairs ("Cheese" ← "nacho cheese tortilla chips"): returns the indexes to reject. */
+export async function verifyDoubtful(pairs: Array<{ receipt: ReceiptLine; line: SentLine; score: number }>): Promise<Set<number>> {
+  const doubtful = pairs.map((p, i) => ({ p, i })).filter(({ p }) => p.score < 0.92)
+  if (!doubtful.length) return new Set()
+  try {
+    const out = await generateWithClaude(`A grocery list was matched to a store receipt by name. Check these pairs. A pair is WRONG when the receipt item is a different product from what the list asked for (e.g. list "Cheese" ← receipt "nacho cheese tortilla chips" is wrong; list "lemon" ← "lemon scented disinfectant wipes" is wrong; list "chicken" ← "boneless skinless chicken breasts" is right; list "Ramen" ← "ramen noodle soup chicken flavor" is right; list "rice vinegar" ← "white wine vinegar" is acceptable as a substitute).\n${doubtful.map(({ p, i }) => `P${i}: list "${p.line.name}" ← receipt "${p.receipt.name}"`).join('\n')}\n\nReturn ONLY JSON: {"wrong":[<P numbers that are wrong>]}`, 400)
+    const j = parseClaudeJSON<{ wrong?: number[] }>(out)
+    return new Set((j.wrong ?? []).map(Number).filter((n) => Number.isInteger(n) && pairs[n] && pairs[n].score < 0.92))
+  } catch { return new Set() }
+}
+
+/** Second pass: let the model pair leftovers by meaning (plastic silverware = assorted cutlery, Scoop chips = Tostitos Scoops). */
+export async function matchLeftovers(unmatchedSent: SentLine[], unmatchedReceipt: ReceiptLine[]): Promise<Array<{ receipt: ReceiptLine; line: SentLine }>> {
+  if (!unmatchedSent.length || !unmatchedReceipt.length) return []
+  try {
+    const out = await generateWithClaude(`A family sent a grocery list to the store. These LIST items had no obvious match on the receipt:\n${unmatchedSent.map((l, i) => `L${i}: ${l.name}`).join('\n')}\n\nThese RECEIPT items were bought but matched nothing on the list:\n${unmatchedReceipt.map((r, i) => `R${i}: ${r.name}`).join('\n')}\n\nPair each list item with the receipt item that is the SAME product bought under a different name or brand (e.g. "plastic silverware" = "heavy duty assorted cutlery", "Scoop chips" = "tostitos scoops", "cereal or oats" = "ready to eat oats", "sandwich bread" = "classic white bread", "bell pepper" = "multi-colored peppers", "cherry tomatoes" = "grape tomatoes"). Do NOT pair different products (eggs ≠ egg bites, milk ≠ cream cheese, Parmesan ≠ cheddar). Each receipt item may be used once. Return ONLY JSON: [{"l":0,"r":3}, ...] — an empty array if nothing pairs.`, 1500)
+    const pairs = parseClaudeJSON<Array<{ l: number; r: number }>>(out)
+    const usedR = new Set<number>(), usedL = new Set<number>()
+    const result: Array<{ receipt: ReceiptLine; line: SentLine }> = []
+    for (const p of Array.isArray(pairs) ? pairs : []) {
+      const l = Number(p?.l), r = Number(p?.r)
+      if (!Number.isInteger(l) || !Number.isInteger(r) || usedL.has(l) || usedR.has(r) || !unmatchedSent[l] || !unmatchedReceipt[r]) continue
+      usedL.add(l); usedR.add(r)
+      result.push({ receipt: unmatchedReceipt[r], line: unmatchedSent[l] })
+    }
+    return result
+  } catch { return [] }
 }
 
 // ---------------------------------------------------------------- reconcile against the list that went to the store
@@ -273,7 +316,16 @@ export async function reconcileReceipt(admin: SupabaseClient, ownerId: string, p
     sent = (data as SentLine[]) ?? []
   }
 
-  const { pairs, unmatchedSent } = matchLines(parsed.items, sent)
+  const m = matchLines(parsed.items, sent)
+  const wrong = await verifyDoubtful(m.pairs)
+  const kept = m.pairs.filter((_, i) => !wrong.has(i))
+  const rejected = m.pairs.filter((_, i) => wrong.has(i))
+  const leftoverSent = [...m.unmatchedSent, ...rejected.map((p) => p.line)]
+  const leftoverReceipt = [...m.unmatchedReceipt, ...rejected.map((p) => p.receipt).filter((r) => !kept.some((k) => k.receipt === r))]
+  const extra = await matchLeftovers(leftoverSent, leftoverReceipt)
+  const pairs = [...kept, ...extra.map((e) => ({ ...e, score: 0.5 }))]
+  const extraIds = new Set(extra.map((e) => e.line.id))
+  const unmatchedSent = leftoverSent.filter((l) => !extraIds.has(l.id))
   let bought = 0, replaced = 0, refunded = 0
   for (const p of pairs) {
     const status = p.receipt.status
