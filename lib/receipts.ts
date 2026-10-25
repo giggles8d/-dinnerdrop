@@ -123,7 +123,25 @@ const RECEIPT_SCHEMA = `Return ONLY JSON:
             "replacedWith": "what was substituted, plain name, only when status is replaced, else null",
             "note": "short note only if useful, else null"}]}
 
-Rules: one entry per line item. "replaced" = the shopper substituted another product (name = what was ORDERED, replacedWith = what they got). "refunded" = the item was out of stock / not found / refunded, so the family does NOT have it. Fees, tips, taxes, credits and delivery lines are not items. Keep names short and generic.`
+Rules: one entry per line item. "replaced" = the shopper substituted another product (name = what was ORDERED, replacedWith = what they got). "refunded" = the item was out of stock / not found / refunded, so the family does NOT have it. Fees, tips, taxes, credits and delivery lines are not items. Keep names short and generic. Omit "replacedWith" and "note" when null. Write compact JSON on one line per item, no commentary — big orders can have 100+ items and every one must be included.`
+
+/** Parse the model's JSON; if the output was cut off mid-array, keep the complete items we did get. */
+export function parseReceiptJSON(out: string): Partial<ParsedReceipt> {
+  try { return parseClaudeJSON<Partial<ParsedReceipt>>(out) } catch { /* salvage below */ }
+  const cleaned = out.replace(/```json\n?/g, '').replace(/```\n?/g, '')
+  const start = cleaned.indexOf('{')
+  if (start < 0) throw new Error('No JSON in receipt parse')
+  const itemsAt = cleaned.indexOf('"items"', start)
+  const head = itemsAt > 0 ? cleaned.slice(start, itemsAt) : ''
+  const grab = (key: string): string | null => { const m = head.match(new RegExp(`"${key}"\\s*:\\s*("([^"]*)"|[-0-9.]+|null)`)); return m ? (m[2] ?? m[1]) : null }
+  const items: ReceiptLine[] = []
+  const arr = itemsAt > 0 ? cleaned.slice(cleaned.indexOf('[', itemsAt) + 1) : ''
+  for (const m of arr.match(/\{[^{}]*\}/g) ?? []) { try { items.push(JSON.parse(m)) } catch { /* skip partial object */ } }
+  if (!items.length) throw new Error('Receipt JSON unreadable')
+  console.warn(`[receipts] salvaged ${items.length} items from a truncated parse`)
+  const total = grab('total'), orderedOn = grab('orderedOn'), store = grab('store'), service = grab('service')
+  return { store: store && store !== 'null' ? store : null, service: (service as ParsedReceipt['service']) ?? 'Other', orderedOn: orderedOn && orderedOn !== 'null' ? orderedOn : null, total: total && total !== 'null' ? Number(total) : null, items }
+}
 
 function normalizeParsed(p: Partial<ParsedReceipt>): ParsedReceipt {
   const items: ReceiptLine[] = Array.isArray(p.items) ? p.items.filter((i) => i && typeof i.name === 'string' && i.name.trim()).map((i) => ({
@@ -144,14 +162,14 @@ function normalizeParsed(p: Partial<ParsedReceipt>): ParsedReceipt {
 }
 
 export async function parseReceipt(text: string): Promise<ParsedReceipt> {
-  const out = await generateWithClaude(`This is a grocery order receipt email (often forwarded, so ignore the forwarding header). Extract what was actually bought.\n\n${RECEIPT_SCHEMA}\n\nRECEIPT:\n${text}`, 4000)
-  return normalizeParsed(parseClaudeJSON<Partial<ParsedReceipt>>(out))
+  const out = await generateWithClaude(`This is a grocery order receipt email (often forwarded, so ignore the forwarding header). Extract what was actually bought.\n\n${RECEIPT_SCHEMA}\n\nRECEIPT:\n${text}`, 16000)
+  return normalizeParsed(parseReceiptJSON(out))
 }
 
 /** Screenshots of an Instacart / Kroger order (one or several, in order). */
 export async function parseReceiptImages(images: ClaudeImage[]): Promise<ParsedReceipt> {
-  const out = await generateWithClaudeImages(`These are screenshot(s) of a grocery order receipt from a store app (Instacart, Kroger, etc.), possibly several pages of the same order in order. Extract what was actually bought. Look for "replaced", "refunded", "out of stock", "not found", strikethrough or similar markers next to items. If the screenshots are not a grocery receipt, return {"store":null,"service":"Other","orderedOn":null,"total":null,"items":[]}.\n\n${RECEIPT_SCHEMA}`, images, 4000)
-  return normalizeParsed(parseClaudeJSON<Partial<ParsedReceipt>>(out))
+  const out = await generateWithClaudeImages(`These are screenshot(s) of a grocery order receipt from a store app (Instacart, Kroger, etc.), possibly several pages of the same order in order. Extract what was actually bought. Look for "replaced", "refunded", "out of stock", "not found", strikethrough or similar markers next to items. If the screenshots are not a grocery receipt, return {"store":null,"service":"Other","orderedOn":null,"total":null,"items":[]}.\n\n${RECEIPT_SCHEMA}`, images, 16000)
+  return normalizeParsed(parseReceiptJSON(out))
 }
 
 /** Who gets the receipt features (upload + forwarding). Unset env = Sarah only; "*" = everyone. */
