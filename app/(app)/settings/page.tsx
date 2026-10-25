@@ -566,6 +566,16 @@ export default function SettingsPage() {
                   <Field label="Dinner ideas to text" hint={`The family picks from these; the top ${settings.plan.dinnersPerWeek} make the week.`}><Select value={String(Math.max(settings.texting.optionsToText, settings.plan.dinnersPerWeek))} onChange={(v) => patch((s) => { s.texting.optionsToText = Number(v) })} options={['5', '6', '7', '8', '9', '10', '12'].filter((n) => Number(n) >= settings.plan.dinnersPerWeek).map((n) => ({ value: n, label: n }))} /></Field>
                   <Field label="Max texts per person per week"><Select value={String(settings.texting.weeklyCap)} onChange={(v) => patch((s) => { s.texting.weeklyCap = Number(v) })} options={['2', '3', '4', '6', '8'].map((n) => ({ value: n, label: n }))} /></Field>
                 </div>
+                <div className="rounded-xl border border-border p-4 space-y-3">
+                  <div>
+                    <h2 className="font-heading font-semibold text-foreground mb-1">Last call before you order</h2>
+                    <p className="text-xs text-muted-foreground">The &ldquo;Ask the family first&rdquo; button on the grocery list texts everyone this message. Replies (ADD + item, or a photo) land on the list until time&rsquo;s up or you order. Placeholders: {'{name}'} {'{store}'} {'{minutes}'}.</p>
+                  </div>
+                  <Field label="Message">
+                    <textarea value={settings.texting.lastCall.message} onChange={(e) => patch((s) => { s.texting.lastCall.message = e.target.value })} rows={3} className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+                  </Field>
+                  <Field label="How long they have" hint="You can change it each time you send."><Select value={String(settings.texting.lastCall.minutes)} onChange={(v) => patch((s) => { s.texting.lastCall.minutes = Number(v) })} options={['10', '15', '20', '30', '45', '60'].map((n) => ({ value: n, label: `${n} minutes` }))} /></Field>
+                </div>
               </>
             )}
 

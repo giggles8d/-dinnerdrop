@@ -50,6 +50,10 @@ export interface Settings {
     weeklyCap: number               // max texts per member per week
     ownerPhone: string              // where "everyone's voted" + reminders for the planner go (E.164)
     optionsToText: number           // dinner ideas texted for the family to pick from (>= dinnersPerWeek)
+    lastCall: {
+      message: string               // template: {name} {store} {minutes}
+      minutes: number               // how long the family has to reply (10–60)
+    }
   }
   stores: {
     mode: 'instacart' | 'kroger' | 'instore'
@@ -104,6 +108,10 @@ export const DEFAULT_SETTINGS: Settings = {
     weeklyCap: 4,
     ownerPhone: '',
     optionsToText: 8,
+    lastCall: {
+      message: '{name} is ordering groceries from {store} in {minutes} min. Need anything? Reply ADD + the item (e.g. ADD granola bars), or send a photo of it.',
+      minutes: 20,
+    },
   },
   stores: {
     mode: 'instacart',
