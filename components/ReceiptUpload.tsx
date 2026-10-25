@@ -1,6 +1,22 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+
+const MAX_SHOTS = 12
+
+/** Downsize a screenshot in the browser (long phone screenshots are 2-4 MB each; a dozen must fit in one request). */
+async function shrink(file: File, maxDim = 1600, quality = 0.82): Promise<File> {
+  try {
+    const bmp = await createImageBitmap(file)
+    const scale = Math.min(1, maxDim / Math.max(bmp.width, bmp.height))
+    const w = Math.round(bmp.width * scale), h = Math.round(bmp.height * scale)
+    const c = document.createElement('canvas'); c.width = w; c.height = h
+    c.getContext('2d')!.drawImage(bmp, 0, 0, w, h)
+    const blob: Blob | null = await new Promise((res) => c.toBlob(res, 'image/jpeg', quality))
+    if (!blob) return file
+    return new File([blob], file.name.replace(/\.[a-z0-9]+$/i, '') + '.jpg', { type: 'image/jpeg' })
+  } catch { return file }
+}
 import { Receipt, Loader2, Check, X } from 'lucide-react'
 
 interface Result { store: string | null; total: number | null; items: number; bought: number; replaced: number; refunded: number; missing: number; restored: string[]; matchedHandoff: boolean }
@@ -28,7 +44,9 @@ export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void
     setBusy(true); setError(null)
     try {
       const fd = new FormData()
-      files.slice(0, 4).forEach((f) => fd.append('images', f))
+      let shots = await Promise.all(files.slice(0, MAX_SHOTS).map((f) => shrink(f)))
+      if (shots.reduce((n, f) => n + f.size, 0) > 3.8 * 1024 * 1024) shots = await Promise.all(files.slice(0, MAX_SHOTS).map((f) => shrink(f, 1200, 0.7)))
+      shots.forEach((f) => fd.append('images', f))
       const r = await fetch('/api/receipts/upload', { method: 'POST', body: fd })
       const j = await r.json()
       if (!r.ok) { setError(j?.error || 'Something went wrong.'); return }
@@ -43,7 +61,7 @@ export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void
         <div className="shrink-0 w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center"><Receipt className="w-5 h-5" /></div>
         <div className="flex-1 min-w-0">
           <p className="font-heading font-semibold text-foreground">Got your groceries? Upload the receipt.</p>
-          <p className="text-sm text-muted-foreground mt-0.5">Screenshot your Instacart or Kroger order (the order details or receipt screen — up to 4 shots if it&rsquo;s long). We&rsquo;ll mark what came, put anything the store didn&rsquo;t have back on your list, and use the real total to sharpen next week&rsquo;s estimates.</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Screenshot your Instacart or Kroger order (the order details or receipt screen — up to 12 shots for a big order). We&rsquo;ll mark what came, put anything the store didn&rsquo;t have back on your list, and use the real total to sharpen next week&rsquo;s estimates.</p>
 
           {result ? (
             <div className="mt-3 rounded-lg bg-muted/50 p-3 text-sm">
@@ -59,7 +77,7 @@ export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void
             </div>
           ) : (
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <input ref={inputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => { setFiles(Array.from(e.target.files ?? []).slice(0, 4)); setError(null) }} />
+              <input ref={inputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => { const picked = Array.from(e.target.files ?? []); setFiles(picked.slice(0, MAX_SHOTS)); setError(picked.length > MAX_SHOTS ? `Only the first ${MAX_SHOTS} screenshots will be used.` : null) }} />
               <button type="button" onClick={() => inputRef.current?.click()} disabled={busy} className="px-3 py-1.5 rounded-md border border-border bg-background text-sm font-medium hover:bg-muted">
                 {files.length ? `${files.length} screenshot${files.length === 1 ? '' : 's'} chosen` : 'Choose screenshot(s)'}
               </button>
@@ -72,7 +90,7 @@ export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void
                 </>
               )}
               {error && <p className="w-full text-sm text-destructive">{error}</p>}
-              {busy && <p className="w-full text-xs text-muted-foreground">Reading the receipt usually takes 10–20 seconds.</p>}
+              {busy && <p className="w-full text-xs text-muted-foreground">Reading the receipt usually takes 15–40 seconds for a big order.</p>}
             </div>
           )}
         </div>

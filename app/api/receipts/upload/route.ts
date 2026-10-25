@@ -8,8 +8,8 @@ import type { ClaudeImage } from '@/lib/claude'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
-const MAX_IMAGES = 4
-const MAX_BYTES = 8 * 1024 * 1024
+const MAX_IMAGES = 12
+const MAX_BYTES = 4 * 1024 * 1024
 const TYPES: Record<string, ClaudeImage['mediaType']> = { 'image/jpeg': 'image/jpeg', 'image/jpg': 'image/jpeg', 'image/png': 'image/png', 'image/webp': 'image/webp', 'image/gif': 'image/gif' }
 
 /** GET — is the receipt upload available to this user? (drives whether the card renders) */
@@ -20,7 +20,7 @@ export async function GET() {
 }
 
 /**
- * POST multipart/form-data { images: File[] (1-4 screenshots of the order) }
+ * POST multipart/form-data { images: File[] (1-12 screenshots of the order; the client downsizes them first) }
  * Parses the screenshots, reconciles with the list that went to the store, restores anything the
  * store didn't have to the active list, learns the real total, and returns a summary.
  */
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
   for (const f of files) {
     const mediaType = TYPES[f.type.toLowerCase()]
     if (!mediaType) return NextResponse.json({ error: `${f.name || 'That file'} isn’t an image (use PNG or JPG screenshots)` }, { status: 400 })
-    if (f.size > MAX_BYTES) return NextResponse.json({ error: `${f.name || 'One screenshot'} is over 8 MB` }, { status: 400 })
+    if (f.size > MAX_BYTES) return NextResponse.json({ error: `${f.name || 'One screenshot'} is over 4 MB` }, { status: 400 })
     images.push({ base64: Buffer.from(await f.arrayBuffer()).toString('base64'), mediaType })
   }
 
