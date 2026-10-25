@@ -380,6 +380,9 @@ export default function GroceryListPage() {
           </div>
         </div>
 
+        {/* Ask the family first — top of the page, no scrolling */}
+        <LastCallCard onItems={load} />
+
         {/* Budget bar */}
         {budget > 0 && (
           <div className="mb-6 rounded-xl border border-border p-4 print:hidden">
@@ -514,8 +517,6 @@ export default function GroceryListPage() {
         </div>
 
         <ReceiptUpload onDone={() => { setAskActual(null); load() }} />
-
-        <div className="mt-6"><LastCallCard onItems={load} /></div>
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden">
           <p className="hidden sm:block text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>
