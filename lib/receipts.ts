@@ -229,6 +229,16 @@ export function matchLines(receipt: ReceiptLine[], sent: SentLine[]): { pairs: A
 
 // ---------------------------------------------------------------- reconcile against the list that went to the store
 
+/** Reverse a receipt's side effects so a better upload of the same order can replace it. */
+export async function undoReceipt(admin: SupabaseClient, ownerId: string, receiptId: string, createdAt: string): Promise<void> {
+  // Lines the receipt restored to the active list (still open, nobody ticked them) go away.
+  await admin.from('list_items').delete().eq('user_id', ownerId).like('added_by', 'receipt:%').gte('created_at', createdAt).is('ordered_at', null).eq('checked', false)
+  // Status marks it set on the sent lines are cleared (the new receipt sets them again).
+  await admin.from('list_items').update({ receipt_status: null }).eq('user_id', ownerId).not('receipt_status', 'is', null).not('ordered_at', 'is', null)
+  await admin.from('item_purchases').delete().eq('receipt_id', receiptId)
+  await admin.from('receipts').delete().eq('id', receiptId)
+}
+
 export interface ReconcileResult { receiptId: string | null; handoffId: string | null; bought: number; replaced: number; refunded: number; missing: number; restored: string[]; store: string | null; total: number | null; duplicate?: boolean }
 
 export async function reconcileReceipt(admin: SupabaseClient, ownerId: string, parsed: ParsedReceipt, meta: { emailId: string; fromEmail: string; rawText: string }): Promise<ReconcileResult> {
@@ -241,6 +251,12 @@ export async function reconcileReceipt(admin: SupabaseClient, ownerId: string, p
   const since = new Date(Date.now() - 14 * 86400000).toISOString()
   const { data: handoffs } = await admin.from('grocery_handoffs').select('id, store, created_at, week_start, est_total').eq('user_id', ownerId).gte('created_at', since).order('created_at', { ascending: false }).limit(5)
   const handoff = (handoffs ?? []).find((h) => parsed.service !== 'Other' && String(h.store).toLowerCase().includes(parsed.service.toLowerCase())) ?? (handoffs ?? [])[0] ?? null
+
+  // A re-upload of the same order (better screenshots, pasted text) replaces the previous receipt:
+  // undo the lines it put back on the list and its history rows, then apply fresh.
+  const prevQ = admin.from('receipts').select('id, created_at').eq('user_id', ownerId).gte('created_at', new Date(Date.now() - 48 * 3600000).toISOString()).order('created_at', { ascending: false }).limit(1)
+  const { data: prev } = handoff ? await prevQ.eq('handoff_id', handoff.id).maybeSingle() : await prevQ.maybeSingle()
+  if (prev) await undoReceipt(admin, ownerId, prev.id as string, prev.created_at as string)
 
   // The lines that went to the store for that handoff (sent within ±1 day of it, or the whole week when no handoff).
   let sent: SentLine[] = []
