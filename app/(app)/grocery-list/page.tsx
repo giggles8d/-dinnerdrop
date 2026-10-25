@@ -222,6 +222,11 @@ export default function GroceryListPage() {
     setItems((xs) => xs.map((x) => (x.id === item.id ? { ...x, have: !x.have } : x)))
     await supabase.from('list_items').update({ have: !item.have }).eq('id', item.id)
   }
+  async function changeQuantity(item: ListItem, quantity: string) {
+    tapHaptic()
+    setItems((xs) => xs.map((x) => (x.id === item.id ? { ...x, quantity } : x)))
+    await supabase.from('list_items').update({ quantity }).eq('id', item.id)
+  }
   async function removeItem(item: ListItem) {
     setItems((xs) => xs.filter((x) => x.id !== item.id))
     await supabase.from('list_items').delete().eq('id', item.id)
@@ -433,6 +438,7 @@ export default function GroceryListPage() {
           onToggleChecked={toggleChecked}
           onToggleHave={toggleHave}
           onRemove={removeItem}
+          onChangeQuantity={changeQuantity}
           onAdd={(name, category) => addItem(name, category)}
         />
 

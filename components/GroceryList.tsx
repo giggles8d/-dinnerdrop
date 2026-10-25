@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Plus, X } from 'lucide-react'
+import { Plus, X, Minus } from 'lucide-react'
 import { CATEGORY_ORDER, CATEGORY_EMOJI, type ListItem } from '@/lib/list'
 import type { GroceryCategory } from '@/types'
 import type { SaleItem } from '@/lib/sales-shared'
@@ -45,6 +45,8 @@ interface GroceryListProps {
   onToggleChecked: (item: ListItem) => void
   onToggleHave: (item: ListItem) => void
   onRemove: (item: ListItem) => void
+  /** Change how much to buy ("2 bags of Cheetos"). Tap the quantity to show − / +. */
+  onChangeQuantity?: (item: ListItem, quantity: string) => void
   onAdd: (name: string, category?: GroceryCategory) => Promise<void> | void
   /** When this week's flyer is loaded: the sale entry matching a list line, for the 🏷️ tag. */
   saleFor?: (name: string) => SaleItem | null
@@ -57,7 +59,11 @@ const SOURCE_LABEL: Partial<Record<ListItem['source'], string>> = {
   manual: 'added', sms: 'texted', staples: 'staple', extra: 'basics',
 }
 
-export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, saleFor, storeFor, onMoveStore }: GroceryListProps) {
+const WEIGHT_UNITS = new Set(['lb', 'lbs', 'pound', 'pounds', 'kg', 'oz', 'ounce', 'ounces'])
+function stepFor(unit: string | null): number { return WEIGHT_UNITS.has((unit ?? '').toLowerCase()) ? 0.5 : 1 }
+
+export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, onChangeQuantity, saleFor, storeFor, onMoveStore }: GroceryListProps) {
+  const [qtyEdit, setQtyEdit] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
   const [adding, setAdding] = useState(false)
 
@@ -119,11 +125,21 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                       {SOURCE_LABEL[item.source] && <span className="ml-2 text-[10px] uppercase tracking-wide text-muted-foreground/70 no-underline">{SOURCE_LABEL[item.source]}{item.added_by ? ` · ${item.added_by}` : ''}</span>}
                       {(() => { const sale = saleFor?.(item.name); return sale ? <span className="ml-2 text-[10px] font-semibold text-primary no-underline" title={sale.note ?? ''}>🏷️ {sale.price}</span> : null })()}
                     </span>
-                    {item.quantity && (
-                      <span className={`text-xs font-medium ${muted ? 'text-muted-foreground/50' : 'text-muted-foreground'}`}>
-                        {formatQuantity(item.quantity, item.unit ?? '')}
-                      </span>
-                    )}
+                    {(item.quantity || onChangeQuantity) && (() => {
+                      const n = Number(item.quantity); const num = Number.isFinite(n) && item.quantity !== '' ? n : 1
+                      const step = stepFor(item.unit); const editing = qtyEdit === item.id && !!onChangeQuantity && !muted
+                      const set = (v: number) => onChangeQuantity?.(item, String(Math.round(Math.max(step, v) * 100) / 100))
+                      return (
+                        <span className="flex items-center gap-1 print:gap-0">
+                          {editing && <button type="button" onClick={() => set(num - step)} disabled={num <= step} aria-label="Less" className="print:hidden w-6 h-6 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:border-primary/50 disabled:opacity-30"><Minus className="w-3 h-3" /></button>}
+                          <button type="button" onClick={() => onChangeQuantity && !muted && setQtyEdit(editing ? null : item.id)} title={onChangeQuantity ? 'Tap to change how many' : undefined}
+                            className={`text-xs font-medium rounded-md px-1.5 py-0.5 ${muted ? 'text-muted-foreground/50' : 'text-muted-foreground'} ${editing ? 'bg-primary/10 text-primary' : onChangeQuantity && !muted ? 'hover:bg-muted' : ''}`}>
+                            {item.quantity ? formatQuantity(item.quantity, item.unit ?? '') : '1'}
+                          </button>
+                          {editing && <button type="button" onClick={() => set(num + step)} aria-label="More" className="print:hidden w-6 h-6 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:border-primary/50"><Plus className="w-3 h-3" /></button>}
+                        </span>
+                      )
+                    })()}
                     {storeFor && !muted && (() => { const st = storeFor(item); return st ? <button type="button" onClick={() => onMoveStore?.(item)} title="Tap to move to the other store" className="print:hidden text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent-foreground font-semibold whitespace-nowrap">{st}</button> : null })()}
                     <button
                       type="button"
