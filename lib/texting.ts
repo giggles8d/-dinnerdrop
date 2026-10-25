@@ -198,14 +198,16 @@ export async function cleanItems(raw: string[]): Promise<CleanItem[]> {
   if (!items.length) return []
   try {
     const text = await generateWithClaude(
-      `A family member texted these grocery items. For each, return a clean shoppable product name (fix typos, drop filler like "like"/"also"/"please"/"some", keep brand names, plural for produce) and the quantity to buy: use the amount they wrote if any, otherwise a sensible single-purchase default (bananas → 1 bunch, milk → 1 gallon, eggs → 1 dozen, Dr Pepper → 1 12-pack, chicken → 1 lb, snack bars → 1 box, paper towels → 1 pack). Units from: whole, bunch, lb, oz, gallon, half-gallon, quart, dozen, bag, box, can, jar, bottle, pack, 12-pack, loaf, head, package. Return ONLY a JSON array in the same order, one object per input: {"name":"","quantity":"1","unit":"bunch"}; use {"name":""} for anything that isn't a grocery item.\n${JSON.stringify(items)}`,
-      500,
+      `A family member texted these grocery items. Return every product they want as its own object, in order: a clean shoppable product name (fix typos, drop filler like "like"/"also"/"please"/"some", keep brand names, plural for produce) and the quantity to buy: use the amount they wrote if any, otherwise a sensible single-purchase default (bananas → 1 bunch, milk → 1 gallon, eggs → 1 dozen, Dr Pepper → 1 12-pack, chicken → 1 lb, snack bars → 1 box, paper towels → 1 pack). Units from: whole, bunch, lb, oz, gallon, half-gallon, quart, dozen, bag, box, can, jar, bottle, pack, 12-pack, loaf, head, package. IMPORTANT: a single entry often lists several products run together with spaces or no punctuation — "steak cheese cold cuts pepperoni eggs" is FIVE items (steak; cheese; cold cuts; pepperoni; eggs), "2 gallons milk and bread" is two — split those into separate objects; keep multi-word product names together (cold cuts, peanut butter, ground beef, orange juice). Skip anything that isn't a grocery/household item. Return ONLY a flat JSON array: [{"name":"","quantity":"1","unit":"bunch"}, ...]\n${JSON.stringify(items)}`,
+      800,
     )
     const out = parseClaudeJSON<Array<{ name?: string; quantity?: string | number; unit?: string }>>(text)
-    if (Array.isArray(out) && out.length === items.length) {
+    if (Array.isArray(out) && out.length) {
+      const seen = new Set<string>()
       return out
-        .map((x) => ({ name: typeof x?.name === 'string' ? x.name.trim() : '', quantity: String(x?.quantity ?? '1').trim() || '1', unit: typeof x?.unit === 'string' ? x.unit.trim() : '' }))
-        .filter((x) => x.name)
+        .map((x) => ({ name: typeof x?.name === 'string' ? x.name.trim().slice(0, 60) : '', quantity: String(x?.quantity ?? '1').trim() || '1', unit: typeof x?.unit === 'string' ? x.unit.trim() : '' }))
+        .filter((x) => x.name && !seen.has(normalizeItemName(x.name)) && seen.add(normalizeItemName(x.name)))
+        .slice(0, 25)
     }
   } catch { /* fall through */ }
   return items.map((name) => ({ name, quantity: '1', unit: '' }))
@@ -402,15 +404,19 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   }
 
   // Unknown but short and food-ish? Treat as add when the member can add and said something list-like.
-  if (m.can_add && body.trim().length <= 40 && !/\d/.test(body) && settings.texting.enabled) {
-    const [it] = await cleanItems([body.trim()])
-    if (owner && it) {
+  if (m.can_add && body.trim().length <= 120 && !/\d/.test(body) && settings.texting.enabled) {
+    const its = await cleanItems([body.trim()])
+    if (owner && its.length) {
       const weekStart = plan?.week_start ?? mondayOf(new Date())
       const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
-      const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
-      if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
-      else await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
-      return { reply: `Added ${it.name}${it.unit ? ` (${it.quantity} ${it.unit})` : ''} to the grocery list. (Text HELP for everything you can do.)`, handled: true, member: m }
+      const added: string[] = []
+      for (const it of its) {
+        const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
+        if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
+        else await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
+        added.push(it.unit ? `${it.name} (${it.quantity} ${it.unit})` : it.name)
+      }
+      return { reply: `Added ${added.join(', ')} to the grocery list. (Text HELP for everything you can do.)`, handled: true, member: m }
     }
   }
   return { reply: `Didn't catch that. Reply numbers to skip dinners, ALL GOOD, ADD + items, MENU, LIST, or HELP.`, handled: true, member: m }
