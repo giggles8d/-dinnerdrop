@@ -192,7 +192,11 @@ function stem(w: string): string {
 export function itemTokens(name: string): Set<string> {
   return new Set(normalizeItemName(name).split(' ').filter((w) => w && !NOISE.has(w) && !/^\d+$/.test(w)).map(stem))
 }
+const NON_FOOD = /\b(wipes?|detergent|cleaner|bleach|soap|shampoo|conditioner|toothpaste|deodorant|trash bags?|foil|plastic wrap|batteries|candles?|lotion|razors?|tampons|diapers|dog food|cat food|litter)\b/i
+
 export function itemSimilarity(a: string, b: string): number {
+  // A household product never satisfies a food line (lemon ≠ lemon-scented wipes).
+  if (NON_FOOD.test(a) !== NON_FOOD.test(b)) return 0
   const A = itemTokens(a), B = itemTokens(b)
   if (!A.size || !B.size) return 0
   // "cornstarch" vs "corn starch", "popsicles" vs "pop sicles": compare with spaces removed too.
@@ -205,7 +209,7 @@ export function itemSimilarity(a: string, b: string): number {
   const jaccard = inter / (A.size + B.size - inter)
   // The head noun (last token) is what the product IS: "cheese and garlic croutons" is croutons, not cheese.
   const la = Array.from(A).pop(), lb = Array.from(B).pop()
-  const head = la === lb ? 0.08 : 0
+  const head = la === lb && containment >= 0.66 ? 0.08 : 0
   return Math.min(1, Math.max(jaccard, containment * 0.9) + head + jaccard * 0.01)
 }
 
@@ -243,12 +247,14 @@ export function matchLines(receipt: ReceiptLine[], sent: SentLine[]): { pairs: A
 
 /** Verify low-confidence pairs ("Cheese" ← "nacho cheese tortilla chips"): returns the indexes to reject. */
 export async function verifyDoubtful(pairs: Array<{ receipt: ReceiptLine; line: SentLine; score: number }>): Promise<Set<number>> {
-  const doubtful = pairs.map((p, i) => ({ p, i })).filter(({ p }) => p.score < 0.92)
+  const doubtful = pairs.map((p, i) => ({ p, i })).filter(({ p }) => p.score < 0.95)
   if (!doubtful.length) return new Set()
   try {
-    const out = await generateWithClaude(`A grocery list was matched to a store receipt by name. Check these pairs. A pair is WRONG when the receipt item is a different product from what the list asked for (e.g. list "Cheese" ← receipt "nacho cheese tortilla chips" is wrong; list "lemon" ← "lemon scented disinfectant wipes" is wrong; list "chicken" ← "boneless skinless chicken breasts" is right; list "Ramen" ← "ramen noodle soup chicken flavor" is right; list "rice vinegar" ← "white wine vinegar" is acceptable as a substitute).\n${doubtful.map(({ p, i }) => `P${i}: list "${p.line.name}" ← receipt "${p.receipt.name}"`).join('\n')}\n\nReturn ONLY JSON: {"wrong":[<P numbers that are wrong>]}`, 400)
-    const j = parseClaudeJSON<{ wrong?: number[] }>(out)
-    return new Set((j.wrong ?? []).map(Number).filter((n) => Number.isInteger(n) && pairs[n] && pairs[n].score < 0.92))
+    const out = await generateWithClaude(`A grocery list was matched to a store receipt by name. Check these pairs. A pair is WRONG when the receipt item is a different product from what the list asked for (e.g. list "Cheese" ← receipt "nacho cheese tortilla chips" is wrong; list "lemon" ← "lemon scented disinfectant wipes" is wrong; list "chicken" ← "boneless skinless chicken breasts" is right; list "Ramen" ← "ramen noodle soup chicken flavor" is right; list "rice vinegar" ← "white wine vinegar" is acceptable as a substitute).\n${doubtful.map(({ p, i }) => `P${i}: list "${p.line.name}" ← receipt "${p.receipt.name}"`).join('\n')}\n\nJudge EVERY pair. A different kind of product (breakfast sandwiches vs peanut-butter sandwiches, eggs vs egg bites, milk vs cream cheese, Parmesan vs cheddar) is wrong. Return ONLY JSON with a verdict for each: {"P0":"right","P1":"wrong",...}`, 800)
+    const j = parseClaudeJSON<Record<string, string>>(out)
+    const wrong = new Set<number>()
+    for (const [k, v] of Object.entries(j ?? {})) { const n = Number(String(k).replace(/^P/i, '')); if (Number.isInteger(n) && pairs[n] && pairs[n].score < 0.95 && String(v).toLowerCase().startsWith('wrong')) wrong.add(n) }
+    return wrong
   } catch { return new Set() }
 }
 
@@ -275,7 +281,9 @@ export async function matchLeftovers(unmatchedSent: SentLine[], unmatchedReceipt
 /** Reverse a receipt's side effects so a better upload of the same order can replace it. */
 export async function undoReceipt(admin: SupabaseClient, ownerId: string, receiptId: string, createdAt: string): Promise<void> {
   // Lines the receipt restored to the active list (still open, nobody ticked them) go away.
-  await admin.from('list_items').delete().eq('user_id', ownerId).like('added_by', 'receipt:%').gte('created_at', createdAt).is('ordered_at', null).eq('checked', false)
+  // Restored lines are written a moment BEFORE the receipt row, so look back a few minutes.
+  const since = new Date(new Date(createdAt).getTime() - 5 * 60000).toISOString()
+  await admin.from('list_items').delete().eq('user_id', ownerId).like('added_by', 'receipt:%').gte('created_at', since).is('ordered_at', null).eq('checked', false)
   // Status marks it set on the sent lines are cleared (the new receipt sets them again).
   await admin.from('list_items').update({ receipt_status: null }).eq('user_id', ownerId).not('receipt_status', 'is', null).not('ordered_at', 'is', null)
   await admin.from('item_purchases').delete().eq('receipt_id', receiptId)
