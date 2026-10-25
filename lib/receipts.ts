@@ -293,5 +293,67 @@ export async function reconcileReceipt(admin: SupabaseClient, ownerId: string, p
     total: parsed.total, item_count: parsed.items.length, items: parsed.items, raw_text: meta.rawText.slice(0, 20000),
     summary: { bought, replaced, refunded, missing, restored: restored.length, matched: pairs.length, sent: sent.length },
   }).select('id').single()
+  // Per-item purchase history (where/when/price) for History and the week check.
+  if (rec?.id && parsed.items.length) {
+    const boughtOn = parsed.orderedOn ?? new Date().toISOString().slice(0, 10)
+    await admin.from('item_purchases').insert(parsed.items.map((i) => ({
+      user_id: ownerId, receipt_id: rec.id, store: parsed.store, bought_on: boughtOn, name: i.name, name_key: normalizeItemName(i.name),
+      qty: i.qty, price: i.price, status: i.status, replaced_with: i.replacedWith ?? null,
+    }))).then(({ error }) => { if (error) console.error('[receipts] item_purchases insert failed:', error.message) })
+  }
   return { receiptId: (rec?.id as string) ?? null, handoffId, bought, replaced, refunded, missing, restored, store: parsed.store, total: parsed.total }
+}
+
+// ---------------------------------------------------------------- week check: did every dinner's ingredients make it?
+
+export type IngredientStatus = 'received' | 'replaced' | 'missing' | 'have' | 'not_ordered' | 'pending'
+export interface DinnerCheck { day: string; name: string; ok: boolean; ingredients: Array<{ name: string; status: IngredientStatus; note?: string }> }
+export interface WeekCheck { weekStart: string | null; hasReceipt: boolean; dinners: DinnerCheck[]; missingCount: number }
+
+interface PlanMealLite { day: string; name: string; ingredients: Array<{ name: string; searchTerm?: string }> }
+
+/** Compare the current plan's ingredients with what the list/receipt says happened to them. */
+export async function weekCheck(admin: SupabaseClient, ownerId: string): Promise<WeekCheck> {
+  const { data: plan } = await admin.from('meal_plans').select('id, week_start, meals, created_at').eq('user_id', ownerId).order('created_at', { ascending: false }).limit(1).maybeSingle()
+  if (!plan) return { weekStart: null, hasReceipt: false, dinners: [], missingCount: 0 }
+  const meals = (Array.isArray(plan.meals) ? plan.meals : []) as PlanMealLite[]
+  const { data: lines } = await admin.from('list_items').select('name, search_term, have, ordered_at, receipt_status, added_by').eq('user_id', ownerId).eq('week_start', plan.week_start as string)
+  const { data: rec } = await admin.from('receipts').select('id').eq('user_id', ownerId).gte('created_at', plan.created_at as string).limit(1)
+  const hasReceipt = !!rec?.length
+  type Line = { name: string; search_term: string | null; have: boolean; ordered_at: string | null; receipt_status: string | null; added_by: string | null }
+  const all = ((lines as Line[]) ?? [])
+  const replacedWith = new Map<string, string>()
+  if (hasReceipt) {
+    const { data: purchases } = await admin.from('item_purchases').select('name, replaced_with').eq('user_id', ownerId).eq('status', 'replaced').gte('created_at', plan.created_at as string)
+    for (const p of purchases ?? []) if (p.replaced_with) replacedWith.set(normalizeItemName(p.name), p.replaced_with)
+  }
+  const bestLine = (ing: { name: string; searchTerm?: string }): { line: Line; score: number } | null => {
+    let best: { line: Line; score: number } | null = null
+    for (const l of all) {
+      const score = Math.max(itemSimilarity(ing.name, l.name), ing.searchTerm ? itemSimilarity(ing.searchTerm, l.name) : 0, l.search_term ? itemSimilarity(ing.name, l.search_term) : 0)
+      if (score >= 0.5 && (!best || score > best.score)) best = { line: l, score }
+    }
+    return best
+  }
+  let missingCount = 0
+  const dinners: DinnerCheck[] = meals.map((m) => {
+    const ingredients = (m.ingredients ?? []).map((ing) => {
+      const hit = bestLine(ing)
+      let status: IngredientStatus = 'not_ordered'; let note: string | undefined
+      if (hit) {
+        const l = hit.line
+        if (l.have) status = 'have'
+        else if (!l.ordered_at) status = hasReceipt ? 'missing' : 'pending'            // still on the open list (never sent, or restored by the receipt)
+        else if (l.receipt_status === 'bought') status = 'received'
+        else if (l.receipt_status === 'replaced') { status = 'replaced'; const r = replacedWith.get(normalizeItemName(l.name)); if (r) note = `got ${r}` }
+        else if (l.receipt_status === 'refunded' || l.receipt_status === 'missing') status = 'missing'
+        else status = hasReceipt ? 'received' : 'pending'                                 // sent, no receipt line (e.g. second store)
+        if (status === 'missing' && !l.ordered_at) note = 'back on your list'
+      }
+      if (status === 'missing' || status === 'not_ordered') missingCount++
+      return { name: ing.name, status, note }
+    })
+    return { day: m.day, name: m.name, ok: ingredients.every((i) => i.status === 'received' || i.status === 'have' || i.status === 'replaced'), ingredients }
+  })
+  return { weekStart: (plan.week_start as string) ?? null, hasReceipt, dinners, missingCount }
 }

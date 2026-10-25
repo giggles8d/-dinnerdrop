@@ -16,6 +16,7 @@ import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 import { resolvePlanOwner } from '@/lib/household'
 import { attachLibraryImages } from '@/lib/library-images'
 import { trackOnce } from '@/lib/activation'
+import WeekCheckCard from '@/components/WeekCheckCard'
 
 export default function DashboardPage() {
   return (
@@ -483,6 +484,9 @@ function DashboardContent() {
         </div>
       )}
       <div className={`container mx-auto px-4 py-8 max-w-6xl${showListBar ? ' pb-32' : ''}`}>
+        {/* After a receipt: did every dinner's ingredients arrive? */}
+        {hasGenerated && meals.length > 0 && !loading && <WeekCheckCard />}
+
         {/* Past due payment banner */}
         {subscriptionStatus === 'past_due' && (
           <div className="flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-red-50 border border-red-200">
