@@ -2,9 +2,10 @@
  * Recipe library — server-only helpers around public.recipes.
  *
  * Every dinner the planner generates is stored once (name-normalized), with
- * its Unsplash photo fetched a single time and kept on the row. Later plans
- * can pull proven dinners straight from the library instead of regenerating
- * them, and families can browse / upload their own.
+ * its Unsplash photo fetched a single time and kept on the row. Only the
+ * nightly grower's recipes are public; dinners generated inside a family's
+ * plan or swap stay private to that family. Later plans pull from the public
+ * library instead of regenerating, and families can browse / upload their own.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Meal } from '@/types'
@@ -13,6 +14,7 @@ import { ensurePortions, scaleMeal } from '@/lib/portions'
 /** Drop time-claim tags the recipe's own numbers don't support ("15-min" on a 30-minute dinner). */
 export function honestTags(tags: string[], totalMinutes: number): string[] {
   return tags.filter((t) => {
+    if (t.toLowerCase() === 'quick') return totalMinutes > 0 && totalMinutes <= 30
     const m = t.match(/^(\d+)-?min/i)
     if (!m) return true
     return totalMinutes > 0 && totalMinutes <= Number(m[1])
@@ -147,8 +149,12 @@ export async function upsertRecipes(
         nutrition: meal.nutrition ?? null,
         source: opts.source ?? 'generated',
         created_by: opts.userId ?? null,
-        is_public: (opts.source ?? 'generated') === 'generated',
-        times_planned: 1,
+        // Only the nightly grower (no userId) adds to the shared library. Dinners
+        // generated inside one family's plan or swap are sized for that household and
+        // labeled with that family's diet, so they stay private to the family.
+        is_public: (opts.source ?? 'generated') === 'generated' && !opts.userId,
+        // A grower recipe has not been planned by anyone yet.
+        times_planned: opts.userId ? 1 : 0,
       })
       .select('id')
       .single()
