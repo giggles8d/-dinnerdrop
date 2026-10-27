@@ -74,8 +74,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
   const { data: profiles } = await admin
     .from('profiles')
     .select('id, email, full_name, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, subscription_status, is_beta_member, family_until, email_unsubscribed')
-    .not('settings', 'eq', '{}')
-  const thisMonday = mondayOf(now)
+  const started = Date.now()
+  // Families with no plan in this long have drifted away; don't keep planning for them.
+  const ACTIVE_DAYS = 45
 
   for (const p of (profiles ?? []) as ProfileRow[]) {
     report.checked++
@@ -88,11 +89,19 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       const family = isFamilyProfile(p)
 
       // ---- automatic weekly plan ----
-      if (settings.schedule.autoPlan && settings.schedule.planDay === weekday) {
+      // Plan day, or the day after if the run ran out of time before reaching this family.
+      const dayAfterPlanDay = WEEKDAYS[(WEEKDAYS.indexOf(settings.schedule.planDay) + 1) % 7]
+      if (settings.schedule.autoPlan && (settings.schedule.planDay === weekday || dayAfterPlanDay === weekday) && Date.now() - started < 200_000) {
+        const { data: recent } = await admin.from('meal_plans').select('created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
+        const lastPlan = recent?.[0]?.created_at ? new Date(recent[0].created_at).getTime() : 0
+        if (now.getTime() - lastPlan <= ACTIVE_DAYS * 86400000) {
+        const planningDay = settings.schedule.planDay === weekday ? weekday : settings.schedule.planDay
         // Planning on Sat/Sun targets the coming Monday; mid-week targets this week.
-        const target = (weekday === 'sat' || weekday === 'sun')
-          ? mondayOf(new Date(now.getTime() + 2 * 86400000 + (weekday === 'sat' ? 86400000 : 0)))
-          : thisMonday
+        const catchUp = planningDay !== weekday ? 1 : 0
+        const planNow = new Date(now.getTime() - catchUp * 86400000)
+        const target = (planningDay === 'sat' || planningDay === 'sun')
+          ? mondayOf(new Date(planNow.getTime() + 2 * 86400000 + (planningDay === 'sat' ? 86400000 : 0)))
+          : mondayOf(planNow)
         const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', target).limit(1)
         if (!existing?.length) {
           const meals = await autoPlan(admin, p, settings, target)
@@ -110,6 +119,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
               await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned —\n${names.join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
             }
           }
+        }
         }
       }
 

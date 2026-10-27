@@ -90,7 +90,8 @@ export const DEFAULT_SETTINGS: Settings = {
     useSales: true,
   },
   schedule: {
-    autoPlan: false,
+    // On by default (2026-10-26): active families get next week planned and emailed on Sunday.
+    autoPlan: true,
     planDay: 'sun',
     planTime: '08:00',
     reminders: {

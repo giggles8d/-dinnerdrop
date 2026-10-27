@@ -4,6 +4,7 @@ import { runDailyReminders } from '@/lib/reminders'
 import { runTextingDay } from '@/lib/texting'
 import { creditReferrals } from '@/lib/referrals'
 import { backfillImages } from '@/lib/recipe-library'
+import { runOrderFollowups } from '@/lib/order-followup'
 
 export const maxDuration = 300
 
@@ -25,6 +26,7 @@ export async function GET(request: NextRequest) {
   const out: Record<string, unknown> = {}
 
   try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
+  try { out.orderFollowups = await runOrderFollowups(admin, now) } catch (e) { out.orderFollowups = { error: String(e) } }
   try { out.texting = await runTextingDay(admin, now) } catch (e) { out.texting = { error: String(e) } }
   try { out.referrals = await creditReferrals(admin) } catch (e) { out.referrals = { error: String(e) } }
   try { out.recipeImages = await backfillImages(admin) } catch (e) { out.recipeImages = { error: String(e) } }
