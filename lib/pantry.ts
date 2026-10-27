@@ -38,6 +38,9 @@ export function pantryPromptBlock(rows: PantryRow[], dinners: number): string {
 
 // Long-life staples: bought once, used for weeks. Matched against list item names.
 const STAPLE = /\b(olive oil|vegetable oil|canola oil|sesame oil|coconut oil|cooking spray|vinegar|soy sauce|fish sauce|worcestershire|hot sauce|sriracha|ketchup|mustard|mayo|mayonnaise|bbq sauce|barbecue sauce|honey|maple syrup|peanut butter|jam|jelly|flour|sugar|brown sugar|cornstarch|baking powder|baking soda|vanilla|bread ?crumbs|panko|oats|rice|quinoa|dried pasta|salt|pepper|black pepper|garlic powder|onion powder|chili powder|cumin|paprika|oregano|basil|thyme|rosemary|cinnamon|italian seasoning|taco seasoning|red pepper flakes|curry powder|bay leaves|bouillon|stock cubes|chicken broth|beef broth|vegetable broth|coconut milk|canned tomatoes|tomato paste|diced tomatoes|crushed tomatoes|tomato sauce|salsa|canned beans|black beans|kidney beans|chickpeas|lentils|tuna|parmesan)\b/i
+// Fresh produce that trips the staple words ("jalapeño pepper", "fresh basil", "bell pepper") is used up
+// in a week — never mark it as stocked, or next week's list silently drops it.
+const FRESH = /\b(fresh|bell|jalape\S*|serrano|poblano|habanero|chile|chili pepper|banana pepper|sweet pepper|green pepper|red pepper(?! flakes)|yellow pepper|orange pepper|leaves? of|sprigs?)\b/i
 const SHELF_DAYS: Array<[RegExp, number]> = [[/broth|coconut milk|salsa|mayo|mayonnaise|parmesan/i, 30], [/tomato|beans|chickpeas|tuna|lentils/i, 365], [/./, 180]]
 
 /**
@@ -56,7 +59,7 @@ export async function stockStaplesFromReceipt(db: SupabaseClient, userId: string
 }
 
 async function stockStaples(db: SupabaseClient, userId: string, rows: Array<{ name: string; quantity: string | null; unit: string | null }>): Promise<number> {
-  const staples = rows.filter((r) => STAPLE.test(r.name))
+  const staples = rows.filter((r) => STAPLE.test(r.name) && !FRESH.test(r.name))
   if (!staples.length) return 0
   const existing = await loadPantry(db, userId)
   const byName = new Map(existing.map((e) => [normalizeItemName(e.name), e]))

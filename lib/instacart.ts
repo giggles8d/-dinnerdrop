@@ -127,7 +127,10 @@ export async function createInstacartLink(
     }),
     landing_page_configuration: {
       partner_linkback_url: 'https://dinnerdrop.app/grocery-list',
-      enable_pantry_items: true,
+      // Off: DinnerDrop's own "have?" toggle already keeps owned items off the list. With this on,
+      // Instacart parks oils, sugar, cornstarch etc. under "pantry items" un-added, so families got
+      // carts missing ingredients they meant to buy (2026-10-27 "items were missing" report).
+      enable_pantry_items: false,
     },
   }
 
