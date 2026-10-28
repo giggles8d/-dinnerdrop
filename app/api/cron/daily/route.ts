@@ -5,6 +5,7 @@ import { runTextingDay } from '@/lib/texting'
 import { creditReferrals } from '@/lib/referrals'
 import { backfillImages } from '@/lib/recipe-library'
 import { runOrderFollowups } from '@/lib/order-followup'
+import { runWeeklyReport } from '@/lib/weekly-report'
 
 export const maxDuration = 300
 
@@ -14,6 +15,7 @@ export const maxDuration = 300
  *  - family texting day jobs: vote day, "bring it back?" day (lib/texting)
  *  - the activation email sequence (existing route)
  *  - the Sunday newsletter (existing route)
+ *  - Monday: Sarah's weekly checkout report (lib/weekly-report)
  * Consolidated so the project stays within the hosting plan's cron limits.
  */
 export async function GET(request: NextRequest) {
@@ -30,6 +32,7 @@ export async function GET(request: NextRequest) {
   try { out.texting = await runTextingDay(admin, now) } catch (e) { out.texting = { error: String(e) } }
   try { out.referrals = await creditReferrals(admin) } catch (e) { out.referrals = { error: String(e) } }
   try { out.recipeImages = await backfillImages(admin) } catch (e) { out.recipeImages = { error: String(e) } }
+  try { out.weeklyReport = await runWeeklyReport(admin, now) } catch (e) { out.weeklyReport = { error: String(e) } }
 
   const base = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
   const headers = { authorization: `Bearer ${process.env.CRON_SECRET}` }
