@@ -146,7 +146,8 @@ export function check(m: Meal & { dietary?: string[] }, maxMinutes: number): str
   const ingText = ings.map((i) => `${i.name} ${i.searchTerm}`).join(' | ')
   const stepText = steps.join(' ')
   // Food safety: meat and poultry need a target temperature, not "cooked through".
-  if (NEEDS_TEMP.test(ings.map((i) => i.name).join(' ')) && !TEMP.test(stepText)) return 'meat with no target temperature'
+  const meatNames = ings.map((i) => i.name).join(' ').replace(/\b(chicken|beef|pork|turkey)\s+(broth|stock|bouillon|base|gravy)\b/gi, ' ')
+  if (NEEDS_TEMP.test(meatNames) && !TEMP.test(stepText)) return 'meat with no target temperature'
   if (/swordfish|king mackerel|shark|tilefish/i.test(ingText)) return 'high-mercury fish (FDA advice for kids)'
   // The grocery list has to cover everything the steps use, unless the step calls it optional.
   const required = steps.filter((s) => !/optional|if you have|if you like/i.test(s)).join(' ')
