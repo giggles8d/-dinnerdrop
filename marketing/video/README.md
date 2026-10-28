@@ -18,6 +18,12 @@ Sarah's standing instruction (2026-10-28): post **3 videos a day** on DinnerDrop
 
 Trend rotation by weekday: Mon "$X grocery haul" · Tue "Girl dinner vs real dinner" · Wed viral-ingredient remix · Thu "POV: it's 5 PM" · Fri fridge clean-out (pantry feature) · Sat ASMR ingredient→plate (no talking) · Sun "Sunday reset: plan the week in 60 s".
 
+## Links in captions (so signups show their source in the Monday report)
+- YouTube description: `https://dinnerdrop.app/?utm_source=youtube&utm_medium=shorts&utm_campaign=<slot>` (slot = fruit / recipe / trend)
+- Facebook: `dinnerdrop.app/?utm_source=facebook&utm_medium=reels&utm_campaign=<slot>`
+- TikTok captions can't hold clickable links — keep the bio link `dinnerdrop.app/go/fruit` (records as source "code · fruit").
+- Fruit episodes can keep `dinnerdrop.app/go/fruit` on screen.
+
 ## Posting
 Publer workspace "SkillPulses Media" (Business plan, 13 account slots). DinnerDrop account ids:
 - TikTok `6a0cfcd01ce4f41e25dffbd4` (post_type `video`)
