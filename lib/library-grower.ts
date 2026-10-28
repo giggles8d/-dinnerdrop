@@ -16,8 +16,11 @@ import type { Meal } from '@/types'
 
 const DIETS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Keto', 'Halal'] as const
 const CATEGORIES = new Set(['Produce', 'Meat & Seafood', 'Dairy & Eggs', 'Pantry & Dry Goods', 'Frozen', 'Bakery', 'Beverages'])
-const MEAT = /\b(chicken|beef|pork|bacon|ham|sausage|turkey|lamb|steak|prosciutto|pepperoni|salami|chorizo|shrimp|salmon|tuna|cod|tilapia|fish|crab|scallop|anchov)/i
-const ANIMAL = /\b(egg|milk|cheese|butter|cream|yogurt|honey|ghee|parmesan|mozzarella|cheddar|feta|ricotta|mayo)/i
+// Word-bounded so "hamburger buns", "eggplant" and "butter lettuce" don't read as ham, egg or butter.
+const MEAT = /\b(chicken|beef|pork|bacon|ham|sausages?|turkey|lamb|steaks?|prosciutto|pepperoni|salami|chorizo|shrimp|salmon|tuna|cod|tilapia|fish|crab|scallops?|anchovy|anchovies)\b/i
+const ANIMAL = /\b(eggs?|milk|cheeses?|butter|cream|yogurt|honey|ghee|parmesan|mozzarella|cheddar|feta|ricotta|mayo|mayonnaise)\b/i
+// Plant-based or unrelated items that contain a dairy/egg word; removed before the vegan and dairy-free checks.
+const PLANT_LOOKALIKES = /\b((coconut|oat|almond|soy|cashew|rice) (milk|cream|yogurt)|(peanut|almond|sunflower|cashew) butter|butter (lettuce|beans)|butternut|cream of tartar|(vegan|dairy-free|egg-free|plant-based) [a-z]+( [a-z]+)?)\b/gi
 const PORK = /\b(pork|bacon|ham|prosciutto|pepperoni|salami|chorizo|lard)\b/i
 const GLUTEN = /\b(flour|bread|pasta|spaghetti|penne|noodle|tortilla|couscous|barley|soy sauce|panko|breadcrumb|bun|pita|naan|orzo|ramen|udon)\b/i
 const DAIRY = /\b(milk|cheese|butter|cream|yogurt|parmesan|mozzarella|cheddar|feta|ricotta|ghee)\b/i
@@ -50,17 +53,75 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
 function dietViolation(diet: string, m: Meal): string | null {
   const hay = `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`
   if ((diet === 'Vegetarian' || diet === 'Vegan') && MEAT.test(hay)) return `${diet} but has meat/fish`
-  if (diet === 'Vegan' && ANIMAL.test(hay)) return 'Vegan but has animal products'
+  const plantHay = hay.replace(PLANT_LOOKALIKES, ' ')
+  if (diet === 'Vegan' && ANIMAL.test(plantHay)) return 'Vegan but has animal products'
   if (diet === 'Halal' && PORK.test(hay)) return 'Halal but has pork'
   if (diet === 'Halal' && /\b(chicken|beef|lamb|turkey|goat|veal)\b/i.test(hay) && !(m.ingredients ?? []).some((i) => /halal/i.test(`${i.name} ${i.searchTerm}`))) return 'Halal meat not specified as halal'
-  if (diet === 'Gluten-free' && GLUTEN.test(hay) && !/gluten-free/i.test(hay)) return 'Gluten-free but has gluten'
-  if (diet === 'Dairy-free' && DAIRY.test(hay) && !/dairy-free|vegan/i.test(hay)) return 'Dairy-free but has dairy'
-  if (diet === 'Keto' && /\b(rice|pasta|potato|bread|tortilla|noodle|sugar|beans|corn)\b/i.test(hay) && !/cauliflower rice|low-carb/i.test(hay)) return 'Keto but has starch'
+  if (diet === 'Gluten-free' && GLUTEN.test(hay.replace(/spaghetti squash|rice noodles?|rice vermicelli|rice paper|corn tortillas?|glass noodles|zucchini noodles|gluten-free [a-z]+( [a-z]+)?|tamari/gi, ' '))) return 'Gluten-free but has gluten'
+  if (diet === 'Dairy-free' && DAIRY.test(plantHay)) return 'Dairy-free but has dairy'
+  if (diet === 'Keto' && /\b(rice|pasta|potato|bread|tortilla|noodle|sugar|beans|corn)\b/i.test(hay.replace(/green beans|cauliflower rice|riced cauliflower|zucchini noodles|shirataki noodles|sugar-free|no-sugar-added|rice vinegar|rice wine vinegar|corn ?starch/gi, ' '))) return 'Keto but has starch'
   return null
 }
 
+const SEAFOOD = /\b(shrimp|salmon|tuna|cod|tilapia|fish|crab|scallops?|halibut|mahi|catfish|sea bass|swordfish|trout|clams?|mussels?)\b/i
+const NEEDS_TEMP = /\b(chicken|beef|pork|turkey|lamb|steak|sausage|meatballs?|chorizo|sirloin|chuck|brisket|tenderloin|short ribs?)\b/i
+const TEMP = /\b1[2-7]\d\s*°?\s*F\b/i
+// Things a step can call for that must then be on the grocery list (water, salt and pepper are exempt).
+const STEP_ITEMS: Array<[RegExp, RegExp]> = [
+  [/\brice\b(?! vinegar| paper| noodle)/i, /\brice\b|riced/i],
+  [/\btortillas?\b/i, /tortilla/i],
+  [/\b(bread|buns?)\b/i, /bread|bun|roll|baguette|loaf/i],
+  [/\b(pita|naan)\b/i, /pita|naan/i],
+  [/\bnoodles?\b/i, /noodle|pasta|spaghetti|linguine|fettuccine|udon|ramen|lo mein/i],
+  [/\bsalsa\b/i, /salsa/i],
+  [/\bsour cream\b/i, /sour cream/i],
+  [/\boil\b/i, /oil|spray/i],
+  [/\bbutter\b(?! lettuce)/i, /butter/i],
+  [/\blime\b/i, /lime/i],
+  [/\blemon\b/i, /lemon/i],
+  [/\bcilantro\b/i, /cilantro/i],
+  [/\bgarlic\b/i, /garlic/i],
+  [/\bginger\b/i, /ginger/i],
+  [/\bsoy sauce\b/i, /soy sauce|tamari|coconut aminos/i],
+  [/\b(honey|sugar|maple syrup)\b/i, /honey|sugar|syrup/i],
+  [/\bvinegar\b/i, /vinegar/i],
+  [/\b(broth|stock)\b/i, /broth|stock|bouillon/i],
+  [/\b(cumin|paprika|chili powder|oregano)\b/i, /cumin|paprika|chili powder|oregano|seasoning|spice/i],
+]
+// Products whose usual supermarket version breaks a diet label unless the recipe names a compliant one.
+const PRODUCT_RULES: Array<[string, RegExp, RegExp]> = [
+  ['Vegetarian', /worcestershire|fish sauce|oyster sauce|anchov/i, /vegetarian|vegan/i],
+  ['Vegan', /worcestershire|fish sauce|oyster sauce|curry paste|lo mein|egg noodle|brioche|mayo/i, /vegan|egg-free/i],
+  ['Dairy-free', /brioche|naan|pesto|ranch|caesar/i, /dairy-free|vegan/i],
+  ['Gluten-free', /enchilada sauce|taco seasoning|tortilla chips|soy sauce|hoisin|teriyaki|broth|sausage|bbq sauce|barbecue sauce|worcestershire/i, /gluten-free|tamari|coconut aminos/i],
+  ['Halal', /broth|stock|wine(?! vinegar)|gelatin|vanilla extract|marshmallow/i, /halal|vegetable|veggie|mushroom/i],
+]
+
+/** Repairs that never change what the dinner is: wording and tags the recipe's own numbers decide. */
+export function normalize(m: Meal & { dietary?: string[] }): Meal & { dietary?: string[] } {
+  const ingredients = (m.ingredients ?? []).map((i) =>
+    SEAFOOD.test(i.name) ? { ...i, name: i.name.replace(/\bhalal\s+/gi, ''), searchTerm: (i.searchTerm ?? '').replace(/\bhalal\s+/gi, '') } : i)
+  // "Halal Salmon" is meaningless (fish is halal by default) and breaks grocery matching.
+  const name = SEAFOOD.test(m.name ?? '') && !NEEDS_TEMP.test(m.name ?? '') ? (m.name ?? '').replace(/\bhalal\s+/gi, '') : m.name
+  const total = (Number(m.prepTime) || 0) + (Number(m.cookTime) || 0)
+  const per = (Number(m.estimatedCost) || 0) / (Number(m.servings) || 4)
+  const stepText = (m.steps ?? []).join(' ')
+  const vessels = new Set((stepText.toLowerCase().match(/sheet pan|baking sheet|baking dish|saucepan|skillet|wok|stockpot|large pot|\bpot\b|rice cooker|air fryer|slow cooker/g) ?? []).map((v) => (v === 'baking sheet' ? 'sheet pan' : v === 'large pot' || v === 'stockpot' ? 'pot' : v)))
+  const heat = (m.ingredients ?? []).some((i) => /red pepper flakes|gochujang|sriracha|jalape|cayenne|chipotle|harissa|chili paste|chili oil|hot sauce|curry paste|habanero|serrano/i.test(i.name))
+  let tags = honestTags(m.tags ?? [], total).filter((t) => {
+    if (t === 'vegetarian' || t === '15-min') return false
+    if (t === 'budget') return per > 0 && per <= 5
+    if (t === 'one-pot') return vessels.size <= 1
+    if (t === 'sheet-pan') return vessels.has('sheet pan')
+    if (t === 'kid-favorite') return !heat || /plain|kids'? portion|set aside|on the side/i.test(stepText)
+    return true
+  })
+  if ((m.dietary ?? []).some((d) => d === 'Vegetarian' || d === 'Vegan') && !tags.includes('meatless')) tags = [...tags, 'meatless']
+  return { ...m, name, ingredients, tags }
+}
+
 /** Every check a recipe must pass before it can be served to a family. */
-function check(m: Meal & { dietary?: string[] }, maxMinutes: number): string | null {
+export function check(m: Meal & { dietary?: string[] }, maxMinutes: number): string | null {
   if (!m.name || m.name.length < 4 || m.name.length > 80) return 'bad name'
   const ings = m.ingredients ?? []
   if (ings.length < 3 || ings.length > 10) return `${ings.length} ingredients`
@@ -72,12 +133,32 @@ function check(m: Meal & { dietary?: string[] }, maxMinutes: number): string | n
   }
   const steps = m.steps ?? []
   if (steps.length < 2 || steps.length > 6) return `${steps.length} steps`
-  const total = (Number(m.cookTime) || 0)
-  if (total < 5 || total > maxMinutes + 5) return `cook time ${total} min`
+  const prep = Number(m.prepTime) || 0
+  if (prep < 3) return `prep time ${prep} min`
+  const total = prep + (Number(m.cookTime) || 0)
+  if (total < 10 || total > maxMinutes + 5) return `total time ${total} min`
   const cost = Number(m.estimatedCost) || 0
   const per = cost / (Number(m.servings) || 4)
   if (per < 1.25 || per > 9) return `cost $${per.toFixed(2)}/serving`
   for (const d of m.dietary ?? []) { const v = dietViolation(d, m); if (v) return v }
+  const ingText = ings.map((i) => `${i.name} ${i.searchTerm}`).join(' | ')
+  const stepText = steps.join(' ')
+  // Food safety: meat and poultry need a target temperature, not "cooked through".
+  if (NEEDS_TEMP.test(ings.map((i) => i.name).join(' ')) && !TEMP.test(stepText)) return 'meat with no target temperature'
+  if (/swordfish|king mackerel|shark|tilefish/i.test(ingText)) return 'high-mercury fish (FDA advice for kids)'
+  // The grocery list has to cover everything the steps use, unless the step calls it optional.
+  const required = steps.filter((s) => !/optional|if you have|if you like/i.test(s)).join(' ')
+  for (const [inStep, inList] of STEP_ITEMS) {
+    // A component named in the title ("Mango Salsa") is made in the recipe, not bought.
+    if (inStep.test(m.name ?? '')) continue
+    if (inStep.test(required) && !inList.test(ingText)) return `step uses "${(required.match(inStep) ?? [''])[0]}" not on the grocery list`
+  }
+  for (const [diet, risky, ok] of PRODUCT_RULES) {
+    if (!(m.dietary ?? []).includes(diet)) continue
+    const bad = ings.find((i) => risky.test(i.name) && !ok.test(`${i.name} ${i.searchTerm}`))
+    if (bad) return `${diet} needs a compliant "${bad.name}" named in the ingredient`
+  }
+  if (/\b(divide|split)\b[^.]{0,40}\b(between|among) (two|2)\b/i.test(stepText)) return 'steps portion for 2, recipe serves 4'
   return null
 }
 
@@ -104,9 +185,13 @@ Base them on dishes American families actually cook and search for — classics 
 Rules:
 - Servings: exactly 4. Realistic US supermarket cost for the whole dinner (most run $10–$24 for 4); do not inflate.
 - 4–8 ingredients with shoppable quantities ("1" "lb", "1" "can", "1" "bunch"), each with a "searchTerm" that matches a grocery product. Per serving at least 6 oz raw boneless meat/fish (5.5 oz ground) when there is meat.
-- 3–5 short steps, one sentence each, for a tired parent.
-- "dietary": list EVERY one of these the recipe truly complies with: ${DIETS.join(', ')} (empty list if none). Halal dinners with meat must call for halal meat by name (e.g. "halal chicken thighs").
-- 1–3 tags from: quick, sheet-pan, one-pot, air-fryer, grill, kid-favorite, budget, high-protein, vegetarian, 15-min
+- 3–5 short steps, one sentence each, for a tired parent. prepTime + cookTime must cover every step, including rests and batches; prepTime is never 0.
+- Every item a step uses or serves (oil, butter, garlic, rice, tortillas, bread, salsa, sauces, spices, broth, lime/lemon) must be in the ingredients; only water, salt and pepper may be left out. A truly optional extra says "(optional)" in the step. If rice or pasta is served, include it and say how to cook it (or use microwave rice pouches when time is short).
+- Food safety: give a target temperature for meat and poultry — chicken/turkey 165°F, ground beef/pork/lamb and sausage 160°F, whole cuts of beef/pork/lamb 145°F then rest 3 minutes. Never use swordfish, king mackerel, shark or tilefish.
+- Portions and step wording must match 4 servings (four plates/bowls, enough buns/tortillas/fillets for 4).
+- If heat (chiles, red pepper flakes, sriracha, curry paste) is mixed in and you tag kid-favorite, include a step that sets aside a plain portion before the heat goes in.
+- "dietary": list EVERY one of these the recipe truly complies with: ${DIETS.join(', ')} (empty list if none). Halal dinners with meat must call for halal meat by name (e.g. "halal chicken thighs") and use halal or vegetable broth; never write "halal" on fish or shellfish. When a label depends on the product, name the compliant product in the ingredient and searchTerm (gluten-free soy sauce/tamari, gluten-free enchilada sauce, vegetarian Worcestershire, vegan curry paste, dairy-free buns).
+- 1–3 tags from: quick, sheet-pan, one-pot, air-fryer, grill, kid-favorite, budget, high-protein. Use "one-pot" only if the whole dinner uses one pot or pan, and "sheet-pan" only if it cooks on a sheet pan.
 - Different proteins and cuisines across the ${perBatch}; none may be a version of these existing dinners: ${avoid.join('; ')}
 
 Return ONLY valid JSON, no markdown:
@@ -121,17 +206,18 @@ Categories must be one of: ${Array.from(CATEGORIES).join(', ')}.`
     if (r.status !== 'fulfilled') { report.rejected.push({ name: '(batch)', why: String(r.reason).slice(0, 120) }); continue }
     const { f, meals } = r.value
     for (const raw of meals) {
-      const m = { ...raw, servings: 4, cookTime: Number(raw.cookTime) || 0, prepTime: Number(raw.prepTime) || 0, day: '1' }
+      let m = { ...raw, servings: 4, cookTime: Number(raw.cookTime) || 0, prepTime: Number(raw.prepTime) || 0, day: '1' }
       // Keep only diets we track; the batch's target diet must be among them.
       m.dietary = (raw.dietary ?? []).filter((d): d is (typeof DIETS)[number] => (DIETS as readonly string[]).includes(d))
       if (f.diet && !m.dietary.includes(f.diet)) { report.rejected.push({ name: m.name, why: `not tagged ${f.diet}` }); continue }
+      m = normalize(m)
       const norm = normalizeName(m.name ?? '')
       if (known.has(norm)) { report.rejected.push({ name: m.name, why: 'duplicate' }); continue }
       const why = check(m, f.maxMinutes)
       if (why) { report.rejected.push({ name: m.name, why }); continue }
       known.add(norm)
       try {
-        await upsertRecipes(admin, [{ ...m, tags: honestTags(m.tags ?? [], m.cookTime) }], { dietary: m.dietary, fetchImages: false })
+        await upsertRecipes(admin, [m], { dietary: m.dietary, fetchImages: false })
         report.saved.push(m.name)
       } catch (e) {
         report.rejected.push({ name: m.name, why: `save failed: ${String(e).slice(0, 80)}` })
