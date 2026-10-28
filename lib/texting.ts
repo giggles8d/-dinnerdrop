@@ -14,7 +14,7 @@ import { timeLabel, type PlanShape } from '@/lib/plan'
 import { guessCategory, normalizeItemName } from '@/lib/list'
 import { generateWithClaude, generateWithClaudeImage, parseClaudeJSON } from '@/lib/claude'
 import { looksLikeFlyer, salesFromImage, saveSales } from '@/lib/sales'
-import { blendFactor } from '@/lib/prices'
+import { blendFactor, factorAtSend } from '@/lib/prices'
 import type { Meal } from '@/types'
 
 export interface MemberRow {
@@ -261,12 +261,12 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       return { reply: `Welcome back, ${m.name}. Text MENU for this week's dinners or ADD + an item for the list.`, handled: true, member: m }
     case 'order_total': {
       if (!owner) return { reply: '', handled: false }
-      const { data: hs } = await admin.from('grocery_handoffs').select('id, est_total').eq('user_id', owner.id).order('created_at', { ascending: false }).limit(1)
+      const { data: hs } = await admin.from('grocery_handoffs').select('id, est_total, created_at').eq('user_id', owner.id).order('created_at', { ascending: false }).limit(1)
       const h = hs?.[0]
       if (!h) return { reply: `I don't see a recent order to attach $${parsed.total.toFixed(2)} to. Send the list to Instacart first, then text me the total after checkout.`, handled: true, member: m }
       await admin.from('grocery_handoffs').update({ actual_total: parsed.total, ...(parsed.store ? { store: `Instacart · ${parsed.store}` } : {}) }).eq('id', h.id)
       if (h.est_total && Number(h.est_total) > 0) {
-        const observed = parsed.total / Number(h.est_total)
+        const observed = parsed.total / (Number(h.est_total) / factorAtSend(h.created_at, settings.stores.priceFactor))
         const f = blendFactor(settings.stores.priceFactor, observed)
         const myStores = [...settings.stores.myStores]
         if (parsed.store) {

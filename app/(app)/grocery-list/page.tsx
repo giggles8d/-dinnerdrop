@@ -22,6 +22,7 @@ import {
   listToText, guessCategory, normalizeItemName, parseTypedItem,
 } from '@/lib/list'
 import type { GroceryCategory, GroceryItem, Meal } from '@/types'
+import { DEFAULT_FACTOR, effectiveFactor, fallbackPrice } from '@/lib/price-factor'
 
 type GroceryListData = Record<GroceryCategory, GroceryItem[]>
 
@@ -287,7 +288,7 @@ export default function GroceryListPage() {
   /* ---------- Kroger ---------- */
   const shoppable = useMemo(() => shoppableItems(items), [items])
   const planCount = items.filter((i) => i.source === 'plan' && !i.have).length || 1
-  const baseline = useCallback((i: ListItem): number => (Number(i.est_price) > 0 ? Number(i.est_price) : i.source === 'plan' ? totalCost / planCount : 0), [totalCost, planCount])
+  const baseline = useCallback((i: ListItem): number => (Number(i.est_price) > 0 ? Number(i.est_price) : i.source === 'plan' ? totalCost / planCount : fallbackPrice(i.name)), [totalCost, planCount])
   const splitLists = useMemo(() => {
     if (!split || !splitStores) return null
     const [a, b] = splitStores
@@ -362,9 +363,9 @@ export default function GroceryListPage() {
   const openRows = items.filter((i) => !i.have && !i.checked)
   const dinnersEst = openRows.filter((i) => i.source === 'plan').reduce((n, i) => n + baseline(i), 0)
   const extrasEst = openRows.filter((i) => i.source !== 'plan').reduce((n, i) => n + baseline(i), 0)
-  const unpricedExtras = openRows.filter((i) => i.source !== 'plan' && !(baseline(i) > 0)).length
   const listEst = dinnersEst + extrasEst
-  const storeEst = listEst * (priceFactor || 1)
+  const learned = priceFactor !== 1
+  const storeEst = listEst * effectiveFactor(priceFactor)
   const over = budget > 0 && storeEst > budget
 
   return (
@@ -392,7 +393,7 @@ export default function GroceryListPage() {
         {budget > 0 && (
           <div className="mb-6 rounded-xl border border-border p-4 print:hidden">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Everything on the list{priceFactor !== 1 ? ' (at your store)' : ' (estimate)'}</span>
+              <span className="text-muted-foreground">Everything on the list{learned ? ' (at your store)' : ' (estimate)'}</span>
               <span className={`font-semibold ${over ? 'text-destructive' : 'text-primary'}`}>${storeEst.toFixed(0)} of ${budget} budget</span>
             </div>
             <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
@@ -498,12 +499,12 @@ export default function GroceryListPage() {
 
         <div className="mt-8 p-5 rounded-xl bg-foreground print:hidden">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-primary-foreground/60">{priceFactor !== 1 ? 'Expected at your store' : 'Whole list, estimated'}</span>
+            <span className="text-sm font-medium text-primary-foreground/60">{learned ? 'Expected at your store' : 'Whole list, estimated'}</span>
             <span className="text-2xl font-heading font-bold text-primary-foreground">${storeEst.toFixed(2)}</span>
           </div>
           <p className="text-[11px] text-primary-foreground/50 mt-1">
-            Dinners ${dinnersEst.toFixed(0)}{extrasEst > 0 ? ` + other items $${extrasEst.toFixed(0)}` : ''}{unpricedExtras ? ` (+${unpricedExtras} unpriced)` : ''} at typical prices
-            {priceFactor !== 1 ? ` × ${priceFactor.toFixed(2)} for your store and fees, learned from your orders` : ' — Instacart prices and fees usually run 20–30% higher'}.
+            Dinners ${dinnersEst.toFixed(0)}{extrasEst > 0 ? ` + other items $${extrasEst.toFixed(0)}` : ''} at typical prices
+            {learned ? ` × ${priceFactor.toFixed(2)} for your store and fees, learned from your orders` : ` + about ${Math.round((DEFAULT_FACTOR - 1) * 100)}% for Instacart prices and fees (we'll learn your store's real number from your first order)`}. Tip not included.
             {' '}{shoppableCount} items go to the cart{haveCount ? ` · ${haveCount} you already have stay off it` : ''}.
           </p>
           {askActual && !actualSaved && (

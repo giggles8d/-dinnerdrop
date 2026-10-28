@@ -4,23 +4,34 @@
  * - estimatePrices(): typical-US-supermarket price for a purchase line ("1 gallon almond milk",
  *   "1 pack Freshpet dog food") — used for texted / added / basics lines, which have no recipe cost.
  * - priceFactor: learned from real orders (what the store + Instacart actually charged ÷ what we
- *   estimated at handoff). Stored in settings.stores.priceFactor; 1.0 until the first order.
+ *   estimated at typical prices). Stored in settings.stores.priceFactor; 1.0 = not learned yet,
+ *   in which case effectiveFactor() uses DEFAULT_FACTOR.
  */
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { fallbackPrice } from '@/lib/price-factor'
+export { DEFAULT_FACTOR, effectiveFactor, factorAtSend, fallbackPrice } from '@/lib/price-factor'
 
 export interface PriceLine { name: string; quantity?: string | null; unit?: string | null }
 
-export async function estimatePrices(lines: PriceLine[]): Promise<number[]> {
-  if (!lines.length) return []
+async function estimateChunk(lines: PriceLine[]): Promise<number[]> {
   try {
     const text = await generateWithClaude(
       `Estimate the typical US supermarket shelf price (USD, 2026) for each grocery purchase below — the whole package as a shopper would buy it (a bag of grapes, a 12-pack of soda, a 35 lb bag of dog food if that's what's named). Return ONLY a JSON array of numbers in the same order, one per line, no text.\n${JSON.stringify(lines.map((l) => `${l.quantity ?? '1'} ${l.unit ?? ''} ${l.name}`.replace(/\s+/g, ' ').trim()))}`,
       400,
     )
     const out = parseClaudeJSON<unknown[]>(text)
-    if (Array.isArray(out) && out.length === lines.length) return out.map((x) => Math.max(0, Math.round(Number(x) * 100) / 100 || 0))
+    if (Array.isArray(out)) return lines.map((l, i) => { const n = Math.round(Number(out[i]) * 100) / 100; return n > 0 ? n : fallbackPrice(l.name) })
   } catch { /* fall through */ }
-  return lines.map(() => 0)
+  return lines.map((l) => fallbackPrice(l.name))
+}
+
+/** Every line gets a price: model estimate in chunks of 20, per-line aisle fallback when it can't. */
+export async function estimatePrices(lines: PriceLine[]): Promise<number[]> {
+  if (!lines.length) return []
+  const chunks: PriceLine[][] = []
+  for (let i = 0; i < lines.length; i += 20) chunks.push(lines.slice(i, i + 20))
+  const parts = await Promise.all(chunks.map(estimateChunk))
+  return parts.flat()
 }
 
 export function clampFactor(f: number): number {

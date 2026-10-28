@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   if (!Array.isArray(ids) || !ids.length) return NextResponse.json({ prices: {} })
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const { ownerId } = await resolvePlanOwner(admin, user.id)
-  const { data: rows } = await admin.from('list_items').select('id, name, quantity, unit').eq('user_id', ownerId).in('id', ids.slice(0, 60)).is('est_price', null)
+  const { data: rows } = await admin.from('list_items').select('id, name, quantity, unit').eq('user_id', ownerId).in('id', ids.slice(0, 200)).is('est_price', null)
   if (!rows?.length) return NextResponse.json({ prices: {} })
   const prices = await estimatePrices(rows)
   const out: Record<string, number> = {}

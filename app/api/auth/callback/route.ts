@@ -58,7 +58,14 @@ export async function GET(request: Request) {
         }
       }
 
-      return NextResponse.redirect(`${origin}${next}`)
+      // Brand-new accounts (e.g. "Continue with Google" from /login) get new=1 so the ad platforms'
+      // signup conversion fires on landing, same as the /signup flow.
+      let dest = next.startsWith('/') ? next : '/dashboard'
+      const created = sessionData?.user?.created_at ? new Date(sessionData.user.created_at).getTime() : 0
+      if (created && Date.now() - created < 10 * 60 * 1000 && !/[?&]new=1(&|$)/.test(dest)) {
+        dest += (dest.includes('?') ? '&' : '?') + 'new=1'
+      }
+      return NextResponse.redirect(`${origin}${dest}`)
     }
   }
 

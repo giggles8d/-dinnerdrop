@@ -17,7 +17,7 @@ const STEPS = [
     ],
   },
   {
-    question: "What's your weekly grocery budget?",
+    question: 'What do you want to spend on dinners each week?',
     field: 'weeklyBudget' as const,
     options: [
       { label: '$75', value: '$75' },

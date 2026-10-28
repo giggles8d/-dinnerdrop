@@ -5,7 +5,7 @@
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings } from '@/lib/settings'
-import { blendFactor } from '@/lib/prices'
+import { blendFactor, factorAtSend } from '@/lib/prices'
 
 export async function recordActualTotal(
   admin: SupabaseClient,
@@ -26,7 +26,8 @@ export async function recordActualTotal(
   if (h.est_total && Number(h.est_total) > 0) {
     const { data: prof } = await admin.from('profiles').select('settings').eq('id', ownerId).single()
     const settings = mergeSettings(prof?.settings)
-    const observed = actual / Number(h.est_total)
+    // est_total was the list at typical prices × the factor in use when it was sent; learn against the typical-price base.
+    const observed = actual / (Number(h.est_total) / factorAtSend(h.created_at, settings.stores.priceFactor))
     factor = blendFactor(settings.stores.priceFactor, observed)
     const myStores = [...settings.stores.myStores]
     if (storeName) {
