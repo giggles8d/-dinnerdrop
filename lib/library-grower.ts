@@ -57,9 +57,11 @@ function dietViolation(diet: string, m: Meal): string | null {
   if (diet === 'Vegan' && ANIMAL.test(plantHay)) return 'Vegan but has animal products'
   if (diet === 'Halal' && PORK.test(hay)) return 'Halal but has pork'
   if (diet === 'Halal' && /\b(chicken|beef|lamb|turkey|goat|veal)\b/i.test(hay) && !(m.ingredients ?? []).some((i) => /halal/i.test(`${i.name} ${i.searchTerm}`))) return 'Halal meat not specified as halal'
-  if (diet === 'Gluten-free' && GLUTEN.test(hay.replace(/spaghetti squash|rice noodles?|rice vermicelli|rice paper|corn tortillas?|glass noodles|zucchini noodles|gluten-free [a-z]+( [a-z]+)?|tamari/gi, ' '))) return 'Gluten-free but has gluten'
+  // Gluten and starch are judged on what's bought, not the title ("Zucchini Noodle Bolognese").
+  const ingHay = (m.ingredients ?? []).map((i) => i.name).join(' ')
+  if (diet === 'Gluten-free' && GLUTEN.test(ingHay.replace(/spaghetti squash|rice noodles?|rice vermicelli|rice paper|corn tortillas?|glass noodles|zucchini noodles|gluten-free [a-z]+( [a-z]+)?|tamari/gi, ' '))) return 'Gluten-free but has gluten'
   if (diet === 'Dairy-free' && DAIRY.test(plantHay)) return 'Dairy-free but has dairy'
-  if (diet === 'Keto' && /\b(rice|pasta|potato|bread|tortilla|noodle|sugar|beans|corn)\b/i.test(hay.replace(/green beans|cauliflower rice|riced cauliflower|zucchini noodles|shirataki noodles|sugar-free|no-sugar-added|rice vinegar|rice wine vinegar|corn ?starch/gi, ' '))) return 'Keto but has starch'
+  if (diet === 'Keto' && /\b(rice|pasta|potato|bread|tortilla|noodle|sugar|beans|corn)\b/i.test(ingHay.replace(/green beans|cauliflower rice|riced cauliflower|zucchini noodles|shirataki noodles|sugar-free|no-sugar-added|rice vinegar|rice wine vinegar|corn ?starch/gi, ' '))) return 'Keto but has starch'
   return null
 }
 
