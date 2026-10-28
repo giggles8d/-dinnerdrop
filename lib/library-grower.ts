@@ -106,7 +106,9 @@ export function normalize(m: Meal & { dietary?: string[] }): Meal & { dietary?: 
   const total = (Number(m.prepTime) || 0) + (Number(m.cookTime) || 0)
   const per = (Number(m.estimatedCost) || 0) / (Number(m.servings) || 4)
   const stepText = (m.steps ?? []).join(' ')
-  const vessels = new Set((stepText.toLowerCase().match(/sheet pan|baking sheet|baking dish|saucepan|skillet|wok|stockpot|large pot|\bpot\b|rice cooker|air fryer|slow cooker/g) ?? []).map((v) => (v === 'baking sheet' ? 'sheet pan' : v === 'large pot' || v === 'stockpot' ? 'pot' : v)))
+  // "a skillet or wok" names one vessel, not two; a fallback in another step doesn't count either.
+  const vesselText = stepText.toLowerCase().replace(/\b(or|and\/or)\s+(a\s+|an\s+)?(large\s+|deep\s+|heavy\s+)?(skillet|wok|pot|saucepan|dutch oven|baking dish|sheet pan|grill pan)\b/g, ' ')
+  const vessels = new Set((vesselText.match(/sheet pan|baking sheet|baking dish|saucepan|skillet|wok|stockpot|large pot|\bpot\b|rice cooker|air fryer|slow cooker/g) ?? []).map((v) => (v === 'baking sheet' ? 'sheet pan' : v === 'large pot' || v === 'stockpot' ? 'pot' : v)))
   const heat = (m.ingredients ?? []).some((i) => /red pepper flakes|gochujang|sriracha|jalape|cayenne|chipotle|harissa|chili paste|chili oil|hot sauce|curry paste|habanero|serrano/i.test(i.name))
   let tags = honestTags(m.tags ?? [], total).filter((t) => {
     if (t === 'vegetarian' || t === '15-min') return false
