@@ -17,7 +17,7 @@ export async function weeklyCheckoutNumbers(db: SupabaseClient, now = new Date()
   const [{ data: hs }, { data: rc }, { data: profs }, { count: signups }] = await Promise.all([
     db.from('grocery_handoffs').select('id, user_id, store, est_total, actual_total, feedback, created_at').gte('created_at', since),
     db.from('receipts').select('user_id, handoff_id, total, created_at').gte('created_at', since),
-    db.from('profiles').select('id, email'),
+    db.from('profiles').select('id, email, created_at, signup_source'),
     db.from('profiles').select('id', { count: 'exact', head: true }).gte('created_at', since),
   ])
   const internal = new Set((profs ?? []).filter((p) => INTERNAL.test(p.email ?? '')).map((p) => p.id))
@@ -35,7 +35,19 @@ export async function weeklyCheckoutNumbers(db: SupabaseClient, now = new Date()
   confirmed.forEach((u) => noAnswer.delete(u))
   const est = handoffs.reduce((n, h) => n + (Number(h.est_total) || 0), 0)
   const actual = handoffs.reduce((n, h) => n + (Number(h.actual_total) || 0), 0)
+  // Signups and list-senders by where they came from (profiles.signup_source, recorded at signup).
+  const label = (p: { signup_source?: { s?: string; c?: string } | null }) => {
+    const ss = p.signup_source
+    if (!ss?.s) return 'unknown (before tracking / direct)'
+    return ss.c ? `${ss.s} · ${ss.c}` : ss.s
+  }
+  const recent = (profs ?? []).filter((p) => !internal.has(p.id) && p.created_at >= since)
+  const byId = new Map((profs ?? []).map((p) => [p.id, p]))
+  const sources: Record<string, { signups: number; sent: number }> = {}
+  for (const p of recent) { const k = label(p); sources[k] = sources[k] ?? { signups: 0, sent: 0 }; sources[k].signups++ }
+  families.forEach((u) => { const p = byId.get(u); if (!p) return; const k = label(p); sources[k] = sources[k] ?? { signups: 0, sent: 0 }; sources[k].sent++ })
   return {
+    sources,
     signups: signups ?? 0,
     sends: handoffs.length,
     families: families.size,
@@ -66,6 +78,7 @@ ${row('Receipts uploaded', n.receipts)}
 ${row('Estimated value of lists sent', `$${n.estTotal}`)}
 ${row('Real totals reported', n.actualReported ? `$${n.actualReported}` : '—')}
 </table>
+${Object.keys(n.sources).length ? `<h3 style="font-size:15px;margin:18px 0 6px">Where families came from</h3><table style="border-collapse:collapse;font-size:14px"><tr><td style="padding:2px 12px 2px 0;color:#5b6660">Source</td><td style="padding:2px 12px 2px 0;color:#5b6660">Signups</td><td style="color:#5b6660">Sent a list</td></tr>${Object.entries(n.sources).sort((a, b) => b[1].signups - a[1].signups).map(([k, v]) => `<tr><td style="padding:2px 12px 2px 0">${k}</td><td style="padding:2px 12px 2px 0;font-weight:600">${v.signups}</td><td style="font-weight:600">${v.sent}</td></tr>`).join('')}</table>` : ''}
 <p style="margin-top:14px">"Confirmed" means the family answered the follow-up email (anything but "not yet"), uploaded a receipt, or told us their total. Paid Instacart orders show up in Impact 1–2 days after delivery — compare its action count with the ${n.families} families above.</p>
 <p style="font-size:12px;color:#8a8577">Your own test accounts are left out. Last 7 days.</p>`
   const html = emailShell(`Checkout report: ${n.confirmed} of ${n.families} families confirmed`, body, { label: 'Open Impact', href: 'https://app.impact.com/' })

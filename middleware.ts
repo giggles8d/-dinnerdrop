@@ -41,9 +41,13 @@ export async function middleware(request: NextRequest) {
   const promo = request.nextUrl.searchParams.get('code') ?? request.nextUrl.searchParams.get('promo')
   const promoCookie = promo && /^[A-Z0-9]{3,20}$/i.test(promo) ? promo.toUpperCase() : null
 
+  // Signup source: where this visitor came from (utm_*, ad click ids, or the referring site).
+  const src = inApp ? null : visitSource(request)
+
   // Skip auth check for routes that don't need it
   if (!isProtectedRoute && !isAuthRoute) {
     const res = NextResponse.next()
+    if (src) res.cookies.set('dd_src', src, { maxAge: 60 * 86400, path: '/', sameSite: 'lax' })
     if (refCookie) res.cookies.set('dd_ref', refCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
     if (promoCookie) res.cookies.set('dd_promo', promoCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
     return res
@@ -92,7 +96,38 @@ export async function middleware(request: NextRequest) {
 
   if (refCookie) response.cookies.set('dd_ref', refCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
   if (promoCookie) response.cookies.set('dd_promo', promoCookie, { maxAge: 30 * 86400, path: '/', sameSite: 'lax' })
+  if (src) response.cookies.set('dd_src', src, { maxAge: 60 * 86400, path: '/', sameSite: 'lax' })
   return response
+}
+
+/**
+ * Where did this visit come from? Returns a compact JSON cookie value, or null when there's nothing new
+ * to record. Last non-direct touch wins: a later ad click replaces an earlier one, but a plain direct
+ * visit never overwrites a known source. Saved onto the profile at signup (/api/attribution/attach).
+ */
+function visitSource(request: NextRequest): string | null {
+  const q = request.nextUrl.searchParams
+  const ext = (() => {
+    const r = request.headers.get('referer')
+    if (!r) return ''
+    try { const h = new URL(r).hostname.replace(/^www\./, ''); return /dinnerdrop\.app$/.test(h) ? '' : h } catch { return '' }
+  })()
+  let source = q.get('utm_source') ?? ''
+  let medium = q.get('utm_medium') ?? ''
+  if (!source) {
+    if (q.get('gclid') || q.get('gbraid') || q.get('wbraid')) { source = 'google'; medium = 'cpc' }
+    else if (q.get('fbclid')) { source = /instagram/.test(ext) ? 'instagram' : 'facebook'; medium = q.get('utm_medium') ?? 'social' }
+    else if (q.get('ttclid')) { source = 'tiktok'; medium = 'cpc' }
+    else if (q.get('rdt_cid')) { source = 'reddit'; medium = 'cpc' }
+    else if (ext) { source = ext.replace(/^(m|l|lm)\./, ''); medium = 'referral' }
+  }
+  if (!source) return null
+  const v = {
+    s: source.slice(0, 40), m: medium.slice(0, 40),
+    c: (q.get('utm_campaign') ?? '').slice(0, 60), ct: (q.get('utm_content') ?? '').slice(0, 60),
+    r: ext.slice(0, 60), lp: request.nextUrl.pathname.slice(0, 60), t: new Date().toISOString().slice(0, 10),
+  }
+  return encodeURIComponent(JSON.stringify(v))
 }
 
 export const config = {

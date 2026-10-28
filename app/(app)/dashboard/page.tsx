@@ -97,6 +97,8 @@ function DashboardContent() {
 
       // Referral attribution (no-op without the dd_ref cookie).
       if (document.cookie.includes('dd_ref=')) fetch('/api/referrals/attach', { method: 'POST' }).catch(() => {})
+      // Signup source (utm / ad click / referring site) captured by middleware — saved once for new accounts.
+      if (document.cookie.includes('dd_src=')) fetch('/api/attribution/attach', { method: 'POST' }).catch(() => {})
       // Promo code picked up from ?code=XXX on the way in (no-op without the dd_promo cookie).
       if (document.cookie.includes('dd_promo=')) {
         fetch('/api/promo/redeem', { method: 'POST' }).then((r) => r.json()).then((j) => {
