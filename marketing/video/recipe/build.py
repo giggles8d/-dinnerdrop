@@ -2,7 +2,7 @@
 """Recipe Short: photo top, text below, app cutaway, end card. VO timings from silencedetect."""
 import subprocess, sys, os
 HERE = os.path.dirname(os.path.abspath(__file__))
-APP = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../apps/mobile/store/review/2026-10-21_DinnerDrop_AppReview.mp4'
+APP = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../apps/mobile/store/review/2026-10-21_DinnerDrop_AppReview.mp4')
 FONT = '/usr/share/fonts/truetype/google-fonts/Poppins-Bold.ttf'
 FONTM = '/usr/share/fonts/truetype/google-fonts/Poppins-Medium.ttf'
 CREAM, GREEN, GOLD = '0xfef9ee', '0x1a5c38', '0xe8a838'

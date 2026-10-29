@@ -2,7 +2,7 @@
 """POV trend short: stills with slow zoom + on-screen text, app footage, end card. Times are from the VO (sped up)."""
 import subprocess, sys, os
 H = os.path.dirname(os.path.abspath(__file__))
-APP = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../apps/mobile/store/review/2026-10-21_DinnerDrop_AppReview.mp4'
+APP = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../apps/mobile/store/review/2026-10-21_DinnerDrop_AppReview.mp4')
 FONT = '/usr/share/fonts/truetype/google-fonts/Poppins-Bold.ttf'
 CREAM, GREEN, GOLD = '0xfef9ee', '0x1a5c38', '0xe8a838'
 SP = 1.1
