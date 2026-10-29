@@ -3,3 +3,7 @@ fruit/out2/
 **/*.mp4
 **/*.wav
 **/*.png
+__pycache__/
+**/*.jpg
+**/*.webp
+**/*.txt
