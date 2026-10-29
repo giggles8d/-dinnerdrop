@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
 import { COOKWARE, cookwareUrl } from '@/lib/cookware'
 
 const count = COOKWARE.reduce((n, g) => n + g.items.length, 0)
@@ -19,11 +18,18 @@ export default function CookwarePage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 max-w-3xl flex items-center justify-between">
-          <Link href="/" className="font-heading text-xl font-bold text-foreground">DinnerDrop</Link>
-          <Link href="/recipes" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Recipes
+        <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-accent mt-0.5" />
+            <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
           </Link>
+          <nav className="flex items-center gap-2 sm:gap-4 text-sm">
+            <Link href="/recipes" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Recipes</Link>
+            <Link href="/cookware" className="hidden sm:block font-medium text-foreground">Cookware</Link>
+            <Link href="/blog" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Blog</Link>
+            <Link href="/start" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Pricing</Link>
+            <Link href="/dashboard" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors">My dinners</Link>
+          </nav>
         </div>
       </header>
 

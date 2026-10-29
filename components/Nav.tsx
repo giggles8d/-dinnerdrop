@@ -3,11 +3,12 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { createClient } from '@/lib/supabase'
-import { Heart, UtensilsCrossed, ShoppingCart, Package, Clock, User, Settings2, BookOpen } from 'lucide-react'
+import { Heart, UtensilsCrossed, ShoppingCart, Package, Clock, User, Settings2, BookOpen, ChefHat } from 'lucide-react'
 
 const links = [
   { href: '/dashboard', label: 'Meals', icon: UtensilsCrossed },
   { href: '/recipes', label: 'Recipes', icon: BookOpen },
+  { href: '/cookware', label: 'Cookware', icon: ChefHat },
   { href: '/favorites', label: 'Favorites', icon: Heart },
   { href: '/grocery-list', label: 'Grocery List', icon: ShoppingCart },
   { href: '/pantry', label: 'Pantry', icon: Package },
@@ -36,6 +37,7 @@ export default function Nav() {
           </Link>
           <div className="flex items-center gap-2 sm:gap-4 text-sm">
             <Link href="/recipes" className={`hidden sm:block font-medium ${pathname.startsWith('/recipes') ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`}>Recipes</Link>
+            <Link href="/cookware" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Cookware</Link>
             <Link href="/blog" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Blog</Link>
             <Link href="/start" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Pricing</Link>
             <Link href="/login" className="font-medium text-muted-foreground hover:text-foreground">Sign in</Link>
