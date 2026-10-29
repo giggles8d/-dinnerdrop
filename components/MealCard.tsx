@@ -65,7 +65,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
           {(meal.tags?.length || meal.fromLibrary) && (
             <div className="flex flex-wrap gap-1">
               {meal.fromLibrary && <span className="rounded-full bg-accent/15 text-accent-foreground px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Family favorite</span>}
-              {(meal.tags ?? []).slice(0, 3).map(t => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
+              {(meal.tags ?? []).slice(0, 3).map(t => t === 'family pick'
+                ? <span key={t} title="Your family texted to bring this one back" className="rounded-full bg-rose-100 text-rose-700 px-2 py-0.5 text-[10px] font-semibold">❤️ Family pick</span>
+                : <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
             </div>
           )}
           {(meal.saleItems?.length ?? 0) > 0 && (
@@ -141,7 +143,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
           {(meal.tags?.length || meal.fromLibrary) && (
             <div className="flex flex-wrap gap-1">
               {meal.fromLibrary && <span className="rounded-full bg-accent/15 text-accent-foreground px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Family favorite</span>}
-              {(meal.tags ?? []).slice(0, 3).map(t => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
+              {(meal.tags ?? []).slice(0, 3).map(t => t === 'family pick'
+                ? <span key={t} title="Your family texted to bring this one back" className="rounded-full bg-rose-100 text-rose-700 px-2 py-0.5 text-[10px] font-semibold">❤️ Family pick</span>
+                : <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
             </div>
           )}
           {(meal.saleItems?.length ?? 0) > 0 && (

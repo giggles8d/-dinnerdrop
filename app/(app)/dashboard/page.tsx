@@ -396,10 +396,12 @@ function DashboardContent() {
           // First plan ever: pre-select the week so one tap confirms — new users
           // should be one click from done, not facing unchecked boxes. Returning
           // users regenerating start empty and choose deliberately.
+          // Dinners the family texted "bring it back" for come pre-picked (tagged "family pick").
+          const familyPicks = data.meals.filter(m => (m.tags ?? []).includes('family pick')).slice(0, shape.dinnersPerWeek)
           setSelectedIds(
             planCount === 0 && !hasGenerated
               ? new Set(pickWithOverlap(data.meals, shape.dinnersPerWeek).map(m => m.day))
-              : new Set()
+              : new Set(familyPicks.map(m => m.day))
           )
         }
         setGenerateError('')
