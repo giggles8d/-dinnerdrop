@@ -38,6 +38,7 @@ export default function Nav() {
           <div className="flex items-center gap-2 sm:gap-4 text-sm">
             <Link href="/recipes" className={`hidden sm:block font-medium ${pathname.startsWith('/recipes') ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`}>Recipes</Link>
             <Link href="/cookware" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Cookware</Link>
+            <Link href="/gift" className="hidden md:block font-medium text-muted-foreground hover:text-foreground">Gift</Link>
             <Link href="/blog" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Blog</Link>
             <Link href="/start" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Pricing</Link>
             <Link href="/login" className="font-medium text-muted-foreground hover:text-foreground">Sign in</Link>

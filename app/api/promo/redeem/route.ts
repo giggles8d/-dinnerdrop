@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { redeemPromo, PROMO_COOKIE } from '@/lib/promo'
+import { isGiftCode, redeemGift } from '@/lib/gifts'
 
 /**
  * POST { code? } — redeem a promo code for the signed-in family. Falls back to the
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest) {
   if (!code) return NextResponse.json({ ok: false, reason: 'invalid' })
 
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-  const result = await redeemPromo(admin, user.id, code)
+  const result = isGiftCode(code) ? await redeemGift(admin, user.id, code) : await redeemPromo(admin, user.id, code)
   const res = NextResponse.json(result)
   res.cookies.delete(PROMO_COOKIE)   // whatever happened, don't retry on every load
   return res

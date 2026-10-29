@@ -7,6 +7,8 @@ import { backfillImages } from '@/lib/recipe-library'
 import { runOrderFollowups } from '@/lib/order-followup'
 import { runWeeklyReport } from '@/lib/weekly-report'
 import { shrinkRecipeImages } from '@/lib/shrink-images'
+import { reconcileGifts } from '@/lib/gifts'
+import Stripe from 'stripe'
 
 export const maxDuration = 300
 
@@ -48,6 +50,8 @@ export async function GET(request: NextRequest) {
     const r = await fetch(`${base}/api/cron/email-sequences`, { headers, cache: 'no-store' })
     out.emailSequences = await r.json().catch(() => ({ status: r.status }))
   } catch (e) { out.emailSequences = { error: String(e) } }
+  // Gift purchases that never reached the thank-you page (closed tab) still get their code + emails.
+  try { out.gifts = await reconcileGifts(admin, new Stripe(process.env.STRIPE_SECRET_KEY!)) } catch (e) { out.gifts = { error: String(e) } }
   // Recipe photo diet: ~1 MB JPEGs → 900px WebP, a time-boxed batch per day (new photos included).
   try { out.shrinkImages = await shrinkRecipeImages(admin, { limit: 400, budgetMs: 120000 }) } catch (e) { out.shrinkImages = { error: String(e) } }
   if (newsletter) {
