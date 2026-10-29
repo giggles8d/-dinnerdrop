@@ -11,6 +11,8 @@ import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
 import { recordMealSignal } from '@/lib/taste-profile'
 import { trackOnce } from '@/lib/activation'
 import CookMode from '@/components/CookMode'
+import CookwareList from '@/components/CookwareList'
+import RecipeNotes from '@/components/RecipeNotes'
 import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
@@ -342,6 +344,10 @@ function RecipeContent() {
             <ChefHat className="w-4 h-4" /> Cook mode
           </button>
         </div>
+
+        <RecipeNotes recipeName={meal.name} />
+
+        <CookwareList meal={meal} />
 
         {/* Ingredients */}
         <section className="mb-8">

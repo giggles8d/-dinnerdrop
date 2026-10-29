@@ -31,6 +31,7 @@ export interface Meal {
   saleItems?: string[]  // "chicken thighs $1.99/lb" — sale items this dinner was built around
   safeBite?: string     // the one plain component a picky eater can eat on its own ("plain rice")
   usesPantry?: string[] // pantry items this dinner was built to use up
+  cookedAt?: string     // ISO time the family marked it cooked (fades it on the plan)
 }
 
 export interface Ingredient {

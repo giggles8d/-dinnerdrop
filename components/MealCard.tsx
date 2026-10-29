@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { Heart, RefreshCw, Check } from 'lucide-react'
+import { Heart, RefreshCw, Check, CheckCircle2 } from 'lucide-react'
 import MealCardImage from './MealCardImage'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
@@ -14,13 +14,18 @@ interface MealCardProps {
   selected?: boolean
   onSelect?: (meal: Meal) => void
   votes?: { keep: number; skip: number; again: number; voters: string[] }
+  /** Picking screen: fresh ingredients this dinner shares with the current picks ("cilantro, limes"). */
+  sharesWith?: string[]
+  /** This week's plan: tap to mark the dinner cooked (it fades, like crossing it off). */
+  onToggleCooked?: (meal: Meal) => void
 }
 
 function getMealId(meal: Meal) {
   return meal.day.toLowerCase()
 }
 
-export default function MealCard({ meal, isFavorite, onToggleFavorite, selectable, selected, onSelect, votes }: MealCardProps) {
+export default function MealCard({ meal, isFavorite, onToggleFavorite, selectable, selected, onSelect, votes, sharesWith, onToggleCooked }: MealCardProps) {
+  const cooked = !!meal.cookedAt
   function handleClick() {
     localStorage.setItem(`meal-${getMealId(meal)}`, JSON.stringify(meal))
   }
@@ -69,6 +74,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
           {(meal.usesPantry?.length ?? 0) > 0 && (
             <div className="text-[11px] text-amber-700 font-medium" title={meal.usesPantry!.join(', ')}>🥫 Uses up: {meal.usesPantry!.slice(0, 2).join(' · ')}{meal.usesPantry!.length > 2 ? ` +${meal.usesPantry!.length - 2}` : ''}</div>
           )}
+          {(sharesWith?.length ?? 0) > 0 && (
+            <div className="text-[11px] text-emerald-700 font-medium" title="Fresh ingredients this dinner shares with your picks — whole packages get used">🌿 {selected ? 'Shares' : 'Uses the rest of'}: {sharesWith!.slice(0, 2).join(' · ')}{sharesWith!.length > 2 ? ` +${sharesWith!.length - 2}` : ''}</div>
+          )}
           <div className={`inline-block rounded-full px-3 py-1 text-xs font-semibold border
             ${selected ? 'bg-primary/10 text-primary border-primary/30' : 'bg-secondary text-primary border-primary/20'}`}>
             ${meal.estimatedCost.toFixed(2)}
@@ -79,7 +87,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
   }
 
   return (
-    <div className="rounded-xl border border-border bg-card hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden group">
+    <div className={`rounded-xl border border-border bg-card hover:shadow-lg hover:-translate-y-1 transition-all duration-200 overflow-hidden group ${cooked ? 'opacity-55' : ''}`}>
       <Link href={`/recipe/${getMealId(meal)}`} onClick={handleClick} className="block">
         <MealCardImage mealName={meal.name} dayLabel={meal.day} imageUrl={meal.imageUrl} />
       </Link>
@@ -151,6 +159,18 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             ${meal.estimatedCost.toFixed(2)}
           </div>
         </Link>
+        {onToggleCooked && (
+          <div className="px-4 pb-4 -mt-1">
+            <button
+              type="button"
+              onClick={() => onToggleCooked(meal)}
+              className={`inline-flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-1 border transition-colors ${cooked ? 'bg-primary text-primary-foreground border-primary' : 'text-muted-foreground border-border hover:border-primary/50 hover:text-primary'}`}
+              aria-pressed={cooked}
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" /> {cooked ? 'Cooked' : 'Mark cooked'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

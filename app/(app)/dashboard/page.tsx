@@ -17,6 +17,7 @@ import { resolvePlanOwner } from '@/lib/household'
 import { attachLibraryImages } from '@/lib/library-images'
 import { trackOnce } from '@/lib/activation'
 import WeekCheckCard from '@/components/WeekCheckCard'
+import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
 
 export default function DashboardPage() {
   return (
@@ -67,6 +68,13 @@ function DashboardContent() {
   const canGenerate = true
   const isPickingMeals = pendingMeals.length > 0
   const selectedMeals = pendingMeals.filter(m => selectedIds.has(m.day))
+  // Picking screen: which fresh ingredients each option shares with the current picks.
+  const sharesWith: Record<string, string[]> = {}
+  if (isPickingMeals && selectedMeals.length) {
+    for (const m of pendingMeals) sharesWith[m.day] = overlapWith(m, selectedMeals.filter((x) => x.day !== m.day))
+  }
+  const pickSummary = isPickingMeals ? sharedSummary(selectedMeals) : null
+  const planSummary = !isPickingMeals && meals.length ? sharedSummary(meals) : null
 
   const loadExistingPlan = useCallback(async () => {
     try {
@@ -287,7 +295,9 @@ function DashboardContent() {
     }
   }
 
-  async function generatePlan() {
+  /** `keep`: dinners already picked this week — they stay, and new options fill the rest. */
+  async function generatePlan(keep?: Meal[] | unknown) {
+    const keepMeals: Meal[] = Array.isArray(keep) ? keep : []
     if (subscriptionStatus === 'past_due') {
       await handleUpdatePayment()
       return
@@ -300,7 +310,7 @@ function DashboardContent() {
     setLoading(true)
     setGenerateError('')
 
-    if (hasGenerated) {
+    if (hasGenerated && !keepMeals.length) {
       await recordMealSignal({ event_type: 'regenerated_week' })
     }
 
@@ -344,6 +354,7 @@ function DashboardContent() {
               favoriteMeals,
               userId: user.id,
               mode: planMode,
+              keepMeals: keepMeals.map(({ name, protein, cuisine, ingredients }) => ({ name, protein, cuisine, ingredients })),
             }),
           })
           const json = await res.json()
@@ -365,15 +376,24 @@ function DashboardContent() {
       if (data.meals) {
         const shape = data.plan ?? DEFAULT_SHAPE
         setPlanShape(shape)
-        setPendingMeals(data.meals)
-        // First plan ever: pre-select the week so one tap confirms — new users
-        // should be one click from done, not facing unchecked boxes. Returning
-        // users regenerating start empty and choose deliberately.
-        setSelectedIds(
-          planCount === 0 && !hasGenerated
-            ? new Set(data.meals.slice(0, shape.dinnersPerWeek).map(m => m.day))
-            : new Set()
-        )
+        if (keepMeals.length) {
+          // Kept picks stay on top (re-keyed so their ids can't clash with the new options), and the
+          // rest of the week is pre-filled with the new options that share the most fresh ingredients.
+          const kept = keepMeals.map((m, i) => ({ ...m, day: `K${i + 1}` }))
+          const fill = pickWithOverlap(data.meals, Math.max(shape.dinnersPerWeek - kept.length, 0), kept)
+          setPendingMeals([...kept, ...data.meals])
+          setSelectedIds(new Set([...kept.map(m => m.day), ...fill.map(m => m.day)]))
+        } else {
+          setPendingMeals(data.meals)
+          // First plan ever: pre-select the week so one tap confirms — new users
+          // should be one click from done, not facing unchecked boxes. Returning
+          // users regenerating start empty and choose deliberately.
+          setSelectedIds(
+            planCount === 0 && !hasGenerated
+              ? new Set(pickWithOverlap(data.meals, shape.dinnersPerWeek).map(m => m.day))
+              : new Set()
+          )
+        }
         setGenerateError('')
       }
     } catch (error) {
@@ -386,6 +406,28 @@ function DashboardContent() {
       )
     } finally {
       setLoading(false)
+    }
+  }
+
+  /** Mealime-style auto-builder: keep whatever is picked and fill the week with the options that share the most fresh ingredients. */
+  function pickForMe() {
+    const fill = pickWithOverlap(pendingMeals, Math.max(planShape.dinnersPerWeek - selectedMeals.length, 0), selectedMeals)
+    setSelectedIds(new Set([...selectedMeals.map(m => m.day), ...fill.map(m => m.day)]))
+  }
+
+  /** Mark a dinner cooked (or not) on the saved plan; the card fades like a crossed-off item. */
+  async function toggleCooked(meal: Meal) {
+    const next = meals.map(m => (m.day === meal.day && m.name === meal.name ? { ...m, cookedAt: m.cookedAt ? undefined : new Date().toISOString() } : m))
+    setMeals(next)
+    localStorage.setItem('current-meals', JSON.stringify(next))
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.user) return
+      const { data: plan } = await supabase.from('meal_plans').select('id').eq('user_id', session.user.id)
+        .order('created_at', { ascending: false }).limit(1).single()
+      if (plan) await supabase.from('meal_plans').update({ meals: next }).eq('id', plan.id)
+    } catch (e) {
+      console.error('Could not save cooked state', e)
     }
   }
 
@@ -592,7 +634,27 @@ function DashboardContent() {
             </p>
           </div>
           {isPickingMeals ? (
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+              {selectedMeals.length < planShape.dinnersPerWeek && (
+                <button
+                  onClick={pickForMe}
+                  disabled={loading}
+                  title="Keeps your picks and fills the week with dinners that share fresh ingredients"
+                  className="px-4 py-3 rounded-xl border border-primary/40 text-primary font-semibold hover:bg-primary/5 transition-colors text-sm"
+                >
+                  {selectedMeals.length ? `Fill the rest for me` : 'Pick for me'}
+                </button>
+              )}
+              {selectedMeals.length > 0 && selectedMeals.length < pendingMeals.length && (
+                <button
+                  onClick={() => generatePlan(selectedMeals)}
+                  disabled={loading}
+                  title="Keeps the dinners you picked and brings new options for the rest of the week"
+                  className="px-4 py-3 rounded-xl border border-border text-foreground/80 font-semibold hover:bg-muted transition-colors text-sm"
+                >
+                  Keep {selectedMeals.length}, show new options
+                </button>
+              )}
               <button
                 onClick={() => { setPendingMeals([]); setSelectedIds(new Set()) }}
                 className="px-4 py-3 rounded-xl border border-border text-foreground/70 font-semibold hover:bg-muted transition-colors text-sm"
@@ -680,6 +742,11 @@ function DashboardContent() {
             </div>
           </div>
         )}
+        {(isPickingMeals ? pickSummary : planSummary) && !loading && (
+          <p className="mb-4 text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2.5">
+            🌿 {isPickingMeals ? pickSummary : planSummary}
+          </p>
+        )}
         {isPickingMeals ? (
           <MealGrid
             meals={pendingMeals}
@@ -687,6 +754,7 @@ function DashboardContent() {
             selectable
             selectedIds={selectedIds}
             onSelectMeal={toggleMealSelection}
+            sharesWith={sharesWith}
           />
         ) : (
           <MealGrid
@@ -695,6 +763,7 @@ function DashboardContent() {
             favoriteNames={favoriteNames}
             onToggleFavorite={toggleFavorite}
             votes={votes}
+            onToggleCooked={isPartner ? undefined : toggleCooked}
           />
         )}
 
