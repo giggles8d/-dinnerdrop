@@ -1,5 +1,6 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { cleanNutrition } from '@/lib/nutrition-shared'
+import { allergyConflicts } from '@/lib/allergens'
 import { createClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, type Settings, type Weekday } from '@/lib/settings'
 import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName, honestTags } from '@/lib/recipe-library'
@@ -85,6 +86,9 @@ export async function POST(request: Request) {
     const kidSafeFoods = members.filter((m) => m.role === 'kid').flatMap((m) => m.safe_foods ?? [])
     const hasKids = members.some((m) => m.role === 'kid') || settings.food.kidFriendly
     const hardExclusions = Array.from(new Set([...allAllergies, ...settings.food.neverIngredients, ...settings.food.avoidProteins]))
+    // Allergy safety net by allergen, not just the word: each person's allergies plus household "-free" diets (Dairy-free → dairy).
+    const freeDiets = profile.dietaryNeeds.filter((d: string) => /-free$/i.test(d.trim())).map((d: string) => d.replace(/-free$/i, '').trim())
+    const allergyPeople = [...members.filter((m) => m.allergies?.length).map((m) => ({ name: m.name, allergies: m.allergies })), ...(freeDiets.length ? [{ name: '', allergies: freeDiets }] : [])]
 
     // ---------- plan shape ----------
     const cookDays = settings.plan.cookDays.length ? settings.plan.cookDays : (['mon', 'tue', 'wed', 'thu', 'fri'] as Weekday[])
@@ -157,7 +161,8 @@ export async function POST(request: Request) {
           limit: optionsCount + 16,
           maxCookTime: slowestNight,
           dietary: profile.dietaryNeeds,
-          excludeWords: [...hardExclusions, ...allDislikes],
+          excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allDislikes],
+          allergies: allergyPeople.flatMap((p) => p.allergies),
           excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name), ...keepMeals.map((m) => m.name)],
           cuisines: settings.food.cuisines,
         })
@@ -302,10 +307,11 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
     }
 
     // Safety net on hard exclusions (allergies / never list): drop any option that slipped through.
-    const excl = hardExclusions.map((w) => w.toLowerCase())
+    const excl = [...settings.food.neverIngredients, ...settings.food.avoidProteins].map((w) => w.toLowerCase()) // allergies: checked by allergen below
     let generated = (planData.meals ?? []).filter((m) => {
       const hay = `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
-      return !excl.some((w) => w && hay.includes(w))
+      if (excl.some((w) => w && hay.includes(w))) return false
+      return !allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length
     })
     // Pin servings to the family (the model drifts); leftover-friendly dinners are sized for two nights.
     generated = generated.map((m) => ({

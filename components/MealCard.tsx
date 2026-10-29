@@ -5,6 +5,8 @@ import MealCardImage from './MealCardImage'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
 import { safeBite, cookware } from '@/lib/meal-insights'
+import { allergyConflicts } from '@/lib/allergens'
+import { useFamilyAllergies } from '@/lib/use-family-allergies'
 
 interface MealCardProps {
   meal: Meal
@@ -26,6 +28,13 @@ function getMealId(meal: Meal) {
 
 export default function MealCard({ meal, isFavorite, onToggleFavorite, selectable, selected, onSelect, votes, sharesWith, onToggleCooked }: MealCardProps) {
   const cooked = !!meal.cookedAt
+  const family = useFamilyAllergies()
+  const allergyHits = allergyConflicts(meal.ingredients ?? [], family, meal.name)
+  const allergyBadge = allergyHits.length ? (
+    <div role="alert" className="rounded-md bg-red-50 border border-red-200 px-2 py-1 text-[11px] font-semibold text-red-800">
+      ⚠️ {allergyHits.map((c) => `${c.allergy}${c.who.length ? ` (${c.who.join(', ')})` : ''}`).join(' · ')}
+    </div>
+  ) : null
   function handleClick() {
     localStorage.setItem(`meal-${getMealId(meal)}`, JSON.stringify(meal))
   }
@@ -61,6 +70,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             <span title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
             {meal.nutrition && <><span aria-hidden>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
           </div>
+          {allergyBadge}
           {safeBite(meal) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite(meal)}</div>}
           {(meal.tags?.length || meal.fromLibrary) && (
             <div className="flex flex-wrap gap-1">
@@ -139,6 +149,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             <span title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
             {meal.nutrition && <><span aria-hidden>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
           </div>
+          {allergyBadge}
           {safeBite(meal) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite(meal)}</div>}
           {(meal.tags?.length || meal.fromLibrary) && (
             <div className="flex flex-wrap gap-1">

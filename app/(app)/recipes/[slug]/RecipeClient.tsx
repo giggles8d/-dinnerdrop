@@ -3,6 +3,7 @@ import CookwareList from '@/components/CookwareList'
 import RecipeNotes from '@/components/RecipeNotes'
 import PrintButton from '@/components/PrintButton'
 import NutritionPanel from '@/components/NutritionPanel'
+import AllergenNotice from '@/components/AllergenNotice'
 import ServingsStepper from '@/components/ServingsStepper'
 import { withServings } from '@/lib/servings'
 
@@ -109,6 +110,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           </div>
         </div>
         {added && <p className="text-sm text-primary mb-4">{added}</p>}
+        <AllergenNotice ingredients={meal.ingredients} name={meal.name} />
         <div className="print:hidden">
           <RecipeNotes recipeName={meal.name} />
           <CookwareList meal={meal} />

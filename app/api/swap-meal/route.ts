@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { allergyConflicts } from '@/lib/allergens'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
 import { ensurePortions } from '@/lib/portions'
@@ -34,6 +35,9 @@ export async function POST(request: Request) {
     const settings = mergeSettings(profileRow.settings)
     let memberLines = ''
     const hardExclusions = [...settings.food.neverIngredients, ...settings.food.avoidProteins]
+    const allergyPeople: Array<{ name: string; allergies: string[] }> = []
+    const freeDiets = ((profileRow.dietary_needs ?? []) as string[]).filter((d) => /-free$/i.test(d.trim())).map((d) => d.replace(/-free$/i, '').trim())
+    if (freeDiets.length) allergyPeople.push({ name: '', allergies: freeDiets })
     if (profileRow.household_id) {
       const { data: members } = await supabase
         .from('household_members')
@@ -41,6 +45,7 @@ export async function POST(request: Request) {
         .eq('household_id', profileRow.household_id)
       for (const m of members ?? []) {
         hardExclusions.push(...(m.allergies ?? []))
+        if (m.allergies?.length) allergyPeople.push({ name: m.name, allergies: m.allergies })
         const bits: string[] = []
         if (m.likes?.length) bits.push(`loves ${m.likes.join(', ')}`)
         if (m.dislikes?.length) bits.push(`won't eat ${m.dislikes.join(', ')}`)
@@ -96,8 +101,15 @@ Return ONLY valid JSON with this exact structure, no markdown:
   }
 }`
 
-    const text = await generateWithClaude(prompt, 2000)
-    const data = parseClaudeJSON<SwapMealResponse>(text)
+    // Allergy safety net: never hand back a swap that hits someone's allergy (by allergen, so "dairy" also catches cheese).
+    const unsafe = (m: Meal | undefined) => !m || allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length > 0
+      || [...settings.food.neverIngredients, ...settings.food.avoidProteins].some((w) => w && `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase().includes(w.toLowerCase()))
+    let data = parseClaudeJSON<SwapMealResponse>(await generateWithClaude(prompt, 2000))
+    if (unsafe(data.meal)) {
+      const hit = allergyConflicts(data.meal?.ingredients ?? [], allergyPeople, data.meal?.name ?? '').map((c) => `${c.allergy} (${c.items.join(', ')})`).join('; ')
+      data = parseClaudeJSON<SwapMealResponse>(await generateWithClaude(`${prompt}\n\nIMPORTANT: your last answer broke the family's allergy rules${hit ? `: ${hit}` : ''}. Use none of those ingredients or anything containing them.`, 2000))
+      if (unsafe(data.meal)) return Response.json({ error: 'Couldn\u2019t find a swap that fits your family\u2019s allergies. Try again, or pick one from the recipe library.' }, { status: 422 })
+    }
     data.meal = ensurePortions({ ...data.meal, servings: Number(data.meal.servings) || profile.familySize })
     try {
       const [stored] = await upsertRecipes(supabase, [data.meal], { userId, dietary: profileRow.dietary_needs ?? [] })

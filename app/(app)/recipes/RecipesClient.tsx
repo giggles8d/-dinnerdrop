@@ -6,7 +6,7 @@ import { Heart, Link2, FileText, Camera, Search } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import type { Meal } from '@/types'
-import { FULL_COLUMNS, toLibRow, applyFilters, filtersFromQuery, filtersToQuery, activeCount, EMPTY, PROTEINS, CUISINES, STYLES, TIMES, SORTS, type LibRow, type Filters, type SortKey } from '@/lib/recipe-filters'
+import { FULL_COLUMNS, toLibRow, applyFilters, filtersFromQuery, filtersToQuery, activeCount, EMPTY, PROTEINS, CUISINES, STYLES, FREE_OF, TIMES, SORTS, type LibRow, type Filters, type SortKey } from '@/lib/recipe-filters'
 
 const PAGE = 48
 
@@ -68,7 +68,7 @@ export default function RecipesClient({ initialRows = [], total = 0 }: { initial
   const filtered = useMemo(() => applyFilters(rows, f, { userId, favNames }), [rows, f, userId, favNames])
   const n = activeCount(f)
   const set = (patch: Partial<Filters>) => setF((cur) => ({ ...cur, ...patch }))
-  const toggle = <K extends 'proteins' | 'cuisines' | 'styles'>(k: K, v: Filters[K][number]) =>
+  const toggle = <K extends 'proteins' | 'cuisines' | 'styles' | 'free'>(k: K, v: Filters[K][number]) =>
     setF((cur) => { const arr = cur[k] as string[]; return { ...cur, [k]: arr.includes(v as string) ? arr.filter((x) => x !== v) : [...arr, v] } })
 
   function toMeal(r: LibRow): Meal {
@@ -190,13 +190,19 @@ export default function RecipesClient({ initialRows = [], total = 0 }: { initial
             {CUISINES.map((c) => (
               <button key={c.v} onClick={() => toggle('cuisines', c.v)} aria-pressed={f.cuisines.includes(c.v)} className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${f.cuisines.includes(c.v) ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground hover:border-primary/40'}`}>{c.l}</button>
             ))}
-            <button onClick={() => setMoreOpen((o) => !o)} className="rounded-full border px-3 py-1.5 text-sm transition-colors border-dashed border-border text-muted-foreground hover:text-foreground">{moreOpen ? 'Fewer filters' : 'More filters'}{f.styles.length || f.without ? ` (${f.styles.length + (f.without ? 1 : 0)})` : ''}</button>
+            <button onClick={() => setMoreOpen((o) => !o)} className="rounded-full border px-3 py-1.5 text-sm transition-colors border-dashed border-border text-muted-foreground hover:text-foreground">{moreOpen ? 'Fewer filters' : 'More filters'}{f.styles.length || f.free.length || f.without ? ` (${f.styles.length + f.free.length + (f.without ? 1 : 0)})` : ''}</button>
           </div>
           {moreOpen && (
             <div className="rounded-xl border border-border p-3 space-y-3">
               <div className="flex flex-wrap gap-2" role="group" aria-label="Style">
                 {STYLES.map((t) => (
                   <button key={t.v} onClick={() => toggle('styles', t.v)} aria-pressed={f.styles.includes(t.v)} className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${f.styles.includes(t.v) ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground hover:border-primary/40'}`}>{t.l}</button>
+                ))}
+              </div>
+              <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Free of">
+                <span className="text-sm text-muted-foreground">Free of:</span>
+                {FREE_OF.map((t) => (
+                  <button key={t.v} onClick={() => toggle('free', t.v)} aria-pressed={f.free.includes(t.v)} className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${f.free.includes(t.v) ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground hover:border-primary/40'}`}>{f.free.includes(t.v) ? '✓ ' : ''}{t.l}</button>
                 ))}
               </div>
               <div className="flex flex-wrap items-center gap-2">
