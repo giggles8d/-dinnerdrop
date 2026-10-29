@@ -10,6 +10,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
+import { mergeDiets } from '@/lib/diets'
 import type { Meal } from '@/types'
 import { ensurePortions, scaleMeal } from '@/lib/portions'
 
@@ -145,7 +146,7 @@ export async function upsertRecipes(
         ingredients: meal.ingredients,
         steps: meal.steps,
         tags: honestTags(meal.tags ?? [], (meal.cookTime ?? 0) + (meal.prepTime ?? 0)),
-        dietary: opts.dietary ?? [],
+        dietary: mergeDiets(opts.dietary ?? [], { name: meal.name, ingredients: meal.ingredients, nutrition: meal.nutrition }),
         image_url: img?.url ?? null,
         image_credit: img?.credit ?? null,
         nutrition: cleanNutrition(meal.nutrition) ?? null,

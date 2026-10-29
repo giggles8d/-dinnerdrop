@@ -154,7 +154,7 @@ export function mergeSettings(stored: unknown): Settings {
 export const CUISINE_OPTIONS = ['American', 'Mexican', 'Italian', 'Asian', 'Mediterranean', 'Indian', 'Southern', 'Tex-Mex', 'Middle Eastern']
 export const PROTEIN_OPTIONS = ['chicken', 'beef', 'pork', 'turkey', 'shrimp', 'salmon', 'fish', 'tofu', 'beans', 'eggs']
 export const EQUIPMENT_OPTIONS = ['air fryer', 'instant pot', 'slow cooker', 'sheet pan', 'grill', 'wok']
-export const DIETARY_OPTIONS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Nut-free', 'Keto', 'Halal', 'Kosher', 'Pescatarian', 'Low-sodium']
+export const DIETARY_OPTIONS = ['Vegetarian', 'Vegan', 'Pescatarian', 'Gluten-free', 'Dairy-free', 'Nut-free', 'Low-carb', 'Keto', 'Paleo', 'Low-sodium', 'Halal', 'Kosher-style']
 export const AGE_BANDS = [
   { value: 'toddler', label: 'Toddler (1–3)' },
   { value: 'kid', label: 'Kid (4–8)' },

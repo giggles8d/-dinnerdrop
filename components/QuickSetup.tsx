@@ -15,7 +15,7 @@ const SIZES = [
   { label: '5+', value: 5 },
 ]
 const BUDGETS = ['$75', '$100', '$150', '$200', '$250+']
-const AVOID = ['Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Halal', 'Keto']
+const AVOID = ['Vegetarian', 'Vegan', 'Pescatarian', 'Gluten-free', 'Dairy-free', 'Nut-free', 'Low-carb', 'Keto', 'Paleo', 'Halal']
 export const DEFAULT_FAMILY_SIZE = 4
 export const DEFAULT_BUDGET = '$150'
 
