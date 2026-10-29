@@ -18,3 +18,6 @@ export function sizedImage(url: string, width: number): string {
 }
 
 export const isUnsplash = (url: string) => /^https:\/\/images\.unsplash\.com\//.test(url)
+
+/** Already small enough to serve as-is (Unsplash sized via params; our 900px WebP copies). */
+export const isDirect = (url: string) => isUnsplash(url) || /\.webp(\?|$)/.test(url)

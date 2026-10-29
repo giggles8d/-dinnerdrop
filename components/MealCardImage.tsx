@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
-import { sizedImage, isUnsplash } from '@/lib/image-src'
+import { sizedImage, isUnsplash, isDirect } from '@/lib/image-src'
 
 interface MealCardImageProps {
   mealName: string
@@ -13,8 +13,8 @@ interface MealCardImageProps {
 
 /**
  * Card photo that never shows broken alt text (Sarah, Oct 29 2026).
- * Unsplash photos come straight from Unsplash at card size. Our own stored photos (~1 MB each)
- * go through Vercel's resizer; if that fails (Hobby-plan quota), load the original instead,
+ * Unsplash photos come straight from Unsplash at card size, and our 900px WebP copies load as-is.
+ * Any older ~1 MB stored photo goes through Vercel's resizer; if that fails (Hobby-plan quota), load the original instead,
  * and if that fails too, show a soft placeholder.
  */
 export default function MealCardImage({ mealName, dayLabel, imageUrl }: MealCardImageProps) {
@@ -28,7 +28,7 @@ export default function MealCardImage({ mealName, dayLabel, imageUrl }: MealCard
 
   let img: React.ReactNode = <div className="absolute inset-0 flex items-center justify-center text-5xl" aria-hidden>🍽️</div>
   if (loading) img = <div className="absolute inset-0 bg-muted animate-pulse" />
-  else if (photo && n === 0 && !isUnsplash(photo.url)) {
+  else if (photo && n === 0 && !isDirect(photo.url)) {
     img = <Image src={photo.url} alt={photo.alt} fill sizes="(max-width: 640px) 100vw, 400px" quality={70} className="object-cover" onError={fail} />
   } else if (photo && n <= 1) {
     // eslint-disable-next-line @next/next/no-img-element
