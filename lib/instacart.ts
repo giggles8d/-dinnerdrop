@@ -86,6 +86,31 @@ export function singularSearchTerm(term: string): string {
   return t.slice(0, -1)
 }
 
+/**
+ * The line item Instacart will actually fill. Tested Oct 29 2026 at ALDI: Instacart ignores package counts
+ * ("2 package" or "2 each" of "large eggs 12 ct" → 1 carton) but computes the right number from a real amount
+ * (24 each eggs, 32 ounce bacon, 16 ounce parmesan → 2 of each). So packages are sent as count × package size,
+ * and a package with no known size falls back to the recipe amount.
+ */
+export function lineItemFor(item: { name: string; quantity?: string | number | null; unit?: string | null; searchTerm?: string | null }): { name: string; quantity: number; unit: string; label: string } {
+  const plan = toPackages({ name: item.name, quantity: item.quantity == null ? null : String(item.quantity), unit: item.unit, searchTerm: item.searchTerm })
+  if (plan.kind === 'lb') return { name: plan.search, quantity: plan.count, unit: 'lb', label: plan.label }
+  if (plan.kind === 'each') return { name: singularSearchTerm(plan.search), quantity: plan.count, unit: 'each', label: plan.label }
+  const sizeRe = /(\d+(?:\.\d+)?)\s*-?\s*(fl\.? ?oz|oz|ct|count|lbs?)\b\.?/i
+  const m = plan.search.match(sizeRe)
+  if (m) {
+    const size = Number(m[1])
+    const u = m[2].toLowerCase().replace(/\s|\./g, '')
+    const unit = u === 'floz' ? 'fl oz' : u === 'oz' ? 'ounce' : u === 'lb' || u === 'lbs' ? 'pound' : 'each'
+    const name = plan.search.replace(sizeRe, ' ').replace(/\s+/g, ' ').trim() || plan.search
+    return { name, quantity: Math.round(plan.count * size * 100) / 100, unit, label: plan.label }
+  }
+  if (plan.count <= 1) return { name: plan.search, quantity: 1, unit: 'package', label: plan.label }
+  // Several packages of unknown size: let Instacart size it from the recipe amount.
+  const n = Number(String(item.quantity ?? '').trim().split(/\s+/).reduce((t, part) => { const f = part.match(/^(\d+)\/(\d+)$/); return t + (f ? Number(f[1]) / Number(f[2]) : Number(part) || 0) }, 0)) || plan.count
+  return { name: plan.search, quantity: Math.round(n * 100) / 100, unit: instacartUnit(item.unit), label: plan.label }
+}
+
 export function instacartUnit(unit: string | null | undefined): string {
   const u = (unit ?? '').trim().toLowerCase()
   if (PACKAGE_UNITS.has(u)) return 'package'
@@ -115,14 +140,9 @@ export async function createInstacartLink(
     line_items: items.map((item) => {
       // Send what a shopper buys ("1 × 6 oz can"), not the recipe measure ("2 1/2 tbsp tomato paste"),
       // so Instacart doesn't have to guess the package (Sarah, Oct 29 2026). See lib/package-match.ts.
-      const plan = toPackages({ name: item.name, quantity: item.quantity, unit: item.unit, searchTerm: item.searchTerm })
+      const li = lineItemFor(item)
       const recipeAmount = `${item.quantity ?? ''} ${item.unit ?? ''} ${item.name}`.replace(/\s+/g, ' ').trim()
-      return {
-        name: plan.kind === 'each' ? singularSearchTerm(plan.search) : plan.search,
-        quantity: plan.count,
-        unit: plan.kind === 'lb' ? 'lb' : plan.kind === 'each' ? 'each' : 'package',
-        display_text: `${recipeAmount} (${plan.label})`,
-      }
+      return { name: li.name, quantity: li.quantity, unit: li.unit, display_text: `${recipeAmount} (${li.label})` }
     }),
     landing_page_configuration: {
       partner_linkback_url: 'https://dinnerdrop.app/grocery-list',
