@@ -91,7 +91,16 @@ function Chips({ options, value, onChange }: { options: string[]; value: string[
   )
 }
 
-function TagInput({ value, onChange, placeholder }: { value: string[]; onChange: (v: string[]) => void; placeholder?: string }) {
+// Common answers, one tap to add (typing still works for anything else).
+const PICKS = {
+  allergies: ['Peanuts', 'Tree nuts', 'Dairy', 'Eggs', 'Gluten', 'Soy', 'Shellfish', 'Fish', 'Sesame'],
+  dislikes: ['Mushrooms', 'Onions', 'Olives', 'Spicy food', 'Cilantro', 'Tomatoes', 'Bell peppers', 'Beans', 'Seafood', 'Avocado', 'Eggplant', 'Coconut', 'Anything mixed together'],
+  likes: ['Pasta', 'Tacos', 'Pizza', 'Chicken', 'Rice bowls', 'Burgers', 'Soup', 'Mac and cheese', 'Stir-fry', 'Quesadillas', 'Broccoli', 'Potatoes'],
+  safe: ['Plain rice', 'Plain pasta', 'Buttered noodles', 'Plain chicken', 'Cheese quesadilla', 'Bread or a roll', 'Corn', 'Fruit', 'Cucumber slices', 'Shredded cheese'],
+  never: ['Cilantro', 'Mushrooms', 'Olives', 'Blue cheese', 'Anchovies', 'Coconut', 'Capers', 'Goat cheese', 'Raisins', 'Eggplant', 'Spicy peppers'],
+}
+
+function TagInput({ value, onChange, placeholder, suggestions }: { value: string[]; onChange: (v: string[]) => void; placeholder?: string; suggestions?: string[] }) {
   const [draft, setDraft] = useState('')
   function commit() {
     const items = draft.split(/[,\n]/).map((s) => s.trim()).filter(Boolean)
@@ -116,6 +125,14 @@ function TagInput({ value, onChange, placeholder }: { value: string[]; onChange:
         placeholder={placeholder ?? 'Type and press Enter'}
         className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
       />
+      {suggestions && suggestions.some((o) => !value.some((v) => v.toLowerCase() === o.toLowerCase())) && (
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          <span className="text-[11px] text-muted-foreground mr-0.5">Tap to add:</span>
+          {suggestions.filter((o) => !value.some((v) => v.toLowerCase() === o.toLowerCase())).map((o) => (
+            <button key={o} type="button" onClick={() => onChange([...value, o])} className="px-2.5 py-1 rounded-full border border-dashed border-border text-xs text-foreground hover:border-primary/60 hover:bg-primary/5">+ {o}</button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -385,10 +402,10 @@ export default function SettingsPage() {
                           <button onClick={() => removeMember(m.id)} className="text-xs text-muted-foreground hover:text-destructive pb-2.5">Remove</button>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          <Field label="Loves"><TagInput value={m.likes} onChange={(v) => updateMember(m.id, { likes: v })} placeholder="pasta, tacos, broccoli" /></Field>
-                          <Field label="Won't eat"><TagInput value={m.dislikes} onChange={(v) => updateMember(m.id, { dislikes: v })} placeholder="mushrooms, anything mixed" /></Field>
-                          <Field label="Allergies" hint="Hard exclusions on every plan."><TagInput value={m.allergies} onChange={(v) => updateMember(m.id, { allergies: v })} placeholder="peanuts, shellfish" /></Field>
-                          <Field label="Safe foods" hint="One of these lands on their plate every night."><TagInput value={m.safe_foods} onChange={(v) => updateMember(m.id, { safe_foods: v })} placeholder="plain rice, cheese quesadilla" /></Field>
+                          <Field label="Loves"><TagInput value={m.likes} onChange={(v) => updateMember(m.id, { likes: v })} placeholder="pasta, tacos, broccoli" suggestions={PICKS.likes} /></Field>
+                          <Field label="Won't eat"><TagInput value={m.dislikes} onChange={(v) => updateMember(m.id, { dislikes: v })} placeholder="mushrooms, anything mixed" suggestions={PICKS.dislikes} /></Field>
+                          <Field label="Allergies" hint="Hard exclusions on every plan."><TagInput value={m.allergies} onChange={(v) => updateMember(m.id, { allergies: v })} placeholder="peanuts, shellfish" suggestions={PICKS.allergies} /></Field>
+                          <Field label="Safe foods" hint="One of these lands on their plate every night."><TagInput value={m.safe_foods} onChange={(v) => updateMember(m.id, { safe_foods: v })} placeholder="plain rice, cheese quesadilla" suggestions={PICKS.safe} /></Field>
                         </div>
                       </div>
                     ))}
@@ -420,7 +437,7 @@ export default function SettingsPage() {
                   <Chips options={PROTEIN_OPTIONS} value={settings.food.avoidProteins} onChange={(v) => patch((s) => { s.food.avoidProteins = v })} />
                 </Field>
                 <Field label="Never put these in a recipe" hint="Beyond dietary needs — the ingredients your house just won't do.">
-                  <TagInput value={settings.food.neverIngredients} onChange={(v) => patch((s) => { s.food.neverIngredients = v })} placeholder="cilantro, olives, blue cheese" />
+                  <TagInput value={settings.food.neverIngredients} onChange={(v) => patch((s) => { s.food.neverIngredients = v })} placeholder="cilantro, olives, blue cheese" suggestions={PICKS.never} />
                 </Field>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <Field label="Spice level">
