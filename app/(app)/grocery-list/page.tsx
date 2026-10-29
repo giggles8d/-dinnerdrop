@@ -148,6 +148,7 @@ export default function GroceryListPage() {
 
     // 1. Make sure the plan has a deduplicated list (generated once per plan).
     let planList: GroceryListData | null = plan.grocery_list && Object.keys(plan.grocery_list).length > 0 ? plan.grocery_list : null
+    const rebuilt = !planList // the plan changed (swap, added dinner, servings) and its list was just rebuilt
     if (!planList) {
       try {
         const res = await fetch('/api/generate-list', {
@@ -168,7 +169,7 @@ export default function GroceryListPage() {
 
     // 2. Materialize rows for this week if the plan is newer than the rows we have.
     const [{ data: existing }, { data: pantryItems }, { data: stapleRows }] = await Promise.all([
-      supabase.from('list_items').select('id, source, created_at, ordered_at').eq('user_id', uid).eq('week_start', ws),
+      supabase.from('list_items').select('id, source, created_at, ordered_at, name, have').eq('user_id', uid).eq('week_start', ws),
       supabase.from('pantry_items').select('name').eq('user_id', uid),
       supabase.from('staples').select('*').eq('user_id', uid).order('created_at'),
     ])
@@ -176,13 +177,18 @@ export default function GroceryListPage() {
     const planRows = (existing ?? []).filter((r) => r.source === 'plan')
     const newestPlanRow = planRows.reduce((m, r) => (r.created_at > m ? r.created_at : m), '')
     const planIsNewer = !planRows.length || plan.created_at > newestPlanRow
+    // A changed plan refreshes its lines too — unless this week's dinner list was already sent to a store.
+    const changedBeforeOrder = rebuilt && !planRows.some((r) => r.ordered_at)
 
-    if (planIsNewer && planList) {
+    if ((planIsNewer || changedBeforeOrder) && planList) {
       // Only replace plan lines that are still on the list — ordered ones are history.
       const openPlanRows = planRows.filter((r) => !r.ordered_at)
       if (openPlanRows.length) await supabase.from('list_items').delete().in('id', openPlanRows.map((r) => r.id))
       const pantryNames = new Set((pantryItems ?? []).map((p: { name: string }) => normalizeItemName(p.name)))
       const rows = rowsFromPlanList(planList, { userId: uid, householdId: profile?.household_id ?? null, weekStart: ws, pantryNames })
+      // Keep "have it" ticks the family already made on lines that are still needed.
+      const hadIt = new Set(openPlanRows.filter((r) => r.have).map((r) => normalizeItemName(r.name)))
+      for (const row of rows) if (hadIt.has(normalizeItemName(row.name))) row.have = true
 
       // Staples due this week + lunch/breakfast basics (only on first materialization for the week).
       const firstTime = !(existing ?? []).length
