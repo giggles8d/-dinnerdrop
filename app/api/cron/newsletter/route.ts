@@ -3,18 +3,16 @@ import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 import { render } from '@react-email/render'
 import { Resend } from 'resend'
-import Newsletter from '@/emails/Newsletter'
-import { getPublishedPosts } from '@/lib/published-posts'
-import { getIssueForDate, getFeatureForDate, isSendWeek, isoWeek } from '@/lib/newsletter-content'
+import WeeklyDinners from '@/emails/WeeklyDinners'
+import { buildWeeklyIssue, recordIssue } from '@/lib/weekly-newsletter'
 
-// "The Sunday Drop" — biweekly newsletter.
-// Vercel cron hits this every Sunday 13:00 UTC (vercel.json); the ISO-week
-// parity gate below makes it effectively biweekly (even weeks only).
+// "The Sunday Drop" — WEEKLY Allrecipes-style dinner email (Oct 28 2026; was a biweekly static calendar).
+// The daily cron calls this on Sundays (8 AM ET). Content comes from the real recipe library each week.
 //
 // KILL SWITCH: full sends only happen when NEWSLETTER_LIVE is true.
 // ?preview=1  → sends ONE email to PREVIEW_RECIPIENT only (works while not live)
 // ?dryRun=1   → returns assembled content + recipient counts, sends nothing
-// ?force=1    → bypasses the ISO-week parity gate (not the live gate)
+// ?html=1     → (admin) returns the rendered email HTML for review
 const NEWSLETTER_LIVE = false
 const PREVIEW_RECIPIENT = 'setzl1979@gmail.com'
 
@@ -50,7 +48,6 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url)
   const dryRun = url.searchParams.get('dryRun') === '1'
   const preview = url.searchParams.get('preview') === '1'
-  const force = url.searchParams.get('force') === '1'
 
   const authHeader = request.headers.get('authorization')
   const hasCronAuth = authHeader === `Bearer ${process.env.CRON_SECRET}`
@@ -60,20 +57,12 @@ export async function GET(request: NextRequest) {
   }
 
   const now = new Date()
-  // Preview/dry-run always work regardless of the biweekly parity gate
-  if (!force && !preview && !dryRun && !isSendWeek(now)) {
-    return NextResponse.json({ skipped: true, reason: `odd ISO week ${isoWeek(now)} — biweekly gate`, sent: 0 })
+  const issue = await buildWeeklyIssue(createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!), now)
+  const appStoreUrl = process.env.APP_STORE_URL || null
+  if (url.searchParams.get('html') === '1' && canUseSession) {
+    const html = await render(React.createElement(WeeklyDinners, { issue, firstName: 'Sarah', appStoreUrl }))
+    return new NextResponse(html, { headers: { 'content-type': 'text/html; charset=utf-8' } })
   }
-
-  // Assemble the issue
-  const issue = getIssueForDate(now)
-  const feature = getFeatureForDate(now)
-  const cutoff = new Date(now.getTime() - 14 * 86400000)
-  const blogPosts = getPublishedPosts()
-    .filter((p) => new Date(p.publishDate) > cutoff)
-    .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
-    .slice(0, 3)
-    .map((p) => ({ title: p.title, description: p.description, slug: p.slug }))
 
   // Gather recipients: all profiles (not unsubscribed) + waitlist, deduped
   const supabase = createClient(
@@ -114,11 +103,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       dryRun: true,
       live: NEWSLETTER_LIVE,
-      isoWeek: isoWeek(now),
       subject: issue.subject,
-      theme: issue.themeTitle,
-      feature: feature.title,
-      blogPosts: blogPosts.map((p) => p.slug),
+      featured: issue.featured.slug,
+      trending: issue.trending.map((t) => t.slug),
       recipientCount: recipients.size,
     })
   }
@@ -147,18 +134,17 @@ export async function GET(request: NextRequest) {
   for (const r of targets) {
     try {
       const html = await render(
-        React.createElement(Newsletter, {
-          firstName: r.firstName,
-          isBetaMember: r.isBetaMember,
+        React.createElement(WeeklyDinners, {
           issue,
-          feature,
-          blogPosts,
+          firstName: r.firstName,
           unsubscribeUrl: r.unsubscribeUrl,
+          appStoreUrl,
         })
       )
       const { error } = await resend.emails.send({
         from,
         to: r.email,
+        reply_to: process.env.NEWSLETTER_REPLY_TO ?? 'sarah@dinnerdrop.app',
         subject: preview ? `[PREVIEW] ${issue.subject}` : issue.subject,
         html,
       })
@@ -171,6 +157,7 @@ export async function GET(request: NextRequest) {
     await new Promise((res) => setTimeout(res, 250))
   }
 
-  console.log(`[cron/newsletter] week ${isoWeek(now)} "${issue.themeTitle}" sent=${sent} failed=${failures.length}${preview ? ' (preview)' : ''}`)
+  if (!preview && sent > 0) await recordIssue(supabase, issue)
+  console.log(`[cron/newsletter] ${issue.weekKey} "${issue.featured.name}" sent=${sent} failed=${failures.length}${preview ? ' (preview)' : ''}`)
   return NextResponse.json({ sent, failed: failures.length, failures, preview, subject: issue.subject })
 }
