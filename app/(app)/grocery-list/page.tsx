@@ -17,6 +17,7 @@ import LastCallCard from '@/components/LastCallCard'
 import type { StorePref } from '@/lib/compare'
 import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
+import InAppBrowserNotice from '@/components/InAppBrowserNotice'
 import { mergeSettings } from '@/lib/settings'
 import { resolvePlanOwner } from '@/lib/household'
 import {
@@ -405,6 +406,9 @@ export default function GroceryListPage() {
             <button onClick={() => window.print()} title="Print" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted"><Printer className="w-4 h-4" /></button>
           </div>
         </div>
+
+        {/* Inside Facebook/Instagram's browser, Instacart sign-in can fail: offer Safari/Chrome first. */}
+        <div className="print:hidden"><InAppBrowserNotice /></div>
 
         {/* Ask the family first — top of the page, no scrolling */}
         <LastCallCard onItems={load} />
