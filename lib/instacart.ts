@@ -1,5 +1,5 @@
 import type { GroceryItem } from '@/types'
-import { parseQuantity } from '@/lib/portions'
+import { toPackages } from '@/lib/package-match'
 
 /**
  * Instacart Developer Platform — Create Shopping List Page
@@ -113,16 +113,15 @@ export async function createInstacartLink(
     link_type: 'shopping_list',
     expires_in: 7,
     line_items: items.map((item) => {
-      // "3/4" and "1 1/2" must stay fractions (parseFloat("3/4") is 3, which tripled produce orders).
-      const qty = parseQuantity(item.quantity) || 1
-      const unit = instacartUnit(item.unit)
-      // Small ingredient counts ("3 cloves garlic", "2 slices") mean one package, not three.
-      const quantity = unit === 'package' && !PACKAGE_UNITS.has((item.unit ?? '').trim().toLowerCase()) ? 1 : qty
+      // Send what a shopper buys ("1 × 6 oz can"), not the recipe measure ("2 1/2 tbsp tomato paste"),
+      // so Instacart doesn't have to guess the package (Sarah, Oct 29 2026). See lib/package-match.ts.
+      const plan = toPackages({ name: item.name, quantity: item.quantity, unit: item.unit, searchTerm: item.searchTerm })
+      const recipeAmount = `${item.quantity ?? ''} ${item.unit ?? ''} ${item.name}`.replace(/\s+/g, ' ').trim()
       return {
-        name: unit === 'each' ? singularSearchTerm(item.searchTerm || item.name) : item.searchTerm || item.name,
-        quantity,
-        unit,
-        display_text: `${item.quantity} ${item.unit} ${item.name}`.replace(/\s+/g, ' ').trim(),
+        name: plan.kind === 'each' ? singularSearchTerm(plan.search) : plan.search,
+        quantity: plan.count,
+        unit: plan.kind === 'lb' ? 'lb' : plan.kind === 'each' ? 'each' : 'package',
+        display_text: `${recipeAmount} (${plan.label})`,
       }
     }),
     landing_page_configuration: {
