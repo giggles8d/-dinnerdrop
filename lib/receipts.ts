@@ -181,6 +181,11 @@ export async function parseReceiptImages(images: ClaudeImage[]): Promise<ParsedR
 export function receiptFeatureAllowed(email: string | null | undefined): boolean {
   if (!email) return false
   if ((process.env.RECEIPT_UPLOAD ?? '').trim().toLowerCase() !== 'off') return true
+  return receiptEmailAllowed(email)
+}
+
+/** Emailed receipts (Resend inbound): unchanged — allowlist only. */
+export function receiptEmailAllowed(email: string): boolean {
   const raw = (process.env.RECEIPT_INBOUND_ALLOWLIST ?? '').trim()
   if (!raw) return email.toLowerCase() === 'setzl1979@gmail.com'
   return receiptInboundAllowed(email)
