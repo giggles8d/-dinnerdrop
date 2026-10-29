@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { repeatPlan } from '@/lib/repeat-plan'
 import { createClient } from '@/lib/supabase'
 import { Clock, UtensilsCrossed, ChevronDown, ChevronUp, Receipt } from 'lucide-react'
 import type { Meal } from '@/types'
@@ -45,6 +46,7 @@ export default function HistoryPage() {
   const [openReceipt, setOpenReceipt] = useState<string | null>(null)
   const [showItems, setShowItems] = useState(false)
   const [itemQ, setItemQ] = useState('')
+  const [repeating, setRepeating] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
@@ -193,6 +195,20 @@ export default function HistoryPage() {
                 </button>
                 {isOpen && (
                   <div className="border-t border-border px-4 py-3 space-y-2 bg-muted/20">
+                    <div className="flex justify-end">
+                      <button
+                        onClick={async () => {
+                          setRepeating(plan.id)
+                          const { data: { user } } = await supabase.auth.getUser()
+                          if (user && (await repeatPlan(supabase, user.id, meals))) router.push('/dashboard')
+                          else setRepeating(null)
+                        }}
+                        disabled={repeating !== null || meals.length === 0}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary/40 text-primary text-xs font-semibold hover:bg-primary/5 disabled:opacity-50"
+                      >
+                        {repeating === plan.id ? 'Planning…' : 'Plan this week again'}
+                      </button>
+                    </div>
                     {meals.map((meal, idx) => (
                       <div key={idx} className="flex items-start justify-between gap-2">
                         <div>
