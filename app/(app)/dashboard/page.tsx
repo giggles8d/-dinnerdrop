@@ -18,6 +18,7 @@ import { attachLibraryImages } from '@/lib/library-images'
 import { trackOnce } from '@/lib/activation'
 import WeekCheckCard from '@/components/WeekCheckCard'
 import SavingsCard from '@/components/SavingsCard'
+import ShareWeekButton from '@/components/ShareWeekButton'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
 import { repeatPlan, lastWeekPlan, mondayISO } from '@/lib/repeat-plan'
 
@@ -841,12 +842,15 @@ function DashboardContent() {
             <SavingsCard />
 
             <div className="mt-6 text-center">
+<div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/grocery-list"
                 className="inline-block px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-sm"
               >
                 Build my grocery list &rarr;
               </Link>
+              <ShareWeekButton />
+              </div>
               <div className="mt-6 p-4 rounded-xl border border-accent/30 bg-accent/5 text-center">
                 <p className="text-sm font-semibold text-foreground mb-1">Know someone who dreads the dinner question?</p>
                 <p className="text-xs text-muted-foreground mb-3">Share your link — it&apos;s free for them, and when they start Family you both get a month of Family free.</p>
