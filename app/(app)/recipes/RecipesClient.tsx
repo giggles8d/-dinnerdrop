@@ -11,12 +11,13 @@ import { FULL_COLUMNS, toLibRow, applyFilters, filtersFromQuery, filtersToQuery,
 const PAGE = 48
 
 /** Client half of /recipes. The server sends a slim index of the whole library; filters and sorting run here instantly. */
-export default function RecipesClient({ initialRows = [] }: { initialRows?: LibRow[] }) {
+export default function RecipesClient({ initialRows = [], total = 0 }: { initialRows?: LibRow[]; total?: number }) {
   const supabase = useMemo(() => createClient(), [])
   const [userId, setUserId] = useState<string | null>(null)
   const [rows, setRows] = useState<LibRow[]>(initialRows)
   const [favNames, setFavNames] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(initialRows.length === 0)
+  const [indexReady, setIndexReady] = useState(false)
   const [f, setF] = useState<Filters>(EMPTY)
   const urlRead = useRef(false)
   const [shown, setShown] = useState(PAGE)
@@ -32,21 +33,22 @@ export default function RecipesClient({ initialRows = [] }: { initialRows?: LibR
     const { data: { user } } = await supabase.auth.getUser()
     setUserId(user?.id ?? null)
     const [pub, own, favs] = await Promise.all([
-      // Only when the server couldn't send the index.
-      initialRows.length ? Promise.resolve({ data: null }) : supabase.from('recipes').select(FULL_COLUMNS).eq('is_public', true).order('kept_count', { ascending: false }).limit(2000),
+      // The full slim index (the HTML only carries the first page of cards).
+      fetch('/api/recipes/library').then((r) => (r.ok ? r.json() : null)).then((j: { rows?: LibRow[] } | null) => ({ data: j?.rows ?? null })).catch(() => ({ data: null as LibRow[] | null })),
       // The family's own recipes (private ones aren't in the public index).
       user ? supabase.from('recipes').select(FULL_COLUMNS).eq('created_by', user.id).eq('source', 'user') : Promise.resolve({ data: null }),
       user ? supabase.from('favorites').select('meal_name').eq('user_id', user.id) : Promise.resolve({ data: [] as Array<{ meal_name: string }> }),
     ])
     setRows((cur) => {
-      const base = pub.data ? (pub.data as Parameters<typeof toLibRow>[0][]).map(toLibRow) : cur
+      const base = pub.data?.length ? pub.data : cur
       const mineRows = own.data ? (own.data as Parameters<typeof toLibRow>[0][]).map(toLibRow) : []
       const seen = new Set(mineRows.map((r) => r.id))
       return [...mineRows, ...base.filter((r) => !seen.has(r.id))]
     })
     setFavNames(new Set((favs.data ?? []).map((x: { meal_name: string }) => x.meal_name)))
+    setIndexReady(!!pub.data?.length)
     setLoading(false)
-  }, [supabase, initialRows.length])
+  }, [supabase])
 
   useEffect(() => { load() }, [load])
 
@@ -210,7 +212,7 @@ export default function RecipesClient({ initialRows = [] }: { initialRows?: LibR
             </div>
           )}
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <span>{loading ? 'Loading…' : `${filtered.length} dinner${filtered.length === 1 ? '' : 's'}`}</span>
+            <span>{loading ? 'Loading…' : !indexReady && n === 0 && total > rows.length ? `${total} dinners` : `${filtered.length} dinner${filtered.length === 1 ? '' : 's'}`}</span>
             {n > 0 && <button onClick={() => setF({ ...EMPTY, sort: f.sort })} className="text-primary hover:underline">Clear filters</button>}
           </div>
         </div>
