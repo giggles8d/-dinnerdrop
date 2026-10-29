@@ -304,6 +304,7 @@ export default async function LandingPage() {
             <Link href="/cookware" className="hover:text-foreground transition-colors">Kitchen essentials</Link>
             <Link href="/gift" className="hover:text-foreground transition-colors">Give DinnerDrop</Link>
             <Link href="/affiliates" className="hover:text-foreground transition-colors">Affiliates</Link>
+            <Link href="/help" className="hover:text-foreground transition-colors">Help</Link>
             <Link href="/disclosure" className="hover:text-foreground transition-colors">Disclosure</Link>
             <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
