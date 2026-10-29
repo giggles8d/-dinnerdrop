@@ -6,12 +6,13 @@
  * photos as they're added) and from the admin route. Safe to re-run.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import sharp from 'sharp'
 
 const PATTERN = '%/storage/v1/object/public/recipe-images/%'
 
 export async function shrinkRecipeImages(admin: SupabaseClient, opts: { limit: number; budgetMs: number }) {
   const started = Date.now()
+  // Loaded here, not at the top, so a native-module problem can never take down the daily job that imports this file.
+  const sharp = (await import('sharp')).default
   const { data: rows } = await admin.from('recipes').select('id, image_url')
     .like('image_url', PATTERN).not('image_url', 'like', '%.webp%').limit(opts.limit)
   let processed = 0, before = 0, after = 0
