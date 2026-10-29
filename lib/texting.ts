@@ -12,7 +12,7 @@ import { isFamilyProfile } from '@/lib/access'
 import { generateCandidates, savePlan } from '@/lib/autoplan'
 import { timeLabel, type PlanShape } from '@/lib/plan'
 import { guessCategory, normalizeItemName } from '@/lib/list'
-import { generateWithClaude, generateWithClaudeImage, parseClaudeJSON } from '@/lib/claude'
+import { generateWithClaude, generateWithClaudeImage, generateSmart, parseClaudeJSON } from '@/lib/claude'
 import { looksLikeFlyer, salesFromImage, saveSales } from '@/lib/sales'
 import { blendFactor, factorAtSend } from '@/lib/prices'
 import type { Meal } from '@/types'
@@ -150,8 +150,8 @@ export async function runTextingDay(admin: SupabaseClient, now: Date = new Date(
 export type Parsed =
   | { kind: 'optin' } | { kind: 'stop' } | { kind: 'start' } | { kind: 'help' }
   | { kind: 'list' } | { kind: 'menu' }
-  | { kind: 'allgood' } | { kind: 'none' }
-  | { kind: 'skip'; numbers: number[] } | { kind: 'again'; numbers: number[] }
+  | { kind: 'allgood' } | { kind: 'none' } | { kind: 'thanks' }
+  | { kind: 'skip'; numbers: number[]; explicit?: boolean } | { kind: 'again'; numbers: number[] }
   | { kind: 'add'; items: string[] }
   | { kind: 'order_total'; total: number; store?: string }
   | { kind: 'use_up'; items: string[] }
@@ -160,14 +160,17 @@ export type Parsed =
 export function parseInbound(raw: string): Parsed {
   const t = raw.trim()
   const u = t.toUpperCase()
-  if (/^(YES|Y|JOIN|YEP|YEAH|SURE|OK|OKAY)\b/.test(u)) return { kind: 'optin' }
+  // Whole-message commands only: "no i want that again" or "ok add milk" are sentences for the AI step, not NONE / YES.
+  const end = String.raw`[\s.!?]*$`
+  if (new RegExp(`^(YES|Y|JOIN|YEP|YEAH|SURE|OK|OKAY)(\\s+(PLEASE|THANKS|THANK YOU))?${end}`).test(u)) return { kind: 'optin' }
   if (/^(STOP|STOPALL|UNSUBSCRIBE|CANCEL|END|QUIT)\b/.test(u)) return { kind: 'stop' }
   if (/^(START|UNSTOP|RESUME)\b/.test(u)) return { kind: 'start' }
-  if (/^(HELP|INFO|\?)\b/.test(u)) return { kind: 'help' }
-  if (/^(LIST|GROCERY|GROCERIES)\b/.test(u)) return { kind: 'list' }
-  if (/^(MENU|DINNERS|PLAN|WHAT'?S FOR DINNER)\b/.test(u)) return { kind: 'menu' }
-  if (/^(ALL ?GOOD|ALL|GOOD|KEEP ?ALL|LOOKS GOOD|👍|LGTM|FINE)\b/.test(u)) return { kind: 'allgood' }
-  if (/^(NONE|NO|NOPE|NAH)\b/.test(u)) return { kind: 'none' }
+  if (new RegExp(`^(HELP|INFO|\\?)${end}`).test(u)) return { kind: 'help' }
+  if (new RegExp(`^(LIST|GROCERY|GROCERIES|GROCERY LIST|THE LIST)${end}`).test(u)) return { kind: 'list' }
+  if (new RegExp(`^(MENU|DINNERS|PLAN|WHAT'?S FOR DINNER( THIS WEEK| TONIGHT)?)${end}`).test(u)) return { kind: 'menu' }
+  if (new RegExp(`^(ALL ?GOOD|ALL|GOOD|KEEP ?ALL|LOOKS GOOD|👍|LGTM|FINE|ALL OF THEM)${end}`).test(u)) return { kind: 'allgood' }
+  if (new RegExp(`^(NONE|NO|NOPE|NAH|NONE OF THEM)${end}`).test(u)) return { kind: 'none' }
+  if (new RegExp(`^(THANKS|THANK YOU|THANKS!|THX|TY|COOL|GREAT|AWESOME|❤️|🙏)( SO MUCH| YOU)?${end}`).test(u)) return { kind: 'thanks' }
   // "ORDER 317.97", "total 317.97", "it came to $317.97", "order was $317" — the planner recording the real bill.
   const order = t.match(/^(?:order|total|order total|bill|it came to|came to|cost|spent|paid)\s*(?:was|is|came to|:)?\s*\$?\s*(\d{1,4}(?:[.,]\d{2})?)\s*(?:(?:at|@|from)\s+)?([A-Za-z'&. ]{2,30})?\s*$/i)
   if (order) return { kind: 'order_total', total: Number(order[1].replace(',', '.')), store: order[2]?.trim() || undefined }
@@ -177,8 +180,8 @@ export function parseInbound(raw: string): Parsed {
   if (useup) return { kind: 'use_up', items: splitItems(useup[1]) }
   const add = t.match(/^(?:add|\+|need|we need|we'?re out of|out of|get|buy|pick up|grab)\s*[:\-]?\s*(.+)$/i)
   if (add) return { kind: 'add', items: splitItems(add[1]) }
-  const skip = u.match(/^(?:SKIP|NOT|NO|DROP)?\s*[:\-]?\s*([\d\s,and&]+)$/)
-  if (skip && numbersIn(skip[1]).length) return { kind: 'skip', numbers: numbersIn(skip[1]) }
+  const skip = u.match(/^(SKIP|NOT|NO|DROP)?\s*[:\-]?\s*([\d\s,and&]+)$/)
+  if (skip && numbersIn(skip[2]).length) return { kind: 'skip', numbers: numbersIn(skip[2]), explicit: !!skip[1] }
   return { kind: 'unknown' }
 }
 
@@ -213,21 +216,6 @@ export async function cleanItems(raw: string[]): Promise<CleanItem[]> {
   return items.map((name) => ({ name, quantity: '1', unit: '' }))
 }
 
-interface Understood { wants: number[]; dislikes: number[]; add: string[]; allGood: boolean; none: boolean; question: boolean }
-
-/** Free-text reply → structured intent, judged against the numbered ideas. */
-async function understandReply(body: string, candidates: Meal[]): Promise<Understood | null> {
-  try {
-    const text = await generateWithClaude(
-      `A family member replied to this text about next week's dinners. The numbered ideas were:\n${candidates.map((c, i) => `${i + 1}. ${c.name}`).join('\n')}\n\nTheir reply: """${body.trim()}"""\n\nInterpret it. "wants" = idea numbers they want/like/pick. "dislikes" = numbers they don't want, don't like, want changed/swapped, or dishes they named negatively (match to a number). "add" = grocery items they want added (as written, including any amount). allGood = they're fine with everything. none = they don't want any / have no picks. question = they asked something or it's unrelated chatter.\nReturn ONLY JSON: {"wants":[],"dislikes":[],"add":[],"allGood":false,"none":false,"question":false}`,
-      200,
-    )
-    const u = parseClaudeJSON<Understood>(text)
-    const nums = (a: unknown) => (Array.isArray(a) ? a.map(Number).filter((n) => n >= 1 && n <= candidates.length) : [])
-    return { wants: nums(u.wants), dislikes: nums(u.dislikes), add: Array.isArray(u.add) ? u.add.filter((x) => typeof x === 'string' && x.trim()).map((x) => x.trim()) : [], allGood: !!u.allGood, none: !!u.none, question: !!u.question }
-  } catch { return null }
-}
-
 export interface InboundResult { reply: string; handled: boolean; member?: MemberRow }
 
 /** Handle a text from a known member. Returns the reply to send (via TwiML). */
@@ -237,8 +225,12 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const m = (mrows?.[0] as MemberRow | undefined)
   if (!m) return { reply: '', handled: false }
 
-  const parsed = parseInbound(body)
+  let parsed = parseInbound(body)
   const round = await openRound(admin, m.household_id)
+  // What did we last ask this person, and what was just said? (Read before this message is logged.)
+  const ctx = await smsContext(admin, m.id)
+  // Bare numbers answer the question we asked: after "which should come back?" they mean AGAIN, not skip.
+  if (parsed.kind === 'skip' && !parsed.explicit && !round && ctx.lastAsk === 'again') parsed = { kind: 'again', numbers: parsed.numbers }
   const intent = round && parsed.kind === 'skip' ? 'pick' : parsed.kind
   await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'in', from_number: phone, body, intent, twilio_sid: sid })
 
@@ -292,6 +284,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       }
       return { reply: `Got it — ${items.join(', ')} flagged to use up. The next plan builds dinners around ${items.length === 1 ? 'it' : 'them'} and keeps ${items.length === 1 ? 'it' : 'them'} off the shopping list.`, handled: true, member: m }
     }
+    case 'thanks':
+      return { reply: `Anytime, ${m.name} 🙂`, handled: true, member: m }
     case 'help':
       return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, AGAIN 1 3 to bring some back, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items to plan around what's in the fridge, MENU, LIST, STOP.`, handled: true, member: m }
     default:
@@ -370,56 +364,138 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     default:
       break
   }
-  // Open vote + free text ("i don't like 7", "change 4", "1 2 and the tacos"): let Claude read it.
-  if (round && m.can_vote) {
-    const u = await understandReply(body, round.candidates)
-    if (u && (u.wants.length || u.dislikes.length || u.allGood || u.none || u.add.length)) {
-      const cands = round.candidates
-      const rows: Array<{ household_id: string; member_id: string; week_start: string; meal_name: string; vote: string }> = []
-      const wantNames = (u.allGood ? cands.map((_, i) => i + 1) : u.wants).map((n) => cands[n - 1]?.name).filter((x): x is string => !!x)
-      const dislikeNames = u.dislikes.map((n) => cands[n - 1]?.name).filter((x): x is string => !!x)
-      wantNames.forEach((name) => rows.push({ household_id: m.household_id, member_id: m.id, week_start: round.week_start, meal_name: name, vote: 'keep' }))
-      dislikeNames.forEach((name) => rows.push({ household_id: m.household_id, member_id: m.id, week_start: round.week_start, meal_name: name, vote: 'skip' }))
-      if (wantNames.length || u.allGood || u.none) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', round.week_start).eq('vote', 'keep')
-      if (dislikeNames.length) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', round.week_start).eq('vote', 'skip').in('meal_name', dislikeNames)
-      if (rows.length) await admin.from('meal_votes').insert(rows)
-      await admin.from('sms_messages').update({ intent: u.dislikes.length && !u.wants.length && !u.allGood ? 'dislike' : 'pick' }).eq('twilio_sid', sid ?? '')
-      let addedNote = ''
-      if (u.add.length && m.can_add && owner) {
-        const weekStart = plan?.week_start ?? mondayOf(new Date())
-        for (const it of await cleanItems(u.add)) {
-          await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
-        }
-        addedNote = ` Added to the list: ${u.add.join(', ')}.`
-      }
-      const parts: string[] = []
-      if (u.allGood) parts.push("they all work for you")
-      else if (wantNames.length) parts.push(`your picks: ${wantNames.join(', ')}`)
-      if (dislikeNames.length) parts.push(`not ${dislikeNames.map((n) => `#${cands.findIndex((c) => c.name === n) + 1} ${n}`).join(' or ')}`)
-      if (u.none && !wantNames.length) parts.push('no picks from you this week')
-      const ask = !wantNames.length && !u.allGood && !u.none ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
-      return { reply: `Got it, ${m.name} — ${parts.join('; ')}.${addedNote}${ask}`, handled: true, member: m }
+  // Anything that isn't a plain command: read it in context — what we last asked, the last few texts,
+  // and the numbered dinners — instead of guessing (Sarah, Oct 29 2026: "2" after "which should come
+  // back?" was logged as a skip, and "oh no I want that again" landed on the grocery list).
+  const mode: 'round' | 'again' | 'week' = round ? 'round' : ctx.lastAsk === 'again' ? 'again' : 'week'
+  const list = round ? round.candidates : meals
+  const weekStart = round ? round.week_start : plan?.week_start ?? mondayOf(new Date())
+  const u = await understandInContext(body, ctx, list, mode)
+  if (!u) return { reply: helpFor(mode, family), handled: true, member: m }
+
+  const voteChange = m.can_vote && (u.picks.length || u.skips.length || u.again.length || u.allGood || u.none || u.correction)
+  if (voteChange && list.length) {
+    const name = (n: number) => list[n - 1]?.name
+    // A correction replaces what we recorded from this person in the last hour.
+    if (u.correction) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', weekStart).gte('created_at', new Date(Date.now() - 3600000).toISOString())
+    const rows: Array<{ household_id: string; member_id: string; week_start: string; meal_name: string; vote: string }> = []
+    const push = (n: number, vote: string) => { const nm = name(n); if (nm) rows.push({ household_id: m.household_id, member_id: m.id, week_start: weekStart, meal_name: nm, vote }) }
+    if (mode === 'round') {
+      const picks = u.allGood ? list.map((_, i) => i + 1) : u.picks
+      if (picks.length || u.none) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', weekStart).eq('vote', 'keep')
+      picks.forEach((n) => push(n, 'keep'))
+      u.skips.forEach((n) => push(n, 'skip'))
+    } else {
+      const touched = [...u.again, ...u.skips, ...u.picks].map(name).filter((x): x is string => !!x)
+      if (touched.length) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', weekStart).in('meal_name', touched)
+      u.again.forEach((n) => push(n, 'again'))
+      u.skips.forEach((n) => push(n, 'skip'))
+      u.picks.forEach((n) => push(n, 'keep'))
     }
-    if (u?.question) return { reply: `I'm just the dinner bot 🙂 Reply numbers for the dinners you want (e.g. "1 3 5"), or text ${family} directly.`, handled: true, member: m }
+    if (rows.length) await admin.from('meal_votes').insert(rows)
+    await admin.from('sms_messages').update({ intent: u.again.length ? 'again' : u.skips.length && !u.picks.length ? 'dislike' : 'pick' }).eq('twilio_sid', sid ?? '')
   }
 
-  // Unknown but short and food-ish? Treat as add when the member can add and said something list-like.
-  if (m.can_add && body.trim().length <= 120 && !/\d/.test(body) && settings.texting.enabled) {
-    const its = await cleanItems([body.trim()])
-    if (owner && its.length) {
-      const weekStart = plan?.week_start ?? mondayOf(new Date())
-      const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
-      const added: string[] = []
-      for (const it of its) {
-        const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
-        if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
-        else await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
-        added.push(it.unit ? `${it.name} (${it.quantity} ${it.unit})` : it.name)
-      }
-      return { reply: `Added ${added.join(', ')} to the grocery list. (Text HELP for everything you can do.)`, handled: true, member: m }
+  const added: string[] = []
+  const listWeek = plan?.week_start ?? mondayOf(new Date())
+  if (u.add.length && m.can_add && owner) {
+    const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', listWeek).is('ordered_at', null)
+    for (const it of await cleanItems(u.add)) {
+      const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
+      if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
+      else await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: listWeek, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
+      added.push(it.unit ? `${it.name} (${it.quantity} ${it.unit})` : it.name)
     }
   }
-  return { reply: `Didn't catch that. Reply numbers to skip dinners, ALL GOOD, ADD + items, MENU, LIST, or HELP.`, handled: true, member: m }
+  // They say something we just put on the grocery list from their text was wrong.
+  if (u.removeLastAdded && owner) {
+    const { data: recent } = await admin.from('list_items').select('id').eq('user_id', owner.id).eq('source', 'sms').eq('added_by', m.name).is('ordered_at', null).gte('created_at', new Date(Date.now() - 3600000).toISOString())
+    if (recent?.length) await admin.from('list_items').delete().in('id', recent.map((r) => r.id))
+  }
+
+  const n2 = (ns: number[]) => ns.map((n) => list[n - 1]?.name).filter(Boolean).join(' and ')
+  const parts: string[] = []
+  if (u.again.length) parts.push(`${n2(u.again)} ${u.again.length === 1 ? 'goes' : 'go'} on the bring-back list`)
+  if (mode === 'round' && u.allGood) parts.push('they all work for you')
+  else if (u.picks.length) parts.push(mode === 'round' ? `your picks: ${n2(u.picks)}` : `you'd keep ${n2(u.picks)}`)
+  if (u.skips.length) parts.push(`you'd skip ${n2(u.skips)}`)
+  if (u.none && !u.picks.length && !u.again.length) parts.push(mode === 'again' ? 'none to bring back' : 'no picks from you this week')
+  if (added.length) parts.push(`added to the list: ${added.join(', ')}`)
+  if (u.removeLastAdded) parts.push('took that off the grocery list')
+  if (parts.length) {
+    const lead = u.correction ? `Sorry about that, ${m.name} — fixed: ` : `Got it, ${m.name} — `
+    const tail = mode === 'round' && !u.picks.length && !u.allGood && !u.none && u.skips.length ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
+    return { reply: `${lead}${parts.join('; ')}.${tail}`, handled: true, member: m }
+  }
+  if (u.clarify) return { reply: u.clarify, handled: true, member: m }
+  if (u.question) return { reply: `I'm just the dinner bot 🙂 For anything else, text ${family} directly. ${helpFor(mode, family)}`, handled: true, member: m }
+  return { reply: helpFor(mode, family), handled: true, member: m }
+}
+
+/** The help line that fits what we last asked. */
+function helpFor(mode: 'round' | 'again' | 'week', family: string): string {
+  if (mode === 'round') return `Reply the numbers of the dinners you want (e.g. "1 3 5"), ALL GOOD, or ADD + items for the list.`
+  if (mode === 'again') return `Reply the numbers of the dinners to bring back (e.g. "2" or "1 3"), or NONE. ADD + items puts things on ${family}'s list.`
+  return `Text MENU for this week's dinners, LIST for the grocery list, ADD + items to add to it, or HELP.`
+}
+
+export interface SmsContext { lastAsk: 'again' | 'vote' | null; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
+
+/** The last few texts with this person (both ways) and the last question we asked them. */
+async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsContext> {
+  const since = new Date(Date.now() - 4 * 86400000).toISOString()
+  const { data } = await admin.from('sms_messages').select('direction, body, intent, created_at').eq('member_id', memberId).gte('created_at', since).order('created_at', { ascending: false }).limit(8)
+  const rows = (data ?? []) as Array<{ direction: string; body: string | null; intent: string | null }>
+  const ask = rows.find((r) => r.direction === 'out' && (r.intent === 'again_request' || r.intent === 'vote_request'))
+  return {
+    lastAsk: ask?.intent === 'again_request' ? 'again' : ask ? 'vote' : null,
+    history: rows.slice(0, 6).reverse().map((r) => ({ who: r.direction === 'out' ? 'DinnerDrop' : 'Them', body: (r.body ?? '').slice(0, 400) })),
+  }
+}
+
+export interface Meant { picks: number[]; skips: number[]; again: number[]; add: string[]; allGood: boolean; none: boolean; correction: boolean; removeLastAdded: boolean; question: boolean; clarify: string }
+
+/** The prompt for reading a free-text reply against what we asked and what was just said (exported for tests). */
+export function understandPrompt(body: string, ctx: SmsContext, list: Pick<Meal, 'name'>[], mode: 'round' | 'again' | 'week'): string {
+  const asked = mode === 'round' ? 'which of these dinners they want next week (numbers = picks)'
+    : mode === 'again' ? "which of this week's dinners should come back soon (numbers = bring back)"
+    : "nothing specific right now (this week's dinners are listed for reference)"
+  return `You read text replies for DinnerDrop, a family dinner planner. Be a sensible human reader: use what DinnerDrop last asked and the recent conversation to decide what this person means. Never treat a sentence as a grocery item.
+
+DinnerDrop last asked them: ${asked}.
+Numbered dinners:
+${list.length ? list.map((c, i) => `${i + 1}. ${c.name}`).join('\n') : '(none)'}
+
+Recent conversation (oldest first):
+${ctx.history.map((h) => `${h.who}: ${h.body}`).join('\n') || '(none)'}
+
+Their new message: <<<${body.trim()}>>>
+
+Return ONLY JSON:
+{"picks":[],"skips":[],"again":[],"add":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"clarify":""}
+- picks: numbers they want / are happy to keep. skips: numbers they don't want. again: numbers they want brought back on a future week (use this when DinnerDrop asked which should come back, or they say "again"/"bring back"/"want that again").
+- A dish they name or refer to ("that", "the salad") is matched to its number using the conversation.
+- correction: true if they're saying DinnerDrop got their last answer wrong ("oh no", "I meant", "not that"); then fill picks/skips/again with what they actually meant.
+- removeLastAdded: true only if they say something DinnerDrop just added to the grocery list was wrong or wasn't meant for the list.
+- add: only real grocery/household products they clearly want added, as product names with any amount. Otherwise [].
+- allGood / none: whole-list answers. question: they asked something or it's unrelated chat.
+- clarify: if you genuinely can't tell what they mean, a short friendly question (under 140 characters) asking them, else "".`
+}
+
+export function parseMeant(text: string, listLength: number): Meant {
+  const j = parseClaudeJSON<Partial<Meant>>(text)
+  const nums = (a: unknown) => (Array.isArray(a) ? Array.from(new Set(a.map(Number).filter((n) => Number.isInteger(n) && n >= 1 && n <= listLength))) : [])
+  return {
+    picks: nums(j.picks), skips: nums(j.skips), again: nums(j.again),
+    add: Array.isArray(j.add) ? j.add.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 60).map((x) => x.trim()) : [],
+    allGood: !!j.allGood, none: !!j.none, correction: !!j.correction, removeLastAdded: !!j.removeLastAdded, question: !!j.question,
+    clarify: typeof j.clarify === 'string' ? j.clarify.trim().slice(0, 160) : '',
+  }
+}
+
+async function understandInContext(body: string, ctx: SmsContext, list: Meal[], mode: 'round' | 'again' | 'week'): Promise<Meant | null> {
+  try { return parseMeant(await generateSmart(understandPrompt(body, ctx, list, mode), 400), list.length) }
+  catch { return null }
 }
 
 /* ------------------------------------------------------------------ */
