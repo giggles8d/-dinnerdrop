@@ -18,6 +18,7 @@ import { attachLibraryImages } from '@/lib/library-images'
 import { trackOnce } from '@/lib/activation'
 import WeekCheckCard from '@/components/WeekCheckCard'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
+import { repeatPlan, lastWeekPlan, mondayISO } from '@/lib/repeat-plan'
 
 export default function DashboardPage() {
   return (
@@ -46,6 +47,10 @@ function DashboardContent() {
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [votes, setVotes] = useState<Record<string, { keep: number; skip: number; again: number; voters: string[] }>>({})
   const [planMode, setPlanMode] = useState<'fresh' | 'favorites'>('fresh')
+  // "Repeat last week": the most recent plan from before this week, and this week's plan date (to ask before replacing it).
+  const [prevWeek, setPrevWeek] = useState<{ week_start: string; meals: Meal[] } | null>(null)
+  const [currentWeekStart, setCurrentWeekStart] = useState<string | null>(null)
+  const [confirmRepeat, setConfirmRepeat] = useState(false)
   // null = unknown yet; false = this week's list hasn't gone to a store (drives the sticky "list is ready" bar).
   const [listSent, setListSent] = useState<boolean | null>(null)
   // Instant first plan: brand-new users (no plan yet) get their first week
@@ -133,6 +138,8 @@ function DashboardContent() {
       }
 
       const plan = planRes.data
+      if (!owner.isPartner) lastWeekPlan(supabase, planUserId).then(setPrevWeek).catch(() => {})
+      setCurrentWeekStart(plan?.week_start ?? null)
       if (plan) {
         const planMeals = await attachLibraryImages(supabase, plan.meals as Meal[])
         setMeals(planMeals)
@@ -409,6 +416,31 @@ function DashboardContent() {
     }
   }
 
+  /** One tap: plan last week's dinners again for this week (asks first if this week already has a plan). */
+  async function repeatLastWeek() {
+    if (!prevWeek) return
+    if (currentWeekStart === mondayISO() && !confirmRepeat) { setConfirmRepeat(true); return }
+    setConfirmRepeat(false)
+    setLoading(true)
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.user) { router.push('/login'); return }
+      const r = await repeatPlan(supabase, session.user.id, prevWeek.meals)
+      if (!r) { setGenerateError('Could not repeat last week — please try again.'); return }
+      const withImages = await attachLibraryImages(supabase, r.meals)
+      setMeals(withImages)
+      setTotalCost(r.total)
+      setHasGenerated(true)
+      setIsPlanStale(false)
+      setListSent(false)
+      setCurrentWeekStart(mondayISO())
+      setPlanCount((n) => n + 1)
+      localStorage.setItem('current-meals', JSON.stringify(withImages))
+    } finally {
+      setLoading(false)
+    }
+  }
+
   /** Mealime-style auto-builder: keep whatever is picked and fill the week with the options that share the most fresh ingredients. */
   function pickForMe() {
     const fill = pickWithOverlap(pendingMeals, Math.max(planShape.dinnersPerWeek - selectedMeals.length, 0), selectedMeals)
@@ -678,6 +710,16 @@ function DashboardContent() {
                   <input type="checkbox" checked={planMode === 'favorites'} onChange={(e) => setPlanMode(e.target.checked ? 'favorites' : 'fresh')} className="accent-[#1a5c38]" />
                   Build from my favorites
                 </label>
+              )}
+              {prevWeek && !loading && !initialLoading && (
+                <button
+                  onClick={repeatLastWeek}
+                  onBlur={() => setConfirmRepeat(false)}
+                  title={`Plan last week's ${prevWeek.meals.length} dinners again: ${prevWeek.meals.map((m) => m.name).join(', ')}`}
+                  className={`px-4 py-3 rounded-xl border font-semibold transition-colors text-sm ${confirmRepeat ? 'border-amber-400 bg-amber-50 text-amber-900' : 'border-primary/40 text-primary hover:bg-primary/5'}`}
+                >
+                  {confirmRepeat ? "Replace this week's dinners? Tap again" : 'Repeat last week'}
+                </button>
               )}
               <button
                 onClick={generatePlan}

@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
   // Inside the iOS/Android app (Capacitor appends "DinnerDropApp" to the UA), nothing sells the
   // subscription: checkout pages bounce to Account, which shows plan status only.
   const inApp = (request.headers.get('user-agent') ?? '').includes('DinnerDropApp')
-  if (inApp && (pathname.startsWith('/subscribe') || pathname.startsWith('/go/'))) {
+  if (inApp && (pathname.startsWith('/subscribe') || pathname.startsWith('/go/') || pathname.startsWith('/gift'))) {
     const u = request.nextUrl.clone(); u.pathname = '/account'; u.search = ''
     return NextResponse.redirect(u)
   }

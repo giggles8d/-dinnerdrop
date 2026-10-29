@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import PublicHeader from '@/components/site/PublicHeader'
 import { COOKWARE, cookwareUrl } from '@/lib/cookware'
 
 const count = COOKWARE.reduce((n, g) => n + g.items.length, 0)
@@ -17,21 +18,7 @@ export default function CookwarePage() {
   const starters = COOKWARE.flatMap((g) => g.items).filter((i) => i.starter)
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-accent mt-0.5" />
-            <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
-          </Link>
-          <nav className="flex items-center gap-2 sm:gap-4 text-sm">
-            <Link href="/recipes" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Recipes</Link>
-            <Link href="/cookware" className="hidden sm:block font-medium text-foreground">Cookware</Link>
-            <Link href="/blog" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Blog</Link>
-            <Link href="/start" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Pricing</Link>
-            <Link href="/signup" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors">Start free</Link>
-          </nav>
-        </div>
-      </header>
+      <PublicHeader active="cookware" />
 
       <main className="container mx-auto px-4 py-12 max-w-3xl">
         <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Kitchen essentials</p>

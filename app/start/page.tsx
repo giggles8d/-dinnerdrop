@@ -29,7 +29,7 @@ function PromoBanner() {
   const months = Math.round(promo.days / 30)
   return (
     <div className="mx-auto max-w-2xl mb-5 sm:mb-6 rounded-2xl border-2 px-5 py-4 text-left shadow-sm" style={{ borderColor: GOLD, backgroundColor: '#fff8e8' }}>
-      <p className="text-sm font-bold" style={{ color: GREEN }}>Code {promo.code} is on — {months} month{months === 1 ? '' : 's'} of the Family plan free, no card needed.</p>
+      <p className="text-sm font-bold" style={{ color: GREEN }}>{promo.label.startsWith('A gift') ? `🎁 ${promo.label}: ${months >= 12 ? 'a year' : `${months} months`} of the Family plan, no card needed.` : `Code ${promo.code} is on — ${months} month${months === 1 ? '' : 's'} of the Family plan free, no card needed.`}</p>
       <p className="text-sm text-gray-700 mt-1">Sign up below and it applies automatically: family texting, per-person profiles and reminders, on top of the free plans and your one-tap Instacart cart. Nothing to cancel when it ends — you just go back to the free plan.</p>
     </div>
   )

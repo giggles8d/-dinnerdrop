@@ -27,6 +27,7 @@ export default async function LandingPage() {
             <Link href="/shop" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Shop</Link>
             <Link href="/recipes" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Recipes</Link>
             <Link href="/cookware" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Cookware</Link>
+            <Link href="/gift" className="hidden md:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Gift</Link>
             <Link href="/start" className="hidden md:block px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Pricing</Link>
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
             <Link href="/signup" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Start free</Link>
@@ -301,6 +302,7 @@ export default async function LandingPage() {
             <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
             <Link href="/shop" className="hover:text-foreground transition-colors">Shop</Link>
             <Link href="/cookware" className="hover:text-foreground transition-colors">Kitchen essentials</Link>
+            <Link href="/gift" className="hover:text-foreground transition-colors">Give DinnerDrop</Link>
             <Link href="/affiliates" className="hover:text-foreground transition-colors">Affiliates</Link>
             <Link href="/disclosure" className="hover:text-foreground transition-colors">Disclosure</Link>
             <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
