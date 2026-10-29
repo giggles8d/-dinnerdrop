@@ -1,5 +1,6 @@
 import { safeBite, cookware } from '@/lib/meal-insights'
 import type { Meal } from '@/types'
+import { dinnerAllergens, ALLERGENS, type AllergenKey } from '@/lib/allergens'
 
 /** One row of the slim recipe index the library page filters in the browser (no steps, ingredient names only). */
 export interface LibRow {
@@ -21,6 +22,7 @@ export interface LibRow {
   ing: string        // ingredient names, lowercased, " | " separated
   cook: string       // "2 pans" etc.
   safe: string | null
+  alg: AllergenKey[] // major allergens in the ingredients
 }
 
 export type ProteinGroup = 'chicken' | 'beef' | 'pork' | 'turkey' | 'seafood' | 'lamb' | 'meatless'
@@ -94,11 +96,13 @@ export function toLibRow(r: Full): LibRow {
     tags, image_url: r.image_url, source: r.source, created_by: r.created_by, kept: r.kept_count ?? 0,
     ing: names.join(' | '),
     cook: cookware(lite).label, safe: safeBite(lite),
+    alg: dinnerAllergens(r.ingredients ?? []).map((a) => a.key),
   }
 }
 
-export interface Filters { q: string; without: string; time: number; proteins: ProteinGroup[]; cuisines: CuisineGroup[]; styles: string[]; sort: SortKey; mine: boolean; favs: boolean }
-export const EMPTY: Filters = { q: '', without: '', time: 0, proteins: [], cuisines: [], styles: [], sort: 'kept', mine: false, favs: false }
+export interface Filters { q: string; without: string; time: number; proteins: ProteinGroup[]; cuisines: CuisineGroup[]; styles: string[]; free: AllergenKey[]; sort: SortKey; mine: boolean; favs: boolean }
+export const EMPTY: Filters = { q: '', without: '', time: 0, proteins: [], cuisines: [], styles: [], free: [], sort: 'kept', mine: false, favs: false }
+export const FREE_OF = ALLERGENS.map((a) => ({ v: a.key, l: a.short }))
 
 /** Apply the filters. Proteins and cuisines are any-of; styles are all-of; "without" excludes any matching ingredient word. */
 export function applyFilters(rows: LibRow[], f: Filters, ctx: { userId: string | null; favNames: Set<string> }): LibRow[] {
@@ -112,6 +116,7 @@ export function applyFilters(rows: LibRow[], f: Filters, ctx: { userId: string |
     if (f.cuisines.length && !f.cuisines.includes(r.cg)) return false
     if (f.styles.length && !f.styles.every((s) => r.tags.includes(s) || (s === 'meatless' && r.pg === 'meatless'))) return false
     if (without.length && without.some((w) => r.ing.includes(w) || r.name.toLowerCase().includes(w))) return false
+    if (f.free.length && f.free.some((k) => (r.alg ?? []).includes(k))) return false
     if (q && !`${r.name} ${r.cuisine} ${r.protein} ${r.ing}`.toLowerCase().includes(q)) return false
     return true
   })
@@ -131,6 +136,7 @@ export function filtersFromQuery(sp: URLSearchParams): Filters {
     proteins: list('p').filter((p): p is ProteinGroup => PROTEINS.some((x) => x.v === p)),
     cuisines: list('c').filter((c): c is CuisineGroup => CUISINES.some((x) => x.v === c)),
     styles: list('s').map((s) => (s === 'vegetarian' ? 'meatless' : s)).filter((s) => STYLES.some((x) => x.v === s) || s === 'meatless'),
+    free: list('f').filter((k): k is AllergenKey => ALLERGENS.some((a) => a.key === k)),
     sort: sort === 'quick' || sort === 'cheap' ? sort : 'kept',
   }
 }
@@ -142,10 +148,11 @@ export function filtersToQuery(f: Filters): string {
   if (f.proteins.length) sp.set('p', f.proteins.join(','))
   if (f.cuisines.length) sp.set('c', f.cuisines.join(','))
   if (f.styles.length) sp.set('s', f.styles.join(','))
+  if (f.free.length) sp.set('f', f.free.join(','))
   if (f.sort !== 'kept') sp.set('sort', f.sort)
   const s = sp.toString()
   return s ? `?${s}` : ''
 }
 export function activeCount(f: Filters): number {
-  return (f.q ? 1 : 0) + (f.without ? 1 : 0) + (f.time ? 1 : 0) + f.proteins.length + f.cuisines.length + f.styles.length + (f.mine ? 1 : 0) + (f.favs ? 1 : 0)
+  return (f.q ? 1 : 0) + (f.without ? 1 : 0) + (f.time ? 1 : 0) + f.proteins.length + f.cuisines.length + f.styles.length + f.free.length + (f.mine ? 1 : 0) + (f.favs ? 1 : 0)
 }
