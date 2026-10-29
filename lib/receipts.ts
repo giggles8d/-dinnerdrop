@@ -173,8 +173,14 @@ export async function parseReceiptImages(images: ClaudeImage[]): Promise<ParsedR
 }
 
 /** Who gets the receipt features (upload + forwarding). Unset env = Sarah only; "*" = everyone. */
+/**
+ * Receipt upload on the grocery list: on for every signed-in family since Oct 29 2026 (Sarah approved,
+ * for the come-back gift offer). RECEIPT_UPLOAD=off switches it back to the allowlist below.
+ * The emailed-receipt (inbound) path still uses RECEIPT_INBOUND_ALLOWLIST.
+ */
 export function receiptFeatureAllowed(email: string | null | undefined): boolean {
   if (!email) return false
+  if ((process.env.RECEIPT_UPLOAD ?? '').trim().toLowerCase() !== 'off') return true
   const raw = (process.env.RECEIPT_INBOUND_ALLOWLIST ?? '').trim()
   if (!raw) return email.toLowerCase() === 'setzl1979@gmail.com'
   return receiptInboundAllowed(email)
