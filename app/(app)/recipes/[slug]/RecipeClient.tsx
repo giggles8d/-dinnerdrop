@@ -1,6 +1,7 @@
 'use client'
 import CookwareList from '@/components/CookwareList'
 import RecipeNotes from '@/components/RecipeNotes'
+import PrintButton from '@/components/PrintButton'
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
@@ -77,12 +78,12 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-3xl">
-        <Link href="/recipes" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6"><ArrowLeft className="w-4 h-4" /> Recipe library</Link>
+        <Link href="/recipes" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 print:hidden"><ArrowLeft className="w-4 h-4" /> Recipe library</Link>
         {cooking && <CookMode meal={meal} onClose={() => setCooking(false)} />}
-        <div className="rounded-xl overflow-hidden mb-6"><MealCardImage mealName={r.name} dayLabel={r.source === 'user' && r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} /></div>
+        <div className="rounded-xl overflow-hidden mb-6 print:hidden"><MealCardImage mealName={r.name} dayLabel={r.source === 'user' && r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} /></div>
         <div className="flex items-start justify-between gap-4 mb-4">
           <h1 className="text-4xl font-heading font-bold text-foreground leading-tight">{r.name}</h1>
-          <button onClick={toggleFav} className="p-2 rounded-full hover:bg-muted" aria-label="Favorite"><Heart className={`w-6 h-6 ${fav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} /></button>
+          <div className="flex items-center gap-1 print:hidden"><PrintButton /><button onClick={toggleFav} className="p-2 rounded-full hover:bg-muted" aria-label="Favorite"><Heart className={`w-6 h-6 ${fav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} /></button></div>
         </div>
         <div className="flex flex-wrap items-center gap-2 mb-6 pb-6 border-b border-border">
           <span className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground"><Clock className="w-3.5 h-3.5" />{timeLabel(meal)}</span>
@@ -92,7 +93,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           {meal.estimatedCost > 0 && <span className="bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold">${meal.estimatedCost.toFixed(2)}</span>}
           {meal.nutrition && <span className="bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span>}
           {r.kept_count > 0 && <span className="text-xs text-muted-foreground">kept by {r.kept_count} {r.kept_count === 1 ? 'family' : 'families'}</span>}
-          <div className="ml-auto flex gap-2">
+          <div className="ml-auto flex gap-2 print:hidden">
             {userId ? (
               <button onClick={addToWeek} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-primary/30 text-primary text-sm font-semibold hover:bg-secondary"><CalendarPlus className="w-4 h-4" /> Add to this week</button>
             ) : (
@@ -102,8 +103,10 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           </div>
         </div>
         {added && <p className="text-sm text-primary mb-4">{added}</p>}
-        <RecipeNotes recipeName={meal.name} />
-        <CookwareList meal={meal} />
+        <div className="print:hidden">
+          <RecipeNotes recipeName={meal.name} />
+          <CookwareList meal={meal} />
+        </div>
         <section className="mb-8">
           <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">Ingredients</h2>
           <ul className="space-y-1">
