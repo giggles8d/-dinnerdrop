@@ -7,6 +7,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { getIssueForDate } from '@/lib/newsletter-content'
+import { kitchenPickFor, type KitchenPick } from '@/lib/kitchen-picks'
 
 export interface NlRecipe { name: string; slug: string; image: string; minutes: number; cost: number | null; kept: number; cuisine: string | null }
 export interface WeeklyIssue {
@@ -15,6 +16,7 @@ export interface WeeklyIssue {
   featured: NlRecipe & { blurb: string; sides: Array<{ name: string; note: string }> }
   trending: NlRecipe[]
   tip: { title: string; body: string }
+  kitchen: KitchenPick & { url: string }
   weekKey: string
 }
 
@@ -66,6 +68,7 @@ export async function buildWeeklyIssue(db: SupabaseClient, now = new Date()): Pr
     featured: { ...featured, blurb, sides },
     trending,
     tip,
+    kitchen: kitchenPickFor(now),
     weekKey,
   }
 }
