@@ -13,10 +13,11 @@ import { buildWeeklyIssue, recordIssue } from '@/lib/weekly-newsletter'
 // ?preview=1  → sends ONE email to PREVIEW_RECIPIENT only (works while not live)
 // ?dryRun=1   → returns assembled content + recipient counts, sends nothing
 // ?html=1     → (admin) returns the rendered email HTML for review
-const NEWSLETTER_LIVE = false
+const NEWSLETTER_LIVE = true   // approved by Sarah 2026-10-28: weekly, starting Sun Nov 1
 const PREVIEW_RECIPIENT = 'setzl1979@gmail.com'
 
 export const dynamic = 'force-dynamic'
+export const maxDuration = 300   // ~300 recipients × 250 ms pacing
 
 const ADMIN_EMAIL = 'setzl1979@gmail.com'
 
