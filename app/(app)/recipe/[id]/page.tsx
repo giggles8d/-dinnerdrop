@@ -1,11 +1,11 @@
 'use client'
 
-import { Suspense, useCallback, useEffect, useState } from 'react'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { sizedImage, isUnsplash, isDirect } from '@/lib/image-src'
 import Link from 'next/link'
-import { ArrowLeft, Clock, Heart, RefreshCw, Users, ChefHat, Share2 } from 'lucide-react'
+import { ArrowLeft, Clock, Heart, RefreshCw, ChefHat, Share2 } from 'lucide-react'
 import { nativeShare, tapHaptic } from '@/lib/native'
 import { createClient } from '@/lib/supabase'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
@@ -16,6 +16,8 @@ import CookwareList from '@/components/CookwareList'
 import RecipeNotes from '@/components/RecipeNotes'
 import PrintButton from '@/components/PrintButton'
 import NutritionPanel from '@/components/NutritionPanel'
+import ServingsStepper from '@/components/ServingsStepper'
+import { withServings, saveDinnerServings } from '@/lib/servings'
 import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
@@ -86,6 +88,9 @@ function RecipeContent() {
   const [favoriting, setFavoriting] = useState(false)
   const [swapping, setSwapping] = useState(false)
   const [swapError, setSwapError] = useState(false)
+  const [servingsNote, setServingsNote] = useState<string | null>(null)
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const planned = useRef<Meal | null>(null) // the dinner as it sits in the plan, to find it when saving
   const supabase = createClient()
 
   const checkFavorite = useCallback(async (mealName: string) => {
@@ -254,6 +259,24 @@ function RecipeContent() {
     }
   }
 
+  /** Make this one dinner for more or fewer people; the plan and grocery list follow (saved after a short pause). */
+  function changeServings(n: number) {
+    if (!meal) return
+    if (!planned.current) planned.current = meal
+    const updated = withServings(meal, n)
+    setMeal(updated)
+    try { localStorage.setItem(`meal-${id}`, JSON.stringify(updated)) } catch { /* ignore */ }
+    if (meal.day === 'Saved') return
+    setServingsNote('Saving…')
+    if (saveTimer.current) clearTimeout(saveTimer.current)
+    saveTimer.current = setTimeout(async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      const ok = user && planned.current ? await saveDinnerServings(supabase, user.id, updated, planned.current) : false
+      if (ok) planned.current = updated
+      setServingsNote(ok ? `Grocery list updated for ${updated.servings}` : 'Changed here only — this dinner isn\u2019t in your current week')
+    }, 700)
+  }
+
   if (mealLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -339,10 +362,7 @@ function RecipeContent() {
             <Clock className="w-3.5 h-3.5" />
             <span>{timeLabel(meal)}</span>
           </div>
-          <div className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">
-            <Users className="w-3.5 h-3.5" />
-            <span>{meal.servings} servings</span>
-          </div>
+          <ServingsStepper servings={meal.servings} onChange={changeServings} />
           <div className="flex items-center gap-1.5 bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold">
             ${meal.estimatedCost.toFixed(2)}
           </div>
@@ -356,6 +376,7 @@ function RecipeContent() {
           </button>
         </div>
 
+        {servingsNote && <p className="-mt-5 mb-6 text-xs text-primary print:hidden" role="status">{servingsNote}{meal.base && servingsNote !== 'Saving…' ? ` · planned for ${meal.base.servings}` : ''}</p>}
         <div className="print:hidden">
           <RecipeNotes recipeName={meal.name} />
           <CookwareList meal={meal} />
