@@ -3,6 +3,7 @@
 import { Suspense, useCallback, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import { sizedImage, isUnsplash } from '@/lib/image-src'
 import Link from 'next/link'
 import { ArrowLeft, Clock, Heart, RefreshCw, Users, ChefHat, Share2 } from 'lucide-react'
 import { nativeShare, tapHaptic } from '@/lib/native'
@@ -21,6 +22,7 @@ function HeroImage({ mealName, imageUrl }: { mealName: string; imageUrl?: string
   const lookup = useUnsplashPhoto(imageUrl ? '' : mealName)
   const photo = imageUrl ? { url: imageUrl, alt: `Photo of ${mealName}`, credit: null } : (lookup.photo ? { ...lookup.photo, credit: lookup.photo.credit } : null)
   const loading = imageUrl ? false : lookup.loading
+  const [heroFailed, setHeroFailed] = useState<string | null>(null)
 
   return (
     <div className="relative h-[300px] sm:h-[400px] w-full rounded-xl overflow-hidden mb-8">
@@ -28,14 +30,20 @@ function HeroImage({ mealName, imageUrl }: { mealName: string; imageUrl?: string
         <div className="absolute inset-0 bg-muted animate-pulse" />
       ) : photo ? (
         <>
-          <Image
-            src={photo.url}
-            alt={photo.alt}
-            fill
-            sizes="(max-width: 768px) 100vw, 800px"
-            className="object-cover"
-            priority
-          />
+          {heroFailed === photo.url + '#2' ? (
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center text-6xl" aria-hidden>🍽️</div>
+          ) : heroFailed === photo.url || isUnsplash(photo.url) ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={isUnsplash(photo.url) ? sizedImage(photo.url, 1200) : photo.url}
+              alt={photo.alt}
+              decoding="async"
+              onError={() => setHeroFailed(photo.url + '#2')}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <Image src={photo.url} alt={photo.alt} fill sizes="(max-width: 768px) 100vw, 800px" className="object-cover" priority onError={() => setHeroFailed(photo.url)} />
+          )}
           {photo.credit && (
             <a
               href={`${photo.credit.link}?utm_source=dinnerdrop&utm_medium=referral`}
