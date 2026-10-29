@@ -3,10 +3,12 @@ import CookwareList from '@/components/CookwareList'
 import RecipeNotes from '@/components/RecipeNotes'
 import PrintButton from '@/components/PrintButton'
 import NutritionPanel from '@/components/NutritionPanel'
+import ServingsStepper from '@/components/ServingsStepper'
+import { withServings } from '@/lib/servings'
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Clock, Heart, Users, ChefHat, CalendarPlus } from 'lucide-react'
+import { ArrowLeft, Clock, Heart, ChefHat, CalendarPlus } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import CookMode from '@/components/CookMode'
@@ -34,6 +36,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
   const [fav, setFav] = useState(false)
   const [cooking, setCooking] = useState(false)
   const [added, setAdded] = useState<string | null>(null)
+  const [servings, setServings] = useState<number | null>(null)
 
   useEffect(() => {
     (async () => {
@@ -47,11 +50,13 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
     })()
   }, [slug, initial.name, supabase])
 
-  const meal: Meal | null = r ? {
+  const baseMeal: Meal | null = r ? {
     day: 'Saved', name: r.name, cuisine: r.cuisine ?? undefined, protein: r.protein ?? undefined, cookTime: r.cook_time ?? 30, prepTime: r.prep_time ?? 10,
     servings: r.servings ?? 4, estimatedCost: Number(r.estimated_cost ?? 0), ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [],
     nutrition: r.nutrition ?? undefined, imageUrl: r.image_url ?? undefined, recipeId: r.id, fromLibrary: true,
   } : null
+  // Make it for a different number of people: amounts, cost and "Add to this week" all follow.
+  const meal: Meal | null = baseMeal && servings && servings !== baseMeal.servings ? withServings(baseMeal, servings) : baseMeal
 
   async function toggleFav() {
     if (!userId || !r || !meal) return
@@ -88,7 +93,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
         </div>
         <div className="flex flex-wrap items-center gap-2 mb-6 pb-6 border-b border-border">
           <span className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground"><Clock className="w-3.5 h-3.5" />{timeLabel(meal)}</span>
-          <span className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground"><Users className="w-3.5 h-3.5" />{meal.servings} servings</span>
+          <ServingsStepper servings={meal.servings} onChange={setServings} />
           <span className="bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground" title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
           {safeBite(meal) && <span className="bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold" title="The one plain component a picky eater can have on its own">Picky-eater safe bet: {safeBite(meal)}</span>}
           {meal.estimatedCost > 0 && <span className="bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold">${meal.estimatedCost.toFixed(2)}</span>}
