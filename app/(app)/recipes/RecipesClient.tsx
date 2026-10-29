@@ -6,45 +6,21 @@ import { Heart, Link2, FileText, Camera, Search } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import type { Meal } from '@/types'
-import { safeBite, cookware } from '@/lib/meal-insights'
+import { FULL_COLUMNS, toLibRow, applyFilters, filtersFromQuery, filtersToQuery, activeCount, EMPTY, PROTEINS, CUISINES, STYLES, TIMES, SORTS, type LibRow, type Filters, type SortKey } from '@/lib/recipe-filters'
 
-interface RecipeRow {
-  id: string
-  name: string
-  slug: string
-  cuisine: string | null
-  protein: string | null
-  cook_time: number | null
-  prep_time: number | null
-  servings: number | null
-  estimated_cost: number | null
-  ingredients: Meal['ingredients']
-  steps: string[]
-  tags: string[]
-  image_url: string | null
-  nutrition: Meal['nutrition'] | null
-  source: 'generated' | 'user'
-  created_by: string | null
-  kept_count: number
-  times_planned: number
-}
+const PAGE = 48
 
-const TIME_FILTERS = [{ v: 0, l: 'Any time' }, { v: 20, l: '≤ 20 min' }, { v: 30, l: '≤ 30 min' }, { v: 45, l: '≤ 45 min' }]
-const TAGS = ['quick', 'kid-favorite', 'sheet-pan', 'one-pot', 'air-fryer', 'slow-cooker', 'instant-pot', 'leftover-friendly', 'budget', 'high-protein', 'vegetarian']
-
-export type { RecipeRow }
-
-/** Client half of /recipes. The server page passes `initialRows` so visitors and crawlers see the library in the first HTML. */
-export default function RecipesClient({ initialRows = [] }: { initialRows?: RecipeRow[] }) {
+/** Client half of /recipes. The server sends a slim index of the whole library; filters and sorting run here instantly. */
+export default function RecipesClient({ initialRows = [] }: { initialRows?: LibRow[] }) {
   const supabase = useMemo(() => createClient(), [])
   const [userId, setUserId] = useState<string | null>(null)
-  const [rows, setRows] = useState<RecipeRow[]>(initialRows)
+  const [rows, setRows] = useState<LibRow[]>(initialRows)
   const [favNames, setFavNames] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(initialRows.length === 0)
-  const [q, setQ] = useState('')
-  const [maxTime, setMaxTime] = useState(0)
-  const [tag, setTag] = useState('')
-  const [mine, setMine] = useState(false)
+  const [f, setF] = useState<Filters>(EMPTY)
+  const urlRead = useRef(false)
+  const [shown, setShown] = useState(PAGE)
+  const [moreOpen, setMoreOpen] = useState(false)
   const [tab, setTab] = useState<'link' | 'text' | 'photo'>('link')
   const [url, setUrl] = useState('')
   const [text, setText] = useState('')
@@ -55,44 +31,64 @@ export default function RecipesClient({ initialRows = [] }: { initialRows?: Reci
   const load = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
     setUserId(user?.id ?? null)
-    const [{ data }, favs] = await Promise.all([
-      supabase.from('recipes').select('id, name, slug, cuisine, protein, cook_time, prep_time, servings, estimated_cost, ingredients, steps, tags, image_url, nutrition, source, created_by, kept_count, times_planned').order('kept_count', { ascending: false }).order('times_planned', { ascending: false }).limit(400),
+    const [pub, own, favs] = await Promise.all([
+      // Only when the server couldn't send the index.
+      initialRows.length ? Promise.resolve({ data: null }) : supabase.from('recipes').select(FULL_COLUMNS).eq('is_public', true).order('kept_count', { ascending: false }).limit(2000),
+      // The family's own recipes (private ones aren't in the public index).
+      user ? supabase.from('recipes').select(FULL_COLUMNS).eq('created_by', user.id).eq('source', 'user') : Promise.resolve({ data: null }),
       user ? supabase.from('favorites').select('meal_name').eq('user_id', user.id) : Promise.resolve({ data: [] as Array<{ meal_name: string }> }),
     ])
-    if (data?.length) setRows(data as RecipeRow[])
-    setFavNames(new Set((favs.data ?? []).map((f: { meal_name: string }) => f.meal_name)))
+    setRows((cur) => {
+      const base = pub.data ? (pub.data as Parameters<typeof toLibRow>[0][]).map(toLibRow) : cur
+      const mineRows = own.data ? (own.data as Parameters<typeof toLibRow>[0][]).map(toLibRow) : []
+      const seen = new Set(mineRows.map((r) => r.id))
+      return [...mineRows, ...base.filter((r) => !seen.has(r.id))]
+    })
+    setFavNames(new Set((favs.data ?? []).map((x: { meal_name: string }) => x.meal_name)))
     setLoading(false)
-  }, [supabase])
+  }, [supabase, initialRows.length])
 
   useEffect(() => { load() }, [load])
 
-  const filtered = rows.filter((r) => {
-    if (mine && !(r.source === 'user' && r.created_by === userId)) return false
-    if (maxTime && (r.cook_time ?? 0) + (r.prep_time ?? 0) > maxTime) return false
-    if (tag && !(r.tags ?? []).includes(tag)) return false
-    if (q) {
-      const hay = `${r.name} ${r.cuisine ?? ''} ${r.protein ?? ''} ${(r.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
-      if (!hay.includes(q.toLowerCase())) return false
+  // Keep the URL in step with the filters so a filtered view can be shared or bookmarked.
+  // (Read after mount, not via useSearchParams, so the server still renders the full library for Google.)
+  useEffect(() => {
+    if (!urlRead.current) {
+      urlRead.current = true
+      const fromUrl = filtersFromQuery(new URLSearchParams(window.location.search))
+      if (activeCount(fromUrl) || fromUrl.sort !== 'kept') { setF(fromUrl); return }
     }
-    return true
-  })
+    setShown(PAGE)
+    const qs = filtersToQuery(f)
+    if (window.location.search !== qs) window.history.replaceState(null, '', `/recipes${qs}`)
+  }, [f])
 
-  function toMeal(r: RecipeRow): Meal {
+  const filtered = useMemo(() => applyFilters(rows, f, { userId, favNames }), [rows, f, userId, favNames])
+  const n = activeCount(f)
+  const set = (patch: Partial<Filters>) => setF((cur) => ({ ...cur, ...patch }))
+  const toggle = <K extends 'proteins' | 'cuisines' | 'styles'>(k: K, v: Filters[K][number]) =>
+    setF((cur) => { const arr = cur[k] as string[]; return { ...cur, [k]: arr.includes(v as string) ? arr.filter((x) => x !== v) : [...arr, v] } })
+
+  function toMeal(r: LibRow): Meal {
     return {
-      day: 'Saved', name: r.name, cuisine: r.cuisine ?? undefined, protein: r.protein ?? undefined,
-      cookTime: r.cook_time ?? 30, prepTime: r.prep_time ?? 10, servings: r.servings ?? 4, estimatedCost: Number(r.estimated_cost ?? 0),
-      ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [], nutrition: r.nutrition ?? undefined, imageUrl: r.image_url ?? undefined, recipeId: r.id, fromLibrary: true,
+      day: 'Saved', name: r.name, cuisine: r.cuisine || undefined, protein: r.protein || undefined,
+      cookTime: r.time || 30, prepTime: 0, servings: r.servings, estimatedCost: r.cost,
+      ingredients: [], steps: [], tags: r.tags, imageUrl: r.image_url ?? undefined, recipeId: r.id, fromLibrary: true,
     }
   }
 
-  async function toggleFavorite(r: RecipeRow) {
+  async function toggleFavorite(r: LibRow) {
     if (!userId) return
     if (favNames.has(r.name)) {
       await supabase.from('favorites').delete().eq('user_id', userId).eq('meal_name', r.name)
-      setFavNames((s) => { const n = new Set(s); n.delete(r.name); return n })
+      setFavNames((x) => { const m = new Set(x); m.delete(r.name); return m })
     } else {
-      await supabase.from('favorites').insert({ user_id: userId, meal_name: r.name, meal_data: toMeal(r) })
-      setFavNames((s) => new Set(s).add(r.name))
+      // Favorites store the full dinner so it can rotate into plans.
+      const { data } = await supabase.from('recipes').select(FULL_COLUMNS).eq('id', r.id).maybeSingle()
+      const full = data as Parameters<typeof toLibRow>[0] | null
+      const meal: Meal = full ? { ...toMeal(r), cookTime: full.cook_time ?? 30, prepTime: full.prep_time ?? 10, ingredients: full.ingredients ?? [], steps: full.steps ?? [] } : toMeal(r)
+      await supabase.from('favorites').insert({ user_id: userId, meal_name: r.name, meal_data: meal })
+      setFavNames((x) => new Set(x).add(r.name))
     }
   }
 
@@ -170,19 +166,53 @@ export default function RecipesClient({ initialRows = [] }: { initialRows?: Reci
         </div>}
 
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-2 mb-5">
-          <div className="relative flex-1 min-w-[200px]">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search dinners or ingredients" className="w-full rounded-lg border border-input bg-background pl-9 pr-3 py-2 text-sm" />
+        <div className="mb-5 space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="relative flex-1 min-w-[200px]">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input value={f.q} onChange={(e) => set({ q: e.target.value })} placeholder="Search dinners or ingredients" className="w-full rounded-lg border border-input bg-background pl-9 pr-3 py-2 text-sm" />
+            </div>
+            <select value={f.time} onChange={(e) => set({ time: Number(e.target.value) })} aria-label="Total time" className="rounded-lg border border-input bg-background px-3 py-2 text-sm">
+              {TIMES.map((t) => <option key={t.v} value={t.v}>{t.l}</option>)}
+            </select>
+            <select value={f.sort} onChange={(e) => set({ sort: e.target.value as SortKey })} aria-label="Sort" className="rounded-lg border border-input bg-background px-3 py-2 text-sm">
+              {SORTS.map((t) => <option key={t.v} value={t.v}>{t.l}</option>)}
+            </select>
           </div>
-          <select value={maxTime} onChange={(e) => setMaxTime(Number(e.target.value))} className="rounded-lg border border-input bg-background px-3 py-2 text-sm">
-            {TIME_FILTERS.map((t) => <option key={t.v} value={t.v}>{t.l}</option>)}
-          </select>
-          <select value={tag} onChange={(e) => setTag(e.target.value)} className="rounded-lg border border-input bg-background px-3 py-2 text-sm">
-            <option value="">Any style</option>
-            {TAGS.map((t) => <option key={t} value={t}>{t}</option>)}
-          </select>
-          {userId && <label className="flex items-center gap-1.5 text-sm text-muted-foreground"><input type="checkbox" checked={mine} onChange={(e) => setMine(e.target.checked)} className="accent-[#1a5c38]" /> My recipes</label>}
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Protein">
+            {PROTEINS.map((p) => (
+              <button key={p.v} onClick={() => toggle('proteins', p.v)} aria-pressed={f.proteins.includes(p.v)} className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${f.proteins.includes(p.v) ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground hover:border-primary/40'}`}>{p.l}</button>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Cuisine">
+            {CUISINES.map((c) => (
+              <button key={c.v} onClick={() => toggle('cuisines', c.v)} aria-pressed={f.cuisines.includes(c.v)} className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${f.cuisines.includes(c.v) ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground hover:border-primary/40'}`}>{c.l}</button>
+            ))}
+            <button onClick={() => setMoreOpen((o) => !o)} className="rounded-full border px-3 py-1.5 text-sm transition-colors border-dashed border-border text-muted-foreground hover:text-foreground">{moreOpen ? 'Fewer filters' : 'More filters'}{f.styles.length || f.without ? ` (${f.styles.length + (f.without ? 1 : 0)})` : ''}</button>
+          </div>
+          {moreOpen && (
+            <div className="rounded-xl border border-border p-3 space-y-3">
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Style">
+                {STYLES.map((t) => (
+                  <button key={t.v} onClick={() => toggle('styles', t.v)} aria-pressed={f.styles.includes(t.v)} className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${f.styles.includes(t.v) ? 'bg-primary text-primary-foreground border-primary' : 'border-border text-foreground hover:border-primary/40'}`}>{t.l}</button>
+                ))}
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <label htmlFor="without" className="text-sm text-muted-foreground">Leave out:</label>
+                <input id="without" value={f.without} onChange={(e) => set({ without: e.target.value })} placeholder="e.g. mushrooms, olives" className="flex-1 min-w-[180px] rounded-lg border border-input bg-background px-3 py-1.5 text-sm" />
+              </div>
+              {userId && (
+                <div className="flex flex-wrap gap-4">
+                  <label className="flex items-center gap-1.5 text-sm text-muted-foreground"><input type="checkbox" checked={f.favs} onChange={(e) => set({ favs: e.target.checked })} className="accent-[#1a5c38]" /> My favorites</label>
+                  <label className="flex items-center gap-1.5 text-sm text-muted-foreground"><input type="checkbox" checked={f.mine} onChange={(e) => set({ mine: e.target.checked })} className="accent-[#1a5c38]" /> Recipes I added</label>
+                </div>
+              )}
+            </div>
+          )}
+          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+            <span>{loading ? 'Loading…' : `${filtered.length} dinner${filtered.length === 1 ? '' : 's'}`}</span>
+            {n > 0 && <button onClick={() => setF({ ...EMPTY, sort: f.sort })} className="text-primary hover:underline">Clear filters</button>}
+          </div>
         </div>
 
         {loading ? (
@@ -190,10 +220,10 @@ export default function RecipesClient({ initialRows = [] }: { initialRows?: Reci
             {Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-72 rounded-xl border border-border bg-card animate-pulse" />)}
           </div>
         ) : filtered.length === 0 ? (
-          <p className="text-muted-foreground text-sm">Nothing here yet{mine ? ' — add a recipe above' : ''}. Dinners show up as families plan them.</p>
+          <p className="text-muted-foreground text-sm">{n > 0 ? 'No dinners match all of those — try removing a filter.' : f.mine ? 'Nothing here yet — add a recipe above.' : 'Nothing here yet. Dinners show up as families plan them.'}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {filtered.map((r) => (
+            {filtered.slice(0, shown).map((r) => (
               <div key={r.id} className="rounded-xl border border-border bg-card overflow-hidden group hover:shadow-md transition-shadow">
                 <Link href={`/recipes/${r.slug}`} className="block">
                   <MealCardImage mealName={r.name} dayLabel={r.source === 'user' && r.created_by === userId ? 'Yours' : ''} imageUrl={r.image_url ?? undefined} />
@@ -205,12 +235,17 @@ export default function RecipesClient({ initialRows = [] }: { initialRows?: Reci
                   <Link href={`/recipes/${r.slug}`} className="block pr-8">
                     <h3 className="font-heading font-semibold leading-tight text-card-foreground group-hover:text-primary">{r.name}</h3>
                   </Link>
-                  <div className="text-xs text-muted-foreground">{(r.cook_time ?? 0) + (r.prep_time ?? 0)} min · {r.servings ?? 4} servings · 🍳 {cookware({ name: r.name, ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [] }).label}{r.kept_count > 0 ? ` · kept by ${r.kept_count} ${r.kept_count === 1 ? 'family' : 'families'}` : ''}</div>
-                  {safeBite({ name: r.name, ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [] }) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite({ name: r.name, ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [] })}</div>}
-                  {(r.tags ?? []).length > 0 && <div className="flex flex-wrap gap-1">{(r.tags ?? []).slice(0, 3).map((t) => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}</div>}
+                  <div className="text-xs text-muted-foreground">{r.time} min · {r.servings} servings · 🍳 {r.cook}{r.kept > 0 ? ` · kept by ${r.kept} ${r.kept === 1 ? 'family' : 'families'}` : ''}</div>
+                  {r.safe && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {r.safe}</div>}
+                  {r.tags.length > 0 && <div className="flex flex-wrap gap-1">{r.tags.slice(0, 3).map((t) => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}</div>}
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        {!loading && filtered.length > shown && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setShown((x) => x + PAGE)} className="px-6 py-2.5 rounded-xl border border-border text-sm font-semibold hover:bg-muted">Show more ({filtered.length - shown} left)</button>
           </div>
         )}
       </div>
