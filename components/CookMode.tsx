@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { X, ChevronLeft, ChevronRight, Timer, Volume2, VolumeX, Mic, MicOff } from 'lucide-react'
 import type { Meal } from '@/types'
+import { isNativeApp } from '@/lib/native'
 
 /**
  * Full-screen, big-type, one-step-at-a-time view for the stove. Keeps the
@@ -80,7 +81,7 @@ export default function CookMode({ meal, onClose }: { meal: Meal; onClose: () =>
     return () => { if (tick.current && timer <= 1) { clearInterval(tick.current); tick.current = null } }
   }, [timer])
 
-  useEffect(() => { setCanListen(!!getRecognizer()) }, [])
+  useEffect(() => { setCanListen(!isNativeApp() && !!getRecognizer()) }, []) // the iOS app has no microphone permission declared
   useEffect(() => () => { wantListen.current = false; try { rec.current?.stop() } catch { /* ignore */ } ; if (canSpeak) window.speechSynthesis.cancel() }, [canSpeak])
 
   function say(text: string) {
