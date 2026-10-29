@@ -17,6 +17,7 @@ import { resolvePlanOwner } from '@/lib/household'
 import { attachLibraryImages } from '@/lib/library-images'
 import { trackOnce } from '@/lib/activation'
 import WeekCheckCard from '@/components/WeekCheckCard'
+import SavingsCard from '@/components/SavingsCard'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
 import { repeatPlan, lastWeekPlan, mondayISO } from '@/lib/repeat-plan'
 
@@ -834,6 +835,8 @@ function DashboardContent() {
                 </span>
               </div>
             </div>
+
+            <SavingsCard />
 
             <div className="mt-6 text-center">
               <Link

@@ -61,6 +61,7 @@ export interface Settings {
     usualStore: string
     priceFactor: number             // what this family's store (+ Instacart fees) charges vs our typical-price estimates; learned from real orders
     myStores: Array<{ name: string; factor?: number }>   // the stores they compare (Wegmans, Tops, Aldi…), each with its own learned factor
+    takeoutPerServing: number       // what a takeout/delivery dinner costs this family per person — the "you saved" comparison
   }
   notifications: {
     email: boolean
@@ -120,6 +121,7 @@ export const DEFAULT_SETTINGS: Settings = {
     usualStore: '',
     priceFactor: 1,
     myStores: [],
+    takeoutPerServing: 15,
   },
   notifications: {
     email: true,

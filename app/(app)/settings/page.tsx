@@ -450,6 +450,9 @@ export default function SettingsPage() {
                   <Field label="Weekly dinner budget">
                     <Select value={profile.weekly_budget} onChange={(v) => patchProfile({ weekly_budget: v })} options={BUDGETS.map((b) => ({ value: b, label: b }))} />
                   </Field>
+                  <Field label="Takeout costs us about (per person)" hint="Used for the “you saved vs takeout” number on your dashboard.">
+                    <Select value={String(settings.stores.takeoutPerServing ?? 15)} onChange={(v) => patch((s) => { s.stores.takeoutPerServing = Number(v) })} options={[8, 10, 12, 15, 18, 20, 25, 30].map((n) => ({ value: String(n), label: `$${n}` }))} />
+                  </Field>
                 </div>
                 <Field label="Default cook time per night (minutes)" hint="Prep included. Override any night below.">
                   <Select value={String(profile.max_cook_time)} onChange={(v) => patchProfile({ max_cook_time: Number(v) })} options={COOK_TIMES.map((n) => ({ value: String(n), label: `${n} min` }))} />
