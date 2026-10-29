@@ -1,4 +1,6 @@
 'use client'
+import CookwareList from '@/components/CookwareList'
+import RecipeNotes from '@/components/RecipeNotes'
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
@@ -100,6 +102,8 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           </div>
         </div>
         {added && <p className="text-sm text-primary mb-4">{added}</p>}
+        <RecipeNotes recipeName={meal.name} />
+        <CookwareList meal={meal} />
         <section className="mb-8">
           <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">Ingredients</h2>
           <ul className="space-y-1">

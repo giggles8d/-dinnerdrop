@@ -10,6 +10,9 @@ interface MealGridProps {
   selectedIds?: Set<string>
   onSelectMeal?: (meal: Meal) => void
   votes?: Record<string, { keep: number; skip: number; again: number; voters: string[] }>
+  /** Picking screen: per dinner (by day id), fresh ingredients it shares with the current picks. */
+  sharesWith?: Record<string, string[]>
+  onToggleCooked?: (meal: Meal) => void
 }
 
 function SkeletonCard() {
@@ -32,6 +35,8 @@ export default function MealGrid({
   selectedIds,
   onSelectMeal,
   votes,
+  sharesWith,
+  onToggleCooked,
 }: MealGridProps) {
   const skeletonCount = selectable ? 10 : 5
 
@@ -57,6 +62,8 @@ export default function MealGrid({
           selected={selectedIds?.has(meal.day)}
           onSelect={onSelectMeal}
           votes={votes?.[meal.name]}
+          sharesWith={sharesWith?.[meal.day]}
+          onToggleCooked={onToggleCooked}
         />
       ))}
     </div>

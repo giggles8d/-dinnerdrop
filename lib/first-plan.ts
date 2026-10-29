@@ -6,6 +6,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, type Weekday } from '@/lib/settings'
 import { pickLibraryRecipes, recipeToMeal, fitBudget } from '@/lib/recipe-library'
+import { pickWithOverlap } from '@/lib/overlap'
 import { DEFAULT_SHAPE, mondayOf, type PlanShape } from '@/lib/plan'
 import { savePlan } from '@/lib/autoplan'
 import { trackStep } from '@/lib/activation'
@@ -28,7 +29,7 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
   const maxCook = Math.max(...cookDays.map((d) => cookTimeFor(d, settings, p.max_cook_time || 30)))
 
   const picks = await pickLibraryRecipes(admin, {
-    limit: dinners + 8,
+    limit: dinners + 14,
     maxCookTime: maxCook,
     dietary: p.dietary_needs ?? [],
     excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
@@ -37,7 +38,10 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
   })
   // First impressions: dinners with a photo first. Sized to the family (cost included).
   const size = p.family_size || 4
-  const pool = [...picks.filter((r) => r.image_url), ...picks.filter((r) => !r.image_url)].map((r, i) => recipeToMeal(r, `L${i + 1}`, size))
+  const withPhoto = picks.filter((r) => r.image_url).map((r, i) => recipeToMeal(r, `L${i + 1}`, size))
+  const noPhoto = picks.filter((r) => !r.image_url).map((r, i) => recipeToMeal(r, `N${i + 1}`, size))
+  // Within the photo-first order, lead with dinners that share fresh ingredients (whole packages get used).
+  const pool = [...pickWithOverlap(withPhoto, withPhoto.length), ...noPhoto]
   const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 150
   const meals = fitBudget(pool, dinners, budget)
   if (meals.length < Math.min(3, dinners)) {

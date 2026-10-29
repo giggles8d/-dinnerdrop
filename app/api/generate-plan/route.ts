@@ -6,6 +6,7 @@ import type { Meal } from '@/types'
 import { ensurePortions } from '@/lib/portions'
 import { currentSales, salesPromptBlock } from '@/lib/sales'
 import { loadPantry, pantryPromptBlock } from '@/lib/pantry'
+import { pickWithOverlap, isFresh } from '@/lib/overlap'
 
 // Extend serverless timeout — AI generation needs up to 55s
 export const maxDuration = 60
@@ -65,6 +66,9 @@ export async function POST(request: Request) {
       dietaryNeeds: Array.isArray(body.dietaryNeeds) ? body.dietaryNeeds as string[] : (profileRow.dietary_needs || []),
       favoriteMeals: Array.isArray(body.favoriteMeals) ? body.favoriteMeals as Meal[] : [],
     }
+    // "Keep my picks, fill the rest": dinners the family already chose this week. New options
+    // should not repeat them and should share fresh ingredients with them where it's natural.
+    const keepMeals: Meal[] = Array.isArray(body.keepMeals) ? (body.keepMeals as Meal[]).slice(0, 7) : []
 
     // ---------- household members: per-person likes / won't-eats / allergies / safe foods ----------
     let members: MemberRow[] = []
@@ -132,19 +136,21 @@ export async function POST(request: Request) {
     if (mode === 'fresh') {
       try {
         const picks = await pickLibraryRecipes(supabase, {
-          limit: optionsCount + 8,
+          limit: optionsCount + 16,
           maxCookTime: slowestNight,
           dietary: profile.dietaryNeeds,
           excludeWords: [...hardExclusions, ...allDislikes],
-          excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name)],
+          excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name), ...keepMeals.map((m) => m.name)],
           cuisines: settings.food.cuisines,
         })
         // Sized to the family; skip dinners far over the per-dinner budget.
         const perDinner = Number(perMealBudget) || 20
-        libraryMeals = picks
+        const affordable = picks
           .map((r, i) => recipeToMeal(r, `L${i + 1}`, profile.familySize))
           .filter((m) => (Number(m.estimatedCost) || 0) <= perDinner * 1.4)
-          .slice(0, optionsCount)
+        // Favor options that share fresh ingredients with each other (and with kept picks),
+        // so whatever the family picks uses whole bunches/bags instead of half of each.
+        libraryMeals = pickWithOverlap(affordable, optionsCount, keepMeals)
       } catch (e) {
         console.error('library picks failed', e)
       }
@@ -205,6 +211,11 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
     if (hasKids) constraintLines.push(`Kid-friendly by default: familiar flavors, components kept separate where possible, nothing "mixed" that a kid can't pick apart.`)
     if (settings.plan.leftoverNight) constraintLines.push(`Mark at least 2 options "leftoverFriendly": true — dinners that double well and reheat well (for the family's leftover night). Their servings should be ${profile.familySize * 2}.`)
     if (recentNames.length) constraintLines.push(`Do not repeat these recent dinners: ${recentNames.slice(0, 20).join(', ')}.`)
+    constraintLines.push(`Share fresh ingredients across options where it's natural: if one dinner uses half a bunch of cilantro, a few green onions, part of a bag of spinach or a tub of sour cream, have another option use the rest (different dish, different protein). A family picking several options should use whole packages, not throw half away.`)
+    if (keepMeals.length) {
+      const keptFresh = Array.from(new Set(keepMeals.flatMap((m) => (m.ingredients ?? []).filter(isFresh).map((i) => i.name.toLowerCase()))))
+      constraintLines.push(`The family already chose: ${keepMeals.map((m) => m.name).join(', ')}. Do not repeat them. These options fill the rest of the week${keptFresh.length ? `; where natural, reuse their fresh ingredients (${keptFresh.slice(0, 10).join(', ')})` : ''}.`)
+    }
 
     const nightLines = nightTimes.map((n) => `- ${n.label}: ${n.minutes} min`).join('\n')
     const timeRule = fastestNight === slowestNight

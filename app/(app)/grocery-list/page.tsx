@@ -7,6 +7,8 @@ import { nativeShare, tapHaptic } from '@/lib/native'
 import { trackOnce } from '@/lib/activation'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
+import { mealsUsing } from '@/lib/overlap'
+import { toPackages } from '@/lib/package-match'
 import { matchSale, type WeeklySales } from '@/lib/sales-shared'
 import RestOfShop from '@/components/RestOfShop'
 import StoreCompare from '@/components/StoreCompare'
@@ -33,6 +35,7 @@ export default function GroceryListPage() {
   const [householdId, setHouseholdId] = useState<string | null>(null)
   const [weekStart, setWeekStart] = useState<string | null>(null)
   const [items, setItems] = useState<ListItem[]>([])
+  const [planMeals, setPlanMeals] = useState<Meal[]>([])
   const [sales, setSales] = useState<WeeklySales[]>([])
   const [storeQuotes, setStoreQuotes] = useState<Array<{ store: string; total: number; item_count: number | null; missing: string[]; created_at: string }>>([])
   const [priceFactor, setPriceFactor] = useState(1)
@@ -129,6 +132,7 @@ export default function GroceryListPage() {
 
     if (!plan) { setNoPlan(true); setLoading(false); return }
     setTotalCost(plan.total_estimated_cost || 0)
+    setPlanMeals((plan.meals as Meal[]) ?? [])
     const ws: string = plan.week_start
     setWeekStart(ws)
 
@@ -441,6 +445,10 @@ export default function GroceryListPage() {
           onRemove={removeItem}
           onChangeQuantity={changeQuantity}
           onAdd={(name, category) => addItem(name, category)}
+          detailFor={(i) => ({
+            usedIn: i.source === 'plan' ? mealsUsing(i.name, planMeals) : [],
+            buy: i.quantity ? toPackages({ name: i.name, quantity: i.quantity, unit: i.unit, searchTerm: i.search_term }).label.replace(/^1 × package$/, '') || null : null,
+          })}
         />
 
         {/* The rest of the shop */}

@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Plus, X, Minus } from 'lucide-react'
+import { Plus, X, Minus, Info } from 'lucide-react'
 import { CATEGORY_ORDER, CATEGORY_EMOJI, type ListItem } from '@/lib/list'
 import type { GroceryCategory } from '@/types'
 import type { SaleItem } from '@/lib/sales-shared'
@@ -53,6 +53,8 @@ interface GroceryListProps {
   /** Split orders: which store a line is assigned to, and a tap to move it. */
   storeFor?: (item: ListItem) => string | null
   onMoveStore?: (item: ListItem) => void
+  /** Tap ⓘ on a line: which of this week's dinners use it, and what to buy ("1 × 32 oz carton"). */
+  detailFor?: (item: ListItem) => { usedIn: string[]; buy: string | null }
 }
 
 const SOURCE_LABEL: Partial<Record<ListItem['source'], string>> = {
@@ -62,8 +64,9 @@ const SOURCE_LABEL: Partial<Record<ListItem['source'], string>> = {
 const WEIGHT_UNITS = new Set(['lb', 'lbs', 'pound', 'pounds', 'kg', 'oz', 'ounce', 'ounces'])
 function stepFor(unit: string | null): number { return WEIGHT_UNITS.has((unit ?? '').toLowerCase()) ? 0.5 : 1 }
 
-export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, onChangeQuantity, saleFor, storeFor, onMoveStore }: GroceryListProps) {
+export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, onChangeQuantity, saleFor, storeFor, onMoveStore, detailFor }: GroceryListProps) {
   const [qtyEdit, setQtyEdit] = useState<string | null>(null)
+  const [openInfo, setOpenInfo] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
   const [adding, setAdding] = useState(false)
 
@@ -106,8 +109,10 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
             <ul className="space-y-1">
               {rows.map((item) => {
                 const muted = item.checked || item.have
+                const info = openInfo === item.id && detailFor ? detailFor(item) : null
                 return (
-                  <li key={item.id} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${muted ? 'bg-muted/50' : 'hover:bg-muted/30'}`}>
+                  <li key={item.id} className={`rounded-lg transition-colors ${muted ? 'bg-muted/50' : 'hover:bg-muted/30'}`}>
+                  <div className="flex items-center gap-3 px-3 py-2.5">
                     <button
                       type="button"
                       onClick={() => onToggleChecked(item)}
@@ -149,11 +154,26 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                     >
                       {item.have ? 'have it' : 'have?'}
                     </button>
+                    {detailFor && (
+                      <button type="button" onClick={() => setOpenInfo(openInfo === item.id ? null : item.id)} aria-label="Which dinners use this" aria-expanded={openInfo === item.id}
+                        title="Which dinners use this, and what to buy"
+                        className={`print:hidden ${openInfo === item.id ? 'text-primary' : 'text-muted-foreground/60 hover:text-primary'}`}>
+                        <Info className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                     {item.source !== 'plan' && (
                       <button type="button" onClick={() => onRemove(item)} aria-label="Remove" className="print:hidden text-muted-foreground hover:text-destructive">
                         <X className="w-3.5 h-3.5" />
                       </button>
                     )}
+                  </div>
+                  {info && (
+                    <div className="px-3 pb-2.5 pl-11 text-xs text-muted-foreground space-y-0.5 print:hidden">
+                      <p><span className="font-semibold text-foreground">For:</span> {info.usedIn.length ? info.usedIn.join(' · ') : item.source === 'plan' ? 'this week’s dinners' : 'you added this one'}</p>
+                      {info.buy && <p><span className="font-semibold text-foreground">Buy:</span> {info.buy}</p>}
+                      {info.usedIn.length >= 2 && <p className="text-emerald-700">🌿 Shared by {info.usedIn.length} dinners — the whole package gets used.</p>}
+                    </div>
+                  )}
                   </li>
                 )
               })}
