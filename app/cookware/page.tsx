@@ -28,7 +28,7 @@ export default function CookwarePage() {
             <Link href="/cookware" className="hidden sm:block font-medium text-foreground">Cookware</Link>
             <Link href="/blog" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Blog</Link>
             <Link href="/start" className="hidden sm:block font-medium text-muted-foreground hover:text-foreground">Pricing</Link>
-            <Link href="/dashboard" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors">My dinners</Link>
+            <Link href="/signup" className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors">Start free</Link>
           </nav>
         </div>
       </header>
