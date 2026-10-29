@@ -12,9 +12,10 @@ import type { RedeemResult } from '@/lib/promo'
 
 export type GiftPlanId = '3' | '6' | '12'
 export const GIFT_PLANS: Record<GiftPlanId, { months: number; days: number; cents: number; label: string; note: string }> = {
-  '3': { months: 3, days: 92, cents: 1497, label: '3 months', note: 'Same as 3 months of Family' },
-  '6': { months: 6, days: 183, cents: 2499, label: '6 months', note: 'Save $5' },
-  '12': { months: 12, days: 365, cents: 3900, label: '1 year', note: 'Best value — same as a Family year' },
+  // Gift prices set by Sarah, Oct 29 2026 (below the $4.99/mo and $39/yr Family prices).
+  '3': { months: 3, days: 92, cents: 1200, label: '3 months', note: '$4/month' },
+  '6': { months: 6, days: 183, cents: 2000, label: '6 months', note: 'About $3.33/month' },
+  '12': { months: 12, days: 365, cents: 3000, label: '1 year', note: 'Best value — $2.50/month' },
 }
 
 const APP = 'https://www.dinnerdrop.app'
