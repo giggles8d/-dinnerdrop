@@ -47,7 +47,15 @@ export default async function LibraryRecipePage({ params }: { params: { slug: st
     keywords: (r.tags ?? []).join(', ') || undefined,
     recipeIngredient: (r.ingredients ?? []).map((i) => `${i.quantity ?? ''} ${i.unit ?? ''} ${i.name}`.replace(/\s+/g, ' ').trim()),
     recipeInstructions: (r.steps ?? []).map((s) => ({ '@type': 'HowToStep', text: s })),
-    nutrition: r.nutrition ? { '@type': 'NutritionInformation', calories: `${r.nutrition.calories} calories`, proteinContent: `${r.nutrition.protein} g` } : undefined,
+    nutrition: r.nutrition ? {
+      '@type': 'NutritionInformation', servingSize: '1 serving', calories: `${r.nutrition.calories} calories`, proteinContent: `${r.nutrition.protein} g`,
+      ...(r.nutrition.carbs != null ? { carbohydrateContent: `${r.nutrition.carbs} g` } : {}),
+      ...(r.nutrition.fat != null ? { fatContent: `${r.nutrition.fat} g` } : {}),
+      ...(r.nutrition.satFat != null ? { saturatedFatContent: `${r.nutrition.satFat} g` } : {}),
+      ...(r.nutrition.fiber != null ? { fiberContent: `${r.nutrition.fiber} g` } : {}),
+      ...(r.nutrition.sugar != null ? { sugarContent: `${r.nutrition.sugar} g` } : {}),
+      ...(r.nutrition.sodium != null ? { sodiumContent: `${r.nutrition.sodium} mg` } : {}),
+    } : undefined,
   }
   return (
     <>

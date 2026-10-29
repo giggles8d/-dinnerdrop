@@ -1,4 +1,5 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { cleanNutrition } from '@/lib/nutrition-shared'
 import { createClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, type Settings, type Weekday } from '@/lib/settings'
 import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName, honestTags } from '@/lib/recipe-library'
@@ -261,7 +262,7 @@ ${timeRule}
 - "safeBite" is the one plain component of that dinner a picky eater can have on its own, in 2–4 words ("plain rice", "a plain tortilla", "chicken, sauce on the side"); every dinner must have one.
 - Size every ingredient for the dinner's servings — this is a real family, not a recipe for 4. Per serving buy at least 6 oz raw boneless meat or fish (8 oz bone-in, 5 1/2 oz ground meat), 3 1/2 oz dry pasta or 1/2 cup dry rice, 1/2 lb potatoes, and 1 cup of vegetables. So ${profile.familySize} servings needs about ${(Math.ceil((profile.familySize * 6) / 4) / 4).toFixed(2).replace(/\.?0+$/, '')} lb of boneless meat${settings.plan.leftoverNight ? `, and a leftover-friendly dinner (${profile.familySize * 2} servings) needs double that` : ''}.
 - Give each dinner 1–3 short tags from: quick, sheet-pan, one-pot, air-fryer, slow-cooker, instant-pot, grill, kid-favorite, leftover-friendly, budget, high-protein, vegetarian, 15-min
-${settings.food.nutritionInfo ? '- Estimate nutrition per serving (calories, grams of protein)' : ''}
+${settings.food.nutritionInfo ? '- Estimate nutrition per serving from the ingredient amounts (calories; grams of protein, carbs, fat, saturated fat, fiber, sugar; mg sodium)' : ''}
 
 Return ONLY valid JSON with this exact structure, no markdown:
 {
@@ -278,7 +279,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
       "tags": ["quick", "kid-favorite"],
       "suggestedNight": "Tuesday",
       "leftoverFriendly": false,
-      "safeBite": "plain rice",${pantrySection ? '\n      "usesPantry": ["chicken thighs"],' : ''}${salesSection ? '\n      "saleItems": ["chicken thighs $1.99/lb"],' : ''}${kidSafeFoods.length ? '\n      "kidNote": "plain rice on the side for Max",' : ''}${nutritionField ? '\n      "nutrition": { "calories": 520, "protein": 34 },' : ''}
+      "safeBite": "plain rice",${pantrySection ? '\n      "usesPantry": ["chicken thighs"],' : ''}${salesSection ? '\n      "saleItems": ["chicken thighs $1.99/lb"],' : ''}${kidSafeFoods.length ? '\n      "kidNote": "plain rice on the side for Max",' : ''}${nutritionField ? '\n      "nutrition": { "calories": 520, "protein": 34, "carbs": 48, "fat": 18, "satFat": 6, "fiber": 7, "sugar": 9, "sodium": 890 },' : ''}
       "ingredients": [
         { "name": "string", "quantity": "1 1/2", "unit": "lb", "category": "Meat & Seafood", "searchTerm": "chicken breast" }
       ],
@@ -312,6 +313,7 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
       servings: m.leftoverFriendly ? profile.familySize * 2 : profile.familySize,
       cookTime: Number(m.cookTime) || 30,
       prepTime: Number(m.prepTime) || 0,
+      nutrition: cleanNutrition(m.nutrition) ?? undefined,
     })).map(ensurePortions).map((m) => ({ ...m, tags: honestTags(m.tags ?? [], (m.cookTime ?? 0) + (m.prepTime ?? 0)) }))
     // Enforce the all-day dinner cap (the model over-leans on slow cookers when they're listed).
     if (maxLong >= 0) {

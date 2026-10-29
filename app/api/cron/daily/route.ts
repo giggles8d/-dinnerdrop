@@ -48,6 +48,9 @@ export async function GET(request: NextRequest) {
   const headers = { authorization: `Bearer ${process.env.CRON_SECRET}` }
   // Email campaigns run in their own function (own 300s budget); started now, awaited at the end.
   const campaigns = fetch(`${base}/api/cron/campaigns`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
+  // Recipe nutrition fill (carbs, fat, fiber, sugar, sodium) also runs in its own function; started now, not awaited
+  // past this function's own budget.
+  const nutrition = fetch(`${base}/api/cron/nutrition`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
   try {
     const r = await fetch(`${base}/api/cron/email-sequences`, { headers, cache: 'no-store' })
     out.emailSequences = await r.json().catch(() => ({ status: r.status }))
@@ -60,5 +63,8 @@ export async function GET(request: NextRequest) {
     out.newsletter = await newsletter
   }
   out.campaigns = await campaigns
+  // Don't let the nutrition fill hold this function past its own limit; it keeps running in its own function.
+  const leftMs = Math.max(1000, 285000 - (Date.now() - now.getTime()))
+  out.nutrition = await Promise.race([nutrition, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), leftMs))])
   return NextResponse.json({ ok: true, at: now.toISOString(), ...out })
 }

@@ -15,6 +15,7 @@ import CookMode from '@/components/CookMode'
 import CookwareList from '@/components/CookwareList'
 import RecipeNotes from '@/components/RecipeNotes'
 import PrintButton from '@/components/PrintButton'
+import NutritionPanel from '@/components/NutritionPanel'
 import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
@@ -396,6 +397,8 @@ function RecipeContent() {
             ))}
           </ol>
         </section>
+
+        <NutritionPanel nutrition={meal.nutrition} />
 
         {/* Swap button */}
         <div className="border-t border-border pt-6 print:hidden">

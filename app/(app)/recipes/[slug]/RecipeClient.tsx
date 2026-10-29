@@ -2,6 +2,7 @@
 import CookwareList from '@/components/CookwareList'
 import RecipeNotes from '@/components/RecipeNotes'
 import PrintButton from '@/components/PrintButton'
+import NutritionPanel from '@/components/NutritionPanel'
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
@@ -123,6 +124,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
             ))}
           </ol>
         </section>
+        <div className="mt-8"><NutritionPanel nutrition={meal.nutrition} /></div>
         {r.image_credit && <p className="text-[10px] text-muted-foreground mt-8">Photo: {r.image_credit}</p>}
       </div>
     </div>

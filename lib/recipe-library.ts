@@ -8,6 +8,7 @@
  * library instead of regenerating, and families can browse / upload their own.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { cleanNutrition } from '@/lib/nutrition-shared'
 import type { Meal } from '@/types'
 import { ensurePortions, scaleMeal } from '@/lib/portions'
 
@@ -146,7 +147,7 @@ export async function upsertRecipes(
         dietary: opts.dietary ?? [],
         image_url: img?.url ?? null,
         image_credit: img?.credit ?? null,
-        nutrition: meal.nutrition ?? null,
+        nutrition: cleanNutrition(meal.nutrition) ?? null,
         source: opts.source ?? 'generated',
         created_by: opts.userId ?? null,
         // Only the nightly grower (no userId) adds to the shared library. Dinners

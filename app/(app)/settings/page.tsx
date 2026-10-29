@@ -432,7 +432,7 @@ export default function SettingsPage() {
                 </Field>
                 <div className="space-y-3">
                   <Toggle checked={settings.food.kidFriendly} onChange={(v) => patch((s) => { s.food.kidFriendly = v })} label="Kid-friendly by default" hint="Familiar flavors, components kept separate, one safe thing on every plate." />
-                  <Toggle checked={settings.food.nutritionInfo} onChange={(v) => patch((s) => { s.food.nutritionInfo = v })} label="Show calories and protein per serving" />
+                  <Toggle checked={settings.food.nutritionInfo} onChange={(v) => patch((s) => { s.food.nutritionInfo = v })} label="Show nutrition per serving (calories, protein, carbs, fat)" />
                 </div>
               </>
             )}
