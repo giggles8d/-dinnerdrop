@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
 const protectedPaths = [
-  '/dashboard', '/grocery-list', '/favorites', '/recipe',
+  '/dashboard', '/plan', '/grocery-list', '/favorites', '/recipe',
   '/onboarding', '/pantry', '/history', '/account', '/settings', '/join',
 ]
 const authPaths = ['/login', '/signup']

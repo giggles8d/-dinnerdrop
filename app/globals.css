@@ -42,3 +42,10 @@
 html[data-native] .web-only { display: none !important; }
 .native-only { display: none !important; }
 html[data-native] .native-only { display: revert !important; }
+
+/* Paper: plain white, sensible margins, no shadows. */
+@media print {
+  @page { margin: 0.6in; }
+  html, body { background: #fff !important; }
+  * { box-shadow: none !important; }
+}

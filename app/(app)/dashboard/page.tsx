@@ -850,6 +850,7 @@ function DashboardContent() {
                 Build my grocery list &rarr;
               </Link>
               <ShareWeekButton />
+              <Link href="/plan/print" className="web-only inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-sm font-semibold text-foreground hover:bg-muted">🖨️ Print the week</Link>
               </div>
               <div className="mt-6 p-4 rounded-xl border border-accent/30 bg-accent/5 text-center">
                 <p className="text-sm font-semibold text-foreground mb-1">Know someone who dreads the dinner question?</p>

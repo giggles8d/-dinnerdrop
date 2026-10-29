@@ -14,6 +14,7 @@ import { trackOnce } from '@/lib/activation'
 import CookMode from '@/components/CookMode'
 import CookwareList from '@/components/CookwareList'
 import RecipeNotes from '@/components/RecipeNotes'
+import PrintButton from '@/components/PrintButton'
 import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
@@ -25,7 +26,7 @@ function HeroImage({ mealName, imageUrl }: { mealName: string; imageUrl?: string
   const [heroFailed, setHeroFailed] = useState<string | null>(null)
 
   return (
-    <div className="relative h-[300px] sm:h-[400px] w-full rounded-xl overflow-hidden mb-8">
+    <div className="relative h-[300px] sm:h-[400px] w-full rounded-xl overflow-hidden mb-8 print:hidden">
       {loading ? (
         <div className="absolute inset-0 bg-muted animate-pulse" />
       ) : photo ? (
@@ -279,7 +280,7 @@ function RecipeContent() {
         {/* Back link */}
         <Link
           href="/dashboard"
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 print:hidden"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to meal plan
@@ -300,7 +301,8 @@ function RecipeContent() {
               {meal.name}
             </h1>
           </div>
-          <div className="flex items-center gap-1 flex-shrink-0">
+          <div className="flex items-center gap-1 flex-shrink-0 print:hidden">
+          <PrintButton />
           <button
             onClick={async () => {
               const text = `${meal.name}\n\nIngredients:\n${meal.ingredients.map((i) => `• ${[i.quantity, i.unit, i.name].filter(Boolean).join(' ')}`).join('\n')}\n\nSteps:\n${meal.steps.map((st, n) => `${n + 1}. ${st}`).join('\n')}\n\nPlanned with DinnerDrop — dinnerdrop.app`
@@ -348,14 +350,15 @@ function RecipeContent() {
               {meal.nutrition.calories} cal · {meal.nutrition.protein}g protein
             </div>
           )}
-          <button onClick={() => setCooking(true)} className="ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90">
+          <button onClick={() => setCooking(true)} className="print:hidden ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90">
             <ChefHat className="w-4 h-4" /> Cook mode
           </button>
         </div>
 
-        <RecipeNotes recipeName={meal.name} />
-
-        <CookwareList meal={meal} />
+        <div className="print:hidden">
+          <RecipeNotes recipeName={meal.name} />
+          <CookwareList meal={meal} />
+        </div>
 
         {/* Ingredients */}
         <section className="mb-8">
@@ -395,7 +398,7 @@ function RecipeContent() {
         </section>
 
         {/* Swap button */}
-        <div className="border-t border-border pt-6">
+        <div className="border-t border-border pt-6 print:hidden">
           <button
             onClick={handleSwap}
             disabled={swapping}

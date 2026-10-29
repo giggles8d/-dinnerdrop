@@ -29,7 +29,7 @@ export default function Nav() {
   // Public pages (the recipe library) get a marketing-style header when nobody is signed in.
   if (signedIn === false) {
     return (
-      <nav className="border-b border-border bg-white">
+      <nav className="border-b border-border bg-white print:hidden">
         <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-accent mt-0.5" />
@@ -50,7 +50,7 @@ export default function Nav() {
   }
 
   return (
-    <nav className="border-b border-border bg-white">
+    <nav className="border-b border-border bg-white print:hidden">
       <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-accent mt-0.5" />
