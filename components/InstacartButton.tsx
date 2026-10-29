@@ -14,7 +14,12 @@ interface InstacartButtonProps {
   onSent?: () => void
   /** Pinned-bar version: no helper line under the button. */
   compact?: boolean
+  /** The family's stores (Settings → Stores), to warn about limited-brand stores like Aldi. */
+  familyStores?: string[]
 }
+
+/** Stores that carry few national brands, so Instacart substitutes more ("Close Match" items). */
+const LIMITED_BRAND = /\b(aldi|lidl|save[- ]a[- ]lot|trader joe|costco|sam'?s club|bj'?s)\b/i
 
 /**
  * Instacart "Shop ingredients" CTA.
@@ -26,7 +31,9 @@ interface InstacartButtonProps {
  *   - Approved button copy: "Shop ingredients"
  * Docs: https://docs.instacart.com/developer_platform_api/guide/concepts/design/cta_design
  */
-export default function InstacartButton({ groceryList, estTotal, weekStart, store, onSent, compact }: InstacartButtonProps) {
+export default function InstacartButton({ groceryList, estTotal, weekStart, store, onSent, compact, familyStores }: InstacartButtonProps) {
+  const limited = [store, ...(familyStores ?? [])].filter((s): s is string => !!s && LIMITED_BRAND.test(s))
+  const limitedName = limited[0]?.replace(/\b\w/g, (c) => c.toUpperCase())
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -86,6 +93,11 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
       {!compact && (
         <p className="text-[11px] text-muted-foreground">
           Opens Instacart in a new tab. Powered by Instacart.
+        </p>
+      )}
+      {!compact && limitedName && (
+        <p className="text-[11px] text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5">
+          Shopping {limitedName}? It carries fewer brands, so Instacart swaps more items (e.g. queso fresco for cotija). Check anything marked <b>Close Match</b> and tap <b>Show alternatives</b> before checkout.
         </p>
       )}
 

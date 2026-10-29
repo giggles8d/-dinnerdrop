@@ -587,7 +587,7 @@ export default function GroceryListPage() {
                 })}
               </div>
             ) : (
-              <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={afterSent} />
+              <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={afterSent} familyStores={myStores.map((s) => s.name)} />
             )}
             <div className="space-y-2">
               {krogerConnected ? (

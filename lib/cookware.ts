@@ -71,7 +71,7 @@ export const COOKWARE: CookwareGroup[] = [
     { id: 'pressure-cooker', name: '6-quart electric pressure cooker', search: '6 quart electric pressure cooker multicooker', why: '"I forgot to start dinner" becomes dinner in 30 minutes.', match: /\b(instant pot|pressure cook|pressure-cook)\b/i },
     { id: 'slow-cooker', name: '6-quart slow cooker', search: '6 quart programmable slow cooker', why: 'Start it in the morning, dinner is done when you walk in.', match: /\b(slow cooker|crock ?pot)\b/i },
     { id: 'air-fryer', name: 'Air fryer (5–6 quart)', search: 'air fryer 6 quart', why: 'Crispy chicken and vegetables faster than heating the oven.', match: /\b(air fryer|air-fry|air fry)\b/i },
-    { id: 'blender', name: 'Blender', search: 'countertop blender', why: 'Smoothies, sauces, blended soups.', match: /\b(blend|blender|pur[eé]e)\b/i },
+    { id: 'blender', name: 'Blender', search: 'countertop blender', why: 'Smoothies, sauces, blended soups.', match: /\b(blender|pur[eé]e(?:d)?|blend (?:until|till|to a|into|the (?:sauce|soup|mixture|dressing)|everything|all)|blend (?:in|with) a)\b/i }, // not "until the flavors blend"
     { id: 'immersion-blender', name: 'Immersion blender', search: 'immersion hand blender', why: 'Blend soup right in the pot.', match: /\b(immersion blender|hand blender|stick blender)\b/i },
     { id: 'food-processor', name: 'Mini food processor', search: 'mini food processor 3 cup', why: 'Pesto, salsa and chopping onions without tears.', match: /\b(food processor|pulse)\b/i },
     { id: 'rice-cooker', name: 'Rice cooker', search: 'rice cooker 6 cup', why: 'Perfect rice with no watching — one less burner.', match: /\b(rice cooker)\b/i },

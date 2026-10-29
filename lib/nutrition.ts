@@ -35,7 +35,7 @@ export async function estimateNutrition(dishes: Dish[]): Promise<Record<string, 
 export async function fillRecipeNutrition(admin: SupabaseClient, opts: { budgetMs?: number; limit?: number; concurrency?: number } = {}) {
   const started = Date.now()
   const budget = opts.budgetMs ?? 200000
-  const { data, error } = await admin.from('recipes').select('id, name, servings, ingredients').filter('nutrition->>carbs', 'is', null).limit(opts.limit ?? 1000)
+  const { data, error } = await admin.from('recipes').select('id, name, servings, ingredients').filter('nutrition->>carbs', 'is', null).order('kept_count', { ascending: false }).order('times_planned', { ascending: false }).limit(opts.limit ?? 1000)
   if (error) return { error: error.message }
   const todo = (data ?? []) as Array<{ id: string; name: string; servings: number | null; ingredients: Meal['ingredients'] | null }>
   const batches: typeof todo[] = []
