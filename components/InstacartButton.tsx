@@ -12,6 +12,8 @@ interface InstacartButtonProps {
   store?: string
   /** Called after the list was handed to Instacart (not on the fallback search). */
   onSent?: () => void
+  /** Pinned-bar version: no helper line under the button. */
+  compact?: boolean
 }
 
 /**
@@ -24,7 +26,7 @@ interface InstacartButtonProps {
  *   - Approved button copy: "Shop ingredients"
  * Docs: https://docs.instacart.com/developer_platform_api/guide/concepts/design/cta_design
  */
-export default function InstacartButton({ groceryList, estTotal, weekStart, store, onSent }: InstacartButtonProps) {
+export default function InstacartButton({ groceryList, estTotal, weekStart, store, onSent, compact }: InstacartButtonProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -81,9 +83,11 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
         <span>{loading ? 'Creating your list…' : store ? `Shop ${store} list` : 'Shop ingredients'}</span>
       </button>
 
-      <p className="text-[11px] text-muted-foreground">
-        Opens Instacart in a new tab. Powered by Instacart.
-      </p>
+      {!compact && (
+        <p className="text-[11px] text-muted-foreground">
+          Opens Instacart in a new tab. Powered by Instacart.
+        </p>
+      )}
 
       {error && (
         <p className="text-sm text-destructive" role="alert">

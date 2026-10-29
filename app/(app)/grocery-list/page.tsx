@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Copy, Printer, Share2, Check } from 'lucide-react'
 import { nativeShare, tapHaptic } from '@/lib/native'
@@ -65,6 +65,16 @@ export default function GroceryListPage() {
     try { const r = await fetch('/api/email/recipes', { method: 'POST' }); setRecipesMail(r.ok ? 'sent' : 'error') } catch { setRecipesMail('error') }
   }
   const [copied, setCopied] = useState(false)
+  // Desktop: pin a slim "Shop ingredients" bar to the bottom while the send section is off screen.
+  const sendRef = useRef<HTMLDivElement | null>(null)
+  const [sendInView, setSendInView] = useState(true)
+  useEffect(() => {
+    const el = sendRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const io = new IntersectionObserver(([e]) => setSendInView(e.isIntersecting), { rootMargin: '0px 0px -40px 0px' })
+    io.observe(el)
+    return () => io.disconnect()
+  })
   const [ordered, setOrdered] = useState<ListItem[]>([])
   const [showOrdered, setShowOrdered] = useState(false)
   const [stapleDraft, setStapleDraft] = useState('')
@@ -535,7 +545,23 @@ export default function GroceryListPage() {
           <ReceiptUpload onDone={() => { setAskActual(null); load() }} />
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden">
+        {!sendInView && shoppableCount > 0 && (
+          <div className="hidden sm:block fixed bottom-4 inset-x-0 z-40 px-4 print:hidden">
+            <div className="mx-auto max-w-2xl flex items-center justify-between gap-4 rounded-2xl border border-border bg-background/95 backdrop-blur shadow-xl px-5 py-3">
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-foreground">{shoppableCount} items ready{storeEst > 0 ? ` · about $${Math.round(storeEst)}` : ''}</p>
+                <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="text-xs text-muted-foreground hover:text-foreground underline">More ways to send ↓</button>
+              </div>
+              {splitLists && splitStores ? (
+                <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="px-5 py-2.5 rounded-full bg-[#003D29] text-[#FAF1E5] font-semibold text-sm">Send to your cart ↓</button>
+              ) : (
+                <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={afterSent} compact />
+              )}
+            </div>
+          </div>
+        )}
+
+        <div ref={sendRef} className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden">
           <p className="hidden sm:block text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>
           <div className="space-y-4">
             {splitLists && splitStores ? (
