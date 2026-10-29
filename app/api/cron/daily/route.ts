@@ -6,6 +6,7 @@ import { creditReferrals } from '@/lib/referrals'
 import { backfillImages } from '@/lib/recipe-library'
 import { runOrderFollowups } from '@/lib/order-followup'
 import { runWeeklyReport } from '@/lib/weekly-report'
+import { shrinkRecipeImages } from '@/lib/shrink-images'
 
 export const maxDuration = 300
 
@@ -47,6 +48,8 @@ export async function GET(request: NextRequest) {
     const r = await fetch(`${base}/api/cron/email-sequences`, { headers, cache: 'no-store' })
     out.emailSequences = await r.json().catch(() => ({ status: r.status }))
   } catch (e) { out.emailSequences = { error: String(e) } }
+  // Recipe photo diet: ~1 MB JPEGs → 900px WebP, a time-boxed batch per day (new photos included).
+  try { out.shrinkImages = await shrinkRecipeImages(admin, { limit: 400, budgetMs: 120000 }) } catch (e) { out.shrinkImages = { error: String(e) } }
   if (newsletter) {
     out.newsletter = await newsletter
   }
