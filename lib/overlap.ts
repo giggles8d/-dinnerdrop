@@ -37,7 +37,11 @@ const SKIP_RE = /\b(salt|pepper flake|black pepper|oil|water|sugar|flour|garlic 
 export function isFresh(ing: Pick<Ingredient, 'name' | 'category'> | string): boolean {
   const name = typeof ing === 'string' ? ing : ing.name
   const k = ingredientKey(name)
-  if (!k || SKIP_RE.test(k)) return false
+  if (!k || SKIP_RE.test(k) || /\bfrozen\b/.test(name.toLowerCase())) return false
+  // Canned/jarred goods keep — except the opened-and-half-used ones.
+  const cat = typeof ing === 'string' ? null : ing.category
+  if (cat === 'Frozen') return false
+  if (cat === 'Pantry & Dry Goods' || /\b(canned|crushed|diced tomato)/.test(name.toLowerCase())) return /\b(tomato paste|coconut milk|salsa)\b/.test(k)
   if (FRESH_RE.test(k)) return true
   return typeof ing !== 'string' && ing.category === 'Produce' && !/\b(onion|potato|garlic|carrot|apple|banana)\b/.test(k)
 }
