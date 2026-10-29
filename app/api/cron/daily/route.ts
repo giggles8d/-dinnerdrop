@@ -46,6 +46,8 @@ export async function GET(request: NextRequest) {
 
   const base = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
   const headers = { authorization: `Bearer ${process.env.CRON_SECRET}` }
+  // Email campaigns run in their own function (own 300s budget); started now, awaited at the end.
+  const campaigns = fetch(`${base}/api/cron/campaigns`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
   try {
     const r = await fetch(`${base}/api/cron/email-sequences`, { headers, cache: 'no-store' })
     out.emailSequences = await r.json().catch(() => ({ status: r.status }))
@@ -57,5 +59,6 @@ export async function GET(request: NextRequest) {
   if (newsletter) {
     out.newsletter = await newsletter
   }
+  out.campaigns = await campaigns
   return NextResponse.json({ ok: true, at: now.toISOString(), ...out })
 }
