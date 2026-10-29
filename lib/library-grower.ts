@@ -200,7 +200,7 @@ Rules:
 - Different proteins and cuisines across the ${perBatch}; none may be a version of these existing dinners: ${avoid.join('; ')}
 
 Return ONLY valid JSON, no markdown:
-{"meals":[{"name":"string","cuisine":"Mexican","protein":"chicken thighs","cookTime":25,"prepTime":10,"servings":4,"estimatedCost":16.5,"dietary":["Gluten-free"],"tags":["quick"],"nutrition":{"calories":520,"protein":34},"ingredients":[{"name":"chicken thighs","quantity":"1 1/2","unit":"lb","category":"Meat & Seafood","searchTerm":"boneless chicken thighs"}],"steps":["..."]}]}
+{"meals":[{"name":"string","cuisine":"Mexican","protein":"chicken thighs","cookTime":25,"prepTime":10,"servings":4,"estimatedCost":16.5,"dietary":["Gluten-free"],"tags":["quick"],"nutrition":{"calories":520,"protein":34,"carbs":48,"fat":18,"satFat":6,"fiber":7,"sugar":9,"sodium":890},"ingredients":[{"name":"chicken thighs","quantity":"1 1/2","unit":"lb","category":"Meat & Seafood","searchTerm":"boneless chicken thighs"}],"steps":["..."]}]}
 Categories must be one of: ${Array.from(CATEGORIES).join(', ')}.`
     const text = await generateWithClaude(prompt, 6000)
     const out = parseClaudeJSON<{ meals: Array<Meal & { dietary?: string[] }> }>(text)
