@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { lineItemFor } from '@/lib/instacart'
 
 // THROWAWAY (preview only, never merged): which line-item shape makes Instacart put 2 packages in the cart?
 export async function GET() {
@@ -29,6 +30,9 @@ export async function GET() {
       { name: 'grated parmesan cheese', quantity: 16, unit: 'ounce', display_text: 'D parm 16 oz' },
     ],
   }
+  const marion: Array<[string, string, string, string]> = [["Garlic","1 head","count","fresh garlic bulb"],["Limes","2","count","limes"],["Cornstarch","1/2","cup","cornstarch"],["Hoisin sauce","1 1/2","tbsp","hoisin sauce"],["Frozen sweet corn","12","oz","frozen sweet corn"],["Frozen sweet peas","2 1/4","cup","frozen sweet peas"],["Broccoli florets","1 1/4","lb","fresh broccoli florets"],["Boneless skinless chicken thighs","2 3/4","lb","boneless skinless chicken thighs"],["Yellow onion","2","count","yellow onion"],["Ground beef","1 1/4","lb","85% lean ground beef"],["Thick cut bacon","18","oz","thick cut bacon"],["Cotija cheese","3","oz","cotija cheese"],["Eggs","15","count","large eggs"],["Grated Parmesan cheese","3","cup","grated parmesan cheese"],["Instant brown rice","1 3/4","cup","instant brown rice"],["Ramen noodles","5","count","dried ramen noodle cakes"],["Chicken broth","9","cup","low sodium chicken broth"],["Crushed tomatoes","2","can","28 oz crushed tomatoes"],["Black beans","2","cans","black beans"],["Spaghetti","3 1/2","lb","spaghetti pasta"]]
+  variants.E_new = marion.map(([name, quantity, unit, searchTerm]) => { const li = lineItemFor({ name, quantity, unit, searchTerm }); return { name: li.name, quantity: li.quantity, unit: li.unit, display_text: `E ${name} want ${li.label}` } })
+  for (const k of ['A_package', 'B_each', 'C_measurements', 'D_weight']) delete variants[k]
   const out: Record<string, unknown> = { env }
   for (const [k, line_items] of Object.entries(variants)) {
     const r = await fetch(`${base}/idp/v1/products/products_link`, {
