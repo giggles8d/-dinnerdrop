@@ -26,6 +26,13 @@ export async function GET(request: NextRequest) {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const now = new Date()
   const out: Record<string, unknown> = {}
+  // Sunday: start the weekly newsletter first (its own function, up to 300 s for ~300 sends) and collect the result at the end.
+  const nlBase = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
+  const newsletter = now.getUTCDay() === 0
+    ? fetch(`${nlBase}/api/cron/newsletter`, { headers: { authorization: `Bearer ${process.env.CRON_SECRET}` }, cache: 'no-store' })
+        .then((r) => r.json().catch(() => ({ status: r.status })))
+        .catch((e) => ({ error: String(e) }))
+    : null
 
   try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
   try { out.orderFollowups = await runOrderFollowups(admin, now) } catch (e) { out.orderFollowups = { error: String(e) } }
@@ -40,11 +47,8 @@ export async function GET(request: NextRequest) {
     const r = await fetch(`${base}/api/cron/email-sequences`, { headers, cache: 'no-store' })
     out.emailSequences = await r.json().catch(() => ({ status: r.status }))
   } catch (e) { out.emailSequences = { error: String(e) } }
-  if (now.getUTCDay() === 0) {
-    try {
-      const r = await fetch(`${base}/api/cron/newsletter`, { headers, cache: 'no-store' })
-      out.newsletter = await r.json().catch(() => ({ status: r.status }))
-    } catch (e) { out.newsletter = { error: String(e) } }
+  if (newsletter) {
+    out.newsletter = await newsletter
   }
   return NextResponse.json({ ok: true, at: now.toISOString(), ...out })
 }
