@@ -60,6 +60,43 @@ export async function latestPlan(admin: SupabaseClient, userId: string): Promise
   return data ? { id: data.id, week_start: data.week_start, meals: (data.meals as Meal[]) ?? [] } : null
 }
 
+const DAY_INDEX: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri: 4, sat: 5, sun: 6 }
+
+/**
+ * Dinners the family has already had: planned for a night in the last 7 days, before today
+ * (Sarah, Oct 29 2026: the "which should come back?" text listed this week's Thu/Fri dinners nobody
+ * had eaten yet). Looks across this week's and last week's plans; oldest first, one per name.
+ */
+export async function recentDinners(admin: SupabaseClient, userId: string, todayStr: string): Promise<Meal[]> {
+  const { data } = await admin.from('meal_plans').select('week_start, meals, created_at').eq('user_id', userId).order('created_at', { ascending: false }).limit(4)
+  const today = new Date(todayStr + 'T12:00:00Z').getTime()
+  const seen = new Set<string>()
+  const out: Array<{ meal: Meal; at: number }> = []
+  // Newest plan per week wins (a re-planned week replaces the old one).
+  const weeks = new Set<string>()
+  for (const p of (data ?? []) as Array<{ week_start: string; meals: Meal[] }>) {
+    if (!p.week_start || weeks.has(p.week_start)) continue
+    weeks.add(p.week_start)
+    const start = new Date(p.week_start + 'T12:00:00Z').getTime()
+    for (const m of p.meals ?? []) {
+      const idx = DAY_INDEX[String(m.day ?? '').slice(0, 3).toLowerCase()]
+      if (idx === undefined) continue
+      const at = start + idx * 86400000
+      if (at >= today || at < today - 7 * 86400000) continue
+      const key = m.name.toLowerCase()
+      if (seen.has(key)) continue
+      seen.add(key)
+      out.push({ meal: m, at })
+    }
+  }
+  return out.sort((a, b) => a.at - b.at).map((x) => x.meal)
+}
+
+/** The numbered dinners from the last "which should come back?" text we sent this person. */
+function againListFrom(body: string | null | undefined): string[] {
+  return Array.from(String(body ?? '').matchAll(/^\d+\.\s+(?:[A-Z][a-z]{2}\s+—\s+)?(.+)$/gm)).map((m) => m[1].trim())
+}
+
 async function sentThisWeek(admin: SupabaseClient, memberId: string): Promise<number> {
   const since = new Date(Date.now() - 7 * 86400000).toISOString()
   // Only proactive texts count toward the weekly cap — replies to their own messages and the opt-in don't.
@@ -129,8 +166,10 @@ export async function runTextingDay(admin: SupabaseClient, now: Date = new Date(
       }
       // "Bring it back?" day: only to people already opted in, about the current plan.
       if (isAgain && !(await alreadySent(admin, o.household_id, 'again_request'))) {
-        const plan = await latestPlan(admin, o.id)
-        if (!plan || !plan.meals.length) { report.skipped++; continue }
+        // Only dinners they've actually had (last 7 days, before today) — never ones still coming up.
+        const had = await recentDinners(admin, o.id, localNow(o.timezone || 'America/New_York', now).dateStr)
+        if (had.length < 2) { report.skipped++; continue }
+        const plan = { meals: had }
         const { data: members } = await admin.from('household_members').select('*').eq('household_id', o.household_id).not('phone', 'is', null)
         const voters = ((members ?? []) as MemberRow[]).filter((m) => m.can_vote && m.phone_opt_in_at && !m.phone_opted_out)
         const body = `DinnerDrop — which dinners should come back soon?\n${menuLines(plan.meals)}\n\nReply AGAIN + numbers (e.g. "again 1 3"), or NONE.`
@@ -298,6 +337,9 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
 
   const plan = owner ? await latestPlan(admin, owner.id) : null
   const meals = plan?.meals ?? []
+  // After a "which should come back?" text, numbers mean the dinners in THAT text (past dinners), not this week's plan.
+  const againNames = ctx.lastAsk === 'again' ? againListFrom(ctx.lastAskBody) : []
+  const againMeals: Meal[] = againNames.length ? againNames.map((name) => meals.find((x) => x.name === name) ?? ({ name } as Meal)) : meals
 
   switch (parsed.kind) {
     case 'menu':
@@ -332,7 +374,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const rows: Array<{ household_id: string; member_id: string; week_start: string; meal_name: string; vote: string }> = []
       if (parsed.kind === 'allgood') meals.forEach((x) => rows.push({ household_id: m.household_id, member_id: m.id, week_start: plan.week_start, meal_name: x.name, vote: 'keep' }))
       if (parsed.kind === 'skip') meals.forEach((x, i) => rows.push({ household_id: m.household_id, member_id: m.id, week_start: plan.week_start, meal_name: x.name, vote: parsed.numbers.includes(i + 1) ? 'skip' : 'keep' }))
-      if (parsed.kind === 'again') parsed.numbers.forEach((n) => { const x = meals[n - 1]; if (x) rows.push({ household_id: m.household_id, member_id: m.id, week_start: plan.week_start, meal_name: x.name, vote: 'again' }) })
+      if (parsed.kind === 'again') parsed.numbers.forEach((n) => { const x = againMeals[n - 1]; if (x) rows.push({ household_id: m.household_id, member_id: m.id, week_start: plan.week_start, meal_name: x.name, vote: 'again' }) })
       if (rows.length) {
         await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', plan.week_start).in('vote', parsed.kind === 'again' ? ['again'] : ['keep', 'skip'])
         await admin.from('meal_votes').insert(rows)
@@ -343,7 +385,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         const names = parsed.numbers.map((n) => meals[n - 1]?.name).filter(Boolean)
         return { reply: names.length ? `Got it — you'd skip ${names.join(' and ')}. ${family} will see the votes.` : `I didn't catch which numbers. Reply like "2 4" to skip those dinners.`, handled: true, member: m }
       }
-      const names = parsed.numbers.map((n) => meals[n - 1]?.name).filter(Boolean)
+      const names = parsed.numbers.map((n) => againMeals[n - 1]?.name).filter(Boolean)
       return { reply: names.length ? `Bring back ${names.join(' and ')} — noted. 🍽️` : `Reply like "again 1 3" to pick the ones that should come back.`, handled: true, member: m }
     }
     case 'add': {
@@ -368,7 +410,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   // and the numbered dinners — instead of guessing (Sarah, Oct 29 2026: "2" after "which should come
   // back?" was logged as a skip, and "oh no I want that again" landed on the grocery list).
   const mode: 'round' | 'again' | 'week' = round ? 'round' : ctx.lastAsk === 'again' ? 'again' : 'week'
-  const list = round ? round.candidates : meals
+  const list = round ? round.candidates : mode === 'again' ? againMeals : meals
   const weekStart = round ? round.week_start : plan?.week_start ?? mondayOf(new Date())
   const u = await understandInContext(body, ctx, list, mode)
   if (!u) return { reply: helpFor(mode, family), handled: true, member: m }
@@ -439,7 +481,7 @@ function helpFor(mode: 'round' | 'again' | 'week', family: string): string {
   return `Text MENU for this week's dinners, LIST for the grocery list, ADD + items to add to it, or HELP.`
 }
 
-export interface SmsContext { lastAsk: 'again' | 'vote' | null; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
+export interface SmsContext { lastAsk: 'again' | 'vote' | null; lastAskBody?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
 
 /** The last few texts with this person (both ways) and the last question we asked them. */
 async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsContext> {
@@ -449,6 +491,7 @@ async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsC
   const ask = rows.find((r) => r.direction === 'out' && (r.intent === 'again_request' || r.intent === 'vote_request'))
   return {
     lastAsk: ask?.intent === 'again_request' ? 'again' : ask ? 'vote' : null,
+    lastAskBody: ask?.body ?? undefined,
     history: rows.slice(0, 6).reverse().map((r) => ({ who: r.direction === 'out' ? 'DinnerDrop' : 'Them', body: (r.body ?? '').slice(0, 400) })),
   }
 }

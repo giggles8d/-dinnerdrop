@@ -132,6 +132,23 @@ export async function POST(request: Request) {
     // Library first (instant): the library is grown nightly by /api/cron/grow-library, so
     // most weeks are filled entirely from it. AI writes live only to cover what the library
     // can't (tight diets / allergy combos), and those dinners join the library for next time.
+    // ---------- "bring it back": dinners the family texted AGAIN for in the last month ----------
+    let bringBack: Meal[] = []
+    if (mode === 'fresh' && profileRow.household_id) {
+      try {
+        const { data: again } = await supabase.from('meal_votes').select('meal_name').eq('household_id', profileRow.household_id).eq('vote', 'again').gte('created_at', new Date(Date.now() - 30 * 86400000).toISOString())
+        const lastPlanNames = new Set((((recentPlans ?? [])[0]?.meals as Meal[]) ?? []).map((m) => normalizeName(m.name)))
+        const wanted = Array.from(new Set((again ?? []).map((v) => normalizeName(v.meal_name)))).filter((n) => !lastPlanNames.has(n)).slice(0, 4)
+        if (wanted.length) {
+          const { data: rows } = await supabase.from('recipes').select('*').in('normalized_name', wanted).limit(4)
+          bringBack = ((rows ?? []) as Parameters<typeof recipeToMeal>[0][]).slice(0, 2)
+            .map((r, i) => ({ ...recipeToMeal(r, `B${i + 1}`, profile.familySize), tags: ['family pick', ...((r as { tags?: string[] }).tags ?? []).slice(0, 2)] }))
+        }
+      } catch (e) {
+        console.error('bring-back lookup failed', e)
+      }
+    }
+
     let libraryMeals: Meal[] = []
     if (mode === 'fresh') {
       try {
@@ -150,7 +167,8 @@ export async function POST(request: Request) {
           .filter((m) => (Number(m.estimatedCost) || 0) <= perDinner * 1.4)
         // Favor options that share fresh ingredients with each other (and with kept picks),
         // so whatever the family picks uses whole bunches/bags instead of half of each.
-        libraryMeals = pickWithOverlap(affordable, optionsCount, keepMeals)
+        const backNames = new Set(bringBack.map((m) => normalizeName(m.name)))
+        libraryMeals = [...bringBack, ...pickWithOverlap(affordable.filter((m) => !backNames.has(normalizeName(m.name))), optionsCount - bringBack.length, [...keepMeals, ...bringBack])]
       } catch (e) {
         console.error('library picks failed', e)
       }
