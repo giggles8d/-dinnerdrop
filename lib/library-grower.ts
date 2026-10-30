@@ -62,13 +62,15 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
   }
   const queue = ((kv?.value as { pending?: string[] } | null)?.pending ?? []).filter((x) => typeof x === 'string' && x.trim())
   if (queue.length) {
-    const take = queue.slice(0, 10)
-    const half = Math.ceil(take.length / 2)
-    const conceptFocuses: Focus[] = [take.slice(0, half), take.slice(half)].filter((c) => c.length).map((c, i) => ({
+    // 6 batches of 6 ideas a night (all batches run in parallel) → ~36 new dinners a night, the queue clears in ~5–6 weeks.
+    const take = queue.slice(0, 36)
+    const groups: string[][] = []
+    for (let i = 0; i < take.length; i += 6) groups.push(take.slice(i, i + 6))
+    const conceptFocuses: Focus[] = groups.map((c, i) => ({
       label: `concepts ${i + 1}`, maxMinutes: 40, concepts: c,
       note: `Each recipe is YOUR OWN original take on one of these dinner ideas, in this order, one recipe per idea: ${c.map((x, n) => `${n + 1}. ${x}`).join('; ')}. Use the idea as a theme only — choose your own ingredients, amounts, method and a fresh name (don't reuse the idea's wording); keep it a weeknight dinner for 4 that fits the rules.`,
     }))
-    return [...conceptFocuses, ...focuses].slice(0, Math.max(batches, conceptFocuses.length))
+    return [...conceptFocuses, ...focuses].slice(0, Math.max(batches, conceptFocuses.length) + 1)
   }
   return focuses.slice(0, batches)
 }

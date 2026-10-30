@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { growLibrary } from '@/lib/library-grower'
 
 export const dynamic = 'force-dynamic'
-export const maxDuration = 60
+export const maxDuration = 300
 
 // Nightly (vercel.json, 3am ET): add ~20 checked, original recipes to the library,
 // aimed at its thinnest areas. Photos are added afterwards by the nightly photo task.
