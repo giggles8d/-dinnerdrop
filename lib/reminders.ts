@@ -10,6 +10,8 @@ import { mergeSettings, WEEKDAY_LABEL, WEEKDAYS, type Settings, type Channel } f
 import { localNow, mondayOf, timeLabel } from '@/lib/plan'
 import { autoPlan } from '@/lib/autoplan'
 import { sendEmail, sendSms, emailShell, smsConfigured } from '@/lib/notify'
+import { attachLibraryImages } from '@/lib/library-images'
+import { planReadySubject, planReadyHtml } from '@/lib/plan-ready-email'
 import { isFamilyProfile } from '@/lib/access'
 import { textMember, type MemberRow } from '@/lib/texting'
 import type { Meal } from '@/types'
@@ -109,11 +111,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             report.autoPlans++
             const names = meals.map((m) => `${m.day}: ${m.name}`)
             if (wantsEmail(settings.schedule.reminders.planReady) && canEmail) {
-              await sendEmail(p.email!, `Your dinners for the week are planned`, emailShell(
-                `Hi ${firstName(p)}, your week is planned`,
-                `<p>Here's what's cooking:</p><ul>${names.map((n) => `<li>${n}</li>`).join('')}</ul><p>Swap anything you like, then send the list to your cart in one tap.</p>`,
-                { label: 'See the week', href: `${APP}/dashboard` }
-              ))
+              const withPhotos = await attachLibraryImages(admin, meals)
+              const weekLabel = new Date(`${target}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}` }))
             }
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
               await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned —\n${names.join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
