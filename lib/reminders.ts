@@ -42,6 +42,9 @@ export interface DailyReport {
   shopReminders: number
   cookReminders: number
   errors: string[]
+  /** Dry run only: what would have happened, per family. */
+  dry?: Array<{ email: string | null; target: string; emailWouldSend: boolean; smsWouldSend: boolean; dinners: string[]; total: number; ms: number }>
+  skipped?: Record<string, number>
 }
 
 function wantsEmail(c: Channel) { return c === 'email' || c === 'both' }
@@ -69,8 +72,10 @@ async function textAdults(admin: SupabaseClient, p: ProfileRow, settings: Settin
   }
 }
 
-export async function runDailyReminders(admin: SupabaseClient, now: Date = new Date()): Promise<DailyReport> {
-  const report: DailyReport = { checked: 0, autoPlans: 0, shopReminders: 0, cookReminders: 0, errors: [] }
+export async function runDailyReminders(admin: SupabaseClient, now: Date = new Date(), opts: { dry?: boolean } = {}): Promise<DailyReport> {
+  const dry = !!opts.dry
+  const report: DailyReport = { checked: 0, autoPlans: 0, shopReminders: 0, cookReminders: 0, errors: [], ...(dry ? { dry: [], skipped: {} } : {}) }
+  const skip = (why: string) => { if (report.skipped) report.skipped[why] = (report.skipped[why] ?? 0) + 1 }
   const { data: profiles } = await admin
     .from('profiles')
     .select('id, email, full_name, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, subscription_status, is_beta_member, family_until, email_unsubscribed')
@@ -94,6 +99,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       if (settings.schedule.autoPlan && (settings.schedule.planDay === weekday || dayAfterPlanDay === weekday) && Date.now() - started < 200_000) {
         const { data: recent } = await admin.from('meal_plans').select('created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
         const lastPlan = recent?.[0]?.created_at ? new Date(recent[0].created_at).getTime() : 0
+        if (now.getTime() - lastPlan > ACTIVE_DAYS * 86400000) skip('inactive 45d')
         if (now.getTime() - lastPlan <= ACTIVE_DAYS * 86400000) {
         const planningDay = settings.schedule.planDay === weekday ? weekday : settings.schedule.planDay
         // Planning on Sat/Sun targets the coming Monday; mid-week targets this week.
@@ -103,11 +109,17 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
           ? mondayOf(new Date(planNow.getTime() + 2 * 86400000 + (planningDay === 'sat' ? 86400000 : 0)))
           : mondayOf(planNow)
         const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', target).limit(1)
+        if (existing?.length) skip('already has that week')
         if (!existing?.length) {
-          const meals = await autoPlan(admin, p, settings, target)
+          const t0 = Date.now()
+          const meals = await autoPlan(admin, p, settings, target, { save: !dry })
           if (meals) {
             report.autoPlans++
             const names = meals.map((m) => `${m.day}: ${m.name}`)
+            if (dry) {
+              report.dry!.push({ email: p.email ?? null, target, emailWouldSend: wantsEmail(settings.schedule.reminders.planReady) && canEmail, smsWouldSend: wantsSms(settings.schedule.reminders.planReady) && family, dinners: names, total: Math.round(meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)), ms: Date.now() - t0 })
+              continue
+            }
             if (wantsEmail(settings.schedule.reminders.planReady) && canEmail) {
               await sendEmail(p.email!, `Your dinners for the week are planned`, emailShell(
                 `Hi ${firstName(p)}, your week is planned`,
@@ -123,6 +135,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
         }
       }
 
+      if (dry) continue
       // ---- "anything else?" — the day before shopping day, ask the whole household (not just adults) ----
       const shop = settings.schedule.reminders.shopBy
       if (shop.channel !== 'off' && settings.texting.enabled && family && smsConfigured() && p.household_id) {

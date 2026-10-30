@@ -27,6 +27,21 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  // Dry run: when app_kv 'cron_dry_run' = { as: ISO date } is set (from the database, by hand), this run
+  // only simulates the automatic weekly plans + plan-ready notices as of that date — nothing is saved or sent —
+  // writes the outcome to app_kv 'cron_dry_run_result' and clears the flag. Lets a Sunday be rehearsed on a weekday.
+  try {
+    const { data: flag } = await admin.from('app_kv').select('value').eq('key', 'cron_dry_run').maybeSingle()
+    const as = (flag?.value as { as?: string } | null)?.as
+    if (as && !Number.isNaN(Date.parse(as))) {
+      await admin.from('app_kv').delete().eq('key', 'cron_dry_run')
+      const started = Date.now()
+      const reminders = await runDailyReminders(admin, new Date(as), { dry: true })
+      const result = { ranAt: new Date().toISOString(), as, seconds: Math.round((Date.now() - started) / 1000), reminders }
+      await admin.from('app_kv').upsert({ key: 'cron_dry_run_result', value: result, updated_at: new Date().toISOString() })
+      return NextResponse.json({ ok: true, dryRun: true, ...result })
+    }
+  } catch (e) { console.error('[cron/daily] dry-run check failed', e) }
   const now = new Date()
   const out: Record<string, unknown> = {}
   // Sunday: start the weekly newsletter first (its own function, up to 300 s for ~300 sends) and collect the result at the end.

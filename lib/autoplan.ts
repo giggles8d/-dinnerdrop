@@ -19,7 +19,7 @@ export interface AutoPlanProfile {
 }
 
 /** Generate + save a plan for a family without them lifting a finger. */
-export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<Meal[] | null> {
+export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string, opts: { save?: boolean } = {}): Promise<Meal[] | null> {
   const base = process.env.NEXT_PUBLIC_APP_URL || APP
   const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
   const res = await fetch(`${base}/api/generate-plan`, {
@@ -41,7 +41,7 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
   const chosen = assignNights((data.meals ?? []).slice(0, shape.dinnersPerWeek), shape)
   if (!chosen.length) return null
   const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
-  await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
+  if (opts.save !== false) await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
   return chosen
 }
 
