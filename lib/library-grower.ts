@@ -50,7 +50,16 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
   ]
   // Concept queue (app_kv 'recipe_concepts'): dish ideas families already know — e.g. the dinners ex-Mealime users
   // will look for — written from scratch in our own words. Two batches a night come from the queue while it lasts.
-  const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
+  let { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
+  if (!kv) {
+    // First run: seed from the repo file.
+    try {
+      const file = (await import('@/data/recipe-concepts.json')).default as { concepts: string[] }
+      const value = { pending: file.concepts, done: 0, source: 'data/recipe-concepts.json' }
+      await admin.from('app_kv').upsert({ key: 'recipe_concepts', value, updated_at: new Date().toISOString() })
+      kv = { value }
+    } catch { /* no seed file */ }
+  }
   const queue = ((kv?.value as { pending?: string[] } | null)?.pending ?? []).filter((x) => typeof x === 'string' && x.trim())
   if (queue.length) {
     const take = queue.slice(0, 10)
