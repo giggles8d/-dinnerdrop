@@ -18,7 +18,7 @@ export function recipeIntro(m: Lite): string {
   )
   if (cw.label) sentences.push(`You'll need ${cw.label.toLowerCase()}, and the ${m.ingredients.length} ingredients below are everyday supermarket items.`)
   const bite = safeBite(m)
-  if (bite) sentences.push(`Cooking for a picky eater? The ${bite.toLowerCase()} can be served plain on its own.`)
+  if (bite) { const b = bite.toLowerCase().replace(/^plain /, ''); sentences.push(`Cooking for a picky eater? Plain ${b} works on its own for the one who won't try the rest.`) }
   sentences.push('Add it to your week and the whole grocery list lands in your Instacart cart in one tap.')
   return sentences.join(' ')
 }
