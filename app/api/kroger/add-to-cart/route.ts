@@ -47,22 +47,25 @@ export async function POST(request: Request) {
       }
     }
 
-    const { groceryList } = await request.json()
-    const allItems = Object.values(groceryList).flat() as GroceryItem[]
+    const { groceryList, chosen, locationId } = await request.json()
+    const allItems = Object.values(groceryList ?? {}).flat() as GroceryItem[]
+    // Reviewed in the app: the family already saw and (maybe) changed what goes in; push exactly that.
+    const picked = Array.isArray(chosen) ? (chosen as Array<{ name: string; productId: string; quantity: number }>).filter((c) => c && typeof c.productId === 'string' && c.productId) : null
 
     // Search for each item using client credentials token
     const searchToken = await getClientCredentialsToken()
     const cartItems: { productId: string; quantity: number }[] = []
     const sentNames: string[] = []
 
-    for (const item of allItems) {
-      const product = await searchProduct(item.searchTerm || item.name, searchToken)
-      if (product) {
-        sentNames.push(item.name)
-        cartItems.push({
-          productId: product.productId,
-          quantity: Math.ceil(parseQuantity(item.quantity) || 1),
-        })
+    if (picked) {
+      for (const c of picked) { sentNames.push(c.name); cartItems.push({ productId: c.productId, quantity: Math.min(20, Math.max(1, Math.round(Number(c.quantity) || 1))) }) }
+    } else {
+      for (const item of allItems) {
+        const product = await searchProduct(item.searchTerm || item.name, searchToken, typeof locationId === 'string' ? locationId : undefined)
+        if (product) {
+          sentNames.push(item.name)
+          cartItems.push({ productId: product.productId, quantity: Math.ceil(parseQuantity(item.quantity) || 1) })
+        }
       }
     }
 
@@ -98,7 +101,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       added: cartItems.length,
-      total: allItems.length,
+      total: picked ? picked.length : allItems.length,
     })
   } catch (error) {
     console.error('Kroger add-to-cart error:', error)

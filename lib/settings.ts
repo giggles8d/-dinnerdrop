@@ -57,6 +57,8 @@ export interface Settings {
     }
   }
   stores: {
+    krogerLocationId?: string        // the family's Kroger-family store (for prices, stock, matches)
+    krogerLocationName?: string
     mode: 'instacart' | 'kroger' | 'instore'
     fulfillment: 'delivery' | 'pickup'
     usualStore: string
