@@ -6,7 +6,7 @@ import { Heart, Link2, FileText, Camera, Search } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import type { Meal } from '@/types'
-import { featuredCollections } from '@/lib/collections'
+import { featuredCollections, COLLECTIONS } from '@/lib/collections'
 import { FULL_COLUMNS, toLibRow, applyFilters, filtersFromQuery, filtersToQuery, activeCount, EMPTY, PROTEINS, CUISINES, STYLES, FREE_OF, CALORIES, TIMES, SORTS, type LibRow, type Filters, type SortKey } from '@/lib/recipe-filters'
 
 const PAGE = 48
@@ -273,7 +273,22 @@ export default function RecipesClient({ initialRows = [], total = 0 }: { initial
             <button onClick={() => setShown((x) => x + PAGE)} className="px-6 py-2.5 rounded-xl border border-border text-sm font-semibold hover:bg-muted">Show more ({filtered.length - shown} left)</button>
           </div>
         )}
-      </div>
+              <nav aria-label="Browse the whole library" className="mt-12 pt-6 border-t border-border text-sm print:hidden">
+          <p className="text-xs font-bold text-primary uppercase tracking-widest mb-3">Browse everything</p>
+          <ul className="flex flex-wrap gap-2 mb-5">
+            {Array.from({ length: Math.max(1, Math.ceil(total / 100)) }, (_, i) => i + 1).map((p) => <li key={p}><Link href={`/recipes/browse/${p}`} className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">All recipes, page {p}</Link></li>)}
+          </ul>
+          <p className="text-xs font-bold text-primary uppercase tracking-widest mb-3">Collections &amp; guides</p>
+          <ul className="flex flex-wrap gap-2">
+            {COLLECTIONS.map((c) => <li key={c.slug}><Link href={`/recipes/collections/${c.slug}`} className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">{c.name}</Link></li>)}
+            <li><Link href="/dinners/picky-eater-dinners" className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">Picky-eater dinners</Link></li>
+            <li><Link href="/dinners/dinners-under-30-minutes" className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">Dinners under 30 minutes</Link></li>
+            <li><Link href="/dinners/family-dinners-under-100" className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">A week under $100</Link></li>
+            <li><Link href="/dinners/gluten-free-family-dinners" className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">Gluten-free dinners</Link></li>
+            <li><Link href="/cookware" className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">Kitchen essentials</Link></li>
+          </ul>
+        </nav>
+</div>
     </div>
   )
 }

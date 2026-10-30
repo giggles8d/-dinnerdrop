@@ -16,16 +16,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Supabase returns at most 1000 rows per request; page until a short page comes back.
     const rows: Array<{ slug: string | null; updated_at: string | null; created_at: string | null }> = []
     for (let from = 0; from < 20000; from += 1000) {
-      const { data } = await admin.from('recipes').select('slug, updated_at, created_at').order('kept_count', { ascending: false }).order('id').range(from, from + 999)
+      const { data } = await admin.from('recipes').select('slug, updated_at, created_at').eq('is_public', true).order('kept_count', { ascending: false }).order('id').range(from, from + 999)
       rows.push(...(data ?? []))
       if (!data || data.length < 1000) break
     }
-    recipeEntries = rows.filter((r) => r.slug).map((r) => ({
+    const browsePages = Math.max(1, Math.ceil(rows.length / 100))
+    recipeEntries = Array.from({ length: browsePages }, (_, i) => ({ url: `${BASE}/recipes/browse/${i + 1}`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.5 }))
+    recipeEntries = recipeEntries.concat(rows.filter((r) => r.slug).map((r) => ({
       url: `${BASE}/recipes/${r.slug}`,
       lastModified: new Date(r.updated_at ?? r.created_at ?? Date.now()),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
-    }))
+    })))
   } catch { /* leave recipes out of this build of the sitemap */ }
   const blogEntries: MetadataRoute.Sitemap = getPublishedPosts().map((post) => ({
     url: `${BASE}/blog/${post.slug}`,
