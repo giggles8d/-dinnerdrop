@@ -61,7 +61,7 @@ export default function GroceryListPage() {
   const [krogerConnected, setKrogerConnected] = useState(false)
   // Kroger cart push is a Family feature (2026-10-18). Anyone already connected keeps it.
   const [isFamily, setIsFamily] = useState(true)
-  const [krogerLoading, setKrogerLoading] = useState(false)
+  const [krogerLoading] = useState(false)
   const [krogerResult, setKrogerResult] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
   const [recipesMail, setRecipesMail] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   async function emailRecipes() {
