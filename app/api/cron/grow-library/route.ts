@@ -31,6 +31,6 @@ export async function GET(request: NextRequest) {
     batches: Number(sp.get('batches')) || undefined,
     perBatch: Number(sp.get('perBatch')) || undefined,
   })
-  await admin.from('app_kv').upsert({ key: 'library_growth_last', value: { at: new Date().toISOString(), saved: report.saved.length, rejected: report.rejected.length, focuses: report.focuses }, updated_at: new Date().toISOString() })
+  await admin.from('app_kv').upsert({ key: 'library_growth_last', value: { at: new Date().toISOString(), saved: report.saved.length, rejected: report.rejected.length, focuses: report.focuses, rejectedWhy: report.rejected.slice(0, 40) }, updated_at: new Date().toISOString() })
   return NextResponse.json(report)
 }

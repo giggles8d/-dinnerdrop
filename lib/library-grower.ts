@@ -60,7 +60,20 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
       kv = { value }
     } catch { /* no seed file */ }
   }
-  const queue = ((kv?.value as { pending?: string[] } | null)?.pending ?? []).filter((x) => typeof x === 'string' && x.trim())
+  let queue = ((kv?.value as { pending?: string[] } | null)?.pending ?? []).filter((x) => typeof x === 'string' && x.trim())
+  if (!queue.length) {
+    // Queue drained (or was seeded from an older, shorter file): top it up from the repo file, skipping the ideas already used.
+    try {
+      const file = (await import('@/data/recipe-concepts.json')).default as { concepts: string[] }
+      const done = Number((kv?.value as { done?: number } | null)?.done ?? 0)
+      const rest = file.concepts.slice(done)
+      if (rest.length) {
+        const value = { ...((kv?.value as object | null) ?? {}), pending: rest, done, source: 'data/recipe-concepts.json' }
+        await admin.from('app_kv').upsert({ key: 'recipe_concepts', value, updated_at: new Date().toISOString() })
+        queue = rest
+      }
+    } catch { /* no seed file */ }
+  }
   if (queue.length) {
     // 12 batches of 6 ideas a night (all batches run in parallel) → ~72 new dinners a night, the queue clears in ~3 weeks (Sarah: faster).
     const take = queue.slice(0, 72)
