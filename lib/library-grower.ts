@@ -62,8 +62,8 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
   }
   const queue = ((kv?.value as { pending?: string[] } | null)?.pending ?? []).filter((x) => typeof x === 'string' && x.trim())
   if (queue.length) {
-    // 6 batches of 6 ideas a night (all batches run in parallel) → ~36 new dinners a night, the queue clears in ~5–6 weeks.
-    const take = queue.slice(0, 36)
+    // 12 batches of 6 ideas a night (all batches run in parallel) → ~72 new dinners a night, the queue clears in ~3 weeks (Sarah: faster).
+    const take = queue.slice(0, 72)
     const groups: string[][] = []
     for (let i = 0; i < take.length; i += 6) groups.push(take.slice(i, i + 6))
     const conceptFocuses: Focus[] = groups.map((c, i) => ({
