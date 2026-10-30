@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Affiliate Disclosure — DinnerDrop',
     description: 'How DinnerDrop works with grocery partners like Instacart and Kroger, and how we earn commissions.',
-    url: 'https://dinnerdrop.app/disclosure',
+    url: 'https://www.dinnerdrop.app/disclosure',
     siteName: 'DinnerDrop',
     type: 'website',
   },
-  alternates: { canonical: 'https://dinnerdrop.app/disclosure' },
+  alternates: { canonical: 'https://www.dinnerdrop.app/disclosure' },
 }
 
 export default function DisclosurePage() {

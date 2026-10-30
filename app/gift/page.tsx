@@ -7,8 +7,9 @@ const description = 'Give a busy family months of planned weeknight dinners: 5 d
 
 export const metadata: Metadata = {
   title, description,
-  openGraph: { title, description, url: 'https://dinnerdrop.app/gift', siteName: 'DinnerDrop', type: 'website' },
-  alternates: { canonical: 'https://dinnerdrop.app/gift' },
+  openGraph: { title, description, url: 'https://www.dinnerdrop.app/gift', siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png'] },
+  alternates: { canonical: 'https://www.dinnerdrop.app/gift' },
 }
 
 export default function GiftPage({ searchParams }: { searchParams: { canceled?: string } }) {

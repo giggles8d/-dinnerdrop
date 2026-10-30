@@ -3,8 +3,8 @@ import Link from 'next/link'
 import HelpForm from './HelpForm'
 
 export const metadata: Metadata = {
-  title: 'Help & Contact — DinnerDrop',
-  description: 'Answers to common DinnerDrop questions and a direct line to Sarah, the founder.',
+  title: 'DinnerDrop Help — Instacart, Swaps, Servings, Billing & Contact',
+  description: 'Quick answers on Instacart carts, swapping dinners, servings, allergies, family texting, billing and cancelling — plus a direct line to Sarah, DinnerDrop\'s founder.',
   alternates: { canonical: 'https://www.dinnerdrop.app/help' },
 }
 
@@ -18,9 +18,15 @@ const FAQ: Array<[string, string]> = [
   ['Delete my account', 'Account → Delete account removes your plans, lists and profile. Or email sarah@dinnerdrop.app and we’ll do it.'],
 ]
 
+const faqLd = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+}
+
 export default function HelpPage() {
   return (
     <div className="min-h-screen bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <div className="container mx-auto px-4 py-10 max-w-2xl">
         <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Help</p>
         <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Need a hand?</h1>

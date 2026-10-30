@@ -25,7 +25,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: `${r.name} — Family Dinner Recipe | DinnerDrop`,
     description,
     alternates: { canonical: url },
-    openGraph: { title: r.name, description, url, images: r.image_url ? [{ url: r.image_url }] : undefined },
+    openGraph: { title: r.name, description, url, siteName: 'DinnerDrop', type: 'article', images: [r.image_url ? { url: r.image_url, alt: r.name } : { url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] },
+    twitter: { card: 'summary_large_image', title: r.name, description, images: [r.image_url || '/og-image.png'] },
   }
 }
 
@@ -57,9 +58,18 @@ export default async function LibraryRecipePage({ params }: { params: { slug: st
       ...(r.nutrition.sodium != null ? { sodiumContent: `${r.nutrition.sodium} mg` } : {}),
     } : undefined,
   }
+  const breadcrumbs = {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dinnerdrop.app/' },
+      { '@type': 'ListItem', position: 2, name: 'Recipes', item: 'https://www.dinnerdrop.app/recipes' },
+      { '@type': 'ListItem', position: 3, name: r.name, item: `https://www.dinnerdrop.app/recipes/${r.slug}` },
+    ],
+  }
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <RecipeClient initial={r} />
     </>
   )

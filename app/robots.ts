@@ -13,6 +13,6 @@ export default function robots(): MetadataRoute.Robots {
         "/auth/",
       ],
     },
-    sitemap: "https://dinnerdrop.app/sitemap.xml",
+    sitemap: "https://www.dinnerdrop.app/sitemap.xml",
   };
 }

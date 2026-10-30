@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const title = "DinnerDrop — Free Weekly Dinner Plans + One-Tap Instacart Cart";
 const description =
-  "Five weeknight dinners planned for your family and budget, and your whole grocery list in your Instacart cart in one tap. Free, no card needed. Family plan $4.99/month with a 14-day free trial.";
+  "Five weeknight dinners planned for your family and budget, and your whole grocery list in your Instacart cart in one tap. Free to start, no card needed.";
 
 export const metadata: Metadata = {
   title,

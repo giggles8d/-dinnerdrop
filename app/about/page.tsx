@@ -3,10 +3,10 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'About DinnerDrop — Weeknight Dinners, Handled',
+  title: 'About DinnerDrop — The AI Weekly Dinner Planner for Busy Families',
   description: 'DinnerDrop is an AI weekly dinner planner for busy families: 5 personalized dinners, a deduplicated grocery list, and a one-tap handoff to Instacart or Kroger.',
   openGraph: {
-    title: 'About DinnerDrop — Weeknight Dinners, Handled',
+    title: 'About DinnerDrop — The AI Weekly Dinner Planner for Busy Families',
     description: 'DinnerDrop is an AI weekly dinner planner for busy families: 5 personalized dinners, a deduplicated grocery list, and a one-tap handoff to Instacart or Kroger.',
     url: 'https://dinnerdrop.app/about',
     siteName: 'DinnerDrop',

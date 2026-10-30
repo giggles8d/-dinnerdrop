@@ -5,7 +5,7 @@ import MealimeDeadline from '@/components/MealimeDeadline'
 
 const title = 'Mealime has closed — bring your dinners to DinnerDrop (free)'
 const description =
-  'Mealime shut down on October 21, 2026 with no export. Type the names of the dinners your family loves and DinnerDrop rebuilds them, plans your week, and puts the grocery list in your Instacart cart. Free, no card needed.'
+  'Mealime closed Oct 21, 2026 with no export. Type the dinners your family loved and DinnerDrop rebuilds them, plans your week, and loads the grocery list into Instacart. Free.'
 
 export const metadata: Metadata = {
   title,

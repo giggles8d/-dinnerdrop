@@ -64,6 +64,21 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "DinnerDrop",
+              "url": "https://www.dinnerdrop.app",
+              "logo": "https://www.dinnerdrop.app/logo.png",
+              "email": "sarah@dinnerdrop.app",
+              "founder": { "@type": "Person", "name": "Sarah Etzl" },
+              "contactPoint": { "@type": "ContactPoint", "email": "sarah@dinnerdrop.app", "contactType": "customer support", "url": "https://www.dinnerdrop.app/help" }
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
               "@type": "SoftwareApplication",
               "name": "DinnerDrop",
               "applicationCategory": "LifestyleApplication",
