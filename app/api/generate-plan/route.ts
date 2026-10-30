@@ -160,6 +160,7 @@ export async function POST(request: Request) {
         const picks = await pickLibraryRecipes(supabase, {
           limit: optionsCount + 16,
           maxCookTime: slowestNight,
+          maxCalories: settings.food.maxCalories,
           dietary: profile.dietaryNeeds,
           excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allDislikes],
           allergies: allergyPeople.flatMap((p) => p.allergies),
@@ -267,6 +268,7 @@ ${timeRule}
 - "safeBite" is the one plain component of that dinner a picky eater can have on its own, in 2–4 words ("plain rice", "a plain tortilla", "chicken, sauce on the side"); every dinner must have one.
 - Size every ingredient for the dinner's servings — this is a real family, not a recipe for 4. Per serving buy at least 6 oz raw boneless meat or fish (8 oz bone-in, 5 1/2 oz ground meat), 3 1/2 oz dry pasta or 1/2 cup dry rice, 1/2 lb potatoes, and 1 cup of vegetables. So ${profile.familySize} servings needs about ${(Math.ceil((profile.familySize * 6) / 4) / 4).toFixed(2).replace(/\.?0+$/, '')} lb of boneless meat${settings.plan.leftoverNight ? `, and a leftover-friendly dinner (${profile.familySize * 2} servings) needs double that` : ''}.
 - Give each dinner 1–3 short tags from: quick, sheet-pan, one-pot, air-fryer, slow-cooker, instant-pot, grill, kid-favorite, leftover-friendly, budget, high-protein, vegetarian, 15-min
+${settings.food.maxCalories ? `- Every dinner must be under ${settings.food.maxCalories} calories per serving (lean proteins, more vegetables, lighter sauces); include the nutrition estimate.` : ''}
 ${settings.food.nutritionInfo ? '- Estimate nutrition per serving from the ingredient amounts (calories; grams of protein, carbs, fat, saturated fat, fiber, sugar; mg sodium)' : ''}
 
 Return ONLY valid JSON with this exact structure, no markdown:
@@ -311,6 +313,7 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
     let generated = (planData.meals ?? []).filter((m) => {
       const hay = `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
       if (excl.some((w) => w && hay.includes(w))) return false
+      if (settings.food.maxCalories && m.nutrition?.calories && m.nutrition.calories > settings.food.maxCalories * 1.1) return false
       return !allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length
     })
     // Pin servings to the family (the model drifts); leftover-friendly dinners are sized for two nights.

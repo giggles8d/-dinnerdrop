@@ -182,6 +182,8 @@ export async function pickLibraryRecipes(
     excludeWords: string[]
     excludeNames: string[]
     cuisines?: string[]
+    /** Per-serving calorie cap (0/undefined = none). */
+    maxCalories?: number
     /** Allergies: matched by allergen (dairy also catches cheese and butter), not just the word. */
     allergies?: string[]
   }
@@ -189,19 +191,20 @@ export async function pickLibraryRecipes(
   if (opts.limit <= 0) return []
   let q = supabase
     .from('recipes')
-    .select('id, normalized_name, name, cuisine, protein, ingredients, kept_count, skipped_count, image_url')
+    .select('id, normalized_name, name, cuisine, protein, ingredients, kept_count, skipped_count, image_url, nutrition')
     .eq('is_public', true)
     .lte('cook_time', opts.maxCookTime)
     .limit(2000)
   if (opts.dietary.length) q = q.contains('dietary', opts.dietary)
   const { data } = await q
-  type Lite = Pick<RecipeRow, 'id' | 'normalized_name' | 'name' | 'cuisine' | 'protein' | 'ingredients' | 'kept_count' | 'skipped_count' | 'image_url'>
+  type Lite = Pick<RecipeRow, 'id' | 'normalized_name' | 'name' | 'cuisine' | 'protein' | 'ingredients' | 'kept_count' | 'skipped_count' | 'image_url' | 'nutrition'>
   const excludeNorm = new Set(opts.excludeNames.map(normalizeName))
   const words = opts.excludeWords.map((w) => w.toLowerCase().trim()).filter(Boolean)
   const cuisines = (opts.cuisines ?? []).map((c) => c.toLowerCase()).filter((c) => c && c !== 'mixed')
   const allergyList = (opts.allergies ?? []).filter((a) => a && a.trim())
   const pool = ((data ?? []) as Lite[]).filter((r) => {
     if (excludeNorm.has(r.normalized_name)) return false
+    if (opts.maxCalories && r.nutrition?.calories && r.nutrition.calories > opts.maxCalories) return false
     if (cuisines.length && r.cuisine && !cuisines.includes(r.cuisine.toLowerCase())) return false
     const hay = `${r.name} ${(r.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
     if (words.some((w) => hay.includes(w))) return false

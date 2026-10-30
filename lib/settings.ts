@@ -29,6 +29,7 @@ export interface Settings {
     equipment: string[]             // 'air fryer' | 'instant pot' | 'slow cooker' | 'sheet pan' | 'grill'
     kidFriendly: boolean            // one safe thing on every plate
     nutritionInfo: boolean          // show calories/protein per serving
+    maxCalories: number             // per-serving calorie cap for planned dinners (0 = no cap)
     useSales: boolean               // build the week around this week's store sales when a flyer is loaded
   }
   schedule: {
@@ -88,6 +89,7 @@ export const DEFAULT_SETTINGS: Settings = {
     equipment: [],
     kidFriendly: false,
     nutritionInfo: true,
+    maxCalories: 0,
     useSales: true,
   },
   schedule: {
