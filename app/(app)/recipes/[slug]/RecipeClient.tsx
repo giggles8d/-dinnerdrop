@@ -90,7 +90,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
         <div className="rounded-xl overflow-hidden mb-6 print:hidden"><MealCardImage mealName={r.name} dayLabel={r.source === 'user' && r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} /></div>
         <div className="flex items-start justify-between gap-4 mb-4">
           <h1 className="text-4xl font-heading font-bold text-foreground leading-tight">{r.name}</h1>
-          <div className="flex items-center gap-1 print:hidden"><PrintButton /><button onClick={toggleFav} className="p-2 rounded-full hover:bg-muted" aria-label="Favorite"><Heart className={`w-6 h-6 ${fav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} /></button></div>
+          <div className="flex items-center gap-1 print:hidden">{r.source === 'user' && r.created_by === userId && <Link href={`/recipes/${r.slug}/edit`} className="px-3 py-1.5 rounded-full border border-border text-xs font-semibold text-foreground hover:bg-muted">Edit</Link>}<PrintButton /><button onClick={toggleFav} className="p-2 rounded-full hover:bg-muted" aria-label="Favorite"><Heart className={`w-6 h-6 ${fav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} /></button></div>
         </div>
         <div className="flex flex-wrap items-center gap-2 mb-6 pb-6 border-b border-border">
           <span className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground"><Clock className="w-3.5 h-3.5" />{timeLabel(meal)}</span>

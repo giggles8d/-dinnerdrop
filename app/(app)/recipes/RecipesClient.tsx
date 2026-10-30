@@ -6,7 +6,7 @@ import { Heart, Link2, FileText, Camera, Search } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import type { Meal } from '@/types'
-import { FULL_COLUMNS, toLibRow, applyFilters, filtersFromQuery, filtersToQuery, activeCount, EMPTY, PROTEINS, CUISINES, STYLES, FREE_OF, TIMES, SORTS, type LibRow, type Filters, type SortKey } from '@/lib/recipe-filters'
+import { FULL_COLUMNS, toLibRow, applyFilters, filtersFromQuery, filtersToQuery, activeCount, EMPTY, PROTEINS, CUISINES, STYLES, FREE_OF, CALORIES, TIMES, SORTS, type LibRow, type Filters, type SortKey } from '@/lib/recipe-filters'
 
 const PAGE = 48
 
@@ -177,6 +177,9 @@ export default function RecipesClient({ initialRows = [], total = 0 }: { initial
             <select value={f.time} onChange={(e) => set({ time: Number(e.target.value) })} aria-label="Total time" className="rounded-lg border border-input bg-background px-3 py-2 text-sm">
               {TIMES.map((t) => <option key={t.v} value={t.v}>{t.l}</option>)}
             </select>
+            <select value={f.cal} onChange={(e) => set({ cal: Number(e.target.value) })} aria-label="Calories" className="rounded-lg border border-input bg-background px-3 py-2 text-sm">
+              {CALORIES.map((t) => <option key={t.v} value={t.v}>{t.l}</option>)}
+            </select>
             <select value={f.sort} onChange={(e) => set({ sort: e.target.value as SortKey })} aria-label="Sort" className="rounded-lg border border-input bg-background px-3 py-2 text-sm">
               {SORTS.map((t) => <option key={t.v} value={t.v}>{t.l}</option>)}
             </select>
@@ -243,7 +246,7 @@ export default function RecipesClient({ initialRows = [], total = 0 }: { initial
                   <Link href={`/recipes/${r.slug}`} className="block pr-8">
                     <h3 className="font-heading font-semibold leading-tight text-card-foreground group-hover:text-primary">{r.name}</h3>
                   </Link>
-                  <div className="text-xs text-muted-foreground">{r.time} min · {r.servings} servings · 🍳 {r.cook}{r.kept > 0 ? ` · kept by ${r.kept} ${r.kept === 1 ? 'family' : 'families'}` : ''}</div>
+                  <div className="text-xs text-muted-foreground">{r.time} min · {r.servings} servings{r.cal ? ` · ${r.cal} cal` : ''} · 🍳 {r.cook}{r.kept > 0 ? ` · kept by ${r.kept} ${r.kept === 1 ? 'family' : 'families'}` : ''}</div>
                   {r.safe && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {r.safe}</div>}
                   {r.tags.length > 0 && <div className="flex flex-wrap gap-1">{r.tags.slice(0, 3).map((t) => <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}</div>}
                 </div>

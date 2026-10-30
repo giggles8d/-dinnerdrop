@@ -62,6 +62,10 @@ const STEPS = [
       { label: 'Dairy-free', value: 'Dairy-free' },
       { label: 'Keto', value: 'Keto' },
       { label: 'Halal', value: 'Halal' },
+      { label: 'Pescatarian', value: 'Pescatarian' },
+      { label: 'Nut-free', value: 'Nut-free' },
+      { label: 'Low-carb', value: 'Low-carb' },
+      { label: 'Paleo', value: 'Paleo' },
     ],
   },
   {

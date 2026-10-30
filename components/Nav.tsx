@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { createClient } from '@/lib/supabase'
-import { Heart, UtensilsCrossed, ShoppingCart, Package, Clock, User, Settings2, BookOpen, ChefHat } from 'lucide-react'
+import { Heart, UtensilsCrossed, ShoppingCart, Package, Clock, User, Settings2, BookOpen, ChefHat, LifeBuoy } from 'lucide-react'
 
 const links = [
   { href: '/dashboard', label: 'Meals', icon: UtensilsCrossed },
@@ -15,6 +15,7 @@ const links = [
   { href: '/history', label: 'History', icon: Clock },
   { href: '/settings', label: 'Settings', icon: Settings2 },
   { href: '/account', label: 'Account', icon: User },
+  { href: '/help', label: 'Help', icon: LifeBuoy },
 ]
 
 export default function Nav() {

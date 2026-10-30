@@ -183,6 +183,13 @@ export default function AccountPage() {
                 </p>
               </div>
             </div>
+            <div className="rounded-xl border border-border p-4 mb-4 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Need help?</p>
+                <p className="text-xs text-muted-foreground">Something not working, or a question? Sarah answers every message.</p>
+              </div>
+              <Link href="/help" className="shrink-0 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold">Get help</Link>
+            </div>
             <DeleteAccount />
           </div>
         )}

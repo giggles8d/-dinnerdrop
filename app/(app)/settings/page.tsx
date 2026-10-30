@@ -451,6 +451,12 @@ export default function SettingsPage() {
                   <Toggle checked={settings.food.kidFriendly} onChange={(v) => patch((s) => { s.food.kidFriendly = v })} label="Kid-friendly by default" hint="Familiar flavors, components kept separate, one safe thing on every plate." />
                   <Toggle checked={settings.food.nutritionInfo} onChange={(v) => patch((s) => { s.food.nutritionInfo = v })} label="Show nutrition per serving (calories, protein, carbs, fat)" />
                 </div>
+                <Field label="Calories per serving" hint="Dinners are planned under this number. Estimates from the ingredients; brands and portions vary.">
+                  <select value={settings.food.maxCalories} onChange={(e) => patch((s) => { s.food.maxCalories = Number(e.target.value) })} className="rounded-md border border-input bg-background px-3 py-2 text-sm">
+                    <option value={0}>No limit</option>
+                    {[400, 500, 600, 700, 800].map((n) => <option key={n} value={n}>Under {n} cal</option>)}
+                  </select>
+                </Field>
               </>
             )}
 

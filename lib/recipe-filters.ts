@@ -23,6 +23,7 @@ export interface LibRow {
   cook: string       // "2 pans" etc.
   safe: string | null
   alg: AllergenKey[] // major allergens in the ingredients
+  cal: number | null // calories per serving (estimated)
 }
 
 export type ProteinGroup = 'chicken' | 'beef' | 'pork' | 'turkey' | 'seafood' | 'lamb' | 'meatless'
@@ -77,7 +78,7 @@ type Full = {
   servings: number | null; estimated_cost: number | null; ingredients: Meal['ingredients'] | null; steps: string[] | null; tags: string[] | null
   image_url: string | null; source: 'generated' | 'user'; created_by: string | null; kept_count: number | null
 }
-export const FULL_COLUMNS = 'id, name, slug, cuisine, protein, cook_time, prep_time, servings, estimated_cost, ingredients, steps, tags, image_url, source, created_by, kept_count'
+export const FULL_COLUMNS = 'id, name, slug, cuisine, protein, cook_time, prep_time, servings, estimated_cost, ingredients, steps, tags, image_url, source, created_by, kept_count, nutrition'
 
 export function toLibRow(r: Full): LibRow {
   const tags = (r.tags ?? []).map((t) => (t === 'vegetarian' ? 'meatless' : t))
@@ -97,12 +98,14 @@ export function toLibRow(r: Full): LibRow {
     ing: names.join(' | '),
     cook: cookware(lite).label, safe: safeBite(lite),
     alg: dinnerAllergens(r.ingredients ?? []).map((a) => a.key),
+    cal: (r as { nutrition?: { calories?: number } | null }).nutrition?.calories ?? null,
   }
 }
 
-export interface Filters { q: string; without: string; time: number; proteins: ProteinGroup[]; cuisines: CuisineGroup[]; styles: string[]; free: AllergenKey[]; sort: SortKey; mine: boolean; favs: boolean }
-export const EMPTY: Filters = { q: '', without: '', time: 0, proteins: [], cuisines: [], styles: [], free: [], sort: 'kept', mine: false, favs: false }
+export interface Filters { q: string; without: string; time: number; proteins: ProteinGroup[]; cuisines: CuisineGroup[]; styles: string[]; free: AllergenKey[]; cal: number; sort: SortKey; mine: boolean; favs: boolean }
+export const EMPTY: Filters = { q: '', without: '', time: 0, proteins: [], cuisines: [], styles: [], free: [], cal: 0, sort: 'kept', mine: false, favs: false }
 export const FREE_OF = ALLERGENS.map((a) => ({ v: a.key, l: a.short }))
+export const CALORIES = [{ v: 0, l: 'Any calories' }, { v: 400, l: 'Under 400 cal' }, { v: 500, l: 'Under 500 cal' }, { v: 600, l: 'Under 600 cal' }, { v: 700, l: 'Under 700 cal' }]
 
 /** Apply the filters. Proteins and cuisines are any-of; styles are all-of; "without" excludes any matching ingredient word. */
 export function applyFilters(rows: LibRow[], f: Filters, ctx: { userId: string | null; favNames: Set<string> }): LibRow[] {
@@ -117,6 +120,7 @@ export function applyFilters(rows: LibRow[], f: Filters, ctx: { userId: string |
     if (f.styles.length && !f.styles.every((s) => r.tags.includes(s) || (s === 'meatless' && r.pg === 'meatless'))) return false
     if (without.length && without.some((w) => r.ing.includes(w) || r.name.toLowerCase().includes(w))) return false
     if (f.free.length && f.free.some((k) => (r.alg ?? []).includes(k))) return false
+    if (f.cal && !(r.cal != null && r.cal <= f.cal)) return false
     if (q && !`${r.name} ${r.cuisine} ${r.protein} ${r.ing}`.toLowerCase().includes(q)) return false
     return true
   })
@@ -137,6 +141,7 @@ export function filtersFromQuery(sp: URLSearchParams): Filters {
     cuisines: list('c').filter((c): c is CuisineGroup => CUISINES.some((x) => x.v === c)),
     styles: list('s').map((s) => (s === 'vegetarian' ? 'meatless' : s)).filter((s) => STYLES.some((x) => x.v === s) || s === 'meatless'),
     free: list('f').filter((k): k is AllergenKey => ALLERGENS.some((a) => a.key === k)),
+    cal: Number(sp.get('cal')) || 0,
     sort: sort === 'quick' || sort === 'cheap' ? sort : 'kept',
   }
 }
@@ -149,10 +154,11 @@ export function filtersToQuery(f: Filters): string {
   if (f.cuisines.length) sp.set('c', f.cuisines.join(','))
   if (f.styles.length) sp.set('s', f.styles.join(','))
   if (f.free.length) sp.set('f', f.free.join(','))
+  if (f.cal) sp.set('cal', String(f.cal))
   if (f.sort !== 'kept') sp.set('sort', f.sort)
   const s = sp.toString()
   return s ? `?${s}` : ''
 }
 export function activeCount(f: Filters): number {
-  return (f.q ? 1 : 0) + (f.without ? 1 : 0) + (f.time ? 1 : 0) + f.proteins.length + f.cuisines.length + f.styles.length + f.free.length + (f.mine ? 1 : 0) + (f.favs ? 1 : 0)
+  return (f.q ? 1 : 0) + (f.without ? 1 : 0) + (f.time ? 1 : 0) + f.proteins.length + f.cuisines.length + f.styles.length + f.free.length + (f.cal ? 1 : 0) + (f.mine ? 1 : 0) + (f.favs ? 1 : 0)
 }

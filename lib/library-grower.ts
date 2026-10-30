@@ -9,12 +9,13 @@
  * survivors without a photo — the nightly photo task gives them one.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { mergeDiets } from '@/lib/diets'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { normalizeName, upsertRecipes, honestTags } from '@/lib/recipe-library'
 import { parseQuantity } from '@/lib/portions'
 import type { Meal } from '@/types'
 
-const DIETS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Keto', 'Halal'] as const
+const DIETS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Keto', 'Halal', 'Pescatarian', 'Low-carb', 'Paleo', 'Nut-free', 'Kosher-style', 'Low-sodium'] as const
 const CATEGORIES = new Set(['Produce', 'Meat & Seafood', 'Dairy & Eggs', 'Pantry & Dry Goods', 'Frozen', 'Bakery', 'Beverages'])
 // Word-bounded so "hamburger buns", "eggplant" and "butter lettuce" don't read as ham, egg or butter.
 const MEAT = /\b(chicken|beef|pork|bacon|ham|sausages?|turkey|lamb|steaks?|prosciutto|pepperoni|salami|chorizo|shrimp|salmon|tuna|cod|tilapia|fish|crab|scallops?|anchovy|anchovies)\b/i
@@ -214,6 +215,8 @@ Categories must be one of: ${Array.from(CATEGORIES).join(', ')}.`
       let m = { ...raw, servings: 4, cookTime: Number(raw.cookTime) || 0, prepTime: Number(raw.prepTime) || 0, day: '1' }
       // Keep only diets we track; the batch's target diet must be among them.
       m.dietary = (raw.dietary ?? []).filter((d): d is (typeof DIETS)[number] => (DIETS as readonly string[]).includes(d))
+      // Rule-checked diets replace the model's word for them.
+      m.dietary = mergeDiets(m.dietary, { name: m.name, ingredients: m.ingredients }) as (typeof DIETS)[number][]
       if (f.diet && !m.dietary.includes(f.diet)) { report.rejected.push({ name: m.name, why: `not tagged ${f.diet}` }); continue }
       m = normalize(m)
       const norm = normalizeName(m.name ?? '')
