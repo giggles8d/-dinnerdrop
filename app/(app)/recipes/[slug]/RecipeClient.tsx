@@ -18,6 +18,7 @@ import { formatQuantity } from '@/components/GroceryList'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
 import { safeBite, cookware } from '@/lib/meal-insights'
+import { recipeIntro, relatedLinks } from '@/lib/recipe-intro'
 
 interface RecipeRow {
   id: string; name: string; slug: string; cuisine: string | null; protein: string | null
@@ -111,6 +112,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           </div>
         </div>
         {added && <p className="text-sm text-primary mb-4">{added}</p>}
+        <p className="mb-4 text-sm text-foreground/80 leading-relaxed">{recipeIntro({ ...meal, cuisine: r.cuisine, protein: r.protein })}</p>
         <p className="mb-4 text-sm text-muted-foreground"><span className="font-semibold text-foreground">Goes with:</span> {sideFor(meal).name} <span className="text-xs">({sideFor(meal).minutes} min)</span></p>
         <AllergenNotice ingredients={meal.ingredients} name={meal.name} />
         <div className="print:hidden">
@@ -134,6 +136,14 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           </ol>
         </section>
         <div className="mt-8"><NutritionPanel nutrition={meal.nutrition} /></div>
+        <nav aria-label="More dinners like this" className="mt-10 print:hidden">
+          <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">More like this</h2>
+          <ul className="flex flex-wrap gap-2">
+            {relatedLinks({ ...meal, cuisine: r.cuisine, protein: r.protein }).map((l) => (
+              <li key={l.href}><Link href={l.href} className="inline-block rounded-full border border-border px-3 py-1.5 text-sm text-foreground hover:bg-muted">{l.label}</Link></li>
+            ))}
+          </ul>
+        </nav>
         {r.image_credit && <p className="text-[10px] text-muted-foreground mt-8">Photo: {r.image_credit}</p>}
       </div>
     </div>

@@ -35,6 +35,31 @@ export default function GiftPage({ searchParams }: { searchParams: { canceled?: 
             <div key={h} className="rounded-xl border border-border p-4"><p className="font-semibold text-foreground mb-1">{h}</p><p className="text-muted-foreground">{t}</p></div>
           ))}
         </section>
+
+        <section className="mt-12 space-y-8 text-sm text-muted-foreground leading-relaxed max-w-2xl">
+          <div>
+            <h2 className="text-xl font-heading font-bold text-foreground mb-2">Who a DinnerDrop gift is for</h2>
+            <p>New parents who haven&apos;t cooked a real dinner in weeks. A friend going back to work after leave. Your own kids setting up their first apartment. Grandparents who still cook for the whole family on Sundays. Anyone whose evenings are spent deciding what to eat instead of eating.</p>
+          </div>
+          <div>
+            <h2 className="text-xl font-heading font-bold text-foreground mb-2">What&apos;s included</h2>
+            <p>Every week, DinnerDrop plans five weeknight dinners around their household: how many people, what they like, what they won&apos;t touch, allergies, cook time and a weekly budget. It merges the ingredients into one grocery list and sends that list to their Instacart cart in a single tap, or straight into a Kroger cart. The Family plan adds per-person preferences, texting the week&apos;s options to the family and letting everyone vote, reminders, cook mode and a printable fridge sheet.</p>
+          </div>
+          <div>
+            <h2 className="text-xl font-heading font-bold text-foreground mb-2">How gifting works</h2>
+            <ol className="list-decimal pl-5 space-y-1">
+              <li>Choose 3, 6 or 12 months above and pay once. There is no renewal and nothing for them to cancel.</li>
+              <li>You get a gift code and a sign-up link right away. We can email it to them right after checkout, or send it to you with a printable card to hand over yourself.</li>
+              <li>They sign up with the link (no card needed) and the months are added. If they already use DinnerDrop, the months attach to their account.</li>
+            </ol>
+          </div>
+          <div>
+            <h2 className="text-xl font-heading font-bold text-foreground mb-2">Common questions</h2>
+            <p className="mb-2"><span className="font-semibold text-foreground">Does the gift cover groceries?</span> No. DinnerDrop plans the week and fills the cart; they pay the store on Instacart or Kroger as usual.</p>
+            <p className="mb-2"><span className="font-semibold text-foreground">Can I gift someone outside the US?</span> Instacart and Kroger are US services, so the grocery handoff works in the US only. The planner itself works anywhere.</p>
+            <p><span className="font-semibold text-foreground">What if they don&apos;t use it?</span> Write to <a href="mailto:sarah@dinnerdrop.app" className="underline">sarah@dinnerdrop.app</a> within 30 days and we&apos;ll refund it.</p>
+          </div>
+        </section>
       </main>
     </div>
   )
