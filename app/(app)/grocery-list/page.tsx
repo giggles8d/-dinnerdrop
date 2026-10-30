@@ -18,6 +18,7 @@ import type { StorePref } from '@/lib/compare'
 import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
 import InAppBrowserNotice from '@/components/InAppBrowserNotice'
+import KrogerReview from '@/components/KrogerReview'
 import { mergeSettings } from '@/lib/settings'
 import { resolvePlanOwner } from '@/lib/household'
 import {
@@ -42,6 +43,8 @@ export default function GroceryListPage() {
   const [priceFactor, setPriceFactor] = useState(1)
   const [usuals, setUsuals] = useState<UsualItem[]>([])
   const [myStores, setMyStores] = useState<StorePref[]>([])
+  const [krogerReview, setKrogerReview] = useState(false)
+  const [krogerLoc, setKrogerLoc] = useState<{ id?: string; name?: string }>({})
   const [split, setSplit] = useState<Record<string, string> | null>(null)
   const [splitStores, setSplitStores] = useState<[string, string] | null>(null)
   const [actualStore, setActualStore] = useState('')
@@ -122,6 +125,7 @@ export default function GroceryListPage() {
 
     setPriceFactor(Number(settings.stores.priceFactor) || 1)
     setMyStores(Array.isArray(settings.stores.myStores) ? settings.stores.myStores : [])
+    setKrogerLoc({ id: settings.stores.krogerLocationId, name: settings.stores.krogerLocationName })
     if (profile) {
       const tokenValid = profile.kroger_access_token &&
         (!profile.kroger_token_expires_at || new Date(profile.kroger_token_expires_at) > new Date())
@@ -321,28 +325,9 @@ export default function GroceryListPage() {
 
   async function handleKrogerCart() {
     if (!krogerConnected) { window.location.href = '/api/kroger/auth'; return }
-    setKrogerLoading(true)
+    // Review what Kroger matched (brand, size, price) before anything is pushed.
     setKrogerResult(null)
-    try {
-      const res = await fetch('/api/kroger/add-to-cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ groceryList: shoppable }),
-      })
-      const data = await res.json()
-      if (res.status === 403) {
-        setKrogerConnected(false)
-        setKrogerResult({ type: 'error', message: 'Kroger session expired. Please reconnect.' })
-        return
-      }
-      if (!res.ok) throw new Error(data.error || 'Failed to add to cart')
-      setKrogerResult({ type: 'success', message: `Added ${data.added} of ${data.total} items to your Kroger cart.` })
-      if (userId && weekStart) loadItems(userId, weekStart)
-    } catch (error) {
-      setKrogerResult({ type: 'error', message: error instanceof Error ? error.message : 'Failed to add items to Kroger cart.' })
-    } finally {
-      setKrogerLoading(false)
-    }
+    setKrogerReview(true)
   }
 
   /* ---------- states ---------- */
@@ -626,6 +611,11 @@ export default function GroceryListPage() {
             <a href="/disclosure" className="underline hover:text-foreground">Learn more</a>.
           </p>
         </div>
+
+        {krogerReview && (
+          <KrogerReview groceryList={shoppable} locationId={krogerLoc.id} locationName={krogerLoc.name} onClose={() => setKrogerReview(false)}
+            onPushed={(added, total) => { setKrogerReview(false); setKrogerResult({ type: 'success', message: `Added ${added} of ${total} items to your Kroger cart.` }); if (userId && weekStart) loadItems(userId, weekStart) }} />
+        )}
 
         <div className="h-32 sm:hidden" />
       </div>
