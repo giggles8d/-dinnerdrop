@@ -26,6 +26,11 @@ VIDEOS = {
    ('c92.mp4', ["DinnerDrop plans 5 new dinners\nthe kids will actually eat,\non your budget.", "Even for my\npicky one?"], WEEK, '5 new dinners. Your budget.', 0, None),
    ('c93.mp4', ["Just tell it what they won't eat.\nThen the whole list goes\nstraight to Instacart.", "Bye-bye,\nnugget night!"], CART, 'Whole list in Instacart, 1 tap', 0, None),
  ], ['Picky eaters? Covered.'], 6, ('Nugget night... again?', 'meal planning for busy moms')),
+ 'e7': ('FruitMoms_Ep7_HalloweenCandy', [
+   ('c101.mp4', ["Halloween's tomorrow and all\nthey want for dinner is candy!", "And I haven't planned\na single meal."], None, None, None, 'FRUIT MOMS  EP 7'),
+   ('c102.mp4', ["DinnerDrop plans five real dinners\non your budget,\nbefore the candy hits.", "Even on\nHalloween week?"], WEEK, '5 real dinners. Your budget.', 0, None),
+   ('c103.mp4', ["And the whole list goes straight\nto your Instacart cart.", "Real dinner first,\nthen trick-or-treat!"], CART, 'Whole list in Instacart, 1 tap', 0, None),
+ ], ['Real dinner before the candy'], 7, ('Candy for dinner?', 'Halloween week meal planning')),
 }
 DATE = os.environ.get('EP_DATE', '2026-10-29')
 
