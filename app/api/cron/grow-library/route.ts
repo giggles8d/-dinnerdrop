@@ -18,6 +18,15 @@ export async function GET(request: NextRequest) {
   if (!ok) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const sp = request.nextUrl.searchParams
+  // ?seed=1 loads data/recipe-concepts.json into the concept queue (only if the queue is empty), then returns.
+  if (sp.get('seed')) {
+    const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
+    const pending = (kv?.value as { pending?: string[] } | null)?.pending ?? []
+    if (pending.length) return NextResponse.json({ seeded: false, pending: pending.length })
+    const file = (await import('@/data/recipe-concepts.json')).default as { concepts: string[] }
+    await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { pending: file.concepts, done: 0, source: 'data/recipe-concepts.json' }, updated_at: new Date().toISOString() })
+    return NextResponse.json({ seeded: true, pending: file.concepts.length })
+  }
   const report = await growLibrary(admin, {
     batches: Number(sp.get('batches')) || undefined,
     perBatch: Number(sp.get('perBatch')) || undefined,
