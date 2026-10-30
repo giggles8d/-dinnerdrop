@@ -15,7 +15,7 @@ import { normalizeName, upsertRecipes, honestTags } from '@/lib/recipe-library'
 import { parseQuantity } from '@/lib/portions'
 import type { Meal } from '@/types'
 
-const DIETS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Keto', 'Halal', 'Pescatarian', 'Low-carb', 'Paleo', 'Nut-free', 'Kosher-style', 'Low-sodium'] as const
+const DIETS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Keto', 'Halal', 'Pescatarian', 'Low-carb', 'Paleo', 'Nut-free', 'Kosher-style', 'Low-sodium', 'Diabetic-friendly', 'Heart-healthy'] as const
 const CATEGORIES = new Set(['Produce', 'Meat & Seafood', 'Dairy & Eggs', 'Pantry & Dry Goods', 'Frozen', 'Bakery', 'Beverages'])
 // Word-bounded so "hamburger buns", "eggplant" and "butter lettuce" don't read as ham, egg or butter.
 const MEAT = /\b(chicken|beef|pork|bacon|ham|sausages?|turkey|lamb|steaks?|prosciutto|pepperoni|salami|chorizo|shrimp|salmon|tuna|cod|tilapia|fish|crab|scallops?|anchovy|anchovies)\b/i

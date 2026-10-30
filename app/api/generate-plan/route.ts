@@ -1,4 +1,5 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { styleByKey } from '@/lib/styles'
 import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
 import { createClient } from '@supabase/supabase-js'
@@ -243,6 +244,8 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
     }
 
     const nightLines = nightTimes.map((n) => `- ${n.label}: ${n.minutes} min`).join('\n')
+    const style = styleByKey(settings.food.style)
+    if (style?.rule) constraintLines.push(style.rule)
     const timeRule = fastestNight === slowestNight
       ? `- Every dinner must be completable in ${slowestNight} minutes or less, prep included.`
       : `- Cook nights and the time available each night:\n${nightLines}\n- At least ${Math.max(2, Math.ceil(generateCount / 3))} options must take ${fastestNight} minutes or less (for the fastest nights). No option may exceed ${slowestNight} minutes. Set "suggestedNight" to the night each dinner fits best.`

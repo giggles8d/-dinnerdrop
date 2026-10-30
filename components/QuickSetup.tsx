@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import { trackOnce } from '@/lib/activation'
+import { FOOD_STYLES } from '@/lib/styles'
+import { applyStyle } from '@/lib/apply-style'
 
 // Three tap-only questions shown on a brand-new family's first dashboard visit,
 // before their first week is built. Everything is preselected to a typical
@@ -23,6 +25,7 @@ export interface QuickSetupAnswers {
   familySize: number
   weeklyBudget: string
   dietaryNeeds: string[]
+  style?: string | null
 }
 
 function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
@@ -45,6 +48,7 @@ export default function QuickSetup({ onDone }: { onDone: (a: QuickSetupAnswers) 
   const [familySize, setFamilySize] = useState(DEFAULT_FAMILY_SIZE)
   const [weeklyBudget, setWeeklyBudget] = useState(DEFAULT_BUDGET)
   const [avoid, setAvoid] = useState<string[]>([])
+  const [style, setStyle] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
 
   const perDinner = Math.round((Number(weeklyBudget.replace(/[^0-9.]/g, '')) || 0) / 5)
@@ -53,7 +57,7 @@ export default function QuickSetup({ onDone }: { onDone: (a: QuickSetupAnswers) 
     setSaving(true)
     const answers: QuickSetupAnswers = skipped
       ? { familySize: DEFAULT_FAMILY_SIZE, weeklyBudget: DEFAULT_BUDGET, dietaryNeeds: [] }
-      : { familySize, weeklyBudget, dietaryNeeds: avoid }
+      : { familySize, weeklyBudget, dietaryNeeds: avoid, style }
     try {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
@@ -63,6 +67,7 @@ export default function QuickSetup({ onDone }: { onDone: (a: QuickSetupAnswers) 
           dietary_needs: answers.dietaryNeeds,
           ...(skipped ? {} : { onboarding_complete: true }),
         }).eq('id', user.id)
+        if (!skipped && style) await applyStyle(supabase, user.id, style)
       }
     } catch {
       // Never block the first plan on a profile write; defaults still work.
@@ -74,7 +79,7 @@ export default function QuickSetup({ onDone }: { onDone: (a: QuickSetupAnswers) 
   return (
     <div className="mb-8 p-5 sm:p-6 rounded-2xl border border-primary/20 bg-primary/5">
       <h2 className="text-xl font-heading font-bold text-foreground">Let&apos;s plan your week</h2>
-      <p className="text-sm text-muted-foreground mt-1 mb-5">Three quick taps and we&apos;ll build 5 dinners around your family.</p>
+      <p className="text-sm text-muted-foreground mt-1 mb-5">A few quick taps and we&apos;ll build 5 dinners around your family.</p>
 
       <p className="text-sm font-semibold text-foreground mb-2">How many people are eating?</p>
       <div className="flex flex-wrap gap-2 mb-5">
@@ -86,6 +91,13 @@ export default function QuickSetup({ onDone }: { onDone: (a: QuickSetupAnswers) 
         {BUDGETS.map((b) => <Chip key={b} on={weeklyBudget === b} onClick={() => setWeeklyBudget(b)}>{b}</Chip>)}
       </div>
       <p className="text-xs text-muted-foreground mb-5">About ${perDinner}{weeklyBudget.endsWith('+') ? '+' : ''} per dinner, for the whole table.</p>
+
+      <p className="text-sm font-semibold text-foreground mb-2">What kind of week? <span className="font-normal text-muted-foreground">(optional — you can change it any time)</span></p>
+      <div className="flex flex-wrap gap-2 mb-5">
+        {FOOD_STYLES.map((s) => (
+          <Chip key={s.key} on={style === s.key} onClick={() => setStyle(style === s.key ? null : s.key)}>{s.emoji} {s.name}</Chip>
+        ))}
+      </div>
 
       <p className="text-sm font-semibold text-foreground mb-2">Anything to avoid? <span className="font-normal text-muted-foreground">(optional)</span></p>
       <div className="flex flex-wrap gap-2 mb-6">

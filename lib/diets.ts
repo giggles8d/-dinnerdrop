@@ -6,11 +6,11 @@ import { ingredientAllergens } from '@/lib/allergens'
  *
  * Judged on what's bought, never the title ("Zucchini Noodle Bolognese" is fine for Low-carb).
  */
-export const INFERRED_DIETS = ['Pescatarian', 'Low-carb', 'Paleo', 'Nut-free', 'Kosher-style', 'Low-sodium'] as const
+export const INFERRED_DIETS = ['Pescatarian', 'Low-carb', 'Paleo', 'Nut-free', 'Kosher-style', 'Low-sodium', 'Diabetic-friendly', 'Heart-healthy'] as const
 export type InferredDiet = (typeof INFERRED_DIETS)[number]
 
 type Ing = { name: string; searchTerm?: string | null }
-type Lite = { name: string; ingredients: Ing[] | null; nutrition?: { sodium?: number; carbs?: number } | null }
+type Lite = { name: string; ingredients: Ing[] | null; nutrition?: { sodium?: number; carbs?: number; sugar?: number; satFat?: number; fiber?: number } | null }
 
 const LAND_MEAT = /\b(chicken|beef|steak|sirloin|brisket|chuck|ribeye|flank|skirt|pork|bacon|ham|sausages?|bratwurst|kielbasa|hot dogs?|pepperoni|salami|prosciutto|chorizo|turkey|lamb|veal|goat|meatballs?|meatloaf|ground (beef|turkey|pork|chicken|lamb)|rotisserie|deli (turkey|ham|roast beef)|corned beef|pastrami|duck)\b/i
 const PORK_ONLY = /\b(pork|bacon|ham\b|bratwurst|kielbasa|pepperoni|salami|prosciutto|chorizo|lard|hot dogs?)\b/i
@@ -26,6 +26,9 @@ const LEGUME_SOY_GRAIN = /\b(beans?|lentils?|chickpeas?|hummus|edamame|tofu|temp
 const LEGUME_OK = /\b(green beans|coconut aminos|cornstarch|corn ?starch)\b/gi
 const SALTY = /\b(soy sauce|tamari|fish sauce|oyster sauce|hoisin|teriyaki|miso|bacon|ham\b|sausages?|chorizo|kielbasa|pepperoni|salami|prosciutto|deli|hot dogs?|canned soup|cream of \w+ soup|seasoning (mix|packet)|taco seasoning|ranch seasoning|onion soup mix|bouillon|pickles?|olives|capers|kimchi|sauerkraut|feta|parmesan|cotija|anchov\w*|velveeta|american cheese)\b/i
 const LOW_SODIUM_OK = /\b(low[- ]sodium [a-z ]+|reduced[- ]sodium [a-z ]+|no[- ]salt[- ]added [a-z ]+|unsalted [a-z]+)\b/gi
+
+const SUGARY = /\b(sugar|brown sugar|honey|maple syrup|agave|molasses|jam|jelly|sweet chili|teriyaki|hoisin|bbq sauce|barbecue sauce|ketchup|sweet and sour|glaze|candied|caramel|chocolate|cranberry sauce|sweetened)\b/i
+const SAT_FAT_HEAVY = /\b(bacon|sausages?|chorizo|kielbasa|bratwurst|pepperoni|salami|prosciutto|hot dogs?|ribeye|ribs|pork belly|heavy cream|butter|cream cheese|velveeta|american cheese|lard|ghee|coconut oil|coconut cream)\b/i
 
 const names = (r: Lite) => (r.ingredients ?? []).map((i) => i.name)
 const hay = (r: Lite) => names(r).join(' | ')
@@ -55,6 +58,23 @@ export function dietViolation(diet: InferredDiet, r: Lite): string | null {
       if (SHELLFISH.test(h)) return 'has shellfish'
       const meat = LAND_MEAT.test(h) && !/\b(turkey|chicken) (sausage|bacon)\b/i.test(h) ? true : LAND_MEAT.test(h)
       if (meat && DAIRY.test(h.replace(NON_DAIRY, ' '))) return 'mixes meat and dairy'
+      return null
+    }
+    case 'Diabetic-friendly': {
+      // Modest carbs, no sugary sauces/sweeteners; needs the nutrition fill to confirm.
+      const m = h.match(SUGARY)
+      if (m) return `added sugar (${m[0]})`
+      if (r.nutrition?.carbs == null) return 'carbs not known yet'
+      if (r.nutrition.carbs > 45) return `${r.nutrition.carbs} g carbs per serving`
+      if ((r.nutrition.sugar ?? 0) > 15) return `${r.nutrition.sugar} g sugar per serving`
+      return null
+    }
+    case 'Heart-healthy': {
+      const m = h.replace(LOW_SODIUM_OK, ' ').match(SALTY) || h.match(SAT_FAT_HEAVY)
+      if (m) return `heart-unfriendly ingredient (${m[0]})`
+      if (r.nutrition?.sodium == null || r.nutrition?.satFat == null) return 'nutrition not known yet'
+      if (r.nutrition.sodium > 600) return `${r.nutrition.sodium} mg sodium per serving`
+      if (r.nutrition.satFat > 6) return `${r.nutrition.satFat} g saturated fat per serving`
       return null
     }
     case 'Low-sodium': {
