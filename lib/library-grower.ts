@@ -26,7 +26,7 @@ const PORK = /\b(pork|bacon|ham|prosciutto|pepperoni|salami|chorizo|lard)\b/i
 const GLUTEN = /\b(flour|bread|pasta|spaghetti|penne|noodle|tortilla|couscous|barley|soy sauce|panko|breadcrumb|bun|pita|naan|orzo|ramen|udon)\b/i
 const DAIRY = /\b(milk|cheese|butter|cream|yogurt|parmesan|mozzarella|cheddar|feta|ricotta|ghee)\b/i
 
-interface Focus { label: string; diet?: (typeof DIETS)[number]; maxMinutes: number; note: string }
+interface Focus { label: string; diet?: (typeof DIETS)[number]; maxMinutes: number; note: string; concepts?: string[] }
 
 export interface GrowReport { requested: number; saved: string[]; rejected: Array<{ name: string; why: string }>; focuses: string[] }
 
@@ -48,6 +48,19 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
     { label: `${thinnest[2]} 30-min`, diet: thinnest[2], maxMinutes: 30, note: '' },
     { label: 'budget family favorites', maxMinutes: 30, note: 'Classic kid-friendly family dinners under $3 per serving.' },
   ]
+  // Concept queue (app_kv 'recipe_concepts'): dish ideas families already know — e.g. the dinners ex-Mealime users
+  // will look for — written from scratch in our own words. Two batches a night come from the queue while it lasts.
+  const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
+  const queue = ((kv?.value as { pending?: string[] } | null)?.pending ?? []).filter((x) => typeof x === 'string' && x.trim())
+  if (queue.length) {
+    const take = queue.slice(0, 10)
+    const half = Math.ceil(take.length / 2)
+    const conceptFocuses: Focus[] = [take.slice(0, half), take.slice(half)].filter((c) => c.length).map((c, i) => ({
+      label: `concepts ${i + 1}`, maxMinutes: 40, concepts: c,
+      note: `Each recipe is YOUR OWN original take on one of these dinner ideas, in this order, one recipe per idea: ${c.map((x, n) => `${n + 1}. ${x}`).join('; ')}. Use the idea as a theme only — choose your own ingredients, amounts, method and a fresh name (don't reuse the idea's wording); keep it a weeknight dinner for 4 that fits the rules.`,
+    }))
+    return [...conceptFocuses, ...focuses].slice(0, Math.max(batches, conceptFocuses.length))
+  }
   return focuses.slice(0, batches)
 }
 
@@ -173,6 +186,7 @@ export async function growLibrary(admin: SupabaseClient, opts: { batches?: numbe
   const perBatch = Math.min(Math.max(opts.perBatch ?? 5, 1), 8)
   const focuses = await chooseFocuses(admin, batches)
   const report: GrowReport = { requested: batches * perBatch, saved: [], rejected: [], focuses: focuses.map((f) => f.label) }
+  const usedConcepts = focuses.flatMap((f) => f.concepts ?? [])
 
   const { data: existing } = await admin.from('recipes').select('normalized_name, name, dietary').limit(5000)
   const known = new Set((existing ?? []).map((r) => r.normalized_name as string))
@@ -185,7 +199,7 @@ export async function growLibrary(admin: SupabaseClient, opts: { batches?: numbe
       .slice(0, 120)
     const prompt = `You write recipes for DinnerDrop, a weeknight dinner planner for busy US families.
 
-Write ${perBatch} ORIGINAL weeknight dinner recipes${f.diet ? ` that are strictly ${f.diet}` : ''}, each on the table in ${f.maxMinutes} minutes or less (prep included). ${f.note}
+Write ${f.concepts?.length ?? perBatch} ORIGINAL weeknight dinner recipes${f.diet ? ` that are strictly ${f.diet}` : ''}, each on the table in ${f.maxMinutes} minutes or less (prep included). ${f.note}
 Base them on dishes American families actually cook and search for — classics and currently popular dinners — but write every recipe yourself in your own words. Do not reproduce any specific published recipe, blog, cookbook or brand recipe, and do not name sources.
 
 Rules:
@@ -198,7 +212,7 @@ Rules:
 - If heat (chiles, red pepper flakes, sriracha, curry paste) is mixed in and you tag kid-favorite, include a step that sets aside a plain portion before the heat goes in.
 - "dietary": list EVERY one of these the recipe truly complies with: ${DIETS.join(', ')} (empty list if none). Halal dinners with meat must call for halal meat by name (e.g. "halal chicken thighs") and use halal or vegetable broth; never write "halal" on fish or shellfish. When a label depends on the product, name the compliant product in the ingredient and searchTerm (gluten-free soy sauce/tamari, gluten-free enchilada sauce, vegetarian Worcestershire, vegan curry paste, dairy-free buns).
 - 1–3 tags from: quick, sheet-pan, one-pot, air-fryer, grill, kid-favorite, budget, high-protein. Use "one-pot" only if the whole dinner uses one pot or pan, and "sheet-pan" only if it cooks on a sheet pan.
-- Different proteins and cuisines across the ${perBatch}; none may be a version of these existing dinners: ${avoid.join('; ')}
+- ${f.concepts ? 'Cover each idea once' : `Different proteins and cuisines across the ${perBatch}`}; none may be a version of these existing dinners: ${avoid.join('; ')}
 
 Return ONLY valid JSON, no markdown:
 {"meals":[{"name":"string","cuisine":"Mexican","protein":"chicken thighs","cookTime":25,"prepTime":10,"servings":4,"estimatedCost":16.5,"dietary":["Gluten-free"],"tags":["quick"],"nutrition":{"calories":520,"protein":34,"carbs":48,"fat":18,"satFat":6,"fiber":7,"sugar":9,"sodium":890},"ingredients":[{"name":"chicken thighs","quantity":"1 1/2","unit":"lb","category":"Meat & Seafood","searchTerm":"boneless chicken thighs"}],"steps":["..."]}]}
@@ -231,6 +245,13 @@ Categories must be one of: ${Array.from(CATEGORIES).join(', ')}.`
         report.rejected.push({ name: m.name, why: `save failed: ${String(e).slice(0, 80)}` })
       }
     }
+  }
+  // Pop the concepts we tried tonight (saved or rejected — a rejected idea isn't retried; the pool is large).
+  if (usedConcepts.length) {
+    const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
+    const v = (kv?.value as { pending?: string[]; done?: number } | null) ?? {}
+    const pending = (v.pending ?? []).filter((x) => !usedConcepts.includes(x))
+    await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { ...v, pending, done: (v.done ?? 0) + usedConcepts.length, last: new Date().toISOString() }, updated_at: new Date().toISOString() })
   }
   return report
 }
