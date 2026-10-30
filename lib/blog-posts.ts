@@ -10,6 +10,65 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'easy-thanksgiving-week-dinners',
+    title: 'Easy Thanksgiving-Week Dinners: 7 Nights Without Cooking a Whole Bird',
+    description:
+      'Thanksgiving is one dinner. The other six nights that week still need to happen. ' +
+      'Here is a realistic plan for the week: 25-minute turkey dinners, sides that double as mains, and what to do with the leftovers.',
+    publishDate: '2026-10-31',
+    readingTimeMinutes: 6,
+    primaryKeyword: 'easy thanksgiving week dinners',
+    content: `Everyone plans Thursday. Almost nobody plans the Monday before it, when the fridge is half full of ingredients earmarked for the big meal, the kids are home from school, and someone still has to answer "what's for dinner?"
+
+This is a plan for the whole week — the six ordinary dinners around the one big one — built the way we build every DinnerDrop week: short cook times, overlapping ingredients so nothing goes to waste, and a grocery list you can send to your cart in one tap.
+
+## The rule for Thanksgiving week: no second bird
+
+The mistake most families make is treating the week as a run-up to Thursday and eating takeout until then. The second mistake is cooking "Thanksgiving-lite" every night and burning out before the real thing.
+
+The fix is simple: **cook turkey the fast way, not the whole-bird way.** Turkey cutlets, tenderloins and ground turkey cook in 15–25 minutes, cost less than chicken breast most weeks, and taste like the holiday without the four-hour roast. Save the bird for Thursday.
+
+## Monday–Wednesday: fast turkey dinners (25 minutes or less)
+
+- **Sheet-pan turkey cutlets with sweet potato wedges and green beans.** One pan, 25 minutes. The sweet potatoes and green beans are the same ones you'll buy for Thursday, so buy one bigger bag of each.
+- **Turkey tenderloin with a cranberry pan sauce and roasted Brussels sprouts.** Sear, roast, deglaze with a spoonful of cranberry sauce — the jar you were buying anyway.
+- **Ground turkey and sweet potato skillet pie.** Ground turkey, mashed sweet potato on top, 20 minutes under the broiler. Kids eat it because it looks like shepherd's pie.
+
+All three are in the [Thanksgiving-week collection](/recipes/collections/thanksgiving) with full ingredient lists and steps.
+
+## Sides that work as dinner
+
+The week before Thanksgiving is the one week a year when "sides" are cheap and everywhere. Two of them make a complete weeknight dinner on their own:
+
+- **Butternut squash soup with grilled cheese.** 45 minutes, mostly hands-off, and it reheats for lunches.
+- **Roasted acorn squash halves stuffed with sausage, apple and wild rice.** Looks like a holiday dish, takes 35 minutes, and the squash is on sale.
+
+## Thursday: cook the real thing
+
+We won't tell you how to roast a turkey — your family already has a way. Two things that help the rest of the week, though:
+
+1. **Make a double batch of the plain sides** (mashed potatoes, roasted vegetables, rice or stuffing). Friday and Saturday dinners are built from them below.
+2. **Pull the leftover turkey off the bone Thursday night**, not Saturday. It keeps better and it's ready to use.
+
+## Friday–Sunday: leftovers that don't feel like leftovers
+
+- **Turkey and cranberry fried rice.** Day-old rice (or Thursday's leftover), diced turkey, a spoon of cranberry sauce, soy sauce, scallions. 18 minutes. This is the one people ask for again.
+- **Turkey pot pie with a biscuit top.** Leftover turkey and vegetables in a quick gravy, canned biscuits on top, 25 minutes in the oven.
+- **Open-faced turkey and cranberry sandwiches** with the last of the sweet potato wedges. Five minutes, no cooking, and the fridge is finally empty.
+
+## The grocery list for the week
+
+Here is why planning the six ordinary dinners around Thursday saves money: most of the ingredients overlap. Sweet potatoes, green beans, Brussels sprouts, squash, cranberry sauce, rice, onions and stock show up in both the holiday meal and the weeknight ones. Buy them once, in the larger size, and the per-dinner cost for the week usually lands around $14–18 for a family of four.
+
+If you plan the week in [DinnerDrop](/start), the list is built for you from the dinners you pick, deduplicated across all of them, and sent to your Instacart cart (or a Kroger cart) in one tap — so the Thanksgiving shop and the weeknight shop are one order instead of three trips.
+
+## Start with the collection
+
+The [Thanksgiving-week collection](/recipes/collections/thanksgiving) has every dinner above plus a few dozen more — all with real cook times, cost per meal and nutrition. Heart the ones your family would eat and they'll rotate into your plan. Hosting more people than usual? Change the servings on any dinner and the grocery list scales with it.
+
+Thursday is handled. Now the rest of the week is too.`,
+  },
+  {
     slug: 'mealime-shutting-down-alternative',
     title: 'Mealime Is Shutting Down October 21 — How to Move Your Family Dinners (Free)',
     description:
