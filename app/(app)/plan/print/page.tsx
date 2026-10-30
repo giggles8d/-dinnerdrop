@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { formatQuantity } from '@/components/GroceryList'
 import { timeLabel } from '@/lib/plan'
 import type { Meal } from '@/types'
+import { sideFor } from '@/lib/sides'
 
 /** Printable week: a one-page fridge sheet of the dinners, then each recipe on its own page. */
 export default function PrintWeekPage() {
@@ -68,6 +69,7 @@ export default function PrintWeekPage() {
                 <td className="py-3 pr-3 font-semibold text-foreground">{/^day \d+$/i.test(m.day) ? `Dinner ${i + 1}` : m.day}</td>
                 <td className="py-3 pr-3">
                   <p className="font-medium text-foreground">{m.name}</p>
+                  <p className="text-xs text-muted-foreground">with {sideFor(m).name}</p>
                   {m.safeBite && <p className="text-xs text-muted-foreground">Picky-eater safe bet: {m.safeBite}</p>}
                 </td>
                 <td className="py-3 pr-3 text-muted-foreground">{timeLabel(m)}</td>

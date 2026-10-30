@@ -4,6 +4,7 @@ import RecipeNotes from '@/components/RecipeNotes'
 import PrintButton from '@/components/PrintButton'
 import NutritionPanel from '@/components/NutritionPanel'
 import AllergenNotice from '@/components/AllergenNotice'
+import { sideFor } from '@/lib/sides'
 import ServingsStepper from '@/components/ServingsStepper'
 import { withServings } from '@/lib/servings'
 
@@ -110,6 +111,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           </div>
         </div>
         {added && <p className="text-sm text-primary mb-4">{added}</p>}
+        <p className="mb-4 text-sm text-muted-foreground"><span className="font-semibold text-foreground">Goes with:</span> {sideFor(meal).name} <span className="text-xs">({sideFor(meal).minutes} min)</span></p>
         <AllergenNotice ingredients={meal.ingredients} name={meal.name} />
         <div className="print:hidden">
           <RecipeNotes recipeName={meal.name} />

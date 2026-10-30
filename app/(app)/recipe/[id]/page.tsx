@@ -17,6 +17,7 @@ import RecipeNotes from '@/components/RecipeNotes'
 import PrintButton from '@/components/PrintButton'
 import NutritionPanel from '@/components/NutritionPanel'
 import AllergenNotice from '@/components/AllergenNotice'
+import { sideFor } from '@/lib/sides'
 import ServingsStepper from '@/components/ServingsStepper'
 import { withServings, saveDinnerServings } from '@/lib/servings'
 import { attachLibraryImages } from '@/lib/library-images'
@@ -378,6 +379,7 @@ function RecipeContent() {
         </div>
 
         {servingsNote && <p className="-mt-5 mb-6 text-xs text-primary print:hidden" role="status">{servingsNote}{meal.base && servingsNote !== 'Saving…' ? ` · planned for ${meal.base.servings}` : ''}</p>}
+        <p className="-mt-4 mb-6 text-sm text-muted-foreground"><span className="font-semibold text-foreground">Goes with:</span> {sideFor(meal).name} <span className="text-xs">({sideFor(meal).minutes} min) · add it from your grocery list</span></p>
         <AllergenNotice ingredients={meal.ingredients} name={meal.name} />
 
         <div className="print:hidden">
