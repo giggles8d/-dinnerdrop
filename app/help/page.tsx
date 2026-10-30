@@ -4,7 +4,7 @@ import HelpForm from './HelpForm'
 
 export const metadata: Metadata = {
   title: 'DinnerDrop Help — Instacart, Swaps, Servings, Billing & Contact',
-  description: 'Quick answers on Instacart carts, swapping dinners, servings, allergies, family texting, billing and cancelling — plus a direct line to Sarah, DinnerDrop\'s founder.',
+  description: 'Quick answers on Instacart carts, swapping dinners, servings, allergies, family texting and billing — plus a direct line to Sarah, DinnerDrop\'s founder.',
   alternates: { canonical: 'https://www.dinnerdrop.app/help' },
 }
 

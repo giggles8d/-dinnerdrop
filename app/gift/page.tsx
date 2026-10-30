@@ -3,7 +3,7 @@ import PublicHeader from '@/components/site/PublicHeader'
 import GiftForm from './GiftForm'
 
 const title = 'Give the Gift of Dinner, Handled — DinnerDrop Gift Subscriptions'
-const description = 'Give a busy family months of planned weeknight dinners: 5 dinners a week for their family and budget, one grocery list, one tap to Instacart. No card needed for them.'
+const description = 'Give a busy family months of planned weeknight dinners: 5 dinners a week for their family and budget, one grocery list, one tap to Instacart.'
 
 export const metadata: Metadata = {
   title, description,

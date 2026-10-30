@@ -13,8 +13,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let recipeEntries: MetadataRoute.Sitemap = []
   try {
     const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-    const { data } = await admin.from('recipes').select('slug, updated_at, created_at').order('kept_count', { ascending: false }).limit(5000)
-    recipeEntries = (data ?? []).filter((r) => r.slug).map((r) => ({
+    // Supabase returns at most 1000 rows per request; page until a short page comes back.
+    const rows: Array<{ slug: string | null; updated_at: string | null; created_at: string | null }> = []
+    for (let from = 0; from < 20000; from += 1000) {
+      const { data } = await admin.from('recipes').select('slug, updated_at, created_at').order('kept_count', { ascending: false }).order('id').range(from, from + 999)
+      rows.push(...(data ?? []))
+      if (!data || data.length < 1000) break
+    }
+    recipeEntries = rows.filter((r) => r.slug).map((r) => ({
       url: `${BASE}/recipes/${r.slug}`,
       lastModified: new Date(r.updated_at ?? r.created_at ?? Date.now()),
       changeFrequency: 'monthly' as const,

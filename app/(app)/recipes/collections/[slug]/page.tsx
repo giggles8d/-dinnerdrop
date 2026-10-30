@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const c = collectionBySlug(params.slug)
   if (!c) return {}
   const title = `${c.name} dinners — family recipes with a one-tap grocery list | DinnerDrop`
-  const description = `${c.blurb} Real family weeknight dinners with honest cook times, cost per meal, and a grocery list that lands in your Instacart cart in one tap.`
+  const description = `${c.blurb} Family weeknight dinners with honest times and cost, plus a one-tap Instacart grocery list.`.slice(0, 160)
   const url = `https://www.dinnerdrop.app/recipes/collections/${c.slug}`
   return {
     title, description,
