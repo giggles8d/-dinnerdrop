@@ -5,6 +5,7 @@ import MealCardImage from './MealCardImage'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
 import { safeBite, cookware } from '@/lib/meal-insights'
+import { sideFor } from '@/lib/sides'
 import { allergyConflicts } from '@/lib/allergens'
 import { useFamilyAllergies } from '@/lib/use-family-allergies'
 
@@ -72,6 +73,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
           </div>
           {allergyBadge}
           {safeBite(meal) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite(meal)}</div>}
+          <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Goes with:</span> {sideFor(meal).name} <span className="opacity-70">({sideFor(meal).minutes} min)</span></div>
           {(meal.tags?.length || meal.fromLibrary) && (
             <div className="flex flex-wrap gap-1">
               {meal.fromLibrary && <span className="rounded-full bg-accent/15 text-accent-foreground px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Family favorite</span>}
@@ -151,6 +153,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
           </div>
           {allergyBadge}
           {safeBite(meal) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite(meal)}</div>}
+          <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Goes with:</span> {sideFor(meal).name} <span className="opacity-70">({sideFor(meal).minutes} min)</span></div>
           {(meal.tags?.length || meal.fromLibrary) && (
             <div className="flex flex-wrap gap-1">
               {meal.fromLibrary && <span className="rounded-full bg-accent/15 text-accent-foreground px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Family favorite</span>}

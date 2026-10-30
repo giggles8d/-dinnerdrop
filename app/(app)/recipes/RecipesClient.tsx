@@ -6,9 +6,11 @@ import { Heart, Link2, FileText, Camera, Search } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import type { Meal } from '@/types'
+import { featuredCollections } from '@/lib/collections'
 import { FULL_COLUMNS, toLibRow, applyFilters, filtersFromQuery, filtersToQuery, activeCount, EMPTY, PROTEINS, CUISINES, STYLES, FREE_OF, CALORIES, TIMES, SORTS, type LibRow, type Filters, type SortKey } from '@/lib/recipe-filters'
 
 const PAGE = 48
+const featured = featuredCollections()
 
 /** Client half of /recipes. The server sends a slim index of the whole library; filters and sorting run here instantly. */
 export default function RecipesClient({ initialRows = [], total = 0 }: { initialRows?: LibRow[]; total?: number }) {
@@ -166,6 +168,18 @@ export default function RecipesClient({ initialRows = [], total = 0 }: { initial
           )}
           {msg && <p className="text-sm mt-3 text-foreground">{msg}</p>}
         </div>}
+
+        {/* Collections in season */}
+        {featured.length > 0 && (
+          <div className="mb-5 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1" aria-label="Collections">
+            {featured.map((c) => (
+              <Link key={c.slug} href={`/recipes/collections/${c.slug}`} className="shrink-0 rounded-xl border border-border bg-card px-4 py-2.5 hover:border-primary/50 hover:shadow-sm">
+                <p className="text-sm font-semibold text-foreground">{c.emoji} {c.name}</p>
+                <p className="text-[11px] text-muted-foreground max-w-[220px] truncate">{c.blurb}</p>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Filters */}
         <div className="mb-5 space-y-3">

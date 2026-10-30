@@ -19,6 +19,7 @@ import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
 import InAppBrowserNotice from '@/components/InAppBrowserNotice'
 import KrogerReview from '@/components/KrogerReview'
+import SidesCard from '@/components/SidesCard'
 import { mergeSettings } from '@/lib/settings'
 import { resolvePlanOwner } from '@/lib/household'
 import {
@@ -397,6 +398,7 @@ export default function GroceryListPage() {
 
         {/* Ask the family first — top of the page, no scrolling */}
         <LastCallCard onItems={load} />
+        <SidesCard meals={planMeals} have={items.map((i) => i.name)} onAdd={(name, category, searchTerm, qty) => addItem(name, category, searchTerm, 'extra', qty)} />
 
         {/* Budget bar */}
         {budget > 0 && (

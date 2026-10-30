@@ -5,6 +5,8 @@ import DeleteAccount from '@/components/DeleteAccount'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import SalesCard from '@/components/SalesCard'
+import { FOOD_STYLES, styleByKey } from '@/lib/styles'
+import { applyStyle } from '@/lib/apply-style'
 import { createClient } from '@/lib/supabase'
 import {
   mergeSettings, DEFAULT_SETTINGS, WEEKDAYS, WEEKDAY_LABEL, CUISINE_OPTIONS, PROTEIN_OPTIONS,
@@ -430,6 +432,21 @@ export default function SettingsPage() {
             {/* ---------------- Food ---------------- */}
             {section === 'food' && (
               <>
+                <Field label="Your style" hint="A one-tap preset: it sets diets, time, calories or equipment for you. Change any of those below afterwards.">
+                  <div className="flex flex-wrap gap-2">
+                    {FOOD_STYLES.map((st) => {
+                      const on = settings.food.style === st.key
+                      return (
+                        <button key={st.key} type="button" title={st.blurb}
+                          onClick={async () => { if (!profile) return; setSaving(true); await applyStyle(supabase, profile.id, on ? null : st.key); await load(); setSaving(false); setSaved('Style applied') }}
+                          className={`px-3 py-1.5 rounded-full border text-sm transition-colors ${on ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>
+                          {st.emoji} {st.name}
+                        </button>
+                      )
+                    })}
+                  </div>
+                  {styleByKey(settings.food.style) && <p className="text-xs text-muted-foreground mt-2">{styleByKey(settings.food.style)!.blurb}</p>}
+                </Field>
                 <Field label="Cuisines you like" hint="Leave empty for a mix.">
                   <Chips options={CUISINE_OPTIONS} value={settings.food.cuisines} onChange={(v) => patch((s) => { s.food.cuisines = v })} />
                 </Field>

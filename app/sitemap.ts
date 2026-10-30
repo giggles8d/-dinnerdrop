@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
 import { getPublishedPosts } from '@/lib/published-posts'
+import { COLLECTIONS } from '@/lib/collections'
 
 const BASE = 'https://www.dinnerdrop.app'
 
@@ -77,6 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.6,
     },
+    ...COLLECTIONS.map((c) => ({ url: `${BASE}/recipes/collections/${c.slug}`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.6 })),
     {
       url: `${BASE}/disclosure`,
       lastModified: new Date(),
