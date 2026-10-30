@@ -57,7 +57,7 @@ export default function GiftPage({ searchParams }: { searchParams: { canceled?: 
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">Common questions</h2>
             <p className="mb-2"><span className="font-semibold text-foreground">Does the gift cover groceries?</span> No. DinnerDrop plans the week and fills the cart; they pay the store on Instacart or Kroger as usual.</p>
             <p className="mb-2"><span className="font-semibold text-foreground">Can I gift someone outside the US?</span> Instacart and Kroger are US services, so the grocery handoff works in the US only. The planner itself works anywhere.</p>
-            <p><span className="font-semibold text-foreground">What if they don&apos;t use it?</span> Write to <a href="mailto:sarah@dinnerdrop.app" className="underline">sarah@dinnerdrop.app</a> within 30 days and we&apos;ll refund it.</p>
+            <p><span className="font-semibold text-foreground">Something go wrong?</span> Write to <a href="mailto:sarah@dinnerdrop.app" className="underline">sarah@dinnerdrop.app</a> — Sarah, the founder, reads every message.</p>
           </div>
         </section>
       </main>
