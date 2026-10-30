@@ -158,7 +158,7 @@ export async function POST(request: Request) {
     let libraryMeals: Meal[] = []
     if (mode === 'fresh') {
       try {
-        const picks = await pickLibraryRecipes(supabase, {
+        const libOpts = {
           limit: optionsCount + 16,
           maxCookTime: slowestNight,
           maxCalories: settings.food.maxCalories,
@@ -167,12 +167,29 @@ export async function POST(request: Request) {
           allergies: allergyPeople.flatMap((p) => p.allergies),
           excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name), ...keepMeals.map((m) => m.name)],
           cuisines: settings.food.cuisines,
-        })
-        // Sized to the family; skip dinners far over the per-dinner budget.
+        }
         const perDinner = Number(perMealBudget) || 20
-        const affordable = picks
+        const toAffordable = (rows: Awaited<ReturnType<typeof pickLibraryRecipes>>, slack: number) => rows
           .map((r, i) => recipeToMeal(r, `L${i + 1}`, profile.familySize))
-          .filter((m) => (Number(m.estimatedCost) || 0) <= perDinner * 1.4)
+          .filter((m) => (Number(m.estimatedCost) || 0) <= perDinner * slack)
+        // Weeks come from the library, not live AI. If the strict filters leave the week short,
+        // relax the soft preferences in steps (cuisines → recent-repeat window → cook time → budget)
+        // before ever asking AI. Allergies, never-ingredients and diets are never relaxed.
+        let picks = await pickLibraryRecipes(supabase, libOpts)
+        let affordable = toAffordable(picks, 1.4)
+        const need = optionsCount - bringBack.length
+        const relaxations: Array<[string, Partial<typeof libOpts>, number]> = [
+          ['cuisines', { cuisines: [] }, 1.4],
+          ['recent repeats', { cuisines: [], excludeNames: keepMeals.map((m) => m.name) }, 1.4],
+          ['cook time', { cuisines: [], excludeNames: keepMeals.map((m) => m.name), maxCookTime: slowestNight + 20, maxCalories: 0 }, 1.6],
+          ['budget', { cuisines: [], excludeNames: keepMeals.map((m) => m.name), maxCookTime: slowestNight + 30, maxCalories: 0 }, 2.5],
+        ]
+        for (const [label, extra, slack] of relaxations) {
+          if (affordable.length >= need) break
+          picks = await pickLibraryRecipes(supabase, { ...libOpts, ...extra, limit: optionsCount + 24 })
+          affordable = toAffordable(picks, slack)
+          console.log(`[generate-plan] library short (${affordable.length}/${need}) — relaxed ${label}`)
+        }
         // Favor options that share fresh ingredients with each other (and with kept picks),
         // so whatever the family picks uses whole bunches/bags instead of half of each.
         const backNames = new Set(bringBack.map((m) => normalizeName(m.name)))

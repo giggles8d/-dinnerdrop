@@ -4,7 +4,7 @@ import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
 import { ensurePortions } from '@/lib/portions'
 import { mergeSettings } from '@/lib/settings'
-import { upsertRecipes } from '@/lib/recipe-library'
+import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName } from '@/lib/recipe-library'
 
 interface SwapMealResponse {
   meal: Meal
@@ -61,6 +61,53 @@ export async function POST(request: Request) {
       memberLines ? `Who's eating:\n${memberLines}` : '',
     ].filter(Boolean).join('\n')
 
+    // Allergy safety net: never hand back a swap that hits someone's allergy (by allergen, so "dairy" also catches cheese).
+    const unsafeMeal = (m: Meal | undefined) => !m || allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length > 0
+      || [...settings.food.neverIngredients, ...settings.food.avoidProteins].some((w) => w && `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase().includes(w.toLowerCase()))
+
+    // Library first: a proven dinner that fits the family, never the ones already on this week's plan.
+    // AI writes a swap only when the library has nothing left that fits.
+    try {
+      const { data: plans } = await supabase.from('meal_plans').select('meals').eq('user_id', userId).order('created_at', { ascending: false }).limit(2)
+      const onPlan = (plans ?? []).flatMap((p) => ((p.meals as Meal[]) ?? []).map((m) => m.name)).filter(Boolean)
+      const familySize = Number(profile?.familySize) || 4
+      const maxCook = Number(profile?.maxCookTime) || 45
+      const dietary: string[] = Array.isArray(profileRow.dietary_needs) ? profileRow.dietary_needs : []
+      const baseOpts = {
+        limit: 12,
+        maxCookTime: maxCook,
+        maxCalories: settings.food.maxCalories,
+        dietary,
+        excludeWords: hardExclusions,
+        allergies: allergyPeople.flatMap((p) => p.allergies),
+        excludeNames: [...onPlan, currentMeal?.name ?? ''],
+        cuisines: settings.food.cuisines,
+      }
+      let rows = await pickLibraryRecipes(supabase, baseOpts)
+      if (!rows.length) rows = await pickLibraryRecipes(supabase, { ...baseOpts, cuisines: [], maxCookTime: maxCook + 20, maxCalories: 0 })
+      if (rows.length) {
+        const target = Number(currentMeal?.estimatedCost) || 0
+        const curProtein = String(currentMeal?.protein ?? '').toLowerCase()
+        const curCuisine = String(currentMeal?.cuisine ?? '').toLowerCase()
+        // Prefer a fresh dinner in the same lane (same cuisine or protein), near the same cost, with a photo.
+        const ranked = rows.map((r) => ({
+          r,
+          score: Math.random()
+            + (r.cuisine && r.cuisine.toLowerCase() === curCuisine ? 0.6 : 0)
+            + (r.protein && r.protein.toLowerCase() === curProtein ? 0.3 : 0)
+            + (r.image_url ? 0.4 : 0)
+            - (target > 0 ? Math.min(Math.abs((Number(r.estimated_cost) || target) - target) / target, 1) * 0.5 : 0),
+        })).sort((a, b) => b.score - a.score)
+        const pick = ranked.find((x) => normalizeName(x.r.name) !== normalizeName(currentMeal?.name ?? ''))?.r
+        if (pick) {
+          const meal = recipeToMeal(pick, currentMeal?.day ?? 'Monday', familySize)
+          if (!unsafeMeal(meal)) return Response.json({ meal, source: 'library' })
+        }
+      }
+    } catch (e) {
+      console.error('[swap-meal] library pick failed, falling back to AI', e)
+    }
+
     const prompt = `You are a meal planning assistant for DinnerDrop. The user wants to swap out a meal from their weekly plan.
 
 Current meal being replaced:
@@ -101,9 +148,7 @@ Return ONLY valid JSON with this exact structure, no markdown:
   }
 }`
 
-    // Allergy safety net: never hand back a swap that hits someone's allergy (by allergen, so "dairy" also catches cheese).
-    const unsafe = (m: Meal | undefined) => !m || allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length > 0
-      || [...settings.food.neverIngredients, ...settings.food.avoidProteins].some((w) => w && `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase().includes(w.toLowerCase()))
+    const unsafe = unsafeMeal
     let data = parseClaudeJSON<SwapMealResponse>(await generateWithClaude(prompt, 2000))
     if (unsafe(data.meal)) {
       const hit = allergyConflicts(data.meal?.ingredients ?? [], allergyPeople, data.meal?.name ?? '').map((c) => `${c.allergy} (${c.items.join(', ')})`).join('; ')
