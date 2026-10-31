@@ -73,6 +73,15 @@ async function textAdults(admin: SupabaseClient, p: ProfileRow, settings: Settin
 
 export async function runDailyReminders(admin: SupabaseClient, now: Date = new Date(), opts: { onlyAutoPlan?: boolean } = {}): Promise<DailyReport> {
   const report: DailyReport = { checked: 0, autoPlans: 0, shopReminders: 0, cookReminders: 0, errors: [] }
+  // One run at a time: two overlapping runs (the cron and a manual run, or a double request) each saw
+  // "no plan for that week yet" and both planned and emailed 35 families on Oct 31. The lock is a row in
+  // app_kv that expires after 10 minutes, so a crashed run never blocks the next day.
+  const LOCK = 'daily_reminders_lock'
+  const { data: lock } = await admin.from('app_kv').select('value').eq('key', LOCK).maybeSingle()
+  const lockedAt = Date.parse(String((lock?.value as { at?: string } | null)?.at ?? '')) || 0
+  if (Date.now() - lockedAt < 10 * 60000) { report.errors.push('another run is in progress — skipped'); return report }
+  await admin.from('app_kv').upsert({ key: LOCK, value: { at: new Date().toISOString() }, updated_at: new Date().toISOString() })
+  try {
   const { data: profiles } = await admin
     .from('profiles')
     .select('id, email, full_name, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, subscription_status, is_beta_member, family_until, email_unsubscribed')
@@ -189,6 +198,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
     } catch (e) {
       report.errors.push(`${p.id}: ${e instanceof Error ? e.message : String(e)}`)
     }
+  }
+  } finally {
+    await admin.from('app_kv').delete().eq('key', LOCK)
   }
   return report
 }
