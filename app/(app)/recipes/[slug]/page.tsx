@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import RecipeClient, { type RecipeRow } from './RecipeClient'
+import { recipeIntro } from '@/lib/recipe-intro'
 
 // Server-rendered recipe page: title, description, photo and Recipe JSON-LD in the first HTML.
 export const revalidate = 600
@@ -38,8 +39,12 @@ export default async function LibraryRecipePage({ params }: { params: { slug: st
     '@context': 'https://schema.org',
     '@type': 'Recipe',
     name: r.name,
-    image: r.image_url ? [r.image_url] : undefined,
-    author: { '@type': 'Organization', name: 'DinnerDrop' },
+    // Google requires an image for Recipe rich results; recipes still waiting on their nightly photo use the site image.
+    image: [r.image_url || 'https://www.dinnerdrop.app/og-image.png'],
+    description: recipeIntro({ name: r.name, ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [], servings: r.servings ?? 4, estimatedCost: Number(r.estimated_cost ?? 0), prepTime: r.prep_time ?? 0, cookTime: r.cook_time ?? 0, cuisine: r.cuisine, protein: r.protein }),
+    recipeCategory: 'Dinner',
+    datePublished: (r as { created_at?: string }).created_at ?? undefined,
+    author: { '@type': 'Organization', name: 'DinnerDrop', url: 'https://www.dinnerdrop.app' },
     recipeYield: `${r.servings ?? 4} servings`,
     prepTime: r.prep_time ? `PT${r.prep_time}M` : undefined,
     cookTime: r.cook_time ? `PT${r.cook_time}M` : undefined,
