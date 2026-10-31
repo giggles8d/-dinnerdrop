@@ -19,7 +19,8 @@ type CapacitorGlobal = {
       schedule: (opts: { notifications: LocalNotice[] }) => Promise<unknown>
       getPending: () => Promise<{ notifications: Array<{ id: number }> }>
       cancel: (opts: { notifications: Array<{ id: number }> }) => Promise<void>
-      addListener: (ev: 'localNotificationActionPerformed', fn: (e: { notification: { extra?: { url?: string } } }) => void) => Promise<unknown>
+      // In the native shell this returns a plain { remove } object, not a promise.
+      addListener: (ev: 'localNotificationActionPerformed', fn: (e: { notification: { extra?: { url?: string } } }) => void) => unknown
     }
     Camera?: {
       getPhoto: (opts: { quality?: number; resultType: 'base64' | 'uri' | 'dataUrl'; source?: 'CAMERA' | 'PHOTOS' | 'PROMPT'; width?: number; correctOrientation?: boolean; promptLabelHeader?: string; promptLabelPhoto?: string; promptLabelPicture?: string }) => Promise<{ base64String?: string; format: string }>
@@ -156,7 +157,9 @@ export async function cancelDinnerReminders() {
 export function listenForNotificationTaps(go: (url: string) => void) {
   const ln = cap()?.Plugins?.LocalNotifications
   if (!isNativeApp() || !ln) return
-  ln.addListener('localNotificationActionPerformed', (e) => { const url = e.notification.extra?.url; if (url) go(url) }).catch(() => {})
+  try {
+    ln.addListener('localNotificationActionPerformed', (e) => { const url = e?.notification?.extra?.url; if (url) go(url) })
+  } catch { /* never let the shell's bridge take the page down */ }
 }
 
 /** Small on-device key/value store shared with the offline page. */

@@ -30,16 +30,18 @@ export default function DinnerReminders({ meals }: { meals: Meal[] }) {
   useEffect(() => {
     if (!isNativeApp()) return
     setNative(true)
-    listenForNotificationTaps((url) => router.push(url))
-    nativePrefGet(KEY).then((v) => { if (v) { try { setPrefs({ ...DEFAULT, ...JSON.parse(v) }) } catch { /* keep default */ } } setLoaded(true) })
+    try { listenForNotificationTaps((url) => router.push(url)) } catch { /* ignore */ }
+    nativePrefGet(KEY).then((v) => { if (v) { try { setPrefs({ ...DEFAULT, ...JSON.parse(v) }) } catch { /* keep default */ } } setLoaded(true) }).catch(() => setLoaded(true))
   }, [router])
 
   // Re-schedule whenever the plan or the chosen time changes.
   useEffect(() => {
     if (!native || !loaded) return
-    if (!prefs.on) { cancelDinnerReminders(); return }
-    if (!meals.length) return
-    scheduleDinnerReminders(meals.map((m) => ({ id: m.day.toLowerCase(), name: m.name, day: m.day, prepTime: m.prepTime })), { hour: prefs.hour, minute: prefs.minute })
+    try {
+      if (!prefs.on) { cancelDinnerReminders().catch(() => {}); return }
+      if (!meals.length) return
+      scheduleDinnerReminders(meals.map((m) => ({ id: m.day.toLowerCase(), name: m.name, day: m.day, prepTime: m.prepTime })), { hour: prefs.hour, minute: prefs.minute }).catch(() => {})
+    } catch { /* a bridge quirk must never take the dashboard down */ }
   }, [native, loaded, prefs, meals])
 
   async function save(next: Prefs) {
