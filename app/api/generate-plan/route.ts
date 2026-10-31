@@ -11,6 +11,7 @@ import { currentSales, salesPromptBlock } from '@/lib/sales'
 import { loadPantry, pantryPromptBlock } from '@/lib/pantry'
 import { pickWithOverlap, isFresh } from '@/lib/overlap'
 import { hasMix, scaleMix, mixLabel, proteinGroup, MIX_GROUPS } from '@/lib/protein-mix'
+import { computeTastes, householdBoost, learned, likeScore, type MemberTaste } from '@/lib/tastes'
 
 // Extend serverless timeout — AI generation needs up to 55s
 export const maxDuration = 60
@@ -82,6 +83,11 @@ export async function POST(request: Request) {
         .select('name, role, age_band, likes, dislikes, allergies, safe_foods')
         .eq('household_id', profileRow.household_id)
       members = (data as MemberRow[]) ?? []
+    }
+    // What each voter tends to pick (lib/tastes) — steers which dinners are offered.
+    let tastes: MemberTaste[] = []
+    if (profileRow.household_id && mode === 'fresh') {
+      try { tastes = await computeTastes(supabase, profileRow.household_id, settings.tastes.hidden) } catch (e) { console.error('tastes failed', e) }
     }
     const allAllergies = Array.from(new Set(members.flatMap((m) => m.allergies ?? [])))
     const allDislikes = Array.from(new Set(members.flatMap((m) => m.dislikes ?? [])))
@@ -172,6 +178,7 @@ export async function POST(request: Request) {
           excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name), ...keepMeals.map((m) => m.name)],
           cuisines: settings.food.cuisines,
           quota,
+          boost: householdBoost(tastes),
         }
         const perDinner = Number(perMealBudget) || 20
         const toAffordable = (rows: Awaited<ReturnType<typeof pickLibraryRecipes>>, slack: number) => rows
@@ -211,6 +218,30 @@ export async function POST(request: Request) {
           libraryMeals = [...bringBack, ...picked].slice(0, optionsCount)
         } else {
           libraryMeals = [...bringBack, ...pickWithOverlap(fresh, optionsCount - bringBack.length, [...keepMeals, ...bringBack])]
+        }
+        // Everyone gets something: each voter with a track record should see at least two options they're
+        // likely to pick. If not, swap in their best fit from the spares (same protein group when a mix is set),
+        // replacing the option the household as a whole likes least.
+        const ts = learned(tastes)
+        if (ts.length) {
+          const chosenNames = () => new Set(libraryMeals.map((m) => normalizeName(m.name)))
+          const fam = (m: Meal) => ts.reduce((sum, t) => sum + likeScore(t, m), 0)
+          for (const t of ts) {
+            let liked = libraryMeals.filter((m) => likeScore(t, m) > 0.5).length
+            for (let tries = 0; liked < 2 && tries < 2; tries++) {
+              const taken = chosenNames()
+              const spares = fresh.filter((m) => !taken.has(normalizeName(m.name)) && likeScore(t, m) > 0.5).sort((a, b) => likeScore(t, b) - likeScore(t, a))
+              const swapIn = spares.find((sp) => libraryMeals.some((m, i) => i >= bringBack.length && likeScore(t, m) <= 0.5 && (!quota || proteinGroup(m.protein, m.name) === proteinGroup(sp.protein, sp.name))))
+              if (!swapIn) break
+              const outIdx = libraryMeals
+                .map((m, i) => ({ m, i }))
+                .filter(({ m, i }) => i >= bringBack.length && likeScore(t, m) <= 0.5 && (!quota || proteinGroup(m.protein, m.name) === proteinGroup(swapIn.protein, swapIn.name)))
+                .sort((a, b) => fam(a.m) - fam(b.m))[0]?.i
+              if (outIdx === undefined) break
+              libraryMeals[outIdx] = swapIn
+              liked++
+            }
+          }
         }
       } catch (e) {
         console.error('library picks failed', e)

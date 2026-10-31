@@ -32,6 +32,7 @@ export default function TonightPage() {
   const [items, setItems] = useState<string[] | null>(null)
   const [meals, setMeals] = useState<TonightMeal[]>([])
   const [note, setNote] = useState<string | null>(null)
+  const [pantryCount, setPantryCount] = useState(0)
   const [added, setAdded] = useState<Record<string, boolean>>({})
 
   async function run(payload: Record<string, unknown>, kind: 'photo' | 'text') {
@@ -40,7 +41,7 @@ export default function TonightPage() {
       const r = await fetch('/api/tonight', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, usePantry }) })
       const j = await r.json()
       if (!r.ok) { setError(j.error || 'Something went wrong — try again.'); return }
-      setItems(j.items ?? []); setMeals(j.meals ?? []); setNote(j.note ?? null); setAdded({})
+      setItems(j.items ?? []); setPantryCount(j.pantryCount ?? 0); setMeals(j.meals ?? []); setNote(j.note ?? null); setAdded({})
       if (j.items?.length && !typed) setTyped((j.items as string[]).join(', '))
     } catch { setError('Something went wrong — try again.') } finally { setBusy(null) }
   }
@@ -104,7 +105,7 @@ export default function TonightPage() {
         {items && (
           <div className="mt-8">
             {items.length > 0 && (
-              <p className="text-sm text-muted-foreground mb-4"><span className="font-medium text-foreground">Working with:</span> {items.join(', ')}. Missed something? Add it in the box above and tap Find dinners.</p>
+              <p className="text-sm text-muted-foreground mb-4"><span className="font-medium text-foreground">Working with:</span> {items.join(', ')}{pantryCount > 0 ? `, plus ${pantryCount} thing${pantryCount === 1 ? '' : 's'} from your pantry` : ''}. Missed something? Add it in the box above and tap Find dinners.</p>
             )}
             {note && <p className="text-sm text-muted-foreground mb-4">{note}</p>}
             {items.length > 0 && !meals.length && !note && (

@@ -74,6 +74,9 @@ export interface Settings {
     email: boolean
     sms: boolean
   }
+  tastes: {
+    hidden: Record<string, string[]>  // learned-taste chips the family removed, per household member id
+  }
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -136,6 +139,9 @@ export const DEFAULT_SETTINGS: Settings = {
   notifications: {
     email: true,
     sms: false,
+  },
+  tastes: {
+    hidden: {},
   },
 }
 
