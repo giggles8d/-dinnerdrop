@@ -65,7 +65,7 @@ export default async function LandingPage() {
             </div>
 
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 rotate-1 bg-white">
+              <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-white">
                 <HeroClip className="w-full h-auto block" />
               </div>
               {/* floating proof chips */}

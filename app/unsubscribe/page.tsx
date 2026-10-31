@@ -56,7 +56,7 @@ function UnsubscribeContent() {
             <h1 className="text-2xl font-heading font-bold text-foreground">Something went wrong</h1>
             <p className="text-muted-foreground text-sm">
               This unsubscribe link may be invalid. Email us at{' '}
-              <a href="mailto:info@dinnerdrop.app" className="text-primary underline">info@dinnerdrop.app</a>
+              <a href="mailto:sarah@dinnerdrop.app" className="text-primary underline">sarah@dinnerdrop.app</a>
               {' '}and we&apos;ll remove you immediately.
             </p>
           </div>

@@ -76,7 +76,7 @@ export default function StoreCompare({ items, baseline, stores, sets, globalFact
       <div className="flex items-center gap-2 mb-2">
         <Store className="w-4 h-4 text-primary" />
         <h2 className="font-heading font-semibold text-foreground">Which store this week?</h2>
-        {!flyersLoaded && !anyReal && <span className="text-[11px] text-muted-foreground">estimates from what each store usually costs you — real prices load every Sunday morning</span>}
+        {!flyersLoaded && !anyReal && <span className="text-[11px] text-muted-foreground">estimates from what each store usually costs you — they sharpen with every order and receipt</span>}
         {anyReal && <span className="text-[11px] text-primary font-medium">real prices from Instacart, sales included</span>}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">

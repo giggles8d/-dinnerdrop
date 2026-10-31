@@ -1,3 +1,4 @@
+import { timeLabel } from '@/lib/plan'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
@@ -41,7 +42,7 @@ export async function GET() {
     name: m.name,
     status: m.phone_opted_out ? 'opted out' : !m.phone_opt_in_at ? 'waiting for YES' : answeredIds.has(m.id) ? 'answered' : askedIds.has(m.id) ? 'sent, waiting' : m.can_vote ? 'not sent yet' : 'no vote',
   }))
-  return NextResponse.json({ round: { id: round.id, week_start: round.week_start, picks_needed: round.picks_needed, created_at: round.created_at, candidates: round.candidates.map((cnd) => ({ name: cnd.name, cookTime: cnd.cookTime, ...tally[cnd.name] })) }, people })
+  return NextResponse.json({ round: { id: round.id, week_start: round.week_start, picks_needed: round.picks_needed, created_at: round.created_at, candidates: round.candidates.map((cnd) => ({ name: cnd.name, cookTime: cnd.cookTime, time: cnd.cookTime ? timeLabel(cnd) : undefined, ...tally[cnd.name] })) }, people })
 }
 
 /** POST { action: 'close' } — finalize now with the votes so far. */

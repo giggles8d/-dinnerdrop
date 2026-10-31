@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
 import AffiliateForm from './AffiliateForm'
+import PublicHeader from '@/components/site/PublicHeader'
 
 export const metadata: Metadata = {
   title: 'DinnerDrop Affiliate Program — earn 30% recommending a dinner planner parents keep',
@@ -20,12 +20,7 @@ const TERMS = [
 export default function AffiliatesPage() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 max-w-3xl flex items-center justify-between">
-          <Link href="/" className="font-heading text-xl font-bold text-foreground">DinnerDrop</Link>
-          <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="w-4 h-4" /> Back to home</Link>
-        </div>
-      </header>
+      <PublicHeader />
       <main className="container mx-auto px-4 py-12 max-w-3xl">
         <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Affiliate program</p>
         <h1 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-3">Recommend the dinner planner the whole family votes on. Earn 30%.</h1>

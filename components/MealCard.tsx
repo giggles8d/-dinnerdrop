@@ -38,6 +38,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
   ) : null
   function handleClick() {
     localStorage.setItem(`meal-${getMealId(meal)}`, JSON.stringify(meal))
+    try { localStorage.setItem(`meal-${getMealId(meal)}-at`, String(Date.now())) } catch { /* ignore */ }
   }
 
   if (selectable) {

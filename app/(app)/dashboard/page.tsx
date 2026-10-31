@@ -174,12 +174,8 @@ function DashboardContent() {
         }
 
         if (plan.week_start) {
-          const planWeekStart = new Date(plan.week_start)
-          const today = new Date()
-          const thisMonday = new Date(today)
-          thisMonday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
-          thisMonday.setHours(0, 0, 0, 0)
-          if (planWeekStart < thisMonday) setIsPlanStale(true)
+          // Compare dates as strings: new Date('YYYY-MM-DD') is UTC midnight, which is Sunday evening in the US.
+          if (plan.week_start < mondayISO()) setIsPlanStale(true)
         }
       }
 
@@ -499,13 +495,9 @@ function DashboardContent() {
       const user = session?.user ?? null
       if (!user) { router.push('/login'); return }
 
-      const today = new Date()
-      const monday = new Date(today)
-      monday.setDate(today.getDate() - ((today.getDay() + 6) % 7))
-
       await supabase.from('meal_plans').insert({
         user_id: user.id,
-        week_start: monday.toISOString().split('T')[0],
+        week_start: mondayISO(),
         meals: confirmed,
         grocery_list: {},
         total_estimated_cost: confirmedCost,

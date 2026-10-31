@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import PublicHeader from '@/components/site/PublicHeader'
 
 export const metadata: Metadata = {
   title: 'About DinnerDrop — The AI Weekly Dinner Planner for Busy Families',
@@ -19,20 +19,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 max-w-3xl flex items-center justify-between">
-          <Link href="/" className="font-heading text-xl font-bold text-foreground">
-            DinnerDrop
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to home
-          </Link>
-        </div>
-      </header>
+      <PublicHeader />
 
       <main className="container mx-auto px-4 py-12 max-w-3xl">
         <h1 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-4">
@@ -105,8 +92,8 @@ export default function AboutPage() {
             </p>
             <p className="text-muted-foreground">
               — Sarah, Founder ·{' '}
-              <a href="mailto:info@dinnerdrop.app" className="text-primary underline">
-                info@dinnerdrop.app
+              <a href="mailto:sarah@dinnerdrop.app" className="text-primary underline">
+                sarah@dinnerdrop.app
               </a>
             </p>
           </section>
@@ -115,8 +102,8 @@ export default function AboutPage() {
             <h2 className="text-xl font-heading font-semibold text-foreground mb-3">Contact</h2>
             <p>
               Questions, feedback, or press? Email{' '}
-              <a href="mailto:info@dinnerdrop.app" className="text-primary underline">
-                info@dinnerdrop.app
+              <a href="mailto:sarah@dinnerdrop.app" className="text-primary underline">
+                sarah@dinnerdrop.app
               </a>
               . You can also read our{' '}
               <Link href="/disclosure" className="text-primary underline">affiliate disclosure</Link>,{' '}

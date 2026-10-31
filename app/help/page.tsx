@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import HelpForm from './HelpForm'
+import PublicHeader from '@/components/site/PublicHeader'
 
 export const metadata: Metadata = {
   title: 'DinnerDrop Help — Instacart, Swaps, Servings, Billing & Contact',
@@ -26,6 +27,7 @@ const faqLd = {
 export default function HelpPage() {
   return (
     <div className="min-h-screen bg-background">
+      <PublicHeader />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <div className="container mx-auto px-4 py-10 max-w-2xl">
         <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Help</p>

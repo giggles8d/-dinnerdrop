@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 
-interface Candidate { name: string; cookTime?: number; votes: number; by: string[] }
+interface Candidate { name: string; cookTime?: number; time?: string; votes: number; by: string[] }
 interface Round { id: string; week_start: string; picks_needed: number; created_at: string; candidates: Candidate[] }
 interface Person { name: string; status: string }
 
@@ -22,7 +22,13 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
     } catch { /* ignore */ } finally { setLoaded(true) }
   }, [])
 
-  useEffect(() => { load(); const t = setInterval(load, 60_000); return () => clearInterval(t) }, [load])
+  useEffect(() => {
+    load(); const t = setInterval(load, 60_000)
+    // Background tabs throttle timers — refresh the tally as soon as the tab is looked at again.
+    const onShow = () => { if (document.visibilityState === 'visible') load() }
+    document.addEventListener('visibilitychange', onShow)
+    return () => { clearInterval(t); document.removeEventListener('visibilitychange', onShow) }
+  }, [load])
 
   if (!loaded || !round) return null
   const answered = people.filter((p) => p.status === 'answered').length
@@ -61,7 +67,7 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
             <li key={c.name} className="grid grid-cols-[1.5rem_1fr_auto] items-center gap-2 text-sm">
               <span className="text-muted-foreground">{i + 1}.</span>
               <div className="min-w-0">
-                <div className={`truncate ${inTop ? 'font-semibold text-foreground' : 'text-foreground'}`}>{c.name}{c.cookTime ? <span className="text-xs text-muted-foreground"> · {c.cookTime} min</span> : null}</div>
+                <div className={`truncate ${inTop ? 'font-semibold text-foreground' : 'text-foreground'}`}>{c.name}{c.time || c.cookTime ? <span className="text-xs text-muted-foreground"> · {c.time ?? `${c.cookTime} min`}</span> : null}</div>
                 <div className="h-1.5 rounded-full bg-muted mt-1 overflow-hidden"><div className={`h-full ${inTop ? 'bg-primary' : 'bg-muted-foreground/40'}`} style={{ width: `${(Math.max(0, c.votes) / max) * 100}%` }} /></div>
               </div>
               <span className="text-xs text-muted-foreground whitespace-nowrap" title={c.by.join(', ')}>{c.votes} {c.votes === 1 ? 'vote' : 'votes'}{c.by.length ? ` · ${c.by.join(', ')}` : ''}</span>

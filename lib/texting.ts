@@ -423,6 +423,14 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     const rows: Array<{ household_id: string; member_id: string; week_start: string; meal_name: string; vote: string }> = []
     const push = (n: number, vote: string) => { const nm = name(n); if (nm) rows.push({ household_id: m.household_id, member_id: m.id, week_start: weekStart, meal_name: nm, vote }) }
     if (mode === 'round') {
+      // "The rest ..yuk" right after "78" means everything except 7 and 8 (Rich, Oct 31 2026) — never let a
+      // skip undo a pick this person already made unless this message names that number.
+      if (u.skips.length && !u.correction) {
+        const { data: kept } = await admin.from('meal_votes').select('meal_name').eq('member_id', m.id).eq('week_start', weekStart).eq('vote', 'keep')
+        const keptNames = new Set([...(kept ?? []).map((k) => k.meal_name), ...u.picks.map(name)])
+        const said = new Set((body.match(/\d+/g) ?? []).map(Number))
+        u.skips = u.skips.filter((n) => !keptNames.has(name(n) ?? '') || said.has(n))
+      }
       const picks = u.allGood ? list.map((_, i) => i + 1) : u.picks
       if (picks.length || u.none) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', weekStart).eq('vote', 'keep')
       picks.forEach((n) => push(n, 'keep'))
@@ -518,6 +526,7 @@ Return ONLY JSON:
 {"picks":[],"skips":[],"again":[],"add":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"clarify":""}
 - picks: numbers they want / are happy to keep. skips: numbers they don't want. again: numbers they want brought back on a future week (use this when DinnerDrop asked which should come back, or they say "again"/"bring back"/"want that again").
 - A dish they name or refer to ("that", "the salad") is matched to its number using the conversation.
+- "the rest", "all the others", "everything else" mean every number they did NOT just pick in the conversation. Never put a number in skips that they picked unless this message names that number or dish.
 - correction: true if they're saying DinnerDrop got their last answer wrong ("oh no", "I meant", "not that"); then fill picks/skips/again with what they actually meant.
 - removeLastAdded: true only if they say something DinnerDrop just added to the grocery list was wrong or wasn't meant for the list.
 - add: only real grocery/household products they clearly want added, as product names with any amount. Otherwise [].
