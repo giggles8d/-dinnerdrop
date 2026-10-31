@@ -15,7 +15,8 @@ import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 import { resolvePlanOwner } from '@/lib/household'
 import { attachLibraryImages } from '@/lib/library-images'
-import { trackOnce } from '@/lib/activation'
+import { track, trackOnce } from '@/lib/activation'
+import EngagementTracker from '@/components/EngagementTracker'
 import WeekCheckCard from '@/components/WeekCheckCard'
 import TextingNudge from '@/components/TextingNudge'
 import DinnerReminders from '@/components/DinnerReminders'
@@ -409,6 +410,7 @@ function DashboardContent() {
     } catch (error) {
       console.error('Error generating plan:', error)
       const isTimeout = error instanceof Error && (error.name === 'AbortError' || error.message.includes('timeout'))
+      track('plan_error', { message: error instanceof Error ? error.message : String(error), timeout: isTimeout })
       setGenerateError(
         isTimeout
           ? 'Generation took too long — please try again. It usually works on the second attempt.'
@@ -551,6 +553,7 @@ function DashboardContent() {
             </div>
             <Link
               href="/grocery-list"
+              data-track="shop_my_list_bar"
               className="shrink-0 px-5 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm"
             >
               Shop my list &rarr;
@@ -564,6 +567,7 @@ function DashboardContent() {
         {/* Family texting in one step — shows once a family has a plan and no numbers yet; ?texting=1 (emails) opens it. */}
         {hasGenerated && meals.length > 0 && !loading && <TextingNudge forceOpen={searchParams.get('texting') === '1'} />}
         {hasGenerated && meals.length > 0 && !loading && <DinnerReminders meals={meals} />}
+        <EngagementTracker page="dashboard" ready={hasGenerated && meals.length > 0 && !loading} />
 
         {/* Past due payment banner */}
         {subscriptionStatus === 'past_due' && (
@@ -850,6 +854,7 @@ function DashboardContent() {
 <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/grocery-list"
+                data-track="build_list_button"
                 className="inline-block px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-sm"
               >
                 Build my grocery list &rarr;

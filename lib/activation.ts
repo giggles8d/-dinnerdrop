@@ -12,6 +12,16 @@ export const ACTIVATION_STEPS = [
   'grocery_list_view',   // opened the grocery list (once per session)
   'quick_setup_done',    // answered the 3 first-visit questions (size, budget, avoid)
   'quick_setup_skipped', // skipped them (planned for the default family of 4)
+  // Engagement (Oct 31 2026): what happens on the screen between the milestones above — so we can tell
+  // "saw the button and ignored it" from "never reached it" from "left before the plan rendered".
+  'plan_seen',           // the week's dinners rendered on screen (meta.page)
+  'scroll_25', 'scroll_50', 'scroll_75', 'scroll_100', // how far down the page they got (meta.page)
+  'list_cta_seen',       // a "grocery list" / Instacart call-to-action entered the viewport (meta.id)
+  'dwell_30s', 'dwell_60s', 'dwell_120s', // still on the page at that mark (meta.page)
+  'page_hidden',         // app/tab backgrounded (meta.page, meta.t seconds on page, meta.scroll max %)
+  'page_closed',         // page unloaded (meta.page, meta.t, meta.scroll, meta.hidden: was it backgrounded first)
+  'cta_tap',             // tapped a tracked button (meta.id)
+  'plan_error',          // plan generation failed in the browser (meta.message)
 ] as const
 export type ActivationStep = (typeof ACTIVATION_STEPS)[number]
 
@@ -24,14 +34,24 @@ export async function trackStep(admin: SupabaseClient, userId: string, step: Act
 }
 
 /** Client helper: record a step once per browser session. */
-export function trackOnce(step: ActivationStep): void {
+export function trackOnce(step: ActivationStep, meta?: Record<string, unknown>): void {
   if (typeof window === 'undefined') return
   try {
-    const key = `dd_track_${step}`
+    const key = `dd_track_${step}${meta?.page ? `_${meta.page}` : ''}${meta?.id ? `_${meta.id}` : ''}`
     if (sessionStorage.getItem(key)) return
     sessionStorage.setItem(key, '1')
   } catch {
     // private mode etc. — still send
   }
-  fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ step }), keepalive: true }).catch(() => {})
+  track(step, meta)
+}
+
+/** Client helper: record a step every time (small meta only). Uses sendBeacon when the page is going away. */
+export function track(step: ActivationStep, meta?: Record<string, unknown>, opts: { beacon?: boolean } = {}): void {
+  if (typeof window === 'undefined') return
+  const body = JSON.stringify({ step, meta: meta ?? {} })
+  try {
+    if (opts.beacon && navigator.sendBeacon) { navigator.sendBeacon('/api/track', new Blob([body], { type: 'application/json' })); return }
+  } catch { /* fall through */ }
+  fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {})
 }

@@ -75,7 +75,7 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
 
   return (
     <div className="space-y-2">
-      <button
+      <button data-track="instacart_button"
         onClick={handleSendToInstacart}
         disabled={loading}
         style={{ backgroundColor: '#003D29', color: '#FAF1E5', height: '46px', paddingLeft: '18px', paddingRight: '18px' }}

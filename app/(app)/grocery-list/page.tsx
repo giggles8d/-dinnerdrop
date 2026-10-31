@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Copy, Printer, Share2, Check } from 'lucide-react'
 import { isNativeApp, nativePrefGet, nativePrefRemove, nativePrefSet, nativeShare, tapHaptic } from '@/lib/native'
 import { trackOnce } from '@/lib/activation'
+import EngagementTracker from '@/components/EngagementTracker'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import { mealsUsing } from '@/lib/overlap'
@@ -434,6 +435,7 @@ export default function GroceryListPage() {
 
         {/* Inside Facebook/Instagram's browser, Instacart sign-in can fail: offer Safari/Chrome first. */}
         <div className="print:hidden"><InAppBrowserNotice /></div>
+        <EngagementTracker page="grocery-list" ready={!loading && items.length > 0} />
 
         {/* Ask the family first — top of the page, no scrolling */}
         <LastCallCard onItems={load} />
