@@ -6,7 +6,7 @@ import { ingredientAllergens } from '@/lib/allergens'
  *
  * Judged on what's bought, never the title ("Zucchini Noodle Bolognese" is fine for Low-carb).
  */
-export const INFERRED_DIETS = ['Pescatarian', 'Low-carb', 'Paleo', 'Nut-free', 'Kosher-style', 'Low-sodium', 'Diabetic-friendly', 'Heart-healthy'] as const
+export const INFERRED_DIETS = ['Pescatarian', 'Low-carb', 'Keto', 'Paleo', 'Nut-free', 'Kosher-style', 'Low-sodium', 'Diabetic-friendly', 'Heart-healthy'] as const
 export type InferredDiet = (typeof INFERRED_DIETS)[number]
 
 type Ing = { name: string; searchTerm?: string | null }
@@ -46,6 +46,14 @@ export function dietViolation(diet: InferredDiet, r: Lite): string | null {
       const m = h.replace(STARCH_OK, ' ').replace(LEGUME_OK, ' ').match(STARCH) || h.replace(LEGUME_OK, ' ').match(LOW_CARB_NO)
       if (m) return `has starch or sugar (${m[0]})`
       if (r.nutrition?.carbs != null && r.nutrition.carbs > 30) return `${r.nutrition.carbs} g carbs per serving`
+      return null
+    }
+    case 'Keto': {
+      // Low-carb's ingredient rules (no starch, sugar, beans or corn) plus a firm per-serving cap.
+      const m = h.replace(STARCH_OK, ' ').replace(LEGUME_OK, ' ').match(STARCH) || h.replace(LEGUME_OK, ' ').match(LOW_CARB_NO)
+      if (m) return `has starch or sugar (${m[0]})`
+      if (r.nutrition?.carbs == null) return 'carbs not known yet'
+      if (r.nutrition.carbs > 20) return `${r.nutrition.carbs} g carbs per serving`
       return null
     }
     case 'Paleo': {

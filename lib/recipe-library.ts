@@ -13,6 +13,7 @@ import { allergyConflicts } from '@/lib/allergens'
 import { mergeDiets } from '@/lib/diets'
 import type { Meal } from '@/types'
 import { ensurePortions, scaleMeal } from '@/lib/portions'
+import { pickByQuota, proteinGroup } from '@/lib/protein-mix'
 
 /** Drop time-claim tags the recipe's own numbers don't support ("15-min" on a 30-minute dinner). */
 export function honestTags(tags: string[], totalMinutes: number): string[] {
@@ -186,24 +187,30 @@ export async function pickLibraryRecipes(
     maxCalories?: number
     /** Allergies: matched by allergen (dairy also catches cheese and butter), not just the word. */
     allergies?: string[]
+    /** Protein mix scaled to the options wanted (lib/protein-mix scaleMix); groups not in it are left out. */
+    quota?: Record<string, number>
+    /** Extra preference per recipe (e.g. what this household's voters tend to pick); added to the score. */
+    boost?: (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) => number
   }
 ): Promise<RecipeRow[]> {
   if (opts.limit <= 0) return []
   let q = supabase
     .from('recipes')
-    .select('id, normalized_name, name, cuisine, protein, ingredients, kept_count, skipped_count, image_url, nutrition')
+    .select('id, normalized_name, name, cuisine, protein, ingredients, kept_count, skipped_count, image_url, nutrition, tags')
     .eq('is_public', true)
     .lte('cook_time', opts.maxCookTime)
     .limit(2000)
   if (opts.dietary.length) q = q.contains('dietary', opts.dietary)
   const { data } = await q
-  type Lite = Pick<RecipeRow, 'id' | 'normalized_name' | 'name' | 'cuisine' | 'protein' | 'ingredients' | 'kept_count' | 'skipped_count' | 'image_url' | 'nutrition'>
+  type Lite = Pick<RecipeRow, 'id' | 'normalized_name' | 'name' | 'cuisine' | 'protein' | 'ingredients' | 'kept_count' | 'skipped_count' | 'image_url' | 'nutrition' | 'tags'>
+  const quota = opts.quota && Object.values(opts.quota).some((n) => n > 0) ? opts.quota : null
   const excludeNorm = new Set(opts.excludeNames.map(normalizeName))
   const words = opts.excludeWords.map((w) => w.toLowerCase().trim()).filter(Boolean)
   const cuisines = (opts.cuisines ?? []).map((c) => c.toLowerCase()).filter((c) => c && c !== 'mixed')
   const allergyList = (opts.allergies ?? []).filter((a) => a && a.trim())
   const pool = ((data ?? []) as Lite[]).filter((r) => {
     if (excludeNorm.has(r.normalized_name)) return false
+    if (quota && !((quota[proteinGroup(r.protein, r.name)] ?? 0) > 0)) return false
     if (opts.maxCalories && r.nutrition?.calories && r.nutrition.calories > opts.maxCalories) return false
     if (cuisines.length && r.cuisine && !cuisines.includes(r.cuisine.toLowerCase())) return false
     const hay = `${r.name} ${(r.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
@@ -214,23 +221,23 @@ export async function pickLibraryRecipes(
   const scored = pool
     .map((r) => ({
       r,
-      score: Math.random() + Math.min(r.kept_count ?? 0, 5) * 0.3 - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0),
+      score: Math.random() + Math.min(r.kept_count ?? 0, 5) * 0.3 - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0) + (opts.boost ? opts.boost(r) : 0),
     }))
     .sort((a, b) => b.score - a.score)
   // One dinner per main protein first; repeat proteins only if the pool runs short.
-  const chosen: Lite[] = []
+  const spread: Lite[] = []
   const usedProteins = new Set<string>()
   for (const { r } of scored) {
-    if (chosen.length >= opts.limit) break
     const p = (r.protein ?? '').toLowerCase()
     if (p && usedProteins.has(p)) continue
-    chosen.push(r)
+    spread.push(r)
     if (p) usedProteins.add(p)
   }
-  for (const { r } of scored) {
-    if (chosen.length >= opts.limit) break
-    if (!chosen.includes(r)) chosen.push(r)
-  }
+  for (const { r } of scored) if (!spread.includes(r)) spread.push(r)
+  // With a weekly mix, fill each group's count from that order (spares come from groups in the mix).
+  const chosen: Lite[] = quota
+    ? pickByQuota(spread, opts.limit, quota, (r) => proteinGroup(r.protein, r.name))
+    : spread.slice(0, opts.limit)
   if (!chosen.length) return []
   const { data: full } = await supabase.from('recipes').select('*').in('id', chosen.map((c) => c.id))
   const byId = new Map(((full ?? []) as RecipeRow[]).map((r) => [r.id, r]))

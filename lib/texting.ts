@@ -5,6 +5,7 @@
  * Outbound day jobs run from the daily cron; inbound is /api/sms/inbound.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { hasMix, scaleMix, pickByQuota, proteinGroup } from '@/lib/protein-mix'
 import { mergeSettings, type Settings } from '@/lib/settings'
 import { localNow, mondayOf } from '@/lib/plan'
 import { sendSms, smsConfigured, normalizePhone } from '@/lib/notify'
@@ -594,8 +595,16 @@ export async function openRound(admin: SupabaseClient, householdId: string): Pro
   return (data?.[0] as VoteRound) ?? null
 }
 
-function pickLines(meals: Meal[]): string {
-  return meals.map((m, i) => `${i + 1}. ${m.name}${m.cookTime ? ` (${timeLabel(m)})` : ''}`).join('\n')
+function pickLines(meals: Meal[], showCarbs = false): string {
+  return meals.map((m, i) => {
+    const bits = [m.cookTime ? timeLabel(m) : '', showCarbs && typeof m.nutrition?.carbs === 'number' ? `${m.nutrition.carbs}g carbs` : ''].filter(Boolean)
+    return `${i + 1}. ${m.name}${bits.length ? ` (${bits.join(' · ')})` : ''}`
+  }).join('\n')
+}
+
+/** Families watching carbs see them on each texted dinner. */
+export function watchesCarbs(dietaryNeeds: string[] | null | undefined): boolean {
+  return (dietaryNeeds ?? []).some((d) => /^(keto|low-carb|diabetic-friendly)$/i.test(d.trim()))
 }
 
 /** The numbered photo collage of the choices, texted with the vote (see app/api/sms/menu-image). */
@@ -605,8 +614,8 @@ function menuImageUrl(roundId: string): string {
   return `${base}/api/sms/menu-image/${roundId}?v=${Date.now().toString(36)}`
 }
 
-function voteBody(familyName: string, round: VoteRound): string {
-  return `DinnerDrop — ${familyName}'s dinner ideas for the week of ${round.week_start.slice(5).replace('-', '/')}:\n${pickLines(round.candidates)}\n\nReply with the numbers you WANT (pick up to ${round.picks_needed}, e.g. "1 3 5"). The top picks make the week. Text ADD + anything for the grocery list.`
+function voteBody(familyName: string, round: VoteRound, showCarbs = false): string {
+  return `DinnerDrop — ${familyName}'s dinner ideas for the week of ${round.week_start.slice(5).replace('-', '/')}:\n${pickLines(round.candidates, showCarbs)}\n\nReply with the numbers you WANT (pick up to ${round.picks_needed}, e.g. "1 3 5"). The top picks make the week. Text ADD + anything for the grocery list.`
 }
 
 /**
@@ -665,7 +674,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     const askedAlready = await sentForRound(admin, mm.id, round.id)
     // resend: the same round's menu again (e.g. after a picture fix) — only to people who already got it
     if (opts.resend ? !askedAlready : (!opts.force && askedAlready)) continue
-    if (await textMember(admin, mm, voteBody(familyName, round), `vote_request:${round.id}`, settings.texting.weeklyCap, menuImageUrl(round.id))) report.voteTextsSent++
+    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap, menuImageUrl(round.id))) report.voteTextsSent++
   }
   return report
 }
@@ -852,7 +861,12 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   }
   // top N by votes; ties keep the planner's order (candidate index)
   const ranked = round.candidates.map((c, i) => ({ c, i, votes: tally[c.name] ?? 0 })).sort((a, b) => b.votes - a.votes || a.i - b.i)
-  const chosen = ranked.slice(0, round.picks_needed).map((r) => r.c)
+  // The family's weekly protein mix still holds: if fish wins three spots but the mix says one,
+  // the next most-voted dinner that fits takes the extra spot.
+  const mix = hasMix(settings.food.mix) ? scaleMix(settings.food.mix, round.picks_needed) : null
+  const chosen = mix
+    ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.c.protein, r.c.name)).map((r) => r.c)
+    : ranked.slice(0, round.picks_needed).map((r) => r.c)
   const shape: PlanShape = { dinnersPerWeek: round.picks_needed, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   const saved = await savePlan(admin, owner.id, round.week_start, chosen, shape)
   await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString(), result: { chosen: saved.map((m) => m.name), tally } }).eq('id', round.id)

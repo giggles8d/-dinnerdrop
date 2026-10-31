@@ -70,7 +70,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             <span>{meal.servings} servings</span>
             <span aria-hidden>&middot;</span>
             <span title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
-            {meal.nutrition && <><span aria-hidden>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
+            {meal.nutrition && <><span aria-hidden>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein{typeof meal.nutrition.carbs === 'number' ? ` · ${meal.nutrition.carbs}g carbs` : ''}</span></>}
           </div>
           {allergyBadge}
           {safeBite(meal) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite(meal)}</div>}
@@ -150,7 +150,7 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
             <span>{meal.servings} servings</span>
             <span aria-hidden>&middot;</span>
             <span title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
-            {meal.nutrition && <><span aria-hidden>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span></>}
+            {meal.nutrition && <><span aria-hidden>&middot;</span><span>{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein{typeof meal.nutrition.carbs === 'number' ? ` · ${meal.nutrition.carbs}g carbs` : ''}</span></>}
           </div>
           {allergyBadge}
           {safeBite(meal) && <div className="text-[11px] text-muted-foreground"><span className="font-semibold text-foreground">Safe bet for the picky one:</span> {safeBite(meal)}</div>}
