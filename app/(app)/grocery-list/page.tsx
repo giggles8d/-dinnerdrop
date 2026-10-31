@@ -51,6 +51,8 @@ export default function GroceryListPage() {
   const [actualStore, setActualStore] = useState('')
   const [lastWeekExtras, setLastWeekExtras] = useState<UsualItem[]>([])
   const [askActual, setAskActual] = useState<{ id: string; est: number | null } | null>(null)
+  // The last send to a store whose lines are still on the list: ask whether the order went through.
+  const [pendingSend, setPendingSend] = useState<{ id: string; at: string; store: string | null } | null>(null)
   const [actualDraft, setActualDraft] = useState('')
   const [actualSaved, setActualSaved] = useState<string | null>(null)
   const [staples, setStaples] = useState<Staple[]>([])
@@ -123,10 +125,14 @@ export default function GroceryListPage() {
     setUserId(uid)
     setIsPartner(owner.isPartner)
     fetch('/api/sales', { cache: 'no-store' }).then((r) => r.json()).then((j) => { setSales(j.sets ?? []); setStoreQuotes(j.quotes ?? []) }).catch(() => {})
-    supabase.from('grocery_handoffs').select('id, est_total, actual_total, created_at').eq('user_id', uid).order('created_at', { ascending: false }).limit(1)
+    supabase.from('grocery_handoffs').select('id, est_total, actual_total, created_at, store').eq('user_id', uid).order('created_at', { ascending: false }).limit(1)
       .then(({ data: hs }) => {
         const h = hs?.[0]
         if (h && h.actual_total == null && Date.now() - new Date(h.created_at).getTime() < 5 * 86400000) setAskActual({ id: h.id, est: h.est_total == null ? null : Number(h.est_total) })
+        let dismissed = false
+        try { dismissed = !!h && localStorage.getItem(`dd.send.${h.id}`) === 'keep' } catch { /* ignore */ }
+        if (h && h.actual_total == null && !dismissed && Date.now() - new Date(h.created_at).getTime() < 3 * 86400000) setPendingSend({ id: h.id, at: h.created_at, store: h.store ?? null })
+        else setPendingSend(null)
       })
 
     const { data: profile } = await supabase
@@ -298,7 +304,21 @@ export default function GroceryListPage() {
     await supabase.from('list_items').update({ ordered_at: null }).in('id', ids)
     if (userId && weekStart) await loadItems(userId, weekStart)
   }
-  const afterSent = () => { if (userId && weekStart) setTimeout(() => loadItems(userId, weekStart), 1500) }
+  const afterSent = () => { if (userId && weekStart) setTimeout(() => { loadItems(userId, weekStart); load() }, 1500) }
+  /** The order went through: the lines that were on the list when it was sent come off; later adds stay. */
+  async function confirmOrdered() {
+    if (!pendingSend || !userId) return
+    const ids = items.filter((i) => !i.have && i.created_at <= pendingSend.at).map((i) => i.id)
+    if (ids.length) await supabase.from('list_items').update({ ordered_at: new Date().toISOString() }).in('id', ids)
+    try { localStorage.setItem(`dd.send.${pendingSend.id}`, 'done') } catch { /* ignore */ }
+    setPendingSend(null)
+    if (weekStart) await loadItems(userId, weekStart)
+  }
+  function keepShopping() {
+    if (!pendingSend) return
+    try { localStorage.setItem(`dd.send.${pendingSend.id}`, 'keep') } catch { /* ignore */ }
+    setPendingSend(null)
+  }
 
   /* ---------- staples ---------- */
   async function addStaple(e: React.FormEvent) {
@@ -435,6 +455,21 @@ export default function GroceryListPage() {
           </div>
         )}
 
+        {pendingSend && items.some((i) => !i.have && i.created_at <= pendingSend.at) && (
+          <div className="mb-6 rounded-xl border border-accent/50 bg-accent/10 p-4 print:hidden">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm text-foreground">
+                <span className="font-semibold">Sent to {pendingSend.store?.replace(/^Instacart · /, '') || 'the store'} {new Date(pendingSend.at).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}.</span>
+                {' '}Did the order go through? Your items stay on the list until you say so.
+              </p>
+              <div className="flex gap-2">
+                <button onClick={confirmOrdered} className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs font-semibold">Yes — clear them</button>
+                <button onClick={keepShopping} className="px-3 py-1.5 rounded-md border border-border bg-background text-xs font-semibold">Not yet, keep the list</button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {ordered.length > 0 && (
           <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-4 print:hidden">
             <div className="flex flex-wrap items-center justify-between gap-2">
@@ -542,7 +577,7 @@ export default function GroceryListPage() {
             {' '}{shoppableCount} items go to the cart{haveCount ? ` · ${haveCount} you already have stay off it` : ''}.
           </p>
           {askActual && !actualSaved && (
-            <form onSubmit={async (e) => { e.preventDefault(); const t = Number(actualDraft.replace(/[^0-9.]/g, '')); if (!t) return; const r = await fetch('/api/handoff/actual', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ total: t, store: actualStore || undefined }) }); const j = await r.json(); if (r.ok) { setActualSaved(j.factor ? `Thanks — your store runs about ${j.factor.toFixed(2)}× our estimates. Future lists use that.` : 'Thanks — saved.'); if (j.factor) setPriceFactor(j.factor); setAskActual(null) } }} className="mt-3 flex flex-wrap items-center gap-2">
+            <form onSubmit={async (e) => { e.preventDefault(); const t = Number(actualDraft.replace(/[^0-9.]/g, '')); if (!t) return; const r = await fetch('/api/handoff/actual', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ total: t, store: actualStore || undefined }) }); const j = await r.json(); if (r.ok) { setActualSaved(j.factor ? `Thanks — your store runs about ${j.factor.toFixed(2)}× our estimates. Future lists use that.` : 'Thanks — saved.'); if (j.factor) setPriceFactor(j.factor); setAskActual(null); setPendingSend(null); if (userId && weekStart) loadItems(userId, weekStart) } }} className="mt-3 flex flex-wrap items-center gap-2">
               <span className="text-xs text-primary-foreground/70">What did your last order come to{askActual.est ? ` (we estimated $${askActual.est.toFixed(0)})` : ''}?</span>
               <input value={actualDraft} onChange={(e) => setActualDraft(e.target.value)} inputMode="decimal" placeholder="$0.00" className="w-28 rounded-md px-2 py-1 text-sm text-foreground" />
               {myStores.length > 0 && (

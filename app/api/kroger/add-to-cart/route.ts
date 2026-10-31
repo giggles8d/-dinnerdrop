@@ -3,7 +3,6 @@ import { parseQuantity } from '@/lib/portions'
 import { createClient } from '@supabase/supabase-js'
 import { sendWeekRecipes } from '@/lib/recipe-email'
 import { stockStaplesFromList } from '@/lib/pantry'
-import { markListOrdered } from '@/lib/list-ordered'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getClientCredentialsToken, searchProduct, addItemsToCart, refreshKrogerToken } from '@/lib/kroger'
 import type { GroceryItem } from '@/types'
@@ -93,7 +92,7 @@ export async function POST(request: Request) {
     try {
       const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
       await stockStaplesFromList(admin, user.id, null).catch((e) => console.error('[kroger] staple stock failed:', e))
-      await markListOrdered(admin, user.id, sentNames).catch((e) => console.error('[kroger] mark ordered failed:', e))
+      // Lines stay on the list until the family confirms the order went through.
       await sendWeekRecipes(admin, user.id)
     } catch (mailErr) {
       console.error('[kroger] recipe email failed:', mailErr)

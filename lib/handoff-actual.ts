@@ -6,6 +6,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings } from '@/lib/settings'
 import { blendFactor, factorAtSend } from '@/lib/prices'
+import { markAllOpenOrdered } from '@/lib/list-ordered'
 
 export async function recordActualTotal(
   admin: SupabaseClient,
@@ -22,6 +23,8 @@ export async function recordActualTotal(
   if (!h) return { handoffId: null, factor: null }
   const storeName = store ? String(store).slice(0, 40) : ''
   await admin.from('grocery_handoffs').update({ actual_total: actual, ...(storeName ? { store: storeName } : {}) }).eq('id', h.id)
+  // A real total means the order went through: the lines that were on the list when it was sent come off now.
+  await markAllOpenOrdered(admin, ownerId, h.created_at).catch(() => {})
   let factor: number | null = null
   if (h.est_total && Number(h.est_total) > 0) {
     const { data: prof } = await admin.from('profiles').select('settings').eq('id', ownerId).single()

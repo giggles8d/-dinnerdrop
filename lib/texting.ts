@@ -17,6 +17,7 @@ import { guessCategory, normalizeItemName } from '@/lib/list'
 import { generateWithClaude, generateWithClaudeImage, generateSmart, parseClaudeJSON } from '@/lib/claude'
 import { looksLikeFlyer, salesFromImage, saveSales } from '@/lib/sales'
 import { blendFactor, factorAtSend } from '@/lib/prices'
+import { markAllOpenOrdered } from '@/lib/list-ordered'
 import type { Meal } from '@/types'
 
 export interface MemberRow {
@@ -388,6 +389,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const h = hs?.[0]
       if (!h) return { reply: `I don't see a recent order to attach $${parsed.total.toFixed(2)} to. Send the list to Instacart first, then text me the total after checkout.`, handled: true, member: m }
       await admin.from('grocery_handoffs').update({ actual_total: parsed.total, ...(parsed.store ? { store: `Instacart · ${parsed.store}` } : {}) }).eq('id', h.id)
+      await markAllOpenOrdered(admin, owner.id, h.created_at).catch(() => {})
       if (h.est_total && Number(h.est_total) > 0) {
         const observed = parsed.total / (Number(h.est_total) / factorAtSend(h.created_at, settings.stores.priceFactor))
         const f = blendFactor(settings.stores.priceFactor, observed)
