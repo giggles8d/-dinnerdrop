@@ -59,11 +59,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Couldn't read that photo — try again, or type what you have." }, { status: 502 })
   }
   if (typeof body.text === 'string' && body.text.trim()) items.push(...parseTypedFridge(body.text))
+  items = Array.from(new Map(items.map((i) => [normalizeItemName(i), i])).values())
+  const spotted = [...items]
   if (body.usePantry) {
     const pantry = await loadPantry(admin, ownerId).catch(() => [])
     items.push(...pantry.map((p) => p.name))
+    items = Array.from(new Map(items.map((i) => [normalizeItemName(i), i])).values())
   }
-  items = Array.from(new Map(items.map((i) => [normalizeItemName(i), i])).values())
   if (!items.length) return NextResponse.json({ items: [], meals: [], note: "I couldn't find any food in that. Try a closer photo, or type a few things you have." })
 
   // ---------- the family's rules ----------
@@ -91,5 +93,5 @@ export async function POST(req: Request) {
   if (meals.length < 2) {
     try { meals = [...meals, ...(await writeFromFridge(items, household, 2))] } catch (e) { console.error('[tonight] AI fallback failed', e) }
   }
-  return NextResponse.json({ items, meals })
+  return NextResponse.json({ items: spotted, pantryCount: items.length - spotted.length, meals })
 }
