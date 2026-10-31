@@ -218,7 +218,7 @@ export function parseInbound(raw: string): Parsed {
   const suggest = t.match(/^(?:(?:can|could|may) (?:i|we) |i'?d like to |i want to |i wanna )?(?:suggest|recommend|request|propose)(?:ing)?\s*(?:a|an|some)?\s*[:\-]?\s*(.*)$|^(?:how about|what about|can we (?:do|have|make|get)|could we (?:do|have|make)|let'?s (?:do|have|make)|we should (?:do|have|make|try)|i'?d love|put on|idea[:\-]?)\s+(.+)$/i)
   if (suggest) {
     const what = (suggest[1] ?? suggest[2] ?? '').trim().replace(/[?!.]+$/, '')
-    if (!/^\d[\d\s,and&]*$/.test(what)) return { kind: 'suggest', items: /^(meals?|dinners?|something|a meal|a dinner|ideas?|one|things?|food|)$/i.test(what) ? [] : splitItems(what) }
+    if (!/^\d[\d\s,and&]*$/.test(what)) return { kind: 'suggest', items: /^(meals?|dinners?|something|a meal|a dinner|ideas?|one|things?|food|)$/i.test(what) ? [] : splitDishes(what) }
   }
   if (new RegExp(`^(ALL ?GOOD|ALL|GOOD|KEEP ?ALL|LOOKS GOOD|👍|LGTM|FINE|ALL OF THEM)${end}`).test(u)) return { kind: 'allgood' }
   if (new RegExp(`^(NONE|NO|NOPE|NAH|NONE OF THEM)${end}`).test(u)) return { kind: 'none' }
@@ -239,6 +239,10 @@ export function parseInbound(raw: string): Parsed {
 
 function numbersIn(s: string): number[] {
   return Array.from(new Set((s.match(/\d+/g) ?? []).map(Number).filter((n) => n >= 1 && n <= 20)))
+}
+/** Dish ideas: "spaghetti and meatballs" is one dish; commas / "or" / newlines separate several. */
+function splitDishes(s: string): string[] {
+  return s.split(/,|;|\n|\bor\b/i).map((x) => x.trim().replace(/^(a|an|some|the)\s+/i, '').replace(/[.!?]+$/, '')).filter((x) => x.length >= 2 && x.length <= 60)
 }
 function splitItems(s: string): string[] {
   return s.split(/,|\band\b|&|\n|;/i).map((x) => x.trim().replace(/[.!]+$/, '')).filter((x) => x.length >= 2 && x.length <= 60)
@@ -562,6 +566,20 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     }
   }
   if (u.suggest.length && owner) await addSuggestions(admin, owner, m.name, u.suggest)
+  // Their own tastes, in their own words — saved on their member profile (the planner and vote candidates use these).
+  const prefNote: string[] = []
+  if (u.likes.length || u.dislikes.length || u.allergies.length) {
+    const { data: me } = await admin.from('household_members').select('likes, dislikes, allergies').eq('id', m.id).maybeSingle()
+    const merge = (cur: string[] | null | undefined, add: string[]) => { const set = new Set((cur ?? []).map((x) => x.toLowerCase())); for (const x of add) set.add(x); return Array.from(set).slice(0, 40) }
+    const patch: Record<string, string[]> = {}
+    if (u.likes.length) { patch.likes = merge(me?.likes, u.likes); patch.dislikes = (me?.dislikes ?? []).filter((x: string) => !u.likes.includes(x.toLowerCase())) }
+    if (u.dislikes.length) { patch.dislikes = merge(patch.dislikes ?? me?.dislikes, u.dislikes); patch.likes = (patch.likes ?? me?.likes ?? []).filter((x: string) => !u.dislikes.includes(x.toLowerCase())) }
+    if (u.allergies.length) patch.allergies = merge(me?.allergies, u.allergies)
+    await admin.from('household_members').update(patch).eq('id', m.id)
+    if (u.likes.length) prefNote.push(`you like ${u.likes.join(', ')}`)
+    if (u.dislikes.length) prefNote.push(`you don't do ${u.dislikes.join(', ')}`)
+    if (u.allergies.length) prefNote.push(`allergic to ${u.allergies.join(', ')} — nothing with that will be planned`)
+  }
 
   const voteChange = m.can_vote && (u.picks.length || u.skips.length || u.again.length || u.allGood || u.none || u.correction)
   if (voteChange && list.length) {
@@ -620,6 +638,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   if (u.none && !u.picks.length && !u.again.length) parts.push(mode === 'again' ? 'none to bring back' : 'no picks from you this week')
   if (added.length) parts.push(`added to the list: ${added.join(', ')}`)
   if (u.suggest.length) parts.push(`${u.suggest.join(', ')} ${u.suggest.length === 1 ? 'is' : 'are'} on ${family}'s idea list for a coming week`)
+  if (prefNote.length) parts.push(`saved to your profile: ${prefNote.join('; ')}`)
   if (u.removeLastAdded) parts.push('took that off the grocery list')
   if (parts.length) {
     const lead = u.correction ? `Sorry about that, ${m.name} — fixed: ` : `Got it, ${m.name} — `
@@ -656,7 +675,7 @@ async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsC
   }
 }
 
-export interface Meant { picks: number[]; skips: number[]; again: number[]; add: string[]; suggest: string[]; allGood: boolean; none: boolean; correction: boolean; removeLastAdded: boolean; question: boolean; relay: boolean; answer: string; clarify: string }
+export interface Meant { picks: number[]; skips: number[]; again: number[]; add: string[]; suggest: string[]; likes: string[]; dislikes: string[]; allergies: string[]; allGood: boolean; none: boolean; correction: boolean; removeLastAdded: boolean; question: boolean; relay: boolean; answer: string; clarify: string }
 
 /** Facts the bot may answer questions from (standings, tonight, list size, the planner's name). */
 export interface BotFacts { family: string; tonight?: string; standings?: string; listCount?: number; ownerMessage?: string }
@@ -682,17 +701,18 @@ Facts you may answer from (the planner is ${facts.family}):
 - Vote standings: ${facts.standings ?? 'no vote open'}
 - Grocery list: ${facts.listCount == null ? 'unknown' : `${facts.listCount} items still to buy`}
 - ${facts.ownerMessage ? `${facts.family} recently texted the family: "${facts.ownerMessage}"` : `${facts.family} hasn't texted the family recently`}
-- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, USE UP + items, a photo of a product or a store flyer.` : ''}
+- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product or a store flyer.` : ''}
 
 Return ONLY JSON:
-{"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
+{"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"likes":[],"dislikes":[],"allergies":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
 - picks: numbers they want / are happy to keep. skips: numbers they don't want. again: numbers they want brought back on a future week (use this when DinnerDrop asked which should come back, or they say "again"/"bring back"/"want that again").
 - A dish they name or refer to ("that", "the salad") is matched to its number using the conversation.
 - "the rest", "all the others", "everything else" mean every number they did NOT just pick in the conversation. Never put a number in skips that they picked unless this message names that number or dish.
 - correction: true if they're saying DinnerDrop got their last answer wrong ("oh no", "I meant", "not that"); then fill picks/skips/again with what they actually meant.
 - removeLastAdded: true only if they say something DinnerDrop just added to the grocery list was wrong or wasn't meant for the list.
 - add: only real grocery/household products they clearly want added, as product names with any amount. Otherwise [].
-- suggest: dishes or meal ideas they propose for a future week ("how about tacos", "we should do pizza night", "can I recommend chicken parm") — dish names, not grocery items. Otherwise [].
+- suggest: dishes or meal ideas they propose for a future week ("how about tacos", "we should do pizza night", "can I recommend chicken parm", "can we have spaghetti and meatballs") — one entry per dish ("spaghetti and meatballs" is ONE dish), not grocery items. A side they want with it ("peas on the side") belongs in the dish name, not in add. Otherwise [].
+- likes / dislikes / allergies: foods or dishes they say they personally love, won't eat, or are allergic to ("I don't like mushrooms", "I'm allergic to shellfish", "I love anything with chicken"). These update THEIR OWN taste profile. Only what they state about themselves; otherwise [].
 - allGood / none: whole-list answers. question: they asked something or it's unrelated chat.
 - answer: if question is true and it's about dinners, the vote, the list, the app, or what they can text, answer it warmly in one or two sentences (under 280 characters) from the facts above — e.g. tell them the standings, tonight's dinner, how to suggest a dish. Else "".
 - relay: true when the message is clearly meant for the planner or the family, not the bot — a reply to something the planner texted, "tell Sarah…", "I'll be late", "running to the store", a question only a person can answer. Then answer stays "".
@@ -701,11 +721,13 @@ Return ONLY JSON:
 
 export function parseMeant(text: string, listLength: number): Meant {
   const j = parseClaudeJSON<Partial<Meant>>(text)
+  const strs = (a: unknown) => (Array.isArray(a) ? a.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 40).map((x) => x.trim().toLowerCase()).slice(0, 8) : [])
   const nums = (a: unknown) => (Array.isArray(a) ? Array.from(new Set(a.map(Number).filter((n) => Number.isInteger(n) && n >= 1 && n <= listLength))) : [])
   return {
     picks: nums(j.picks), skips: nums(j.skips), again: nums(j.again),
     add: Array.isArray(j.add) ? j.add.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 60).map((x) => x.trim()) : [],
     suggest: Array.isArray(j.suggest) ? j.suggest.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 60).map((x) => x.trim()).slice(0, 5) : [],
+    likes: strs(j.likes), dislikes: strs(j.dislikes), allergies: strs(j.allergies),
     allGood: !!j.allGood, none: !!j.none, correction: !!j.correction, removeLastAdded: !!j.removeLastAdded, question: !!j.question, relay: !!j.relay,
     answer: typeof j.answer === 'string' ? j.answer.trim().slice(0, 320) : '',
     clarify: typeof j.clarify === 'string' ? j.clarify.trim().slice(0, 160) : '',
