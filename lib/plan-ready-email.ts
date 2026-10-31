@@ -2,6 +2,7 @@
  * "Your dinners for the week are planned" — the Sunday email for families whose week was planned automatically.
  * Shows each dinner with its photo, the total, and one tap to the grocery list.
  */
+import { emailImageUrl } from './email-image'
 import type { Meal } from '@/types'
 
 const APP = 'https://www.dinnerdrop.app'
@@ -20,7 +21,7 @@ export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabe
   const rows = meals.map((m) => `
     <tr>
       <td style="padding:8px 0;border-bottom:1px solid #eeebe3;width:76px;vertical-align:top">
-        ${m.imageUrl ? `<img src="${m.imageUrl}" width="68" height="68" alt="" style="display:block;width:68px;height:68px;object-fit:cover;border-radius:10px;background:#eee">` : `<div style="width:68px;height:68px;border-radius:10px;background:#e9efe9"></div>`}
+        ${emailImageUrl(m.imageUrl) ? `<img src="${emailImageUrl(m.imageUrl, 200)}" width="68" height="68" alt="" style="display:block;width:68px;height:68px;object-fit:cover;border-radius:10px;background:#eee">` : `<div style="width:68px;height:68px;border-radius:10px;background:#e9efe9"></div>`}
       </td>
       <td style="padding:8px 0 8px 12px;border-bottom:1px solid #eeebe3;vertical-align:top">
         <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1a5c38">${esc(m.day)}</p>

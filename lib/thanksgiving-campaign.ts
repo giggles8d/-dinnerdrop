@@ -3,6 +3,7 @@
  * Thanksgiving-week collection comes into season. Runs from /api/cron/campaigns once app_kv
  * `campaign_thanksgiving` = { status: 'approved', sendOn: 'YYYY-MM-DD' } (ET date) and sends once per address.
  */
+import { emailImageUrl } from './email-image'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 import { collectionBySlug } from '@/lib/collections'
@@ -37,7 +38,7 @@ export function thanksgivingHtml(opts: { firstName?: string; featured: Featured[
   const cards = featured.map((f) => `
     <td width="33%" style="padding:0 6px;vertical-align:top">
       <a href="${link(`/recipes/${f.slug}`, 'recipe')}" style="text-decoration:none;color:#1f2a24">
-        ${f.image_url ? `<img src="${f.image_url}" width="160" alt="" style="display:block;width:100%;height:110px;object-fit:cover;border-radius:10px;background:#eee">` : ''}
+        ${emailImageUrl(f.image_url) ? `<img src="${emailImageUrl(f.image_url)}" width="160" alt="" style="display:block;width:100%;height:110px;object-fit:cover;border-radius:10px;background:#eee">` : ''}
         <p style="margin:8px 0 2px;font-size:14px;font-weight:700;line-height:1.3">${esc(f.name)}</p>
         <p style="margin:0;font-size:12px;color:#5b6660">${f.minutes ? `${f.minutes} min` : ''}${f.cost > 0 ? ` · ~$${f.cost.toFixed(0)}` : ''}</p>
       </a>
