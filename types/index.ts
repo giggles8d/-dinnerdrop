@@ -33,6 +33,7 @@ export interface Meal {
   side?: { name: string; minutes: number; items: Ingredient[] } // what goes with it (planner-given, else suggested by lib/sides)
   usesPantry?: string[] // pantry items this dinner was built to use up
   cookedAt?: string     // ISO time the family marked it cooked (fades it on the plan)
+  ideaBy?: string       // a family member suggested this dinner by text ("Rich's idea" on the vote)
   base?: { servings: number; ingredients: Ingredient[]; estimatedCost: number } // as planned, before the family changed servings for this dinner
 }
 

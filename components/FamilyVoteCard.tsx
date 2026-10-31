@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 
-interface Candidate { name: string; cookTime?: number; time?: string; carbs?: number | null; inWeek?: boolean; votes: number; by: string[]; skippedBy?: string[] }
+interface Candidate { name: string; cookTime?: number; time?: string; carbs?: number | null; inWeek?: boolean; votes: number; by: string[]; skippedBy?: string[]; ideaBy?: string }
 interface Suggestion { name: string; by: string; at: string }
 interface Round { id: string; week_start: string; picks_needed: number; created_at: string; candidates: Candidate[] }
 interface Person { name: string; status: string }
@@ -69,7 +69,7 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
             <li key={c.name} className="grid grid-cols-[1.5rem_1fr_auto] items-center gap-2 text-sm">
               <span className="text-muted-foreground">{i + 1}.</span>
               <div className="min-w-0">
-                <div className={`truncate ${inTop ? 'font-semibold text-foreground' : 'text-foreground'}`}>{c.name}{c.time || c.cookTime ? <span className="text-xs text-muted-foreground"> · {c.time ?? `${c.cookTime} min`}{typeof c.carbs === 'number' ? ` · ${c.carbs}g carbs` : ''}</span> : null}</div>
+                <div className={`truncate ${inTop ? 'font-semibold text-foreground' : 'text-foreground'}`}>{c.name}{c.time || c.cookTime ? <span className="text-xs text-muted-foreground"> · {c.time ?? `${c.cookTime} min`}{typeof c.carbs === 'number' ? ` · ${c.carbs}g carbs` : ''}</span> : null}{c.ideaBy ? <span className="ml-1.5 inline-block rounded-full bg-accent/30 px-1.5 py-0.5 text-[10px] font-semibold text-foreground align-middle">{c.ideaBy}&apos;s idea</span> : null}</div>
                 <div className="h-1.5 rounded-full bg-muted mt-1 overflow-hidden"><div className={`h-full ${inTop ? 'bg-primary' : 'bg-muted-foreground/40'}`} style={{ width: `${(Math.max(0, c.votes) / max) * 100}%` }} /></div>
               </div>
               <span className="text-xs text-muted-foreground whitespace-nowrap" title={[...c.by, ...(c.skippedBy ?? []).map((n) => `${n} skipped`)].join(', ')}>

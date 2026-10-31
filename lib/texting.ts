@@ -11,6 +11,7 @@ import { localNow, mondayOf } from '@/lib/plan'
 import { sendSms, smsConfigured, normalizePhone } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
 import { generateCandidates, savePlan } from '@/lib/autoplan'
+import { markSuggestionsUsed, pendingSuggestions, resolveSuggestion, type Suggestion } from '@/lib/suggestions'
 import { timeLabel, type PlanShape } from '@/lib/plan'
 import { guessCategory, normalizeItemName } from '@/lib/list'
 import { generateWithClaude, generateWithClaudeImage, generateSmart, parseClaudeJSON } from '@/lib/claude'
@@ -314,13 +315,13 @@ function tallyText(round: VoteRound, st: Standings): string {
   return `Vote so far (★ = making the week):\n${lines.join('\n')}${out.length ? `\n\nStill waiting on ${out.join(', ')}.` : '\n\nEveryone has answered.'}`
 }
 
-export interface Suggestion { name: string; by: string; at: string }
+export type { Suggestion }
 
 /** Dinner ideas family members texted ("how about tacos") — kept on the planner's settings for the next plan. */
 export async function addSuggestions(admin: SupabaseClient, owner: OwnerRow, by: string, names: string[]): Promise<Suggestion[]> {
   const cur = (((owner.settings as Record<string, unknown> | null)?.suggestions as Suggestion[] | undefined) ?? []).filter((x) => x && typeof x.name === 'string')
   const now = new Date().toISOString()
-  const fresh = names.map((n) => ({ name: n.slice(0, 60), by, at: now })).filter((n) => !cur.some((c) => normalizeItemName(c.name) === normalizeItemName(n.name)))
+  const fresh = names.map((n) => ({ name: n.slice(0, 60), by, at: now })).filter((n) => !cur.some((c) => !c.usedAt && normalizeItemName(c.name) === normalizeItemName(n.name)))
   const next = [...fresh, ...cur].slice(0, 30)
   await admin.from('profiles').update({ settings: { ...((owner.settings as object) ?? {}), suggestions: next } }).eq('id', owner.id)
   return next
@@ -763,7 +764,7 @@ export async function openRound(admin: SupabaseClient, householdId: string): Pro
 function pickLines(meals: Meal[], showCarbs = false): string {
   return meals.map((m, i) => {
     const bits = [m.cookTime ? timeLabel(m) : '', showCarbs && typeof m.nutrition?.carbs === 'number' ? `${m.nutrition.carbs}g carbs` : ''].filter(Boolean)
-    return `${i + 1}. ${m.name}${bits.length ? ` (${bits.join(' · ')})` : ''}`
+    return `${i + 1}. ${m.name}${bits.length ? ` (${bits.join(' · ')})` : ''}${m.ideaBy ? ` — ${m.ideaBy}'s idea` : ''}`
   }).join('\n')
 }
 
@@ -816,9 +817,18 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     if (round) await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id)
     const { meals } = await generateCandidates(admin, o, count)
     if (!meals.length) { report.skipped.push('could not generate dinner ideas'); return report }
-    const { data: created } = await admin.from('vote_rounds').insert({ household_id: o.household_id, user_id: o.id, week_start: weekStart, candidates: meals, picks_needed: picksNeeded }).select('*').single()
+    // Family ideas texted in since the last vote join the ballot (up to 3), labelled with who suggested them.
+    const ideaMeals: Meal[] = []
+    const usedIdeas: string[] = []
+    for (const sug of pendingSuggestions(o.settings).slice(0, 3)) {
+      const m = await resolveSuggestion(admin, o, sug, [...meals, ...ideaMeals].map((x) => x.name))
+      if (m) { ideaMeals.push(m); usedIdeas.push(sug.name) }
+    }
+    const candidates = [...meals.slice(0, Math.max(picksNeeded, count - ideaMeals.length)), ...ideaMeals]
+    const { data: created } = await admin.from('vote_rounds').insert({ household_id: o.household_id, user_id: o.id, week_start: weekStart, candidates, picks_needed: picksNeeded }).select('*').single()
     round = created as VoteRound
     report.planned = true
+    if (usedIdeas.length) await markSuggestionsUsed(admin, o, usedIdeas)
   }
 
   // 2 + 3. members
@@ -840,6 +850,11 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     // resend: the same round's menu again (e.g. after a picture fix) — only to people who already got it
     if (opts.resend ? !askedAlready : (!opts.force && askedAlready)) continue
     if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap, menuImageUrl(round.id))) report.voteTextsSent++
+    // Their idea made the ballot: say so (once per round, not counted against the weekly cap).
+    const theirs = round.candidates.map((c, i) => ({ c, n: i + 1 })).filter(({ c }) => c.ideaBy && c.ideaBy.toLowerCase() === mm.name.toLowerCase())
+    if (theirs.length && !opts.resend && !(await alreadySentTo(admin, mm.id, `idea_in_vote:${round.id}`, 7))) {
+      await textMember(admin, mm, `Your idea made the vote, ${mm.name}: ${theirs.map(({ c, n }) => `#${n} ${c.name}`).join(', ')}. Reply with your picks (numbers) to vote for it.`, `idea_in_vote:${round.id}`)
+    }
   }
   return report
 }

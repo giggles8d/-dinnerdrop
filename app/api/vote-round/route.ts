@@ -27,7 +27,7 @@ export async function GET() {
   const suggestions = ((((owner?.settings as Record<string, unknown> | null)?.suggestions) as Suggestion[] | undefined) ?? []).slice(0, 8)
   const byName = new Map(st.candidates.map((x) => [x.name, x]))
   return NextResponse.json({
-    round: { id: round.id, week_start: round.week_start, picks_needed: round.picks_needed, created_at: round.created_at, candidates: round.candidates.map((cnd) => { const t = byName.get(cnd.name); return { name: cnd.name, cookTime: cnd.cookTime, time: cnd.cookTime ? timeLabel(cnd) : undefined, carbs: cnd.nutrition?.carbs ?? null, inWeek: !!t?.inWeek, votes: t?.votes ?? 0, by: t?.by ?? [], skippedBy: t?.skippedBy ?? [] } }) },
+    round: { id: round.id, week_start: round.week_start, picks_needed: round.picks_needed, created_at: round.created_at, candidates: round.candidates.map((cnd) => { const t = byName.get(cnd.name); return { name: cnd.name, cookTime: cnd.cookTime, time: cnd.cookTime ? timeLabel(cnd) : undefined, carbs: cnd.nutrition?.carbs ?? null, ideaBy: cnd.ideaBy, inWeek: !!t?.inWeek, votes: t?.votes ?? 0, by: t?.by ?? [], skippedBy: t?.skippedBy ?? [] } }) },
     people: st.people.map((p) => ({ name: p.name, status: p.status })),
     suggestions,
   })
