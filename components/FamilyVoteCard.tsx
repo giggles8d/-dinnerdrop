@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 
-interface Candidate { name: string; cookTime?: number; time?: string; carbs?: number | null; inWeek?: boolean; votes: number; by: string[] }
+interface Candidate { name: string; cookTime?: number; time?: string; carbs?: number | null; inWeek?: boolean; votes: number; by: string[]; skippedBy?: string[] }
+interface Suggestion { name: string; by: string; at: string }
 interface Round { id: string; week_start: string; picks_needed: number; created_at: string; candidates: Candidate[] }
 interface Person { name: string; status: string }
 
@@ -11,6 +12,7 @@ interface Person { name: string; status: string }
 export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) {
   const [round, setRound] = useState<Round | null>(null)
   const [people, setPeople] = useState<Person[]>([])
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const [busy, setBusy] = useState(false)
   const [loaded, setLoaded] = useState(false)
 
@@ -18,7 +20,7 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
     try {
       const r = await fetch('/api/vote-round', { cache: 'no-store' })
       const j = await r.json()
-      setRound(j.round ?? null); setPeople(j.people ?? [])
+      setRound(j.round ?? null); setPeople(j.people ?? []); setSuggestions(j.suggestions ?? [])
     } catch { /* ignore */ } finally { setLoaded(true) }
   }, [])
 
@@ -70,11 +72,18 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
                 <div className={`truncate ${inTop ? 'font-semibold text-foreground' : 'text-foreground'}`}>{c.name}{c.time || c.cookTime ? <span className="text-xs text-muted-foreground"> · {c.time ?? `${c.cookTime} min`}{typeof c.carbs === 'number' ? ` · ${c.carbs}g carbs` : ''}</span> : null}</div>
                 <div className="h-1.5 rounded-full bg-muted mt-1 overflow-hidden"><div className={`h-full ${inTop ? 'bg-primary' : 'bg-muted-foreground/40'}`} style={{ width: `${(Math.max(0, c.votes) / max) * 100}%` }} /></div>
               </div>
-              <span className="text-xs text-muted-foreground whitespace-nowrap" title={c.by.join(', ')}>{c.votes} {c.votes === 1 ? 'vote' : 'votes'}{c.by.length ? ` · ${c.by.join(', ')}` : ''}</span>
+              <span className="text-xs text-muted-foreground whitespace-nowrap" title={[...c.by, ...(c.skippedBy ?? []).map((n) => `${n} skipped`)].join(', ')}>
+                {c.votes > 0 ? '+' : ''}{c.votes} {Math.abs(c.votes) === 1 ? 'vote' : 'votes'}
+                {c.by.length ? ` · ${c.by.join(', ')}` : ''}
+                {c.skippedBy?.length ? <span className="text-red-700">{` · ${c.skippedBy.join(', ')} skipped`}</span> : null}
+              </span>
             </li>
           )
         })}
       </ol>
+      {suggestions.length > 0 && (
+        <p className="text-xs text-foreground mt-3"><span className="font-semibold">Ideas from the family:</span> {suggestions.map((s) => `${s.name} (${s.by})`).join(' · ')}</p>
+      )}
       <p className="text-[11px] text-muted-foreground mt-3">Add numbers yourself under <Link href="/settings" className="underline">Settings → Family texting</Link>, or text the family again from there.</p>
     </div>
   )

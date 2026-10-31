@@ -19,6 +19,7 @@ import { trackOnce } from '@/lib/activation'
 import WeekCheckCard from '@/components/WeekCheckCard'
 import TextingNudge from '@/components/TextingNudge'
 import DinnerReminders from '@/components/DinnerReminders'
+import FamilyMessages from '@/components/FamilyMessages'
 import SavingsCard from '@/components/SavingsCard'
 import ShareWeekButton from '@/components/ShareWeekButton'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
@@ -753,6 +754,7 @@ function DashboardContent() {
           />
         )}
         {!isPickingMeals && !showQuickSetup && <FamilyVoteCard onClosed={() => loadExistingPlan()} />}
+        {!isPickingMeals && !showQuickSetup && <FamilyMessages />}
         {!isPickingMeals && !showQuickSetup && (
           <Link href="/tonight" className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 hover:border-primary/40 transition-colors">
             <span className="text-sm"><span className="font-semibold text-foreground">📸 What can I make tonight?</span> <span className="text-muted-foreground">Snap your fridge — get dinners from what you have.</span></span>

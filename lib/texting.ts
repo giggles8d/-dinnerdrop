@@ -195,6 +195,8 @@ export type Parsed =
   | { kind: 'add'; items: string[] }
   | { kind: 'order_total'; total: number; store?: string }
   | { kind: 'use_up'; items: string[] }
+  | { kind: 'tally' } | { kind: 'tonight' } | { kind: 'recipe'; number: number }
+  | { kind: 'suggest'; items: string[] }
   | { kind: 'unknown' }
 
 export function parseInbound(raw: string): Parsed {
@@ -207,7 +209,16 @@ export function parseInbound(raw: string): Parsed {
   if (/^(START|UNSTOP|RESUME)\b/.test(u)) return { kind: 'start' }
   if (new RegExp(`^(HELP|INFO|\\?)${end}`).test(u)) return { kind: 'help' }
   if (new RegExp(`^(LIST|GROCERY|GROCERIES|GROCERY LIST|THE LIST)${end}`).test(u)) return { kind: 'list' }
-  if (new RegExp(`^(MENU|DINNERS|PLAN|WHAT'?S FOR DINNER( THIS WEEK| TONIGHT)?)${end}`).test(u)) return { kind: 'menu' }
+  if (new RegExp(`^(TONIGHT|WHAT'?S (FOR )?DINNER TONIGHT|DINNER TONIGHT|WHAT'?S TONIGHT|WHAT ARE WE (HAVING|EATING) TONIGHT)${end}`).test(u)) return { kind: 'tonight' }
+  if (new RegExp(`^(MENU|DINNERS|PLAN|THIS WEEK|WHAT'?S FOR DINNER( THIS WEEK)?|WHAT'?S THE PLAN)${end}`).test(u)) return { kind: 'menu' }
+  if (new RegExp(`^(TALLY|RESULTS?|SCORE|STANDINGS|VOTES?|VOTE (SO FAR|STATUS|COUNT|RESULTS?)|WHO('?S| HAS)? VOTED|WHAT'?S THE VOT(E|ING)( SO FAR)?|HOW'?S THE VOT(E|ING)( GOING)?|WHO'?S WINNING)${end}`).test(u)) return { kind: 'tally' }
+  const recipe = u.match(/^(?:RECIPE|INGREDIENTS(?: FOR)?|HOW (?:DO I|DO YOU|TO) (?:MAKE|COOK))\s*#?\s*(\d{1,2})[\s.!?]*$/)
+  if (recipe) return { kind: 'recipe', number: Number(recipe[1]) }
+  const suggest = t.match(/^(?:(?:can|could|may) (?:i|we) |i'?d like to |i want to |i wanna )?(?:suggest|recommend|request|propose)(?:ing)?\s*(?:a|an|some)?\s*[:\-]?\s*(.*)$|^(?:how about|what about|can we (?:do|have|make|get)|could we (?:do|have|make)|let'?s (?:do|have|make)|we should (?:do|have|make|try)|i'?d love|put on|idea[:\-]?)\s+(.+)$/i)
+  if (suggest) {
+    const what = (suggest[1] ?? suggest[2] ?? '').trim().replace(/[?!.]+$/, '')
+    if (!/^\d[\d\s,and&]*$/.test(what)) return { kind: 'suggest', items: /^(meals?|dinners?|something|a meal|a dinner|ideas?|one|things?|food|)$/i.test(what) ? [] : splitItems(what) }
+  }
   if (new RegExp(`^(ALL ?GOOD|ALL|GOOD|KEEP ?ALL|LOOKS GOOD|👍|LGTM|FINE|ALL OF THEM)${end}`).test(u)) return { kind: 'allgood' }
   if (new RegExp(`^(NONE|NO|NOPE|NAH|NONE OF THEM)${end}`).test(u)) return { kind: 'none' }
   if (new RegExp(`^(THANKS|THANK YOU|THANKS!|THX|TY|COOL|GREAT|AWESOME|❤️|🙏)( SO MUCH| YOU)?${end}`).test(u)) return { kind: 'thanks' }
@@ -254,6 +265,81 @@ export async function cleanItems(raw: string[]): Promise<CleanItem[]> {
     }
   } catch { /* fall through */ }
   return items.map((name) => ({ name, quantity: '1', unit: '' }))
+}
+
+export interface Standing { name: string; votes: number; by: string[]; skippedBy: string[]; inWeek: boolean }
+export interface Standings { candidates: Standing[]; people: Array<{ id: string; name: string; status: string }> }
+
+/** Running tally of an open round plus who has answered — shared by the dashboard card and the TALLY text. */
+export async function roundStandings(admin: SupabaseClient, round: VoteRound): Promise<Standings> {
+  const [{ data: asked }, { data: answered }, { data: votes }, { data: members }, { data: owner }] = await Promise.all([
+    admin.from('sms_messages').select('member_id').eq('intent', `vote_request:${round.id}`),
+    admin.from('sms_messages').select('member_id').eq('household_id', round.household_id).eq('direction', 'in').gte('created_at', round.created_at).in('intent', ['allgood', 'skip', 'none', 'pick', 'dislike']),
+    admin.from('meal_votes').select('meal_name, member_id, vote').eq('household_id', round.household_id).eq('week_start', round.week_start).in('vote', ['keep', 'skip']).gte('created_at', round.created_at),
+    admin.from('household_members').select('id, name, phone, phone_opt_in_at, phone_opted_out, can_vote').eq('household_id', round.household_id),
+    admin.from('profiles').select('settings').eq('id', round.user_id).maybeSingle(),
+  ])
+  const askedIds = new Set((asked ?? []).map((a) => a.member_id))
+  const answeredIds = new Set((answered ?? []).map((a) => a.member_id))
+  const byId = new Map((members ?? []).map((m) => [m.id, m]))
+  const tally: Record<string, { votes: number; by: string[]; skippedBy: string[] }> = {}
+  for (const cnd of round.candidates) tally[cnd.name] = { votes: 0, by: [], skippedBy: [] }
+  for (const v of votes ?? []) {
+    const t = tally[v.meal_name]; if (!t) continue
+    const nm = byId.get(v.member_id)?.name
+    if (v.vote === 'skip') { t.votes--; if (nm && !t.skippedBy.includes(nm)) t.skippedBy.push(nm); continue }
+    t.votes++; if (nm && !t.by.includes(nm)) t.by.push(nm)
+  }
+  const settings = mergeSettings(owner?.settings)
+  const ranked = round.candidates.map((cnd, i) => ({ cnd, i, votes: tally[cnd.name]?.votes ?? 0 })).sort((a, b) => b.votes - a.votes || a.i - b.i)
+  const mix = hasMix(settings.food.mix) ? scaleMix(settings.food.mix, round.picks_needed) : null
+  const inWeek = new Set((mix ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.cnd.protein, r.cnd.name)) : ranked.slice(0, round.picks_needed)).map((r) => r.cnd.name))
+  const people = (members ?? []).filter((m) => m.phone).map((m) => ({
+    id: m.id as string,
+    name: m.name as string,
+    status: m.phone_opted_out ? 'opted out' : !m.phone_opt_in_at ? 'waiting for YES' : answeredIds.has(m.id) ? 'answered' : askedIds.has(m.id) ? 'sent, waiting' : m.can_vote ? 'not sent yet' : 'no vote',
+  }))
+  return { candidates: round.candidates.map((cnd) => ({ name: cnd.name, inWeek: inWeek.has(cnd.name), ...tally[cnd.name] })), people }
+}
+
+/** The TALLY text: standings in candidate order with who picked / skipped, then who's still out. */
+function tallyText(round: VoteRound, st: Standings): string {
+  const lines = round.candidates.map((c, i) => {
+    const t = st.candidates.find((x) => x.name === c.name)
+    const who = [...(t?.by ?? []), ...(t?.skippedBy ?? []).map((n) => `${n} ✗`)]
+    const v = t?.votes ?? 0
+    return `${t?.inWeek ? '★ ' : ''}${i + 1}. ${c.name} — ${v > 0 ? '+' : ''}${v}${who.length ? ` (${who.join(', ')})` : ''}`
+  })
+  const out = st.people.filter((p) => p.status === 'sent, waiting' || p.status === 'waiting for YES').map((p) => p.name)
+  return `Vote so far (★ = making the week):\n${lines.join('\n')}${out.length ? `\n\nStill waiting on ${out.join(', ')}.` : '\n\nEveryone has answered.'}`
+}
+
+export interface Suggestion { name: string; by: string; at: string }
+
+/** Dinner ideas family members texted ("how about tacos") — kept on the planner's settings for the next plan. */
+export async function addSuggestions(admin: SupabaseClient, owner: OwnerRow, by: string, names: string[]): Promise<Suggestion[]> {
+  const cur = (((owner.settings as Record<string, unknown> | null)?.suggestions as Suggestion[] | undefined) ?? []).filter((x) => x && typeof x.name === 'string')
+  const now = new Date().toISOString()
+  const fresh = names.map((n) => ({ name: n.slice(0, 60), by, at: now })).filter((n) => !cur.some((c) => normalizeItemName(c.name) === normalizeItemName(n.name)))
+  const next = [...fresh, ...cur].slice(0, 30)
+  await admin.from('profiles').update({ settings: { ...((owner.settings as object) ?? {}), suggestions: next } }).eq('id', owner.id)
+  return next
+}
+
+/** Tonight's dinner from the plan (by the family's local weekday), if the week has one. */
+function tonightMeal(meals: Meal[], timezone: string): Meal | null {
+  const wd = localNow(timezone).weekday
+  const label: Record<string, string> = { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' }
+  return meals.find((m) => m.day === label[wd]) ?? null
+}
+
+/** A recipe as one text (ingredients + steps, trimmed to fit a long SMS). */
+function recipeText(m: Meal): string {
+  const ings = (m.ingredients ?? []).map((i) => `• ${[i.quantity, i.unit, i.name].filter(Boolean).join(' ').trim()}`)
+  const steps = (m.steps ?? []).map((st, i) => `${i + 1}. ${st}`)
+  let out = `${m.name}${m.cookTime ? ` · ${m.cookTime} min` : ''}${m.servings ? ` · ${m.servings} servings` : ''}\n\nYou need:\n${ings.join('\n')}\n\nSteps:\n${steps.join('\n')}`
+  if (out.length > 1500) out = out.slice(0, 1480).replace(/\s+\S*$/, '') + '…'
+  return out
 }
 
 export interface InboundResult { reply: string; handled: boolean; member?: MemberRow }
@@ -327,7 +413,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     case 'thanks':
       return { reply: `Anytime, ${m.name} 🙂`, handled: true, member: m }
     case 'help':
-      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, AGAIN 1 3 to bring some back, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items to plan around what's in the fridge, MENU, LIST, STOP.`, handled: true, member: m }
+      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, TALLY for the vote so far, SUGGEST + a dish for a future week, TONIGHT, RECIPE + number, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items, MENU, LIST, STOP.`, handled: true, member: m }
     default:
       break
   }
@@ -342,10 +428,33 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const againNames = ctx.lastAsk === 'again' ? againListFrom(ctx.lastAskBody) : []
   const againMeals: Meal[] = againNames.length ? againNames.map((name) => meals.find((x) => x.name === name) ?? ({ name } as Meal)) : meals
 
+  const tz = owner?.timezone || 'America/New_York'
   switch (parsed.kind) {
     case 'menu':
       if (round) return { reply: `Pick your favorites (up to ${round.picks_needed}):\n${pickLines(round.candidates)}\n\nReply with the numbers you want, e.g. "1 3 5".`, handled: true, member: m }
       return { reply: meals.length ? `This week:\n${menuLines(meals)}` : `No dinners planned yet — ${family} hasn't built this week.`, handled: true, member: m }
+    case 'tally': {
+      if (!round) return { reply: meals.length ? `No vote open right now. This week:\n${menuLines(meals)}` : `No vote open right now — ${family} hasn't planned this week yet.`, handled: true, member: m }
+      return { reply: tallyText(round, await roundStandings(admin, round)), handled: true, member: m }
+    }
+    case 'tonight': {
+      const t = tonightMeal(meals, tz)
+      if (!t) return { reply: meals.length ? `Nothing planned for tonight. This week:\n${menuLines(meals)}` : `No dinners planned yet — ${family} hasn't built this week.`, handled: true, member: m }
+      const n = meals.indexOf(t) + 1
+      return { reply: `Tonight: ${t.name}${t.cookTime ? ` · ${t.cookTime} min` : ''}${t.side?.name ? ` · with ${t.side.name}` : ''}${t.cookedAt ? ' (already cooked ✓)' : ''}. Text RECIPE ${n} for the how-to.`, handled: true, member: m }
+    }
+    case 'recipe': {
+      const src = round ? round.candidates : meals
+      const r = src[parsed.number - 1]
+      if (!r) return { reply: src.length ? `I have ${src.length} dinners numbered 1–${src.length}. Text RECIPE + the number, e.g. "recipe 2".` : `No dinners to show yet.`, handled: true, member: m }
+      return { reply: recipeText(r), handled: true, member: m }
+    }
+    case 'suggest': {
+      if (!owner) break
+      if (!parsed.items.length) return { reply: `Sure — what would you like on a future week? Text it like "suggest chicken parm" or "how about taco night".`, handled: true, member: m }
+      await addSuggestions(admin, owner, m.name, parsed.items)
+      return { reply: `Love it — ${parsed.items.join(', ')} ${parsed.items.length === 1 ? 'is' : 'are'} on ${family}'s idea list for a coming week. 🍽️`, handled: true, member: m }
+    }
     case 'list': {
       if (!owner) break
       const { data: items } = await admin.from('list_items').select('name, quantity, unit, have, checked').eq('user_id', owner.id).eq('week_start', plan?.week_start ?? mondayOf(new Date())).is('ordered_at', null).order('category')
@@ -413,8 +522,45 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const mode: 'round' | 'again' | 'week' = round ? 'round' : ctx.lastAsk === 'again' ? 'again' : 'week'
   const list = round ? round.candidates : mode === 'again' ? againMeals : meals
   const weekStart = round ? round.week_start : plan?.week_start ?? mondayOf(new Date())
-  const u = await understandInContext(body, ctx, list, mode)
+  // Facts the bot can answer from, and the planner's latest note to the family (so replies to it get passed on).
+  const facts: BotFacts = { family }
+  try {
+    const tn = tonightMeal(meals, tz); if (tn) facts.tonight = `${tn.name}${tn.cookTime ? ` (${tn.cookTime} min)` : ''}`
+    if (round) { const st = await roundStandings(admin, round); facts.standings = tallyText(round, st).replace(/\n/g, ' | ') }
+    if (owner) {
+      const { count } = await admin.from('list_items').select('id', { count: 'exact', head: true }).eq('user_id', owner.id).eq('week_start', plan?.week_start ?? mondayOf(new Date())).is('ordered_at', null).eq('have', false).eq('checked', false)
+      facts.listCount = count ?? undefined
+    }
+    facts.ownerMessage = ctx.ownerMessage
+  } catch { /* facts are optional */ }
+  const u = await understandInContext(body, ctx, list, mode, facts)
   if (!u) return { reply: helpFor(mode, family), handled: true, member: m }
+  // Something for a person, not the bot.
+  if (u.relay && !u.picks.length && !u.skips.length && !u.add.length && !u.suggest.length && owner) {
+    const to = await ownerPhone(admin, owner)
+    const isPlanner = m.profile_id === owner.id || (!!to && to === m.phone)
+    // The planner texting back: it goes to the whole family as their note.
+    if (isPlanner) {
+      const { data: all } = await admin.from('household_members').select('*').eq('household_id', m.household_id)
+      const others = ((all ?? []) as MemberRow[]).filter((x) => x.id !== m.id && x.phone && x.phone_opt_in_at && !x.phone_opted_out)
+      const first = m.name.trim().split(' ')[0]
+      let n = 0
+      for (const x of others) {
+        const r = await sendSms(x.phone as string, `${first}: ${body.trim().slice(0, 600)}`)
+        await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: x.id, direction: 'out', to_number: x.phone, body: body.trim().slice(0, 600), intent: 'owner_message', twilio_sid: r.sid ?? null })
+        if (r.ok) n++
+      }
+      await admin.from('sms_messages').update({ intent: 'planner_note' }).eq('twilio_sid', sid ?? '')
+      return { reply: n ? `Sent to ${others.filter((x) => x.phone).map((x) => x.name).join(', ')}.` : `Nobody else has joined the texts yet.`, handled: true, member: m }
+    }
+    if (to && to !== m.phone) {
+      const r = await sendSms(to, `${m.name}: ${body.trim().slice(0, 600)}\n(Reply here to text the family back.)`)
+      await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: to, body: `${m.name}: ${body.trim().slice(0, 600)}`, intent: 'relay', twilio_sid: r.sid ?? null })
+      await admin.from('sms_messages').update({ intent: 'for_planner' }).eq('twilio_sid', sid ?? '')
+      return { reply: `Passed that on to ${family} 👍`, handled: true, member: m }
+    }
+  }
+  if (u.suggest.length && owner) await addSuggestions(admin, owner, m.name, u.suggest)
 
   const voteChange = m.can_vote && (u.picks.length || u.skips.length || u.again.length || u.allGood || u.none || u.correction)
   if (voteChange && list.length) {
@@ -472,14 +618,16 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   if (u.skips.length) parts.push(`you'd skip ${n2(u.skips)}`)
   if (u.none && !u.picks.length && !u.again.length) parts.push(mode === 'again' ? 'none to bring back' : 'no picks from you this week')
   if (added.length) parts.push(`added to the list: ${added.join(', ')}`)
+  if (u.suggest.length) parts.push(`${u.suggest.join(', ')} ${u.suggest.length === 1 ? 'is' : 'are'} on ${family}'s idea list for a coming week`)
   if (u.removeLastAdded) parts.push('took that off the grocery list')
   if (parts.length) {
     const lead = u.correction ? `Sorry about that, ${m.name} — fixed: ` : `Got it, ${m.name} — `
     const tail = mode === 'round' && !u.picks.length && !u.allGood && !u.none && u.skips.length ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
     return { reply: `${lead}${parts.join('; ')}.${tail}`, handled: true, member: m }
   }
+  if (u.answer) return { reply: u.answer, handled: true, member: m }
   if (u.clarify) return { reply: u.clarify, handled: true, member: m }
-  if (u.question) return { reply: `I'm just the dinner bot 🙂 For anything else, text ${family} directly. ${helpFor(mode, family)}`, handled: true, member: m }
+  if (u.question) return { reply: `I can help with dinners, the vote and the list — for anything else, text ${family} directly. ${helpFor(mode, family)}`, handled: true, member: m }
   return { reply: helpFor(mode, family), handled: true, member: m }
 }
 
@@ -490,7 +638,7 @@ function helpFor(mode: 'round' | 'again' | 'week', family: string): string {
   return `Text MENU for this week's dinners, LIST for the grocery list, ADD + items to add to it, or HELP.`
 }
 
-export interface SmsContext { lastAsk: 'again' | 'vote' | null; lastAskBody?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
+export interface SmsContext { lastAsk: 'again' | 'vote' | null; lastAskBody?: string; ownerMessage?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
 
 /** The last few texts with this person (both ways) and the last question we asked them. */
 async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsContext> {
@@ -498,17 +646,22 @@ async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsC
   const { data } = await admin.from('sms_messages').select('direction, body, intent, created_at').eq('member_id', memberId).gte('created_at', since).order('created_at', { ascending: false }).limit(8)
   const rows = (data ?? []) as Array<{ direction: string; body: string | null; intent: string | null }>
   const ask = rows.find((r) => r.direction === 'out' && (r.intent === 'again_request' || r.intent === 'vote_request'))
+  const note = rows.find((r) => r.direction === 'out' && r.intent === 'owner_message')
   return {
     lastAsk: ask?.intent === 'again_request' ? 'again' : ask ? 'vote' : null,
     lastAskBody: ask?.body ?? undefined,
+    ownerMessage: note?.body ?? undefined,
     history: rows.slice(0, 6).reverse().map((r) => ({ who: r.direction === 'out' ? 'DinnerDrop' : 'Them', body: (r.body ?? '').slice(0, 400) })),
   }
 }
 
-export interface Meant { picks: number[]; skips: number[]; again: number[]; add: string[]; allGood: boolean; none: boolean; correction: boolean; removeLastAdded: boolean; question: boolean; clarify: string }
+export interface Meant { picks: number[]; skips: number[]; again: number[]; add: string[]; suggest: string[]; allGood: boolean; none: boolean; correction: boolean; removeLastAdded: boolean; question: boolean; relay: boolean; answer: string; clarify: string }
+
+/** Facts the bot may answer questions from (standings, tonight, list size, the planner's name). */
+export interface BotFacts { family: string; tonight?: string; standings?: string; listCount?: number; ownerMessage?: string }
 
 /** The prompt for reading a free-text reply against what we asked and what was just said (exported for tests). */
-export function understandPrompt(body: string, ctx: SmsContext, list: Pick<Meal, 'name'>[], mode: 'round' | 'again' | 'week'): string {
+export function understandPrompt(body: string, ctx: SmsContext, list: Pick<Meal, 'name'>[], mode: 'round' | 'again' | 'week', facts?: BotFacts): string {
   const asked = mode === 'round' ? 'which of these dinners they want next week (numbers = picks)'
     : mode === 'again' ? "which of this week's dinners should come back soon (numbers = bring back)"
     : "nothing specific right now (this week's dinners are listed for reference)"
@@ -522,16 +675,26 @@ Recent conversation (oldest first):
 ${ctx.history.map((h) => `${h.who}: ${h.body}`).join('\n') || '(none)'}
 
 Their new message: <<<${body.trim()}>>>
+${facts ? `
+Facts you may answer from (the planner is ${facts.family}):
+- Tonight's dinner: ${facts.tonight ?? 'not planned'}
+- Vote standings: ${facts.standings ?? 'no vote open'}
+- Grocery list: ${facts.listCount == null ? 'unknown' : `${facts.listCount} items still to buy`}
+- ${facts.ownerMessage ? `${facts.family} recently texted the family: "${facts.ownerMessage}"` : `${facts.family} hasn't texted the family recently`}
+- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, USE UP + items, a photo of a product or a store flyer.` : ''}
 
 Return ONLY JSON:
-{"picks":[],"skips":[],"again":[],"add":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"clarify":""}
+{"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
 - picks: numbers they want / are happy to keep. skips: numbers they don't want. again: numbers they want brought back on a future week (use this when DinnerDrop asked which should come back, or they say "again"/"bring back"/"want that again").
 - A dish they name or refer to ("that", "the salad") is matched to its number using the conversation.
 - "the rest", "all the others", "everything else" mean every number they did NOT just pick in the conversation. Never put a number in skips that they picked unless this message names that number or dish.
 - correction: true if they're saying DinnerDrop got their last answer wrong ("oh no", "I meant", "not that"); then fill picks/skips/again with what they actually meant.
 - removeLastAdded: true only if they say something DinnerDrop just added to the grocery list was wrong or wasn't meant for the list.
 - add: only real grocery/household products they clearly want added, as product names with any amount. Otherwise [].
+- suggest: dishes or meal ideas they propose for a future week ("how about tacos", "we should do pizza night", "can I recommend chicken parm") — dish names, not grocery items. Otherwise [].
 - allGood / none: whole-list answers. question: they asked something or it's unrelated chat.
+- answer: if question is true and it's about dinners, the vote, the list, the app, or what they can text, answer it warmly in one or two sentences (under 280 characters) from the facts above — e.g. tell them the standings, tonight's dinner, how to suggest a dish. Else "".
+- relay: true when the message is clearly meant for the planner or the family, not the bot — a reply to something the planner texted, "tell Sarah…", "I'll be late", "running to the store", a question only a person can answer. Then answer stays "".
 - clarify: if you genuinely can't tell what they mean, a short friendly question (under 140 characters) asking them, else "".`
 }
 
@@ -541,13 +704,15 @@ export function parseMeant(text: string, listLength: number): Meant {
   return {
     picks: nums(j.picks), skips: nums(j.skips), again: nums(j.again),
     add: Array.isArray(j.add) ? j.add.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 60).map((x) => x.trim()) : [],
-    allGood: !!j.allGood, none: !!j.none, correction: !!j.correction, removeLastAdded: !!j.removeLastAdded, question: !!j.question,
+    suggest: Array.isArray(j.suggest) ? j.suggest.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 60).map((x) => x.trim()).slice(0, 5) : [],
+    allGood: !!j.allGood, none: !!j.none, correction: !!j.correction, removeLastAdded: !!j.removeLastAdded, question: !!j.question, relay: !!j.relay,
+    answer: typeof j.answer === 'string' ? j.answer.trim().slice(0, 320) : '',
     clarify: typeof j.clarify === 'string' ? j.clarify.trim().slice(0, 160) : '',
   }
 }
 
-async function understandInContext(body: string, ctx: SmsContext, list: Meal[], mode: 'round' | 'again' | 'week'): Promise<Meant | null> {
-  try { return parseMeant(await generateSmart(understandPrompt(body, ctx, list, mode), 400), list.length) }
+async function understandInContext(body: string, ctx: SmsContext, list: Meal[], mode: 'round' | 'again' | 'week', facts?: BotFacts): Promise<Meant | null> {
+  try { return parseMeant(await generateSmart(understandPrompt(body, ctx, list, mode, facts), 500), list.length) }
   catch { return null }
 }
 
