@@ -606,7 +606,7 @@ function voteBody(familyName: string, round: VoteRound): string {
  *  3. the candidates to everyone who has, asking for their picks
  * When everyone has answered (or after 24h) the top picks become the week.
  */
-export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opts: { now?: Date; force?: boolean } = {}): Promise<CycleReport> {
+export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opts: { now?: Date; force?: boolean; resend?: boolean } = {}): Promise<CycleReport> {
   const now = opts.now ?? new Date()
   const { data: o } = await admin
     .from('profiles')
@@ -627,6 +627,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
   const count = Math.min(Math.max(settings.texting.optionsToText, picksNeeded, 5), 12)
   let round = await openRound(admin, o.household_id)
   if (round && round.week_start !== weekStart) { await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id); round = null }
+  if (opts.resend && !round) { report.skipped.push('no open vote to resend'); return report }
   if (!round || opts.force) {
     if (round) await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id)
     const { meals } = await generateCandidates(admin, o, count)
@@ -647,11 +648,13 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     const mm = { ...m, phone }
     if (mm.phone_opted_out) continue
     if (!mm.phone_opt_in_at) {
-      if (await sendOptIn(admin, mm, `${familyName}'s family`)) report.optInsSent++
+      if (!opts.resend && await sendOptIn(admin, mm, `${familyName}'s family`)) report.optInsSent++
       continue
     }
     if (!mm.can_vote) continue
-    if (!opts.force && await sentForRound(admin, mm.id, round.id)) continue
+    const askedAlready = await sentForRound(admin, mm.id, round.id)
+    // resend: the same round's menu again (e.g. after a picture fix) — only to people who already got it
+    if (opts.resend ? !askedAlready : (!opts.force && askedAlready)) continue
     if (await textMember(admin, mm, voteBody(familyName, round), `vote_request:${round.id}`, settings.texting.weeklyCap, menuImageUrl(round.id))) report.voteTextsSent++
   }
   return report
