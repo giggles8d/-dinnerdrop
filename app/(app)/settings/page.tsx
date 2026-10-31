@@ -262,6 +262,27 @@ export default function SettingsPage() {
 
   useEffect(() => { load() }, [load])
 
+  // What DinnerDrop has learned from each person's votes (lib/tastes) — adjusts the menu on its own.
+  type Learned = { id: string; votes: number; likes: Array<{ key: string; label: string }>; skips: Array<{ key: string; label: string }> }
+  const [learnedTastes, setLearnedTastes] = useState<Record<string, Learned>>({})
+  useEffect(() => {
+    fetch('/api/tastes', { cache: 'no-store' }).then((r) => r.json()).then((j) => {
+      const map: Record<string, Learned> = {}
+      for (const m of (j.members ?? []) as Learned[]) map[m.id] = m
+      setLearnedTastes(map)
+    }).catch(() => { /* ignore */ })
+  }, [])
+  async function forgetTaste(memberId: string, key: string) {
+    const r = await fetch('/api/tastes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ memberId, key }) })
+    if (!r.ok) return
+    setLearnedTastes((prev) => {
+      const m = prev[memberId]; if (!m) return prev
+      return { ...prev, [memberId]: { ...m, likes: m.likes.filter((x) => x.key !== key), skips: m.skips.filter((x) => x.key !== key) } }
+    })
+    // Keep the local copy in step so a later Save doesn't bring it back.
+    setSettings((prev) => ({ ...prev, tastes: { hidden: { ...prev.tastes.hidden, [memberId]: Array.from(new Set([...(prev.tastes.hidden[memberId] ?? []), key])) } } }))
+  }
+
   function patch(fn: (s: Settings) => void) {
     setSettings((prev) => { const next = structuredClone(prev); fn(next); return next })
     setDirty(true)
@@ -425,6 +446,23 @@ export default function SettingsPage() {
                           <Field label="Allergies" hint="Hard exclusions on every plan."><TagInput value={m.allergies} onChange={(v) => updateMember(m.id, { allergies: v })} placeholder="peanuts, shellfish" suggestions={PICKS.allergies} /></Field>
                           <Field label="Safe foods" hint="One of these lands on their plate every night."><TagInput value={m.safe_foods} onChange={(v) => updateMember(m.id, { safe_foods: v })} placeholder="plain rice, cheese quesadilla" suggestions={PICKS.safe} /></Field>
                         </div>
+                        {(() => {
+                          const lt = learnedTastes[m.id]
+                          if (!lt || lt.votes < 3 || (!lt.likes.length && !lt.skips.length)) return null
+                          const chip = (x: { key: string; label: string }, tone: string) => (
+                            <span key={x.key} className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${tone}`}>
+                              {x.label}
+                              <button type="button" aria-label={`Forget ${x.label}`} title="Not right? Remove it" onClick={() => forgetTaste(m.id, x.key)} className="opacity-60 hover:opacity-100">✕</button>
+                            </span>
+                          )
+                          return (
+                            <div className="rounded-lg bg-muted/40 px-3 py-2.5">
+                              <p className="text-xs font-semibold text-foreground mb-1.5">Learned from {m.name}&apos;s {lt.votes} votes <span className="font-normal text-muted-foreground">— the menu adjusts to this on its own</span></p>
+                              {lt.likes.length > 0 && <div className="flex flex-wrap items-center gap-1.5 mb-1"><span className="text-xs text-muted-foreground mr-1">Leans toward</span>{lt.likes.map((x) => chip(x, 'bg-emerald-50 border-emerald-200 text-emerald-900'))}</div>}
+                              {lt.skips.length > 0 && <div className="flex flex-wrap items-center gap-1.5"><span className="text-xs text-muted-foreground mr-1">Usually skips</span>{lt.skips.map((x) => chip(x, 'bg-amber-50 border-amber-200 text-amber-900'))}</div>}
+                            </div>
+                          )
+                        })()}
                       </div>
                     ))}
                   </div>
