@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Copy, Printer, Share2, Check } from 'lucide-react'
-import { nativeShare, tapHaptic } from '@/lib/native'
+import { isNativeApp, nativePrefGet, nativePrefRemove, nativePrefSet, nativeShare, tapHaptic } from '@/lib/native'
 import { trackOnce } from '@/lib/activation'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
@@ -89,7 +89,20 @@ export default function GroceryListPage() {
     const { data } = await supabase.from('list_items').select('*').eq('user_id', uid).eq('week_start', ws).order('created_at')
     const all = (data as ListItem[]) ?? []
     // Lines already sent to a store leave the active list; new texts/adds start a fresh one.
-    const rows = all.filter((r) => !r.ordered_at)
+    let rows = all.filter((r) => !r.ordered_at)
+    // Native app: items checked off on the offline list (no signal in the store) sync now.
+    if (isNativeApp()) {
+      const pending = await nativePrefGet('dd.grocery.pending')
+      if (pending) {
+        try {
+          const map = JSON.parse(pending) as Record<string, boolean>
+          const changed = rows.filter((r) => map[r.id] != null && map[r.id] !== r.checked)
+          await Promise.all(changed.map((r) => supabase.from('list_items').update({ checked: map[r.id] }).eq('id', r.id)))
+          rows = rows.map((r) => (map[r.id] != null ? { ...r, checked: map[r.id] } : r))
+        } catch { /* ignore a bad cache */ }
+        await nativePrefRemove('dd.grocery.pending')
+      }
+    }
     setItems(rows)
     setOrdered(all.filter((r) => !!r.ordered_at).sort((a, b) => (b.ordered_at! > a.ordered_at! ? 1 : -1)))
     // Typical-price estimates for lines that don't come from the plan (texted, added, basics).
@@ -237,6 +250,12 @@ export default function GroceryListPage() {
 
   useEffect(() => { load() }, [load])
   useEffect(() => { trackOnce('grocery_list_view') }, [])
+  // Native app: keep a copy of the list on the phone so it still opens with no signal (apps/mobile/www/offline.html).
+  useEffect(() => {
+    if (!isNativeApp() || !weekStart) return
+    const cached = items.map((i) => ({ id: i.id, name: i.name, quantity: i.quantity, unit: i.unit, category: i.category, checked: i.checked, have: i.have }))
+    nativePrefSet('dd.grocery', JSON.stringify({ week_start: weekStart, savedAt: Date.now(), items: cached }))
+  }, [items, weekStart])
 
   /* ---------- item actions ---------- */
   async function toggleChecked(item: ListItem) {

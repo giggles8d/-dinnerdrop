@@ -2,10 +2,10 @@ import type { CapacitorConfig } from '@capacitor/cli'
 
 // DinnerDrop native shell.
 // The app loads the production web app (same code as dinnerdrop.app) inside a
-// native container and adds what a website cannot: push notifications ("your
-// plan is ready", "grocery day"), the native share sheet for meal plans, haptic
-// feedback, a home-screen icon with splash, and offline access to the grocery
-// list via the site's service worker. Subscriptions are managed on the web —
+// native container and adds what a website cannot: on-device dinner reminders
+// (local notifications built from the week's plan), the native camera for the
+// pantry scan and receipt capture, an offline grocery list that still works
+// in the store with no signal, the native share sheet, haptics, and push. Subscriptions are managed on the web —
 // the app never sells or links to the subscription (no IAP).
 const config: CapacitorConfig = {
   appId: 'app.dinnerdrop.mobile',
@@ -20,6 +20,9 @@ const config: CapacitorConfig = {
     // Kroger open in the system browser via allowNavigation exclusions.
     allowNavigation: ['www.dinnerdrop.app', 'dinnerdrop.app', '*.supabase.co'],
     cleartext: false,
+    // Offline: the shell shows the locally bundled grocery list (cached on the
+    // device by the web app) instead of a WebView error page.
+    errorPath: 'offline.html',
   },
   ios: {
     contentInset: 'automatic',
@@ -43,6 +46,11 @@ const config: CapacitorConfig = {
     },
     PushNotifications: {
       presentationOptions: ['badge', 'sound', 'alert'],
+    },
+    LocalNotifications: {
+      // Dinner reminders ("Tonight: Sheet Pan Street Corn Chicken") are
+      // scheduled on the device from the week's plan — no server involved.
+      iconColor: '#1a5c38',
     },
   },
 }

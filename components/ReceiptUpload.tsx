@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { isNativeApp, nativePickPhoto } from '@/lib/native'
 
 const MAX_SHOTS = 12
 
@@ -99,7 +100,7 @@ export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void
               )}
               {mode === 'shots' && (<>
               <input ref={inputRef} type="file" accept="image/*" multiple className="hidden" onChange={(e) => { const picked = Array.from(e.target.files ?? []); setFiles(picked.slice(0, MAX_SHOTS)); setError(picked.length > MAX_SHOTS ? `Only the first ${MAX_SHOTS} screenshots will be used.` : null) }} />
-              <button type="button" onClick={() => inputRef.current?.click()} disabled={busy} className="px-3 py-1.5 rounded-md border border-border bg-background text-sm font-medium hover:bg-muted">
+              <button type="button" onClick={async () => { if (isNativeApp()) { const f = await nativePickPhoto({ label: 'Add your receipt', source: 'PROMPT' }); if (f) { setFiles((xs) => [...xs, f].slice(0, MAX_SHOTS)); setError(null) } return } inputRef.current?.click() }} disabled={busy} className="px-3 py-1.5 rounded-md border border-border bg-background text-sm font-medium hover:bg-muted">
                 {files.length ? `${files.length} screenshot${files.length === 1 ? '' : 's'} chosen` : 'Choose screenshot(s)'}
               </button>
               {files.length > 0 && (

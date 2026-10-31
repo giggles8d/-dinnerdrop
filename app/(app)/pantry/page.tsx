@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { isNativeApp, nativePickPhoto } from '@/lib/native'
 import Link from 'next/link'
 import { ArrowLeft, Camera, Loader2, Plus, Trash2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
@@ -101,6 +102,20 @@ export default function PantryPage() {
   async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
+    await scanFile(file)
+  }
+
+  // Native app: open the phone's camera / photo picker; the website uses the file input.
+  async function startScan() {
+    if (isNativeApp()) {
+      const file = await nativePickPhoto({ label: 'Scan your pantry', source: 'PROMPT' })
+      if (file) await scanFile(file)
+      return
+    }
+    fileInputRef.current?.click()
+  }
+
+  async function scanFile(file: File) {
 
     setScanning(true)
     setShowScanned(false)
@@ -173,7 +188,7 @@ export default function PantryPage() {
             <p className="text-muted-foreground mt-1">What&apos;s in the house comes off your grocery list. Flag anything to <strong>use up</strong> and next week&apos;s dinners get built around it.</p>
           </div>
           <button
-            onClick={() => fileInputRef.current?.click()}
+            onClick={startScan}
             disabled={scanning}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors"
           >

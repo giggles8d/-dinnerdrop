@@ -68,5 +68,11 @@
 	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>DinnerDrop uses the camera to scan what's in your pantry and to read grocery receipts so your list and prices stay accurate.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>DinnerDrop can read a pantry photo or receipt screenshot from your photo library.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>DinnerDrop can save a photo of your weekly plan to your library.</string>
 </dict>
 </plist>
