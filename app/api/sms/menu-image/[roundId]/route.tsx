@@ -93,6 +93,6 @@ export async function GET(_req: Request, { params }: { params: { roundId: string
         <div style={{ display: 'flex', marginTop: 'auto', justifyContent: 'center', fontSize: 20, color: GREEN, fontWeight: 700 }}>DinnerDrop</div>
       </div>
     ),
-    { width: W, height: H, headers: { 'Cache-Control': 'public, max-age=3600' } },
+    { width: W, height: H, headers: { 'Cache-Control': 'public, max-age=300' } },
   )
 }
