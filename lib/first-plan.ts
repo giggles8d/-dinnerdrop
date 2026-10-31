@@ -10,6 +10,7 @@ import { pickWithOverlap } from '@/lib/overlap'
 import { DEFAULT_SHAPE, mondayOf, type PlanShape } from '@/lib/plan'
 import { savePlan } from '@/lib/autoplan'
 import { trackStep } from '@/lib/activation'
+import { grantNewFamilyTrial } from '@/lib/family-grant'
 import type { Meal } from '@/types'
 
 export type FirstPlanResult =
@@ -21,6 +22,8 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
   const { data: existing } = await admin.from('meal_plans').select('meals, total_estimated_cost').eq('user_id', userId).order('created_at', { ascending: false }).limit(1)
   if (existing?.[0]) return { ok: true, meals: existing[0].meals as Meal[], totalCost: Number(existing[0].total_estimated_cost) || 0, existing: true }
 
+  // Every new family starts with 14 days of Family (texting, profiles, reminders) — no card.
+  await grantNewFamilyTrial(admin, userId).catch(() => {})
   const { data: p } = await admin.from('profiles').select('family_size, weekly_budget, max_cook_time, dietary_needs, settings').eq('id', userId).single()
   if (!p) return { ok: false, reason: 'no profile' }
   const settings = mergeSettings(p.settings)

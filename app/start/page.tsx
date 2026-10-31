@@ -96,7 +96,7 @@ export default function StartPage() {
             Start free &mdash; no card needed &rarr;
           </Link>
           <p className="text-sm text-gray-600 flex items-center justify-center gap-2 flex-wrap">
-            <InstacartCarrot height={14} /> Works with your Instacart account and every store on it &middot; Free forever &middot; Family plan $4.99/month, 14 days free
+            <InstacartCarrot height={14} /> Works with your Instacart account and every store on it &middot; Free forever &middot; Family plan free for your first 14 days, no card
           </p>
         </div>
 
@@ -175,7 +175,7 @@ export default function StartPage() {
                 Try Family free for 14 days &rarr;
               </Link>
               <p className="text-sm text-gray-600 leading-snug">
-                Card required for the Family trial. $0 today. We email you on day 11, three days before the first charge. Cancel in one tap from Account.
+                Every new family gets the first 14 days of Family free with no card. Add a card here to keep it after that: $0 today, we email you on day 11, cancel in one tap from Account.
               </p>
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function StartPage() {
             },
             {
               q: 'What does Family add, and what does it cost?',
-              a: 'Family is $4.99/month or $39/year after a 14-day free trial. It adds family texting (the week’s dinner ideas go to everyone by text, they reply with numbers, the top picks become the week, and anyone can text an item onto the list), a profile for each person, text reminders, the Kroger cart push, and priority support. You add a card to start the trial; nothing is charged for 14 days.',
+              a: 'Every new family gets Family free for the first 14 days, no card. It adds family texting (the week’s dinner ideas go to everyone by text, they reply with numbers, the top picks become the week, and anyone can text an item onto the list), a profile for each person, text reminders, the Kroger cart push, and priority support. After 14 days it’s $4.99/month or $39/year — add a card from Account to keep it.',
             },
             {
               q: 'Will I be charged by surprise?',
@@ -282,7 +282,7 @@ export default function StartPage() {
         >
           Start free &mdash; no card needed &rarr;
         </Link>
-        <p className="text-center text-[13px] text-gray-600 mt-1">Free forever &middot; Family $4.99/mo after a 14-day trial</p>
+        <p className="text-center text-[13px] text-gray-600 mt-1">Free forever &middot; Family free for 14 days, then $4.99/mo</p>
       </div>
     </div>
   )
