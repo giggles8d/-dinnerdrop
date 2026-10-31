@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 import { sendWeekRecipes } from '@/lib/recipe-email'
 import { stockStaplesFromList } from '@/lib/pantry'
 import { markListOrdered } from '@/lib/list-ordered'
+import { grantWeekendOffer } from '@/lib/weekend-offer'
 import type { GroceryItem } from '@/types'
 
 export async function POST(request: Request) {
@@ -53,6 +54,8 @@ export async function POST(request: Request) {
           // These lines are on their way — take them off the active list so the family's texts start a fresh one.
           await markListOrdered(admin, user.id, allItems.map((i) => i.name)).catch((e) => console.error('[instacart] mark ordered failed:', e))
           await sendWeekRecipes(admin, user.id)
+          // Weekend push offer: first list sent during the window → 90 days of Family (once per family).
+          await grantWeekendOffer(admin, user.id).catch((e) => console.error('[instacart] weekend offer failed:', e))
         } catch (mailErr) {
           console.error('[instacart] recipe email failed:', mailErr)
         }
