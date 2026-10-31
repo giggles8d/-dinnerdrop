@@ -751,6 +751,12 @@ function DashboardContent() {
           />
         )}
         {!isPickingMeals && !showQuickSetup && <FamilyVoteCard onClosed={() => loadExistingPlan()} />}
+        {!isPickingMeals && !showQuickSetup && (
+          <Link href="/tonight" className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 hover:border-primary/40 transition-colors">
+            <span className="text-sm"><span className="font-semibold text-foreground">📸 What can I make tonight?</span> <span className="text-muted-foreground">Snap your fridge — get dinners from what you have.</span></span>
+            <span className="text-sm font-semibold text-primary whitespace-nowrap">Try it →</span>
+          </Link>
+        )}
         {!isPickingMeals && !showQuickSetup && <div className="mb-6"><SalesCard compact /></div>}
 
         {/* First-plan auto-generation in progress */}
