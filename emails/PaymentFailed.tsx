@@ -92,8 +92,8 @@ export default function PaymentFailed({
           <Section style={footer}>
             <Text style={footerText}>
               Questions? Email{' '}
-              <Link href="mailto:info@dinnerdrop.app" style={footerLink}>
-                info@dinnerdrop.app
+              <Link href="mailto:sarah@dinnerdrop.app" style={footerLink}>
+                sarah@dinnerdrop.app
               </Link>
             </Text>
             <Text style={footerText}>

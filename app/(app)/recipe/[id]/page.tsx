@@ -21,6 +21,7 @@ import { sideFor } from '@/lib/sides'
 import ServingsStepper from '@/components/ServingsStepper'
 import { withServings, saveDinnerServings } from '@/lib/servings'
 import { attachLibraryImages } from '@/lib/library-images'
+import { resolvePlanOwner } from '@/lib/household'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
 
@@ -113,19 +114,26 @@ function RecipeContent() {
     let active = true
     async function load() {
       const stored = localStorage.getItem(`meal-${id}`)
-      if (stored) {
-        const parsed = JSON.parse(stored) as Meal
+      const parsed = stored ? (JSON.parse(stored) as Meal) : null
+      if (parsed) {
         setMeal(parsed)
         checkFavorite(parsed.name)
         setMealLoading(false)
         if (!parsed.imageUrl) { const [withImg] = await attachLibraryImages(supabase, [parsed]); if (withImg?.imageUrl && active) setMeal(withImg) }
-        return
       }
+      // A night ("monday") means this week's dinner for that night. The saved copy in this browser can be
+      // from an older week (a "cook tonight" email opened last week's dinner), so check the latest plan.
+      const isNight = /^(monday|tuesday|wednesday|thursday|friday|saturday|sunday|day-?\d+)$/i.test(id)
+      // Just tapped from the dashboard (including a not-yet-saved pick): that copy is the right one.
+      const savedAt = Number(localStorage.getItem(`meal-${id}-at`) || 0)
+      if (parsed && (!isNight || Date.now() - savedAt < 30 * 60_000)) return
       // Opened from an email or another device: find the night in the latest plan.
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
-        const { data: plan } = await supabase.from('meal_plans').select('meals').eq('user_id', user.id).order('created_at', { ascending: false }).limit(1).single()
-        const found = ((plan?.meals as Meal[]) ?? []).find((m) => m.day.toLowerCase() === id.toLowerCase())
+        const { ownerId } = await resolvePlanOwner(supabase, user.id)
+        const { data: plan } = await supabase.from('meal_plans').select('meals').eq('user_id', ownerId).order('created_at', { ascending: false }).limit(1).maybeSingle()
+        const found = ((plan?.meals as Meal[]) ?? []).find((m) => (m.day ?? '').toLowerCase() === id.toLowerCase())
+        if (found && parsed && found.name === parsed.name) { if (active) setMealLoading(false); return }
         if (found && active) {
           localStorage.setItem(`meal-${id}`, JSON.stringify(found))
           setMeal(found)

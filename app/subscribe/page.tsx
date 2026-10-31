@@ -216,7 +216,7 @@ function SubscribeContent() {
               </p>
 
               <p className="text-xs text-muted-foreground text-center mt-4">
-                Payments processed by Stripe &middot; We never see your card number &middot; info@dinnerdrop.app
+                Payments processed by Stripe &middot; We never see your card number &middot; sarah@dinnerdrop.app
               </p>
             </div>
 

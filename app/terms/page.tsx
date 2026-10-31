@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import PublicHeader from '@/components/site/PublicHeader'
 
 export const metadata: Metadata = {
   title: 'Terms of Service — DinnerDrop',
@@ -19,20 +19,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 max-w-3xl flex items-center justify-between">
-          <Link href="/" className="font-heading text-xl font-bold text-foreground">
-            DinnerDrop
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to home
-          </Link>
-        </div>
-      </header>
+      <PublicHeader />
 
       <main className="container mx-auto px-4 py-12 max-w-3xl">
         <h1 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-2">
@@ -175,7 +162,7 @@ export default function TermsPage() {
               We reserve the right to suspend or terminate your account at any time if you violate
               these Terms of Service or engage in conduct that we determine, in our sole discretion,
               to be harmful to the Service, other users, or third parties. You may delete your
-              account at any time by emailing info@dinnerdrop.app from the address on your account
+              account at any time by emailing sarah@dinnerdrop.app from the address on your account
               (see our Privacy Policy for details). Upon termination, your right to
               use the Service will immediately cease, and we may delete your data in accordance
               with our Privacy Policy.
@@ -228,10 +215,10 @@ export default function TermsPage() {
             <p>
               If you have questions about these Terms of Service, please contact us at{' '}
               <a
-                href="mailto:info@dinnerdrop.app"
+                href="mailto:sarah@dinnerdrop.app"
                 className="text-primary hover:underline"
               >
-                info@dinnerdrop.app
+                sarah@dinnerdrop.app
               </a>.
             </p>
           </section>

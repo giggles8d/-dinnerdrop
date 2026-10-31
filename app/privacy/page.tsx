@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import PublicHeader from '@/components/site/PublicHeader'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — DinnerDrop',
@@ -19,20 +19,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 max-w-3xl flex items-center justify-between">
-          <Link href="/" className="font-heading text-xl font-bold text-foreground">
-            DinnerDrop
-          </Link>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to home
-          </Link>
-        </div>
-      </header>
+      <PublicHeader />
 
       <main className="container mx-auto px-4 py-12 max-w-3xl">
         <h1 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-2">
@@ -181,7 +168,7 @@ export default function PrivacyPage() {
                 <span className="font-medium text-foreground">Delete your account:</span> Permanently
                 delete your account and all associated personal data yourself from Settings &rarr; Data &rarr; Delete account (in the
                 app or on the website); billing stops immediately. Or email{' '}
-                <a href="mailto:info@dinnerdrop.app?subject=Delete%20my%20DinnerDrop%20account" className="text-primary underline">info@dinnerdrop.app</a>{' '}
+                <a href="mailto:sarah@dinnerdrop.app?subject=Delete%20my%20DinnerDrop%20account" className="text-primary underline">sarah@dinnerdrop.app</a>{' '}
                 from the address on your account with the subject &ldquo;Delete my DinnerDrop account&rdquo; and
                 we will delete your profile, meal plans, favorites, pantry, and grocery-handoff records within 30 days
                 and confirm by email. Subscription billing records are retained only as required by law.
@@ -193,8 +180,8 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-3">
               To exercise any of these rights, contact us at{' '}
-              <a href="mailto:info@dinnerdrop.app" className="text-primary hover:underline">
-                info@dinnerdrop.app
+              <a href="mailto:sarah@dinnerdrop.app" className="text-primary hover:underline">
+                sarah@dinnerdrop.app
               </a>.
             </p>
           </section>
@@ -236,8 +223,8 @@ export default function PrivacyPage() {
               DinnerDrop is not intended for children under the age of 13. We do not knowingly
               collect personal information from children under 13. If you believe a child under 13
               has provided us with personal data, please contact us at{' '}
-              <a href="mailto:info@dinnerdrop.app" className="text-primary hover:underline">
-                info@dinnerdrop.app
+              <a href="mailto:sarah@dinnerdrop.app" className="text-primary hover:underline">
+                sarah@dinnerdrop.app
               </a>{' '}
               and we will promptly delete the information.
             </p>
@@ -273,8 +260,8 @@ export default function PrivacyPage() {
             <p>
               If you have questions or concerns about this Privacy Policy or our data practices,
               please contact us at{' '}
-              <a href="mailto:info@dinnerdrop.app" className="text-primary hover:underline">
-                info@dinnerdrop.app
+              <a href="mailto:sarah@dinnerdrop.app" className="text-primary hover:underline">
+                sarah@dinnerdrop.app
               </a>.
             </p>
           </section>

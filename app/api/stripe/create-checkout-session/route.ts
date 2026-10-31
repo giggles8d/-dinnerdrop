@@ -9,10 +9,6 @@ function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY!)
 }
 
-// Legacy $9/mo price — only used by the BETA100 founding-family path so those
-// subscriptions keep their original terms. New checkouts use the Family prices.
-const LEGACY_PRICE_ID = 'price_1TBEm3BnujZBkm2Rdirr7XtN'
-
 export async function POST(req: NextRequest) {
   try {
     const supabase = createServerSupabaseClient()
@@ -23,7 +19,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json().catch(() => ({}))
-    const couponCode: string | undefined = body?.couponCode
+    let couponCode: string | undefined = body?.couponCode
     const interval: FamilyInterval = body?.interval === 'yearly' ? 'yearly' : 'monthly'
 
     // Check if user already has a Stripe customer ID
@@ -51,25 +47,11 @@ export async function POST(req: NextRequest) {
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
 
-    // BETA100 = the closed founding-family offer (6 months free, no card).
-    // Kept so existing links keep working; new visitors never see it.
+    // BETA100 (the founding offer, 6 months free with no card) closed 2026-10-16. Founding families are
+    // already on their free Family year, so the code is ignored here — it used to still work if posted directly.
+    if (couponCode === 'BETA100') couponCode = undefined
     let sessionParams: Stripe.Checkout.SessionCreateParams
-
-    if (couponCode === 'BETA100') {
-      sessionParams = {
-        customer: customerId,
-        mode: 'subscription',
-        line_items: [{ price: LEGACY_PRICE_ID, quantity: 1 }],
-        success_url: `${appUrl}/dashboard?subscribed=true&beta=1`,
-        cancel_url: `${appUrl}/subscribe?coupon=BETA100`,
-        subscription_data: {
-          trial_period_days: 180,
-          metadata: { beta_member: 'true', source: 'BETA100' },
-        },
-        payment_method_collection: 'if_required',
-        allow_promotion_codes: false,
-      }
-    } else {
+    {
       // Family tier: $4.99/mo or $39/yr, 14-day free trial, card at signup.
       const priceId = await getFamilyPriceId(stripe, interval)
       sessionParams = {

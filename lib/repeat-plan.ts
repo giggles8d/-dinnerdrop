@@ -7,10 +7,12 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Meal } from '@/types'
 
+/** This week's Monday as YYYY-MM-DD in the family's local time. (toISOString() is UTC, so on a US
+ *  evening it rolled the date forward — Monday 9 PM ET became Tuesday.) */
 export function mondayISO(d = new Date()): string {
   const m = new Date(d)
   m.setDate(d.getDate() - ((d.getDay() + 6) % 7))
-  return m.toISOString().split('T')[0]
+  return `${m.getFullYear()}-${String(m.getMonth() + 1).padStart(2, '0')}-${String(m.getDate()).padStart(2, '0')}`
 }
 
 export async function repeatPlan(supabase: SupabaseClient, userId: string, meals: Meal[]): Promise<{ meals: Meal[]; total: number } | null> {
