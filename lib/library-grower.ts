@@ -69,7 +69,8 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
       const rest = file.concepts.slice(done)
       if (rest.length) {
         const value = { ...((kv?.value as object | null) ?? {}), pending: rest, done, source: 'data/recipe-concepts.json' }
-        await admin.from('app_kv').upsert({ key: 'recipe_concepts', value, updated_at: new Date().toISOString() })
+        const { error } = await admin.from('app_kv').upsert({ key: 'recipe_concepts', value, updated_at: new Date().toISOString() })
+        if (error) console.error('[grow-library] concept queue refill failed', error)
         queue = rest
       }
     } catch { /* no seed file */ }
@@ -274,8 +275,12 @@ Categories must be one of: ${Array.from(CATEGORIES).join(', ')}.`
   if (usedConcepts.length) {
     const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
     const v = (kv?.value as { pending?: string[]; done?: number } | null) ?? {}
-    const pending = (v.pending ?? []).filter((x) => !usedConcepts.includes(x))
-    await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { ...v, pending, done: (v.done ?? 0) + usedConcepts.length, last: new Date().toISOString() }, updated_at: new Date().toISOString() })
+    // Pop from the queue we actually ran with (the in-memory one), not only what the row holds: on Oct 31 the
+    // refill upsert didn't persist and the end-of-run pop wrote an empty queue over 1,296 remaining ideas.
+    const base = (v.pending && v.pending.length) ? v.pending : queue
+    const pending = base.filter((x) => !usedConcepts.includes(x))
+    const { error } = await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { ...v, pending, done: (v.done ?? 0) + usedConcepts.length, last: new Date().toISOString(), source: 'data/recipe-concepts.json' }, updated_at: new Date().toISOString() })
+    if (error) console.error('[grow-library] concept queue pop failed', error)
   }
   return report
 }
