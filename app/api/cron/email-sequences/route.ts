@@ -33,9 +33,11 @@ export async function GET(request: NextRequest) {
   const emailDays: [number, number][] = [[1, 1], [3, 2], [7, 3]]
 
   for (const [daysAgo, emailNumber] of emailDays) {
-    const targetDate = new Date(now)
-    targetDate.setDate(targetDate.getDate() - daysAgo)
-    const dateStr = targetDate.toISOString().split('T')[0]
+    // Rolling window (not a UTC calendar day): signed up between daysAgo-0.5 and daysAgo+0.5 days ago, so an
+    // evening sign-up gets the day-after email the next morning instead of a day later. The sent-list on the
+    // profile keeps a family from getting the same email twice if the job runs late.
+    const from = new Date(now.getTime() - (daysAgo + 0.5) * 86400000).toISOString()
+    const to = new Date(now.getTime() - (daysAgo - 0.5) * 86400000).toISOString()
 
     const { data: users, error: queryError } = await supabase
       .from('profiles')
@@ -43,8 +45,8 @@ export async function GET(request: NextRequest) {
       .eq('subscription_status', 'free')
       .not('email_unsubscribed', 'eq', true)
       .not('email', 'is', null)
-      .gte('created_at', `${dateStr}T00:00:00Z`)
-      .lt('created_at', `${dateStr}T23:59:59Z`)
+      .gte('created_at', from)
+      .lt('created_at', to)
 
     if (queryError) {
       console.error(`[cron/email-sequences] Day-${daysAgo} query error:`, queryError)
