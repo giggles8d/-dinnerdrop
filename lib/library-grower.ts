@@ -277,7 +277,10 @@ Categories must be one of: ${Array.from(CATEGORIES).join(', ')}.`
     const v = (kv?.value as { pending?: string[]; done?: number } | null) ?? {}
     // Pop from the queue we actually ran with (the in-memory one), not only what the row holds: on Oct 31 the
     // refill upsert didn't persist and the end-of-run pop wrote an empty queue over 1,296 remaining ideas.
-    const base = (v.pending && v.pending.length) ? v.pending : queue
+    let base: string[] = v.pending ?? []
+    if (!base.length) {
+      try { base = ((await import('@/data/recipe-concepts.json')).default as { concepts: string[] }).concepts.slice(Number(v.done ?? 0)) } catch { /* no seed file */ }
+    }
     const pending = base.filter((x) => !usedConcepts.includes(x))
     const { error } = await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { ...v, pending, done: (v.done ?? 0) + usedConcepts.length, last: new Date().toISOString(), source: 'data/recipe-concepts.json' }, updated_at: new Date().toISOString() })
     if (error) console.error('[grow-library] concept queue pop failed', error)
