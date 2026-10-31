@@ -577,7 +577,7 @@ export default function GroceryListPage() {
           </div>
         )}
 
-        <div ref={sendRef} className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden">
+        <div ref={sendRef} className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden native-raise">
           <p className="hidden sm:block text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>
           <div className="space-y-4">
             {splitLists && splitStores ? (

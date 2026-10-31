@@ -35,8 +35,11 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SplashScreen: {
-      launchShowDuration: 1200,
+      // Held until the web app's first page has painted (components/NativeShell → SplashScreen.hide),
+      // so launch goes splash → dinners with no loading page in between. Auto-hides after 6s regardless.
+      launchShowDuration: 6000,
       launchAutoHide: true,
+      launchFadeOutDuration: 250,
       backgroundColor: '#1a5c38',
       showSpinner: false,
     },

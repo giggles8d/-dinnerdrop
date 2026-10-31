@@ -1,4 +1,5 @@
 import Nav from '@/components/Nav'
+import NativeShell from '@/components/NativeShell'
 
 export default function AppLayout({
   children,
@@ -9,6 +10,7 @@ export default function AppLayout({
     <>
       <Nav />
       {children}
+      <NativeShell />
     </>
   )
 }

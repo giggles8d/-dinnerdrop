@@ -543,7 +543,7 @@ function DashboardContent() {
       {/* Free signups (no card) are the main conversion now — count them on every ad platform, once per browser. */}
       {searchParams.get('new') === '1' && searchParams.get('subscribed') !== 'true' && <ConversionTracker value={10} onceKey="dd_signup_conv" />}
       {showListBar && (
-        <div className="fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur px-4 py-3 print:hidden">
+        <div className="fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur px-4 py-3 print:hidden native-raise">
           <div className="mx-auto max-w-6xl flex items-center gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-foreground">Your grocery list is ready</p>

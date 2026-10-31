@@ -25,6 +25,7 @@ type CapacitorGlobal = {
     Camera?: {
       getPhoto: (opts: { quality?: number; resultType: 'base64' | 'uri' | 'dataUrl'; source?: 'CAMERA' | 'PHOTOS' | 'PROMPT'; width?: number; correctOrientation?: boolean; promptLabelHeader?: string; promptLabelPhoto?: string; promptLabelPicture?: string }) => Promise<{ base64String?: string; format: string }>
     }
+    SplashScreen?: { hide: (opts?: { fadeOutDuration?: number }) => Promise<void> }
     Preferences?: {
       get: (opts: { key: string }) => Promise<{ value: string | null }>
       set: (opts: { key: string; value: string }) => Promise<void>
@@ -196,4 +197,11 @@ export async function nativePickPhoto(opts: { label?: string; source?: 'CAMERA' 
     const type = `image/${shot.format === 'jpg' ? 'jpeg' : shot.format}`
     return new File([bytes], `photo.${shot.format}`, { type })
   } catch { return null } // user cancelled
+}
+
+/** Fade the native splash once the first page is on screen (the shell keeps it up until then). */
+export async function hideSplash() {
+  const sp = cap()?.Plugins?.SplashScreen
+  if (!isNativeApp() || !sp) return
+  try { await sp.hide({ fadeOutDuration: 250 }) } catch { /* no-op */ }
 }

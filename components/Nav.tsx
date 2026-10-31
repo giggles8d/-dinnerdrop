@@ -58,7 +58,7 @@ export default function Nav() {
           <div className="w-2 h-2 rounded-full bg-accent mt-0.5" />
           <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
         </Link>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 nav-links">
           {links.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href
             return (

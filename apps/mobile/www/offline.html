@@ -73,6 +73,7 @@
       document.getElementById('retry').addEventListener('click', () => { location.href = 'https://www.dinnerdrop.app/grocery-list?utm_source=app'; });
       try { const p = P(); if (p && p.Network) p.Network.addListener('networkStatusChange', (s) => { if (s.connected) location.href = 'https://www.dinnerdrop.app/grocery-list?utm_source=app'; }); } catch (e) {}
       load();
+      try { const p = P(); if (p && p.SplashScreen) p.SplashScreen.hide(); } catch (e) {}
     </script>
   </body>
 </html>

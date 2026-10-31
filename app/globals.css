@@ -42,6 +42,13 @@
 html[data-native] .web-only { display: none !important; }
 .native-only { display: none !important; }
 html[data-native] .native-only { display: revert !important; }
+/* Native shell chrome: slim top bar (logo only), bottom tab bar (components/NativeShell), room for both. */
+html[data-native] .nav-links { display: none !important; }
+html[data-native] .native-raise { bottom: calc(3.5rem + env(safe-area-inset-bottom)); }
+html[data-native] nav.border-b { padding-top: env(safe-area-inset-top); }
+html[data-native] body { padding-bottom: calc(3.5rem + env(safe-area-inset-bottom)); overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
+html[data-native] body { -webkit-user-select: none; user-select: none; }
+html[data-native] input, html[data-native] textarea, html[data-native] [contenteditable] { -webkit-user-select: text; user-select: text; }
 
 /* Paper: plain white, sensible margins, no shadows. */
 @media print {
