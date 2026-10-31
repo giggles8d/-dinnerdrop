@@ -4,6 +4,8 @@
  * all resolve to a complete object via mergeSettings().
  */
 
+import type { ProteinMix } from '@/lib/protein-mix'
+
 export type Weekday = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'
 export const WEEKDAYS: Weekday[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 export const WEEKDAY_LABEL: Record<Weekday, string> = { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' }
@@ -32,6 +34,7 @@ export interface Settings {
     nutritionInfo: boolean          // show calories/protein per serving
     maxCalories: number             // per-serving calorie cap for planned dinners (0 = no cap)
     useSales: boolean               // build the week around this week's store sales when a flyer is loaded
+    mix: ProteinMix                 // dinners per week by protein group (chicken 2, beef 1…); null = any mix
   }
   schedule: {
     autoPlan: boolean               // create next week's menu automatically
@@ -95,6 +98,7 @@ export const DEFAULT_SETTINGS: Settings = {
     nutritionInfo: true,
     maxCalories: 0,
     useSales: true,
+    mix: null,
   },
   schedule: {
     // On by default (2026-10-26): active families get next week planned and emailed on Sunday.

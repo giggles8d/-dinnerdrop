@@ -10,6 +10,7 @@ import { ensurePortions } from '@/lib/portions'
 import { currentSales, salesPromptBlock } from '@/lib/sales'
 import { loadPantry, pantryPromptBlock } from '@/lib/pantry'
 import { pickWithOverlap, isFresh } from '@/lib/overlap'
+import { hasMix, scaleMix, mixLabel, proteinGroup, MIX_GROUPS } from '@/lib/protein-mix'
 
 // Extend serverless timeout — AI generation needs up to 55s
 export const maxDuration = 60
@@ -96,6 +97,9 @@ export async function POST(request: Request) {
     const dinnersPerWeek = Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
     const requested = Number(body.optionsCount) > 0 ? Number(body.optionsCount) : settings.plan.optionsCount
     const optionsCount = Math.min(Math.max(requested, dinnersPerWeek, 5), 12)
+    // Weekly protein mix (Settings → Food): counts for the cooked dinners, scaled to the options offered.
+    const mix = hasMix(settings.food.mix) ? settings.food.mix : null
+    const quota = mix ? scaleMix(mix, optionsCount) : undefined
     const nightTimes = cookDays.map((d) => ({ day: d, label: WEEKDAY_LABEL[d], minutes: cookTimeFor(d, settings, profile.maxCookTime) }))
     const fastestNight = Math.min(...nightTimes.map((n) => n.minutes))
     const slowestNight = Math.max(...nightTimes.map((n) => n.minutes))
@@ -167,6 +171,7 @@ export async function POST(request: Request) {
           allergies: allergyPeople.flatMap((p) => p.allergies),
           excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name), ...keepMeals.map((m) => m.name)],
           cuisines: settings.food.cuisines,
+          quota,
         }
         const perDinner = Number(perMealBudget) || 20
         const toAffordable = (rows: Awaited<ReturnType<typeof pickLibraryRecipes>>, slack: number) => rows
@@ -193,7 +198,20 @@ export async function POST(request: Request) {
         // Favor options that share fresh ingredients with each other (and with kept picks),
         // so whatever the family picks uses whole bunches/bags instead of half of each.
         const backNames = new Set(bringBack.map((m) => normalizeName(m.name)))
-        libraryMeals = [...bringBack, ...pickWithOverlap(affordable.filter((m) => !backNames.has(normalizeName(m.name))), optionsCount - bringBack.length, [...keepMeals, ...bringBack])]
+        const fresh = affordable.filter((m) => !backNames.has(normalizeName(m.name)))
+        if (quota) {
+          // Fill each protein group's count (bring-backs use up their group's slots), still favoring shared ingredients.
+          const left = { ...quota }
+          for (const b of bringBack) { const g = proteinGroup(b.protein, b.name); if ((left[g] ?? 0) > 0) left[g]-- }
+          const picked: Meal[] = []
+          for (const g of MIX_GROUPS.map((x) => x.key)) {
+            const n = left[g] ?? 0
+            if (n > 0) picked.push(...pickWithOverlap(fresh.filter((m) => proteinGroup(m.protein, m.name) === g), n, [...keepMeals, ...bringBack, ...picked]))
+          }
+          libraryMeals = [...bringBack, ...picked].slice(0, optionsCount)
+        } else {
+          libraryMeals = [...bringBack, ...pickWithOverlap(fresh, optionsCount - bringBack.length, [...keepMeals, ...bringBack])]
+        }
       } catch (e) {
         console.error('library picks failed', e)
       }
@@ -207,6 +225,13 @@ export async function POST(request: Request) {
       })
     }
     const generateCount = mode === 'fresh' ? Math.max(optionsCount - libraryMeals.length, 2) : Math.max(optionsCount, 3)
+    // What the AI still has to cover of the mix, after the library's picks.
+    let mixNeeded: Record<string, number> | null = null
+    if (quota) {
+      mixNeeded = { ...quota }
+      for (const m of libraryMeals) { const g = proteinGroup(m.protein, m.name); if ((mixNeeded[g] ?? 0) > 0) mixNeeded[g]-- }
+      if (!Object.values(mixNeeded).some((n) => n > 0)) mixNeeded = scaleMix(mix!, generateCount)
+    }
 
     // ---------- favorites ----------
     let favoritesSection = ''
@@ -260,6 +285,10 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
       constraintLines.push(`The family already chose: ${keepMeals.map((m) => m.name).join(', ')}. Do not repeat them. These options fill the rest of the week${keptFresh.length ? `; where natural, reuse their fresh ingredients (${keptFresh.slice(0, 10).join(', ')})` : ''}.`)
     }
 
+    if (mixNeeded) {
+      const off = MIX_GROUPS.filter((g) => !(Number(mix?.[g.key]) > 0)).map((g) => g.label.toLowerCase())
+      constraintLines.push(`Main protein for these options (the family sets this mix): ${mixLabel(mixNeeded)}.${off.length ? ` No ${off.join(', ')} as the main protein.` : ''} Fill the "protein" field with the main protein.`)
+    }
     const nightLines = nightTimes.map((n) => `- ${n.label}: ${n.minutes} min`).join('\n')
     const style = styleByKey(settings.food.style)
     if (style?.rule) constraintLines.push(style.rule)

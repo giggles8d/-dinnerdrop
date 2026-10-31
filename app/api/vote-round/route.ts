@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { finalizeRound, openRound, type VoteRound } from '@/lib/texting'
+import { mergeSettings } from '@/lib/settings'
+import { hasMix, scaleMix, pickByQuota, proteinGroup } from '@/lib/protein-mix'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,11 +40,17 @@ export async function GET() {
     if (v.vote === 'skip') { t.votes--; continue }
     t.votes++; const nm = byId.get(v.member_id)?.name; if (nm && !t.by.includes(nm)) t.by.push(nm)
   }
+  // Which dinners make the week right now — same rule as closing the vote (votes, then the family's protein mix).
+  const { data: owner } = await c.admin.from('profiles').select('settings').eq('id', round.user_id).maybeSingle()
+  const settings = mergeSettings(owner?.settings)
+  const ranked = round.candidates.map((cnd, i) => ({ cnd, i, votes: tally[cnd.name]?.votes ?? 0 })).sort((a, b) => b.votes - a.votes || a.i - b.i)
+  const mix = hasMix(settings.food.mix) ? scaleMix(settings.food.mix, round.picks_needed) : null
+  const inWeek = new Set((mix ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.cnd.protein, r.cnd.name)) : ranked.slice(0, round.picks_needed)).map((r) => r.cnd.name))
   const people = (members ?? []).filter((m) => m.phone).map((m) => ({
     name: m.name,
     status: m.phone_opted_out ? 'opted out' : !m.phone_opt_in_at ? 'waiting for YES' : answeredIds.has(m.id) ? 'answered' : askedIds.has(m.id) ? 'sent, waiting' : m.can_vote ? 'not sent yet' : 'no vote',
   }))
-  return NextResponse.json({ round: { id: round.id, week_start: round.week_start, picks_needed: round.picks_needed, created_at: round.created_at, candidates: round.candidates.map((cnd) => ({ name: cnd.name, cookTime: cnd.cookTime, time: cnd.cookTime ? timeLabel(cnd) : undefined, ...tally[cnd.name] })) }, people })
+  return NextResponse.json({ round: { id: round.id, week_start: round.week_start, picks_needed: round.picks_needed, created_at: round.created_at, candidates: round.candidates.map((cnd) => ({ name: cnd.name, cookTime: cnd.cookTime, time: cnd.cookTime ? timeLabel(cnd) : undefined, carbs: cnd.nutrition?.carbs ?? null, inWeek: inWeek.has(cnd.name), ...tally[cnd.name] })) }, people })
 }
 
 /** POST { action: 'close' } — finalize now with the votes so far. */

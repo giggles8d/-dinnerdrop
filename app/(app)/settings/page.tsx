@@ -12,6 +12,7 @@ import {
   mergeSettings, DEFAULT_SETTINGS, WEEKDAYS, WEEKDAY_LABEL, CUISINE_OPTIONS, PROTEIN_OPTIONS,
   EQUIPMENT_OPTIONS, DIETARY_OPTIONS, AGE_BANDS, type Settings, type Channel,
 } from '@/lib/settings'
+import { MIX_GROUPS, hasMix, type ProteinMix } from '@/lib/protein-mix'
 
 /* ------------------------------------------------------------------ */
 /* Types                                                                */
@@ -72,6 +73,21 @@ const TIMEZONES = ['America/New_York', 'America/Chicago', 'America/Denver', 'Ame
 /* ------------------------------------------------------------------ */
 /* Small UI helpers                                                     */
 /* ------------------------------------------------------------------ */
+
+/** The diets most families pick, shown up top on the Food tab (the full list stays under Household). */
+const EATING_STYLES = ['Keto', 'Low-carb', 'Vegetarian', 'Pescatarian', 'Gluten-free', 'Dairy-free']
+
+function mixTotal(mix: ProteinMix | undefined): number {
+  return Object.values(mix ?? {}).reduce((s: number, n) => s + (Number(n) || 0), 0)
+}
+
+/** First tap on "Set my mix": an even starting point the family then adjusts. */
+function starterMix(dinners: number): NonNullable<ProteinMix> {
+  const order: Array<keyof NonNullable<ProteinMix>> = ['chicken', 'beef', 'pork', 'fish', 'turkey', 'meatless', 'chicken']
+  const mix: NonNullable<ProteinMix> = {}
+  for (let i = 0; i < Math.max(1, dinners); i++) { const k = order[i % order.length]; mix[k] = (mix[k] ?? 0) + 1 }
+  return mix
+}
 
 function Chips({ options, value, onChange }: { options: string[]; value: string[]; onChange: (v: string[]) => void }) {
   return (
@@ -432,6 +448,33 @@ export default function SettingsPage() {
             {/* ---------------- Food ---------------- */}
             {section === 'food' && (
               <>
+                <Field label="How your family eats" hint="Every dinner follows these, for the whole family. Keto: 20 g carbs or less per serving, no rice, pasta, bread, potatoes, beans or sugar. Low-carb: 30 g or less. More diets (dairy-free, halal…) are under Household.">
+                  <Chips options={EATING_STYLES} value={(profile.dietary_needs || []).filter((d) => EATING_STYLES.includes(d))} onChange={(v) => patchProfile({ dietary_needs: [...(profile.dietary_needs || []).filter((d) => !EATING_STYLES.includes(d)), ...v] })} />
+                </Field>
+                <Field label="Your weekly mix" hint={hasMix(settings.food.mix) ? `Plans, the dinner ideas texted for votes, and the voted week all follow this. Set to ${mixTotal(settings.food.mix)} of ${settings.plan.dinnersPerWeek} dinners${mixTotal(settings.food.mix) !== settings.plan.dinnersPerWeek ? ' — the planner keeps these proportions' : ''}. 0 means none of that kind.` : 'Any mix: the planner spreads proteins out on its own. Or set how many dinners of each kind you want each week.'}>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    <button type="button" onClick={() => patch((s) => { s.food.mix = null })} className={`px-3 py-1.5 rounded-full border text-sm ${!hasMix(settings.food.mix) ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>Any mix</button>
+                    <button type="button" onClick={() => patch((s) => { if (!hasMix(s.food.mix)) s.food.mix = starterMix(s.plan.dinnersPerWeek) })} className={`px-3 py-1.5 rounded-full border text-sm ${hasMix(settings.food.mix) ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>Set my mix</button>
+                  </div>
+                  {hasMix(settings.food.mix) && (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {MIX_GROUPS.map((g) => {
+                        const n = Number(settings.food.mix?.[g.key]) || 0
+                        const set = (v: number) => patch((s) => { s.food.mix = { ...(s.food.mix ?? {}), [g.key]: Math.max(0, Math.min(7, v)) } })
+                        return (
+                          <div key={g.key} className={`flex items-center justify-between rounded-xl border px-3 py-2 ${n ? 'border-primary/40 bg-primary/5' : 'border-border bg-white'}`}>
+                            <span className="text-sm text-foreground">{g.label}</span>
+                            <span className="flex items-center gap-2">
+                              <button type="button" aria-label={`Fewer ${g.label}`} onClick={() => set(n - 1)} disabled={n === 0} className="w-7 h-7 rounded-full border border-border text-foreground disabled:opacity-30">−</button>
+                              <span className="w-4 text-center text-sm font-semibold tabular-nums">{n}</span>
+                              <button type="button" aria-label={`More ${g.label}`} onClick={() => set(n + 1)} className="w-7 h-7 rounded-full border border-border text-foreground">+</button>
+                            </span>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </Field>
                 <Field label="Your style" hint="A one-tap preset: it sets diets, time, calories or equipment for you. Change any of those below afterwards.">
                   <div className="flex flex-wrap gap-2">
                     {FOOD_STYLES.map((st) => {
