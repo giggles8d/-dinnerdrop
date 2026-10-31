@@ -18,6 +18,25 @@ function sized(url: string): string {
 }
 
 /**
+ * The image renderer (Satori) draws PNG and JPEG only. Library photos are WebP since the Oct 30 photo diet,
+ * so those tiles came out as blank colored boxes (Sarah's family vote text, Oct 31). Convert any non-Unsplash
+ * photo to a small JPEG data URL first; if that fails, fall back to the original .jpg kept beside the .webp.
+ */
+async function tilePhoto(url: string, w: number, h: number): Promise<string | null> {
+  if (url.includes('images.unsplash.com')) return sized(url)
+  try {
+    const res = await fetch(url, { cache: 'no-store' })
+    if (!res.ok) throw new Error(String(res.status))
+    const sharp = (await import('sharp')).default
+    const buf = await sharp(Buffer.from(await res.arrayBuffer())).rotate().resize({ width: w, height: h, fit: 'cover' }).jpeg({ quality: 72 }).toBuffer()
+    return `data:image/jpeg;base64,${buf.toString('base64')}`
+  } catch {
+    const jpg = url.replace(/\.webp(\?|$)/, '.jpg$1')
+    return jpg !== url ? jpg : null
+  }
+}
+
+/**
  * GET /api/sms/menu-image/<roundId> — the picture texted with the weekly vote:
  * every dinner choice as a photo tile with the number to reply with.
  * The round id is an unguessable UUID; the image shows only dinner names and photos.
@@ -42,6 +61,7 @@ export async function GET(_req: Request, { params }: { params: { roundId: string
   const tileW = (W - PAD * 2 - GAP) / 2
   const photoH = Math.round(tileW * 0.72)
   const tileH = photoH + 72
+  const photos = await Promise.all(meals.map((m) => (m.imageUrl ? tilePhoto(m.imageUrl, 360, 260) : Promise.resolve(null))))
   const rows = Math.ceil(meals.length / 2)
   const H = 104 + rows * tileH + (rows - 1) * GAP + PAD + 48
 
@@ -56,9 +76,9 @@ export async function GET(_req: Request, { params }: { params: { roundId: string
           {meals.map((m, i) => (
             <div key={i} style={{ width: tileW, height: tileH, display: 'flex', flexDirection: 'column', background: '#fff', borderRadius: 16, overflow: 'hidden', border: '2px solid #e6e1d6' }}>
               <div style={{ width: tileW, height: photoH, display: 'flex', position: 'relative', background: TILE_COLORS[i % TILE_COLORS.length] }}>
-                {m.imageUrl ? (
+                {photos[i] ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={sized(m.imageUrl)} width={tileW} height={photoH} style={{ objectFit: 'cover' }} alt="" />
+                  <img src={photos[i] as string} width={tileW} height={photoH} style={{ objectFit: 'cover' }} alt="" />
                 ) : (
                   <div style={{ display: 'flex', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', fontSize: 72 }}>🍽️</div>
                 )}
@@ -73,6 +93,6 @@ export async function GET(_req: Request, { params }: { params: { roundId: string
         <div style={{ display: 'flex', marginTop: 'auto', justifyContent: 'center', fontSize: 20, color: GREEN, fontWeight: 700 }}>DinnerDrop</div>
       </div>
     ),
-    { width: W, height: H, headers: { 'Cache-Control': 'public, max-age=86400' } },
+    { width: W, height: H, headers: { 'Cache-Control': 'public, max-age=3600' } },
   )
 }
