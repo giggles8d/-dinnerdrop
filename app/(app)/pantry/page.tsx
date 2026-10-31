@@ -171,6 +171,7 @@ export default function PantryPage() {
           <div>
             <h1 className="text-3xl font-heading font-bold text-foreground">My pantry</h1>
             <p className="text-muted-foreground mt-1">What&apos;s in the house comes off your grocery list. Flag anything to <strong>use up</strong> and next week&apos;s dinners get built around it.</p>
+            <p className="text-sm mt-2"><Link href="/tonight" className="text-primary font-semibold underline">What can I make tonight with what&apos;s here? →</Link></p>
           </div>
           <button
             onClick={() => fileInputRef.current?.click()}

@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 const protectedPaths = [
   '/dashboard', '/plan', '/grocery-list', '/favorites', '/recipe',
-  '/onboarding', '/pantry', '/history', '/account', '/settings', '/join',
+  '/onboarding', '/pantry', '/history', '/account', '/settings', '/join', '/tonight',
 ]
 const authPaths = ['/login', '/signup']
 
