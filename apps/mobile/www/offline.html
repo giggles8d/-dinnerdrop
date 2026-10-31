@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>DinnerDrop — your list</title>
+    <style>
+      :root { --green: #1a5c38; --gold: #e8a838; --cream: #FBF8F1; --ink: #1f2a24; --muted: #6e7470; }
+      html, body { margin: 0; min-height: 100%; background: var(--cream); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-text-size-adjust: 100%; }
+      header { position: sticky; top: 0; background: var(--green); color: #fff; padding: calc(env(safe-area-inset-top) + 14px) 18px 14px; display: flex; align-items: center; justify-content: space-between; }
+      header b { font-size: 18px; } header small { opacity: .85; font-size: 12px; }
+      .banner { margin: 12px 16px 0; background: #fff3d6; border: 1px solid #f0d9a2; border-radius: 12px; padding: 10px 14px; font-size: 13px; color: #5a4210; }
+      main { padding: 8px 16px calc(env(safe-area-inset-bottom) + 90px); }
+      h3 { margin: 18px 0 6px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--green); }
+      label.row { display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 12px; padding: 12px 14px; margin: 6px 0; font-size: 16px; }
+      label.row input { width: 22px; height: 22px; accent-color: var(--green); }
+      label.row.done span { text-decoration: line-through; color: var(--muted); }
+      label.row small { margin-left: auto; color: var(--muted); font-size: 13px; white-space: nowrap; }
+      .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+      .empty h1 { color: var(--green); font-size: 22px; margin: 0 0 8px; }
+      footer { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(env(safe-area-inset-bottom) + 12px); background: linear-gradient(transparent, var(--cream) 30%); }
+      button { width: 100%; border: 0; border-radius: 14px; padding: 15px; font-size: 16px; font-weight: 600; background: var(--green); color: #fff; }
+      .count { font-size: 13px; color: var(--muted); text-align: center; margin: 0 0 8px; }
+    </style>
+  </head>
+  <body>
+    <header><b>DinnerDrop</b><small id="when"></small></header>
+    <div class="banner">You're offline. This is your grocery list as of the last time the app was open — check items off here and they'll sync when you're back online.</div>
+    <main id="list"><div class="empty"><h1>No list saved yet</h1><p>Connect to the internet once to load this week's dinners and grocery list.</p></div></main>
+    <footer><p class="count" id="count"></p><button id="retry">Try again</button></footer>
+    <script>
+      // Runs inside the native shell (window.Capacitor is injected). Reads the
+      // grocery list the web app cached with @capacitor/preferences.
+      const P = () => window.Capacitor && window.Capacitor.Plugins;
+      const KEY = 'dd.grocery', PENDING = 'dd.grocery.pending';
+      const ORDER = ['Produce', 'Meat & Seafood', 'Dairy & Eggs', 'Bakery', 'Pantry', 'Frozen', 'Other'];
+      let data = null, pending = {};
+      async function load() {
+        try {
+          const p = P(); if (!p || !p.Preferences) return;
+          const a = await p.Preferences.get({ key: KEY }); data = a.value ? JSON.parse(a.value) : null;
+          const b = await p.Preferences.get({ key: PENDING }); pending = b.value ? JSON.parse(b.value) : {};
+        } catch (e) { data = null; }
+        render();
+      }
+      function render() {
+        if (!data || !data.items || !data.items.length) return;
+        const items = data.items.map((i) => ({ ...i, checked: pending[i.id] != null ? pending[i.id] : !!i.checked }));
+        const byCat = {};
+        for (const i of items) { if (i.have) continue; (byCat[i.category || 'Other'] = byCat[i.category || 'Other'] || []).push(i); }
+        const cats = Object.keys(byCat).sort((a, b) => (ORDER.indexOf(a) + 1 || 99) - (ORDER.indexOf(b) + 1 || 99));
+        const el = document.getElementById('list'); el.innerHTML = '';
+        for (const c of cats) {
+          const h = document.createElement('h3'); h.textContent = c; el.appendChild(h);
+          for (const i of byCat[c]) {
+            const l = document.createElement('label'); l.className = 'row' + (i.checked ? ' done' : '');
+            const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = i.checked;
+            cb.addEventListener('change', async () => { pending[i.id] = cb.checked; l.classList.toggle('done', cb.checked); count();
+              try { await P().Preferences.set({ key: PENDING, value: JSON.stringify(pending) }); } catch (e) {} });
+            const s = document.createElement('span'); s.textContent = i.name;
+            const q = document.createElement('small'); q.textContent = [i.quantity, i.unit].filter(Boolean).join(' ');
+            l.append(cb, s, q); el.appendChild(l);
+          }
+        }
+        if (data.savedAt) document.getElementById('when').textContent = 'saved ' + new Date(data.savedAt).toLocaleString([], { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+        count();
+      }
+      function count() {
+        if (!data) return;
+        const open = data.items.filter((i) => !i.have && !(pending[i.id] != null ? pending[i.id] : i.checked)).length;
+        document.getElementById('count').textContent = open ? open + ' item' + (open === 1 ? '' : 's') + ' left to get' : 'Everything checked off';
+      }
+      document.getElementById('retry').addEventListener('click', () => { location.href = 'https://www.dinnerdrop.app/grocery-list?utm_source=app'; });
+      try { const p = P(); if (p && p.Network) p.Network.addListener('networkStatusChange', (s) => { if (s.connected) location.href = 'https://www.dinnerdrop.app/grocery-list?utm_source=app'; }); } catch (e) {}
+      load();
+    </script>
+  </body>
+</html>
