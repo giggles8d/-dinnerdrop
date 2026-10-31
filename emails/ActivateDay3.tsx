@@ -8,8 +8,8 @@ interface ActivateDay3Props {
   unsubscribeUrl?: string
 }
 
-// Activation email #2 — sent 3 days after signup to users who still haven't
-// generated a plan. Angle: the 5pm problem they signed up to solve.
+// Activation email #2 — sent 3 days after signup to families who haven't opened the list yet.
+// Angle (Oct 31 2026): family texting — the feature almost nobody finds in Settings.
 export default function ActivateDay3({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
@@ -17,7 +17,7 @@ export default function ActivateDay3({
   return (
     <Html>
       <Head />
-      <Preview>What&apos;s for dinner tonight? (We already answered that.)</Preview>
+      <Preview>Text the family the week&apos;s dinners — they vote, you shop once</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
@@ -26,27 +26,27 @@ export default function ActivateDay3({
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
-              It&apos;s almost 5pm somewhere — which means somebody in your house is about
-              to ask the question.
+              Here&apos;s the part of DinnerDrop most families don&apos;t find on their own, and it&apos;s the
+              part that ends the &ldquo;what&apos;s for dinner?&rdquo; texts for good.
+            </Text>
+            <Text style={heading}>Let the family pick — by text</Text>
+            <Text style={paragraph}>
+              Add a couple of phone numbers and DinnerDrop texts everyone the week&apos;s dinner options.
+              They reply with numbers. The top picks become the week. No group chat, no app for them to install.
             </Text>
             <Text style={paragraph}>
-              <strong>&ldquo;What&apos;s for dinner?&rdquo;</strong>
-            </Text>
-            <Text style={paragraph}>
-              That&apos;s the exact moment DinnerDrop was built for. Your 5 weeknight
-              dinners and their complete grocery list are already on your dashboard.
-              Every meal under 30 minutes, built around a weekly budget.
+              <strong>Anyone can text &ldquo;ADD milk&rdquo;</strong> and it lands on the grocery list.
+              And right before you order, one tap sends everyone a <strong>&ldquo;last call&rdquo;</strong> —
+              &ldquo;ordering in 20 minutes, need anything?&rdquo; Their replies go straight onto the list.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://www.dinnerdrop.app/dashboard">
-                Answer the dinner question →
+              <Button style={button} href="https://www.dinnerdrop.app/dashboard?texting=1&utm_source=email&utm_medium=activation&utm_campaign=day3-texting">
+                Set up family texting (1 minute) →
               </Button>
             </Section>
-            <Text style={heading}>Make it yours in 2 minutes</Text>
             <Text style={paragraph}>
-              Once you&apos;ve seen your first plan, tap <strong>Personalize</strong> — tell us
-              your family size, budget, and what flavors your crew loves, and every plan
-              after that is built for your exact household.
+              It&apos;s part of the Family plan — 14 days free, cancel in one tap. Your grocery list and this
+              week&apos;s dinners are still waiting on your dashboard either way.
             </Text>
             <Hr style={hr} />
             <Text style={paragraph}>

@@ -17,6 +17,7 @@ import { resolvePlanOwner } from '@/lib/household'
 import { attachLibraryImages } from '@/lib/library-images'
 import { trackOnce } from '@/lib/activation'
 import WeekCheckCard from '@/components/WeekCheckCard'
+import TextingNudge from '@/components/TextingNudge'
 import SavingsCard from '@/components/SavingsCard'
 import ShareWeekButton from '@/components/ShareWeekButton'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
@@ -566,6 +567,8 @@ function DashboardContent() {
       <div className={`container mx-auto px-4 py-8 max-w-6xl${showListBar ? ' pb-32' : ''}`}>
         {/* After a receipt: did every dinner's ingredients arrive? */}
         {hasGenerated && meals.length > 0 && !loading && <WeekCheckCard />}
+        {/* Family texting in one step — shows once a family has a plan and no numbers yet; ?texting=1 (emails) opens it. */}
+        {hasGenerated && meals.length > 0 && !loading && <TextingNudge forceOpen={searchParams.get('texting') === '1'} />}
 
         {/* Past due payment banner */}
         {subscriptionStatus === 'past_due' && (

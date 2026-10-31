@@ -71,7 +71,7 @@ async function textAdults(admin: SupabaseClient, p: ProfileRow, settings: Settin
   }
 }
 
-export async function runDailyReminders(admin: SupabaseClient, now: Date = new Date()): Promise<DailyReport> {
+export async function runDailyReminders(admin: SupabaseClient, now: Date = new Date(), opts: { onlyAutoPlan?: boolean } = {}): Promise<DailyReport> {
   const report: DailyReport = { checked: 0, autoPlans: 0, shopReminders: 0, cookReminders: 0, errors: [] }
   const { data: profiles } = await admin
     .from('profiles')
@@ -123,6 +123,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
         }
       }
 
+      if (opts.onlyAutoPlan) continue
       // ---- "anything else?" — the day before shopping day, ask the whole household (not just adults) ----
       const shop = settings.schedule.reminders.shopBy
       if (shop.channel !== 'off' && settings.texting.enabled && family && smsConfigured() && p.household_id) {

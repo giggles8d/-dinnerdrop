@@ -41,6 +41,9 @@ export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabe
     <a href="${link('/grocery-list', 'shop')}" style="display:inline-block;background:#1a5c38;color:#ffffff;font-weight:700;font-size:16px;padding:14px 28px;border-radius:12px;text-decoration:none">Send my list to Instacart →</a>
     <p style="margin:12px 0 0;font-size:14px"><a href="${link('/dashboard', 'swap')}" style="color:#1a5c38">Swap a dinner</a> · <a href="${link('/recipes', 'browse')}" style="color:#1a5c38">Browse the library</a></p>
   </td></tr>
+  <tr><td style="padding:14px 28px 6px">
+    <p style="margin:0;font-size:14px;line-height:1.55;color:#3d4a43"><em>P.S. Want the family to pick? <a href="${link('/dashboard?texting=1', 'texting')}" style="color:#1a5c38">Add their numbers</a> and DinnerDrop texts them the options to vote on — and anyone can text “ADD milk” to put it on the list.</em></p>
+  </td></tr>
   <tr><td style="padding:16px 28px 22px;border-top:1px solid #e6e2d8">
     <p style="margin:0;font-size:12px;line-height:1.5;color:#8a8577">You're getting this because automatic weekly plans are on in your DinnerDrop settings. <a href="${APP}/settings" style="color:#8a8577">Change reminders</a> · <a href="${unsubscribeUrl}" style="color:#8a8577">Unsubscribe</a></p>
   </td></tr>

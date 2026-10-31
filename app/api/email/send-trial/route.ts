@@ -15,7 +15,7 @@ type EmailNumber = 1 | 2 | 3
 // activation, not trial-end urgency).
 const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: React.FC<{ firstName?: string; unsubscribeUrl: string; nextBillingDate?: string }> }> = {
   1: { subject: 'Your grocery list is ready, one tap to Instacart', Template: ActivateDay1 },
-  2: { subject: "Tonight's dinner, solved in 30 seconds", Template: ActivateDay3 },
+  2: { subject: 'Let the family pick dinner — by text', Template: ActivateDay3 },
   3: { subject: '60 seconds for a week of dinners — last nudge', Template: ActivateDay7 },
 }
 
