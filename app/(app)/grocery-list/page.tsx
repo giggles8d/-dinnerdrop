@@ -10,7 +10,9 @@ import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
 import { mealsUsing } from '@/lib/overlap'
 import { toPackages } from '@/lib/package-match'
-import { matchSale, type WeeklySales } from '@/lib/sales-shared'
+import { matchSale, isUpcoming, type WeeklySales } from '@/lib/sales-shared'
+import DealsBanner from '@/components/DealsBanner'
+import StockUpDeals from '@/components/StockUpDeals'
 import RestOfShop from '@/components/RestOfShop'
 import StoreCompare from '@/components/StoreCompare'
 import ReceiptUpload from '@/components/ReceiptUpload'
@@ -51,6 +53,7 @@ export default function GroceryListPage() {
   const [items, setItems] = useState<ListItem[]>([])
   const [planMeals, setPlanMeals] = useState<Meal[]>([])
   const [sales, setSales] = useState<WeeklySales[]>([])
+  const [stockUpOn, setStockUpOn] = useState(true)
   const [storeQuotes, setStoreQuotes] = useState<Array<{ store: string; total: number; item_count: number | null; missing: string[]; created_at: string }>>([])
   const [priceFactor, setPriceFactor] = useState(1)
   const [usuals, setUsuals] = useState<UsualItem[]>([])
@@ -160,6 +163,7 @@ export default function GroceryListPage() {
 
     setPriceFactor(Number(settings.stores.priceFactor) || 1)
     setMyStores(Array.isArray(settings.stores.myStores) ? settings.stores.myStores : [])
+    setStockUpOn(settings.deals.stockUp)
     setKrogerLoc({ id: settings.stores.krogerLocationId, name: settings.stores.krogerLocationName })
     if (profile) {
       const tokenValid = profile.kroger_access_token &&
@@ -568,6 +572,10 @@ export default function GroceryListPage() {
           </div>
         )}
 
+        {sales.length > 0 && items.length > 0 && (
+          <DealsBanner sets={sales.filter((x) => !isUpcoming(x))} nextSets={sales.filter((x) => isUpcoming(x))} names={items.filter((i) => !i.have).map((i) => i.name)} />
+        )}
+
         <GroceryList
           items={items}
           saleFor={sales.length ? (name) => matchSale(name, sales) : undefined}
@@ -583,6 +591,15 @@ export default function GroceryListPage() {
             buy: i.quantity ? toPackages({ name: i.name, quantity: i.quantity, unit: i.unit, searchTerm: i.search_term }).label.replace(/^1 × package$/, '') || null : null,
           })}
         />
+
+        {/* Stock up while it's cheap */}
+        {stockUpOn && sales.length > 0 && (
+          <StockUpDeals
+            sets={sales.filter((x) => !isUpcoming(x))}
+            onList={(name) => items.some((i) => normalizeItemName(i.name) === normalizeItemName(name) && !i.have)}
+            onAdd={(p) => addItem(p.name, p.category, p.searchTerm, 'extra', { quantity: p.quantity, unit: p.unit })}
+          />
+        )}
 
         {/* The rest of the shop */}
         <RestOfShop

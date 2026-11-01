@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Plus, X, Minus, Info } from 'lucide-react'
 import { CATEGORY_ORDER, CATEGORY_EMOJI, type ListItem } from '@/lib/list'
 import type { GroceryCategory } from '@/types'
-import type { SaleItem } from '@/lib/sales-shared'
+import type { SaleMatch } from '@/lib/sales-shared'
 
 // Display helper: "0.625 lbs" -> "5/8 lb", "1 lbs" -> "1 lb", "2 cloves" stays.
 const FRACTIONS: Array<[number, string]> = [
@@ -49,7 +49,7 @@ interface GroceryListProps {
   onChangeQuantity?: (item: ListItem, quantity: string) => void
   onAdd: (name: string, category?: GroceryCategory) => Promise<void> | void
   /** When this week's flyer is loaded: the sale entry matching a list line, for the 🏷️ tag. */
-  saleFor?: (name: string) => SaleItem | null
+  saleFor?: (name: string) => SaleMatch | null
   /** Split orders: which store a line is assigned to, and a tap to move it. */
   storeFor?: (item: ListItem) => string | null
   onMoveStore?: (item: ListItem) => void
@@ -130,7 +130,7 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                     <span onClick={() => onToggleChecked(item)} className={`text-sm flex-1 min-w-0 cursor-pointer transition-colors ${muted ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                       {item.name}
                       {SOURCE_LABEL[item.source] && <span className="ml-2 text-[10px] uppercase tracking-wide text-muted-foreground/70 no-underline">{SOURCE_LABEL[item.source]}{item.added_by ? ` · ${item.added_by}` : ''}</span>}
-                      {(() => { const sale = saleFor?.(item.name); return sale ? <span className="ml-2 text-[10px] font-semibold text-primary no-underline" title={sale.note ?? ''}>🏷️ {sale.price}</span> : null })()}
+                      {(() => { const sale = saleFor?.(item.name); return sale ? <span className={`ml-2 text-[10px] font-semibold no-underline ${sale.upcoming ? 'text-amber-700' : 'text-primary'}`} title={sale.note ?? ''}>🏷️ {sale.price}{sale.store ? ` at ${sale.store}` : ''}{sale.upcoming ? ' next wk' : ''}</span> : null })()}
                       {forMeals.length > 0 && <span className="text-[11px] leading-snug text-muted-foreground/80 line-clamp-2" title={forMeals.join(' · ')}>for {forMeals.map((n) => n.replace(/\s+with\s.+$/i, '')).join(' · ')}</span>}
                     </span>
                     {(item.quantity || onChangeQuantity) && (() => {

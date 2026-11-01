@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { salesFromImage, salesFromText, salesFromUrl, type SaleItem } from '@/lib/sales'
-import { canonicalStore, saveStoreDeals } from '@/lib/store-deals'
+import { canonicalStore, saveStoreDeals, type StoreDeals } from '@/lib/store-deals'
+import { sendDealsTexts } from '@/lib/deals-text'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 120
@@ -45,7 +46,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   if (!(await authorized(request))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const body = await request.json().catch(() => ({})) as { store?: string; region?: string; validFrom?: string; validTo?: string; source?: string; images?: string[]; text?: string; url?: string; items?: SaleItem[] }
+  const body = await request.json().catch(() => ({})) as { store?: string; region?: string; validFrom?: string; validTo?: string; source?: string; images?: string[]; text?: string; url?: string; items?: SaleItem[]; notify?: boolean }
   const store = String(body.store ?? '').trim()
   if (!store) return NextResponse.json({ error: 'store required' }, { status: 400 })
   const hint = `store: ${canonicalStore(store)}`
@@ -78,7 +79,13 @@ export async function POST(request: NextRequest) {
     }
     if (!items.length) return NextResponse.json({ ok: false, error: 'No sale items found on those pages.', pages }, { status: 422 })
     const saved = await saveStoreDeals(admin(), { store, region: body.region, validFrom, validTo, source: body.source ?? 'ad', items, pages })
-    return NextResponse.json({ ok: true, ...saved, validFrom, validTo, pages, read: items.length })
+    // First page of a new set: tell opted-in families (one text per store per ad week; later pages don't re-text).
+    let texted = 0
+    if (!saved.merged && body.notify !== false) {
+      const { data: row } = await admin().from('store_deals').select('*').eq('id', saved.id).maybeSingle()
+      if (row) texted = await sendDealsTexts(admin(), row as StoreDeals).catch(() => 0)
+    }
+    return NextResponse.json({ ok: true, ...saved, validFrom, validTo, pages, read: items.length, texted })
   } catch (e) {
     console.error('[store-deals] failed', e)
     return NextResponse.json({ error: e instanceof Error ? e.message : 'failed' }, { status: 500 })

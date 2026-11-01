@@ -6,6 +6,7 @@ import TripsSettings from '@/components/TripsSettings'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import SalesCard from '@/components/SalesCard'
+import StoreDealsSettings from '@/components/StoreDealsSettings'
 import { FOOD_STYLES, styleByKey } from '@/lib/styles'
 import { applyStyle } from '@/lib/apply-style'
 import { createClient } from '@/lib/supabase'
@@ -717,13 +718,21 @@ export default function SettingsPage() {
                   <Field label="Usual store" hint="Shown on the list; Instacart lets you pick at checkout."><input value={settings.stores.usualStore} onChange={(e) => patch((s) => { s.stores.usualStore = e.target.value })} placeholder="Wegmans, Kroger, Aldi…" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                 </div>
                 <p className="text-sm text-muted-foreground">Connect or disconnect Kroger from the <Link href="/grocery-list" className="text-primary underline">grocery list</Link> page.</p>
-                <Field label="My stores" hint="The stores you compare. Load each one's flyer and the grocery list shows which is cheapest this week; tell DinnerDrop the total after each order and it learns each store's prices.">
+                <div>
+                  <h2 className="font-heading font-semibold text-foreground mb-1">Store deals</h2>
+                  <p className="text-sm text-muted-foreground mb-3">Tell us where you shop. We read each store&apos;s weekly ad for you, plan dinners around what&apos;s on sale, and tag sale prices on your list.</p>
+                </div>
+                <Field label="My stores" hint="Tops, Aldi, Wegmans, Walmart, Kroger, Publix, Weis, Price Chopper and Family Fare ads are read automatically; snap any other store's flyer below.">
                   <TagInput value={settings.stores.myStores.map((s) => s.name)} onChange={(names) => patch((s) => { s.stores.myStores = names.map((n) => s.stores.myStores.find((x) => x.name === n) ?? { name: n }) })} placeholder="Wegmans, Tops, Aldi, Sam's Club" />
                   {settings.stores.myStores.some((s) => s.factor) && (
                     <p className="text-[11px] text-muted-foreground mt-1">Learned so far: {settings.stores.myStores.filter((s) => s.factor).map((s) => `${s.name} ${s.factor!.toFixed(2)}×`).join(' · ')}</p>
                   )}
                 </Field>
-                <Toggle checked={settings.food.useSales} onChange={(v) => patch((s) => { s.food.useSales = v })} label="Plan around this week's sales" hint="When a flyer is loaded, most dinners are built on sale proteins and produce, and sale items are tagged on the list." />
+                <StoreDealsSettings stores={settings.stores.myStores.map((s) => s.name)} />
+                <Toggle checked={settings.food.useSales} onChange={(v) => patch((s) => { s.food.useSales = v })} label="Plan around this week's sales" hint="Most dinners are built on sale proteins and produce when an ad is loaded." />
+                <Toggle checked={settings.deals.stockUp} onChange={(v) => patch((s) => { s.deals.stockUp = v })} label="Suggest stock-ups" hint="Buy-2-get-2 and pantry deals at your stores show up on the list and the deals page so you can add extras." />
+                <Toggle checked={settings.deals.weeklyText} onChange={(v) => patch((s) => { s.deals.weeklyText = v })} label="Text me the best deals each week" hint="One text when a new ad lands for your stores (Family, with texting on)." />
+                <p className="text-xs text-muted-foreground">Sale prices come from each store&apos;s public weekly ad and can vary by location. You check out yourself in Instacart or Walmart — we never buy anything for you.</p>
                 <SalesCard />
               </>
             )}

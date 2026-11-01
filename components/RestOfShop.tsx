@@ -4,13 +4,13 @@ import { useMemo, useState } from 'react'
 import { History, Check } from 'lucide-react'
 import { AISLES, aisleFor, type AisleKey, type AislePick, type UsualItem } from '@/lib/aisle'
 import { normalizeItemName } from '@/lib/list'
-import type { SaleItem } from '@/lib/sales-shared'
+import type { SaleMatch } from '@/lib/sales-shared'
 
 interface Props {
   onList: (name: string) => boolean           // already on this week's list?
   usuals: UsualItem[]                         // the family's own repeat buys, from past weeks
   lastWeekExtras: UsualItem[]                 // what they added last week (for "add last week's extras")
-  saleFor?: (name: string) => SaleItem | null
+  saleFor?: (name: string) => SaleMatch | null
   onAdd: (pick: { name: string; category: AislePick['category']; searchTerm: string; quantity?: string; unit?: string }) => Promise<void> | void
   onAddMany: (picks: Array<{ name: string; category: AislePick['category']; searchTerm: string; quantity?: string; unit?: string }>) => Promise<void> | void
 }
