@@ -66,7 +66,15 @@ export function matchSale(name: string, sets: WeeklySales[]): SaleMatch | null {
   return null
 }
 
-/** Multi-buys and stock-up deals ("buy 2 get 2", "2 for $5", "10 for $10") worth buying extra of. */
-export function isStockUpDeal(i: SaleItem): boolean {
-  return /\b(buy\s*\d|b\d\s*g\d|\d+\s*for\s*\$|free|save\s*\$|must buy)/i.test(`${i.price} ${i.note ?? ''}`)
+/**
+ * How strong a stock-up deal is: 3 = buy X get Y free, 2 = "N for $" / must-buy, 1 = marked-down with a
+ * "was" price, 0 = not a stock-up deal. ("lactose free" / "fat-free" are not deals.)
+ */
+export function stockUpScore(i: SaleItem): number {
+  const t = `${i.price} ${i.note ?? ''}`.toLowerCase()
+  if (/buy\s*\d+\s*,?\s*get\s*\d+|\bb\d\s*g\d\b|buy one,? get one|\bbogo\b/.test(t)) return 3
+  if (/\d+\s*for\s*\$|must buy|when you buy/.test(t)) return 2
+  if (/\bwas\s*\$|\bsave\s*\$|reg\.?\s*\$/.test(t)) return 1
+  return 0
 }
+export function isStockUpDeal(i: SaleItem): boolean { return stockUpScore(i) > 0 }

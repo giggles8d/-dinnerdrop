@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Check, Loader2, Minus, Plus, Tag } from 'lucide-react'
-import { isStockUpDeal, isUpcoming, namesMatch, type SaleItem, type WeeklySales } from '@/lib/sales-shared'
+import { isStockUpDeal, isUpcoming, namesMatch, stockUpScore, type SaleItem, type WeeklySales } from '@/lib/sales-shared'
 import { normalizeItemName } from '@/lib/list'
 
 /**
@@ -70,8 +70,10 @@ export default function DealsPage() {
   }, [weekSets, store, listSet])
 
   const onList = items.filter((i) => i.onList)
-  const stockUp = items.filter((i) => !i.onList && isStockUpDeal(i))
-  const rest = items.filter((i) => !i.onList && (cat === 'For my dinners' ? /meat|seafood|produce|dairy/i.test(i.category ?? '') : (i.category ?? 'Pantry & Dry Goods') === cat))
+  const stockUp = items.filter((i) => !i.onList && isStockUpDeal(i)).sort((a, b) => stockUpScore(b) - stockUpScore(a))
+  const DINNER_ORDER = ['Meat & Seafood', 'Produce', 'Dairy & Eggs']
+  const rest = items.filter((i) => !i.onList && (cat === 'For my dinners' ? DINNER_ORDER.includes(i.category ?? '') : (i.category ?? 'Pantry & Dry Goods') === cat))
+    .sort((a, b) => (cat === 'For my dinners' ? DINNER_ORDER.indexOf(a.category ?? '') - DINNER_ORDER.indexOf(b.category ?? '') : 0))
 
   async function add(i: SaleItem & { store: string; key: string }) {
     setAdded((a) => ({ ...a, [i.key]: 'busy' }))
@@ -197,7 +199,7 @@ export default function DealsPage() {
                     <div key={i.key} className="rounded-2xl border border-border bg-white p-3 flex flex-col gap-1.5">
                       <div className="text-sm font-semibold text-foreground capitalize leading-tight">{i.name}</div>
                       <div className="text-sm font-bold text-primary">{i.price}</div>
-                      <div className="text-[11px] text-muted-foreground">{i.store}{i.note ? ` · ${i.note}` : ''}{i.unit ? ` · ${i.unit}` : ''}</div>
+                      <div className="text-[11px] text-muted-foreground">{i.store}{i.note ? ` · ${i.note}` : ''}{i.unit && !/^(oz|each|pack|lb)$/i.test(i.unit) ? ` · ${i.unit}` : ''}</div>
                       <button type="button" onClick={() => add(i)} disabled={!!st} className={`mt-auto h-10 rounded-full text-sm font-semibold border ${st === 'done' ? 'border-primary/30 text-primary bg-primary/5' : 'border-border text-primary bg-white'} disabled:opacity-80`}>
                         {st === 'done' ? <span className="inline-flex items-center gap-1"><Check className="w-4 h-4" /> Added</span> : st === 'busy' ? <Loader2 className="w-4 h-4 animate-spin inline" /> : 'Add'}
                       </button>

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Check, Minus, Plus } from 'lucide-react'
-import { isStockUpDeal, type SaleItem, type WeeklySales } from '@/lib/sales-shared'
+import { isStockUpDeal, stockUpScore, type SaleItem, type WeeklySales } from '@/lib/sales-shared'
 import type { GroceryCategory } from '@/types'
 
 const CATS: GroceryCategory[] = ['Produce', 'Meat & Seafood', 'Dairy & Eggs', 'Pantry & Dry Goods', 'Frozen', 'Bakery', 'Beverages']
@@ -29,8 +29,10 @@ export default function StockUpDeals({ sets, onList, onAdd }: {
 }) {
   const [qty, setQty] = useState<Record<string, number>>({})
   const [done, setDone] = useState<Record<string, number>>({})
+  // Strongest multi-buys first (buy 2 get 2 → N for $ → marked down); shelf-stable aisles only.
   const deals = sets.flatMap((s) => s.items.filter(isStockUpDeal).map((i) => ({ ...i, store: s.store, key: `${s.id}:${i.name}` })))
     .filter((i) => /pantry|beverage|frozen|dairy|bakery/i.test(i.category ?? 'Pantry') && !onList(i.name))
+    .sort((a, b) => stockUpScore(b) - stockUpScore(a))
     .slice(0, 6)
   if (!deals.length) return null
   return (
