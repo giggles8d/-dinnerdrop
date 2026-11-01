@@ -110,6 +110,8 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
               {rows.map((item) => {
                 const muted = item.checked || item.have
                 const info = openInfo === item.id && detailFor ? detailFor(item) : null
+                // Which dinners this line is for, shown under the name (Sarah, Nov 1: "so I know which meal each item is for").
+                const forMeals = detailFor && item.source === 'plan' ? detailFor(item).usedIn : []
                 return (
                   <li key={item.id} className={`rounded-lg transition-colors ${muted ? 'bg-muted/50' : 'hover:bg-muted/30'}`}>
                   <div className="flex items-center gap-3 px-3 py-2.5">
@@ -125,10 +127,11 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                         </svg>
                       )}
                     </button>
-                    <span onClick={() => onToggleChecked(item)} className={`text-sm flex-1 cursor-pointer transition-colors ${muted ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
+                    <span onClick={() => onToggleChecked(item)} className={`text-sm flex-1 min-w-0 cursor-pointer transition-colors ${muted ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                       {item.name}
                       {SOURCE_LABEL[item.source] && <span className="ml-2 text-[10px] uppercase tracking-wide text-muted-foreground/70 no-underline">{SOURCE_LABEL[item.source]}{item.added_by ? ` · ${item.added_by}` : ''}</span>}
                       {(() => { const sale = saleFor?.(item.name); return sale ? <span className="ml-2 text-[10px] font-semibold text-primary no-underline" title={sale.note ?? ''}>🏷️ {sale.price}</span> : null })()}
+                      {forMeals.length > 0 && <span className="text-[11px] leading-snug text-muted-foreground/80 line-clamp-2" title={forMeals.join(' · ')}>for {forMeals.map((n) => n.replace(/\s+with\s.+$/i, '')).join(' · ')}</span>}
                     </span>
                     {(item.quantity || onChangeQuantity) && (() => {
                       const n = Number(item.quantity); const num = Number.isFinite(n) && item.quantity !== '' ? n : 1

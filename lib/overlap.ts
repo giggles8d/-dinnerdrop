@@ -108,8 +108,14 @@ export function sharedSummary(meals: Meal[]): string | null {
 }
 
 /** Grocery list: which of this week's dinners use a list line. */
+// Different things that contain another item's name ("green onion" is not "onion", "sweet potato" is not "potato").
+const DISTINCT_RE = /\b(green onion|spring onion|scallion|sweet potato)\b/
+function sameForLabel(a: string, b: string): boolean {
+  return sameIngredient(a, b) && DISTINCT_RE.test(a) === DISTINCT_RE.test(b)
+}
+
 export function mealsUsing(lineName: string, meals: Meal[]): string[] {
   const k = ingredientKey(lineName)
   if (!k) return []
-  return meals.filter((m) => (m.ingredients ?? []).some((i) => sameIngredient(ingredientKey(i.name), k) || sameIngredient(ingredientKey(i.searchTerm ?? ''), k))).map((m) => m.name)
+  return meals.filter((m) => (m.ingredients ?? []).some((i) => sameForLabel(ingredientKey(i.name), k) || sameForLabel(ingredientKey(i.searchTerm ?? ''), k))).map((m) => m.name)
 }
