@@ -22,6 +22,8 @@ export interface ListItem {
   checked: boolean
   est_price?: number | null   // typical-price estimate for non-plan lines
   ordered_at?: string | null  // set when the line went to a store; null = still on the active list
+  link_url?: string | null    // a store product link texted onto the list
+  walmart_item_id?: number | null
   created_at: string
 }
 

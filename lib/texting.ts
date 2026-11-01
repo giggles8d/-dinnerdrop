@@ -18,6 +18,7 @@ import { generateWithClaude, generateWithClaudeImage, generateSmart, parseClaude
 import { looksLikeFlyer, salesFromImage, saveSales } from '@/lib/sales'
 import { blendFactor, factorAtSend } from '@/lib/prices'
 import { markAllOpenOrdered } from '@/lib/list-ordered'
+import { walmartUrlsIn, resolveWalmartLink } from '@/lib/store-links'
 import type { Meal } from '@/types'
 
 export interface MemberRow {
@@ -434,6 +435,30 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   // After a "which should come back?" text, numbers mean the dinners in THAT text (past dinners), not this week's plan.
   const againNames = ctx.lastAsk === 'again' ? againListFrom(ctx.lastAskBody) : []
   const againMeals: Meal[] = againNames.length ? againNames.map((name) => meals.find((x) => x.name === name) ?? ({ name } as Meal)) : meals
+
+  // A texted Walmart link goes on the list with its item id, so "Add Walmart picks to cart" can add the exact product (Nov 1 2026).
+  const walmartUrls = walmartUrlsIn(body)
+  if (walmartUrls.length && owner) {
+    if (!m.can_add) return { reply: `Adding to the list is turned off for you, ${m.name}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
+    const weekStart = plan?.week_start ?? mondayOf(new Date())
+    const { data: existing } = await admin.from('list_items').select('id, walmart_item_id').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
+    const added: string[] = []
+    let unnamed = 0
+    for (const raw of walmartUrls.slice(0, 10)) {
+      const link = await resolveWalmartLink(raw)
+      if (!link) continue
+      const label = link.name ?? 'Walmart item'
+      if (!link.name) unnamed++
+      const hit = (existing ?? []).find((e) => Number(e.walmart_item_id) === link.itemId)
+      if (!hit) {
+        await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: label, quantity: '1', unit: null, category: guessCategory(label), search_term: link.name ?? null, source: 'sms', added_by: m.name, link_url: link.url, walmart_item_id: link.itemId })
+      }
+      added.push(label)
+    }
+    if (!added.length) return { reply: `I couldn't read that Walmart link, ${m.name}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
+    const tail = unnamed ? ` (The link didn't say what it is. Text "add" and the name if ${family} should know.)` : ''
+    return { reply: `Added from your Walmart link: ${added.join(', ')}. ✅ ${family} can put all the Walmart picks in the Walmart cart in one tap.${tail}`, handled: true, member: m }
+  }
 
   const tz = owner?.timezone || 'America/New_York'
   switch (parsed.kind) {
