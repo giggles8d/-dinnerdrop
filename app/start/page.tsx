@@ -84,10 +84,10 @@ export default function StartPage() {
         <Suspense fallback={null}><PromoBanner /></Suspense>
         <WeekendOfferBanner />
         <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: GREEN }}>
-          Dinner, handled. <span style={{ color: GOLD }}>Free.</span>
+          Less deciding. <span style={{ color: GOLD }}>More dinners.</span>
         </h1>
         <p className="text-sm sm:text-base font-semibold text-gray-700 max-w-xl mx-auto leading-relaxed mb-5">
-          Five weeknight dinners planned for your family, and your whole grocery list in <strong>your Instacart cart</strong> in one tap. No card needed.
+          Five weeknight dinners your family will eat, planned for you every week &mdash; and the whole grocery list lands in <strong>your Instacart cart</strong> in one tap. Free, no card, no app to download.
         </p>
 
         {/* Primary CTA — above the fold on mobile */}
@@ -194,7 +194,7 @@ export default function StartPage() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
           {[
-            { step: '1', title: 'Tell us about your family', desc: 'Household size, budget, cook time, and any dietary needs in a quick 2-minute setup — or skip it and get a plan right away.' },
+            { step: '1', title: 'Four taps about your family', desc: 'What would make dinner easier, who’s eating, your budget, and your cell if you want the week texted to you. Under a minute — or skip it.' },
             { step: '2', title: 'Get your 5-dinner plan', desc: 'Every week, AI builds a personalized dinner plan around what your family actually eats.' },
             { step: '3', title: 'One tap to your cart', desc: 'Your full grocery list opens in your Instacart cart with every item pre-loaded — you pick the store and check out.' },
           ].map((item) => (

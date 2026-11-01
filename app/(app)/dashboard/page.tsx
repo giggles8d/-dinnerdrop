@@ -10,7 +10,8 @@ import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
 import FamilyVoteCard from '@/components/FamilyVoteCard'
 import SalesCard from '@/components/SalesCard'
-import QuickSetup from '@/components/QuickSetup'
+import QuickSetup, { type QuickSetupAnswers } from '@/components/QuickSetup'
+import FirstWeekReveal from '@/components/FirstWeekReveal'
 import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
 import { resolvePlanOwner } from '@/lib/household'
@@ -65,6 +66,8 @@ function DashboardContent() {
   const [shouldAutoGen, setShouldAutoGen] = useState(false)
   // First visit, not personalized yet: ask 3 quick questions before building week one.
   const [showQuickSetup, setShowQuickSetup] = useState(false)
+  // Answers from the first-visit setup, shown back once the first week is on screen.
+  const [firstAnswers, setFirstAnswers] = useState<QuickSetupAnswers | null>(null)
   const autoGenFired = useRef(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -751,6 +754,7 @@ function DashboardContent() {
           <QuickSetup
             onDone={(a) => {
               setBudget(a.weeklyBudget)
+              setFirstAnswers(a)
               setNeedsPersonalize(false)
               setShowQuickSetup(false)
               setShouldAutoGen(true)
@@ -796,6 +800,9 @@ function DashboardContent() {
               <span className="flex items-center gap-1">&#10003; One-tap store handoff</span>
             </div>
           </div>
+        )}
+        {firstAnswers && hasGenerated && meals.length > 0 && !isPickingMeals && !loading && (
+          <FirstWeekReveal answers={firstAnswers} meals={meals} totalCost={totalCost} onClose={() => setFirstAnswers(null)} />
         )}
         {(isPickingMeals ? pickSummary : planSummary) && !loading && (
           <p className="mb-4 text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2.5">
