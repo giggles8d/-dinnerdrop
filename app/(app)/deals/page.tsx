@@ -62,7 +62,8 @@ export default function DealsPage() {
       if (store !== 'all' && s.store !== store) continue
       for (const i of s.items) {
         const k = normalizeItemName(i.name)
-        const onList = listSet.has(k) || Array.from(listSet).some((n) => n.length > 4 && (n.includes(k) || k.includes(n)))
+        // Exact, or a multi-word list line contained in the deal (or the reverse): "olive oil" ⊂ "olive oil, extra virgin"; never a lone word like "lemon".
+        const onList = listSet.has(k) || Array.from(listSet).some((n) => (n.includes(' ') && k.includes(n)) || (k.includes(' ') && n.includes(k)))
         out.push({ ...i, store: s.store, key: `${s.id}:${k}`, onList })
       }
     }
@@ -210,7 +211,7 @@ export default function DealsPage() {
         )}
 
         {items.length > 0 && (
-          <div className="sticky bottom-4">
+          <div className="sticky bottom-0 -mx-4 px-4 pt-3 pb-4 bg-background/95 backdrop-blur border-t border-border">
             <Link href="/grocery-list" className="block w-full text-center rounded-2xl bg-primary text-primary-foreground font-bold py-3.5 shadow-lg">Back to my list → send to Instacart</Link>
             <p className="text-[11px] text-muted-foreground text-center mt-2 leading-snug">Deals are the stores’ shelf prices; Instacart shows its own price at checkout. Pick the store in Instacart to get its sale.</p>
           </div>

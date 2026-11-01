@@ -722,7 +722,7 @@ export default function SettingsPage() {
                   <h2 className="font-heading font-semibold text-foreground mb-1">Store deals</h2>
                   <p className="text-sm text-muted-foreground mb-3">Tell us where you shop. We read each store&apos;s weekly ad for you, plan dinners around what&apos;s on sale, and tag sale prices on your list.</p>
                 </div>
-                <Field label="My stores" hint="Tops, Aldi, Wegmans, Walmart, Kroger, Publix, Weis, Price Chopper and Family Fare ads are read automatically; snap any other store's flyer below.">
+                <Field label="My stores" hint="Tops, Aldi, Price Chopper, Family Fare, Publix, Walmart and Kroger ads are read automatically; snap any other store's flyer below (Wegmans has no weekly ad).">
                   <TagInput value={settings.stores.myStores.map((s) => s.name)} onChange={(names) => patch((s) => { s.stores.myStores = names.map((n) => s.stores.myStores.find((x) => x.name === n) ?? { name: n }) })} placeholder="Wegmans, Tops, Aldi, Sam's Club" />
                   {settings.stores.myStores.some((s) => s.factor) && (
                     <p className="text-[11px] text-muted-foreground mt-1">Learned so far: {settings.stores.myStores.filter((s) => s.factor).map((s) => `${s.name} ${s.factor!.toFixed(2)}×`).join(' · ')}</p>

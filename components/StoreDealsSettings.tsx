@@ -9,8 +9,10 @@ import { isUpcoming, type WeeklySales } from '@/lib/sales-shared'
  * Settings → Stores: one row per store the family lists, with the state of its weekly ad
  * (DinnerDrop reads most big chains' ads on their preview days; anything else can be snapped).
  */
-const AUTO = /^(tops|wegmans|aldi|walmart|price chopper|market 32|family fare|publix|weis|kroger|smith|fred meyer|king soopers|ralphs|fry'?s|harris teeter)/i
-const AD_DAY: Record<string, string> = { tops: 'Sundays', wegmans: 'Sundays', 'price chopper': 'Sundays', 'market 32': 'Sundays', 'family fare': 'Sundays', aldi: 'Wednesdays', publix: 'Wednesdays', weis: 'Thursdays', walmart: 'daily (rollbacks)', kroger: 'Wednesdays', smith: 'Wednesdays' }
+const AUTO = /^(tops|aldi|walmart|price chopper|market 32|family fare|publix|kroger|smith|fred meyer|king soopers|ralphs|fry'?s|harris teeter)/i
+/** Stores with no weekly ad at all (everyday pricing). */
+const NO_AD = /^(wegmans|costco|sam'?s|bj'?s|trader joe)/i
+const AD_DAY: Record<string, string> = { tops: 'Sundays', 'price chopper': 'Sundays', 'market 32': 'Sundays', 'family fare': 'Sundays', aldi: 'Wednesdays', publix: 'Wednesdays', weis: 'Thursdays', walmart: 'daily (rollbacks)', kroger: 'Wednesdays', smith: 'Wednesdays' }
 
 function adDay(store: string): string {
   const k = Object.keys(AD_DAY).find((k) => store.toLowerCase().startsWith(k))
@@ -45,12 +47,13 @@ export default function StoreDealsSettings({ stores }: { stores: string[] }) {
                 {!loaded ? 'Checking the ad…'
                   : cur ? `${cur.items.length} deals this week${next ? ` · next week loaded (${next.items.length})` : ''}`
                   : next ? `Next week’s ad loaded (${next.items.length} deals)`
+                  : NO_AD.test(name) ? 'No weekly ad — this store uses everyday prices and digital coupons'
                   : auto ? `No ad yet — we read it ${adDay(name)}` : 'No ad yet — snap the flyer and we share it with every family at this store'}
               </div>
             </div>
             {cur || next ? (
               <span className="text-[11px] font-semibold text-primary bg-primary/10 px-2.5 py-1 rounded-full">{cur?.source?.startsWith('shared') || next?.source?.startsWith('shared') ? 'Auto' : 'Loaded'}</span>
-            ) : auto ? (
+            ) : auto && !NO_AD.test(name) ? (
               <span className="text-[11px] font-semibold text-muted-foreground bg-muted px-2.5 py-1 rounded-full">Auto</span>
             ) : null}
           </div>
