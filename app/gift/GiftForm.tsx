@@ -5,16 +5,23 @@ import { GIFT_PLAN_OPTIONS } from './plans'
 export default function GiftForm() {
   const [plan, setPlan] = useState<'3' | '6' | '12'>('3')
   const [f, setF] = useState({ buyerName: '', buyerEmail: '', recipientName: '', recipientEmail: '', message: '' })
-  const [deliver, setDeliver] = useState<'now' | 'me'>('now')
+  const [deliver, setDeliver] = useState<'now' | 'date' | 'me'>('now')
+  const [deliverOn, setDeliverOn] = useState('')
+  // Tomorrow … a year out, in the buyer's own calendar.
+  const ymd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  const minDate = ymd(new Date(Date.now() + 86400000))
+  const maxDate = ymd(new Date(Date.now() + 365 * 86400000))
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setF((x) => ({ ...x, [k]: e.target.value }))
 
   async function go(e: React.FormEvent) {
     e.preventDefault()
-    setErr(''); setBusy(true)
+    setErr('')
+    if (f.recipientEmail && deliver === 'date' && !deliverOn) { setErr('Pick the day they should get it.'); return }
+    setBusy(true)
     try {
-      const r = await fetch('/api/gift/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ plan, ...f, deliver: f.recipientEmail ? deliver : 'me' }) })
+      const r = await fetch('/api/gift/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ plan, ...f, deliver: f.recipientEmail ? deliver : 'me', deliverOn: deliver === 'date' ? deliverOn : undefined }) })
       const j = await r.json()
       if (j.url) { window.location.href = j.url; return }
       setErr(j.error || 'Something went wrong — please try again.')
@@ -49,6 +56,10 @@ export default function GiftForm() {
         <fieldset className="text-sm space-y-1.5">
           <legend className="font-medium text-foreground mb-1">How should they get it?</legend>
           <label className="flex items-center gap-2"><input type="radio" checked={deliver === 'now'} onChange={() => setDeliver('now')} className="accent-[#1a5c38]" /> Email it to them right after checkout</label>
+          <label className="flex flex-wrap items-center gap-2"><input type="radio" checked={deliver === 'date'} onChange={() => setDeliver('date')} className="accent-[#1a5c38]" /> Email it to them on a date
+            {deliver === 'date' && <input type="date" value={deliverOn} min={minDate} max={maxDate} onChange={(e) => setDeliverOn(e.target.value)} className="rounded-md border border-input bg-background px-2 py-1 text-sm" aria-label="Delivery date" required />}
+          </label>
+          {deliver === 'date' && <p className="text-xs text-muted-foreground pl-6">It arrives the morning of that day. You get the code right away too.</p>}
           <label className="flex items-center gap-2"><input type="radio" checked={deliver === 'me'} onChange={() => setDeliver('me')} className="accent-[#1a5c38]" /> Send it to me — I&apos;ll give it to them (printable card included)</label>
         </fieldset>
       )}
