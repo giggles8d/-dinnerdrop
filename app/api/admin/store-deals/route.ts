@@ -12,10 +12,11 @@ function admin() {
 }
 
 /** Same pipeline token the recipe tasks use (app_kv.recipe_image_token), or SETUP_SECRET. */
-async function authorized(request: NextRequest): Promise<boolean> {
+async function authorized(request: NextRequest, bodyToken?: string): Promise<boolean> {
   const secret = request.headers.get('x-admin-secret')
   if (secret && process.env.SETUP_SECRET && secret === process.env.SETUP_SECRET) return true
-  const token = request.headers.get('x-image-token')
+  // The ad reader posts straight from the store's page (no-cors, text/plain), where custom headers are dropped: token in the body.
+  const token = request.headers.get('x-image-token') || bodyToken || ''
   if (!token || token.length < 32) return false
   const { data } = await admin().from('app_kv').select('value').eq('key', 'recipe_image_token').maybeSingle()
   return !!data?.value && (data.value as { token?: string }).token === token
@@ -45,8 +46,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  if (!(await authorized(request))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const body = await request.json().catch(() => ({})) as { store?: string; region?: string; validFrom?: string; validTo?: string; source?: string; images?: string[]; text?: string; url?: string; items?: SaleItem[]; notify?: boolean }
+  const body = await request.json().catch(() => ({})) as { token?: string; store?: string; region?: string; validFrom?: string; validTo?: string; source?: string; images?: string[]; text?: string; url?: string; items?: SaleItem[]; notify?: boolean }
+  if (!(await authorized(request, body.token))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const store = String(body.store ?? '').trim()
   if (!store) return NextResponse.json({ error: 'store required' }, { status: 400 })
   const hint = `store: ${canonicalStore(store)}`
