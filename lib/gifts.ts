@@ -34,6 +34,23 @@ export interface GiftRow {
   emailed_recipient_at: string | null; emailed_buyer_at: string | null; redeemed_by: string | null; redeemed_at: string | null
 }
 
+/** Today's date in Eastern time (YYYY-MM-DD) — scheduled gifts go out the morning of their date. */
+export function todayET(now = new Date()): string {
+  return now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
+}
+
+/** Is the recipient email due? "now" right after checkout; "date" from the morning of the chosen day (Sarah, Oct 31 2026). */
+export function giftDue(md: Stripe.Metadata | null | undefined, now = new Date()): boolean {
+  if (!md) return false
+  if (md.deliver === 'now') return true
+  return md.deliver === 'date' && /^\d{4}-\d{2}-\d{2}$/.test(md.deliver_on ?? '') && md.deliver_on! <= todayET(now)
+}
+
+/** "Friday, December 25" for a YYYY-MM-DD date. */
+export function giftDateLabel(d: string): string {
+  return new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' })
+}
+
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 /** Paid Checkout session → gift (created once), plus the buyer's receipt and, if asked, the recipient's email. */
@@ -61,14 +78,15 @@ export async function giftFromSession(admin: SupabaseClient, session: Stripe.Che
   const from = gift.buyer_name || 'Someone who loves you'
   const to = gift.recipient_name || 'there'
   const length = GIFT_PLANS[String(gift.months) as GiftPlanId]?.label ?? `${gift.months} months`
-  if (gift.recipient_email && md.deliver === 'now' && !gift.emailed_recipient_at) {
+  if (gift.recipient_email && giftDue(md) && !gift.emailed_recipient_at) {
     const body = `<p>Hi ${esc(to)},</p><p><strong>${esc(from)}</strong> gave your family <strong>${length} of DinnerDrop Family</strong> — 5 dinners planned for your family and budget every week, one grocery list, and one tap to your Instacart cart.</p>${gift.message ? `<blockquote style="margin:14px 0;padding:10px 14px;border-left:3px solid #e8a838;background:#fff8e8">${esc(gift.message)}</blockquote>` : ''}<p>Your gift code: <strong style="font-size:18px;letter-spacing:.06em">${gift.code}</strong><br><span style="color:#5b6660;font-size:13px">No card needed. It starts when you sign up.</span></p>`
     const r = await sendEmail(gift.recipient_email, `${from} gave you ${length} of DinnerDrop 🎁`, emailShell(`A gift for your dinner table 🎁`, body, { label: 'Claim my gift', href: giftLink(gift.code) }))
     if (r.ok) await admin.from('gift_cards').update({ emailed_recipient_at: new Date().toISOString() }).eq('code', gift.code)
   }
   if (gift.buyer_email && !gift.emailed_buyer_at) {
     const sent = gift.recipient_email && md.deliver === 'now'
-    const body = `<p>Thank you${gift.buyer_name ? `, ${esc(gift.buyer_name)}` : ''}! Your gift of <strong>${length} of DinnerDrop Family</strong>${gift.recipient_name ? ` for <strong>${esc(gift.recipient_name)}</strong>` : ''} is ready.</p><p>Gift code: <strong style="font-size:18px;letter-spacing:.06em">${gift.code}</strong></p><p>${sent ? `We emailed it to ${esc(gift.recipient_email!)}. You can also share this link:` : 'Share this link (or print the card from the thank-you page):'}<br><a href="${giftLink(gift.code)}">${giftLink(gift.code)}</a></p><p style="color:#5b6660;font-size:13px">It starts when they sign up — no card needed, nothing to cancel. Questions? Just reply.</p>`
+    const scheduled = gift.recipient_email && md.deliver === 'date' && md.deliver_on ? giftDateLabel(md.deliver_on) : ''
+    const body = `<p>Thank you${gift.buyer_name ? `, ${esc(gift.buyer_name)}` : ''}! Your gift of <strong>${length} of DinnerDrop Family</strong>${gift.recipient_name ? ` for <strong>${esc(gift.recipient_name)}</strong>` : ''} is ready.</p><p>Gift code: <strong style="font-size:18px;letter-spacing:.06em">${gift.code}</strong></p><p>${sent ? `We emailed it to ${esc(gift.recipient_email!)}. You can also share this link:` : scheduled ? `We'll email it to ${esc(gift.recipient_email!)} on the morning of ${scheduled}. You can also share this link yourself:` : 'Share this link (or print the card from the thank-you page):'}<br><a href="${giftLink(gift.code)}">${giftLink(gift.code)}</a></p><p style="color:#5b6660;font-size:13px">It starts when they sign up — no card needed, nothing to cancel. Questions? Just reply.</p>`
     const r = await sendEmail(gift.buyer_email, `Your DinnerDrop gift is ready — code ${gift.code}`, emailShell('Your gift is ready 🎁', body, { label: 'See the gift card', href: `${APP}/gift/thanks?session_id=${session.id}` }))
     if (r.ok) await admin.from('gift_cards').update({ emailed_buyer_at: new Date().toISOString() }).eq('code', gift.code)
   }
@@ -108,6 +126,14 @@ export async function reconcileGifts(admin: SupabaseClient, stripe: Stripe): Pro
     checked++
     const { data: had } = await admin.from('gift_cards').select('code').eq('stripe_session_id', s.id).maybeSingle()
     if (!had && (await giftFromSession(admin, s))) created++
+  }
+  // Scheduled gifts: email the ones whose date has come (the daily job runs each morning, Eastern time).
+  const { data: waiting } = await admin.from('gift_cards').select('stripe_session_id').not('recipient_email', 'is', null).is('emailed_recipient_at', null).is('redeemed_by', null).gte('created_at', new Date(Date.now() - 400 * 86400000).toISOString()).limit(200)
+  for (const w of waiting ?? []) {
+    try {
+      const s = await stripe.checkout.sessions.retrieve(w.stripe_session_id)
+      if (s.metadata?.deliver === 'date' && giftDue(s.metadata)) await giftFromSession(admin, s)
+    } catch (e) { console.error('[gifts] scheduled send failed', w.stripe_session_id, e) }
   }
   return { checked, created }
 }

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 import PublicHeader from '@/components/site/PublicHeader'
-import { giftFromSession, giftLink, GIFT_PLANS, type GiftPlanId } from '@/lib/gifts'
+import { giftFromSession, giftLink, giftDateLabel, GIFT_PLANS, type GiftPlanId } from '@/lib/gifts'
 import PrintButton from './PrintButton'
 
 export const dynamic = 'force-dynamic'
@@ -13,11 +13,13 @@ export default async function GiftThanks({ searchParams }: { searchParams: { ses
   const id = searchParams.session_id ?? ''
   let gift: Awaited<ReturnType<typeof giftFromSession>> = null
   let pending = false
+  let scheduledFor = ''
   if (/^cs_[A-Za-z0-9_]+$/.test(id)) {
     try {
       const session = await new Stripe(process.env.STRIPE_SECRET_KEY!).checkout.sessions.retrieve(id)
       const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
       gift = await giftFromSession(admin, session)
+      if (session.metadata?.deliver === 'date' && session.metadata.deliver_on) scheduledFor = giftDateLabel(session.metadata.deliver_on)
       pending = !gift && session.metadata?.kind === 'gift' && session.payment_status !== 'paid'
     } catch (e) { console.error('[gift/thanks]', e) }
   }
@@ -38,7 +40,7 @@ export default async function GiftThanks({ searchParams }: { searchParams: { ses
               <p className="text-4xl mb-2">🎁</p>
               <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Thank you{gift.buyer_name ? `, ${gift.buyer_name}` : ''}!</h1>
               <p className="text-muted-foreground">
-                {gift.recipient_email && gift.emailed_recipient_at ? `We emailed the gift to ${gift.recipient_email}. ` : ''}
+                {gift.recipient_email && gift.emailed_recipient_at ? `We emailed the gift to ${gift.recipient_email}. ` : gift.recipient_email && scheduledFor ? `We'll email the gift to ${gift.recipient_email} on the morning of ${scheduledFor}. ` : ''}
                 {gift.buyer_email ? `Your receipt and the code are on their way to ${gift.buyer_email}.` : ''}
               </p>
             </div>

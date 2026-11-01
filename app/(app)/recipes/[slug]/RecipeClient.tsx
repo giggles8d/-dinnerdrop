@@ -19,6 +19,7 @@ import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
 import { safeBite, cookware } from '@/lib/meal-insights'
 import { recipeIntro, relatedLinks } from '@/lib/recipe-intro'
+import { InstacartCarrot } from '@/components/InstacartMark'
 
 interface RecipeRow {
   id: string; name: string; slug: string; cuisine: string | null; protein: string | null
@@ -40,6 +41,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
   const [cooking, setCooking] = useState(false)
   const [added, setAdded] = useState<string | null>(null)
   const [servings, setServings] = useState<number | null>(null)
+  const [shopping, setShopping] = useState<'idle' | 'busy' | 'done' | 'error'>('idle')
 
   useEffect(() => {
     (async () => {
@@ -81,6 +83,25 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
     setAdded('Added to this week. Your grocery list will rebuild with it.')
   }
 
+  /** This recipe's ingredients as an Instacart list — no account needed (opened in a new tab). */
+  async function shopIngredients() {
+    if (!r || shopping === 'busy') return
+    // Open the tab now, inside the click, so popup blockers allow it; point it at Instacart once the link is ready.
+    const tab = window.open('', '_blank')
+    setShopping('busy')
+    try {
+      const res = await fetch('/api/recipes/shop', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug: r.slug, servings: meal?.servings }) })
+      const j = await res.json()
+      if (!res.ok || !j.url) throw new Error(j.error || 'failed')
+      if (tab) tab.location.href = j.url
+      else window.location.href = j.url
+      setShopping('done')
+    } catch {
+      tab?.close()
+      setShopping('error')
+    }
+  }
+
   if (loading) return <div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>
   if (!r || !meal) return <div className="min-h-screen flex items-center justify-center text-center"><div><p className="font-medium">Recipe not found</p><Link href="/recipes" className="text-primary text-sm hover:underline">Back to the library</Link></div></div>
 
@@ -102,7 +123,8 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           {meal.estimatedCost > 0 && <span className="bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold">${meal.estimatedCost.toFixed(2)}</span>}
           {meal.nutrition && <span className="bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span>}
           {r.kept_count > 0 && <span className="text-xs text-muted-foreground">kept by {r.kept_count} {r.kept_count === 1 ? 'family' : 'families'}</span>}
-          <div className="ml-auto flex gap-2 print:hidden">
+          <div className="ml-auto flex flex-wrap gap-2 print:hidden">
+            <button onClick={shopIngredients} disabled={shopping === 'busy'} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-[#0AAD0A]/40 bg-white text-[#003D29] text-sm font-semibold hover:bg-[#0AAD0A]/5 disabled:opacity-60"><InstacartCarrot height={16} /> {shopping === 'busy' ? 'Opening Instacart…' : 'Shop ingredients'}</button>
             {userId ? (
               <button onClick={addToWeek} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-primary/30 text-primary text-sm font-semibold hover:bg-secondary"><CalendarPlus className="w-4 h-4" /> Add to this week</button>
             ) : (
@@ -112,6 +134,15 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           </div>
         </div>
         {added && <p className="text-sm text-primary mb-4">{added}</p>}
+        {shopping === 'error' && <p className="text-sm text-destructive mb-4 print:hidden">Couldn&apos;t open Instacart just now — please try again.</p>}
+        {shopping === 'done' && (
+          <div className="mb-4 rounded-xl border border-primary/20 bg-secondary/60 px-4 py-3 text-sm print:hidden">
+            <span className="text-foreground">Your ingredients are on an Instacart list in the new tab — pick a store and check out there.</span>{' '}
+            {userId
+              ? <button onClick={addToWeek} className="font-semibold text-primary underline">Add this dinner to my week too</button>
+              : <Link href={`/signup?redirect=${encodeURIComponent('/recipes/' + r.slug)}`} className="font-semibold text-primary underline">Want 5 dinners like this planned every week, on one list? Start free</Link>}
+          </div>
+        )}
         <p className="mb-4 text-sm text-foreground/80 leading-relaxed">{recipeIntro({ ...meal, cuisine: r.cuisine, protein: r.protein })}</p>
         <p className="mb-4 text-sm text-muted-foreground"><span className="font-semibold text-foreground">Goes with:</span> {sideFor(meal).name} <span className="text-xs">({sideFor(meal).minutes} min)</span></p>
         <AllergenNotice ingredients={meal.ingredients} name={meal.name} />

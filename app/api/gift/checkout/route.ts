@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 const clean = (v: unknown, max: number) => (typeof v === 'string' ? v.replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max) : '')
 
 /**
- * POST { plan: '3'|'6'|'12', buyerName, buyerEmail, recipientName, recipientEmail?, message?, deliver: 'now'|'me' }
+ * POST { plan: '3'|'6'|'12', buyerName, buyerEmail, recipientName, recipientEmail?, message?, deliver: 'now'|'date'|'me', deliverOn?: 'YYYY-MM-DD' }
  * → a Stripe Checkout URL (one-time payment). No account needed to buy a gift.
  */
 export async function POST(req: NextRequest) {
@@ -19,7 +19,14 @@ export async function POST(req: NextRequest) {
   const emailOk = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)
   if (buyerEmail && !emailOk(buyerEmail)) return NextResponse.json({ error: 'Check your email address.' }, { status: 400 })
   if (recipientEmail && !emailOk(recipientEmail)) return NextResponse.json({ error: "Check the recipient's email address." }, { status: 400 })
-  const deliver = b.deliver === 'now' && recipientEmail ? 'now' : 'me'
+  // 'date': email them on a chosen day (tomorrow up to a year out), e.g. Christmas morning.
+  const deliverOn = clean(b.deliverOn, 10)
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
+  const yearOut = new Date(Date.now() + 366 * 86400000).toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
+  if (b.deliver === 'date' && recipientEmail && (!/^\d{4}-\d{2}-\d{2}$/.test(deliverOn) || deliverOn <= today || deliverOn > yearOut)) {
+    return NextResponse.json({ error: 'Pick a delivery date from tomorrow up to a year from now.' }, { status: 400 })
+  }
+  const deliver = recipientEmail && (b.deliver === 'now' || b.deliver === 'date') ? b.deliver as 'now' | 'date' : 'me'
 
   const app = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
@@ -36,7 +43,7 @@ export async function POST(req: NextRequest) {
       }],
       ...(buyerEmail ? { customer_email: buyerEmail } : {}),
       metadata: {
-        kind: 'gift', plan: planId, deliver,
+        kind: 'gift', plan: planId, deliver, ...(deliver === 'date' ? { deliver_on: deliverOn } : {}),
         buyer_name: clean(b.buyerName, 80), recipient_name: clean(b.recipientName, 80), recipient_email: recipientEmail, message: clean(b.message, 300),
       },
       payment_intent_data: { description: `DinnerDrop gift — ${plan.label}` },
