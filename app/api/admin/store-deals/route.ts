@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { salesFromImage, salesFromText, type SaleItem } from '@/lib/sales'
+import { salesFromImage, salesFromText, salesFromUrl, type SaleItem } from '@/lib/sales'
 import { canonicalStore, saveStoreDeals } from '@/lib/store-deals'
 
 export const dynamic = 'force-dynamic'
@@ -28,7 +28,7 @@ function parseDataUrl(s: string): { base64: string; mediaType: 'image/jpeg' | 'i
 /**
  * GET  /api/admin/store-deals?store=Tops          → sets for a store (newest first, last 3 weeks)
  * POST /api/admin/store-deals                      → read an ad and save/merge the shared set
- *   { store, region?, validFrom?, validTo?, source?, images?: [dataUrl…] | text?: string | items?: SaleItem[] }
+ *   { store, region?, validFrom?, validTo?, source?, images?: [dataUrl…] | text?: string | url?: string | items?: SaleItem[] }
  *   Each image is one ad page; pages merge into the set for (store, region, validFrom).
  *   validFrom/validTo override what the reader finds (the ad's own dates win when not given).
  * Used by the scheduled ad reader (Chrome on Sarah's PC) on each store's preview day.
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   if (!(await authorized(request))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const body = await request.json().catch(() => ({})) as { store?: string; region?: string; validFrom?: string; validTo?: string; source?: string; images?: string[]; text?: string; items?: SaleItem[] }
+  const body = await request.json().catch(() => ({})) as { store?: string; region?: string; validFrom?: string; validTo?: string; source?: string; images?: string[]; text?: string; url?: string; items?: SaleItem[] }
   const store = String(body.store ?? '').trim()
   if (!store) return NextResponse.json({ error: 'store required' }, { status: 400 })
   const hint = `store: ${canonicalStore(store)}`
@@ -67,11 +67,14 @@ export async function POST(request: NextRequest) {
     } else if (body.text?.trim()) {
       const r = await salesFromText(body.text.trim(), hint)
       items = r.items; validFrom = validFrom || r.validFrom; validTo = validTo || r.validTo; pages = 1
+    } else if (body.url?.trim() && /^https?:\/\//.test(body.url.trim())) {
+      const r = await salesFromUrl(body.url.trim())
+      items = r.items; validFrom = validFrom || r.validFrom; validTo = validTo || r.validTo; pages = 1
     } else if (Array.isArray(body.items) && body.items.length) {
       items = body.items.filter((i) => i && i.name && i.price).map((i) => ({ name: String(i.name).toLowerCase(), price: String(i.price), unit: i.unit, category: i.category, brand: i.brand, note: i.note }))
       pages = 1
     } else {
-      return NextResponse.json({ error: 'Send images, text, or items.' }, { status: 400 })
+      return NextResponse.json({ error: 'Send images, text, url, or items.' }, { status: 400 })
     }
     if (!items.length) return NextResponse.json({ ok: false, error: 'No sale items found on those pages.', pages }, { status: 422 })
     const saved = await saveStoreDeals(admin(), { store, region: body.region, validFrom, validTo, source: body.source ?? 'ad', items, pages })
