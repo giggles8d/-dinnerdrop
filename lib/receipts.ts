@@ -19,6 +19,7 @@
 import { createHmac, timingSafeEqual } from 'crypto'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { generateWithClaude, generateWithClaudeImages, parseClaudeJSON, type ClaudeImage } from '@/lib/claude'
+import { markAllOpenOrdered } from '@/lib/list-ordered'
 import { normalizeItemName, guessCategory } from '@/lib/list'
 import { recordActualTotal } from '@/lib/handoff-actual'
 import { stockStaplesFromReceipt } from '@/lib/pantry'
@@ -325,6 +326,10 @@ export async function reconcileReceipt(admin: SupabaseClient, ownerId: string, p
   // undo the lines they put back on the list and their history rows, then apply fresh.
   const { data: prevs } = await admin.from('receipts').select('id, created_at').eq('user_id', ownerId).gte('created_at', new Date(Date.now() - 48 * 3600000).toISOString()).order('created_at', { ascending: true })
   for (const prev of prevs ?? []) await undoReceipt(admin, ownerId, prev.id as string, prev.created_at as string)
+
+  // A receipt IS the family's confirmation that the order went through (since Oct 31 a send alone no longer
+  // clears the list), so everything that was open when the list went to the store counts as sent now.
+  if (handoff) await markAllOpenOrdered(admin, ownerId, handoff.created_at as string).catch(() => 0)
 
   // The lines that went to the store for that handoff (sent within ±1 day of it, or the whole week when no handoff).
   let sent: SentLine[] = []

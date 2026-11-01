@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { resolvePlanOwner } from '@/lib/household'
-import { parseReceipt, reconcileReceipt, matchLines, type SentLine } from '@/lib/receipts'
+import { parseReceipt, reconcileReceipt, matchLines, type SentLine, type ParsedReceipt } from '@/lib/receipts'
 
 const ADMIN_EMAIL = 'setzl1979@gmail.com'
 export const dynamic = 'force-dynamic'
@@ -27,10 +27,19 @@ async function authorized(request: NextRequest): Promise<{ ok: boolean; userId?:
 export async function POST(request: NextRequest) {
   const auth = await authorized(request)
   if (!auth.ok) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const { text, apply, userId } = await request.json().catch(() => ({})) as { text?: string; apply?: boolean; userId?: string }
+  const { text, apply, userId, receiptId } = await request.json().catch(() => ({})) as { text?: string; apply?: boolean; userId?: string; receiptId?: string }
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  // Re-run a stored receipt (e.g. after a matching fix) from its parsed items — no re-parse, no new images.
+  if (receiptId) {
+    const { data: rec } = await admin.from('receipts').select('id, user_id, store, ordered_on, total, items, raw_text, from_email').eq('id', receiptId).single()
+    if (!rec) return NextResponse.json({ error: 'receipt not found' }, { status: 404 })
+    const again: ParsedReceipt = { store: rec.store ?? null, service: 'Other', orderedOn: rec.ordered_on ?? null, total: rec.total != null ? Number(rec.total) : null, items: (rec.items as ParsedReceipt['items']) ?? [] }
+    if (!apply) return NextResponse.json({ parsed: again })
+    const result = await reconcileReceipt(admin, rec.user_id as string, again, { emailId: `rerun:${rec.id}:${Date.now()}`, fromEmail: (rec.from_email as string) || ADMIN_EMAIL, rawText: (rec.raw_text as string) || '' })
+    return NextResponse.json({ parsed: again, result })
+  }
   if (!text || text.trim().length < 40) return NextResponse.json({ error: 'text required' }, { status: 400 })
   const parsed = await parseReceipt(text.slice(0, 24000))
-  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const uid = userId ?? auth.userId
   if (!uid) return NextResponse.json({ parsed })
   const { ownerId } = await resolvePlanOwner(admin, uid)
