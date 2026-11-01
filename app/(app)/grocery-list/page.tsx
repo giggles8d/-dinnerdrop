@@ -19,6 +19,7 @@ import type { StorePref } from '@/lib/compare'
 import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
 import WalmartButton from '@/components/WalmartButton'
+import WalmartPicks from '@/components/WalmartPicks'
 import InAppBrowserNotice from '@/components/InAppBrowserNotice'
 import KrogerReview from '@/components/KrogerReview'
 import SidesCard from '@/components/SidesCard'
@@ -635,6 +636,7 @@ export default function GroceryListPage() {
               <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={afterSent} familyStores={myStores.map((s) => s.name)} />
             )}
             <WalmartButton groceryList={shoppable} weekStart={weekStart ?? undefined} onSent={afterSent} />
+            <WalmartPicks items={items} weekStart={weekStart ?? undefined} />
             <div className="space-y-2">
               {krogerConnected ? (
                 <button onClick={handleKrogerCart} disabled={krogerLoading || shoppableCount === 0} className="w-full sm:w-auto px-8 py-3 rounded-lg bg-[#0067A0] text-white font-semibold text-base hover:bg-[#005a8c] disabled:opacity-50 transition-colors shadow-lg">
