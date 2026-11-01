@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { runComeback } from '@/lib/comeback'
 import { runThanksgiving } from '@/lib/thanksgiving-campaign'
+import { runCheckin } from '@/lib/checkin-campaign'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -12,5 +13,6 @@ export async function GET(request: NextRequest) {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const comeback = await runComeback(admin, new Date(), { budgetMs: 120000 }).catch((e) => ({ error: String(e) }))
   const thanksgiving = await runThanksgiving(admin, new Date(), { budgetMs: 150000 }).catch((e) => ({ error: String(e) }))
-  return NextResponse.json({ ok: true, comeback, thanksgiving })
+  const checkin = await runCheckin(admin, new Date(), { budgetMs: 100000 }).catch((e) => ({ error: String(e) }))
+  return NextResponse.json({ ok: true, comeback, thanksgiving, checkin })
 }
