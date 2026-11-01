@@ -18,7 +18,7 @@ export default function ActivateDay1({
   return (
     <Html>
       <Head />
-      <Preview>Your 5 dinners are planned. One tap puts the groceries in your Instacart cart.</Preview>
+      <Preview>Your 5 dinners are planned. One tap puts the groceries in your Instacart or Walmart cart.</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
@@ -32,7 +32,7 @@ export default function ActivateDay1({
             </Text>
             <Text style={paragraph}>
               Open the list and tap <strong>Shop ingredients</strong>. The whole list lands in your
-              Instacart cart, ready for delivery or pickup. Already have something? Check it off first.
+              Instacart or Walmart cart, ready for delivery or pickup. Already have something? Check it off first.
             </Text>
             <Section style={ctaSection}>
               <Button style={button} href="https://www.dinnerdrop.app/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day1">

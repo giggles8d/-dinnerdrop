@@ -51,7 +51,7 @@ export default async function LandingPage() {
                 Dinner,<br />handled.
               </h1>
               <p className="text-xl text-muted-foreground max-w-xl leading-relaxed mb-9">
-                Five weeknight dinners planned around your family and your budget. Tap once and your whole list opens in <span className="font-semibold text-foreground">your Instacart cart</span> with every item matched — pick your store, review, check out. Free, no card needed.
+                Five weeknight dinners planned around your family and your budget. Tap once and your whole list lands in <span className="font-semibold text-foreground">your Instacart or Walmart cart</span> with every item matched — review, check out. Free, no card needed.
               </p>
               <div className="flex flex-col sm:flex-row items-start gap-3">
                 <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
@@ -61,7 +61,7 @@ export default async function LandingPage() {
                   See a sample week
                 </a>
               </div>
-              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-2"><InstacartCarrot height={14} /> Works with your Instacart account and every store on it &middot; Free forever &middot; Family plan $4.99/month, 14 days free</p>
+              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-2"><InstacartCarrot height={14} /> Works with Instacart (and every store on it), Walmart and Kroger &middot; Free forever &middot; Family plan $4.99/month, 14 days free</p>
             </div>
 
             <div className="relative">
@@ -72,7 +72,7 @@ export default async function LandingPage() {
               <div className="absolute -bottom-5 left-6 bg-white rounded-2xl shadow-lg px-5 py-3 flex items-center gap-3 ring-1 ring-black/5">
                 <InstacartCarrot height={28} />
                 <div>
-                  <p className="font-heading font-bold text-primary leading-none">One tap → Instacart</p>
+                  <p className="font-heading font-bold text-primary leading-none">One tap → Instacart or Walmart</p>
                   <p className="text-[11px] text-muted-foreground mt-0.5">whole list in your cart, every item matched</p>
                 </div>
               </div>
@@ -91,7 +91,7 @@ export default async function LandingPage() {
       <InstacartBand />
 
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
-        <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop builds the list in your own Instacart or Kroger account. You review every item and check out there at Instacart&apos;s or Kroger&apos;s prices for that store. We never charge your grocery account and never add to the price. Over 200 families plan dinner with DinnerDrop.
+        <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart, Walmart or Kroger account. You review every item and check out there at that store&apos;s prices. We never charge your grocery account and never add to the price. Over 200 families plan dinner with DinnerDrop.
         {' '}<span className="font-semibold text-foreground">On your phone:</span> open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em> — it works like an app, nothing to download.
       </p>
 
@@ -131,7 +131,7 @@ export default async function LandingPage() {
                 {[
                   { step: '1', title: 'Tell us about your family', description: 'Budget, family size, dietary needs, how much time you have to cook. Takes 2 minutes.' },
                   { step: '2', title: 'Get 5 personalized dinners', description: 'AI builds a full week of budget-friendly meals your family will actually eat.' },
-                  { step: '3', title: 'One tap. It\u2019s in your Instacart cart.', description: 'DinnerDrop is built on the Instacart Developer Platform: tap once and your full list opens in your own Instacart account with every item matched — pick a store, review, check out. Family members can push straight to a Kroger cart.' },
+                  { step: '3', title: 'One tap. It\u2019s in your cart.', description: 'Instacart: your full list opens in your own Instacart account with every item matched — pick any store on it, review, check out. Walmart: every line is matched to a Walmart product, you glance at it, and one tap fills your Walmart cart for pickup or delivery. Family members can push straight to a Kroger cart too.' },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-5">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-primary-foreground font-heading font-bold flex items-center justify-center shadow-sm">
@@ -164,7 +164,7 @@ export default async function LandingPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { Icon: Sparkles, title: 'AI meal planning', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },
-            { Icon: ShoppingCart, title: 'Instacart built in', description: 'One tap opens your full list in your Instacart cart with every item matched — pick your store, glance, check out. Every Instacart store near you, no retyping, no missed items. On Family it can go straight into your Kroger cart too.' },
+            { Icon: ShoppingCart, title: 'Instacart and Walmart built in', description: 'One tap opens your full list in your Instacart cart (every store near you) or fills your Walmart cart with every item matched — glance, check out. No retyping, no missed items. On Family it can go straight into your Kroger cart too.' },
             { Icon: Heart, title: 'Picky-eater friendly', description: "Swap any meal you don't love in one tap. DinnerDrop learns your family's tastes over time." },
             { Icon: PiggyBank, title: 'Built to your budget', description: 'Set your weekly food budget. Every plan targets it, builds around your store\u2019s weekly sales, and prices the list at each store you shop so you can pick the cheapest.' },
           ].map(({ Icon, title, description }) => (
@@ -192,7 +192,7 @@ export default async function LandingPage() {
                 I built DinnerDrop so dinner stops being a daily negotiation: it plans the week around your family and your budget, builds the grocery list, and drops it into your cart in one tap.
               </p>
               <p className="text-lg leading-relaxed">
-                Planning and the Instacart cart are free for every family, and they always will be. If you want the whole household in on it &mdash; everyone texted the week&apos;s dinners, a shared list, a Kroger cart &mdash; that&apos;s the Family plan, $4.99 a month, with 14 days free to see if it sticks.
+                Planning and the Instacart and Walmart carts are free for every family, and they always will be. If you want the whole household in on it &mdash; everyone texted the week&apos;s dinners, a shared list, a Kroger cart &mdash; that&apos;s the Family plan, $4.99 a month, with 14 days free to see if it sticks.
               </p>
             </div>
             <p className="mt-8 font-heading text-xl text-primary italic">&mdash; Sarah, founder of DinnerDrop</p>
@@ -208,7 +208,7 @@ export default async function LandingPage() {
           Simple pricing
         </h2>
         <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
-          Planning and your Instacart cart are free. Family adds the rest of the household.
+          Planning and your Instacart or Walmart cart are free. Family adds the rest of the household.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
           <div className="p-7 rounded-2xl border border-border bg-white shadow-sm space-y-5">
@@ -217,7 +217,7 @@ export default async function LandingPage() {
               $0<span className="text-sm font-sans font-normal text-muted-foreground"> forever</span>
             </p>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
-              {['Unlimited weekly dinner plans', 'Deduplicated grocery list', 'One-tap Instacart cart', 'Swap any dinner', 'Pantry scan', 'Favorites and meal history'].map((li) => (
+              {['Unlimited weekly dinner plans', 'Deduplicated grocery list', 'One-tap Instacart or Walmart cart', 'Swap any dinner', 'Pantry scan', 'Favorites and meal history'].map((li) => (
                 <li key={li} className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />{li}
                 </li>
@@ -264,10 +264,11 @@ export default async function LandingPage() {
           <div className="space-y-4">
             {[
               { q: 'How does the Instacart integration work?', a: 'DinnerDrop is built on the Instacart Developer Platform. When your week is planned, tap “Shop on Instacart” and your full, deduplicated list opens in your own Instacart account with every item already matched to a product — no retyping, no searching item by item. You pick any Instacart store near you (Wegmans, Aldi, Tops, Price Chopper, Target, Costco and more), swap anything you like, and check out there. Instacart handles delivery or pickup and payment; DinnerDrop never sees your card.' },
-              { q: 'Is it really free?', a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart cart are free, with no card. Instacart pays us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.' },
+              { q: 'Is it really free?', a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart and Walmart carts are free, with no card. Instacart and Walmart pay us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.' },
+              { q: 'How does the Walmart cart work?', a: 'Tap “Shop at Walmart” and DinnerDrop matches every line on your list to a real Walmart product — size, price and all. You can swap any item for an alternative, then one tap puts everything in your Walmart cart. You pick pickup or delivery and check out on Walmart.com; we never see your payment.' },
               { q: 'How do I cancel Family?', a: 'From your Account page, in one tap. No calls, no hidden steps. Cancel during the 14-day trial and you pay nothing.' },
               { q: 'Will I be charged by surprise?', a: 'No. We email you on day 11 of a Family trial, three days before the first charge, and Account shows your exact billing date. Payments are processed by Stripe; we never see or store your card number.' },
-              { q: 'Does DinnerDrop charge my grocery account?', a: 'Never. It fills the cart in your own Instacart or Kroger account; you review the items and check out there. We add nothing to the price; what you pay is Instacart\u2019s or Kroger\u2019s price for that store plus their fees, which can differ from in-store shelf prices.' },
+              { q: 'Does DinnerDrop charge my grocery account?', a: 'Never. It fills the cart in your own Instacart, Walmart or Kroger account; you review the items and check out there. We add nothing to the price; what you pay is that store\u2019s price plus any of their fees, which can differ from in-store shelf prices.' },
             ].map((item) => (
               <div key={item.q} className="bg-white rounded-2xl ring-1 ring-black/5 p-6">
                 <h3 className="font-heading font-semibold text-foreground mb-2">{item.q}</h3>

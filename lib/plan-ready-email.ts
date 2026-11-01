@@ -39,7 +39,7 @@ export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabe
   </td></tr>
   <tr><td style="padding:10px 28px 4px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows}</table></td></tr>
   <tr><td align="center" style="padding:18px 28px 6px">
-    <a href="${link('/grocery-list', 'shop')}" style="display:inline-block;background:#1a5c38;color:#ffffff;font-weight:700;font-size:16px;padding:14px 28px;border-radius:12px;text-decoration:none">Send my list to Instacart →</a>
+    <a href="${link('/grocery-list', 'shop')}" style="display:inline-block;background:#1a5c38;color:#ffffff;font-weight:700;font-size:16px;padding:14px 28px;border-radius:12px;text-decoration:none">Send my list to Instacart or Walmart →</a>
     <p style="margin:12px 0 0;font-size:14px"><a href="${link('/dashboard', 'swap')}" style="color:#1a5c38">Swap a dinner</a> · <a href="${link('/recipes', 'browse')}" style="color:#1a5c38">Browse the library</a></p>
   </td></tr>
   <tr><td style="padding:14px 28px 6px">
