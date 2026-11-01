@@ -42,7 +42,7 @@ export default function OllieSwitchPage() {
 
         <OllieImportForm />
         <p className="text-xs text-gray-500 mt-3">
-          Ollie is texting families an export of their data before it closes. Save it, then paste your favorite dinners above, or paste a whole recipe on your Recipes page after you sign up and it comes in as written.
+          Ollie is texting families an export of their data before it closes. Save it, then paste it into the box above. Want a recipe exactly as written? Paste it on your Recipes page after you sign up.
         </p>
 
         <section className="mt-14">
