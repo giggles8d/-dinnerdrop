@@ -12,6 +12,7 @@ import { autoPlan } from '@/lib/autoplan'
 import { sendEmail, sendSms, emailShell, smsConfigured } from '@/lib/notify'
 import { attachLibraryImages } from '@/lib/library-images'
 import { planReadySubject, planReadyHtml } from '@/lib/plan-ready-email'
+import { sendListWaitingText, type SetupProfile } from '@/lib/texting-setup'
 import { isFamilyProfile } from '@/lib/access'
 import { textMember, type MemberRow } from '@/lib/texting'
 import type { Meal } from '@/types'
@@ -34,6 +35,7 @@ interface ProfileRow {
   is_beta_member: boolean | null
   family_until: string | null
   email_unsubscribed: boolean | null
+  created_at?: string | null
 }
 
 interface MemberPhone { name: string; phone: string; role: string }
@@ -43,6 +45,7 @@ export interface DailyReport {
   autoPlans: number
   shopReminders: number
   cookReminders: number
+  listNudges: number
   errors: string[]
 }
 
@@ -72,7 +75,7 @@ async function textAdults(admin: SupabaseClient, p: ProfileRow, settings: Settin
 }
 
 export async function runDailyReminders(admin: SupabaseClient, now: Date = new Date(), opts: { onlyAutoPlan?: boolean } = {}): Promise<DailyReport> {
-  const report: DailyReport = { checked: 0, autoPlans: 0, shopReminders: 0, cookReminders: 0, errors: [] }
+  const report: DailyReport = { checked: 0, autoPlans: 0, shopReminders: 0, cookReminders: 0, listNudges: 0, errors: [] }
   // One run at a time: two overlapping runs (the cron and a manual run, or a double request) each saw
   // "no plan for that week yet" and both planned and emailed 35 families on Oct 31. The lock is a row in
   // app_kv that expires after 10 minutes, so a crashed run never blocks the next day.
@@ -84,7 +87,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
   try {
   const { data: profiles } = await admin
     .from('profiles')
-    .select('id, email, full_name, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, subscription_status, is_beta_member, family_until, email_unsubscribed')
+    .select('id, email, full_name, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, subscription_status, is_beta_member, family_until, email_unsubscribed, created_at')
   const started = Date.now()
   // Families with no plan in this long have drifted away; don't keep planning for them.
   const ACTIVE_DAYS = 45
@@ -133,6 +136,15 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       }
 
       if (opts.onlyAutoPlan) continue
+      // ---- day-after nudge: new family, list built, nothing sent to a store yet → one text ----
+      const ageH = (now.getTime() - new Date(p.created_at ?? 0).getTime()) / 3600000
+      if (ageH >= 20 && ageH <= 72 && family && settings.texting.enabled && settings.texting.ownerPhone && smsConfigured() && p.household_id) {
+        const { count: sent } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
+        if (!sent) {
+          const { count: plans } = await admin.from('meal_plans').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
+          if (plans && await sendListWaitingText(admin, p as unknown as SetupProfile, firstName(p) === 'there' ? '' : firstName(p))) report.listNudges++
+        }
+      }
       // ---- "anything else?" — the day before shopping day, ask the whole household (not just adults) ----
       const shop = settings.schedule.reminders.shopBy
       if (shop.channel !== 'off' && settings.texting.enabled && family && smsConfigured() && p.household_id) {
