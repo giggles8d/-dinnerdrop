@@ -43,7 +43,7 @@ export default function VsEmealsPage() {
 
         <div className="flex flex-wrap gap-3 mb-12">
           <Link href="/signup" className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 shadow-sm">Start free — no card</Link>
-          <Link href="/start" className="px-6 py-3 rounded-xl border border-border bg-white font-semibold text-foreground hover:bg-muted">See how it works</Link>
+          <Link href="/emeals" className="px-6 py-3 rounded-xl border border-border bg-white font-semibold text-foreground hover:bg-muted">Switching? Get 3 months of Family free</Link>
         </div>
 
         <div className="overflow-x-auto rounded-2xl border border-border bg-white">

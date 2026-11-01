@@ -10,6 +10,119 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'emeals-review',
+    title: 'eMeals Review 2026: Honest Pros and Cons (and Who It Fits)',
+    description:
+      'An honest eMeals review for 2026: what you get, what it costs ($59.99 a year or $37.50 a quarter), what families praise, what they complain about, and when a free planner fits better.',
+    publishDate: '2026-10-31',
+    readingTimeMinutes: 6,
+    primaryKeyword: 'emeals review',
+    content: `eMeals has been planning dinners for families since 2003, which makes it one of the oldest meal planning services around. We went through its signup, its 15 meal plans, its help center and its pricing page in October 2026. Here is what we found, including where it is genuinely good.
+
+*Full disclosure: we make DinnerDrop, another dinner planner. We have tried to keep this fair; every eMeals price and feature below comes from eMeals' own site as of October 31, 2026.*
+
+## What eMeals is
+
+You pick one of 15 meal plans (Classic, Kid-Friendly, Keto, Diabetic, Heart Healthy, Mediterranean, Quick & Healthy and others). Each week the plan gives you seven dinner recipes with sides, written by eMeals' food team. You choose which ones to make, and the app builds a grocery list you can send to a store for pickup or delivery.
+
+## What it costs
+
+- **No free plan.** There is a 14-day free trial, and it needs a card or PayPal to start.
+- **Yearly:** $59.99 (shown as "$4.99/mo").
+- **Quarterly:** $37.50 (about $12.49 a month).
+- There is no month-to-month dinner plan. Breakfast and lunch plans are paid add-ons.
+- eMeals sometimes runs promotions, so check its site for the current price.
+
+## Pros
+
+- **A big, tested library.** eMeals lists 25,000+ recipes and adds new ones every week.
+- **Lots of grocery partners.** Walmart, Kroger, Instacart, Amazon Fresh, Albertsons/Safeway, H-E-B and Shipt. If you shop at Walmart, this is a real plus.
+- **Real apps.** Native iPhone and Android apps, rated 4.6 stars from about 53,000 ratings on the App Store.
+- **Sides included.** Most dinners come with a side, so the list covers the whole plate.
+- **A specialty plan for most diets**, from keto to diabetic to vegetarian.
+
+## Cons
+
+- **You pay before you try.** The trial needs a card, and the low monthly price only applies if you prepay the year.
+- **One menu per plan, not per family.** Everyone on the Kid-Friendly plan gets the same seven dinners. You can skip recipes, but the menu isn't built around your household's dislikes or budget.
+- **Billing complaints.** On Trustpilot (4.1 stars, about 3,100 reviews), the most common complaints in negative reviews are about renewals and cancelling. If you try it, set a reminder before the trial ends.
+- **Nutrition isn't on every plan.** eMeals shows full nutrition on 7 of its 15 plans.
+- **Web is secondary.** Much of the planning happens in the app.
+
+## Who eMeals fits
+
+eMeals is a good fit if you shop at Walmart, want a big catalog and native apps, and are happy prepaying a year once you know you like it.
+
+## Who might want something else
+
+If you want to try a planner for real without a card, need one menu that works for a picky eater *and* a fish-hater in the same house, or would rather pay month to month, look at the [best eMeals alternatives](/blog/emeals-alternatives) first.
+
+DinnerDrop is one of them: a free weekly dinner planner that builds five dinners around your family, makes one grocery list and opens it in your Instacart cart in one tap. The whole family can vote on the week's dinners by text. See the [side-by-side comparison](/vs/emeals), or if you're switching, [start free with code EMEALS](/emeals) for 3 months of the Family plan.
+
+*eMeals is a trademark of eMeals, Inc. DinnerDrop is not affiliated with or endorsed by eMeals.*
+`,
+  },
+  {
+    slug: 'emeals-alternatives',
+    title: 'eMeals Alternatives 2026: Free and Paid Meal Planners Compared',
+    description:
+      'The best eMeals alternatives in 2026, free and paid: DinnerDrop, Plan to Eat, Paprika, Samsung Food and meal kits, with prices, grocery handoff and who each one fits.',
+    publishDate: '2026-10-31',
+    readingTimeMinutes: 6,
+    primaryKeyword: 'emeals alternative',
+    content: `Families look for an eMeals alternative for a few common reasons: they don't want to put a card down for a trial, they don't want to prepay $59.99 for a year, or one set menu per plan doesn't work for the people at their table. Here are the options worth knowing in 2026, free and paid.
+
+*Disclosure: we make DinnerDrop, the first option below. Prices are from each company's site in October 2026 and can change.*
+
+## Quick comparison
+
+| | Price | Card to start | Who picks the dinners | Grocery handoff |
+|---|---|---|---|---|
+| **eMeals** | $59.99/yr or $37.50/quarter | Yes | eMeals' plan menu (7 a week) | Walmart, Kroger, Instacart and more |
+| **DinnerDrop** | Free; Family $4.99/mo or $39/yr | No | Built for your family; everyone can vote by text | Instacart (any store on it), Kroger cart |
+| **Plan to Eat** | $5.95/mo or $49/yr | Free trial | You | List only |
+| **Paprika** | One-time purchase per platform | No | You | List only |
+| **Samsung Food** | Free; Food+ $6.99/mo | No | You, or its suggestions | Varies by partner |
+| **Meal kits** | Per serving, usually much more | Yes | Kit menu | Delivered box |
+
+## 1. DinnerDrop: free, built around your family
+
+[DinnerDrop](/) plans five weeknight dinners around your family's size, budget, cook time, allergies and each person's dislikes. You can set a weekly mix (say, 2 chicken, 1 beef, 1 fish). It builds one combined grocery list and opens it in your Instacart cart in one tap, at any store on Instacart.
+
+What's different from eMeals: it's free with no card; the optional Family plan is $4.99 month to month; everyone in the house can vote on the week's dinners by text; a fridge photo turns into dinners you can make tonight; and it compares your list's cost across stores.
+
+Trade-offs: a smaller library (1,100+ recipes, growing every night), no Walmart yet, and no native Android app yet.
+
+**Switching from eMeals?** Type the dinners your family loved at [dinnerdrop.app/emeals](/emeals). DinnerDrop writes its own version of each one, sized for your family. Code EMEALS adds 3 months of Family free.
+
+## 2. Plan to Eat: for recipe collectors
+
+Best if you already have recipes you love on blogs and want to drag them onto a calendar yourself. It imports from almost any recipe site and builds a list. No AI planning and no cart handoff.
+
+## 3. Paprika: pay once
+
+A recipe manager with a planner and grocery list, bought once per platform. Great for organized cooks who don't want a subscription. You do all the planning.
+
+## 4. Samsung Food: free recipe saving
+
+Free recipe saving and planning, with a paid Food+ tier for personalized plans. Shopping partners vary by region.
+
+## 5. Meal kits
+
+HelloFresh, Home Chef and others remove the planning and the shopping, but cost much more per serving than groceries. A good fit for a busy season, not usually for feeding a family of five every week.
+
+## How to choose
+
+- **Want it free, and built for your family's tastes?** [DinnerDrop](/emeals).
+- **Have your own recipe collection?** Plan to Eat or Paprika.
+- **Shop at Walmart and like a big catalog?** eMeals may still be your best fit. Read our [eMeals review](/blog/emeals-review).
+
+See the full [DinnerDrop vs eMeals comparison](/vs/emeals).
+
+*eMeals is a trademark of eMeals, Inc. DinnerDrop is not affiliated with or endorsed by eMeals.*
+`,
+  },
+  {
     slug: 'easy-thanksgiving-week-dinners',
     title: 'Easy Thanksgiving-Week Dinners: 7 Nights Without Cooking a Whole Bird',
     description:
