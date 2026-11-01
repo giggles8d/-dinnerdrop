@@ -884,7 +884,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
   if (opts.resend && !round) { report.skipped.push('no open vote to resend'); return report }
   if (!round || opts.force) {
     if (round) await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id)
-    const { meals } = await generateCandidates(admin, o, count)
+    const { meals } = await generateCandidates(admin, o, count, trip?.key)
     if (!meals.length) { report.skipped.push('could not generate dinner ideas'); return report }
     // Family ideas texted in since the last vote join the ballot (up to 3), labelled with who suggested them.
     const ideaMeals: Meal[] = []
@@ -918,7 +918,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     const askedAlready = await sentForRound(admin, mm.id, round.id)
     // resend: the same round's menu again (e.g. after a picture fix) — only to people who already got it
     if (opts.resend ? !askedAlready : (!opts.force && askedAlready)) continue
-    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap, menuImageUrl(round.id))) report.voteTextsSent++
+    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap * Math.max(1, settings.schedule.trips.length), menuImageUrl(round.id))) report.voteTextsSent++
     // Their idea made the ballot: say so (once per round, not counted against the weekly cap).
     const theirs = round.candidates.map((c, i) => ({ c, n: i + 1 })).filter(({ c }) => c.ideaBy && c.ideaBy.toLowerCase() === mm.name.toLowerCase())
     if (theirs.length && !opts.resend && !(await alreadySentTo(admin, mm.id, `idea_in_vote:${round.id}`, 7))) {
@@ -1119,7 +1119,7 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   // Shopping trips: a trip's vote fills only that trip's nights.
   const tcfg = tripsConfig(settings)
   const tripNights = isClassic(tcfg) ? null : tripInstances(tcfg, round.week_start).find((t) => t.key === round.week_start)?.nights.map((n) => n.day) ?? null
-  const shape: PlanShape = { dinnersPerWeek: round.picks_needed, cookDays: tripNights ?? settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
+  const shape: PlanShape = { dinnersPerWeek: round.picks_needed, cookDays: tripNights?.length ? tripNights : settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   const saved = await savePlan(admin, owner.id, round.week_start, chosen, shape)
   await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString(), result: { chosen: saved.map((m) => m.name), tally } }).eq('id', round.id)
 

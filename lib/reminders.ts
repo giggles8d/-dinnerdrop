@@ -114,7 +114,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
         const resolved = resolveTrips(tcfg)[voteTrip.index]
         const familyVotes = family && settings.texting.enabled && resolved?.vote !== false
         const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', voteTrip.key).limit(1)
-        if (!familyVotes && !existing?.length) {
+        const { data: recentPlan } = await admin.from('meal_plans').select('created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
+        const active = recentPlan?.[0]?.created_at && now.getTime() - new Date(recentPlan[0].created_at).getTime() <= ACTIVE_DAYS * 86400000
+        if (active && !familyVotes && !existing?.length) {
           const meals = await autoPlan(admin, p, settings, voteTrip.key)
           if (meals) {
             report.autoPlans++
@@ -220,7 +222,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       if (cook.channel !== 'off' && settings.plan.cookDays.includes(weekday)) {
         const tt = tripMode ? tonightTrip(tcfg, today) : null
         const cq = admin.from('meal_plans').select('meals').eq('user_id', p.id)
-        const { data: plan } = await (tt ? cq.eq('week_start', tt.key) : cq).order('created_at', { ascending: false }).limit(1).single()
+        const { data: plan } = tripMode && !tt ? { data: null } : await (tt ? cq.eq('week_start', tt.key) : cq).order('created_at', { ascending: false }).limit(1).single()
         const tonight = ((plan?.meals as Meal[]) ?? []).find((m) => m.day === todayLabel)
         if (tonight) {
           const line = `${tonight.name} — ${timeLabel(tonight)}`

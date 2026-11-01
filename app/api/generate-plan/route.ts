@@ -4,7 +4,7 @@ import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
 import { createClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, tripsConfig, type Settings, type Weekday } from '@/lib/settings'
-import { isClassic, resolveTrips, shoppingTrip } from '@/lib/trips'
+import { isClassic, resolveTrips, shoppingTrip, tripByKey } from '@/lib/trips'
 import { localNow } from '@/lib/plan'
 import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName, honestTags } from '@/lib/recipe-library'
 import type { Meal } from '@/types'
@@ -104,7 +104,9 @@ export async function POST(request: Request) {
     // Shopping trips (Nov 1 2026): a family that shops more than once a week plans the next trip's nights only.
     // The classic setup (Monday week, one trip) skips this entirely.
     const tcfg = tripsConfig(settings)
-    const trip = isClassic(tcfg) ? null : shoppingTrip(tcfg, localNow(profileRow.timezone || 'America/New_York').dateStr)
+    // The caller names the trip (vote day, auto-plan); otherwise the next trip to shop for.
+    const askedTrip = !isClassic(tcfg) && typeof body.tripKey === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(body.tripKey) ? tripByKey(tcfg, body.tripKey) : null
+    const trip = isClassic(tcfg) ? null : (askedTrip && askedTrip.nights.length ? askedTrip : shoppingTrip(tcfg, localNow(profileRow.timezone || 'America/New_York').dateStr))
     const weekNights = isClassic(tcfg) ? 0 : resolveTrips(tcfg).reduce((n, t) => n + t.nights.length, 0)
     const cookDays = trip ? trip.nights.map((n) => n.day) : settings.plan.cookDays.length ? settings.plan.cookDays : (['mon', 'tue', 'wed', 'thu', 'fri'] as Weekday[])
     const dinnersPerWeek = trip ? Math.min(Math.max(trip.nights.length, 1), 7) : Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)

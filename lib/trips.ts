@@ -48,7 +48,9 @@ function ahead(a: Weekday, b: Weekday): number { return (IDX[b] - IDX[a] + 7) % 
 
 /** True when the family uses the original setup (Monday week, one trip): keys are plain Monday dates. */
 export function isClassic(c: TripsConfig): boolean {
-  return c.weekStart === 'mon' && c.trips.length <= 1
+  // One trip = the original setup, whatever day the week is shown from (review, Nov 1: changing only the
+  // week start must not switch a family into trip mode).
+  return c.trips.length <= 1
 }
 
 /** The family's trips with their nights filled in. A trip covers the cook nights after its shop day, up to and including the next trip's shop day. */
@@ -58,19 +60,19 @@ export function resolveTrips(c: TripsConfig): ResolvedTrip[] {
   // Order trips through the family's week, starting at its first shop day on or after the week start.
   const sorted = raw.map((t, i) => ({ t, i })).sort((a, b) => ahead(c.weekStart, a.t.shopDay) - ahead(c.weekStart, b.t.shopDay))
   const explicit = new Set<Weekday>(sorted.flatMap(({ t }) => t.nights ?? []))
+  const after = (shop: Weekday, d: Weekday) => ahead(shop, d) || 7   // a dinner on the shop day itself is a week out
   return sorted.map(({ t }, k) => {
-    let nights: Weekday[]
-    if (t.nights && t.nights.length) {
-      nights = [...t.nights].filter((d) => cook.has(d)).sort((a, b) => ahead(t.shopDay, a) - ahead(t.shopDay, b))
-    } else {
-      const next = sorted.length > 1 ? sorted[(k + 1) % sorted.length].t.shopDay : t.shopDay
-      const span = sorted.length > 1 ? (ahead(t.shopDay, next) || 7) : 7
-      nights = []
-      for (let s = 1; s <= span; s++) {
-        const d = WEEKDAYS[(IDX[t.shopDay] + s) % 7]
-        if (cook.has(d) && !explicit.has(d)) nights.push(d)
-      }
+    // Automatic nights: after this shop day, up to and including the next trip's shop day.
+    const next = sorted.length > 1 ? sorted[(k + 1) % sorted.length].t.shopDay : t.shopDay
+    const span = sorted.length > 1 ? (ahead(t.shopDay, next) || 7) : 7
+    const auto: Weekday[] = []
+    for (let s = 1; s <= span; s++) {
+      const d = WEEKDAYS[(IDX[t.shopDay] + s) % 7]
+      if (cook.has(d)) auto.push(d)
     }
+    // Nights a family moved stay where they put them; any cook night nobody claimed keeps its automatic trip.
+    const mine = (t.nights ?? []).filter((d) => cook.has(d))
+    const nights = Array.from(new Set([...mine, ...auto.filter((d) => !explicit.has(d))])).sort((a, b) => after(t.shopDay, a) - after(t.shopDay, b))
     return { index: k, shopDay: t.shopDay, nights, store: t.store, vote: t.vote !== false }
   })
 }
@@ -109,7 +111,7 @@ export function tripInstances(c: TripsConfig, date: string, weeks = 2): TripInst
 /** The trip a family is shopping for on `date`: the next trip whose shop day is today or later. */
 export function shoppingTrip(c: TripsConfig, date: string): TripInstance {
   const list = tripInstances(c, date)
-  return list.find((t) => t.shopDate >= date) ?? list[list.length - 1]
+  return list.find((t) => t.shopDate >= date && t.nights.length > 0) ?? list[list.length - 1]
 }
 
 /** The trip whose dinner is tonight (or null on a night with no planned dinner). */
@@ -119,7 +121,7 @@ export function tonightTrip(c: TripsConfig, date: string): TripInstance | null {
 
 /** The trip whose family vote happens on `date` (the day before its shop day), if any. */
 export function voteTripOn(c: TripsConfig, date: string): TripInstance | null {
-  return tripInstances(c, date).find((t) => addDays(t.shopDate, -1) === date) ?? null
+  return tripInstances(c, date).find((t) => t.nights.length > 0 && addDays(t.shopDate, -1) === date) ?? null
 }
 
 /** The trip whose list is "current" on `date`: the first one that still has a dinner tonight or later. */
@@ -131,4 +133,9 @@ export function currentTrip(c: TripsConfig, date: string): TripInstance {
 /** The week_start key for `date`. Classic setup: exactly the Monday date, as before. */
 export function currentKey(c: TripsConfig, date: string): string {
   return isClassic(c) ? mondayOfDate(date) : currentTrip(c, date).key
+}
+
+/** The trip instance whose key is `key` (keys are first-night dates, or Monday dates in the classic setup). */
+export function tripByKey(c: TripsConfig, key: string): TripInstance | null {
+  return tripInstances(c, key).find((t) => t.key === key) ?? null
 }

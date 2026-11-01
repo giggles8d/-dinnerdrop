@@ -29,3 +29,17 @@ const mon2 = { weekStart: 'mon' as const, trips: [{ shopDay: 'sun' as const }, {
 eq('mon2 classic?', isClassic(mon2), false)
 const keys = tripInstances(mon2, '2026-11-03', 4).map((t) => t.key); eq('unique keys', new Set(keys).size, keys.length)
 console.log(fail ? `${fail} failures` : 'all trip tests pass')
+// Review cases (Nov 1): shop-day night moved onto its own trip; new cook day after a move; zero-night trip; back-to-back shop days.
+{
+  const moved = { weekStart: 'sun' as const, trips: [{ shopDay: 'sun' as const, nights: ['mon','tue'] as Weekday[] }, { shopDay: 'wed' as const, nights: ['wed','thu','fri'] as Weekday[] }], cookDays: ['mon','tue','wed','thu','fri','sat'] as Weekday[], shopDay: 'sun' as const }
+  const r = resolveTrips(moved)
+  eq('moved nights', r.map((t) => t.nights), [['mon','tue'], ['thu','fri','sat','wed']])
+  const i2 = tripInstances(moved, '2026-11-03').find((t) => t.shopDate === '2026-11-04')
+  eq('moved key', i2?.key, '2026-11-05')
+  const zero = { weekStart: 'sun' as const, trips: [{ shopDay: 'sun' as const, nights: ['mon','tue','wed','thu','fri'] as Weekday[] }, { shopDay: 'wed' as const, nights: [] as Weekday[] }], cookDays: ['mon','tue','wed','thu','fri'] as Weekday[], shopDay: 'sun' as const }
+  eq('zero vote', voteTripOn(zero, '2026-11-03'), null)
+  const b2b = { weekStart: 'sun' as const, trips: [{ shopDay: 'sun' as const }, { shopDay: 'mon' as const }], cookDays: ['mon','tue','wed','thu','fri'] as Weekday[], shopDay: 'sun' as const }
+  eq('b2b nights', resolveTrips(b2b).map((t) => t.nights), [['mon'], ['tue','wed','thu','fri']])
+  eq('classic with sunday start', isClassic({ ...classic, weekStart: 'sun' as const }), true)
+  console.log(fail ? `${fail} failures (incl. review cases)` : 'review cases pass')
+}

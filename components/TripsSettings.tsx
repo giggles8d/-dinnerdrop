@@ -14,7 +14,8 @@ const COLORS = [
   { ink: 'text-[#8a5a00]', bg: 'bg-[#fdf4e3]', border: 'border-[#ecc985]', pill: 'bg-[#8a5a00]' },
   { ink: 'text-[#2b5d9b]', bg: 'bg-[#eef3fa]', border: 'border-[#a9c0e0]', pill: 'bg-[#2b5d9b]' },
 ]
-const PRESETS: Record<number, Weekday[]> = { 2: ['sun', 'wed'], 3: ['sun', 'tue', 'thu'] }
+// Shop days spread through the family's week: 2 trips = start + 3 days; 3 trips = start, +2, +4 (Sunday week → Sun/Wed, Sun/Tue/Thu).
+const PRESET_OFFSETS: Record<number, number[]> = { 2: [0, 3], 3: [0, 2, 4] }
 
 interface Props {
   settings: Settings
@@ -36,7 +37,8 @@ export default function TripsSettings({ settings, patch, isFamily }: Props) {
   function setCount(n: number) {
     patch((s) => {
       if (n <= 1) { s.schedule.trips = []; return }
-      const days = PRESETS[n]
+      const startIdx = WEEKDAYS.indexOf(s.schedule.weekStart)
+      const days = PRESET_OFFSETS[n].map((o) => WEEKDAYS[(startIdx + o) % 7])
       s.schedule.trips = days.map((d, i) => ({ shopDay: d, vote: true, store: s.schedule.trips[i]?.store }))
     })
   }
@@ -176,7 +178,7 @@ export default function TripsSettings({ settings, patch, isFamily }: Props) {
         <label className="flex items-start justify-between gap-3 rounded-xl border border-border p-4">
           <span className="space-y-0.5">
             <span className="block text-sm font-medium text-foreground">Buy pantry items on the first trip</span>
-            <span className="block text-xs text-muted-foreground">Garlic, onions, spices, oils and cheese go on {WEEKDAY_LABEL[trips[0].shopDay]}&apos;s list. Later trips mark them &ldquo;have it&rdquo; so you don&apos;t buy them twice.</span>
+            <span className="block text-xs text-muted-foreground">Garlic, onions, spices, oils and cheese you buy on {WEEKDAY_LABEL[trips[0].shopDay]}&apos;s trip show as &ldquo;have it&rdquo; on later trips that week, so you don&apos;t buy them twice.</span>
           </span>
           <input type="checkbox" checked={settings.schedule.pantryFirstTrip} onChange={(e) => patch((s) => { s.schedule.pantryFirstTrip = e.target.checked })} className="accent-[#1a5c38] w-4 h-4 mt-1" />
         </label>
