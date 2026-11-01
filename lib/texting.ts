@@ -18,7 +18,8 @@ import { generateWithClaude, generateWithClaudeImage, generateSmart, parseClaude
 import { looksLikeFlyer, salesFromImage, saveSales } from '@/lib/sales'
 import { blendFactor, factorAtSend } from '@/lib/prices'
 import { markAllOpenOrdered } from '@/lib/list-ordered'
-import { walmartUrlsIn, resolveWalmartLink } from '@/lib/store-links'
+import { walmartUrlsIn, resolveWalmartLink, type WalmartLink } from '@/lib/store-links'
+import { cartUrl } from '@/lib/walmart'
 import type { Meal } from '@/types'
 
 export interface MemberRow {
@@ -440,6 +441,19 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const walmartUrls = walmartUrlsIn(body)
   if (walmartUrls.length && owner) {
     if (!m.can_add) return { reply: `Adding to the list is turned off for you, ${m.name}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
+    // Planner's choice (Settings → texting): straight to a one-tap Walmart cart link instead of the list.
+    if (settings.texting.walmartLinks === 'cart') {
+      const links = (await Promise.all(walmartUrls.slice(0, 10).map((u) => resolveWalmartLink(u)))).filter((l): l is WalmartLink => !!l)
+      if (!links.length) return { reply: `I couldn't read that Walmart link, ${m.name}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
+      const names = links.map((l) => l.name ?? 'a Walmart item').join(', ')
+      const url = cartUrl(links.map((l) => ({ itemId: l.itemId, qty: 1 })))
+      const to = await ownerPhone(admin, owner)
+      const isPlanner = m.profile_id === owner.id || (!!to && to === m.phone)
+      if (isPlanner || !to) return { reply: `Tap to add ${names} to your Walmart cart: ${url}`, handled: true, member: m }
+      const r = await sendSms(to, `${m.name} wants ${names} from Walmart. Tap to add to your Walmart cart: ${url}`)
+      await admin.from('sms_messages').insert({ household_id: m.household_id, direction: 'out', to_number: to, body: `walmart pick from ${m.name}: ${names}`, intent: 'walmart_pick', twilio_sid: r.sid ?? null })
+      return { reply: r.ok ? `Sent to ${family}: ${names}. One tap puts it in the Walmart cart. ✅` : `I couldn't reach ${family} just now. Try again in a bit.`, handled: true, member: m }
+    }
     const weekStart = plan?.week_start ?? mondayOf(new Date())
     const { data: existing } = await admin.from('list_items').select('id, walmart_item_id').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
     const added: string[] = []

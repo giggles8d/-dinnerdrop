@@ -54,6 +54,7 @@ export interface Settings {
     quietEnd: string
     weeklyCap: number               // max texts per member per week
     ownerPhone: string              // where "everyone's voted" + reminders for the planner go (E.164)
+    walmartLinks: 'list' | 'cart'   // a texted Walmart link: put it on the grocery list, or text the planner a one-tap Walmart-cart link
     optionsToText: number           // dinner ideas texted for the family to pick from (>= dinnersPerWeek)
     lastCall: {
       message: string               // template: {name} {store} {minutes}
@@ -122,6 +123,7 @@ export const DEFAULT_SETTINGS: Settings = {
     quietEnd: '07:00',
     weeklyCap: 4,
     ownerPhone: '',
+    walmartLinks: 'list',
     optionsToText: 8,
     lastCall: {
       message: '{name} is ordering groceries from {store} in {minutes} min. Need anything? Reply ADD + the item (e.g. ADD granola bars), or send a photo of it.',
