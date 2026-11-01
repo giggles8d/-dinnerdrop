@@ -26,6 +26,8 @@ import SavingsCard from '@/components/SavingsCard'
 import ShareWeekButton from '@/components/ShareWeekButton'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
 import { repeatPlan, lastWeekPlan, mondayISO } from '@/lib/repeat-plan'
+import { mergeSettings, tripsConfig } from '@/lib/settings'
+import { isClassic, currentKey } from '@/lib/trips'
 
 export default function DashboardPage() {
   return (
@@ -56,6 +58,9 @@ function DashboardContent() {
   const [planMode, setPlanMode] = useState<'fresh' | 'favorites'>('fresh')
   // "Repeat last week": the most recent plan from before this week, and this week's plan date (to ask before replacing it).
   const [prevWeek, setPrevWeek] = useState<{ week_start: string; meals: Meal[] } | null>(null)
+  // Shopping trips (Nov 1 2026): families with more than one trip a week plan and save per trip; classic families never touch this.
+  const [tripMode, setTripMode] = useState(false)
+  const [tripKey, setTripKey] = useState<string | null>(null)
   const [currentWeekStart, setCurrentWeekStart] = useState<string | null>(null)
   const [confirmRepeat, setConfirmRepeat] = useState(false)
   // null = unknown yet; false = this week's list hasn't gone to a store (drives the sticky "list is ready" bar).
@@ -116,6 +121,11 @@ function DashboardContent() {
         // used to vanish.)
         setNeedsPersonalize(!profile.onboarding_complete)
       }
+      const tcfg = tripsConfig(mergeSettings(profile?.settings))
+      const trips = !isClassic(tcfg)
+      setTripMode(trips)
+      const now = new Date()
+      const todayLocal = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
 
       // Referral attribution (no-op without the dd_ref cookie).
       if (document.cookie.includes('dd_ref=')) fetch('/api/referrals/attach', { method: 'POST' }).catch(() => {})
@@ -181,7 +191,7 @@ function DashboardContent() {
 
         if (plan.week_start) {
           // Compare dates as strings: new Date('YYYY-MM-DD') is UTC midnight, which is Sunday evening in the US.
-          if (plan.week_start < mondayISO()) setIsPlanStale(true)
+          if (plan.week_start < (trips ? currentKey(tcfg, todayLocal) : mondayISO())) setIsPlanStale(true)
         }
       }
 
@@ -347,7 +357,7 @@ function DashboardContent() {
 
       // Generation occasionally fails on the first attempt — auto-retry once,
       // transparently, so users don't get stranded with no plan.
-      let data: { meals?: Meal[]; plan?: PlanShape; error?: string } | null = null
+      let data: { meals?: Meal[]; plan?: PlanShape; error?: string; tripKey?: string | null } | null = null
       let lastErr: unknown = null
       for (let attempt = 0; attempt < 2; attempt++) {
         const controller = new AbortController()
@@ -388,6 +398,7 @@ function DashboardContent() {
       if (data.meals) {
         const shape = data.plan ?? DEFAULT_SHAPE
         setPlanShape(shape)
+        setTripKey(data.tripKey ?? null)
         if (keepMeals.length) {
           // Kept picks stay on top (re-keyed so their ids can't clash with the new options), and the
           // rest of the week is pre-filled with the new options that share the most fresh ingredients.
@@ -504,7 +515,7 @@ function DashboardContent() {
 
       await supabase.from('meal_plans').insert({
         user_id: user.id,
-        week_start: mondayISO(),
+        week_start: tripKey ?? mondayISO(),
         meals: confirmed,
         grocery_list: {},
         total_estimated_cost: confirmedCost,
@@ -720,7 +731,7 @@ function DashboardContent() {
                   Build from my favorites
                 </label>
               )}
-              {prevWeek && !loading && !initialLoading && (
+              {prevWeek && !tripMode && !loading && !initialLoading && (
                 <button
                   onClick={repeatLastWeek}
                   onBlur={() => setConfirmRepeat(false)}

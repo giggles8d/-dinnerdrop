@@ -3,7 +3,9 @@ import { styleByKey } from '@/lib/styles'
 import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
 import { createClient } from '@supabase/supabase-js'
-import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, type Settings, type Weekday } from '@/lib/settings'
+import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, tripsConfig, type Settings, type Weekday } from '@/lib/settings'
+import { isClassic, resolveTrips, shoppingTrip } from '@/lib/trips'
+import { localNow } from '@/lib/plan'
 import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName, honestTags } from '@/lib/recipe-library'
 import type { Meal } from '@/types'
 import { ensurePortions } from '@/lib/portions'
@@ -51,7 +53,7 @@ export async function POST(request: Request) {
 
     const { data: profileRow } = await supabase
       .from('profiles')
-      .select('id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, settings, household_id')
+      .select('id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, settings, household_id, timezone')
       .eq('id', body.userId)
       .single()
 
@@ -99,8 +101,13 @@ export async function POST(request: Request) {
     const allergyPeople = [...members.filter((m) => m.allergies?.length).map((m) => ({ name: m.name, allergies: m.allergies })), ...(freeDiets.length ? [{ name: '', allergies: freeDiets }] : [])]
 
     // ---------- plan shape ----------
-    const cookDays = settings.plan.cookDays.length ? settings.plan.cookDays : (['mon', 'tue', 'wed', 'thu', 'fri'] as Weekday[])
-    const dinnersPerWeek = Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
+    // Shopping trips (Nov 1 2026): a family that shops more than once a week plans the next trip's nights only.
+    // The classic setup (Monday week, one trip) skips this entirely.
+    const tcfg = tripsConfig(settings)
+    const trip = isClassic(tcfg) ? null : shoppingTrip(tcfg, localNow(profileRow.timezone || 'America/New_York').dateStr)
+    const weekNights = isClassic(tcfg) ? 0 : resolveTrips(tcfg).reduce((n, t) => n + t.nights.length, 0)
+    const cookDays = trip ? trip.nights.map((n) => n.day) : settings.plan.cookDays.length ? settings.plan.cookDays : (['mon', 'tue', 'wed', 'thu', 'fri'] as Weekday[])
+    const dinnersPerWeek = trip ? Math.min(Math.max(trip.nights.length, 1), 7) : Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
     const requested = Number(body.optionsCount) > 0 ? Number(body.optionsCount) : settings.plan.optionsCount
     const optionsCount = Math.min(Math.max(requested, dinnersPerWeek, 5), 12)
     // Weekly protein mix (Settings → Food): counts for the cooked dinners, scaled to the options offered.
@@ -112,7 +119,9 @@ export async function POST(request: Request) {
     // The family's budget is what they'll pay at their store; estimates are at typical prices,
     // so plan to budget ÷ priceFactor (learned from their real orders; 1 until the first one).
     const priceFactor = Number(settings.stores.priceFactor) > 0 ? Number(settings.stores.priceFactor) : 1
-    const budgetNumber = (Number(String(profile.weeklyBudget).replace(/[^0-9.]/g, '')) || 100) / priceFactor
+    const weeklyBudget = (Number(String(profile.weeklyBudget).replace(/[^0-9.]/g, '')) || 100) / priceFactor
+    // A trip spends its share of the weekly dinner budget.
+    const budgetNumber = trip && weekNights > 0 ? weeklyBudget * (trip.nights.length / weekNights) : weeklyBudget
     const perMealBudget = (budgetNumber / dinnersPerWeek).toFixed(0)
 
     // ---------- taste profile (learned) + recent plans, fetched together ----------
@@ -253,6 +262,7 @@ export async function POST(request: Request) {
         totalEstimatedCost: libraryMeals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0),
         plan: { dinnersPerWeek, cookDays, nightTimes, leftoverNight: settings.plan.leftoverNight },
         source: 'library',
+        tripKey: trip?.key ?? null,
       })
     }
     const generateCount = mode === 'fresh' ? Math.max(optionsCount - libraryMeals.length, 2) : Math.max(optionsCount, 3)
@@ -440,6 +450,7 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
       meals,
       totalEstimatedCost,
       plan: { dinnersPerWeek, cookDays, nightTimes, leftoverNight: settings.plan.leftoverNight },
+      tripKey: trip?.key ?? null,
     })
   } catch (error) {
     console.error('Error generating meal plan:', error)
