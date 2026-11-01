@@ -251,7 +251,7 @@ export default async function LandingPage() {
               Try Family free for 14 days &rarr;
             </Link>
             <p className="text-sm text-muted-foreground leading-snug">
-              Card required for the Family trial. $0 today. We email you on day 11, three days before the first charge. Cancel in one tap from Account.
+              Every new family gets the first 14 days of Family free with no card. Add a card here to keep it after that: $0 today, we email you on day 11, cancel in one tap from Account.
             </p>
           </div>
         </div>
