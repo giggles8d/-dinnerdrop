@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     })
   )
 
-  const { data, error } = await getResend().emails.send({
+  const send = () => getResend().emails.send({
     from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',
     to: userEmail,
     subject: config.subject,
@@ -63,6 +63,13 @@ export async function POST(request: NextRequest) {
       'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
     },
   })
+  // Resend allows 10 requests/second; other jobs can send at the same moment (Nov 1: 8 day-1 emails lost to 429s).
+  // Wait and retry a rate-limited send instead of dropping it.
+  let { data, error } = await send()
+  for (let attempt = 1; attempt <= 3 && error && error.name === 'rate_limit_exceeded'; attempt++) {
+    await new Promise((r) => setTimeout(r, 1000 * attempt))
+    ;({ data, error } = await send())
+  }
 
   if (error) {
     console.error(`[email/send-trial] Resend error for user ${userId}:`, error)

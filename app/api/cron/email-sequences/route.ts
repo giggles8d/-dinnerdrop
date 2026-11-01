@@ -71,6 +71,8 @@ export async function GET(request: NextRequest) {
       const sentEmails: number[] = user.email_sequence_sent || []
       if (sentEmails.includes(emailNumber)) continue
 
+      // Space sends out (Resend's limit is 10/second, shared with other jobs).
+      await new Promise((r) => setTimeout(r, 300))
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dinnerdrop.app'}/api/email/send-trial`,
