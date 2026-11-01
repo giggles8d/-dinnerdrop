@@ -18,6 +18,9 @@ Sarah's standing instruction (2026-10-28): post **3 videos a day** on DinnerDrop
 
 Trend rotation by weekday: Mon "$X grocery haul" · Tue "Girl dinner vs real dinner" · Wed viral-ingredient remix · Thu "POV: it's 5 PM" · Fri fridge clean-out (pantry feature) · Sat ASMR ingredient→plate (no talking) · Sun "Sunday reset: plan the week in 60 s".
 
+## Caption line (Nov 1 2026)
+Every caption's CTA names both carts, Instacart first: "…and the whole grocery list lands in your Instacart or Walmart cart in one tap." Walmart in text only (no logo).
+
 ## Links in captions (so signups show their source in the Monday report)
 - YouTube description: `https://dinnerdrop.app/?utm_source=youtube&utm_medium=shorts&utm_campaign=<slot>` (slot = fruit / recipe / trend)
 - Facebook: `dinnerdrop.app/?utm_source=facebook&utm_medium=reels&utm_campaign=<slot>`
