@@ -329,7 +329,7 @@ export async function reconcileReceipt(admin: SupabaseClient, ownerId: string, p
 
   // A receipt IS the family's confirmation that the order went through (since Oct 31 a send alone no longer
   // clears the list), so everything that was open when the list went to the store counts as sent now.
-  if (handoff) await markAllOpenOrdered(admin, ownerId, handoff.created_at as string).catch(() => 0)
+  if (handoff) await markAllOpenOrdered(admin, ownerId, handoff.created_at as string, handoff.week_start as string | null).catch(() => 0)
 
   // The lines that went to the store for that handoff (sent within ±1 day of it, or the whole week when no handoff).
   let sent: SentLine[] = []

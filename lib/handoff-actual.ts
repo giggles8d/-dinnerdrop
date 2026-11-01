@@ -16,7 +16,7 @@ export async function recordActualTotal(
   handoffId?: string | null,
 ): Promise<{ handoffId: string | null; factor: number | null }> {
   if (!Number.isFinite(actual) || actual <= 0) return { handoffId: null, factor: null }
-  const q = admin.from('grocery_handoffs').select('id, est_total, created_at').eq('user_id', ownerId)
+  const q = admin.from('grocery_handoffs').select('id, est_total, created_at, week_start').eq('user_id', ownerId)
   const { data: h } = handoffId
     ? await q.eq('id', handoffId).single()
     : await q.order('created_at', { ascending: false }).limit(1).single()
@@ -24,7 +24,7 @@ export async function recordActualTotal(
   const storeName = store ? String(store).slice(0, 40) : ''
   await admin.from('grocery_handoffs').update({ actual_total: actual, ...(storeName ? { store: storeName } : {}) }).eq('id', h.id)
   // A real total means the order went through: the lines that were on the list when it was sent come off now.
-  await markAllOpenOrdered(admin, ownerId, h.created_at).catch(() => {})
+  await markAllOpenOrdered(admin, ownerId, h.created_at, h.week_start).catch(() => {})
   let factor: number | null = null
   if (h.est_total && Number(h.est_total) > 0) {
     const { data: prof } = await admin.from('profiles').select('settings').eq('id', ownerId).single()
