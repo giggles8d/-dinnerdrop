@@ -87,7 +87,7 @@ export default function StartPage() {
           Less deciding. <span style={{ color: GOLD }}>More dinners.</span>
         </h1>
         <p className="text-sm sm:text-base font-semibold text-gray-700 max-w-xl mx-auto leading-relaxed mb-5">
-          Five weeknight dinners your family will eat, planned for you every week &mdash; and the whole grocery list lands in <strong>your Instacart cart</strong> in one tap. Free, no card, no app to download.
+          Five weeknight dinners your family will eat, planned for you every week &mdash; and the whole grocery list lands in <strong>your Instacart or Walmart cart</strong> in one tap. Free, no card, no app to download.
         </p>
 
         {/* Primary CTA — above the fold on mobile */}
@@ -96,19 +96,19 @@ export default function StartPage() {
             Start free &mdash; no card needed &rarr;
           </Link>
           <p className="text-sm text-gray-600 flex items-center justify-center gap-2 flex-wrap">
-            <InstacartCarrot height={14} /> Works with your Instacart account and every store on it &middot; Free forever &middot; Family plan free for your first 14 days, no card
+            <InstacartCarrot height={14} /> Works with Instacart (and every store on it), Walmart and Kroger &middot; Free forever &middot; Family plan free for your first 14 days, no card
           </p>
         </div>
 
         <p className="text-base sm:text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-10 sm:mb-12">
-          Tell us your family size, budget, and how long you have to cook. Every week you get five dinners your family will actually eat and one deduplicated list &mdash; ready for <strong>Instacart</strong> or your <strong>Kroger</strong> cart.
+          Tell us your family size, budget, and how long you have to cook. Every week you get five dinners your family will actually eat and one deduplicated list &mdash; ready for your <strong>Instacart</strong>, <strong>Walmart</strong> or <strong>Kroger</strong> cart.
         </p>
 
         {/* Benefits */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 text-left">
           {[
             { icon: '🗓️', title: 'Unlimited weekly plans', desc: 'AI-planned weeknight dinners every week, personalized to your family size, budget, and dietary needs.' },
-            { icon: '🛒', title: 'One tap, in your cart', desc: 'Your full list auto-loads into Instacart — pick your store, review, check out. Family members can push straight to a Kroger cart.' },
+            { icon: '🛒', title: 'One tap, in your cart', desc: 'Your full list auto-loads into Instacart (any store on it) or your Walmart cart, every item matched — review, check out. Family members can push straight to a Kroger cart.' },
             { icon: '💰', title: 'Built to your budget', desc: 'Set a weekly number. Every plan is built to fit it, with overlapping ingredients so nothing goes to waste.' },
           ].map((benefit) => (
             <div key={benefit.title} className="p-5 rounded-2xl border bg-white" style={{ borderColor: '#e8e8e8' }}>
@@ -122,7 +122,7 @@ export default function StartPage() {
         {/* Cart mechanics — the question every parent asks */}
         <div className="rounded-2xl border bg-white p-5 mb-12 text-left text-sm text-gray-600 leading-relaxed" style={{ borderColor: '#e8e8e8' }}>
           <p className="font-bold mb-1" style={{ color: GREEN }}>How the cart works</p>
-          DinnerDrop fills the cart in your own Instacart or Kroger account. You review every item and check out there at Instacart&apos;s or Kroger&apos;s prices for that store (plus their fees). We never charge your grocery account and never mark anything up.
+          DinnerDrop fills the cart in your own Instacart, Walmart or Kroger account. You review every item and check out there at that store&apos;s prices (plus any of their fees). We never charge your grocery account and never mark anything up.
         </div>
 
         {/* Social proof */}
@@ -151,7 +151,7 @@ export default function StartPage() {
               <h3 className="font-bold" style={{ color: GREEN }}>Free</h3>
               <p className="text-4xl font-bold text-gray-900">$0<span className="text-sm font-normal text-gray-500"> forever</span></p>
               <ul className="space-y-2 text-sm text-gray-600">
-                {['Unlimited weekly dinner plans', 'Deduplicated grocery list', 'One-tap Instacart cart', 'Swap any dinner', 'Pantry scan', 'Favorites and meal history'].map((li) => (
+                {['Unlimited weekly dinner plans', 'Deduplicated grocery list', 'One-tap Instacart or Walmart cart', 'Swap any dinner', 'Pantry scan', 'Favorites and meal history'].map((li) => (
                   <li key={li} className="flex items-start gap-2"><span style={{ color: GREEN }}>✓</span>{li}</li>
                 ))}
               </ul>
@@ -196,7 +196,7 @@ export default function StartPage() {
           {[
             { step: '1', title: 'Four taps about your family', desc: 'What would make dinner easier, who’s eating, your budget, and your cell if you want the week texted to you. Under a minute — or skip it.' },
             { step: '2', title: 'Get your 5-dinner plan', desc: 'Every week, AI builds a personalized dinner plan around what your family actually eats.' },
-            { step: '3', title: 'One tap to your cart', desc: 'Your full grocery list opens in your Instacart cart with every item pre-loaded — you pick the store and check out.' },
+            { step: '3', title: 'One tap to your cart', desc: 'Your full grocery list opens in your Instacart cart or fills your Walmart cart with every item pre-loaded — review and check out there.' },
           ].map((item) => (
             <div key={item.step} className="flex flex-col items-center gap-3">
               <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-lg" style={{ backgroundColor: GREEN }}>
@@ -230,7 +230,7 @@ export default function StartPage() {
           {[
             {
               q: 'Is it really free?',
-              a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart cart are free, with no card. Instacart pays us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.',
+              a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart and Walmart carts are free, with no card. Instacart and Walmart pay us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.',
             },
             {
               q: 'What does Family add, and what does it cost?',

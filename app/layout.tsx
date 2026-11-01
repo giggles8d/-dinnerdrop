@@ -5,19 +5,19 @@ import PwaRegister from "@/components/PwaRegister";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart Cart",
-  description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
+  title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart or Walmart Cart",
+  description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart or Walmart cart in one tap. Free, no card needed.",
   openGraph: {
-    title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart Cart",
-    description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
+    title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart or Walmart Cart",
+    description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart or Walmart cart in one tap. Free, no card needed.",
     images: [{ url: "/og-image.png?v=3", width: 1200, height: 630, alt: "DinnerDrop" }],
     type: "website",
     url: "https://www.dinnerdrop.app",
   },
   twitter: {
     card: "summary_large_image",
-    title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart Cart",
-    description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart cart in one tap. Free, no card needed.",
+    title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart or Walmart Cart",
+    description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart or Walmart cart in one tap. Free, no card needed.",
     images: ["/og-image.png?v=3"],
   },
   metadataBase: new URL("https://www.dinnerdrop.app"),
@@ -84,9 +84,9 @@ export default function RootLayout({
               "applicationCategory": "LifestyleApplication",
               "operatingSystem": "Web",
               "url": "https://www.dinnerdrop.app",
-              "description": "Weekly dinner planning for busy families. Five personalized dinners, a deduplicated grocery list, and a one-tap Instacart cart.",
+              "description": "Weekly dinner planning for busy families. Five personalized dinners, a deduplicated grocery list, and a one-tap Instacart or Walmart cart.",
               "offers": [
-                { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD", "description": "Unlimited weekly dinner plans, grocery list, and one-tap Instacart cart. No card needed." },
+                { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD", "description": "Unlimited weekly dinner plans, grocery list, and one-tap Instacart or Walmart cart. No card needed." },
                 { "@type": "Offer", "name": "Family", "price": "4.99", "priceCurrency": "USD", "description": "$4.99/month or $39/year after a 14-day free trial. Cancel anytime." }
               ],
               "featureList": [

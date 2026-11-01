@@ -28,8 +28,8 @@ export default function FirstWeekReveal({ answers, meals, totalCost, onClose }: 
       <p className="text-sm text-foreground mt-1">{bits.join(' · ')}.</p>
       <p className="text-sm text-muted-foreground mt-2">
         {answers.phone
-          ? 'A text with these dinners is on its way to your phone. Swap any dinner below, then tap Shop my list — every item lands in your Instacart cart.'
-          : 'Swap any dinner you don’t love, then tap Shop my list — every item lands in your Instacart cart, you pick the store and check out there.'}
+          ? 'A text with these dinners is on its way to your phone. Swap any dinner below, then tap Shop my list — every item lands in your Instacart or Walmart cart.'
+          : 'Swap any dinner you don’t love, then tap Shop my list — every item lands in your Instacart or Walmart cart and you check out there.'}
       </p>
     </div>
   )

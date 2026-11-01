@@ -186,7 +186,7 @@ function SignupForm() {
           <p className="text-xs text-center text-muted-foreground">
             {toTrial
               ? 'No password to remember. Nothing charged for 14 days. Cancel anytime from Account.'
-              : 'Free forever for planning and your Instacart cart. No password — you\'re in instantly.'}
+              : 'Free forever for planning and your Instacart or Walmart cart. No password — you\'re in instantly.'}
           </p>
         </form>
       {!(isNativeApp() && nativePlatform() === 'ios') && (<>

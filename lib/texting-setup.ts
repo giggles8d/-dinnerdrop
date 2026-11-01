@@ -103,7 +103,7 @@ export async function sendFirstPlanText(admin: SupabaseClient, profile: SetupPro
   if (!me) return false
   if (await sentBefore(admin, profile.household_id, 'first_plan')) return false
   const lines = meals.slice(0, 7).map((m, i) => `${i + 1}. ${m.day ? `${m.day.slice(0, 3)} — ` : ''}${m.name}`).join('\n')
-  const body = `DinnerDrop: your week is ready 🍽️\n${lines}\nYour grocery list is built — one tap sends it to Instacart: ${APP_URL}/grocery-list\nText ADD milk (or anything) to put it on the list. Reply STOP to opt out.`
+  const body = `DinnerDrop: your week is ready 🍽️\n${lines}\nYour grocery list is built — one tap sends it to Instacart or Walmart: ${APP_URL}/grocery-list\nText ADD milk (or anything) to put it on the list. Reply STOP to opt out.`
   return textMember(admin, me, body, 'first_plan')
 }
 
@@ -118,6 +118,6 @@ export async function sendListWaitingText(admin: SupabaseClient, profile: SetupP
   const me = await ownerMember(admin, profile)
   if (!me) return false
   if (await sentBefore(admin, profile.household_id, 'list_waiting')) return false
-  const body = `DinnerDrop: ${firstName ? `${firstName}, your` : 'your'} grocery list for the week is still waiting. One tap sends it to your Instacart cart: ${APP_URL}/grocery-list — you pick the store and check out there. Already shopped? Text "spent $120" and we'll mark it done.`
+  const body = `DinnerDrop: ${firstName ? `${firstName}, your` : 'your'} grocery list for the week is still waiting. One tap sends it to your Instacart or Walmart cart: ${APP_URL}/grocery-list — you check out there. Already shopped? Text "spent $120" and we'll mark it done.`
   return textMember(admin, me, body, 'list_waiting')
 }
