@@ -6,6 +6,8 @@
 
 import type { ProteinMix } from '@/lib/protein-mix'
 
+import type { TripSetting } from '@/lib/trips'
+
 export type Weekday = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'
 export const WEEKDAYS: Weekday[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 export const WEEKDAY_LABEL: Record<Weekday, string> = { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' }
@@ -37,6 +39,9 @@ export interface Settings {
     mix: ProteinMix                 // dinners per week by protein group (chicken 2, beef 1…); null = any mix
   }
   schedule: {
+    weekStart: Weekday              // the family's week (default 'mon' = the original Monday weeks)
+    trips: TripSetting[]            // shopping trips; empty = one weekly trip (the original setup)
+    pantryFirstTrip: boolean        // later trips mark pantry items bought on the first trip as "have it"
     autoPlan: boolean               // create next week's menu automatically
     planDay: Weekday
     planTime: string                // 'HH:MM' local
@@ -105,6 +110,9 @@ export const DEFAULT_SETTINGS: Settings = {
     mix: null,
   },
   schedule: {
+    weekStart: 'mon',
+    trips: [],
+    pantryFirstTrip: true,
     // On by default (2026-10-26): active families get next week planned and emailed on Sunday.
     autoPlan: true,
     planDay: 'sat',
@@ -185,4 +193,9 @@ export const AGE_BANDS = [
 export function cookTimeFor(day: Weekday, settings: Settings, fallback: number): number {
   const v = settings.plan.weekdayCookTimes[day]
   return typeof v === 'number' && v > 0 ? v : fallback
+}
+
+/** The trip setup the planner, list and texting read (defaults reproduce the original Monday week, one trip). */
+export function tripsConfig(s: Settings): import('@/lib/trips').TripsConfig {
+  return { weekStart: s.schedule.weekStart, trips: s.schedule.trips ?? [], cookDays: s.plan.cookDays, shopDay: s.schedule.reminders.shopBy.day }
 }
