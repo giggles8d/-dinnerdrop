@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Check, Loader2, Minus, Plus, Tag } from 'lucide-react'
-import { isStockUpDeal, isUpcoming, type SaleItem, type WeeklySales } from '@/lib/sales-shared'
+import { isStockUpDeal, isUpcoming, namesMatch, type SaleItem, type WeeklySales } from '@/lib/sales-shared'
 import { normalizeItemName } from '@/lib/list'
 
 /**
@@ -62,8 +62,7 @@ export default function DealsPage() {
       if (store !== 'all' && s.store !== store) continue
       for (const i of s.items) {
         const k = normalizeItemName(i.name)
-        // Exact, or a multi-word list line contained in the deal (or the reverse): "olive oil" ⊂ "olive oil, extra virgin"; never a lone word like "lemon".
-        const onList = listSet.has(k) || Array.from(listSet).some((n) => (n.includes(' ') && k.includes(n)) || (k.includes(' ') && n.includes(k)))
+        const onList = listSet.has(k) || Array.from(listSet).some((n) => namesMatch(n, k))
         out.push({ ...i, store: s.store, key: `${s.id}:${k}`, onList })
       }
     }

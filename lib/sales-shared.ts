@@ -34,6 +34,25 @@ export function isUpcoming(s: Pick<WeeklySales, 'valid_from'>, today = new Date(
   return !!s.valid_from && s.valid_from > today
 }
 
+/**
+ * Do a list line and a sale item name mean the same thing? Both normalized.
+ * Multi-word names may contain each other ("olive oil" ⊂ "olive oil, extra virgin"); a single word
+ * only matches exactly or as the last word of a short name ("garlic" = "fresh garlic", not
+ * "garlic bread" or "mio lemonade"); and "chicken thighs" = "boneless chicken thighs" (same last two words).
+ */
+export function namesMatch(n: string, k: string): boolean {
+  if (!n || !k) return false
+  if (n === k) return true
+  const nw = n.split(' '), kw = k.split(' ')
+  if (nw.length === 1 || kw.length === 1) {
+    const [one, ow] = nw.length === 1 ? [n, kw] : [k, nw]
+    return ow.length <= 3 && ow[ow.length - 1] === one
+  }
+  if (n.includes(k) || k.includes(n)) return true
+  const a = nw.slice(-2).join(' '), b = kw.slice(-2).join(' ')
+  return a.length > 5 && a === b
+}
+
 /** Match a grocery-list line to a sale item (for the "on sale" tag). Current ads win over next week's. */
 export function matchSale(name: string, sets: WeeklySales[]): SaleMatch | null {
   const n = normalizeItemName(name)
@@ -42,12 +61,7 @@ export function matchSale(name: string, sets: WeeklySales[]): SaleMatch | null {
   for (const s of ordered) for (const i of s.items) {
     const k = normalizeItemName(i.name)
     if (!k) continue
-    const hit = n === k || n.includes(k) || k.includes(n) || (() => {
-      // "chicken thighs" vs "boneless chicken thighs": share the last two words
-      const a = n.split(' ').slice(-2).join(' '), b = k.split(' ').slice(-2).join(' ')
-      return a.length > 5 && a === b
-    })()
-    if (hit) return { ...i, store: s.store, upcoming: isUpcoming(s) }
+    if (namesMatch(n, k)) return { ...i, store: s.store, upcoming: isUpcoming(s) }
   }
   return null
 }
