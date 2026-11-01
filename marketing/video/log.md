@@ -2,6 +2,7 @@
 
 | Date | Time | Slot | Video | Notes |
 |---|---|---|---|---|
+| 2026-11-01 | 12:30 PM | Recipe (late — 11:30 slot was empty) | Quick Chicken Ramen with Soft-Boiled Eggs (slug quick-chicken-ramen-with-soft-boiled-eggs-ovwm) | TikTok/YT/FB via Publer (scheduled 11-01 by Claude; recipe/ramen) |
 | 2026-10-31 | 4:30 PM | Trend (Sat ASMR) | ASMR Garlic Butter Shrimp Pasta (ingredient→plate, no talking; veo3_1 clips, slug garlic-butter-shrimp-pasta-1c8v) | TikTok/YT/FB via Publer (scheduled 10-30) |
 | 2026-10-31 | 11:30 AM | Recipe | Teriyaki Chicken with Broccoli and Rice (slug teriyaki-chicken-with-broccoli-and-rice-2mr5) | TikTok/YT/FB via Publer (scheduled 10-30) |
 | 2026-10-30 | 7:30 PM | Fruit | Fruit Moms Ep 7 "Candy for Dinner?" (Halloween eve) | TikTok/YT/FB via Publer (scheduled 10-30); next episode = Ep 8 |
