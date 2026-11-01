@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import DeleteAccount from '@/components/DeleteAccount'
+import TripsSettings from '@/components/TripsSettings'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import SalesCard from '@/components/SalesCard'
@@ -561,8 +562,9 @@ export default function SettingsPage() {
             {/* ---------------- Plan shape ---------------- */}
             {section === 'plan' && (
               <>
+                <TripsSettings settings={settings} patch={patch} isFamily={isFamily} />
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                  <Field label="Dinners to cook each week" hint="Leftover and takeout nights are the rest.">
+                  <Field label="Dinners to cook each week" hint={settings.schedule.trips.length > 1 ? 'With more than one trip, each trip plans the nights it covers (checked below).' : 'Leftover and takeout nights are the rest.'}>
                     <Select value={String(settings.plan.dinnersPerWeek)} onChange={(v) => patch((s) => { s.plan.dinnersPerWeek = Number(v) })} options={['3', '4', '5', '6', '7'].map((n) => ({ value: n, label: n }))} />
                   </Field>
                   <Field label="Options to choose from" hint="How many ideas the planner offers before you pick.">

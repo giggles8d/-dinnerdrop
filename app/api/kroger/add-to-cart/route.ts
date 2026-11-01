@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       }
     }
 
-    const { groceryList, chosen, locationId } = await request.json()
+    const { groceryList, chosen, locationId, weekStart } = await request.json()
     const allItems = Object.values(groceryList ?? {}).flat() as GroceryItem[]
     // Reviewed in the app: the family already saw and (maybe) changed what goes in; push exactly that.
     const picked = Array.isArray(chosen) ? (chosen as Array<{ name: string; productId: string; quantity: number }>).filter((c) => c && typeof c.productId === 'string' && c.productId) : null
@@ -85,6 +85,7 @@ export async function POST(request: Request) {
         user_id: user.id,
         store: 'Kroger',
         item_count: cartItems.length,
+        week_start: typeof weekStart === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(weekStart) ? weekStart : null,
       })
     } catch (logErr) {
       console.error('[kroger] handoff log failed:', logErr)

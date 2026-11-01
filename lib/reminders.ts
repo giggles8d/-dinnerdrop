@@ -6,7 +6,8 @@
  * more than once a day.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { mergeSettings, WEEKDAY_LABEL, WEEKDAYS, type Settings, type Channel } from '@/lib/settings'
+import { mergeSettings, WEEKDAY_LABEL, WEEKDAYS, tripsConfig, type Settings, type Channel } from '@/lib/settings'
+import { isClassic, resolveTrips, tripInstances, tonightTrip, voteTripOn, addDays } from '@/lib/trips'
 import { localNow, mondayOf, timeLabel } from '@/lib/plan'
 import { autoPlan } from '@/lib/autoplan'
 import { sendEmail, sendSms, emailShell, smsConfigured } from '@/lib/notify'
@@ -101,11 +102,40 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       const todayLabel = WEEKDAY_LABEL[weekday]
       const canEmail = !!p.email && !p.email_unsubscribed
       const family = isFamilyProfile(p)
+      // Shopping trips (Nov 1 2026). Classic families (Monday week, one trip) skip every trip branch below.
+      const tcfg = tripsConfig(settings)
+      const tripMode = !isClassic(tcfg)
+      const today = localNow(tz, now).dateStr
+      const shopTripToday = tripMode ? tripInstances(tcfg, today).find((t) => t.shopDate === today) ?? null : null
+      const voteTrip = tripMode ? voteTripOn(tcfg, today) : null
+
+      // ---- automatic plan per trip: the day before its shop day (unless the family votes on it by text) ----
+      if (tripMode && voteTrip && settings.schedule.autoPlan && Date.now() - started < 200_000) {
+        const resolved = resolveTrips(tcfg)[voteTrip.index]
+        const familyVotes = family && settings.texting.enabled && resolved?.vote !== false
+        const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', voteTrip.key).limit(1)
+        const { data: recentPlan } = await admin.from('meal_plans').select('created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
+        const active = recentPlan?.[0]?.created_at && now.getTime() - new Date(recentPlan[0].created_at).getTime() <= ACTIVE_DAYS * 86400000
+        if (active && !familyVotes && !existing?.length) {
+          const meals = await autoPlan(admin, p, settings, voteTrip.key)
+          if (meals) {
+            report.autoPlans++
+            if (wantsSms(settings.schedule.reminders.planReady) && family) {
+              await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned —\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
+            }
+            if (wantsEmail(settings.schedule.reminders.planReady) && canEmail) {
+              const withPhotos = await attachLibraryImages(admin, meals)
+              const weekLabel = new Date(`${voteTrip.shopDate}T12:00:00Z`).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}` }))
+            }
+          }
+        }
+      }
 
       // ---- automatic weekly plan ----
       // Plan day, or the day after if the run ran out of time before reaching this family.
       const dayAfterPlanDay = WEEKDAYS[(WEEKDAYS.indexOf(settings.schedule.planDay) + 1) % 7]
-      if (settings.schedule.autoPlan && (settings.schedule.planDay === weekday || dayAfterPlanDay === weekday) && Date.now() - started < 200_000) {
+      if (!tripMode && settings.schedule.autoPlan && (settings.schedule.planDay === weekday || dayAfterPlanDay === weekday) && Date.now() - started < 200_000) {
         const { data: recent } = await admin.from('meal_plans').select('created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
         const lastPlan = recent?.[0]?.created_at ? new Date(recent[0].created_at).getTime() : 0
         if (now.getTime() - lastPlan <= ACTIVE_DAYS * 86400000) {
@@ -149,9 +179,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       const shop = settings.schedule.reminders.shopBy
       if (shop.channel !== 'off' && settings.texting.enabled && family && smsConfigured() && p.household_id) {
         const dayBefore = WEEKDAYS[(WEEKDAYS.indexOf(shop.day) + 6) % 7]
-        if (dayBefore === weekday) {
+        if (tripMode ? !!voteTrip : dayBefore === weekday) {
           const { data: mem } = await admin.from('household_members').select('*').eq('household_id', p.household_id).not('phone', 'is', null)
-          const since = new Date(now.getTime() - 6 * 86400000).toISOString()
+          const since = new Date(now.getTime() - (tripMode ? 1 : 6) * 86400000).toISOString()
           const { count: asked } = await admin.from('sms_messages').select('id', { count: 'exact', head: true }).eq('household_id', p.household_id).eq('intent', 'anything_else').gte('created_at', since)
           if (!asked) {
             for (const m of (mem ?? []) as MemberRow[]) {
@@ -163,10 +193,11 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       }
 
       // ---- time to shop ----
-      if (shop.channel !== 'off' && shop.day === weekday) {
-        const { data: plan } = await admin.from('meal_plans').select('id, meals, created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1).single()
+      if (shop.channel !== 'off' && (tripMode ? !!shopTripToday : shop.day === weekday)) {
+        const q = admin.from('meal_plans').select('id, meals, created_at').eq('user_id', p.id)
+        const { data: plan } = await (shopTripToday ? q.eq('week_start', shopTripToday.key) : q).order('created_at', { ascending: false }).limit(1).single()
         if (plan) {
-          const since = new Date(now.getTime() - 6 * 86400000).toISOString()
+          const since = shopTripToday ? `${addDays(shopTripToday.shopDate, -1)}T00:00:00Z` : new Date(now.getTime() - 6 * 86400000).toISOString()
           const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id).gte('created_at', since)
           if (!count) {
             const n = ((plan.meals as Meal[]) ?? []).length
@@ -189,7 +220,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       // ---- tonight's dinner ----
       const cook = settings.schedule.reminders.cookTonight
       if (cook.channel !== 'off' && settings.plan.cookDays.includes(weekday)) {
-        const { data: plan } = await admin.from('meal_plans').select('meals').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1).single()
+        const tt = tripMode ? tonightTrip(tcfg, today) : null
+        const cq = admin.from('meal_plans').select('meals').eq('user_id', p.id)
+        const { data: plan } = tripMode && !tt ? { data: null } : await (tt ? cq.eq('week_start', tt.key) : cq).order('created_at', { ascending: false }).limit(1).single()
         const tonight = ((plan?.meals as Meal[]) ?? []).find((m) => m.day === todayLabel)
         if (tonight) {
           const line = `${tonight.name} — ${timeLabel(tonight)}`

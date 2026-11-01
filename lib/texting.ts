@@ -6,7 +6,8 @@
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { hasMix, scaleMix, pickByQuota, proteinGroup } from '@/lib/protein-mix'
-import { mergeSettings, type Settings } from '@/lib/settings'
+import { mergeSettings, tripsConfig, type Settings } from '@/lib/settings'
+import { isClassic, resolveTrips, shoppingTrip, tripInstances, voteTripOn } from '@/lib/trips'
 import { localNow, mondayOf } from '@/lib/plan'
 import { sendSms, smsConfigured, normalizePhone } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
@@ -158,13 +159,16 @@ export async function runTextingDay(admin: SupabaseClient, now: Date = new Date(
     try {
       const settings: Settings = mergeSettings(o.settings)
       if (!settings.texting.enabled || !isFamilyProfile(o)) continue
-      const { weekday } = localNow(o.timezone || 'America/New_York', now)
-      const isVote = settings.texting.voteDay === weekday
+      const { weekday, dateStr } = localNow(o.timezone || 'America/New_York', now)
+      // Shopping trips (Nov 1 2026): the vote goes out the day before each trip that has voting on.
+      const tcfg = tripsConfig(settings)
+      const vt = isClassic(tcfg) ? null : voteTripOn(tcfg, dateStr)
+      const isVote = isClassic(tcfg) ? settings.texting.voteDay === weekday : !!vt && resolveTrips(tcfg)[vt.index]?.vote !== false
       const isAgain = settings.texting.againDay === weekday
       if (!isVote && !isAgain) continue
 
       // Vote day: auto-pick the week if needed, opt-in anyone new, text the menu.
-      if (isVote && !(await alreadySent(admin, o.household_id, 'vote_request'))) {
+      if (isVote && (vt || !(await alreadySent(admin, o.household_id, 'vote_request')))) {
         const r = await startVoteCycle(admin, o.id, { now })
         report.voteTexts += r.voteTextsSent
         if (r.skipped.length) report.skipped++
@@ -387,11 +391,11 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       return { reply: `Welcome back, ${m.name}. Text MENU for this week's dinners or ADD + an item for the list.`, handled: true, member: m }
     case 'order_total': {
       if (!owner) return { reply: '', handled: false }
-      const { data: hs } = await admin.from('grocery_handoffs').select('id, est_total, created_at').eq('user_id', owner.id).order('created_at', { ascending: false }).limit(1)
+      const { data: hs } = await admin.from('grocery_handoffs').select('id, est_total, created_at, week_start').eq('user_id', owner.id).order('created_at', { ascending: false }).limit(1)
       const h = hs?.[0]
       if (!h) return { reply: `I don't see a recent order to attach $${parsed.total.toFixed(2)} to. Send the list to Instacart first, then text me the total after checkout.`, handled: true, member: m }
       await admin.from('grocery_handoffs').update({ actual_total: parsed.total, ...(parsed.store ? { store: `Instacart · ${parsed.store}` } : {}) }).eq('id', h.id)
-      await markAllOpenOrdered(admin, owner.id, h.created_at).catch(() => {})
+      await markAllOpenOrdered(admin, owner.id, h.created_at, h.week_start).catch(() => {})
       if (h.est_total && Number(h.est_total) > 0) {
         const observed = parsed.total / (Number(h.est_total) / factorAtSend(h.created_at, settings.stores.priceFactor))
         const f = blendFactor(settings.stores.priceFactor, observed)
@@ -863,22 +867,24 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     .single()
   if (!o?.household_id) throw new Error('No household')
   const settings = mergeSettings(o.settings)
-  const { weekday } = localNow(o.timezone || 'America/New_York', now)
-  const weekStart = targetWeekFor(now, weekday)
+  const { weekday, dateStr } = localNow(o.timezone || 'America/New_York', now)
+  const tcfg = tripsConfig(settings)
+  const trip = isClassic(tcfg) ? null : (voteTripOn(tcfg, dateStr) ?? shoppingTrip(tcfg, dateStr))
+  const weekStart = trip ? trip.key : targetWeekFor(now, weekday)
   const report: CycleReport = { weekStart, planned: false, optInsSent: 0, voteTextsSent: 0, skipped: [] }
   if (!smsConfigured()) { report.skipped.push('Twilio not configured'); return report }
   if (!settings.texting.enabled) { report.skipped.push('texting off in settings'); return report }
   if (!isFamilyProfile(o)) { report.skipped.push('family plan required'); return report }
 
   // 1. open round (reuse one already open for this week unless forced)
-  const picksNeeded = Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
+  const picksNeeded = trip ? Math.min(Math.max(trip.nights.length, 1), 7) : Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
   const count = Math.min(Math.max(settings.texting.optionsToText, picksNeeded, 5), 12)
   let round = await openRound(admin, o.household_id)
   if (round && round.week_start !== weekStart) { await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id); round = null }
   if (opts.resend && !round) { report.skipped.push('no open vote to resend'); return report }
   if (!round || opts.force) {
     if (round) await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id)
-    const { meals } = await generateCandidates(admin, o, count)
+    const { meals } = await generateCandidates(admin, o, count, trip?.key)
     if (!meals.length) { report.skipped.push('could not generate dinner ideas'); return report }
     // Family ideas texted in since the last vote join the ballot (up to 3), labelled with who suggested them.
     const ideaMeals: Meal[] = []
@@ -912,7 +918,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     const askedAlready = await sentForRound(admin, mm.id, round.id)
     // resend: the same round's menu again (e.g. after a picture fix) — only to people who already got it
     if (opts.resend ? !askedAlready : (!opts.force && askedAlready)) continue
-    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap, menuImageUrl(round.id))) report.voteTextsSent++
+    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap * Math.max(1, settings.schedule.trips.length), menuImageUrl(round.id))) report.voteTextsSent++
     // Their idea made the ballot: say so (once per round, not counted against the weekly cap).
     const theirs = round.candidates.map((c, i) => ({ c, n: i + 1 })).filter(({ c }) => c.ideaBy && c.ideaBy.toLowerCase() === mm.name.toLowerCase())
     if (theirs.length && !opts.resend && !(await alreadySentTo(admin, mm.id, `idea_in_vote:${round.id}`, 7))) {
@@ -1110,7 +1116,10 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const chosen = mix
     ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.c.protein, r.c.name)).map((r) => r.c)
     : ranked.slice(0, round.picks_needed).map((r) => r.c)
-  const shape: PlanShape = { dinnersPerWeek: round.picks_needed, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
+  // Shopping trips: a trip's vote fills only that trip's nights.
+  const tcfg = tripsConfig(settings)
+  const tripNights = isClassic(tcfg) ? null : tripInstances(tcfg, round.week_start).find((t) => t.key === round.week_start)?.nights.map((n) => n.day) ?? null
+  const shape: PlanShape = { dinnersPerWeek: round.picks_needed, cookDays: tripNights?.length ? tripNights : settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   const saved = await savePlan(admin, owner.id, round.week_start, chosen, shape)
   await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString(), result: { chosen: saved.map((m) => m.name), tally } }).eq('id', round.id)
 

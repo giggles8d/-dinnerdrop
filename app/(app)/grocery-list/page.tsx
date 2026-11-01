@@ -23,7 +23,8 @@ import WalmartPicks from '@/components/WalmartPicks'
 import InAppBrowserNotice from '@/components/InAppBrowserNotice'
 import KrogerReview from '@/components/KrogerReview'
 import SidesCard from '@/components/SidesCard'
-import { mergeSettings } from '@/lib/settings'
+import { mergeSettings, tripsConfig, WEEKDAY_LABEL } from '@/lib/settings'
+import { isClassic, tripInstances, weekStartOf } from '@/lib/trips'
 import { resolvePlanOwner } from '@/lib/household'
 import {
   type ListItem, type Staple, rowsFromPlanList, dueStaples, basicsFor, shoppableItems,
@@ -33,6 +34,13 @@ import type { GroceryCategory, GroceryItem, Meal } from '@/types'
 import { DEFAULT_FACTOR, effectiveFactor, fallbackPrice } from '@/lib/price-factor'
 
 type GroceryListData = Record<GroceryCategory, GroceryItem[]>
+
+/** Pantry items a family buys once a week; later trips mark them "have it" (Settings → Plan shape). */
+const PANTRY_FIRST_TRIP = /\b(garlic|(?<!green |spring )(yellow |white |red )?onions?|shallots?|salt|black pepper|spices?|seasoning|cumin|paprika|oregano|dried thyme|cinnamon|chili powder|(olive |vegetable |canola )?oil|vinegar|soy sauce|butter|flour|sugar|rice|(shredded |grated )?(parmesan|cheddar|mozzarella)( cheese)?|broth|stock|ketchup|mustard|mayonnaise|honey)\b/i
+const WEEKDAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
+function weekdayOfKey(date: string): (typeof WEEKDAY_KEYS)[number] {
+  return WEEKDAY_KEYS[(new Date(`${date}T00:00:00Z`).getUTCDay() + 6) % 7]
+}
 
 export default function GroceryListPage() {
   const supabase = useMemo(() => createClient(), [])
@@ -64,6 +72,9 @@ export default function GroceryListPage() {
   const [loading, setLoading] = useState(true)
   const [generateError, setGenerateError] = useState(false)
   const [noPlan, setNoPlan] = useState(false)
+  // Shopping trips (Nov 1 2026): one tab per trip this week; classic families never see tabs.
+  const tripSel = useRef<string | null>(null)
+  const [tripTabs, setTripTabs] = useState<Array<{ key: string; label: string; sub: string; planned: boolean; selected: boolean }>>([])
   const [krogerConnected, setKrogerConnected] = useState(false)
   // Kroger cart push is a Family feature (2026-10-18). Anyone already connected keeps it.
   const [isFamily, setIsFamily] = useState(true)
@@ -161,13 +172,48 @@ export default function GroceryListPage() {
       setBudget(Number(String(profile.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 0)
     }
 
-    const { data: plan } = await supabase
+    const latest = await supabase
       .from('meal_plans')
       .select('*')
       .eq('user_id', uid)
       .order('created_at', { ascending: false })
       .limit(1)
       .single()
+    let plan = latest.data
+
+    // Shopping trips: pick this trip's plan (tab) instead of simply the newest plan.
+    const tcfg = tripsConfig(settings)
+    const tripMode = !isClassic(tcfg)
+    let earlierKeys: string[] = []
+    let pastTripKeys: string[] = []
+    if (tripMode) {
+      const now = new Date()
+      const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+      pastTripKeys = tripInstances(tcfg, today).filter((t) => t.shopDate < today).map((t) => t.key)
+      const insts = tripInstances(tcfg, today).filter((t) => t.nights.length > 0 && (t.nights[t.nights.length - 1]?.date ?? t.shopDate) >= today).slice(0, 3)
+      const { data: tripPlans } = await supabase.from('meal_plans').select('*').eq('user_id', uid).in('week_start', insts.map((t) => t.key)).order('created_at', { ascending: false })
+      const byKey = new Map<string, typeof plan>()
+      for (const p of tripPlans ?? []) if (!byKey.has(p.week_start)) byKey.set(p.week_start, p)
+      const pick = (tripSel.current ? byKey.get(tripSel.current) : undefined) ?? insts.map((t) => byKey.get(t.key)).find(Boolean)
+      if (pick) plan = pick
+      const short = (d: string) => WEEKDAY_LABEL[d as keyof typeof WEEKDAY_LABEL].slice(0, 3)
+      setTripTabs(insts.map((t) => {
+        const first = t.nights[0]?.day, last = t.nights[t.nights.length - 1]?.day
+        return {
+          key: t.key,
+          label: `Trip ${t.index + 1} · ${WEEKDAY_LABEL[weekdayOfKey(t.shopDate)].slice(0, 3)} ${Number(t.shopDate.slice(5, 7))}/${Number(t.shopDate.slice(8, 10))}`,
+          sub: first ? `${short(first)}${last && last !== first ? `–${short(last)}` : ''} dinners` : 'no dinners',
+          planned: byKey.has(t.key),
+          selected: !!pick && pick.week_start === t.key,
+        }
+      }))
+      if (pick) {
+        const inst = insts.find((t) => t.key === pick.week_start)
+        if (inst) earlierKeys = tripInstances(tcfg, inst.shopDate).filter((t) => weekStartOf(t.shopDate, tcfg.weekStart) === weekStartOf(inst.shopDate, tcfg.weekStart) && t.shopDate < inst.shopDate).map((t) => t.key)
+      }
+    } else {
+      setTripTabs([])
+    }
 
     if (!plan) { setNoPlan(true); setLoading(false); return }
     setTotalCost(plan.total_estimated_cost || 0)
@@ -218,14 +264,22 @@ export default function GroceryListPage() {
       // Keep "have it" ticks the family already made on lines that are still needed.
       const hadIt = new Set(openPlanRows.filter((r) => r.have).map((r) => normalizeItemName(r.name)))
       for (const row of rows) if (hadIt.has(normalizeItemName(row.name))) row.have = true
+      // Shopping trips: pantry items already on an earlier trip this week are "have it" (bought on that trip).
+      if (tripMode && settings.schedule.pantryFirstTrip && earlierKeys.length) {
+        const { data: prev } = await supabase.from('list_items').select('name').eq('user_id', uid).in('week_start', earlierKeys).eq('have', false)
+        const bought = new Set((prev ?? []).map((r: { name: string }) => normalizeItemName(r.name)))
+        for (const row of rows) if (PANTRY_FIRST_TRIP.test(row.name) && bought.has(normalizeItemName(row.name))) row.have = true
+      }
 
       // Staples due this week + lunch/breakfast basics (only on first materialization for the week).
       const firstTime = !(existing ?? []).length
       if (firstTime) {
         // Carry over what the family added after the last order (texted or typed) into the new week.
-        await supabase.from('list_items').update({ week_start: ws })
+        // Trip mode: only from earlier trips whose shop day has passed (never pull lines off a trip still to shop).
+        const carry = supabase.from('list_items').update({ week_start: ws })
           .eq('user_id', uid).neq('week_start', ws).is('ordered_at', null).eq('have', false).eq('checked', false)
           .in('source', ['sms', 'manual']).gte('created_at', new Date(Date.now() - 21 * 86400000).toISOString())
+        await (tripMode ? carry.in('week_start', pastTripKeys.length ? pastTripKeys : ['1900-01-01']) : carry)
         const due = dueStaples((stapleRows as Staple[]) ?? [], ws)
         for (const s of due) {
           rows.push({ user_id: uid, household_id: profile?.household_id ?? null, week_start: ws, name: s.name, quantity: s.quantity, unit: s.unit, category: s.category, search_term: s.name, source: 'staples', added_by: null, have: false, checked: false })
@@ -501,6 +555,19 @@ export default function GroceryListPage() {
           </div>
         )}
 
+        {tripTabs.length > 1 && (
+          <div role="tablist" aria-label="Shopping trips" className="flex gap-2 mb-4 overflow-x-auto">
+            {tripTabs.map((t) => (
+              <button key={t.key} type="button" role="tab" aria-selected={t.selected} disabled={!t.planned}
+                onClick={() => { tripSel.current = t.key; setLoading(true); load() }}
+                className={`flex-1 min-w-[150px] text-left rounded-xl border px-4 py-2.5 ${t.selected ? 'border-primary bg-primary/5' : 'border-border bg-white'} disabled:opacity-60`}>
+                <span className={`block text-sm font-semibold ${t.selected ? 'text-primary' : 'text-foreground'}`}>{t.label}</span>
+                <span className="block text-xs text-muted-foreground">{t.planned ? t.sub : `${t.sub} · plan it on the dashboard`}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
         <GroceryList
           items={items}
           saleFor={sales.length ? (name) => matchSale(name, sales) : undefined}
@@ -676,7 +743,7 @@ export default function GroceryListPage() {
         </div>
 
         {krogerReview && (
-          <KrogerReview groceryList={shoppable} locationId={krogerLoc.id} locationName={krogerLoc.name} onClose={() => setKrogerReview(false)}
+          <KrogerReview groceryList={shoppable} locationId={krogerLoc.id} locationName={krogerLoc.name} weekStart={weekStart ?? undefined} onClose={() => setKrogerReview(false)}
             onPushed={(added, total) => { setKrogerReview(false); setKrogerResult({ type: 'success', message: `Added ${added} of ${total} items to your Kroger cart.` }); if (userId && weekStart) loadItems(userId, weekStart) }} />
         )}
 

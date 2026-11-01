@@ -33,6 +33,7 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
       cuisinePreference: p.cuisine_preference,
       dietaryNeeds: p.dietary_needs || [],
       favoriteMeals: (favs ?? []).map((f) => f.meal_data),
+      tripKey: weekStart,   // trip mode plans exactly this trip; ignored in the classic setup
     }),
   })
   if (!res.ok) throw new Error(`generate-plan ${res.status}`)
@@ -47,7 +48,7 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
 
 
 /** Candidate dinners for the family to vote on — generated, not saved as a plan. */
-export async function generateCandidates(admin: SupabaseClient, p: AutoPlanProfile, count: number): Promise<{ meals: Meal[]; shape: PlanShape }> {
+export async function generateCandidates(admin: SupabaseClient, p: AutoPlanProfile, count: number, tripKey?: string): Promise<{ meals: Meal[]; shape: PlanShape }> {
   const base = process.env.NEXT_PUBLIC_APP_URL || APP
   const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
   const res = await fetch(`${base}/api/generate-plan`, {
@@ -62,6 +63,7 @@ export async function generateCandidates(admin: SupabaseClient, p: AutoPlanProfi
       dietaryNeeds: p.dietary_needs || [],
       favoriteMeals: (favs ?? []).map((f) => f.meal_data),
       optionsCount: count,
+      tripKey,
     }),
   })
   if (!res.ok) throw new Error(`generate-plan ${res.status}`)

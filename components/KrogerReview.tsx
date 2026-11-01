@@ -11,8 +11,8 @@ type Loc = { locationId: string; name: string; address: string }
  * "Here's what goes in your Kroger cart" — the family sees Kroger's match for every line (brand, size, price),
  * can change any of them or drop a line, set counts, pick their store, then push. Nothing is added until they confirm.
  */
-export default function KrogerReview({ groceryList, locationId: initialLoc, locationName: initialLocName, onClose, onPushed }: {
-  groceryList: Record<GroceryCategory, GroceryItem[]>; locationId?: string; locationName?: string; onClose: () => void; onPushed: (added: number, total: number) => void
+export default function KrogerReview({ groceryList, locationId: initialLoc, locationName: initialLocName, onClose, onPushed, weekStart }: {
+  groceryList: Record<GroceryCategory, GroceryItem[]>; locationId?: string; locationName?: string; onClose: () => void; onPushed: (added: number, total: number) => void; weekStart?: string
 }) {
   const [loc, setLoc] = useState<{ id?: string; name?: string }>({ id: initialLoc, name: initialLocName })
   const [zip, setZip] = useState('')
@@ -53,7 +53,7 @@ export default function KrogerReview({ groceryList, locationId: initialLoc, loca
     setBusy(true); setErr('')
     const chosen = matches.map((m, i) => ({ i, m })).filter(({ i, m }) => !skip.has(i) && m.product).map(({ m }) => ({ name: m.name, productId: m.product!.productId, quantity: m.quantity }))
     try {
-      const r = await fetch('/api/kroger/add-to-cart', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ groceryList, chosen, locationId: loc.id }) })
+      const r = await fetch('/api/kroger/add-to-cart', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ groceryList, chosen, locationId: loc.id, weekStart }) })
       const j = await r.json(); if (!r.ok) throw new Error(j.error || 'Failed to add to cart')
       onPushed(j.added, chosen.length)
     } catch (e) { setErr(e instanceof Error ? e.message : 'Failed to add to cart'); setBusy(false) }
