@@ -9,6 +9,8 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { generateWithClaude, generateWithClaudeImage, parseClaudeJSON } from '@/lib/claude'
 import { normalizeItemName } from '@/lib/list'
+import { mergeSettings } from '@/lib/settings'
+import { asWeeklySales, canonicalStore, storeDealsFor } from '@/lib/store-deals'
 
 export type { SaleItem, WeeklySales } from '@/lib/sales-shared'
 export { matchSale } from '@/lib/sales-shared'
@@ -106,12 +108,27 @@ function dedupe(items: SaleItem[]): SaleItem[] {
   return out.slice(0, 120)
 }
 
-/** The sales sets that apply right now (this week's flyers, at most 7 days old). */
-export async function currentSales(admin: SupabaseClient, userId: string): Promise<WeeklySales[]> {
+/**
+ * The sales sets that apply right now: the family's own flyers (at most 7 days old) plus
+ * DinnerDrop's shared weekly-ad sets for the stores they list in Settings → Stores
+ * (a store the family already snapped themselves is not doubled up).
+ */
+export async function currentSales(admin: SupabaseClient, userId: string, opts: { includeNext?: boolean } = {}): Promise<WeeklySales[]> {
   const since = new Date(Date.now() - 7 * 86400000).toISOString()
   const today = new Date().toISOString().slice(0, 10)
-  const { data } = await admin.from('weekly_sales').select('*').eq('user_id', userId).gte('created_at', since).order('created_at', { ascending: false }).limit(5)
-  return ((data ?? []) as WeeklySales[]).filter((s) => !s.valid_to || s.valid_to >= today)
+  const [{ data }, { data: prof }] = await Promise.all([
+    admin.from('weekly_sales').select('*').eq('user_id', userId).gte('created_at', since).order('created_at', { ascending: false }).limit(5),
+    admin.from('profiles').select('settings').eq('id', userId).maybeSingle(),
+  ])
+  const own = ((data ?? []) as WeeklySales[]).filter((s) => !s.valid_to || s.valid_to >= today)
+  const stores = mergeSettings(prof?.settings).stores.myStores.map((s) => s.name).filter(Boolean)
+  if (!stores.length) return own
+  try {
+    const { current, next } = await storeDealsFor(admin, stores, { includeNext: opts.includeNext })
+    const have = new Set(own.map((s) => canonicalStore(s.store).toLowerCase()))
+    const shared = [...current, ...next].filter((d) => !have.has(d.store.toLowerCase())).map((d) => asWeeklySales(d, userId))
+    return [...own, ...shared]
+  } catch { return own }
 }
 
 /** Prompt block for the planner. */

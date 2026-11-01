@@ -17,7 +17,7 @@ export async function GET() {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const { ownerId } = await resolvePlanOwner(admin, user.id)
-  const sets = await currentSales(admin, ownerId)
+  const sets = await currentSales(admin, ownerId, { includeNext: true })
   // Real per-store basket quotes (from the Saturday price read), newest per store, last 7 days.
   const since = new Date(Date.now() - 7 * 86400000).toISOString()
   const { data: q } = await admin.from('store_quotes').select('store, total, item_count, missing, items, week_start, created_at').eq('user_id', ownerId).gte('created_at', since).order('created_at', { ascending: false }).limit(40)
