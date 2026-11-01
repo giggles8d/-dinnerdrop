@@ -73,7 +73,8 @@ export default function GroceryListPage() {
     try { const r = await fetch('/api/email/recipes', { method: 'POST' }); setRecipesMail(r.ok ? 'sent' : 'error') } catch { setRecipesMail('error') }
   }
   const [copied, setCopied] = useState(false)
-  // Desktop: pin a slim "Shop ingredients" bar to the bottom while the send section is off screen.
+  // Pin a slim "Shop ingredients" bar to the bottom while the send section is off screen (phones too, since Nov 1:
+  // the whole send panel used to be pinned on phones and covered half the list).
   const sendRef = useRef<HTMLDivElement | null>(null)
   const [sendInView, setSendInView] = useState(true)
   useEffect(() => {
@@ -599,10 +600,10 @@ export default function GroceryListPage() {
         </div>
 
         {!sendInView && shoppableCount > 0 && (
-          <div className="hidden sm:block fixed bottom-4 inset-x-0 z-40 px-4 print:hidden">
-            <div className="mx-auto max-w-2xl flex items-center justify-between gap-4 rounded-2xl border border-border bg-background/95 backdrop-blur shadow-xl px-5 py-3">
+          <div className="fixed bottom-2 sm:bottom-4 inset-x-0 z-40 px-3 sm:px-4 print:hidden native-raise">
+            <div className="mx-auto max-w-2xl flex items-center justify-between gap-3 sm:gap-4 rounded-2xl border border-border bg-background/95 backdrop-blur shadow-xl px-4 sm:px-5 py-2.5 sm:py-3">
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-foreground">{shoppableCount} items ready{storeEst > 0 ? ` · about $${Math.round(storeEst)}` : ''}</p>
+                <p className="text-sm font-semibold text-foreground truncate">{shoppableCount} items<span className="hidden sm:inline"> ready</span>{storeEst > 0 ? ` · ~$${Math.round(storeEst)}` : ''}</p>
                 <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="text-xs text-muted-foreground hover:text-foreground underline">More ways to send ↓</button>
               </div>
               {splitLists && splitStores ? (
@@ -614,8 +615,8 @@ export default function GroceryListPage() {
           </div>
         )}
 
-        <div ref={sendRef} className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border sm:static sm:mt-6 sm:p-0 sm:bg-transparent sm:border-0 print:hidden native-raise">
-          <p className="hidden sm:block text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>
+        <div ref={sendRef} className="mt-6 print:hidden">
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>
           <div className="space-y-4">
             {splitLists && splitStores ? (
               <div className="space-y-3">
@@ -675,7 +676,7 @@ export default function GroceryListPage() {
             onPushed={(added, total) => { setKrogerReview(false); setKrogerResult({ type: 'success', message: `Added ${added} of ${total} items to your Kroger cart.` }); if (userId && weekStart) loadItems(userId, weekStart) }} />
         )}
 
-        <div className="h-32 sm:hidden" />
+        <div className="h-24 sm:hidden" />
       </div>
     </div>
   )
