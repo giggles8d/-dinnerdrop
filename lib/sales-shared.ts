@@ -26,17 +26,33 @@ export interface WeeklySales {
   created_at: string
 }
 
-/** Match a grocery-list line to a sale item (for the "on sale" tag). */
-export function matchSale(name: string, sets: WeeklySales[]): SaleItem | null {
+/** A matched sale item plus where it's on sale and whether that ad hasn't started yet. */
+export type SaleMatch = SaleItem & { store: string; upcoming: boolean }
+
+/** Is this set next week's ad (its valid_from is after today)? */
+export function isUpcoming(s: Pick<WeeklySales, 'valid_from'>, today = new Date().toISOString().slice(0, 10)): boolean {
+  return !!s.valid_from && s.valid_from > today
+}
+
+/** Match a grocery-list line to a sale item (for the "on sale" tag). Current ads win over next week's. */
+export function matchSale(name: string, sets: WeeklySales[]): SaleMatch | null {
   const n = normalizeItemName(name)
   if (!n) return null
-  for (const s of sets) for (const i of s.items) {
+  const ordered = [...sets].sort((a, b) => Number(isUpcoming(a)) - Number(isUpcoming(b)))
+  for (const s of ordered) for (const i of s.items) {
     const k = normalizeItemName(i.name)
     if (!k) continue
-    if (n === k || n.includes(k) || k.includes(n)) return i
-    // "chicken thighs" vs "boneless chicken thighs": share the last two words
-    const a = n.split(' ').slice(-2).join(' '), b = k.split(' ').slice(-2).join(' ')
-    if (a.length > 5 && a === b) return i
+    const hit = n === k || n.includes(k) || k.includes(n) || (() => {
+      // "chicken thighs" vs "boneless chicken thighs": share the last two words
+      const a = n.split(' ').slice(-2).join(' '), b = k.split(' ').slice(-2).join(' ')
+      return a.length > 5 && a === b
+    })()
+    if (hit) return { ...i, store: s.store, upcoming: isUpcoming(s) }
   }
   return null
+}
+
+/** Multi-buys and stock-up deals ("buy 2 get 2", "2 for $5", "10 for $10") worth buying extra of. */
+export function isStockUpDeal(i: SaleItem): boolean {
+  return /\b(buy\s*\d|b\d\s*g\d|\d+\s*for\s*\$|free|save\s*\$|must buy)/i.test(`${i.price} ${i.note ?? ''}`)
 }

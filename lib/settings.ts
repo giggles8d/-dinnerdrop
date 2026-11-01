@@ -38,6 +38,10 @@ export interface Settings {
     useSales: boolean               // build the week around this week's store sales when a flyer is loaded
     mix: ProteinMix                 // dinners per week by protein group (chicken 2, beef 1…); null = any mix
   }
+  deals: {
+    stockUp: boolean                // "Stock up while it's cheap" on the list (multi-buys, pantry/drink deals)
+    weeklyText: boolean             // text the planner the best deals when a new ad lands
+  }
   schedule: {
     weekStart: Weekday              // the family's week (default 'mon' = the original Monday weeks)
     trips: TripSetting[]            // shopping trips; empty = one weekly trip (the original setup)
@@ -108,6 +112,10 @@ export const DEFAULT_SETTINGS: Settings = {
     maxCalories: 0,
     useSales: true,
     mix: null,
+  },
+  deals: {
+    stockUp: true,
+    weeklyText: false,
   },
   schedule: {
     weekStart: 'mon',
