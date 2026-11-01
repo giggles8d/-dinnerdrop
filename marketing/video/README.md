@@ -13,7 +13,7 @@ Sarah's standing instruction (2026-10-28): post **3 videos a day** on DinnerDrop
 | Slot | Time | Format |
 |---|---|---|
 | 1 | 11:30 AM | Recipe Short |
-| 2 | 4:30 PM | Trend video |
+| 2 | 4:30 PM | Mom video (AI presenter, competitor-switch angle; replaced the trend video Oct 31) — `mom/build_mom.py <dir>` |
 | 3 | 7:30 PM | Fruit Moms episode |
 
 Trend rotation by weekday: Mon "$X grocery haul" · Tue "Girl dinner vs real dinner" · Wed viral-ingredient remix · Thu "POV: it's 5 PM" · Fri fridge clean-out (pantry feature) · Sat ASMR ingredient→plate (no talking) · Sun "Sunday reset: plan the week in 60 s".

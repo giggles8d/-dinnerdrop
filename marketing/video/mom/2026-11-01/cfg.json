@@ -1,0 +1,6 @@
+{"out": "2026-11-01_Mom_OllieRebuild.mp4",
+ "hook_text": ["Meal app shutting down?", "Don't start your dinners over"],
+ "labels": {"c2.mp4": "Type the dinners you loved", "c3.mp4": "5 dinners + 1 list + 1 tap"},
+ "app": [[54, 62, "Your dinners, rebuilt"], [136, 152, "Whole list to Instacart, 1 tap"]],
+ "app_after": 1,
+ "end": ["Your meal app closing?", "Code OLLIE = 3 months of Family free", "dinnerdrop.app/ollie"]}

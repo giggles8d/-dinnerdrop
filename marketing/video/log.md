@@ -2,6 +2,10 @@
 
 | Date | Time | Slot | Video | Notes |
 |---|---|---|---|---|
+| 2026-11-02 | 4:30 PM | Mom (Ollie window) | "Meal app closing this week? Don't start from scratch" — angle 1 (free to try, no card); hook location: work parking lot (Mon) | TikTok/YT/FB via Publer (scheduled 11-01 by Claude; mom/2026-11-02, veo3_1 high, OLLIE end card) |
+| 2026-11-02 | 11:30 AM | Recipe | Spaghetti with Meat Sauce (slug spaghetti-with-meat-sauce-68gq) | TikTok/YT/FB via Publer (scheduled 11-01 by Claude; recipe/meatsauce) |
+| 2026-11-01 | 7:30 PM | Fruit | Fruit Moms Ep 8 "The Extra Hour" (clocks fell back) | TikTok/YT/FB via Publer (scheduled 11-01); next episode = Ep 9 |
+| 2026-11-01 | 4:30 PM | Mom (Ollie window) | "Meal app shutting down? Don't start your dinners over" — angle 7 (type the dinners you loved, it rebuilds them); hook location: kitchen, Sunday reset | TikTok/YT/FB via Publer (scheduled 11-01 by Claude; mom/2026-11-01, veo3_1 high, OLLIE end card) |
 | 2026-11-01 | 12:30 PM | Recipe (late — 11:30 slot was empty) | Quick Chicken Ramen with Soft-Boiled Eggs (slug quick-chicken-ramen-with-soft-boiled-eggs-ovwm) | TikTok/YT/FB via Publer (scheduled 11-01 by Claude; recipe/ramen) |
 | 2026-10-31 | 4:30 PM | Trend (Sat ASMR) | ASMR Garlic Butter Shrimp Pasta (ingredient→plate, no talking; veo3_1 clips, slug garlic-butter-shrimp-pasta-1c8v) | TikTok/YT/FB via Publer (scheduled 10-30) |
 | 2026-10-31 | 11:30 AM | Recipe | Teriyaki Chicken with Broccoli and Rice (slug teriyaki-chicken-with-broccoli-and-rice-2mr5) | TikTok/YT/FB via Publer (scheduled 10-30) |
@@ -13,3 +17,5 @@
 | 2026-10-29 | 11:30 AM | Recipe | Spaghetti Carbonara (slug spaghetti-carbonara-rigi) | TikTok/YT/FB via Publer |
 | 2026-10-28 | 7:30 PM | Fruit | Fruit Moms Ep 5 "Lost in the grocery store" | TikTok/YT/FB via Publer; next episode = Ep 6 |
 | 2026-10-25 | 7 PM | Fruit | Fruit Moms Ep 4 "Sunday Night" | posted via Chrome |
+
+Mom-video angles used (don't repeat within 6 days): 11-01 angle 7 · 11-02 angle 1. Oct 31 "Weekend push" (pickup line) was the template, not one of the 7 angles.

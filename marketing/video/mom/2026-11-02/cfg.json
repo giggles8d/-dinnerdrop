@@ -1,0 +1,6 @@
+{"out": "2026-11-02_Mom_OllieNoCard.mp4",
+ "hook_text": ["Meal app closing this week?", "Don't start from scratch"],
+ "labels": {"c2.mp4": "No card to try it", "c3.mp4": "List builds itself"},
+ "app": [[88, 97, "3 questions, 5 dinners"], [110, 122, "The grocery list, done"]],
+ "app_after": 1,
+ "end": ["Your meal app closing?", "Code OLLIE = 3 months of Family free", "dinnerdrop.app/ollie"]}
