@@ -13,6 +13,7 @@ import { toPackages } from '@/lib/package-match'
 import { matchSale, isUpcoming, type WeeklySales } from '@/lib/sales-shared'
 import DealsBanner from '@/components/DealsBanner'
 import StockUpDeals from '@/components/StockUpDeals'
+import SwapToSave from '@/components/SwapToSave'
 import RestOfShop from '@/components/RestOfShop'
 import StoreCompare from '@/components/StoreCompare'
 import ReceiptUpload from '@/components/ReceiptUpload'
@@ -571,6 +572,8 @@ export default function GroceryListPage() {
             ))}
           </div>
         )}
+
+        {sales.length > 0 && items.length > 0 && <SwapToSave compact onSwapped={() => { setTimeout(() => window.location.reload(), 900) }} />}
 
         {sales.length > 0 && items.length > 0 && (
           <DealsBanner sets={sales.filter((x) => !isUpcoming(x))} nextSets={sales.filter((x) => isUpcoming(x))} names={items.filter((i) => !i.have).map((i) => i.name)} />

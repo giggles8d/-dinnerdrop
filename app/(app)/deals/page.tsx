@@ -6,6 +6,7 @@ import { ArrowLeft, Check, Loader2, Minus, Plus, Tag } from 'lucide-react'
 import { openExternal } from '@/lib/native'
 import { isStockUpDeal, isUpcoming, namesMatch, stockUpScore, type SaleItem, type WeeklySales } from '@/lib/sales-shared'
 import { normalizeItemName } from '@/lib/list'
+import SwapToSave from '@/components/SwapToSave'
 
 /**
  * /deals — this week's (and next week's) sale items at the family's stores: what's already
@@ -159,6 +160,8 @@ export default function DealsPage() {
             )}
           </div>
         )}
+
+        {week === 'current' && cat === 'For my dinners' && <SwapToSave compact />}
 
         {onList.length > 0 && (
           <section className="mb-6">
