@@ -237,7 +237,9 @@ export function parseInbound(raw: string): Parsed {
   if (again) return { kind: 'again', numbers: numbersIn(again[2]) }
   const useup = t.match(/^(?:use up|use first|expiring|going bad|have to use|must use|in the fridge)\s*[:\-]?\s*(.+)$/i)
   if (useup) return { kind: 'use_up', items: splitItems(useup[1]) }
-  const add = t.match(/^(?:add|\+|need|we need|we'?re out of|out of|get|buy|pick up|grab)\s*[:\-]?\s*(.+)$/i)
+  // A bare "add" (Lucas, Nov 1 2026) is still an ADD with nothing to add — answered in code, not by the AI step.
+  // Whole words only: "additional…" / "address…" are not ADD.
+  const add = t.match(/^(?:(?:add|need|we need|we'?re out of|out of|get|buy|pick up|grab)(?=$|\s|[:\-])|\+)\s*[:\-]?\s*(.*)$/i)
   if (add) return { kind: 'add', items: splitItems(add[1]) }
   const skip = u.match(/^(SKIP|NOT|NO|DROP)?\s*[:\-]?\s*([\d\s,and&]+)$/)
   if (skip && numbersIn(skip[2]).length) return { kind: 'skip', numbers: numbersIn(skip[2]), explicit: !!skip[1] }
@@ -454,6 +456,9 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const to = await ownerPhone(admin, owner)
       const isPlanner = m.profile_id === owner.id || (!!to && to === m.phone)
       if (isPlanner || !to) return { reply: `Tap to add ${names} to your Walmart cart: ${url}`, handled: true, member: m }
+      // The same link shared again within a few minutes (Lucas sent one 3× in 8 seconds, Nov 1 2026): the planner already has it — don't text her again.
+      const { data: dup } = await admin.from('sms_messages').select('id').eq('member_id', m.id).eq('direction', 'in').eq('body', body).neq('twilio_sid', sid ?? '').gte('created_at', new Date(Date.now() - 10 * 60000).toISOString()).limit(1)
+      if (dup?.length) return { reply: `Already sent ${names} to ${family} with the one-tap cart link ✅ — no need to resend.`, handled: true, member: m }
       const r = await sendSms(to, `${m.name} wants ${names} from Walmart. Tap to add to your Walmart cart: ${url}`)
       await admin.from('sms_messages').insert({ household_id: m.household_id, direction: 'out', to_number: to, body: `walmart pick from ${m.name}: ${names}`, intent: 'walmart_pick', twilio_sid: r.sid ?? null })
       return { reply: r.ok ? `Sent to ${family}: ${names}. One tap puts it in the Walmart cart. ✅` : `I couldn't reach ${family} just now. Try again in a bit.`, handled: true, member: m }
@@ -561,7 +566,13 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
         added.push(label)
       }
-      return { reply: added.length ? `Added to the list: ${added.join(', ')}. ✅` : `Tell me what to add, like "add oat milk, bananas".`, handled: true, member: m }
+      if (added.length) return { reply: `Added to the list: ${added.join(', ')}. ✅`, handled: true, member: m }
+      // "Add" right after sharing a product link: the link was already handled — say so instead of asking what to add (Lucas, Nov 1 2026).
+      const lastTheirs = [...ctx.history].reverse().find((h) => h.who === 'Them')
+      if (lastTheirs && walmartUrlsIn(lastTheirs.body).length) {
+        return { reply: settings.texting.walmartLinks === 'cart' ? `Your Walmart link already went to ${family} with a one-tap cart button ✅. To put something else on the list, text ADD + the item, like "add granola bars".` : `Your Walmart pick is already on the list ✅. To add something else, text ADD + the item, like "add granola bars".`, handled: true, member: m }
+      }
+      return { reply: `Tell me what to add, like "add oat milk, bananas" — or share a product link or photo.`, handled: true, member: m }
     }
     default:
       break
