@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { createClient } from '@/lib/supabase'
-import { Heart, UtensilsCrossed, ShoppingCart, Package, Clock, User, Settings2, BookOpen, ChefHat, LifeBuoy, Refrigerator } from 'lucide-react'
+import { Heart, UtensilsCrossed, ShoppingCart, Package, Clock, User, Settings2, BookOpen, ChefHat, LifeBuoy, Refrigerator, Tag } from 'lucide-react'
 
 const links = [
   { href: '/dashboard', label: 'Meals', icon: UtensilsCrossed },
@@ -12,6 +12,7 @@ const links = [
   { href: '/favorites', label: 'Favorites', icon: Heart },
   { href: '/tonight', label: 'Tonight', icon: Refrigerator },
   { href: '/grocery-list', label: 'Grocery List', icon: ShoppingCart },
+  { href: '/deals', label: 'Deals', icon: Tag },
   { href: '/pantry', label: 'Pantry', icon: Package },
   { href: '/history', label: 'History', icon: Clock },
   { href: '/settings', label: 'Settings', icon: Settings2 },
