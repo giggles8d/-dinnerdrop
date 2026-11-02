@@ -30,11 +30,18 @@ export async function GET() {
   ])
   const settings = mergeSettings(prof?.settings)
   let listNames: string[] = []
+  let planNames: string[] = []
   if (ws) {
-    const { data } = await admin.from('list_items').select('name').eq('user_id', ownerId).eq('week_start', ws).is('ordered_at', null)
+    const [{ data }, { data: plan }] = await Promise.all([
+      admin.from('list_items').select('name').eq('user_id', ownerId).eq('week_start', ws).is('ordered_at', null),
+      admin.from('meal_plans').select('meals').eq('user_id', ownerId).eq('week_start', ws).order('created_at', { ascending: false }).limit(1).maybeSingle(),
+    ])
     listNames = (data ?? []).map((r) => normalizeItemName(r.name)).filter(Boolean)
+    // Every ingredient in this week's dinners (ordered or not) — "For my dinners" on /deals matches against these.
+    const meals = Array.isArray(plan?.meals) ? (plan!.meals as Array<{ ingredients?: Array<{ name?: string }> }>) : []
+    planNames = Array.from(new Set(meals.flatMap((m) => (m.ingredients ?? []).map((i) => normalizeItemName(String(i.name ?? '')))).filter(Boolean)))
   }
-  return NextResponse.json({ sets, stores: settings.stores.myStores.map((s) => s.name), useSales: settings.food.useSales, stockUp: settings.deals.stockUp, listNames, weekStart: ws })
+  return NextResponse.json({ sets, stores: settings.stores.myStores.map((s) => s.name), useSales: settings.food.useSales, stockUp: settings.deals.stockUp, listNames, planNames, weekStart: ws })
 }
 
 export async function POST(req: NextRequest) {

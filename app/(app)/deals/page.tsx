@@ -13,7 +13,7 @@ import { normalizeItemName } from '@/lib/list'
  * shared weekly-ad reads plus any flyer the family snapped (Settings → Stores).
  */
 type Week = 'current' | 'next'
-const CATS = ['For my dinners', 'Meat & Seafood', 'Produce', 'Pantry & Dry Goods', 'Dairy & Eggs', 'Frozen', 'Beverages', 'Bakery'] as const
+const CATS = ['For my dinners', 'All deals', 'Meat & Seafood', 'Produce', 'Pantry & Dry Goods', 'Dairy & Eggs', 'Frozen', 'Beverages', 'Bakery'] as const
 
 function fmtRange(s: WeeklySales): string {
   const f = (d: string | null) => (d ? new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '')
@@ -36,6 +36,7 @@ export default function DealsPage() {
   const [sets, setSets] = useState<WeeklySales[]>([])
   const [stores, setStores] = useState<string[]>([])
   const [listNames, setListNames] = useState<string[]>([])
+  const [planNames, setPlanNames] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [week, setWeek] = useState<Week>('current')
   const [store, setStore] = useState<string>('all')
@@ -50,7 +51,7 @@ export default function DealsPage() {
     try {
       const r = await fetch('/api/deals', { cache: 'no-store' })
       const j = await r.json()
-      setSets(j.sets ?? []); setStores(j.stores ?? []); setListNames(j.listNames ?? [])
+      setSets(j.sets ?? []); setStores(j.stores ?? []); setListNames(j.listNames ?? []); setPlanNames(j.planNames ?? [])
     } finally { setLoading(false) }
   }, [])
   useEffect(() => { load() }, [load])
@@ -61,25 +62,26 @@ export default function DealsPage() {
   const listSet = useMemo(() => new Set(listNames), [listNames])
 
   const items = useMemo(() => {
-    const out: Array<SaleItem & { store: string; key: string; onList: boolean }> = []
+    const out: Array<SaleItem & { store: string; key: string; onList: boolean; inPlan: boolean }> = []
     for (const s of weekSets) {
       if (store !== 'all' && s.store !== store) continue
       for (const i of s.items) {
         const k = normalizeItemName(i.name)
         const onList = listSet.has(k) || Array.from(listSet).some((n) => namesMatch(n, k))
-        out.push({ ...i, store: s.store, key: `${s.id}:${k}`, onList })
+        const inPlan = planNames.some((n) => namesMatch(n, k))
+        out.push({ ...i, store: s.store, key: `${s.id}:${k}`, onList, inPlan })
       }
     }
     return out
-  }, [weekSets, store, listSet])
+  }, [weekSets, store, listSet, planNames])
 
   const onList = items.filter((i) => i.onList)
   const stockUp = items.filter((i) => !i.onList && isStockUpDeal(i)).sort((a, b) => stockUpScore(b) - stockUpScore(a))
   const DINNER_ORDER = ['Meat & Seafood', 'Produce', 'Dairy & Eggs']
-  const rest = items.filter((i) => !i.onList && (cat === 'For my dinners' ? DINNER_ORDER.includes(i.category ?? '') : (i.category ?? 'Pantry & Dry Goods') === cat))
-    .sort((a, b) => (cat === 'For my dinners' ? DINNER_ORDER.indexOf(a.category ?? '') - DINNER_ORDER.indexOf(b.category ?? '') : 0))
+  const rest = items.filter((i) => !i.onList && (cat === 'For my dinners' ? i.inPlan : cat === 'All deals' ? true : (i.category ?? 'Pantry & Dry Goods') === cat))
+    .sort((a, b) => (cat === 'For my dinners' || cat === 'All deals' ? DINNER_ORDER.indexOf(a.category ?? '') - DINNER_ORDER.indexOf(b.category ?? '') : 0))
 
-  type Deal = SaleItem & { store: string; key: string; onList: boolean }
+  type Deal = SaleItem & { store: string; key: string; onList: boolean; inPlan: boolean }
   const byKey = useMemo(() => new Map<string, Deal>(items.map((i) => [i.key, i])), [items])
   const picks: Deal[] = Object.keys(picked).filter((k) => picked[k]).map((k) => byKey.get(k)).filter((x): x is Deal => x !== undefined)
   const toggle = (i: Deal) => setPicked((p) => ({ ...p, [i.key]: !p[i.key] }))
@@ -221,7 +223,7 @@ export default function DealsPage() {
               ))}
             </div>
             {rest.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Nothing in this aisle this week.</p>
+              <p className="text-sm text-muted-foreground">{cat === 'For my dinners' ? (planNames.length ? 'Nothing else in this week’s dinners is on sale — the matches are already on your list above.' : 'Build this week’s dinners first and we’ll match the ad to them.') : 'Nothing in this aisle this week.'}</p>
             ) : (
               <div className="grid grid-cols-2 gap-2.5">
                 {rest.slice(0, 60).map((i) => {
