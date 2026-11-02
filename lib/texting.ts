@@ -197,7 +197,7 @@ export async function runTextingDay(admin: SupabaseClient, now: Date = new Date(
 
 export type Parsed =
   | { kind: 'optin' } | { kind: 'stop' } | { kind: 'start' } | { kind: 'help' }
-  | { kind: 'list' } | { kind: 'menu' }
+  | { kind: 'list' } | { kind: 'menu' } | { kind: 'prefs' }
   | { kind: 'allgood' } | { kind: 'none' } | { kind: 'thanks' }
   | { kind: 'skip'; numbers: number[]; explicit?: boolean } | { kind: 'again'; numbers: number[] }
   | { kind: 'add'; items: string[] }
@@ -219,29 +219,34 @@ export function parseInbound(raw: string): Parsed {
   if (new RegExp(`^(LIST|GROCERY|GROCERIES|GROCERY LIST|THE LIST)${end}`).test(u)) return { kind: 'list' }
   if (new RegExp(`^(TONIGHT|WHAT'?S (FOR )?DINNER TONIGHT|DINNER TONIGHT|WHAT'?S TONIGHT|WHAT ARE WE (HAVING|EATING) TONIGHT)${end}`).test(u)) return { kind: 'tonight' }
   if (new RegExp(`^(MENU|DINNERS|PLAN|THIS WEEK|WHAT'?S FOR DINNER( THIS WEEK)?|WHAT'?S THE PLAN)${end}`).test(u)) return { kind: 'menu' }
-  if (new RegExp(`^(TALLY|RESULTS?|SCORE|STANDINGS|VOTES?|VOTE (SO FAR|STATUS|COUNT|RESULTS?)|WHO('?S| HAS)? VOTED|WHAT'?S THE VOT(E|ING)( SO FAR)?|HOW'?S THE VOT(E|ING)( GOING)?|WHO'?S WINNING)${end}`).test(u)) return { kind: 'tally' }
+  // "Whata the voting so far?" (Rich, Oct 31 2026) — typos and "how's it going" phrasings all mean TALLY.
+  if (new RegExp(`^(TALLY|RESULTS?|SCORE|STANDINGS|VOTES?( SO FAR)?|VOTE (SO FAR|STATUS|COUNT|RESULTS?)|WHO('?S| HAS)? VOTED|(WHAT|HOW)('?S|A|S| IS|'?S IT| IS IT)? (THE |OUR )?VOT(E|ES|ING)( SO FAR| GOING| LOOK(ING)?| STAND(ING)?)?|WHO'?S WINNING)${end}`).test(u)) return { kind: 'tally' }
+  // Their own saved tastes ("I should be able to see my preferences" — Rich, Oct 31 2026).
+  if (new RegExp(`^(PREFS?|PREFERENCES|MY (PREFS?|PREFERENCES|PROFILE|TASTES?|LIKES|FOODS?)|WHAT (DO I|I) LIKE|WHAT ARE MY (PREFS?|PREFERENCES|LIKES|TASTES?)|SHOW (ME )?MY (PREFS?|PREFERENCES|PROFILE|TASTES?)|(CAN I )?SEE MY (PREFS?|PREFERENCES|PROFILE|TASTES?))${end}`).test(u)) return { kind: 'prefs' }
   const recipe = u.match(/^(?:RECIPE|INGREDIENTS(?: FOR)?|HOW (?:DO I|DO YOU|TO) (?:MAKE|COOK))\s*#?\s*(\d{1,2})[\s.!?]*$/)
   if (recipe) return { kind: 'recipe', number: Number(recipe[1]) }
   const suggest = t.match(/^(?:(?:can|could|may) (?:i|we) |i'?d like to |i want to |i wanna )?(?:suggest|recommend|request|propose)(?:ing)?\s*(?:a|an|some)?\s*[:\-]?\s*(.*)$|^(?:how about|what about|can we (?:do|have|make|get)|could we (?:do|have|make)|let'?s (?:do|have|make)|we should (?:do|have|make|try)|i'?d love|put on|idea[:\-]?)\s+(.+)$/i)
   if (suggest) {
     const what = (suggest[1] ?? suggest[2] ?? '').trim().replace(/[?!.]+$/, '')
-    if (!/^\d[\d\s,and&]*$/.test(what)) return { kind: 'suggest', items: /^(meals?|dinners?|something|a meal|a dinner|ideas?|one|things?|food|)$/i.test(what) ? [] : splitDishes(what) }
+    if (!/^\d[\d\s,and&]*$/i.test(what)) return { kind: 'suggest', items: /^(meals?|dinners?|something|a meal|a dinner|ideas?|one|things?|food|)$/i.test(what) ? [] : splitDishes(what) }
   }
   if (new RegExp(`^(ALL ?GOOD|ALL|GOOD|KEEP ?ALL|LOOKS GOOD|👍|LGTM|FINE|ALL OF THEM)${end}`).test(u)) return { kind: 'allgood' }
   if (new RegExp(`^(NONE|NO|NOPE|NAH|NONE OF THEM)${end}`).test(u)) return { kind: 'none' }
   if (new RegExp(`^(THANKS|THANK YOU|THANKS!|THX|TY|COOL|GREAT|AWESOME|❤️|🙏)( SO MUCH| YOU)?${end}`).test(u)) return { kind: 'thanks' }
   // "ORDER 317.97", "total 317.97", "it came to $317.97", "order was $317" — the planner recording the real bill.
-  const order = t.match(/^(?:order|total|order total|bill|it came to|came to|cost|spent|paid)\s*(?:was|is|came to|:)?\s*\$?\s*(\d{1,4}(?:[.,]\d{2})?)\s*(?:(?:at|@|from)\s+)?([A-Za-z'&. ]{2,30})?\s*$/i)
+  const order = t.match(/^(?:order|total|order total|bill|it came to|came to|cost|spent|paid)\b\s*(?:was|is|came to|:)?\s*\$?\s*(\d{1,4}(?:[.,]\d{2})?)\s*(?:(?:at|@|from)\s+)?([A-Za-z'&. ]{2,30})?\s*$/i)
   if (order) return { kind: 'order_total', total: Number(order[1].replace(',', '.')), store: order[2]?.trim() || undefined }
-  const again = u.match(/^(AGAIN|REPEAT|BRING BACK)\s*[:\-]?\s*([\d\s,and&]+)$/)
+  // "7 and 8" / "again 1 AND 3": the number lists are matched on the upper-cased text, so "and" must be case-insensitive.
+  const again = u.match(/^(AGAIN|REPEAT|BRING BACK)\s*[:\-]?\s*([\d\s,and&]+)$/i)
   if (again) return { kind: 'again', numbers: numbersIn(again[2]) }
-  const useup = t.match(/^(?:use up|use first|expiring|going bad|have to use|must use|in the fridge)\s*[:\-]?\s*(.+)$/i)
+  const useup = t.match(/^(?:use up|use first|expiring|going bad|have to use|must use|in the fridge)\b\s*[:\-]?\s*(.+)$/i)
   if (useup) return { kind: 'use_up', items: splitItems(useup[1]) }
+  // Whole words only: "Addressing me by name…" is a sentence, not ADD (Rich, Oct 31 2026 — it put
+  // "say happy birthday when it happens" on the grocery list). Same for "Needless…", "Getting…".
   // A bare "add" (Lucas, Nov 1 2026) is still an ADD with nothing to add — answered in code, not by the AI step.
-  // Whole words only: "additional…" / "address…" are not ADD.
-  const add = t.match(/^(?:(?:add|need|we need|we'?re out of|out of|get|buy|pick up|grab)(?=$|\s|[:\-])|\+)\s*[:\-]?\s*(.*)$/i)
+  const add = t.match(/^(?:(?:add|need|we need|we'?re out of|out of|get|buy|pick up|grab)\b|\+)\s*[:\-]?\s*(.*)$/i)
   if (add) return { kind: 'add', items: splitItems(add[1]) }
-  const skip = u.match(/^(SKIP|NOT|NO|DROP)?\s*[:\-]?\s*([\d\s,and&]+)$/)
+  const skip = u.match(/^(SKIP|NOT|NO|DROP)?\s*[:\-]?\s*([\d\s,and&]+)$/i)
   if (skip && numbersIn(skip[2]).length) return { kind: 'skip', numbers: numbersIn(skip[2]), explicit: !!skip[1] }
   return { kind: 'unknown' }
 }
@@ -266,7 +271,7 @@ export async function cleanItems(raw: string[]): Promise<CleanItem[]> {
   if (!items.length) return []
   try {
     const text = await generateWithClaude(
-      `A family member texted these grocery items. Return every product they want as its own object, in order: a clean shoppable product name (fix typos, drop filler like "like"/"also"/"please"/"some", keep brand names, plural for produce) and the quantity to buy: use the amount they wrote if any, otherwise a sensible single-purchase default (bananas → 1 bunch, milk → 1 gallon, eggs → 1 dozen, Dr Pepper → 1 12-pack, chicken → 1 lb, snack bars → 1 box, paper towels → 1 pack). Units from: whole, bunch, lb, oz, gallon, half-gallon, quart, dozen, bag, box, can, jar, bottle, pack, 12-pack, loaf, head, package. IMPORTANT: a single entry often lists several products run together with spaces or no punctuation — "steak cheese cold cuts pepperoni eggs" is FIVE items (steak; cheese; cold cuts; pepperoni; eggs), "2 gallons milk and bread" is two — split those into separate objects; keep multi-word product names together (cold cuts, peanut butter, ground beef, orange juice). Skip anything that isn't a grocery/household item. Return ONLY a flat JSON array: [{"name":"","quantity":"1","unit":"bunch"}, ...]\n${JSON.stringify(items)}`,
+      `A family member texted these grocery items. Return every product they want as its own object, in order: a clean shoppable product name (fix typos, drop filler like "like"/"also"/"please"/"some", keep brand names, plural for produce) and the quantity to buy: use the amount they wrote if any, otherwise a sensible single-purchase default (bananas → 1 bunch, milk → 1 gallon, eggs → 1 dozen, Dr Pepper → 1 12-pack, chicken → 1 lb, snack bars → 1 box, paper towels → 1 pack). Units from: whole, bunch, lb, oz, gallon, half-gallon, quart, dozen, bag, box, can, jar, bottle, pack, 12-pack, loaf, head, package. IMPORTANT: a single entry often lists several products run together with spaces or no punctuation — "steak cheese cold cuts pepperoni eggs" is FIVE items (steak; cheese; cold cuts; pepperoni; eggs), "2 gallons milk and bread" is two — split those into separate objects; keep multi-word product names together (cold cuts, peanut butter, ground beef, orange juice). Skip anything that isn't a grocery/household item — and if an entry is a sentence, request or remark rather than products ("say happy birthday when it happens", "address me by name"), skip it entirely, even when it mentions food. Return ONLY a flat JSON array: [{"name":"","quantity":"1","unit":"bunch"}, ...]\n${JSON.stringify(items)}`,
       800,
     )
     const out = parseClaudeJSON<Array<{ name?: string; quantity?: string | number; unit?: string }>>(text)
@@ -428,7 +433,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     case 'thanks':
       return { reply: `Anytime, ${m.name} 🙂`, handled: true, member: m }
     case 'help':
-      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, TALLY for the vote so far, SUGGEST + a dish for a future week, TONIGHT, RECIPE + number, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items, MENU, LIST, STOP.`, handled: true, member: m }
+      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, TALLY for the vote so far, SUGGEST + a dish for a future week, TONIGHT, RECIPE + number, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items, MENU, LIST, PREFS to see what you've told me you like, STOP.`, handled: true, member: m }
     default:
       break
   }
@@ -504,6 +509,13 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       if (!r) return { reply: src.length ? `I have ${src.length} dinners numbered 1–${src.length}. Text RECIPE + the number, e.g. "recipe 2".` : `No dinners to show yet.`, handled: true, member: m }
       return { reply: recipeText(r), handled: true, member: m }
     }
+    case 'prefs': {
+      const { data: me } = await admin.from('household_members').select('likes, dislikes, allergies').eq('id', m.id).maybeSingle()
+      const likes = (me?.likes ?? []) as string[], dislikes = (me?.dislikes ?? []) as string[], allergies = (me?.allergies ?? []) as string[]
+      const lines = [likes.length ? `👍 Likes: ${likes.join(', ')}` : '', dislikes.length ? `👎 Won't eat: ${dislikes.join(', ')}` : '', allergies.length ? `⚠️ Allergies: ${allergies.join(', ')}` : ''].filter(Boolean)
+      const how = `Just text me things like "I love tacos", "I don't like mushrooms" or "I'm allergic to shellfish" and I'll update it — ${family} sees it when planning.`
+      return { reply: lines.length ? `Your profile, ${m.name}:\n${lines.join('\n')}\n\n${how}` : `Nothing saved for you yet, ${m.name}. ${how}`, handled: true, member: m }
+    }
     case 'suggest': {
       if (!owner) break
       if (!parsed.items.length) return { reply: `Sure — what would you like on a future week? Text it like "suggest chicken parm" or "how about taco night".`, handled: true, member: m }
@@ -533,7 +545,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         if (rows.length) await admin.from('meal_votes').insert(rows)
         if (parsed.kind === 'allgood') return { reply: `Got it, ${m.name} — they all work for you. 🙌`, handled: true, member: m }
         if (parsed.kind === 'none') return { reply: `Noted, ${m.name} — no picks from you this week.`, handled: true, member: m }
-        return { reply: picked.length ? `Got it — your picks: ${picked.join(', ')}. The top ${round.picks_needed} make the week.` : `I didn't catch which numbers. Reply like "1 3 5" with the dinners you want.`, handled: true, member: m }
+        return { reply: picked.length ? `Got it, ${m.name} — your picks: ${picked.join(', ')}. The top ${round.picks_needed} make the week.` : `I didn't catch which numbers. Reply like "1 3 5" with the dinners you want.`, handled: true, member: m }
       }
       if (!meals.length || !plan) return { reply: `Nothing to vote on yet — ${family} hasn't planned this week.`, handled: true, member: m }
       const rows: Array<{ household_id: string; member_id: string; week_start: string; meal_name: string; vote: string }> = []
@@ -566,7 +578,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         await admin.from('list_items').insert({ user_id: owner.id, household_id: m.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: m.name })
         added.push(label)
       }
-      if (added.length) return { reply: `Added to the list: ${added.join(', ')}. ✅`, handled: true, member: m }
+      if (added.length) return { reply: `Got it, ${m.name} — added to the list: ${added.join(', ')}. ✅`, handled: true, member: m }
       // "Add" right after sharing a product link: the link was already handled — say so instead of asking what to add (Lucas, Nov 1 2026).
       const lastTheirs = [...ctx.history].reverse().find((h) => h.who === 'Them')
       if (lastTheirs && walmartUrlsIn(lastTheirs.body).length) {
@@ -637,6 +649,10 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     if (u.allergies.length) prefNote.push(`allergic to ${u.allergies.join(', ')} — nothing with that will be planned`)
   }
 
+  // "The rest ..yuk" / "everything else is bad" ADDS to what they just said — it never undoes it, even if the
+  // model calls it a correction (Rich, Oct 31 2026: his picks got flipped to skips).
+  if (u.correction && u.skips.length && !u.picks.length && /\b(the rest|the others?|all the others?|everything else|anything else|everything but|all but)\b/i.test(body)) u.correction = false
+  let alreadyPicked = false
   const voteChange = m.can_vote && (u.picks.length || u.skips.length || u.again.length || u.allGood || u.none || u.correction)
   if (voteChange && list.length) {
     const name = (n: number) => list[n - 1]?.name
@@ -652,6 +668,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         const keptNames = new Set([...(kept ?? []).map((k) => k.meal_name), ...u.picks.map(name)])
         const said = new Set((body.match(/\d+/g) ?? []).map(Number))
         u.skips = u.skips.filter((n) => !keptNames.has(name(n) ?? '') || said.has(n))
+        alreadyPicked = (kept ?? []).length > 0
       }
       const picks = u.allGood ? list.map((_, i) => i + 1) : u.picks
       if (picks.length || u.none) await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', weekStart).eq('vote', 'keep')
@@ -698,7 +715,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   if (u.removeLastAdded) parts.push('took that off the grocery list')
   if (parts.length) {
     const lead = u.correction ? `Sorry about that, ${m.name} — fixed: ` : `Got it, ${m.name} — `
-    const tail = mode === 'round' && !u.picks.length && !u.allGood && !u.none && u.skips.length ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
+    // Only ask what they DO want if they haven't told us yet ("4 and 5 are bad" right after picking 7 and 8 needs no follow-up).
+    const tail = mode === 'round' && !u.picks.length && !u.allGood && !u.none && u.skips.length && !alreadyPicked ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
     return { reply: `${lead}${parts.join('; ')}.${tail}`, handled: true, member: m }
   }
   if (u.answer) return { reply: u.answer, handled: true, member: m }
@@ -757,7 +775,7 @@ Facts you may answer from (the planner is ${facts.family}):
 - Vote standings: ${facts.standings ?? 'no vote open'}
 - Grocery list: ${facts.listCount == null ? 'unknown' : `${facts.listCount} items still to buy`}
 - ${facts.ownerMessage ? `${facts.family} recently texted the family: "${facts.ownerMessage}"` : `${facts.family} hasn't texted the family recently`}
-- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product or a store flyer.` : ''}
+- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), PREFS to see what's saved for them, USE UP + items, a photo of a product or a store flyer.` : ''}
 
 Return ONLY JSON:
 {"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"likes":[],"dislikes":[],"allergies":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
