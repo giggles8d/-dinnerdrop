@@ -24,3 +24,7 @@ Lines used:
 
 Build: put c1..c3.mp4 + cfg.json in `mom/<date>/`, run `python3 build_mom.py mom/<date>`, check `sheet.jpg`.
 Poppins has no "→" glyph — don't use arrows in on-screen text.
+- 2026-11-03 (soccer sideline, Tue; angle 3 family votes by text): c1 "Our meal planning app shuts down this week. So I'm planning dinner from the soccer sideline. Watch this." / c2 (kitchen, second phone in hand, screen away) "Here's the good part. Everybody in the house votes on dinner by text. Even my teenager answers." / c3 (dining table) "Five dinners everybody picked, one grocery list, one tap to Instacart. Code's on the screen." Start frames: 35043efb… / f8c48504… / dd874c31…
+
+Fruit Moms note (Nov 2): `fruit/cast.jpg` is a 3-panel sheet, so nano_banana_pro copies the grid. Use the single-panel crop (Higgsfield media `fe5de01d-3e4f-49b5-b7fa-bd1d228dd5f1`) and start the prompt with "ONE single continuous vertical 9:16 image ... Not a collage, no panels". For veo, add "locked-off camera, all three stay visible the entire clip" — Ep 9 take 1 lost Peach mid-clip.
+Recipe note (Nov 2): seed_audio said "DinnerDrop. DinnerDrop." for the line "DinnerDrop. Plan your week free." — use "Plan your week free at DinnerDrop." and always transcribe.
