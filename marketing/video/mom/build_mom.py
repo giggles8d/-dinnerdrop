@@ -52,11 +52,13 @@ for k, c in enumerate(clips):
         segs = C['app']; per = C.get('app_seconds', 7.2) / len(segs); W = 760; H = int(1256 * W / 600)
         for j, (s, e, label) in enumerate(segs):
             sp = per / (e - s); ap = os.path.join(D, f'a{j}.mp4')
-            run(['ffmpeg','-y','-v','error','-i',APP,'-i',src,'-filter_complex',
+            # Audio under the app screens is SILENCE. (Until Nov 1 2026 this re-used the hook clip's
+            # audio at 15% — which is her speaking, so the hook line replayed under every screen.)
+            run(['ffmpeg','-y','-v','error','-i',APP,'-f','lavfi','-i','anullsrc=r=44100:cl=stereo','-filter_complex',
                  f"[0:v]trim={s}:{e},setpts=PTS-STARTPTS,setpts={sp:.4f}*PTS,crop=600:1256:0:48,scale={W}:{H},pad={W+12}:{H+12}:6:6:color=0xdddddd,fps=30[ph];"
                  f"color=c={CREAM}:s=1080x1920:r=30:d={per:.3f}[cr];[cr][ph]overlay=(W-w)/2:250:eof_action=pass,"
                  f"drawtext=fontfile={FONT}:text='{esc(label)}':fontsize=56:fontcolor={GREEN}:x=(w-text_w)/2:y=120,trim=0:{per:.3f},format=yuv420p,setsar=1[v];"
-                 f"[1:a]atrim=0:{per:.3f},volume=0.15,asetpts=PTS-STARTPTS[a]",
+                 f"[1:a]atrim=0:{per:.3f},asetpts=PTS-STARTPTS[a]",
                  '-map','[v]','-map','[a]','-t',f'{per:.3f}','-c:v','libx264','-crf','20','-preset','medium','-c:a','aac','-b:a','160k','-ar','44100','-ac','2',ap])
             parts.append(ap)
 # end card
@@ -75,3 +77,21 @@ out = os.path.join(D, C['out'])
 run(['ffmpeg','-y','-v','error','-f','concat','-safe','0','-i',lst,'-c:v','libx264','-crf','21','-preset','medium','-c:a','aac','-b:a','160k','-movflags','+faststart',out])
 run(['ffmpeg','-y','-v','error','-i',out,'-vf','fps=1/2,scale=180:-1,tile=9x2','-frames:v','1',os.path.join(D,'sheet.jpg')])
 print(out, round(dur(out), 1))
+
+# QA gate: transcribe the finished video and refuse any repeated sentence (the Nov 1 2026 "hiccup").
+try:
+    import numpy as np, wave, re
+    from faster_whisper import WhisperModel
+    wav = os.path.join(D, 'qa.wav')
+    run(['ffmpeg','-y','-v','error','-i',out,'-vn','-ac','1','-ar','16000',wav])
+    w = wave.open(wav); a = np.frombuffer(w.readframes(w.getnframes()), dtype=np.int16).astype(np.float32) / 32768
+    segs = list(WhisperModel('base', device='cpu', compute_type='int8').transcribe(a)[0])
+    text = ' '.join(x.text.strip() for x in segs)
+    sents = [re.sub(r'[^a-z ]', '', t.lower()).strip() for t in re.split(r'[.!?,]', text) if len(t.split()) >= 4]
+    dupes = sorted({t for t in sents if sents.count(t) > 1})
+    open(os.path.join(D, 'transcript.txt'), 'w').write('\n'.join(f"{x.start:5.1f}-{x.end:5.1f} {x.text}" for x in segs))
+    if dupes:
+        raise SystemExit('QA FAILED — repeated line(s) in the audio: ' + ' | '.join(dupes) + '. Regenerate the clip or mute the span; do not post.')
+    print('QA ok — transcript:', text)
+except ImportError:
+    print('QA skipped: faster-whisper not installed (pip install faster-whisper --break-system-packages) — READ transcript before posting')

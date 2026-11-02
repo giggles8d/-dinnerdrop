@@ -18,6 +18,9 @@ Sarah's standing instruction (2026-10-28): post **3 videos a day** on DinnerDrop
 
 Trend rotation by weekday: Mon "$X grocery haul" · Tue "Girl dinner vs real dinner" · Wed viral-ingredient remix · Thu "POV: it's 5 PM" · Fri fridge clean-out (pantry feature) · Sat ASMR ingredient→plate (no talking) · Sun "Sunday reset: plan the week in 60 s".
 
+## Audio QA before posting (Nov 1 2026 — Sarah: "be more careful and review the video")
+Every finished video is transcribed before it is uploaded (build_mom.py does this at the end; for recipe/fruit videos run the same check by hand: ffmpeg → 16 kHz wav → faster-whisper base). Rules: no sentence may appear twice; the spoken lines must match the script; nothing cut off mid-word. If the check fails, regenerate the clip (or mute the bad span) and re-check. Never post a video whose transcript you have not read. The Nov 1 Mom video went out with the hook line repeated twice under the app screens because the screens section re-used the hook clip's audio — fixed in build_mom.py (silence under screens).
+
 ## Caption line (Nov 1 2026)
 Every caption's CTA names both carts, Instacart first: "…and the whole grocery list lands in your Instacart or Walmart cart in one tap." Walmart in text only (no logo).
 
