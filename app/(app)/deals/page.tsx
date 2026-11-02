@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Check, Loader2, Minus, Plus, Tag } from 'lucide-react'
+import { openExternal } from '@/lib/native'
 import { isStockUpDeal, isUpcoming, namesMatch, stockUpScore, type SaleItem, type WeeklySales } from '@/lib/sales-shared'
 import { normalizeItemName } from '@/lib/list'
 
@@ -40,7 +41,10 @@ export default function DealsPage() {
   const [store, setStore] = useState<string>('all')
   const [cat, setCat] = useState<string>('For my dinners')
   const [qty, setQty] = useState<Record<string, number>>({})
-  const [added, setAdded] = useState<Record<string, 'busy' | 'done'>>({})
+  const [picked, setPicked] = useState<Record<string, boolean>>({})
+  const [added, setAdded] = useState<Record<string, 'done'>>({})
+  const [busy, setBusy] = useState<'list' | 'instacart' | null>(null)
+  const [msg, setMsg] = useState<string | null>(null)
 
   const load = useCallback(async () => {
     try {
@@ -75,14 +79,41 @@ export default function DealsPage() {
   const rest = items.filter((i) => !i.onList && (cat === 'For my dinners' ? DINNER_ORDER.includes(i.category ?? '') : (i.category ?? 'Pantry & Dry Goods') === cat))
     .sort((a, b) => (cat === 'For my dinners' ? DINNER_ORDER.indexOf(a.category ?? '') - DINNER_ORDER.indexOf(b.category ?? '') : 0))
 
-  async function add(i: SaleItem & { store: string; key: string }) {
-    setAdded((a) => ({ ...a, [i.key]: 'busy' }))
+  type Deal = SaleItem & { store: string; key: string; onList: boolean }
+  const byKey = useMemo(() => new Map<string, Deal>(items.map((i) => [i.key, i])), [items])
+  const picks: Deal[] = Object.keys(picked).filter((k) => picked[k]).map((k) => byKey.get(k)).filter((x): x is Deal => x !== undefined)
+  const toggle = (i: Deal) => setPicked((p) => ({ ...p, [i.key]: !p[i.key] }))
+  const qtyOf = (i: Deal) => qty[i.key] ?? stockQty(i)
+
+  /** Put every picked deal on this week's grocery list (so it goes with the weekly Instacart send). */
+  async function addPicksToList() {
+    if (!picks.length) return
+    setBusy('list'); setMsg(null)
+    let n = 0
+    for (const i of picks) {
+      try {
+        const r = await fetch('/api/deals', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: i.name, price: i.price, unit: i.unit, category: i.category, store: i.store, quantity: qtyOf(i) }) })
+        if (r.ok) { n++; setAdded((a) => ({ ...a, [i.key]: 'done' })); setListNames((xs) => [...xs, normalizeItemName(i.name)]) }
+      } catch { /* keep going */ }
+    }
+    setPicked({}); setBusy(null)
+    setMsg(`${n} added to your grocery list.`)
+  }
+
+  /** A separate Instacart list of just the picked specials — buy them now, nothing else changes. */
+  async function buyPicksOnInstacart() {
+    if (!picks.length) return
+    setBusy('instacart'); setMsg(null)
     try {
-      const r = await fetch('/api/deals', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: i.name, price: i.price, unit: i.unit, category: i.category, store: i.store, quantity: qty[i.key] ?? stockQty(i) }) })
-      if (!r.ok) throw new Error()
-      setAdded((a) => ({ ...a, [i.key]: 'done' }))
-      setListNames((xs) => [...xs, normalizeItemName(i.name)])
-    } catch { setAdded((a) => { const n = { ...a }; delete n[i.key]; return n }) }
+      const r = await fetch('/api/deals/instacart', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: picks.map((i) => ({ name: i.name, quantity: qtyOf(i), unit: i.unit, category: i.category, store: i.store, price: i.price })) }) })
+      const j = await r.json()
+      if (!r.ok || !j.link) throw new Error(j.error || 'Could not build the Instacart list')
+      await openExternal(j.link)
+      setMsg(`Your ${picks.length} specials are in an Instacart list — pick ${picks.map((p) => p.store).filter((v, i, a) => a.indexOf(v) === i).join(' or ')} there to get the sale price.`)
+      setPicked({})
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : 'Could not build the Instacart list')
+    } finally { setBusy(null) }
   }
 
   const range = weekSets[0] ? fmtRange(weekSets[0]) : ''
@@ -153,22 +184,22 @@ export default function DealsPage() {
             </div>
             <div className="rounded-2xl border border-amber-200 bg-amber-50/60 divide-y divide-amber-100">
               {stockUp.slice(0, 8).map((i) => {
-                const n = qty[i.key] ?? stockQty(i)
-                const st = added[i.key]
+                const n = qtyOf(i)
+                const on = !!picked[i.key]
                 return (
                   <div key={i.key} className="flex items-center gap-3 px-4 py-3">
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-semibold text-foreground capitalize truncate">{i.name}</div>
                       <div className="text-xs text-amber-900 font-semibold">{i.store} · {i.price}{i.note ? ` · ${i.note}` : ''}</div>
                     </div>
-                    {st === 'done' ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary"><Check className="w-3.5 h-3.5" /> Added {n}</span>
+                    {added[i.key] ? (
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary"><Check className="w-3.5 h-3.5" /> On list</span>
                     ) : (
                       <div className="flex items-center gap-1.5">
                         <button type="button" aria-label="Fewer" onClick={() => setQty((q) => ({ ...q, [i.key]: Math.max(1, n - 1) }))} className="w-9 h-9 rounded-full border border-border bg-white flex items-center justify-center"><Minus className="w-4 h-4" /></button>
                         <span className="w-5 text-center text-sm font-bold">{n}</span>
                         <button type="button" aria-label="More" onClick={() => setQty((q) => ({ ...q, [i.key]: Math.min(12, n + 1) }))} className="w-9 h-9 rounded-full border border-border bg-white flex items-center justify-center"><Plus className="w-4 h-4" /></button>
-                        <button type="button" onClick={() => add(i)} disabled={st === 'busy'} className="ml-1 h-9 px-3 rounded-full bg-primary text-primary-foreground text-xs font-semibold disabled:opacity-50">{st === 'busy' ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Add'}</button>
+                        <button type="button" onClick={() => toggle(i)} aria-pressed={on} className={`ml-1 h-9 px-3 rounded-full text-xs font-semibold border ${on ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-primary border-primary/40'}`}>{on ? <span className="inline-flex items-center gap-1"><Check className="w-3.5 h-3.5" /> Picked</span> : 'Pick'}</button>
                       </div>
                     )}
                   </div>
@@ -182,7 +213,7 @@ export default function DealsPage() {
           <section className="mb-8">
             <div className="flex items-baseline justify-between mb-2">
               <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Shop the ad</h2>
-              <span className="text-[11px] text-muted-foreground">Tap to add to your list</span>
+              <span className="text-[11px] text-muted-foreground">Pick what you want, then choose below</span>
             </div>
             <div className="flex gap-2 overflow-x-auto pb-2 mb-3">
               {CATS.map((c) => (
@@ -194,14 +225,15 @@ export default function DealsPage() {
             ) : (
               <div className="grid grid-cols-2 gap-2.5">
                 {rest.slice(0, 60).map((i) => {
-                  const st = added[i.key]
+                  const on = !!picked[i.key]
+                  const done = !!added[i.key]
                   return (
                     <div key={i.key} className="rounded-2xl border border-border bg-white p-3 flex flex-col gap-1.5">
                       <div className="text-sm font-semibold text-foreground capitalize leading-tight">{i.name}</div>
                       <div className="text-sm font-bold text-primary">{i.price}</div>
                       <div className="text-[11px] text-muted-foreground">{i.store}{i.note ? ` · ${i.note}` : ''}{i.unit && !/^(oz|each|pack|lb)$/i.test(i.unit) ? ` · ${i.unit}` : ''}</div>
-                      <button type="button" onClick={() => add(i)} disabled={!!st} className={`mt-auto h-10 rounded-full text-sm font-semibold border ${st === 'done' ? 'border-primary/30 text-primary bg-primary/5' : 'border-border text-primary bg-white'} disabled:opacity-80`}>
-                        {st === 'done' ? <span className="inline-flex items-center gap-1"><Check className="w-4 h-4" /> Added</span> : st === 'busy' ? <Loader2 className="w-4 h-4 animate-spin inline" /> : 'Add'}
+                      <button type="button" onClick={() => toggle(i)} disabled={done} aria-pressed={on} className={`mt-auto h-10 rounded-full text-sm font-semibold border ${done ? 'border-primary/30 text-primary bg-primary/5' : on ? 'bg-primary text-primary-foreground border-primary' : 'border-primary/40 text-primary bg-white'} disabled:opacity-80`}>
+                        {done ? <span className="inline-flex items-center gap-1"><Check className="w-4 h-4" /> On list</span> : on ? <span className="inline-flex items-center gap-1"><Check className="w-4 h-4" /> Picked</span> : 'Pick'}
                       </button>
                     </div>
                   )
@@ -213,8 +245,23 @@ export default function DealsPage() {
 
         {items.length > 0 && (
           <div className="sticky bottom-0 -mx-4 px-4 pt-3 pb-4 bg-background/95 backdrop-blur border-t border-border">
-            <Link href="/grocery-list" className="block w-full text-center rounded-2xl bg-primary text-primary-foreground font-bold py-3.5 shadow-lg">Back to my list → send to Instacart</Link>
-            <p className="text-[11px] text-muted-foreground text-center mt-2 leading-snug">Deals are the stores’ shelf prices; Instacart shows its own price at checkout. Pick the store in Instacart to get its sale.</p>
+            {msg && <p className="text-xs text-foreground text-center mb-2">{msg}</p>}
+            {picks.length > 0 ? (
+              <div className="flex flex-col gap-2">
+                <button type="button" onClick={buyPicksOnInstacart} disabled={!!busy} className="w-full rounded-2xl bg-primary text-primary-foreground font-bold py-3.5 shadow-lg disabled:opacity-60">
+                  {busy === 'instacart' ? <Loader2 className="w-5 h-5 animate-spin inline" /> : `Buy ${picks.length} special${picks.length === 1 ? '' : 's'} on Instacart now`}
+                </button>
+                <button type="button" onClick={addPicksToList} disabled={!!busy} className="w-full rounded-2xl border border-primary/40 bg-white text-primary font-semibold py-3 disabled:opacity-60">
+                  {busy === 'list' ? <Loader2 className="w-5 h-5 animate-spin inline" /> : `Add ${picks.length} to my grocery list`}
+                </button>
+                <p className="text-[11px] text-muted-foreground text-center leading-snug">“Buy now” opens a separate Instacart list with just these specials — pick the store there to get its sale price. “Add to my list” puts them in this week’s send.</p>
+              </div>
+            ) : (
+              <>
+                <Link href="/grocery-list" className="block w-full text-center rounded-2xl bg-primary text-primary-foreground font-bold py-3.5 shadow-lg">Back to my list → send to Instacart</Link>
+                <p className="text-[11px] text-muted-foreground text-center mt-2 leading-snug">Deals are the stores’ shelf prices; Instacart shows its own price at checkout. Pick the store in Instacart to get its sale.</p>
+              </>
+            )}
           </div>
         )}
       </div>

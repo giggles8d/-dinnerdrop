@@ -9,7 +9,7 @@ import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
 import FamilyVoteCard from '@/components/FamilyVoteCard'
-import SalesCard from '@/components/SalesCard'
+import DealsCard from '@/components/DealsCard'
 import QuickSetup, { type QuickSetupAnswers } from '@/components/QuickSetup'
 import FirstWeekReveal from '@/components/FirstWeekReveal'
 import type { Meal } from '@/types'
@@ -780,7 +780,7 @@ function DashboardContent() {
             <span className="text-sm font-semibold text-primary whitespace-nowrap">Try it →</span>
           </Link>
         )}
-        {!isPickingMeals && !showQuickSetup && <div className="mb-6"><SalesCard compact /></div>}
+        {!isPickingMeals && !showQuickSetup && <DealsCard />}
 
         {/* First-plan auto-generation in progress */}
         {loading && !hasGenerated && !isPickingMeals && (
