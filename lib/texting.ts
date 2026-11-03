@@ -77,6 +77,32 @@ export async function fitPlanToNeeds(admin: SupabaseClient, ownerId: string, pla
   return changed
 }
 
+/** What the bot knows to answer food, cooking and grocery questions: the week, tonight's recipe, the open list, the household's needs. */
+export async function foodFacts(admin: SupabaseClient, m: MemberRow, owner: OwnerRow | null, plan: { week_start: string } | null, meals: Meal[], tz: string, settings: Settings): Promise<Partial<BotFacts>> {
+  const facts: Partial<BotFacts> = {}
+    const tn = tonightMeal(meals, tz); if (tn) facts.tonight = `${tn.name}${tn.cookTime ? ` (${tn.cookTime} min)` : ''}`
+    if (owner) {
+      const { data: open } = await admin.from('list_items').select('name').eq('user_id', owner.id).eq('week_start', plan?.week_start ?? mondayOf(new Date())).is('ordered_at', null).eq('have', false).eq('checked', false).limit(60)
+      facts.listCount = open?.length ?? undefined
+      facts.listItems = (open ?? []).map((r) => r.name).slice(0, 60)
+    }
+    // For the food & cooking assistant: the week, tonight's recipe, and who can't eat what (so answers respect it).
+    facts.menu = meals.map((x, i) => `${i + 1}. ${x.day ? `${x.day} — ` : ''}${x.name}${x.cookedAt ? ' (cooked)' : ''}`)
+    if (tn) facts.tonightRecipe = `Ingredients: ${(tn.ingredients ?? []).map((g) => `${g.quantity ?? ''} ${g.unit ?? ''} ${g.name}`.replace(/\s+/g, ' ').trim()).join('; ').slice(0, 900)}. Steps: ${(tn.steps ?? []).map((st, i) => `${i + 1}) ${st}`).join(' ').slice(0, 1400)}${tn.side?.name ? ` Side: ${tn.side.name}.` : ''}${tn.plateNotes?.length ? ` Plate notes: ${tn.plateNotes.join(' ')}` : ''}`
+    const { data: people } = await admin.from('household_members').select('id, name, role, allergies, dislikes').eq('household_id', m.household_id)
+    const health = settings.health ?? {}
+    facts.people = ((people ?? []) as Array<{ id: string; name: string; role: string; allergies: string[] | null; dislikes: string[] | null }>).map((x) => {
+      const bits: string[] = []
+      if (x.allergies?.length) bits.push(`allergic/can't have: ${x.allergies.join(', ')}`)
+      if (x.dislikes?.length) bits.push(`won't eat: ${x.dislikes.join(', ')}`)
+      const h = health[x.id]
+      if (h?.carbs === 'every_meal') bits.push('needs a starch with every meal')
+      if (h?.carbs === 'limit') bits.push(`keeps carbs low${h.carbsPerDay ? ` (~${h.carbsPerDay} g/day)` : ''}`)
+      return `${x.name}${x.id === m.id ? ' (the person texting)' : ''}${x.role === 'kid' ? ' (kid)' : ''}${bits.length ? ': ' + bits.join('; ') : ''}`
+    }).slice(0, 10)
+  return facts
+}
+
 export async function latestPlan(admin: SupabaseClient, userId: string): Promise<{ id: string; week_start: string; meals: Meal[] } | null> {
   const { data } = await admin.from('meal_plans').select('id, week_start, meals').eq('user_id', userId).order('created_at', { ascending: false }).limit(1).single()
   return data ? { id: data.id, week_start: data.week_start, meals: (data.meals as Meal[]) ?? [] } : null
@@ -608,12 +634,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   // Facts the bot can answer from, and the planner's latest note to the family (so replies to it get passed on).
   const facts: BotFacts = { family }
   try {
-    const tn = tonightMeal(meals, tz); if (tn) facts.tonight = `${tn.name}${tn.cookTime ? ` (${tn.cookTime} min)` : ''}`
+    Object.assign(facts, await foodFacts(admin, m, owner, plan, meals, tz, settings))
     if (round) { const st = await roundStandings(admin, round); facts.standings = tallyText(round, st).replace(/\n/g, ' | ') }
-    if (owner) {
-      const { count } = await admin.from('list_items').select('id', { count: 'exact', head: true }).eq('user_id', owner.id).eq('week_start', plan?.week_start ?? mondayOf(new Date())).is('ordered_at', null).eq('have', false).eq('checked', false)
-      facts.listCount = count ?? undefined
-    }
     facts.ownerMessage = ctx.ownerMessage
   } catch { /* facts are optional */ }
   const u = await understandInContext(body, ctx, list, mode, facts)
@@ -762,7 +784,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   if (parts.length) {
     const lead = u.correction ? `Sorry about that, ${m.name} — fixed: ` : `Got it, ${m.name} — `
     const tail = mode === 'round' && !u.picks.length && !u.allGood && !u.none && u.skips.length ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
-    return { reply: `${lead}${parts.join('; ')}.${tail}`, handled: true, member: m }
+    return { reply: `${lead}${parts.join('; ')}.${tail}${u.answer ? `\n\n${u.answer}` : ''}`, handled: true, member: m }
   }
   if (u.answer) return { reply: u.answer, handled: true, member: m }
   if (u.clarify) return { reply: u.clarify, handled: true, member: m }
@@ -786,13 +808,13 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
 function helpFor(mode: 'round' | 'again' | 'week', family: string): string {
   if (mode === 'round') return `Reply the numbers of the dinners you want (e.g. "1 3 5"), ALL GOOD, or ADD + items for the list.`
   if (mode === 'again') return `Reply the numbers of the dinners to bring back (e.g. "2" or "1 3"), or NONE. ADD + items puts things on ${family}'s list.`
-  return `Text MENU for this week's dinners, LIST for the grocery list, ADD + items to add to it, or HELP.`
+  return `Text MENU for this week's dinners, LIST for the grocery list, ADD + items to add to it — or ask me anything about cooking, recipes or groceries.`
 }
 
 export interface SmsContext { lastAsk: 'again' | 'vote' | null; lastAskBody?: string; askedNeedsTiming?: boolean; lastList?: 'menu' | 'vote' | null; menuShown?: string[]; ownerMessage?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
 
 /** The last few texts with this person (both ways) and the last question we asked them. */
-async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsContext> {
+export async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsContext> {
   const since = new Date(Date.now() - 4 * 86400000).toISOString()
   const { data } = await admin.from('sms_messages').select('direction, body, intent, created_at').eq('member_id', memberId).gte('created_at', since).order('created_at', { ascending: false }).limit(14)
   const rows = (data ?? []) as Array<{ direction: string; body: string | null; intent: string | null }>
@@ -819,7 +841,7 @@ export interface NeedSaid { who: string; carbs: 'every_meal' | 'limit' | ''; car
 export interface Meant { picks: number[]; skips: number[]; again: number[]; add: string[]; suggest: string[]; likes: string[]; dislikes: string[]; allergies: string[]; needs: NeedSaid[]; allGood: boolean; none: boolean; correction: boolean; removeLastAdded: boolean; question: boolean; relay: boolean; answer: string; clarify: string }
 
 /** Facts the bot may answer questions from (standings, tonight, list size, the planner's name). */
-export interface BotFacts { family: string; tonight?: string; standings?: string; listCount?: number; ownerMessage?: string }
+export interface BotFacts { family: string; tonight?: string; standings?: string; listCount?: number; ownerMessage?: string; menu?: string[]; tonightRecipe?: string; listItems?: string[]; people?: string[] }
 
 /** The prompt for reading a free-text reply against what we asked and what was just said (exported for tests). */
 export function understandPrompt(body: string, ctx: SmsContext, list: Pick<Meal, 'name'>[], mode: 'round' | 'again' | 'week', facts?: BotFacts): string {
@@ -840,9 +862,12 @@ ${facts ? `
 Facts you may answer from (the planner is ${facts.family}):
 - Tonight's dinner: ${facts.tonight ?? 'not planned'}
 - Vote standings: ${facts.standings ?? 'no vote open'}
-- Grocery list: ${facts.listCount == null ? 'unknown' : `${facts.listCount} items still to buy`}
+- Grocery list: ${facts.listCount == null ? 'unknown' : `${facts.listCount} items still to buy${facts.listItems?.length ? `: ${facts.listItems.join(', ')}` : ''}`}
+- This week's dinners: ${facts.menu?.length ? facts.menu.join(' | ') : 'none planned'}
+- Tonight's recipe: ${facts.tonightRecipe ?? 'none'}
+- The household: ${facts.people?.length ? facts.people.join(' | ') : 'unknown'}
 - ${facts.ownerMessage ? `${facts.family} recently texted the family: "${facts.ownerMessage}"` : `${facts.family} hasn't texted the family recently`}
-- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product or a store flyer.` : ''}
+- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product or a store flyer, and any food, cooking or grocery question.` : ''}
 
 Return ONLY JSON:
 {"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"likes":[],"dislikes":[],"allergies":[],"needs":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
@@ -857,7 +882,8 @@ Return ONLY JSON:
 - needs: health-driven eating needs they state for themselves or a named family member — a medical condition, medicine or doctor's rule about what they must or can't eat ("I need carbs in every meal or my pancreatitis flares", "on her medicine she can only have 100 carbs a day"). One entry per person: {"who": "me" or the person's first name, "carbs": "every_meal" (must have carbs/starch at every meal) | "limit" (must keep carbs down) | "", "carbsPerDay": the daily gram limit as a number if they gave one else null, "note": a short neutral summary under 60 characters, no diagnosis (e.g. "carbs at every meal — stomach condition")}. Keep tracking across the conversation: "for me" after a question about who means "me". Food intolerances that come with it ("lemons are no good for me") are dislikes. Otherwise [].
 - When needs is filled, answer and clarify stay "" (DinnerDrop confirms what it saved); never give medical or nutrition advice and never promise to calculate a diet.
 - allGood / none: whole-list answers. question: they asked something or it's unrelated chat.
-- answer: if question is true and it's about dinners, the vote, the list, the app, or what they can text, answer it warmly in one or two sentences (under 280 characters) from the facts above — e.g. tell them the standings, tonight's dinner, how to suggest a dish. Else "".
+- answer: you are also the family's food, cooking and grocery assistant. If question is true and it's about food, cooking, recipes, groceries, meal ideas, leftovers, storage, food safety, substitutions, kitchen how-to, the dinners, the vote, the list, the app or what they can text, answer it like a friendly, practical home cook: direct, specific, plain words, under 600 characters (SMS), no markdown. Use the facts above: tonight's recipe for cooking questions, the week and list for "what's for…" / "do we have…", and ALWAYS respect the household's allergies, won't-eats and needs in any suggestion. For "what can I make with X" give 1–2 concrete ideas with rough steps and time. Food safety: give standard USDA safe temperatures and storage times. Never give medical, diet-treatment or medication advice — for those say to ask their doctor (you can still suggest foods that fit what they told you). For anything not about food or the household's meals, say briefly that you only help with food and groceries. Else "".
+- If they ask a question AND want an action (e.g. "how do I cook this, and add rice"), fill both the action fields and answer.
 - relay: true when the message is clearly meant for the planner or the family, not the bot — a reply to something the planner texted, "tell Sarah…", "I'll be late", "running to the store", a question only a person can answer. Then answer stays "".
 - clarify: if you genuinely can't tell what they mean, a short friendly question (under 140 characters) asking them, else "".`
 }
@@ -881,13 +907,13 @@ export function parseMeant(text: string, listLength: number): Meant {
       return who && (carbs || carbsPerDay || note) ? [{ who, carbs: (carbs || (carbsPerDay ? 'limit' : '')) as NeedSaid['carbs'], carbsPerDay, note }] : []
     }).slice(0, 4) : [],
     allGood: !!j.allGood, none: !!j.none, correction: !!j.correction, removeLastAdded: !!j.removeLastAdded, question: !!j.question, relay: !!j.relay,
-    answer: typeof j.answer === 'string' ? j.answer.trim().slice(0, 320) : '',
+    answer: typeof j.answer === 'string' ? j.answer.trim().slice(0, 700) : '',
     clarify: typeof j.clarify === 'string' ? j.clarify.trim().slice(0, 160) : '',
   }
 }
 
 async function understandInContext(body: string, ctx: SmsContext, list: Meal[], mode: 'round' | 'again' | 'week', facts?: BotFacts): Promise<Meant | null> {
-  try { return parseMeant(await generateSmart(understandPrompt(body, ctx, list, mode, facts), 500), list.length) }
+  try { return parseMeant(await generateSmart(understandPrompt(body, ctx, list, mode, facts), 900), list.length) }
   catch { return null }
 }
 
