@@ -41,6 +41,11 @@ VIDEOS = {
    ('c122.mp4', ["DinnerDrop plans five dinners\nfor your budget and\nbuilds the whole list.", "Before\nTuesday?"], WEEK, '5 dinners + the list. Done.', 0, None),
    ('c123.mp4', ["And the whole list goes straight\nto your Instacart cart.", "Monday,\nhandled!"], CART, 'Whole list in Instacart, 1 tap', 0, None),
  ], ['Empty fridge? Monday: handled.'], 9, ('Empty fridge Monday?', 'the weekend ate everything')),
+ 'e10': ('FruitMoms_Ep10_PracticeRanLate', [
+   ('c131.mp4', ["Practice ran late and it's\nalready six-thirty!", "And nobody knows\nwhat's for dinner."], None, None, None, 'FRUIT MOMS  EP 10'),
+   ('c132.mp4', ["DinnerDrop plans five dinners\nfor your budget and\nbuilds the whole list.", "Even on\npractice nights?"], WEEK, '5 dinners + the list. Done.', 0, None),
+   ('c133.mp4', ["And the whole list goes straight\nto your Instacart cart.", "Practice night,\nhandled!"], CART, 'Whole list in Instacart, 1 tap', 0, None),
+ ], ['Practice night? Dinner: handled.'], 10, ('Practice ran late...', "and nobody planned dinner")),
 }
 DATE = os.environ.get('EP_DATE', '2026-10-29')
 

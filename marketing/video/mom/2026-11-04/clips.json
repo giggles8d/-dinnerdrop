@@ -1,0 +1,6 @@
+{"c1": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261103_174416_a5b33b0e-88e3-4ec6-b44a-59770f58cb93.mp4",
+ "c2": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261103_174416_a03cf916-50a6-4d35-8461-3b9702af679c.mp4",
+ "c3": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261103_174415_8c65ef11-bff2-440d-a59b-24bd6164940d.mp4",
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/4718773b-2826-4930-be2f-e4502d6eec54.mp4",
+ "start_frames": ["0201eff2-c5f5-4963-9d0b-853d4eeeb31c", "67682de8-191b-478a-a6c9-b1588e53c44e", "3de1baf5-0484-4c0f-afb9-9c738376cb1b"],
+ "build": "python3 mom/build_mom.py mom/2026-11-04"}
