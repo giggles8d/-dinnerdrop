@@ -12,7 +12,7 @@ import { normalizeItemName, guessCategory } from '@/lib/list'
  */
 
 const APP = 'https://www.dinnerdrop.app'
-export type FollowupKind = 'day1' | 'day3' | 'day7' | 'plan_ready' | 'campaign'
+export type FollowupKind = 'day1' | 'day3' | 'day7' | 'plan_ready' | 'campaign' | 'texting'
 
 function secret(): string {
   return process.env.FOLLOWUP_LINK_SECRET || process.env.CRON_SECRET || ''
@@ -29,6 +29,11 @@ export function verifyFollowup(userId: string, kind: string, sig: string): boole
 /** One tap from an email to the family's Instacart cart. */
 export function shopUrl(userId: string, kind: FollowupKind): string {
   return `${APP}/api/go/shop?u=${encodeURIComponent(userId)}&k=${kind}&s=${signFollowup(userId, kind)}`
+}
+
+/** One tap from an email to "add your family's numbers" — no sign-in (app/go/texting). */
+export function textingUrl(userId: string, campaign = 'texting'): string {
+  return `${APP}/go/texting?u=${encodeURIComponent(userId)}&s=${signFollowup(userId, 'texting')}&utm_source=email&utm_medium=campaign&utm_campaign=${encodeURIComponent(campaign)}`
 }
 
 export async function logFollowup(admin: SupabaseClient, userId: string, kind: FollowupKind, channel: 'email' | 'sms' = 'email'): Promise<void> {
