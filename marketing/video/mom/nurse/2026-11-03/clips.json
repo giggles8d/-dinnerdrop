@@ -1,0 +1,8 @@
+{"element": "87811554-86f2-4e7c-bab3-7f283e89276c (DinnerDrop-NurseMom; portrait job 52924d29-3f66-4a51-b598-4c00be7a50e1)",
+ "start_frames": {"c1": "c1f0b8b4-2767-429f-8b69-bc9289d3ebda", "c2": "49791d2b-a319-4e87-9762-ee7569e8ef4e", "c3": "ab8d0fd9-fb65-4a91-ae03-e512a502781a", "c4": "b2f8c056-b62a-4fc3-84a4-566627898376"},
+ "c1": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261103_222947_933d8868-a3ce-4c61-9d03-92dd8a9189b0.mp4",
+ "c2": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261103_223455_eba969a7-0a89-4c6b-9494-9749de2fab85.mp4",
+ "c3": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261103_222936_0eac236e-0751-4858-8ef2-06f897389b0d.mp4",
+ "c4": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261103_222935_22118521-03f8-451a-b520-16fb5b7cfce4.mp4",
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/c4ba8146-0941-4bd2-ba51-bc59a580bb08.mp4",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-03"}

@@ -1,0 +1,31 @@
+{
+ "out": "2026-11-03_NurseMom_Ep1_TwelveHourShift.mp4",
+ "hook_text": [
+  "12-hour shift. 3 kids.",
+  "Practice at 7. Dinner?"
+ ],
+ "labels": {
+  "c2.mp4": "Kids vote on dinner by text",
+  "c3.mp4": "Text it a cooking question",
+  "c4.mp4": "One tap to your cart"
+ },
+ "app": [
+  [
+   88,
+   97,
+   "Plans around every kid"
+  ],
+  [
+   136,
+   152,
+   "Instacart, Walmart or Kroger"
+  ]
+ ],
+ "app_seconds": 6.0,
+ "app_after": 1,
+ "end": [
+  "Busy mom of 3?",
+  "Code OLLIE = 3 months of Family free",
+  "dinnerdrop.app/ollie"
+ ]
+}
