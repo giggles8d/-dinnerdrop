@@ -692,11 +692,14 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     const health = { ...((stored.health ?? {}) as Record<string, MemberNeed>) }
     const saved: Array<{ name: string; need: MemberNeed }> = []
     const unknown: string[] = []
+    const known: string[] = []
     for (const n of u.needs) {
       const self = /^(me|myself|i)$/i.test(n.who)
       const who = self ? { id: m.id, name: m.name } : people.find((p) => firstOf(p.name) === firstOf(n.who))
       if (!who) { unknown.push(n.who); continue }
       const prev = health[who.id] ?? {}
+      // Already saved exactly this (carbs rule and grams): nothing new to save or re-ask about.
+      if ((n.carbs || prev.carbs) === prev.carbs && (n.carbsPerDay ?? prev.carbsPerDay) === prev.carbsPerDay && prev.carbs) { known.push(self ? 'you' : who.name.split(' ')[0]); continue }
       const need: MemberNeed = {
         carbs: n.carbs || prev.carbs,
         carbsPerDay: n.carbsPerDay ?? prev.carbsPerDay,
@@ -713,8 +716,13 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const cleaned = (me?.likes ?? []).filter((x: string) => !/^(carbs?|carbohydrates?)$/i.test(x))
       if (cleaned.length !== (me?.likes ?? []).length) await admin.from('household_members').update({ likes: cleaned }).eq('id', m.id)
       await admin.from('sms_messages').update({ intent: 'health_need' }).eq('twilio_sid', sid ?? '')
-      needsReply = `${needsConfirmation(saved, (name) => name === 'me')} ${plan?.meals?.length ? NEEDS_TIMING_ASK : ''}`.trim()
+      needsReply = `${u.answer ? `${u.answer}\n\n` : ''}${needsConfirmation(saved, (name) => name === 'me')} ${plan?.meals?.length ? NEEDS_TIMING_ASK : ''}`.trim()
     }
+    // Already known: answer their food question if they asked one, and say it's noted (Sarah, Nov 3: help with the food,
+    // note the need; point to the doctor only for medical advice itself).
+    if (!saved.length && known.length) needsReply = u.answer
+      ? `${u.answer} (Noted: I already have this saved for ${known.join(' and ')}, so every plan is built around it.)`
+      : `Noted. I already have that saved for ${known.join(' and ')}, so every plan is built around it. Want ideas for tonight that fit? For questions about the condition or medicine itself, your doctor is the best person to ask.`
     if (unknown.length) needsReply += `${needsReply ? ' ' : ''}Who is ${unknown.join(' / ')} in the household? ${family} can add them in Settings → Household, then text me again.`
   }
 
@@ -880,9 +888,9 @@ Return ONLY JSON:
 - suggest: dishes or meal ideas they propose for a future week ("how about tacos", "we should do pizza night", "can I recommend chicken parm", "can we have spaghetti and meatballs", "I want to cook chicken, bacon and brussels sprouts over rice" → "chicken, bacon & brussels sprouts over rice") — one entry per dish ("spaghetti and meatballs" is ONE dish), not grocery items. A side they want with it ("peas on the side") belongs in the dish name, not in add. Otherwise [].
 - likes / dislikes / allergies: foods or dishes they say they personally love, won't eat, or are allergic to ("I don't like mushrooms", "I'm allergic to shellfish", "I love anything with chicken"). These update THEIR OWN taste profile. Only what they state about themselves; otherwise []. A health or medical need is NOT a like: never put "carbs" or a nutrient in likes.
 - needs: health-driven eating needs they state for themselves or a named family member — a medical condition, medicine or doctor's rule about what they must or can't eat ("I need carbs in every meal or my pancreatitis flares", "on her medicine she can only have 100 carbs a day"). One entry per person: {"who": "me" or the person's first name, "carbs": "every_meal" (must have carbs/starch at every meal) | "limit" (must keep carbs down) | "", "carbsPerDay": the daily gram limit as a number if they gave one else null, "note": a short neutral summary under 60 characters, no diagnosis (e.g. "carbs at every meal — stomach condition")}. Keep tracking across the conversation: "for me" after a question about who means "me". Food intolerances that come with it ("lemons are no good for me") are dislikes. Otherwise [].
-- When needs is filled, answer and clarify stay "" (DinnerDrop confirms what it saved); never give medical or nutrition advice and never promise to calculate a diet.
+- When needs is filled, still answer any food question in the message; clarify stays "". Never diagnose, never advise on treatment or medication, never promise to calculate a diet.
 - allGood / none: whole-list answers. question: they asked something or it's unrelated chat.
-- answer: you are also the family's food, cooking and grocery assistant. If question is true and it's about food, cooking, recipes, groceries, meal ideas, leftovers, storage, food safety, substitutions, kitchen how-to, the dinners, the vote, the list, the app or what they can text, answer it like a friendly, practical home cook: direct, specific, plain words, under 600 characters (SMS), no markdown. Use the facts above: tonight's recipe for cooking questions, the week and list for "what's for…" / "do we have…", and ALWAYS respect the household's allergies, won't-eats and needs in any suggestion. For "what can I make with X" give 1–2 concrete ideas with rough steps and time. Food safety: give standard USDA safe temperatures and storage times. Never give medical, diet-treatment or medication advice — for those say to ask their doctor (you can still suggest foods that fit what they told you). For anything not about food or the household's meals, say briefly that you only help with food and groceries. Else "".
+- answer: you are also the family's food, cooking and grocery assistant. If question is true and it's about food, cooking, recipes, groceries, meal ideas, leftovers, storage, food safety, substitutions, kitchen how-to, the dinners, the vote, the list, the app or what they can text, answer it like a friendly, practical home cook: direct, specific, plain words, under 600 characters (SMS), no markdown. Use the facts above: tonight's recipe for cooking questions, the week and list for "what's for…" / "do we have…", and ALWAYS respect the household's allergies, won't-eats and needs in any suggestion. For "what can I make with X" give 1–2 concrete ideas with rough steps and time. Food safety: give standard USDA safe temperatures and storage times. Food questions tied to a health need ARE yours: suggest foods, swaps and dinners that fit what they told you (e.g. carbs at every meal, low carb, no lemon), and when they state a need, fill needs so it's noted. Only questions about the condition, symptoms, treatment or medication themselves go to their doctor — say so in one short line, then still help with the food part if there is one. For anything not about food or the household's meals, say briefly that you only help with food and groceries. Else "".
 - If they ask a question AND want an action (e.g. "how do I cook this, and add rice"), fill both the action fields and answer.
 - relay: true when the message is clearly meant for the planner or the family, not the bot — a reply to something the planner texted, "tell Sarah…", "I'll be late", "running to the store", a question only a person can answer. Then answer stays "".
 - clarify: if you genuinely can't tell what they mean, a short friendly question (under 140 characters) asking them, else "".`
