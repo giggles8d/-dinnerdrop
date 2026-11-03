@@ -38,6 +38,10 @@ export async function setupFamilyTexting(
   const ownerPhone = normalizePhone(input.ownerPhone)
   const members = (input.members ?? []).map((m) => ({ name: String(m.name ?? '').trim().slice(0, 40), phone: normalizePhone(m.phone) })).filter((m) => m.phone)
   if (!ownerPhone && !members.length) return { error: 'Add at least one phone number', status: 400 }
+  // The planner's own number typed again in a family row would make two people share one phone (STOP then hit the
+  // wrong row — Nov 3 2026): it belongs to the planner only.
+  const familyOnly = members.filter((m) => m.phone !== ownerPhone)
+
 
   const householdId = await ensureHousehold(admin, profile)
   if (!householdId) return { error: 'Could not set up the household', status: 500 }
@@ -45,7 +49,7 @@ export async function setupFamilyTexting(
   // Members with phones (skip numbers already in the household).
   const { data: existing } = await admin.from('household_members').select('id, phone, name').eq('household_id', householdId)
   const known = new Set((existing ?? []).map((m) => m.phone).filter(Boolean))
-  for (const m of members) {
+  for (const m of familyOnly) {
     if (known.has(m.phone)) continue
     const sameName = (existing ?? []).find((e) => !e.phone && m.name && e.name?.toLowerCase() === m.name.toLowerCase())
     if (sameName) await admin.from('household_members').update({ phone: m.phone }).eq('id', sameName.id)

@@ -375,8 +375,10 @@ export interface InboundResult { reply: string; handled: boolean; member?: Membe
 /** Handle a text from a known member. Returns the reply to send (via TwiML). */
 export async function handleInbound(admin: SupabaseClient, from: string, body: string, sid: string | null): Promise<InboundResult> {
   const phone = normalizePhone(from) ?? from
-  const { data: mrows } = await admin.from('household_members').select('*').eq('phone', phone).limit(1)
-  const m = (mrows?.[0] as MemberRow | undefined)
+  // One phone can sit on two rows (the planner's number typed in a family row): prefer the planner's own row.
+  const { data: mrows } = await admin.from('household_members').select('*').eq('phone', phone).order('profile_id', { ascending: true, nullsFirst: false }).limit(5)
+  const rowsForPhone = (mrows ?? []) as MemberRow[]
+  const m = rowsForPhone.find((r) => r.profile_id) ?? rowsForPhone[0]
   if (!m) return { reply: '', handled: false }
 
   let parsed = parseInbound(body)
@@ -409,7 +411,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       }
       return { reply: `You're in, ${m.name}. You'll get ${family}'s dinners to vote on each week. Text ADD + anything for the grocery list anytime (e.g. "add bananas"). Text MENU for this week, LIST for the list, STOP to opt out.`, handled: true, member: m }
     case 'stop':
-      await admin.from('household_members').update({ phone_opted_out: true }).eq('id', m.id)
+      // STOP is about the phone, not one row: opt out every member row with this number.
+      await admin.from('household_members').update({ phone_opted_out: true }).eq('phone', phone)
       return { reply: `You're opted out of DinnerDrop texts. Reply START to rejoin.`, handled: true, member: m }
     case 'start':
       await admin.from('household_members').update({ phone_opted_out: false, phone_opt_in_at: m.phone_opt_in_at ?? new Date().toISOString() }).eq('id', m.id)
@@ -763,6 +766,18 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   }
   if (u.answer) return { reply: u.answer, handled: true, member: m }
   if (u.clarify) return { reply: u.clarify, handled: true, member: m }
+  // A real sentence we couldn't act on goes to the planner instead of a canned help line (Carson, Nov 3 2026: "I wanted to
+  // cook chicken bacon and Brussels sprouts ... over whatever carb" got "Text MENU for this week's dinners…").
+  if (body.trim().length >= 25 && owner) {
+    const to = await ownerPhone(admin, owner)
+    const isPlanner = m.profile_id === owner.id || (!!to && to === m.phone)
+    if (to && !isPlanner) {
+      const r = await sendSms(to, `${m.name}: ${body.trim().slice(0, 600)}\n(Reply here to text them back.)`)
+      await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: to, body: `${m.name}: ${body.trim().slice(0, 600)}`, intent: 'relay', twilio_sid: r.sid ?? null })
+      await admin.from('sms_messages').update({ intent: 'for_planner' }).eq('twilio_sid', sid ?? '')
+      return { reply: `I passed that to ${family} so a person can sort it out. ${helpFor(mode, family)}`, handled: true, member: m }
+    }
+  }
   if (u.question) return { reply: `I can help with dinners, the vote and the list — for anything else, text ${family} directly. ${helpFor(mode, family)}`, handled: true, member: m }
   return { reply: helpFor(mode, family), handled: true, member: m }
 }
@@ -837,7 +852,7 @@ Return ONLY JSON:
 - correction: true if they're saying DinnerDrop got their last answer wrong ("oh no", "I meant", "not that"); then fill picks/skips/again with what they actually meant.
 - removeLastAdded: true only if they say something DinnerDrop just added to the grocery list was wrong or wasn't meant for the list.
 - add: only real grocery/household products they clearly want added, as product names with any amount. Otherwise [].
-- suggest: dishes or meal ideas they propose for a future week ("how about tacos", "we should do pizza night", "can I recommend chicken parm", "can we have spaghetti and meatballs") — one entry per dish ("spaghetti and meatballs" is ONE dish), not grocery items. A side they want with it ("peas on the side") belongs in the dish name, not in add. Otherwise [].
+- suggest: dishes or meal ideas they propose for a future week ("how about tacos", "we should do pizza night", "can I recommend chicken parm", "can we have spaghetti and meatballs", "I want to cook chicken, bacon and brussels sprouts over rice" → "chicken, bacon & brussels sprouts over rice") — one entry per dish ("spaghetti and meatballs" is ONE dish), not grocery items. A side they want with it ("peas on the side") belongs in the dish name, not in add. Otherwise [].
 - likes / dislikes / allergies: foods or dishes they say they personally love, won't eat, or are allergic to ("I don't like mushrooms", "I'm allergic to shellfish", "I love anything with chicken"). These update THEIR OWN taste profile. Only what they state about themselves; otherwise []. A health or medical need is NOT a like: never put "carbs" or a nutrient in likes.
 - needs: health-driven eating needs they state for themselves or a named family member — a medical condition, medicine or doctor's rule about what they must or can't eat ("I need carbs in every meal or my pancreatitis flares", "on her medicine she can only have 100 carbs a day"). One entry per person: {"who": "me" or the person's first name, "carbs": "every_meal" (must have carbs/starch at every meal) | "limit" (must keep carbs down) | "", "carbsPerDay": the daily gram limit as a number if they gave one else null, "note": a short neutral summary under 60 characters, no diagnosis (e.g. "carbs at every meal — stomach condition")}. Keep tracking across the conversation: "for me" after a question about who means "me". Food intolerances that come with it ("lemons are no good for me") are dislikes. Otherwise [].
 - When needs is filled, answer and clarify stay "" (DinnerDrop confirms what it saved); never give medical or nutrition advice and never promise to calculate a diet.
