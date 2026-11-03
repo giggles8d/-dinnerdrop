@@ -13,6 +13,7 @@ import { autoPlan } from '@/lib/autoplan'
 import { sendEmail, sendSms, emailShell, smsConfigured } from '@/lib/notify'
 import { attachLibraryImages } from '@/lib/library-images'
 import { planReadySubject, planReadyHtml } from '@/lib/plan-ready-email'
+import { shopUrl, logFollowup } from '@/lib/followup'
 import { sendListWaitingText, type SetupProfile } from '@/lib/texting-setup'
 import { isFamilyProfile } from '@/lib/access'
 import { textMember, type MemberRow } from '@/lib/texting'
@@ -126,7 +127,8 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             if (wantsEmail(settings.schedule.reminders.planReady) && canEmail) {
               const withPhotos = await attachLibraryImages(admin, meals)
               const weekLabel = new Date(`${voteTrip.shopDate}T12:00:00Z`).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
-              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}` }))
+              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready') }))
+              await logFollowup(admin, p.id, 'plan_ready')
             }
           }
         }
@@ -155,7 +157,8 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             if (wantsEmail(settings.schedule.reminders.planReady) && canEmail) {
               const withPhotos = await attachLibraryImages(admin, meals)
               const weekLabel = new Date(`${target}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
-              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}` }))
+              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready') }))
+              await logFollowup(admin, p.id, 'plan_ready')
             }
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
               await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned —\n${names.join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')

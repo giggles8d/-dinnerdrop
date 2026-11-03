@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { logFollowup } from '@/lib/followup'
 import { NextRequest, NextResponse } from 'next/server'
 
 // Called by Vercel Cron daily at 10:00 AM EST (14:00 UTC)
@@ -87,6 +88,7 @@ export async function GET(request: NextRequest) {
           await supabase.from('profiles')
             .update({ email_sequence_sent: [...sentEmails, emailNumber] })
             .eq('id', user.id)
+          await logFollowup(supabase, user.id, emailNumber === 1 ? 'day1' : emailNumber === 2 ? 'day3' : 'day7')
           results.push({ userId: user.id, emailNumber, status: 'sent' })
         } else {
           const errBody = await res.json().catch(() => ({}))

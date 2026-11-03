@@ -6,6 +6,7 @@ import * as React from 'react'
 interface ActivateDay3Props {
   firstName?: string
   unsubscribeUrl?: string
+  shopUrl?: string
 }
 
 // Activation email #2 — sent 3 days after signup to families who haven't opened the list yet.
@@ -13,6 +14,7 @@ interface ActivateDay3Props {
 export default function ActivateDay3({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
+  shopUrl,
 }: ActivateDay3Props) {
   return (
     <Html>
@@ -46,7 +48,7 @@ export default function ActivateDay3({
             </Section>
             <Text style={paragraph}>
               It&apos;s part of the Family plan — 14 days free, cancel in one tap. Your grocery list and this
-              week&apos;s dinners are still waiting on your dashboard either way.
+              week&apos;s dinners are still waiting either way{shopUrl ? <> — <Link href={shopUrl} style={{ color: '#1a5c38', fontWeight: 700 }}>send them to Instacart in one tap</Link></> : null}.
             </Text>
             <Hr style={hr} />
             <Text style={paragraph}>

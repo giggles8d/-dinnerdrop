@@ -6,6 +6,7 @@ import * as React from 'react'
 interface ActivateDay1Props {
   firstName?: string
   unsubscribeUrl?: string
+  shopUrl?: string
 }
 
 // Activation email #1 — sent the morning after signup to families who haven't
@@ -14,6 +15,7 @@ interface ActivateDay1Props {
 export default function ActivateDay1({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
+  shopUrl,
 }: ActivateDay1Props) {
   return (
     <Html>
@@ -31,13 +33,16 @@ export default function ActivateDay1({
               already on one grocery list, combined and sorted by aisle.
             </Text>
             <Text style={paragraph}>
-              Open the list and tap <strong>Shop ingredients</strong>. The whole list lands in your
-              Instacart or Walmart cart, ready for delivery or pickup. Already have something? Check it off first.
+              Tap the button and the whole list lands in your Instacart cart, ready for delivery or pickup —
+              no sign-in needed. Already have some of it? Remove it in Instacart, or open your list first and check it off.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://www.dinnerdrop.app/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day1">
-                Open my grocery list →
+              <Button style={button} href={shopUrl ?? 'https://www.dinnerdrop.app/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day1'}>
+                Send my groceries to Instacart →
               </Button>
+              <Text style={{ ...paragraph, textAlign: 'center', marginTop: '10px' }}>
+                <Link href="https://www.dinnerdrop.app/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day1" style={inlineLink}>See my grocery list first</Link>
+              </Text>
             </Section>
             <Text style={paragraph}>
               Want different dinners? Swap any of them on your{' '}

@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
 import { render } from '@react-email/render'
 import ActivateDay1 from '@/emails/ActivateDay1'
+import { shopUrl } from '@/lib/followup'
 import ActivateDay3 from '@/emails/ActivateDay3'
 import ActivateDay7 from '@/emails/ActivateDay7'
 
@@ -13,10 +14,10 @@ type EmailNumber = 1 | 2 | 3
 // Activation sequence (2026-07: replaced the trial-conversion sequence — 226/227
 // users are 'free' and never received emails; the goal now is first-plan
 // activation, not trial-end urgency).
-const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: React.FC<{ firstName?: string; unsubscribeUrl: string; nextBillingDate?: string }> }> = {
+const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: React.FC<{ firstName?: string; unsubscribeUrl: string; nextBillingDate?: string; shopUrl?: string }> }> = {
   1: { subject: 'Your grocery list is ready, one tap to Instacart or Walmart', Template: ActivateDay1 },
   2: { subject: 'Let the family pick dinner — by text', Template: ActivateDay3 },
-  3: { subject: '60 seconds for a week of dinners — last nudge', Template: ActivateDay7 },
+  3: { subject: 'Your dinners are still waiting — one tap to Instacart', Template: ActivateDay7 },
 }
 
 export async function POST(request: NextRequest) {
@@ -49,6 +50,7 @@ export async function POST(request: NextRequest) {
     React.createElement(config.Template, {
       firstName: firstName || 'there',
       unsubscribeUrl,
+      shopUrl: shopUrl(userId, emailNumber === 1 ? 'day1' : emailNumber === 2 ? 'day3' : 'day7'),
       nextBillingDate: nextBillingDate || 'one week from today',
     })
   )
