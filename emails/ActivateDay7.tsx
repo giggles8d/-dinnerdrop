@@ -6,6 +6,7 @@ import * as React from 'react'
 interface ActivateDay7Props {
   firstName?: string
   unsubscribeUrl?: string
+  shopUrl?: string
 }
 
 // Activation email #3 — sent 7 days after signup, last nudge in the sequence.
@@ -13,6 +14,7 @@ interface ActivateDay7Props {
 export default function ActivateDay7({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
+  shopUrl,
 }: ActivateDay7Props) {
   return (
     <Html>
@@ -30,14 +32,17 @@ export default function ActivateDay7({
               the way — that&apos;s exactly the problem we&apos;re trying to solve.
             </Text>
             <Text style={paragraph}>
-              So here&apos;s the whole pitch, one last time: give us 60 seconds and
-              you&apos;ll walk away with <strong>5 weeknight dinners and a complete grocery
-              list</strong>, planned around your budget. That&apos;s the entire ask.
+              Your <strong>5 weeknight dinners and the complete grocery list</strong> are already
+              planned and waiting. One tap puts every ingredient in your Instacart cart — no sign-in,
+              nothing to type. That&apos;s the whole ask.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://www.dinnerdrop.app/dashboard">
-                Get my week of dinners →
+              <Button style={button} href={shopUrl ?? 'https://www.dinnerdrop.app/dashboard?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day7'}>
+                {shopUrl ? 'Send my groceries to Instacart →' : 'See my week of dinners →'}
               </Button>
+              <Text style={{ ...paragraph, textAlign: 'center', marginTop: '10px' }}>
+                <Link href="https://www.dinnerdrop.app/dashboard?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day7" style={{ color: '#1a5c38' }}>See or swap the dinners first</Link>
+              </Text>
             </Section>
             <Text style={paragraph}>
               Planning and the one-tap Instacart cart are free for you — no card, no catch.

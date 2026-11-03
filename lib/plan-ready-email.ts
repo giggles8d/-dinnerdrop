@@ -14,8 +14,8 @@ export function planReadySubject(meals: Meal[]): string {
   return first ? `Your week is planned — ${first} and ${meals.length - 1} more` : 'Your dinners for the week are planned'
 }
 
-export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabel: string; unsubscribeUrl: string; note?: string }): string {
-  const { firstName, meals, weekLabel, unsubscribeUrl, note } = opts
+export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabel: string; unsubscribeUrl: string; note?: string; shopUrl?: string }): string {
+  const { firstName, meals, weekLabel, unsubscribeUrl, note, shopUrl } = opts
   const total = meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   const mins = (m: Meal) => (Number(m.prepTime) || 0) + (Number(m.cookTime) || 0)
   const rows = meals.map((m) => `
@@ -39,8 +39,8 @@ export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabe
   </td></tr>
   <tr><td style="padding:10px 28px 4px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows}</table></td></tr>
   <tr><td align="center" style="padding:18px 28px 6px">
-    <a href="${link('/grocery-list', 'shop')}" style="display:inline-block;background:#1a5c38;color:#ffffff;font-weight:700;font-size:16px;padding:14px 28px;border-radius:12px;text-decoration:none">Send my list to Instacart or Walmart →</a>
-    <p style="margin:12px 0 0;font-size:14px"><a href="${link('/dashboard', 'swap')}" style="color:#1a5c38">Swap a dinner</a> · <a href="${link('/recipes', 'browse')}" style="color:#1a5c38">Browse the library</a></p>
+    <a href="${shopUrl ?? link('/grocery-list', 'shop')}" style="display:inline-block;background:#1a5c38;color:#ffffff;font-weight:700;font-size:16px;padding:14px 28px;border-radius:12px;text-decoration:none">${shopUrl ? 'Send my groceries to Instacart →' : 'Send my list to Instacart or Walmart →'}</a>
+    <p style="margin:12px 0 0;font-size:14px">${shopUrl ? `<a href="${link('/grocery-list', 'list')}" style="color:#1a5c38">See my list first</a> · ` : ''}<a href="${link('/dashboard', 'swap')}" style="color:#1a5c38">Swap a dinner</a> · <a href="${link('/recipes', 'browse')}" style="color:#1a5c38">Browse the library</a></p>
   </td></tr>
   <tr><td style="padding:14px 28px 6px">
     <p style="margin:0;font-size:14px;line-height:1.55;color:#3d4a43"><em>P.S. Want the family to pick? <a href="${link('/dashboard?texting=1', 'texting')}" style="color:#1a5c38">Add their numbers</a> and DinnerDrop texts them the options to vote on — and anyone can text “ADD milk” to put it on the list.</em></p>
