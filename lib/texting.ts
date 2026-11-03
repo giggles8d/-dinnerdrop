@@ -375,8 +375,10 @@ export interface InboundResult { reply: string; handled: boolean; member?: Membe
 /** Handle a text from a known member. Returns the reply to send (via TwiML). */
 export async function handleInbound(admin: SupabaseClient, from: string, body: string, sid: string | null): Promise<InboundResult> {
   const phone = normalizePhone(from) ?? from
-  const { data: mrows } = await admin.from('household_members').select('*').eq('phone', phone).limit(1)
-  const m = (mrows?.[0] as MemberRow | undefined)
+  // One phone can sit on two rows (the planner's number typed in a family row): prefer the planner's own row.
+  const { data: mrows } = await admin.from('household_members').select('*').eq('phone', phone).order('profile_id', { ascending: true, nullsFirst: false }).limit(5)
+  const rowsForPhone = (mrows ?? []) as MemberRow[]
+  const m = rowsForPhone.find((r) => r.profile_id) ?? rowsForPhone[0]
   if (!m) return { reply: '', handled: false }
 
   let parsed = parseInbound(body)
@@ -409,7 +411,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       }
       return { reply: `You're in, ${m.name}. You'll get ${family}'s dinners to vote on each week. Text ADD + anything for the grocery list anytime (e.g. "add bananas"). Text MENU for this week, LIST for the list, STOP to opt out.`, handled: true, member: m }
     case 'stop':
-      await admin.from('household_members').update({ phone_opted_out: true }).eq('id', m.id)
+      // STOP is about the phone, not one row: opt out every member row with this number.
+      await admin.from('household_members').update({ phone_opted_out: true }).eq('phone', phone)
       return { reply: `You're opted out of DinnerDrop texts. Reply START to rejoin.`, handled: true, member: m }
     case 'start':
       await admin.from('household_members').update({ phone_opted_out: false, phone_opt_in_at: m.phone_opt_in_at ?? new Date().toISOString() }).eq('id', m.id)
