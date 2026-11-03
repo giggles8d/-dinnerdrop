@@ -12,7 +12,7 @@ import { normalizeItemName, guessCategory } from '@/lib/list'
  */
 
 const APP = 'https://www.dinnerdrop.app'
-export type FollowupKind = 'day1' | 'day3' | 'day7' | 'plan_ready' | 'campaign' | 'texting'
+export type FollowupKind = 'day1' | 'day3' | 'day7' | 'plan_ready' | 'campaign' | 'texting' | 'receipt'
 
 function secret(): string {
   return process.env.FOLLOWUP_LINK_SECRET || process.env.CRON_SECRET || ''
@@ -34,6 +34,11 @@ export function shopUrl(userId: string, kind: FollowupKind): string {
 /** One tap from an email to "add your family's numbers" — no sign-in (app/go/texting). */
 export function textingUrl(userId: string, campaign = 'texting'): string {
   return `${APP}/go/texting?u=${encodeURIComponent(userId)}&s=${signFollowup(userId, 'texting')}&utm_source=email&utm_medium=campaign&utm_campaign=${encodeURIComponent(campaign)}`
+}
+
+/** One tap from the day-after email to upload the order's receipt — no sign-in (app/go/receipt). */
+export function receiptUrl(userId: string): string {
+  return `${APP}/go/receipt?u=${encodeURIComponent(userId)}&s=${signFollowup(userId, 'receipt')}&utm_source=email&utm_medium=lifecycle&utm_campaign=receipt`
 }
 
 export async function logFollowup(admin: SupabaseClient, userId: string, kind: FollowupKind, channel: 'email' | 'sms' = 'email'): Promise<void> {

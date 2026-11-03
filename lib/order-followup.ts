@@ -6,6 +6,10 @@
 import { createHmac, timingSafeEqual } from 'crypto'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { sendEmail, emailShell } from '@/lib/notify'
+import { receiptUrl } from '@/lib/followup'
+import { mergeSettings } from '@/lib/settings'
+import { normalizePhone } from '@/lib/notify'
+import { textMember, type MemberRow } from '@/lib/texting'
 
 const APP = 'https://www.dinnerdrop.app'
 export const FEEDBACK_ANSWERS = ['ordered', 'pricey', 'missing', 'not_yet'] as const
@@ -25,7 +29,7 @@ function answerLink(handoffId: string, a: FeedbackAnswer): string {
   return `${APP}/api/handoff/feedback?h=${handoffId}&a=${a}&s=${feedbackSig(handoffId)}`
 }
 
-export function followupHtml(name: string, handoffId: string, store: string): string {
+export function followupHtml(name: string, handoffId: string, store: string, userId: string): string {
   const btn = (a: FeedbackAnswer, label: string) =>
     `<a href="${answerLink(handoffId, a)}" style="display:block;margin:8px 0;padding:12px 16px;border:1px solid #d9d4c7;border-radius:10px;color:#1f2a24;text-decoration:none;font-weight:600">${label}</a>`
   return emailShell(
@@ -35,8 +39,8 @@ export function followupHtml(name: string, handoffId: string, store: string): st
      ${btn('pricey', '💸 It came out too expensive')}
      ${btn('missing', '🧺 Items were missing or wrong')}
      ${btn('not_yet', '⏳ Haven’t ordered yet')}
-     <p style="margin-top:18px">Ordered? Snap a photo of your receipt and upload it. DinnerDrop learns your real prices and what was out of stock, and anything missing goes back on next week's list.</p>`,
-    { label: 'Upload my receipt', href: `${APP}/grocery-list#receipt-upload` }
+     <p style="margin-top:18px">Ordered? Add your receipt (paste it or a screenshot, no sign-in needed). DinnerDrop learns your real prices and what was out of stock, and anything missing goes back on next week's list.</p>`,
+    { label: 'Upload my receipt', href: receiptUrl(userId) }
   )
 }
 
@@ -63,7 +67,7 @@ export async function runOrderFollowups(admin: SupabaseClient, now: Date = new D
 
   const { data: profiles } = await admin
     .from('profiles')
-    .select('id, email, full_name, email_unsubscribed')
+    .select('id, email, full_name, email_unsubscribed, household_id, settings')
     .in('id', Array.from(byUser.keys()))
   for (const p of profiles ?? []) {
     const h = byUser.get(p.id)!
@@ -74,7 +78,15 @@ export async function runOrderFollowups(admin: SupabaseClient, now: Date = new D
       continue
     }
     const first = ((p.full_name as string | null) || '').trim().split(' ')[0]
-    const r = await sendEmail(p.email, 'How did your grocery order go?', followupHtml(first, h.id, h.store))
+    const r = await sendEmail(p.email, 'How did your grocery order go?', followupHtml(first, h.id, h.store, p.id))
+    // Families who text with DinnerDrop also get it by text: the planner's own number, one line, one link.
+    try {
+      const own = normalizePhone(mergeSettings(p.settings).texting.ownerPhone)
+      if (own && p.household_id) {
+        const { data: mem } = await admin.from('household_members').select('*').eq('household_id', p.household_id).eq('phone', own).maybeSingle()
+        if (mem) await textMember(admin, mem as MemberRow, `DinnerDrop: did your ${h.store} order come? Add the receipt here and anything missing goes back on your list: ${receiptUrl(p.id)}`, 'receipt_nudge')
+      }
+    } catch (e) { out.errors.push(`${p.id} text: ${String(e)}`) }
     if (r.ok) {
       out.sent++
       await admin.from('grocery_handoffs').update({ followup_sent_at: stamp }).in('id', h.ids)

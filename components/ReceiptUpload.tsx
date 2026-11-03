@@ -27,8 +27,9 @@ interface Result { store: string | null; total: number | null; items: number; bo
  * Anything the store didn't have goes back on the active list; the real total tunes price estimates.
  * Renders only when /api/receipts/upload says the feature is on for this account.
  */
-export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void }) {
-  const [enabled, setEnabled] = useState(false)
+export default function ReceiptUpload({ onDone, endpoint = '/api/receipts/upload', auth }: { onDone?: (r: Result) => void; endpoint?: string; auth?: { u: string; s: string } }) {
+  // auth: the signed u/s from an email link (app/go/receipt) — no session needed, the page already checked the link.
+  const [enabled, setEnabled] = useState(!!auth)
   const [files, setFiles] = useState<File[]>([])
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -38,8 +39,9 @@ export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    if (auth) return
     fetch('/api/receipts/upload').then((r) => r.json()).then((j) => setEnabled(!!j?.enabled)).catch(() => setEnabled(false))
-  }, [])
+  }, [auth])
   if (!enabled) return null
 
   async function submit() {
@@ -49,13 +51,14 @@ export default function ReceiptUpload({ onDone }: { onDone?: (r: Result) => void
     try {
       let r: Response
       if (mode === 'text') {
-        r = await fetch('/api/receipts/upload', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) })
+        r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, ...(auth ?? {}) }) })
       } else {
         const fd = new FormData()
         let shots = await Promise.all(files.slice(0, MAX_SHOTS).map((f) => shrink(f)))
         if (shots.reduce((n, f) => n + f.size, 0) > 3.8 * 1024 * 1024) shots = await Promise.all(files.slice(0, MAX_SHOTS).map((f) => shrink(f, 1200, 0.7)))
         shots.forEach((f) => fd.append('images', f))
-        r = await fetch('/api/receipts/upload', { method: 'POST', body: fd })
+        if (auth) { fd.append('u', auth.u); fd.append('s', auth.s) }
+        r = await fetch(endpoint, { method: 'POST', body: fd })
       }
       const j = await r.json()
       if (!r.ok) { setError(j?.error || 'Something went wrong.'); return }

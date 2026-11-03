@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { FEEDBACK_ANSWERS, feedbackSigOk, type FeedbackAnswer } from '@/lib/order-followup'
+import { receiptUrl } from '@/lib/followup'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,6 +16,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${base}/order-feedback`)
   }
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-  await admin.from('grocery_handoffs').update({ feedback: a, feedback_at: new Date().toISOString() }).eq('id', h)
+  const { data: row } = await admin.from('grocery_handoffs').update({ feedback: a, feedback_at: new Date().toISOString() }).eq('id', h).select('user_id').maybeSingle()
+  // Ordered / missing items: straight to the one-tap receipt page (no sign-in), the next step that page asks for anyway.
+  if ((a === 'ordered' || a === 'missing') && row?.user_id) return NextResponse.redirect(`${receiptUrl(row.user_id)}&a=${a}`)
   return NextResponse.redirect(`${base}/order-feedback?a=${a}`)
 }
