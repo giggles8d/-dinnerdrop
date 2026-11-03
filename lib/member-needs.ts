@@ -20,7 +20,7 @@ export interface MemberNeed {
 }
 export type HealthNeeds = Record<string, MemberNeed>
 
-export interface NeedPerson { id: string; name: string }
+export interface NeedPerson { id: string; name: string; avoid?: string[] }  // avoid: their allergies / won't-eats, flagged on dinners already planned
 
 const STARCH = /\b(rice|pasta|spaghetti|penne|noodles?|tortillas?|potato(es)?|fries|bread|buns?|rolls?|naan|pita|couscous|quinoa|polenta|grits|gnocchi|lasagna|pizza|sandwich|wraps?|tacos?|burrito|quesadilla|tots|orzo|macaroni)\b/
 const SWAPPED_STARCH = /\b(cauliflower rice|zucchini noodles|zoodles|lettuce (wraps?|cups?)|low[- ]carb tortillas?|keto)\b/
@@ -81,6 +81,11 @@ export function applyNeeds(meals: Meal[], people: Array<NeedPerson & MemberNeed>
     } else if (carbEveryMeal.length && hasStarch) {
       notes.push(`${carbEveryMeal.map((p) => first(p.name)).join(' and ')}: this one already has a starch — take a full portion.`)
     }
+    // Dinners planned before the need was known can still contain something they can't have: say so on the plate.
+    for (const p of people) {
+      const hits = (p.avoid ?? []).filter((w) => w.length > 2 && (meal.ingredients ?? []).some((ing) => ing.name.toLowerCase().includes(w.toLowerCase().replace(/s$/, ''))))
+      if (hits.length) notes.push(`${first(p.name)}: has ${Array.from(new Set(hits.map((h) => h.toLowerCase().replace(/s$/, '')))).join(', ')} — set ${first(p.name)}'s portion aside before adding it.`)
+    }
     const mainCarbs = meal.nutrition?.carbs
     for (const p of limited) {
       const limit = p.carbsPerDay ? ` (daily limit ${p.carbsPerDay} g)` : ''
@@ -103,6 +108,9 @@ export function needsPromptLines(people: Array<NeedPerson & MemberNeed>): string
   })
 }
 
+/** Asked after a need is saved; the reply (THIS WEEK / NEXT) is handled in lib/texting. */
+export const NEEDS_TIMING_ASK = `Want this on this week's dinners too? Reply THIS WEEK, or NEXT to start with your next plan.`
+
 /** The confirmation the bot texts back (never medical advice). */
 export function needsConfirmation(saved: Array<{ name: string; need: MemberNeed }>, isSelf: (name: string) => boolean): string {
   const parts = saved.map(({ name, need }) => {
@@ -113,5 +121,5 @@ export function needsConfirmation(saved: Array<{ name: string; need: MemberNeed 
     if (need.notes?.length) bits.push(need.notes.join(', '))
     return `${who === 'you' ? 'for you' : `for ${who}`}: ${bits.join('; ')}`
   })
-  return `Saved ${parts.join(' · ')}. The planner will build around this from the next plan. Carb counts are estimates from the recipes — please follow your doctor's guidance; DinnerDrop can't give medical advice.`
+  return `Saved ${parts.join(' · ')}. Carb counts are estimates from the recipes — please follow your doctor's guidance; DinnerDrop can't give medical advice.`
 }

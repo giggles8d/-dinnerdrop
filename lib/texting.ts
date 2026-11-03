@@ -22,7 +22,7 @@ import { markAllOpenOrdered } from '@/lib/list-ordered'
 import { walmartUrlsIn, resolveWalmartLink, type WalmartLink } from '@/lib/store-links'
 import { cartUrl } from '@/lib/walmart'
 import type { Meal } from '@/types'
-import { needsConfirmation, type MemberNeed } from '@/lib/member-needs'
+import { needsConfirmation, activeNeeds, applyNeeds, NEEDS_TIMING_ASK, type MemberNeed } from '@/lib/member-needs'
 
 export interface MemberRow {
   id: string
@@ -60,6 +60,21 @@ export async function ownerForHousehold(admin: SupabaseClient, householdId: stri
     .eq('id', h.owner_id)
     .single()
   return (data as OwnerRow) ?? null
+}
+
+/** Fit the plan's dinners to the household's health needs now (starch side + plate notes); returns how many changed. */
+export async function fitPlanToNeeds(admin: SupabaseClient, ownerId: string, plan: { id: string; meals: Meal[] }): Promise<number> {
+  const { data: prof } = await admin.from('profiles').select('settings, household_id, dietary_needs').eq('id', ownerId).maybeSingle()
+  if (!prof?.household_id) return 0
+  const s = mergeSettings(prof.settings)
+  const { data: mem } = await admin.from('household_members').select('id, name, allergies, dislikes').eq('household_id', prof.household_id)
+  const people = activeNeeds(s.health, ((mem ?? []) as Array<{ id: string; name: string; allergies: string[] | null; dislikes: string[] | null }>).map((x) => ({ id: x.id, name: x.name, avoid: [...(x.allergies ?? []), ...(x.dislikes ?? [])] })))
+  if (!people.length) return 0
+  const glutenFree = ((prof.dietary_needs ?? []) as string[]).some((d) => /gluten/i.test(d)) || ((mem ?? []) as Array<{ allergies: string[] | null }>).some((x) => (x.allergies ?? []).some((a) => /gluten|wheat|celiac/i.test(a)))
+  const next = applyNeeds(plan.meals, people, { glutenFree })
+  const changed = next.filter((x, i) => JSON.stringify(x) !== JSON.stringify(plan.meals[i])).length
+  if (changed) await admin.from('meal_plans').update({ meals: next, grocery_list: null }).eq('id', plan.id)
+  return changed
 }
 
 export async function latestPlan(admin: SupabaseClient, userId: string): Promise<{ id: string; week_start: string; meals: Meal[] } | null> {
@@ -378,6 +393,15 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const family = rawFirst ? rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1) : 'your family'
   const settings = mergeSettings(owner?.settings)
 
+  // Reply to "Want this on this week's dinners too?" (asked after a health need is saved).
+  if (ctx.askedNeedsTiming && owner) {
+    const plan = await latestPlan(admin, owner.id)
+    if (/^\s*(this week|this|now|yes|yep|yeah|please|ok(ay)?)\b/i.test(body)) {
+      const n = plan ? await fitPlanToNeeds(admin, owner.id, plan) : 0
+      return { reply: n ? `Done — this week's dinners now have a starch side and carb notes where needed. Text MENU or TONIGHT to see them.` : `This week's dinners already fit — nothing to change.`, handled: true, member: m }
+    }
+    if (/^\s*(next( plan| week)?|later|no|nope|wait)\b/i.test(body)) return { reply: `Okay — it starts with your next plan.`, handled: true, member: m }
+  }
   switch (parsed.kind) {
     case 'optin':
       if (!m.phone_opt_in_at || m.phone_opted_out) {
@@ -664,7 +688,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const cleaned = (me?.likes ?? []).filter((x: string) => !/^(carbs?|carbohydrates?)$/i.test(x))
       if (cleaned.length !== (me?.likes ?? []).length) await admin.from('household_members').update({ likes: cleaned }).eq('id', m.id)
       await admin.from('sms_messages').update({ intent: 'health_need' }).eq('twilio_sid', sid ?? '')
-      needsReply = needsConfirmation(saved, (name) => name === 'me')
+      needsReply = `${needsConfirmation(saved, (name) => name === 'me')} ${plan?.meals?.length ? NEEDS_TIMING_ASK : ''}`.trim()
     }
     if (unknown.length) needsReply += `${needsReply ? ' ' : ''}Who is ${unknown.join(' / ')} in the household? ${family} can add them in Settings → Household, then text me again.`
   }
@@ -750,7 +774,7 @@ function helpFor(mode: 'round' | 'again' | 'week', family: string): string {
   return `Text MENU for this week's dinners, LIST for the grocery list, ADD + items to add to it, or HELP.`
 }
 
-export interface SmsContext { lastAsk: 'again' | 'vote' | null; lastAskBody?: string; lastList?: 'menu' | 'vote' | null; menuShown?: string[]; ownerMessage?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
+export interface SmsContext { lastAsk: 'again' | 'vote' | null; lastAskBody?: string; askedNeedsTiming?: boolean; lastList?: 'menu' | 'vote' | null; menuShown?: string[]; ownerMessage?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
 
 /** The last few texts with this person (both ways) and the last question we asked them. */
 async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsContext> {
@@ -764,7 +788,9 @@ async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsC
   const listRow = listIdx >= 0 ? rows[listIdx] : null
   const isMenu = !!listRow && !(listRow.intent === 'again_request' || listRow.intent === 'vote_request')
   const menuShown = isMenu ? (listRow!.body ?? '').split('\n').map((l) => l.match(/^\d+\.\s+(?:[A-Za-z]{3} — )?(.+)$/)?.[1]?.trim()).filter((x): x is string => !!x) : undefined
+  const lastOut = rows.find((r) => r.direction === 'out')
   return {
+    askedNeedsTiming: !!lastOut?.body?.includes(NEEDS_TIMING_ASK),
     lastList: listRow ? (isMenu ? 'menu' : 'vote') : null,
     menuShown,
     lastAsk: ask?.intent === 'again_request' ? 'again' : ask ? 'vote' : null,
