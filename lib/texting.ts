@@ -205,11 +205,20 @@ export type Parsed =
   | { kind: 'use_up'; items: string[] }
   | { kind: 'tally' } | { kind: 'tonight' } | { kind: 'recipe'; number: number }
   | { kind: 'suggest'; items: string[] }
+  | { kind: 'reaction' }
   | { kind: 'unknown' }
+
+/** A member's name as it reads in a greeting — a number-only name (planner typed the phone as the name) is left out. */
+function nick(name: string | null | undefined): string {
+  const n = String(name ?? '').trim()
+  return n && !/^[\d\s()+\-.]+$/.test(n) ? `, ${n}` : ''
+}
 
 export function parseInbound(raw: string): Parsed {
   const t = raw.trim()
   const u = t.toUpperCase()
+  // A tapback ("❤️ to “Passed that on…”", "Loved “…”") is a reaction to our last text, not a message — no reply (Nov 2 2026).
+  if (/^\s*(?:Loved|Liked|Disliked|Laughed at|Emphasized|Questioned|[\u2764\uFE0F\u203C\u2753\u200B\uD83C-\uDBFF\uDC00-\uDFFF\s]+)\s+(?:to\s+)?[\u201C"][\s\S]{0,400}[\u201D"]\s*$/.test(t)) return { kind: 'reaction' }
   // Whole-message commands only: "no i want that again" or "ok add milk" are sentences for the AI step, not NONE / YES.
   const end = String.raw`[\s.!?]*$`
   if (new RegExp(`^(YES|Y|JOIN|YEP|YEAH|SURE|OK|OKAY)(\\s+(PLEASE|THANKS|THANK YOU))?${end}`).test(u)) return { kind: 'optin' }
@@ -382,13 +391,13 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       if (!m.phone_opt_in_at || m.phone_opted_out) {
         await admin.from('household_members').update({ phone_opt_in_at: new Date().toISOString(), phone_opted_out: false }).eq('id', m.id)
       }
-      return { reply: `You're in, ${m.name}. You'll get ${family}'s dinners to vote on each week. Text ADD + anything for the grocery list anytime (e.g. "add bananas"). Text MENU for this week, LIST for the list, STOP to opt out.`, handled: true, member: m }
+      return { reply: `You're in${nick(m.name)}. You'll get ${family}'s dinners to vote on each week. Text ADD + anything for the grocery list anytime (e.g. "add bananas"). Text MENU for this week, LIST for the list, STOP to opt out.`, handled: true, member: m }
     case 'stop':
       await admin.from('household_members').update({ phone_opted_out: true }).eq('id', m.id)
       return { reply: `You're opted out of DinnerDrop texts. Reply START to rejoin.`, handled: true, member: m }
     case 'start':
       await admin.from('household_members').update({ phone_opted_out: false, phone_opt_in_at: m.phone_opt_in_at ?? new Date().toISOString() }).eq('id', m.id)
-      return { reply: `Welcome back, ${m.name}. Text MENU for this week's dinners or ADD + an item for the list.`, handled: true, member: m }
+      return { reply: `Welcome back${nick(m.name)}. Text MENU for this week's dinners or ADD + an item for the list.`, handled: true, member: m }
     case 'order_total': {
       if (!owner) return { reply: '', handled: false }
       const { data: hs } = await admin.from('grocery_handoffs').select('id, est_total, created_at, week_start').eq('user_id', owner.id).order('created_at', { ascending: false }).limit(1)
@@ -424,7 +433,9 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       return { reply: `Got it — ${items.join(', ')} flagged to use up. The next plan builds dinners around ${items.length === 1 ? 'it' : 'them'} and keeps ${items.length === 1 ? 'it' : 'them'} off the shopping list.`, handled: true, member: m }
     }
     case 'thanks':
-      return { reply: `Anytime, ${m.name} 🙂`, handled: true, member: m }
+      return { reply: `Anytime${nick(m.name)} 🙂`, handled: true, member: m }
+    case 'reaction':
+      return { reply: '', handled: true, member: m }
     case 'help':
       return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, TALLY for the vote so far, SUGGEST + a dish for a future week, TONIGHT, RECIPE + number, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items, MENU, LIST, STOP.`, handled: true, member: m }
     default:
@@ -444,11 +455,11 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   // A texted Walmart link goes on the list with its item id, so "Add Walmart picks to cart" can add the exact product (Nov 1 2026).
   const walmartUrls = walmartUrlsIn(body)
   if (walmartUrls.length && owner) {
-    if (!m.can_add) return { reply: `Adding to the list is turned off for you, ${m.name}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
+    if (!m.can_add) return { reply: `Adding to the list is turned off for you${nick(m.name)}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
     // Planner's choice (Settings → texting): straight to a one-tap Walmart cart link instead of the list.
     if (settings.texting.walmartLinks === 'cart') {
       const links = (await Promise.all(walmartUrls.slice(0, 10).map((u) => resolveWalmartLink(u)))).filter((l): l is WalmartLink => !!l)
-      if (!links.length) return { reply: `I couldn't read that Walmart link, ${m.name}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
+      if (!links.length) return { reply: `I couldn't read that Walmart link${nick(m.name)}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
       const names = links.map((l) => l.name ?? 'a Walmart item').join(', ')
       const url = cartUrl(links.map((l) => ({ itemId: l.itemId, qty: 1 })))
       const to = await ownerPhone(admin, owner)
@@ -473,7 +484,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       }
       added.push(label)
     }
-    if (!added.length) return { reply: `I couldn't read that Walmart link, ${m.name}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
+    if (!added.length) return { reply: `I couldn't read that Walmart link${nick(m.name)}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
     const tail = unnamed ? ` (The link didn't say what it is. Text "add" and the name if ${family} should know.)` : ''
     return { reply: `Added from your Walmart link: ${added.join(', ')}. ✅ ${family} can put all the Walmart picks in the Walmart cart in one tap.${tail}`, handled: true, member: m }
   }
@@ -515,7 +526,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     case 'none':
     case 'skip':
     case 'again': {
-      if (!m.can_vote) return { reply: `Thanks ${m.name} — voting is turned off for you, but you can still ADD items to the list.`, handled: true, member: m }
+      if (!m.can_vote) return { reply: `Thanks${nick(m.name)} — voting is turned off for you, but you can still ADD items to the list.`, handled: true, member: m }
       // Open round: numbers are PICKS from the candidates; top picks become the week.
       if (round && parsed.kind !== 'again') {
         const cands = round.candidates
@@ -526,8 +537,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         picked.forEach((name) => rows.push({ household_id: m.household_id, member_id: m.id, week_start: round.week_start, meal_name: name, vote: 'keep' }))
         await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', round.week_start).eq('vote', 'keep')
         if (rows.length) await admin.from('meal_votes').insert(rows)
-        if (parsed.kind === 'allgood') return { reply: `Got it, ${m.name} — they all work for you. 🙌`, handled: true, member: m }
-        if (parsed.kind === 'none') return { reply: `Noted, ${m.name} — no picks from you this week.`, handled: true, member: m }
+        if (parsed.kind === 'allgood') return { reply: `Got it${nick(m.name)} — they all work for you. 🙌`, handled: true, member: m }
+        if (parsed.kind === 'none') return { reply: `Noted${nick(m.name)} — no picks from you this week.`, handled: true, member: m }
         return { reply: picked.length ? `Got it — your picks: ${picked.join(', ')}. The top ${round.picks_needed} make the week.` : `I didn't catch which numbers. Reply like "1 3 5" with the dinners you want.`, handled: true, member: m }
       }
       if (!meals.length || !plan) return { reply: `Nothing to vote on yet — ${family} hasn't planned this week.`, handled: true, member: m }
@@ -540,7 +551,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         await admin.from('meal_votes').insert(rows)
       }
       if (parsed.kind === 'allgood') return { reply: `Got it — all ${meals.length} dinners kept. 🙌`, handled: true, member: m }
-      if (parsed.kind === 'none') return { reply: `Noted, ${m.name}.`, handled: true, member: m }
+      if (parsed.kind === 'none') return { reply: `Noted${nick(m.name)}.`, handled: true, member: m }
       if (parsed.kind === 'skip') {
         const names = parsed.numbers.map((n) => meals[n - 1]?.name).filter(Boolean)
         return { reply: names.length ? `Got it — you'd skip ${names.join(' and ')}. ${family} will see the votes.` : `I didn't catch which numbers. Reply like "2 4" to skip those dinners.`, handled: true, member: m }
@@ -549,7 +560,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       return { reply: names.length ? `Bring back ${names.join(' and ')} — noted. 🍽️` : `Reply like "again 1 3" to pick the ones that should come back.`, handled: true, member: m }
     }
     case 'add': {
-      if (!m.can_add) return { reply: `Adding to the list is turned off for you, ${m.name}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
+      if (!m.can_add) return { reply: `Adding to the list is turned off for you${nick(m.name)}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
       if (!owner) break
       const weekStart = plan?.week_start ?? mondayOf(new Date())
       const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
@@ -613,20 +624,26 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   if (u.suggest.length && owner) await addSuggestions(admin, owner, m.name, u.suggest)
   // Their own tastes, in their own words — saved on their member profile (the planner and vote candidates use these).
   const prefNote: string[] = []
-  if (u.likes.length || u.dislikes.length || u.allergies.length) {
-    const { data: me } = await admin.from('household_members').select('likes, dislikes, allergies').eq('id', m.id).maybeSingle()
+  if (u.likes.length || u.dislikes.length || u.allergies.length || u.safeFoods.length) {
+    const { data: me } = await admin.from('household_members').select('likes, dislikes, allergies, safe_foods').eq('id', m.id).maybeSingle()
     const merge = (cur: string[] | null | undefined, add: string[]) => { const set = new Set((cur ?? []).map((x) => x.toLowerCase())); for (const x of add) set.add(x); return Array.from(set).slice(0, 40) }
     const patch: Record<string, string[]> = {}
     if (u.likes.length) { patch.likes = merge(me?.likes, u.likes); patch.dislikes = (me?.dislikes ?? []).filter((x: string) => !u.likes.includes(x.toLowerCase())) }
     if (u.dislikes.length) { patch.dislikes = merge(patch.dislikes ?? me?.dislikes, u.dislikes); patch.likes = (patch.likes ?? me?.likes ?? []).filter((x: string) => !u.dislikes.includes(x.toLowerCase())) }
     if (u.allergies.length) patch.allergies = merge(me?.allergies, u.allergies)
+    // "Cereal is safe", "I'm fine with chicken, rice and broccoli", "I need carbs with every meal" — the planner's
+    // safe-foods list for this person, not a grocery order (Nov 2 2026: six "safe" foods landed on the list).
+    if (u.safeFoods.length) patch.safe_foods = merge(me?.safe_foods, u.safeFoods)
     await admin.from('household_members').update(patch).eq('id', m.id)
     if (u.likes.length) prefNote.push(`you like ${u.likes.join(', ')}`)
+    if (u.safeFoods.length) prefNote.push(`always-safe for you: ${u.safeFoods.join(', ')} — the planner builds around these`)
     if (u.dislikes.length) prefNote.push(`you don't do ${u.dislikes.join(', ')}`)
-    if (u.allergies.length) prefNote.push(`allergic to ${u.allergies.join(', ')} — nothing with that will be planned`)
+    if (u.allergies.length) prefNote.push(`off-limits: ${u.allergies.join(', ')} — nothing with that will be planned`)
   }
 
-  const voteChange = m.can_vote && (u.picks.length || u.skips.length || u.again.length || u.allGood || u.none || u.correction)
+  // A correction only touches votes when it carries new ones — "No, I'm saying carbs are safe for me" is a
+  // correction about a preference, and must not wipe the picks they sent 15 minutes earlier (Nov 2 2026).
+  const voteChange = m.can_vote && (u.picks.length || u.skips.length || u.again.length || u.allGood || u.none)
   if (voteChange && list.length) {
     const name = (n: number) => list[n - 1]?.name
     // A correction replaces what we recorded from this person in the last hour.
@@ -686,7 +703,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   if (prefNote.length) parts.push(`saved to your profile: ${prefNote.join('; ')}`)
   if (u.removeLastAdded) parts.push('took that off the grocery list')
   if (parts.length) {
-    const lead = u.correction ? `Sorry about that, ${m.name} — fixed: ` : `Got it, ${m.name} — `
+    const lead = u.correction ? `Sorry about that${nick(m.name)} — fixed: ` : `Got it${nick(m.name)} — `
     const tail = mode === 'round' && !u.picks.length && !u.allGood && !u.none && u.skips.length ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
     return { reply: `${lead}${parts.join('; ')}.${tail}`, handled: true, member: m }
   }
@@ -720,7 +737,7 @@ async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsC
   }
 }
 
-export interface Meant { picks: number[]; skips: number[]; again: number[]; add: string[]; suggest: string[]; likes: string[]; dislikes: string[]; allergies: string[]; allGood: boolean; none: boolean; correction: boolean; removeLastAdded: boolean; question: boolean; relay: boolean; answer: string; clarify: string }
+export interface Meant { picks: number[]; skips: number[]; again: number[]; add: string[]; suggest: string[]; likes: string[]; dislikes: string[]; allergies: string[]; safeFoods: string[]; allGood: boolean; none: boolean; correction: boolean; removeLastAdded: boolean; question: boolean; relay: boolean; answer: string; clarify: string }
 
 /** Facts the bot may answer questions from (standings, tonight, list size, the planner's name). */
 export interface BotFacts { family: string; tonight?: string; standings?: string; listCount?: number; ownerMessage?: string }
@@ -749,17 +766,18 @@ Facts you may answer from (the planner is ${facts.family}):
 - What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product or a store flyer.` : ''}
 
 Return ONLY JSON:
-{"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"likes":[],"dislikes":[],"allergies":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
+{"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"likes":[],"dislikes":[],"allergies":[],"safeFoods":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
 - picks: numbers they want / are happy to keep. skips: numbers they don't want. again: numbers they want brought back on a future week (use this when DinnerDrop asked which should come back, or they say "again"/"bring back"/"want that again").
 - A dish they name or refer to ("that", "the salad") is matched to its number using the conversation.
 - "the rest", "all the others", "everything else" mean every number they did NOT just pick in the conversation. Never put a number in skips that they picked unless this message names that number or dish.
 - correction: true if they're saying DinnerDrop got their last answer wrong ("oh no", "I meant", "not that"); then fill picks/skips/again with what they actually meant.
 - removeLastAdded: true only if they say something DinnerDrop just added to the grocery list was wrong or wasn't meant for the list.
-- add: only real grocery/household products they clearly want added, as product names with any amount. Otherwise [].
+- add: only real grocery/household products they clearly want BOUGHT ("add", "we need", "get", "pick up", "out of"), as product names with any amount. Foods they merely say they eat, like, can have, or are "safe"/"fine" for them are NOT add — those are likes or safeFoods. Otherwise [].
 - suggest: dishes or meal ideas they propose for a future week ("how about tacos", "we should do pizza night", "can I recommend chicken parm", "can we have spaghetti and meatballs") — one entry per dish ("spaghetti and meatballs" is ONE dish), not grocery items. A side they want with it ("peas on the side") belongs in the dish name, not in add. Otherwise [].
-- likes / dislikes / allergies: foods or dishes they say they personally love, won't eat, or are allergic to ("I don't like mushrooms", "I'm allergic to shellfish", "I love anything with chicken"). These update THEIR OWN taste profile. Only what they state about themselves; otherwise [].
+- likes / dislikes / allergies: foods or dishes they say they personally love, won't eat, or are allergic to ("I don't like mushrooms", "I'm allergic to shellfish", "I love anything with chicken"). A food they say makes them sick or that they can't have for a medical reason ("curry would send me to the ER", "peanut butter sets off my ulcer", "lemons are no good for me") is an allergy — it must never be planned. These update THEIR OWN taste profile. Only what they state about themselves; otherwise [].
+- safeFoods: foods they say are always safe / fine / easy for them ("cereal is safe", "I'm fine with chicken, rice and broccoli"), and any standing rule for their plate ("I need carbs with every meal" → "carbs with every meal"). Short food names, not sentences. Otherwise [].
 - allGood / none: whole-list answers. question: they asked something or it's unrelated chat.
-- answer: if question is true and it's about dinners, the vote, the list, the app, or what they can text, answer it warmly in one or two sentences (under 280 characters) from the facts above — e.g. tell them the standings, tonight's dinner, how to suggest a dish. Else "".
+- answer: if question is true and it's about dinners, the vote, the list, the app, or what they can text, answer it warmly in one or two sentences (under 280 characters) from the facts above — e.g. tell them the standings, tonight's dinner, how to suggest a dish. Never promise to check, look into, or do anything — you only save what's in this JSON. If they ask for something texting can't do (carb counts, another person's limits, changing a recipe), say so in one line and that the planner can handle it. Else "".
 - relay: true when the message is clearly meant for the planner or the family, not the bot — a reply to something the planner texted, "tell Sarah…", "I'll be late", "running to the store", a question only a person can answer. Then answer stays "".
 - clarify: if you genuinely can't tell what they mean, a short friendly question (under 140 characters) asking them, else "".`
 }
@@ -772,11 +790,18 @@ export function parseMeant(text: string, listLength: number): Meant {
     picks: nums(j.picks), skips: nums(j.skips), again: nums(j.again),
     add: Array.isArray(j.add) ? j.add.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 60).map((x) => x.trim()) : [],
     suggest: Array.isArray(j.suggest) ? j.suggest.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 60).map((x) => x.trim()).slice(0, 5) : [],
-    likes: strs(j.likes), dislikes: strs(j.dislikes), allergies: strs(j.allergies),
+    likes: strs(j.likes), dislikes: strs(j.dislikes), allergies: strs(j.allergies), safeFoods: strs(j.safeFoods),
     allGood: !!j.allGood, none: !!j.none, correction: !!j.correction, removeLastAdded: !!j.removeLastAdded, question: !!j.question, relay: !!j.relay,
-    answer: typeof j.answer === 'string' ? j.answer.trim().slice(0, 320) : '',
-    clarify: typeof j.clarify === 'string' ? j.clarify.trim().slice(0, 160) : '',
+    answer: typeof j.answer === 'string' ? trimText(j.answer, 320) : '',
+    clarify: typeof j.clarify === 'string' ? trimText(j.clarify, 240) : '',
   }
+}
+
+/** Cut a reply at a word, never mid-sentence ("…safe for C" went out on Nov 2 2026). */
+function trimText(s: string, max: number): string {
+  const t = s.trim()
+  if (t.length <= max) return t
+  return t.slice(0, max - 1).replace(/\s+\S*$/, '') + '…'
 }
 
 async function understandInContext(body: string, ctx: SmsContext, list: Meal[], mode: 'round' | 'again' | 'week', facts?: BotFacts): Promise<Meant | null> {
