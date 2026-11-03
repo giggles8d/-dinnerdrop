@@ -692,11 +692,14 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     const health = { ...((stored.health ?? {}) as Record<string, MemberNeed>) }
     const saved: Array<{ name: string; need: MemberNeed }> = []
     const unknown: string[] = []
+    const known: string[] = []
     for (const n of u.needs) {
       const self = /^(me|myself|i)$/i.test(n.who)
       const who = self ? { id: m.id, name: m.name } : people.find((p) => firstOf(p.name) === firstOf(n.who))
       if (!who) { unknown.push(n.who); continue }
       const prev = health[who.id] ?? {}
+      // Already saved exactly this (carbs rule and grams): nothing new to save or re-ask about.
+      if ((n.carbs || prev.carbs) === prev.carbs && (n.carbsPerDay ?? prev.carbsPerDay) === prev.carbsPerDay && prev.carbs) { known.push(self ? 'you' : who.name.split(' ')[0]); continue }
       const need: MemberNeed = {
         carbs: n.carbs || prev.carbs,
         carbsPerDay: n.carbsPerDay ?? prev.carbsPerDay,
@@ -715,6 +718,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       await admin.from('sms_messages').update({ intent: 'health_need' }).eq('twilio_sid', sid ?? '')
       needsReply = `${needsConfirmation(saved, (name) => name === 'me')} ${plan?.meals?.length ? NEEDS_TIMING_ASK : ''}`.trim()
     }
+    if (!saved.length && known.length) needsReply = `I already have that saved for ${known.join(' and ')}, and the planner builds every dinner around it. For what's right for a medical condition, please ask your doctor or a dietitian. I'm happy to help with recipes, cooking and the grocery list.`
     if (unknown.length) needsReply += `${needsReply ? ' ' : ''}Who is ${unknown.join(' / ')} in the household? ${family} can add them in Settings → Household, then text me again.`
   }
 
