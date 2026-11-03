@@ -35,7 +35,7 @@ export default function HelpPage() {
         <p className="text-muted-foreground mb-8">Quick answers below, or write to Sarah, DinnerDrop&apos;s founder. She reads every message.</p>
         <section className="mb-10 space-y-2">
           {FAQ.map(([q, a]) => (
-            <details key={q} className="rounded-xl border border-border bg-card px-4 py-3 group">
+            <details key={q} className={`rounded-xl border border-border bg-card px-4 py-3 group ${q.startsWith('Billing') ? 'web-only' : ''}`}>
               <summary className="cursor-pointer font-semibold text-foreground text-sm list-none flex justify-between items-center">{q}<span className="text-muted-foreground group-open:rotate-45 transition-transform">+</span></summary>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{a}</p>
             </details>

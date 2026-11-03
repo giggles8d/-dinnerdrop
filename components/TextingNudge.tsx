@@ -40,7 +40,8 @@ export default function TextingNudge({ forceOpen = false }: { forceOpen?: boolea
 
   if (!show) return null
   return (
-    <div className="mb-6 rounded-2xl border border-primary/20 bg-secondary/40 p-5 relative">
+    // In the iOS app, families without Family access never see this card: it would point at a plan the app does not sell.
+    <div className={`mb-6 rounded-2xl border border-primary/20 bg-secondary/40 p-5 relative ${family ? '' : 'web-only'}`}>
       <button onClick={dismiss} aria-label="Not now" className="absolute top-3 right-3 p-1 rounded-full text-muted-foreground hover:bg-muted"><X className="w-4 h-4" /></button>
       <div className="flex items-start gap-3">
         <div className="shrink-0 w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center"><MessageSquareText className="w-5 h-5" /></div>
