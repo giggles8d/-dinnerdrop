@@ -3,6 +3,16 @@
 Usage: python3 build_mom.py <dir>   (dir holds c1.mp4 hook, c2.mp4.. home scenes, last = CTA, and cfg.json)
 cfg: {"out": "...mp4", "hook_text": [...], "labels": {"c2.mp4": "..."}, "app": [[start, end, "label"], ...],
       "app_after": 1, "end": ["line1", "line2", "url"]}
+Optional cfg (Nov 3 2026):
+  "end_seconds": 1.8, "cta_y": [y1, y2]  -> end-card length; height of the code/url lines on the last clip
+  "clip_end": {"c1.mp4": 7.9}    -> cut a clip at this time (use last word end + ~0.45 s from a transcript) when silencedetect misses room tone
+  "ai_banner": false            -> drop the bottom "AI-generated presenter" line on clips (the end card keeps its AI line)
+  "hook_tag": "..."             -> small line under the hook text on c1
+  "bubbles": {"c1.mp4": [["text", t, "in"|"out"], ...]}   -> text-message bubbles that pop in at t (s into that clip)
+  "app_over": {"c2.mp4": {"face": 1.0, "segs": [[s, e, "label"], ...]}}
+                                -> show her face for `face` s, then real app screens for the rest of the clip,
+                                   with HER audio from the clip continuing underneath (no silent app screens).
+                                   Set "app_after": 0 to skip the old silent app block.
 Layout: c1 (hook text on top) -> real app screens (6-8 s, labelled) -> remaining clips -> 2.4 s end card.
 Clip tails are trimmed after the last speech (silencedetect). App section carries room tone from c1."""
 import os, re, subprocess, sys, json
@@ -32,18 +42,48 @@ def speech_end(f):
 
 clips = sorted(x for x in os.listdir(D) if re.fullmatch(r'c\d+\.mp4', x))
 parts = []; base = "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30,setsar=1"
-AI = tx('AI-generated presenter · real app screens', 30, 1800, box='0x000000@0.45', font=FONTM)
+AI = tx('AI-generated presenter · real app screens', 30, 1800, box='0x000000@0.45', font=FONTM) if C.get('ai_banner', True) else None
+def bubbles(c):
+    out = []
+    for i, (t, a, side) in enumerate(C.get('bubbles', {}).get(c, [])):
+        x = '80' if side == 'in' else 'w-text_w-80'
+        col, box = ('0x111111', '0xc9cdd3') if side == 'in' else ('white', '0x2f7cf6')
+        out.append(f"drawtext=fontfile={FONT}:text='{esc(t)}':fontsize=50:fontcolor={col}:box=1:boxcolor={box}:boxborderw=26"
+                   f":x={x}:y={560 + i * 130}:enable='gte(t,{a:.2f})'")
+    return out
 for k, c in enumerate(clips):
-    src = os.path.join(D, c); T = speech_end(src); fx = [base, AI]
+    src = os.path.join(D, c); T = C.get('clip_end', {}).get(c) or speech_end(src); fx = [base] + ([AI] if AI else [])
     if k == 0:
         for j, h in enumerate(C['hook_text']):
             fx.append(tx(h, 62 if j == 0 else 54, 220 + j * 110, 0, T, box='0xd62828' if j == 0 else '0x1a1a1a@0.72'))
+        if C.get('hook_tag'):
+            fx.append(tx(C['hook_tag'], 32, 220 + len(C['hook_text']) * 110, 0, T, box='0x000000@0.5', font=FONTM))
     lab = C.get('labels', {}).get(c)
     if lab: fx.append(tx(lab, 54, 1380, 0.4, T))
     if k == len(clips) - 1:
-        fx.append(tx(C['end'][1], 46, 1500, 1.0, T, color='0x1a1a1a', box=GOLD))
-        fx.append(tx(C['end'][2], 58, 1610, 1.0, T, box=GREEN))
+        cy = C.get('cta_y', [1500, 1610])   # keep above the bottom 25% (y>1440) where TikTok/Reels UI sits
+        fx.append(tx(C['end'][1], 46, cy[0], 1.0, T, color='0x1a1a1a', box=GOLD))
+        fx.append(tx(C['end'][2], 58, cy[1], 1.0, T, box=GREEN))
     p = os.path.join(D, f'p{k}.mp4')
+    ov = C.get('app_over', {}).get(c)
+    if ov:
+        # her face for `face` s, then app screens; the clip's own audio (her voice) runs under all of it
+        face = ov.get('face', 1.0); segs = ov['segs']; per = (T - face) / len(segs); W = 760; H = int(1256 * W / 600)
+        ins = ['-i', src]; fc = [f"[0:v]trim=0:{face:.3f},setpts=PTS-STARTPTS,{','.join(fx)}[f]"]
+        for j, (s0, e0, label) in enumerate(segs):
+            ins += ['-i', APP]; sp = per / (e0 - s0)
+            fc.append(f"[{j+1}:v]trim={s0}:{e0},setpts=PTS-STARTPTS,setpts={sp:.4f}*PTS,crop=600:1256:0:48,scale={W}:{H},"
+                      f"pad={W+12}:{H+12}:6:6:color=0xdddddd,fps=30[ph{j}];color=c={CREAM}:s=1080x1920:r=30:d={per:.3f}[cr{j}];"
+                      f"[cr{j}][ph{j}]overlay=(W-w)/2:250:eof_action=pass,"
+                      f"drawtext=fontfile={FONT}:text='{esc(label)}':fontsize=56:fontcolor={GREEN}:x=(w-text_w)/2:y=120,"
+                      f"trim=0:{per:.3f},setpts=PTS-STARTPTS,setsar=1[s{j}]")
+        cat = ''.join(['[f]'] + [f'[s{j}]' for j in range(len(segs))])
+        bub = bubbles(c)
+        fc.append(f"{cat}concat=n={len(segs)+1}:v=1:a=0[cv];[cv]{','.join(bub + ['format=yuv420p'])}[v];[0:a]atrim=0:{T:.3f},asetpts=PTS-STARTPTS[a]")
+        run(['ffmpeg','-y','-v','error'] + ins + ['-filter_complex',';'.join(fc),'-map','[v]','-map','[a]','-t',f'{T:.3f}',
+             '-c:v','libx264','-crf','20','-preset','medium','-c:a','aac','-b:a','160k','-ar','44100','-ac','2',p])
+        parts.append(p); continue
+    fx += bubbles(c)
     run(['ffmpeg','-y','-v','error','-i',src,'-vf',','.join(fx)+',format=yuv420p','-t',f'{T:.3f}','-c:v','libx264','-crf','20','-preset','medium',
          '-c:a','aac','-b:a','160k','-ar','44100','-ac','2',p])
     parts.append(p)
@@ -69,8 +109,8 @@ fx = (f"drawtext=fontfile={FONT}:text='{esc(C['end'][0])}':fontsize=80:fontcolor
       f"drawtext=fontfile={FONT}:text='{esc(C['end'][2])}':fontsize=66:fontcolor=0x1a1a1a:x=(w-text_w)/2:y=1100,"
       f"drawtext=fontfile={FONTM}:text='AI-generated presenter · real app screens':fontsize=34:fontcolor=white:x=(w-text_w)/2:y=1300")
 ep = os.path.join(D, 'end.mp4')
-run(['ffmpeg','-y','-v','error','-f','lavfi','-i',f'color=c={GREEN}:s=1080x1920:d=2.4:r=30,{fx},format=yuv420p,setsar=1',
-     '-f','lavfi','-i','anullsrc=r=44100:cl=stereo','-t','2.4','-c:v','libx264','-crf','20','-c:a','aac','-b:a','160k',ep])
+run(['ffmpeg','-y','-v','error','-f','lavfi','-i',f'color=c={GREEN}:s=1080x1920:d={C.get("end_seconds", 2.4)}:r=30,{fx},format=yuv420p,setsar=1',
+     '-f','lavfi','-i','anullsrc=r=44100:cl=stereo','-t',str(C.get('end_seconds', 2.4)),'-c:v','libx264','-crf','20','-c:a','aac','-b:a','160k',ep])
 parts.append(ep)
 lst = os.path.join(D, 'l.txt'); open(lst, 'w').write(''.join(f"file '{p}'\n" for p in parts))
 out = os.path.join(D, C['out'])

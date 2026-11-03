@@ -1,0 +1,94 @@
+{
+ "out": "2026-11-03_NurseMom_Ep1_ERNurseVsDinner.mp4",
+ "ai_banner": false,
+ "hook_text": [
+  "ER nurse vs. “what's for dinner”"
+ ],
+ "hook_tag": "Fictional AI skit · real app screens",
+ "bubbles": {
+  "c1.mp4": [
+   [
+    "what's for dinner",
+    1.2,
+    "in"
+   ],
+   [
+    "MOM",
+    1.8,
+    "in"
+   ],
+   [
+    "????",
+    2.4,
+    "in"
+   ]
+  ],
+  "c2.mp4": [
+   [
+    "Reply the numbers you want",
+    1.2,
+    "out"
+   ],
+   [
+    "1 4 5",
+    2.4,
+    "in"
+   ],
+   [
+    "3 4 5",
+    3.0,
+    "in"
+   ]
+  ]
+ },
+ "app_over": {
+  "c2.mp4": {
+   "face": 1.0,
+   "segs": [
+    [
+     54,
+     62,
+     "They vote by text. No app."
+    ],
+    [
+     88,
+     97,
+     "Plans around every kid"
+    ]
+   ]
+  },
+  "c3.mp4": {
+   "face": 1.0,
+   "segs": [
+    [
+     110,
+     122,
+     "One tap. Whole week's groceries."
+    ],
+    [
+     136,
+     152,
+     "Instacart, Walmart or Kroger"
+    ]
+   ]
+  }
+ },
+ "app_after": 0,
+ "app": [],
+ "cta_y": [
+  1180,
+  1290
+ ],
+ "end_seconds": 1.8,
+ "end": [
+  "Try it free, no card",
+  "Code NURSE = 3 months of Family free",
+  "dinnerdrop.app/go/nurse"
+ ],
+ "clip_end": {
+  "c1.mp4": 7.95,
+  "c2.mp4": 7.35,
+  "c3.mp4": 7.7,
+  "c4.mp4": 7.2
+ }
+}
