@@ -87,6 +87,7 @@ export interface Settings {
   tastes: {
     hidden: Record<string, string[]>  // learned-taste chips the family removed, per household member id
   }
+  health: Record<string, import('@/lib/member-needs').MemberNeed>  // per household member id: carbs at every meal / a daily carb limit (lib/member-needs)
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -161,6 +162,7 @@ export const DEFAULT_SETTINGS: Settings = {
   tastes: {
     hidden: {},
   },
+  health: {},
 }
 
 type DeepPartial<T> = { [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K] }

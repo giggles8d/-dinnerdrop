@@ -448,6 +448,22 @@ export default function SettingsPage() {
                           <Field label="Allergies" hint="Hard exclusions on every plan."><TagInput value={m.allergies} onChange={(v) => updateMember(m.id, { allergies: v })} placeholder="peanuts, shellfish" suggestions={PICKS.allergies} /></Field>
                           <Field label="Safe foods" hint="One of these lands on their plate every night."><TagInput value={m.safe_foods} onChange={(v) => updateMember(m.id, { safe_foods: v })} placeholder="plain rice, cheese quesadilla" suggestions={PICKS.safe} /></Field>
                         </div>
+                        {/* Health need (lib/member-needs): the shared dinner stays; their plate gets a starch side or a carb note. */}
+                        <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 items-end">
+                          <Field label="Carbs (health need)" hint="For a doctor's rule, not a taste. Carb counts are estimates — not medical advice.">
+                            <Select
+                              value={settings.health[m.id]?.carbs ?? ''}
+                              onChange={(v) => patch((s) => { const cur = s.health[m.id] ?? {}; if (!v) { delete s.health[m.id] } else { s.health[m.id] = { ...cur, carbs: v as 'every_meal' | 'limit', updatedAt: new Date().toISOString() } } })}
+                              options={[{ value: '', label: 'No carb rule' }, { value: 'every_meal', label: 'Needs carbs at every dinner' }, { value: 'limit', label: 'Keeps carbs low' }]}
+                            />
+                          </Field>
+                          {settings.health[m.id]?.carbs === 'limit' && (
+                            <Field label="Daily limit (g)">
+                              <input type="number" min={10} max={400} value={settings.health[m.id]?.carbsPerDay ?? ''} onChange={(e) => patch((s) => { const g = Number(e.target.value); s.health[m.id] = { ...(s.health[m.id] ?? {}), carbsPerDay: g > 0 ? Math.round(g) : undefined } })} className="w-28 rounded-md border border-input bg-background px-3 py-2 text-sm" />
+                            </Field>
+                          )}
+                        </div>
+                        {settings.health[m.id]?.notes?.length ? <p className="text-xs text-muted-foreground">From their texts: {settings.health[m.id]!.notes!.join(' · ')}</p> : null}
                         {(() => {
                           const lt = learnedTastes[m.id]
                           if (!lt || lt.votes < 3 || (!lt.likes.length && !lt.skips.length)) return null

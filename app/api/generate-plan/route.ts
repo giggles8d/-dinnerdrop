@@ -14,6 +14,7 @@ import { loadPantry, pantryPromptBlock } from '@/lib/pantry'
 import { pickWithOverlap, isFresh } from '@/lib/overlap'
 import { hasMix, scaleMix, mixLabel, proteinGroup, MIX_GROUPS } from '@/lib/protein-mix'
 import { computeTastes, householdBoost, learned, likeScore, type MemberTaste } from '@/lib/tastes'
+import { activeNeeds, applyNeeds, needsPromptLines } from '@/lib/member-needs'
 
 // Extend serverless timeout — AI generation needs up to 55s
 export const maxDuration = 60
@@ -24,6 +25,7 @@ interface GeneratePlanResponse {
 }
 
 interface MemberRow {
+  id: string
   name: string
   role: 'adult' | 'kid'
   age_band: string | null
@@ -82,7 +84,7 @@ export async function POST(request: Request) {
     if (profileRow.household_id) {
       const { data } = await supabase
         .from('household_members')
-        .select('name, role, age_band, likes, dislikes, allergies, safe_foods')
+        .select('id, name, role, age_band, likes, dislikes, allergies, safe_foods')
         .eq('household_id', profileRow.household_id)
       members = (data as MemberRow[]) ?? []
     }
@@ -91,6 +93,10 @@ export async function POST(request: Request) {
     if (profileRow.household_id && mode === 'fresh') {
       try { tastes = await computeTastes(supabase, profileRow.household_id, settings.tastes.hidden) } catch (e) { console.error('tastes failed', e) }
     }
+    // Health needs (carbs at every meal / a daily carb limit) — fitted onto each dinner below (lib/member-needs).
+    const needPeople = activeNeeds(settings.health, members.map((m) => ({ id: m.id, name: m.name })))
+    const glutenFree = profile.dietaryNeeds.some((d: string) => /gluten/i.test(d)) || members.some((m) => (m.allergies ?? []).some((a) => /gluten|wheat|celiac/i.test(a)))
+    const fitNeeds = (ms: Meal[]) => needPeople.length ? applyNeeds(ms, needPeople, { glutenFree }) : ms
     const allAllergies = Array.from(new Set(members.flatMap((m) => m.allergies ?? [])))
     const allDislikes = Array.from(new Set(members.flatMap((m) => m.dislikes ?? [])))
     const kidSafeFoods = members.filter((m) => m.role === 'kid').flatMap((m) => m.safe_foods ?? [])
@@ -260,7 +266,7 @@ export async function POST(request: Request) {
     }
     if (mode === 'fresh' && libraryMeals.length >= optionsCount) {
       return Response.json({
-        meals: libraryMeals,
+        meals: fitNeeds(libraryMeals),
         totalEstimatedCost: libraryMeals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0),
         plan: { dinnersPerWeek, cookDays, nightTimes, leftoverNight: settings.plan.leftoverNight },
         source: 'library',
@@ -303,6 +309,7 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
         return `- ${who}${bits.length ? ': ' + bits.join('; ') : ''}`
       })
       peopleSection = `\nWho's eating:\n${lines.join('\n')}\n`
+      if (needPeople.length) peopleSection += `Health needs (keep the shared main; fit each person with a side they can take or skip):\n${needsPromptLines(needPeople).join('\n')}\n`
       if (kidSafeFoods.length) {
         peopleSection += `RULE: every dinner must include, as a component or simple side, at least one of the kids' safe foods (${list(kidSafeFoods)}) OR be built from ingredients a picky kid already eats. Say which in the "kidNote" field.\n`
       }
@@ -445,7 +452,7 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
       console.warn(`[generate-plan] skipped library upsert, generation took ${elapsed}ms`)
     }
 
-    const meals = [...generated, ...libraryMeals]
+    const meals = fitNeeds([...generated, ...libraryMeals])
     const totalEstimatedCost = meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
 
     return Response.json({
