@@ -4,7 +4,6 @@
  "hook_text": [
   "ER nurse vs. “what's for dinner”"
  ],
- "hook_tag": "Fictional AI skit · real app screens",
  "bubbles": {
   "c1.mp4": [
    [
@@ -90,5 +89,6 @@
   "c2.mp4": 7.35,
   "c3.mp4": 7.7,
   "c4.mp4": 7.2
- }
+ },
+ "end_ai_line": false
 }

@@ -1,9 +1,26 @@
-{"element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
+{
+ "element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
  "voice": "Higgsfield preset Hallie 10274bf1-fb93-554f-b59f-d620a920fd36 (voice_change on every clip)",
- "start_frames": {"c1": "f16e933e-a0a4-4150-b585-1659d62b11a3", "c2": "8ec8e4cf-02d7-4487-959a-64b8633a92db", "c3": "95125a18-65f9-4d0d-a44d-9b86f7929b44", "c4": "ab66f7c5-fa1a-4228-8805-0d9442cc2eee"},
- "veo_jobs": {"c1": "1d22e515-5193-4934-b5ba-24b5b0e3c901", "c2": "3c590adb-c43f-428b-a0d8-ab7ab0d8d1d7", "c3": "55eccc81-c414-45b7-a324-552515f4ebc1", "c4": "0b555d31-e837-4487-93c1-5d27be7eaa34"},
- "voice_changed": {"c1": "de05efc1-c975-4193-bbef-f3e12f97f1dd", "c2": "7827f179-3ce3-4ef4-affe-545b5794a17e", "c3": "7397f54a-99b2-4306-b356-5a9cc93703e7", "c4": "d6db12cd-a980-4d16-a546-f47f76a63761"},
+ "start_frames": {
+  "c1": "f16e933e-a0a4-4150-b585-1659d62b11a3",
+  "c2": "8ec8e4cf-02d7-4487-959a-64b8633a92db",
+  "c3": "95125a18-65f9-4d0d-a44d-9b86f7929b44",
+  "c4": "ab66f7c5-fa1a-4228-8805-0d9442cc2eee"
+ },
+ "veo_jobs": {
+  "c1": "1d22e515-5193-4934-b5ba-24b5b0e3c901",
+  "c2": "3c590adb-c43f-428b-a0d8-ab7ab0d8d1d7",
+  "c3": "55eccc81-c414-45b7-a324-552515f4ebc1",
+  "c4": "0b555d31-e837-4487-93c1-5d27be7eaa34"
+ },
+ "voice_changed": {
+  "c1": "de05efc1-c975-4193-bbef-f3e12f97f1dd",
+  "c2": "7827f179-3ce3-4ef4-affe-545b5794a17e",
+  "c3": "7397f54a-99b2-4306-b356-5a9cc93703e7",
+  "c4": "d6db12cd-a980-4d16-a546-f47f76a63761"
+ },
  "c1_fix": "Veo drew glowing wisps around the buzzing phone at 0.2-0.4 s; first frame held 0.1-0.6 s (audio untouched). Avoid 'phone buzzes' in veo ACTION lines.",
- "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/b037594a-f4c3-46e3-a99e-ee73a506acdb.mp4",
- "status": "built 2026-11-03, awaiting Sarah's OK — NOT posted",
- "build": "python3 mom/build_mom.py mom/nurse/2026-11-03b"}
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/611a549d-e35f-4875-9594-d8db0c866bfe.mp4",
+ "status": "v2 built 2026-11-03 with NO on-screen AI label (Sarah's call); awaiting Sarah's OK \u2014 NOT posted",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-03b"
+}
