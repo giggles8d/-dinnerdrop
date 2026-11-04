@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getClientCredentialsToken, searchProducts, type KrogerProduct } from '@/lib/kroger'
 import { toPackages } from '@/lib/package-match'
+import { loadProductPrefs, applyPrefsToItems, storeBrandFirst } from '@/lib/product-prefs'
 import type { GroceryItem } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -17,8 +18,10 @@ export async function POST(request: NextRequest) {
   const { data: { user } } = await sb.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const { groceryList, locationId } = await request.json()
-  const items = (Object.values(groceryList ?? {}).flat() as GroceryItem[]).filter((i) => i?.name)
-  if (!items.length) return NextResponse.json({ matches: [] })
+  const listed = (Object.values(groceryList ?? {}).flat() as GroceryItem[]).filter((i) => i?.name)
+  if (!listed.length) return NextResponse.json({ matches: [] })
+  const mine = await loadProductPrefs(sb, user.id)
+  const items = applyPrefsToItems(listed, mine.prefs)
   const token = await getClientCredentialsToken()
   const loc = typeof locationId === 'string' && locationId ? locationId : undefined
   // Kroger allows ~10 req/s on the products API; run 6 at a time.
@@ -32,6 +35,7 @@ export async function POST(request: NextRequest) {
       const term = it.searchTerm || it.name
       let found = await searchProducts(term, token, { limit: 4, locationId: loc })
       if (!found.length && term !== it.name) found = await searchProducts(it.name, token, { limit: 4, locationId: loc })
+      if (mine.storeBrands) found = storeBrandFirst('kroger', term, found, (p) => p.name, (p) => p.brand)
       const quantity = plan.kind === 'lb' ? Math.max(1, Math.ceil(plan.count / 1.5)) : Math.max(1, Math.ceil(plan.count))
       out[i] = { name: it.name, want: `${it.quantity ?? ''} ${it.unit ?? ''}`.trim(), quantity, product: found[0] ?? null, alternatives: found.slice(1) }
     }

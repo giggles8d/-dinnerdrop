@@ -6,6 +6,7 @@ import { stockStaplesFromList } from '@/lib/pantry'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getClientCredentialsToken, searchProduct, addItemsToCart, refreshKrogerToken } from '@/lib/kroger'
 import type { GroceryItem } from '@/types'
+import { loadProductPrefs, applyPrefsToItems } from '@/lib/product-prefs'
 
 export async function POST(request: Request) {
   try {
@@ -47,7 +48,7 @@ export async function POST(request: Request) {
     }
 
     const { groceryList, chosen, locationId, weekStart } = await request.json()
-    const allItems = Object.values(groceryList ?? {}).flat() as GroceryItem[]
+    const allItems = applyPrefsToItems(Object.values(groceryList ?? {}).flat() as GroceryItem[], (await loadProductPrefs(supabase, user.id)).prefs)
     // Reviewed in the app: the family already saw and (maybe) changed what goes in; push exactly that.
     const picked = Array.isArray(chosen) ? (chosen as Array<{ name: string; productId: string; quantity: number }>).filter((c) => c && typeof c.productId === 'string' && c.productId) : null
 

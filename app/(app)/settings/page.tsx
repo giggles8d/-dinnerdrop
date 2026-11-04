@@ -5,6 +5,7 @@ import DeleteAccount from '@/components/DeleteAccount'
 import TripsSettings from '@/components/TripsSettings'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import ProductPrefsEditor from '@/components/ProductPrefsEditor'
 import SalesCard from '@/components/SalesCard'
 import StoreDealsSettings from '@/components/StoreDealsSettings'
 import { FOOD_STYLES, styleByKey } from '@/lib/styles'
@@ -734,6 +735,14 @@ export default function SettingsPage() {
                   <Field label="Usual store" hint="Shown on the list; Instacart lets you pick at checkout."><input value={settings.stores.usualStore} onChange={(e) => patch((s) => { s.stores.usualStore = e.target.value })} placeholder="Wegmans, Kroger, Aldi…" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                 </div>
                 <p className="text-sm text-muted-foreground">Connect or disconnect Kroger from the <Link href="/grocery-list" className="text-primary underline">grocery list</Link> page.</p>
+                <div>
+                  <h2 className="font-heading font-semibold text-foreground mb-1">My products</h2>
+                  <p className="text-sm text-muted-foreground mb-3">The exact product your family buys. We&apos;ll use it every time a recipe calls for it.</p>
+                  <ProductPrefsEditor value={settings.food.productPrefs} onChange={(v) => patch((s) => { s.food.productPrefs = v })} />
+                  <div className="mt-4">
+                    <Toggle checked={settings.food.storeBrands} onChange={(v) => patch((s) => { s.food.storeBrands = v })} label="Prefer store brands" hint="Great Value at Walmart, Kroger brand at Kroger, when it's a match for what the recipe needs." />
+                  </div>
+                </div>
                 <div>
                   <h2 className="font-heading font-semibold text-foreground mb-1">Store deals</h2>
                   <p className="text-sm text-muted-foreground mb-3">Tell us where you shop. We read each store&apos;s weekly ad for you, plan dinners around what&apos;s on sale, and tag sale prices on your list.</p>
