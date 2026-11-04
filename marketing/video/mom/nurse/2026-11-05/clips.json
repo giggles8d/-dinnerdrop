@@ -1,0 +1,10 @@
+{
+ "element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
+ "voice": "Hallie preset 10274bf1-fb93-554f-b59f-d620a920fd36 (voice_change on every clip)",
+ "start_frames": {"c1": "eb9766df-5903-464d-a9b5-61b947043a85 (break room)", "c2": "f1fdfb42-9f09-4c37-ae95-3f13b3343634 (kitchen)", "c3": "5da7b222-0a9c-49ec-94fb-1920b5e9ee9e (laundry room; first frame d047c208 had a detergent-logo bottle)", "c4": "15a5378d-c510-4384-a3fc-b23d4b99ec1a (open fridge, unlabeled milk)"},
+ "veo_jobs": {"c1": "8037c4a2-a112-4a8c-8af0-fd6d28a49e47", "c2": "77a5f422-799f-4f90-97b4-7e530542a3b7", "c3": "e1df7a4d-b045-4708-9554-0123f607b160", "c4": "43ce3cd7-012d-414c-8cb6-4c203be73884 (take 1 f1a9c0dc said 'code N-nurse'; retake line 'Use the code nurse for…')"},
+ "voice_changed": {"c1": "57910305-3de6-4860-810c-af961b90cd52", "c2": "15a1b689-a520-4839-bb1a-ecf309aa917f", "c3": "a650c6e9-7fcb-4a79-9036-aed057cbfae9", "c4": "f4c21868-e6a9-4713-b375-67e2b2e34b7a"},
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/64348aa8-846b-4db9-a8a6-73d858071242.mp4",
+ "status": "SCHEDULED 2026-11-05 4:30 PM ET on TikTok, YouTube Shorts, Facebook Reels via Publer (by Claude, 11-04)",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-05"
+}

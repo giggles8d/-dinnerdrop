@@ -1,0 +1,8 @@
+# draft takes and generated media (kept out of git; final is on Higgsfield, see clips.json)
+take1/
+take2/
+*.mp4
+*.mp3
+*.wav
+*.png
+*.jpg

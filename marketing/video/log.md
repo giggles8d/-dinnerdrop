@@ -2,6 +2,7 @@
 
 | Date | Time | Slot | Video | Notes |
 |---|---|---|---|---|
+| 2026-11-05 | 4:30 PM | Mom (Nurse Mom) | Nurse Mom Ep 2 "ER nurse vs. the milk" — feature: teen texts "we're out of milk" onto the grocery list (+ one-tap cart); hook location: hospital break room (then kitchen, laundry room 10 PM, open fridge payoff) | TikTok/YT/FB via Publer (scheduled 11-04 by Claude; mom/nurse/2026-11-05, veo3_1 high + Hallie voice_change, no on-screen AI label, code NURSE); final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/64348aa8-846b-4db9-a8a6-73d858071242.mp4 |
 | 2026-11-05 | 11:30 AM | Recipe | Sheet-Pan Shrimp Fajitas (slug sheet-pan-shrimp-fajitas-de3h) | TikTok/YT/FB via Publer (scheduled 11-04 by Claude; recipe/fajitas, 41.4 s, VO speed 1.16) |
 | 2026-11-04 | 7:30 PM | Fruit | Fruit Moms Ep 11 "Hump Day Leftover" (only Wednesday and the fridge is down to one sad leftover) | TikTok/YT/FB via Publer (scheduled 11-04 by Claude; fruit e11, veo3_1 high, clips c141–c143); next episode = Ep 12 |
 | 2026-11-03 | 7:56 PM | Mom (Nurse Mom) | Nurse Mom Ep 1 "ER nurse vs. what's for dinner" — approved/posted by Sarah ("Post it now"); family votes by text + one-tap cart + code NURSE; family-table ending with the 3 kids | TikTok/YT/FB via Publer, published now; mom/nurse/2026-11-03b; reviewed by ChatGPT 8.8 + Gemini 9.1 (APPROVE); no on-screen AI label (Sarah's call), AI disclosure in captions; final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/ff6e2f6b-6578-4ae3-ab9d-f57ff97bc597.mp4 |
@@ -29,4 +30,6 @@
 
 Mom-video angles used (don't repeat within 6 days): 11-01 angle 7 · 11-02 angle 1 · 11-03 angle 3 · 11-04 angle 4. Oct 31 "Weekend push" (pickup line) was the template, not one of the 7 angles.
 
-Credits note 2026-11-03: 115.75 left after this run (under ~120) — next run should post recipe Shorts only until Sarah tops up.
+Credits note 2026-11-03: 115.75 left after this run (under ~120). Topped up by 11-04 (1512.75 at start of the 11-04 run).
+
+Nurse Mom features used (don't repeat within 6 days): 11-03 Ep 1 kids vote by text (+ picky eater, one-tap cart) · 11-05 Ep 2 teen texts "we're out of milk" onto the list. Nurse Mom locations used: garage/kitchen/bleachers/table (Ep 1), break room/kitchen/laundry room/fridge (Ep 2).

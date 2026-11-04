@@ -1,0 +1,67 @@
+{
+ "out": "2026-11-05_NurseMom_Ep2_TheMilk.mp4",
+ "ai_banner": false,
+ "end_ai_line": false,
+ "hook_text": [
+  "ER nurse vs. the milk"
+ ],
+ "bubbles": {
+  "c1.mp4": [
+   [
+    "we're out of milk",
+    1.4,
+    "in"
+   ],
+   [
+    "and cereal",
+    2.4,
+    "in"
+   ],
+   [
+    "MOM",
+    3.2,
+    "in"
+   ]
+  ]
+ },
+ "app_over": {
+  "c2.mp4": {
+   "face": 1.2,
+   "segs": [
+    [
+     110,
+     122,
+     "Texted in. On the list."
+    ]
+   ]
+  },
+  "c3.mp4": {
+   "face": 1.0,
+   "segs": [
+    [
+     136,
+     152,
+     "Instacart, Walmart or Kroger"
+    ]
+   ]
+  }
+ },
+ "app_after": 0,
+ "app": [],
+ "cta_y": [
+  1180,
+  1290
+ ],
+ "end_seconds": 1.8,
+ "end": [
+  "Try it free, no card",
+  "Code NURSE = 3 months of Family free",
+  "dinnerdrop.app/go/nurse"
+ ],
+ "clip_end": {
+  "c1.mp4": 7.75,
+  "c2.mp4": 7.3,
+  "c3.mp4": 7.65,
+  "c4.mp4": 7.75
+ }
+}
