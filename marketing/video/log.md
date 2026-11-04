@@ -2,6 +2,7 @@
 
 | Date | Time | Slot | Video | Notes |
 |---|---|---|---|---|
+| 2026-11-03 | 7:56 PM | Mom (Nurse Mom) | Nurse Mom Ep 1 "ER nurse vs. what's for dinner" — approved/posted by Sarah ("Post it now"); family votes by text + one-tap cart + code NURSE; family-table ending with the 3 kids | TikTok/YT/FB via Publer, published now; mom/nurse/2026-11-03b; reviewed by ChatGPT 8.8 + Gemini 9.1 (APPROVE); no on-screen AI label (Sarah's call), AI disclosure in captions; final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/ff6e2f6b-6578-4ae3-ab9d-f57ff97bc597.mp4 |
 | 2026-11-04 | 4:30 PM | Mom (Ollie window) | "Meal app shutting down? Not shopping without a plan" — angle 4 (snap the fridge, dinner tonight); hook location: grocery store parking lot (Wed) | TikTok/YT/FB via Publer (scheduled 11-03 by Claude; mom/2026-11-04, veo3_1 basic — credits <400, OLLIE end card) |
 | 2026-11-04 | 11:30 AM | Recipe | Honey Soy Glazed Salmon with Broccoli (slug honey-soy-glazed-salmon-with-broccoli-sble) | TikTok/YT/FB via Publer (scheduled 11-03 by Claude; recipe/salmon) |
 | 2026-11-03 | 7:30 PM | Fruit | Fruit Moms Ep 10 "Practice Ran Late" | TikTok/YT/FB via Publer (scheduled 11-03 by Claude; fruit e10); next episode = Ep 11 |
