@@ -20,7 +20,7 @@ export function emailShell(title: string, bodyHtml: string, cta?: { label: strin
 </div></body></html>`
 }
 
-export async function sendEmail(to: string, subject: string, html: string): Promise<{ ok: boolean; id?: string; error?: string }> {
+export async function sendEmail(to: string, subject: string, html: string, opts: { replyTo?: string; text?: string } = {}): Promise<{ ok: boolean; id?: string; error?: string }> {
   if (!process.env.RESEND_API_KEY) {
     console.log('[notify] RESEND_API_KEY missing — would email', to, subject)
     return { ok: false, error: 'RESEND_API_KEY not configured' }
@@ -31,6 +31,8 @@ export async function sendEmail(to: string, subject: string, html: string): Prom
     to,
     subject,
     html,
+    ...(opts.replyTo ? { replyTo: opts.replyTo } : {}),
+    ...(opts.text ? { text: opts.text } : {}),
   })
   if (error) return { ok: false, error: typeof error === 'string' ? error : (error as { message?: string }).message ?? 'send failed' }
   return { ok: true, id: data?.id }
