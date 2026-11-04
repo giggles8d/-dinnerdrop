@@ -46,11 +46,12 @@ parts = []; base = "scale=1080:1920:force_original_aspect_ratio=increase,crop=10
 AI = tx('AI-generated presenter · real app screens', 30, 1800, box='0x000000@0.45', font=FONTM) if C.get('ai_banner', True) else None
 def bubbles(c):
     out = []
-    for i, (t, a, side) in enumerate(C.get('bubbles', {}).get(c, [])):
+    for i, b in enumerate(C.get('bubbles', {}).get(c, [])):
+        t, a, side = b[:3]; until = b[3] if len(b) > 3 else 999
         x = '80' if side == 'in' else 'w-text_w-80'
         col, box = ('0x111111', '0xc9cdd3') if side == 'in' else ('white', '0x2f7cf6')
         out.append(f"drawtext=fontfile={FONT}:text='{esc(t)}':fontsize=50:fontcolor={col}:box=1:boxcolor={box}:boxborderw=26"
-                   f":x={x}:y={560 + i * 130}:enable='gte(t,{a:.2f})'")
+                   f":x={x}:y={560 + i * 130}:enable='between(t,{a:.2f},{until:.2f})'")
     return out
 for k, c in enumerate(clips):
     src = os.path.join(D, c); T = C.get('clip_end', {}).get(c) or speech_end(src); fx = [base] + ([AI] if AI else [])

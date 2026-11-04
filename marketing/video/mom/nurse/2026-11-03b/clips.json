@@ -2,25 +2,25 @@
  "element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
  "voice": "Higgsfield preset Hallie 10274bf1-fb93-554f-b59f-d620a920fd36 (voice_change on every clip)",
  "start_frames": {
-  "c1": "f16e933e-a0a4-4150-b585-1659d62b11a3",
-  "c2": "8ec8e4cf-02d7-4487-959a-64b8633a92db",
-  "c3": "95125a18-65f9-4d0d-a44d-9b86f7929b44",
-  "c4": "ab66f7c5-fa1a-4228-8805-0d9442cc2eee"
+  "c1": "5ef2a2c7-dfc2-49ae-b320-0a11cf7cf2ae",
+  "c2": "eb7e6130-ec76-4960-aba1-e447c9f096b0",
+  "c3": "3362f36f-74fb-45eb-b85c-e5bde1162f17",
+  "c4": "1ca622e5-0790-4397-896c-5066d01b0658 (first c4 frame 04d09d0e had a brand patch on the fleece)"
  },
  "veo_jobs": {
-  "c1": "1d22e515-5193-4934-b5ba-24b5b0e3c901",
-  "c2": "3c590adb-c43f-428b-a0d8-ab7ab0d8d1d7",
-  "c3": "55eccc81-c414-45b7-a324-552515f4ebc1",
-  "c4": "0b555d31-e837-4487-93c1-5d27be7eaa34"
+  "c1": "3f8ebb84-8ee5-4948-977d-8037356c5f95",
+  "c2": "bc5b5996-5ea6-44c6-9db5-86fdb097712f",
+  "c3": "0959099e-bb1b-47d5-95f0-b5cbaa108770",
+  "c4": "8bb89d74-0d26-42d6-af39-ab8863770462"
  },
  "voice_changed": {
-  "c1": "de05efc1-c975-4193-bbef-f3e12f97f1dd",
-  "c2": "7827f179-3ce3-4ef4-affe-545b5794a17e",
-  "c3": "7397f54a-99b2-4306-b356-5a9cc93703e7",
-  "c4": "d6db12cd-a980-4d16-a546-f47f76a63761"
+  "c1": "8506021c-31f9-4741-b484-9b2d770a622f",
+  "c2": "0dde51cc-fd95-423d-bb9e-475fd185cad6",
+  "c3": "59c3f2e5-4ac2-45a1-b51f-8afbbb03df33",
+  "c4": "358c5853-ede9-435b-a683-23f0c1f88c4f"
  },
- "c1_fix": "Veo drew glowing wisps around the buzzing phone at 0.2-0.4 s; first frame held 0.1-0.6 s (audio untouched). Avoid 'phone buzzes' in veo ACTION lines.",
- "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/611a549d-e35f-4875-9594-d8db0c866bfe.mp4",
- "status": "v2 built 2026-11-03 with NO on-screen AI label (Sarah's call); awaiting Sarah's OK \u2014 NOT posted",
- "build": "python3 mom/build_mom.py mom/nurse/2026-11-03b"
+ "final": "(take 2, see below)",
+ "status": "take 2 built 2026-11-03 ~7:15 PM, no on-screen AI label; awaiting Sarah OK \u2014 NOT posted",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-03b",
+ "take1_rejected": "Sarah Nov 3: car seat with no car (c1), odd seat/phone stand in c4; second phone popping in c2/c3. All four re-shot as real-location selfies."
 }

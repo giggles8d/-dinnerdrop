@@ -26,17 +26,20 @@
    [
     "Reply the numbers you want",
     1.2,
-    "out"
+    "out",
+    4.4
    ],
    [
     "1 4 5",
-    2.4,
-    "in"
+    2.2,
+    "in",
+    4.4
    ],
    [
     "3 4 5",
-    3.0,
-    "in"
+    2.8,
+    "in",
+    4.4
    ]
   ]
  },
@@ -85,10 +88,10 @@
   "dinnerdrop.app/go/nurse"
  ],
  "clip_end": {
-  "c1.mp4": 7.95,
-  "c2.mp4": 7.35,
-  "c3.mp4": 7.7,
-  "c4.mp4": 7.2
+  "c1.mp4": 7.9,
+  "c2.mp4": 7.95,
+  "c3.mp4": 6.2,
+  "c4.mp4": 6.75
  },
  "end_ai_line": false
 }
