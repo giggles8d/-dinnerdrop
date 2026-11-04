@@ -408,6 +408,12 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   if (!m) return { reply: '', handled: false }
 
   let parsed = parseInbound(body)
+  // The same text twice within seconds (Caitlin, Nov 3 2026: "menu" arrived twice a second apart, two Twilio SIDs,
+  // and got two identical replies): log the repeat, answer it once. STOP / START / HELP always get their reply.
+  if (!['stop', 'start', 'help'].includes(parsed.kind) && (await justSaid(admin, m.id, body, sid))) {
+    await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'in', from_number: phone, body, intent: 'duplicate', twilio_sid: sid })
+    return { reply: '', handled: true, member: m }
+  }
   const round = await openRound(admin, m.household_id)
   // What did we last ask this person, and what was just said? (Read before this message is logged.)
   const ctx = await smsContext(admin, m.id)
@@ -810,6 +816,15 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   }
   if (u.question) return { reply: `I can help with dinners, the vote and the list — for anything else, text ${family} directly. ${helpFor(mode, family)}`, handled: true, member: m }
   return { reply: helpFor(mode, family), handled: true, member: m }
+}
+
+/** Did this person send exactly this text (another Twilio message) in the last 20 seconds? Dev texts without a SID never count. */
+async function justSaid(admin: SupabaseClient, memberId: string, body: string, sid: string | null): Promise<boolean> {
+  const norm = body.trim().toLowerCase()
+  if (!sid || !norm) return false
+  const since = new Date(Date.now() - 20000).toISOString()
+  const { data } = await admin.from('sms_messages').select('body, twilio_sid').eq('member_id', memberId).eq('direction', 'in').gte('created_at', since).limit(5)
+  return (data ?? []).some((r) => r.twilio_sid && r.twilio_sid !== sid && String(r.body ?? '').trim().toLowerCase() === norm)
 }
 
 /** The help line that fits what we last asked. */
