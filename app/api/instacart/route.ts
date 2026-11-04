@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 import { sendWeekRecipes } from '@/lib/recipe-email'
 import { stockStaplesFromList } from '@/lib/pantry'
 import { grantWeekendOffer } from '@/lib/weekend-offer'
+import { loadProductPrefs, applyPrefsToItems } from '@/lib/product-prefs'
 import type { GroceryItem } from '@/types'
 
 export async function POST(request: Request) {
@@ -23,11 +24,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid grocery list' }, { status: 400 })
     }
 
-    const allItems = Object.values(groceryList).flat() as GroceryItem[]
+    const listed = Object.values(groceryList).flat() as GroceryItem[]
 
-    if (allItems.length === 0) {
+    if (listed.length === 0) {
       return NextResponse.json({ error: 'Grocery list is empty' }, { status: 400 })
     }
+    // The family's own products (lib/product-prefs). Instacart picks the store at checkout, so no store-brand step here.
+    const allItems = applyPrefsToItems(listed, (await loadProductPrefs(supabase, user.id)).prefs)
 
     const result = await createInstacartLink(allItems, storeName ? `DinnerDrop — ${storeName} list` : 'DinnerDrop Weekly Groceries')
 

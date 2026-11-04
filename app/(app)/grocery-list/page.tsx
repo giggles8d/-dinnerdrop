@@ -27,6 +27,7 @@ import InAppBrowserNotice from '@/components/InAppBrowserNotice'
 import KrogerReview from '@/components/KrogerReview'
 import SidesCard from '@/components/SidesCard'
 import { mergeSettings, tripsConfig, WEEKDAY_LABEL } from '@/lib/settings'
+import { applyPrefsToRows, cleanPrefs } from '@/lib/product-prefs'
 import { isClassic, tripInstances, weekStartOf } from '@/lib/trips'
 import { resolvePlanOwner } from '@/lib/household'
 import {
@@ -265,7 +266,8 @@ export default function GroceryListPage() {
       const openPlanRows = planRows.filter((r) => !r.ordered_at)
       if (openPlanRows.length) await supabase.from('list_items').delete().in('id', openPlanRows.map((r) => r.id))
       const pantryNames = new Set((pantryItems ?? []).map((p: { name: string }) => normalizeItemName(p.name)))
-      const rows = rowsFromPlanList(planList, { userId: uid, householdId: profile?.household_id ?? null, weekStart: ws, pantryNames })
+      // The family's own products show on the list by name ("Great Value Gluten Free Cream of Chicken Soup").
+      const rows = applyPrefsToRows(rowsFromPlanList(planList, { userId: uid, householdId: profile?.household_id ?? null, weekStart: ws, pantryNames }), cleanPrefs(settings.food.productPrefs))
       // Keep "have it" ticks the family already made on lines that are still needed.
       const hadIt = new Set(openPlanRows.filter((r) => r.have).map((r) => normalizeItemName(r.name)))
       for (const row of rows) if (hadIt.has(normalizeItemName(row.name))) row.have = true

@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { cartUrl, matchList, walmartConfigured } from '@/lib/walmart'
 import { sendWeekRecipes } from '@/lib/recipe-email'
 import { stockStaplesFromList } from '@/lib/pantry'
+import { loadProductPrefs, applyPrefsToItems } from '@/lib/product-prefs'
 import type { GroceryItem } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -49,10 +50,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ link })
   }
 
-  const items = Object.values(body.groceryList ?? {}).flat() as GroceryItem[]
-  if (!items.length) return NextResponse.json({ error: 'Grocery list is empty' }, { status: 400 })
+  const listed = Object.values(body.groceryList ?? {}).flat() as GroceryItem[]
+  if (!listed.length) return NextResponse.json({ error: 'Grocery list is empty' }, { status: 400 })
   try {
-    const matches = await matchList(admin, items.slice(0, 60))
+    // The family's own products ("cream of chicken soup" → their gluten-free store brand) and store-brand preference.
+    const mine = await loadProductPrefs(admin, user.id)
+    const items = applyPrefsToItems(listed, mine.prefs)
+    const matches = await matchList(admin, items.slice(0, 60), { storeBrands: mine.storeBrands })
     const total = matches.reduce((s, m) => s + (m.product?.price ? m.product.price * m.qty : 0), 0)
     return NextResponse.json({ matches, estTotal: Math.round(total * 100) / 100, unmatched: matches.filter((m) => !m.product).length })
   } catch (e) {

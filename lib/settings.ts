@@ -37,6 +37,8 @@ export interface Settings {
     maxCalories: number             // per-serving calorie cap for planned dinners (0 = no cap)
     useSales: boolean               // build the week around this week's store sales when a flyer is loaded
     mix: ProteinMix                 // dinners per week by protein group (chicken 2, beef 1…); null = any mix
+    productPrefs: import('@/lib/product-prefs').ProductPref[]  // "when a recipe needs X, buy Y" (lib/product-prefs)
+    storeBrands: boolean            // prefer the store's own brand (Walmart, Kroger) when it matches as well
   }
   deals: {
     stockUp: boolean                // "Stock up while it's cheap" on the list (multi-buys, pantry/drink deals)
@@ -113,6 +115,8 @@ export const DEFAULT_SETTINGS: Settings = {
     maxCalories: 0,
     useSales: true,
     mix: null,
+    productPrefs: [],
+    storeBrands: false,
   },
   deals: {
     stockUp: true,

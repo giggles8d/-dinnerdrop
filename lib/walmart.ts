@@ -8,6 +8,7 @@ import { createSign } from 'crypto'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { toPackages, type PackagePlan } from '@/lib/package-match'
 import { parseQuantity } from '@/lib/portions'
+import { storeBrandFirst } from '@/lib/product-prefs'
 import type { GroceryItem } from '@/types'
 
 const API = 'https://developer.api.walmart.com/api-proxy/service/affil/product/v2'
@@ -155,7 +156,7 @@ export function quantityFor(plan: PackagePlan, product: WalmartProduct, raw?: { 
 }
 
 /** Match every open line on the list to a Walmart product (a few searches at a time). */
-export async function matchList(admin: SupabaseClient, items: GroceryItem[]): Promise<WalmartMatch[]> {
+export async function matchList(admin: SupabaseClient, items: GroceryItem[], opts: { storeBrands?: boolean } = {}): Promise<WalmartMatch[]> {
   const out: WalmartMatch[] = new Array(items.length)
   const POOL = 4
   let i = 0
@@ -164,7 +165,8 @@ export async function matchList(admin: SupabaseClient, items: GroceryItem[]): Pr
       const idx = i++
       const it = items[idx]
       const plan = toPackages({ name: it.name, quantity: it.quantity, unit: it.unit, searchTerm: it.searchTerm })
-      const found = rank(plan.search, await searchWalmart(admin, plan.search), plan.kind)
+      const ranked = rank(plan.search, await searchWalmart(admin, plan.search), plan.kind)
+      const found = opts.storeBrands ? storeBrandFirst('walmart', plan.search, ranked, (p) => p.name) : ranked
       const product = found[0] ?? null
       out[idx] = {
         line: { name: it.name, quantity: String(it.quantity ?? ''), unit: it.unit ?? '', category: it.category },
