@@ -20,7 +20,13 @@
   "c4": "358c5853-ede9-435b-a683-23f0c1f88c4f"
  },
  "final": "(take 2, see below)",
- "status": "take 2 built 2026-11-03 ~7:15 PM, no on-screen AI label; awaiting Sarah OK \u2014 NOT posted",
+ "status": "take 2 + family ending built 2026-11-03 ~7:55 PM; awaiting Sarah OK \u2014 NOT posted",
  "build": "python3 mom/build_mom.py mom/nurse/2026-11-03b",
- "take1_rejected": "Sarah Nov 3: car seat with no car (c1), odd seat/phone stand in c4; second phone popping in c2/c3. All four re-shot as real-location selfies."
+ "take1_rejected": "Sarah Nov 3: car seat with no car (c1), odd seat/phone stand in c4; second phone popping in c2/c3. All four re-shot as real-location selfies.",
+ "c4_family": {
+  "start_frame": "0c262d63-3061-49fb-aa99-c7db7160557b",
+  "veo_attempt": "78a3d57a-0a2f-4d60-9052-23515515eaee BLOCKED (nsfw) \u2014 veo3_1 refuses kids",
+  "seedance_talk": "9ac9ec9b-28ef-465c-8cbe-80a00a01ef22 (seedance_2_5 omni_reference, start_image + audio_references = Hallie CTA line, 1080p, 8s)",
+  "voice_changed": "6fb2a0d5-53f0-43e9-b2d4-29d884c1dd67"
+ }
 }
