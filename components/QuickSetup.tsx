@@ -177,7 +177,7 @@ export default function QuickSetup({ onDone, demo = false, initialStep = 0 }: { 
               <Chip key={s.key} on={style === s.key} onClick={() => setStyle(style === s.key ? null : s.key)}>{s.emoji} {s.name}</Chip>
             ))}
           </div>
-          <p className="text-sm font-semibold text-foreground mb-2">Anything to avoid? <span className="font-normal text-muted-foreground">(optional)</span></p>
+          <p className="text-sm font-semibold text-foreground mb-2">Does your family follow a special diet? <span className="font-normal text-muted-foreground">(skip if not)</span></p>
           <div className="flex flex-wrap gap-2 mb-6">
             {AVOID.map((d) => (
               <Chip key={d} on={avoid.includes(d)} onClick={() => setAvoid((xs) => (xs.includes(d) ? xs.filter((x) => x !== d) : [...xs, d]))}>{d}</Chip>
