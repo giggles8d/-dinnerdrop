@@ -174,6 +174,18 @@ export async function upsertRecipes(
  * doesn't come back as four chicken dinners. Excludes anything containing an
  * excluded ingredient word, and anything this family has seen recently.
  */
+const SOY_MAINS = /\b(tofu|tempeh|seitan)\b/
+const LOW_CARB_SWAPS = /\b(cauliflower rice|riced cauliflower|cauliflower mash|lettuce (wraps?|cups?|boats?)|zucchini noodles|zoodles|spaghetti squash|shirataki|cloud bread)\b/
+
+const FAMILIAR_CUISINE = /^(american|mexican|italian|tex-mex|southern|italian-american|mexican-american|bbq|comfort)/i
+/** Kid-favorite / comfort-food dinners lead; for families who haven't chosen cuisines, familiar American, Mexican and Italian ones lead most. */
+function everydayBonus(r: { tags?: string[] | null; cuisine: string | null }, choseCuisines: boolean): number {
+  const kid = (r.tags ?? []).some((t) => t === 'kid-favorite' || t === 'comfort-food')
+  if (choseCuisines) return kid ? 0.6 : 0
+  const familiar = FAMILIAR_CUISINE.test(r.cuisine ?? '')
+  return (kid ? 0.8 : 0) + (familiar ? 0.8 : 0)
+}
+
 export async function pickLibraryRecipes(
   supabase: SupabaseClient,
   opts: {
@@ -191,9 +203,17 @@ export async function pickLibraryRecipes(
     quota?: Record<string, number>
     /** Extra preference per recipe (e.g. what this household's voters tend to pick); added to the score. */
     boost?: (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) => number
+    /** First week for a new family: past keep counts mostly reflect families who never swapped, so don't let them snowball. */
+    ignoreKept?: boolean
   }
 ): Promise<RecipeRow[]> {
   if (opts.limit <= 0) return []
+  // Everyday family dinners by default (Sarah, Nov 5 2026: "meat and potatoes and spaghetti, not tofu or
+  // cauliflower wraps"). Tofu/tempeh/seitan only for vegetarian or vegan families; low-carb swaps
+  // (cauliflower rice, lettuce wraps, zucchini noodles) only for low-carb, keto or paleo families.
+  const diets = opts.dietary.map((d) => d.toLowerCase())
+  const allowSoyMains = diets.some((d) => d === 'vegetarian' || d === 'vegan')
+  const allowLowCarbSwaps = diets.some((d) => d === 'low-carb' || d === 'keto' || d === 'paleo')
   let q = supabase
     .from('recipes')
     .select('id, normalized_name, name, cuisine, protein, ingredients, kept_count, skipped_count, image_url, nutrition, tags')
@@ -215,13 +235,16 @@ export async function pickLibraryRecipes(
     if (cuisines.length && r.cuisine && !cuisines.includes(r.cuisine.toLowerCase())) return false
     const hay = `${r.name} ${(r.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
     if (words.some((w) => hay.includes(w))) return false
+    if (!allowSoyMains && SOY_MAINS.test(hay)) return false
+    if (!allowLowCarbSwaps && LOW_CARB_SWAPS.test(hay)) return false
     if (allergyList.length && allergyConflicts(r.ingredients ?? [], [{ name: '', allergies: allergyList }], r.name).length) return false
     return true
   })
   const scored = pool
     .map((r) => ({
       r,
-      score: Math.random() + Math.min(r.kept_count ?? 0, 5) * 0.3 - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0) + (opts.boost ? opts.boost(r) : 0),
+      score: Math.random() + (opts.ignoreKept ? 0 : Math.min(r.kept_count ?? 0, 5) * 0.3) - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0)
+        + everydayBonus(r, cuisines.length > 0) + (opts.boost ? opts.boost(r) : 0),
     }))
     .sort((a, b) => b.score - a.score)
   // One dinner per main protein first; repeat proteins only if the pool runs short.

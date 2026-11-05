@@ -326,6 +326,12 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
     if (settings.food.equipment.length) constraintLines.push(`Equipment to lean on: ${settings.food.equipment.join(', ')}. Some options should use these, but keep most dinners stovetop/oven weeknight cooking.`)
     const maxLong = settings.plan.maxLongCookNights
     if (maxLong >= 0) constraintLines.push(maxLong === 0 ? `No slow-cooker or all-day dinners this week.` : `At most ${maxLong} slow-cooker / Instant-Pot all-day dinner${maxLong === 1 ? '' : 's'} (cookTime 90+ min) among the options.`)
+    {
+      const d = profile.dietaryNeeds.map((x: string) => x.toLowerCase())
+      constraintLines.push(`Everyday family dinners: most options should be the familiar meals a typical household makes (chicken, beef, pork, meat and potatoes, spaghetti and pasta, tacos, casseroles, burgers). Keep restaurant-style or unusual dishes to one at most.`)
+      if (!d.some((x: string) => x === 'vegetarian' || x === 'vegan')) constraintLines.push(`No tofu, tempeh or seitan.`)
+      if (!d.some((x: string) => x === 'low-carb' || x === 'keto' || x === 'paleo')) constraintLines.push(`No low-carb swaps: no cauliflower rice, lettuce wraps or cups, zucchini noodles or spaghetti squash — use regular rice, pasta, potatoes, tortillas and bread.`)
+    }
     if (hasKids) constraintLines.push(`Kid-friendly by default: familiar flavors, components kept separate where possible, nothing "mixed" that a kid can't pick apart.`)
     if (settings.plan.leftoverNight) constraintLines.push(`Mark at least 2 options "leftoverFriendly": true — dinners that double well and reheat well (for the family's leftover night). Their servings should be ${profile.familySize * 2}.`)
     if (recentNames.length) constraintLines.push(`Do not repeat these recent dinners: ${recentNames.slice(0, 20).join(', ')}.`)

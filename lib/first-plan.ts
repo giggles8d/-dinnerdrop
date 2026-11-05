@@ -38,6 +38,7 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
     excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
     excludeNames: [],
     cuisines: settings.food.cuisines,
+    ignoreKept: true,
   })
   // First impressions: dinners with a photo first. Sized to the family (cost included).
   const size = p.family_size || 4
