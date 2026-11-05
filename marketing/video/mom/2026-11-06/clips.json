@@ -1,0 +1,8 @@
+{"c1": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261105_174216_5bfd42a7-a690-44c2-adcb-0b03046de0f3.mp4",
+ "c2": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261105_174505_6e9f67d0-09e0-43d7-aedb-a87552cc92b6.mp4",
+ "c3": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261105_174215_dd6e3993-b829-425e-bd5d-af0ff1a07594.mp4",
+ "start_frames": ["724d25e7-a9e0-44b8-b143-223bd6d170a7", "7962887a-fc40-4fff-a5f6-1d952e747050", "014505ba-a345-444b-a822-cfa27eb25c4e"],
+ "lines": {"c1": "My meal planning app shuts down today. So I'm planning next week from the pickup line. Watch this.",
+           "c2": "One kid eats about five foods. One won't touch fish. It still plans one menu that works for both.",
+           "c3": "Five dinners, one grocery list, one tap to Instacart. Code's on the screen."},
+ "build": "python3 mom/build_mom.py mom/2026-11-06"}

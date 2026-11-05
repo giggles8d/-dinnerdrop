@@ -2,6 +2,9 @@
 
 | Date | Time | Slot | Video | Notes |
 |---|---|---|---|---|
+| 2026-11-06 | 4:30 PM | Mom (Ollie window, DinnerDrop-Mom) | "Meal app shutting down today? Planning from the pickup line" — angle 6 (one menu for a picky eater AND a no-fish kid); hook location: school pickup line (then kitchen counter, stove) | TikTok/YT/FB via Publer (scheduled 11-05 by Claude; mom/2026-11-06, veo3_1 high, ai_banner false, OLLIE end card; last Ollie-window video); final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/effc65bb-ec87-4695-9cc1-1204d97dfda5.mp4 |
+| 2026-11-06 | 11:30 AM | Recipe | Beef Stir-Fry Rice Bowls (slug beef-stir-fry-rice-bowl-k36j) | TikTok/YT/FB via Publer (scheduled 11-05 by Claude; recipe/beefbowl, 43.3 s, VO speed 1.12) |
+| 2026-11-05 | 7:30 PM | Fruit | Fruit Moms Ep 12 "Takeout Thursday" (four nights of takeout, delivery guy knows their names) | TikTok/YT/FB via Publer (scheduled 11-05 by Claude; fruit e12, veo3_1 high, clips c151–c153; c153 take 1 had Blueberry/Lemon swapping outfits, regenerated); next episode = Ep 13 |
 | 2026-11-05 | 4:30 PM | Mom (Nurse Mom) | Nurse Mom Ep 2 "ER nurse vs. the milk" — feature: teen texts "we're out of milk" onto the grocery list (+ one-tap cart); hook location: hospital break room (then kitchen, laundry room 10 PM, open fridge payoff) | TikTok/YT/FB via Publer (scheduled 11-04 by Claude; mom/nurse/2026-11-05, veo3_1 high + Hallie voice_change, no on-screen AI label, code NURSE); final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/64348aa8-846b-4db9-a8a6-73d858071242.mp4 |
 | 2026-11-05 | 11:30 AM | Recipe | Sheet-Pan Shrimp Fajitas (slug sheet-pan-shrimp-fajitas-de3h) | TikTok/YT/FB via Publer (scheduled 11-04 by Claude; recipe/fajitas, 41.4 s, VO speed 1.16) |
 | 2026-11-04 | 7:30 PM | Fruit | Fruit Moms Ep 11 "Hump Day Leftover" (only Wednesday and the fridge is down to one sad leftover) | TikTok/YT/FB via Publer (scheduled 11-04 by Claude; fruit e11, veo3_1 high, clips c141–c143); next episode = Ep 12 |
@@ -28,7 +31,7 @@
 | 2026-10-28 | 7:30 PM | Fruit | Fruit Moms Ep 5 "Lost in the grocery store" | TikTok/YT/FB via Publer; next episode = Ep 6 |
 | 2026-10-25 | 7 PM | Fruit | Fruit Moms Ep 4 "Sunday Night" | posted via Chrome |
 
-Mom-video angles used (don't repeat within 6 days): 11-01 angle 7 · 11-02 angle 1 · 11-03 angle 3 · 11-04 angle 4. Oct 31 "Weekend push" (pickup line) was the template, not one of the 7 angles.
+Mom-video angles used (don't repeat within 6 days): 11-01 angle 7 · 11-02 angle 1 · 11-03 angle 3 · 11-04 angle 4 · 11-06 angle 6. From 11-07 DinnerDrop-Mom returns to the eMeals rotation (/emeals, code EMEALS). Oct 31 "Weekend push" (pickup line) was the template, not one of the 7 angles.
 
 Credits note 2026-11-03: 115.75 left after this run (under ~120). Topped up by 11-04 (1512.75 at start of the 11-04 run).
 

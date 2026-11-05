@@ -1,0 +1,7 @@
+{"out": "2026-11-06_Mom_OllieOneMenuPickyAndFish.mp4",
+ "hook_text": ["Meal app shutting down today?", "Planning from the pickup line"],
+ "labels": {"c2.mp4": "Picky eater + no fish: one menu", "c3.mp4": "Whole list, one tap"},
+ "app": [[54, 62, "Dinners planned around your family"], [110, 122, "The grocery list, done"]],
+ "app_after": 1, "app_seconds": 6.5,
+ "ai_banner": false,
+ "end": ["Your meal app closing?", "Code OLLIE = 3 months of Family free", "dinnerdrop.app/ollie"]}
