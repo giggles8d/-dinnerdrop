@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
             to: p.email,
             subject: 'Your 5 dinners for this week are ready 🍽️',
             html,
-            headers: { 'List-Unsubscribe': `<${unsubscribeUrl}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
+            headers: { 'List-Unsubscribe': `<${unsubscribeUrl.replace('/unsubscribe?', '/api/email/unsubscribe?')}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
           })
           if (error) r.email = `failed: ${error.message}`
           else {

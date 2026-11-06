@@ -20,19 +20,47 @@ export function emailShell(title: string, bodyHtml: string, cta?: { label: strin
 </div></body></html>`
 }
 
+const REPLY_TO = 'sarah@dinnerdrop.app'
+
+/** "Sarah at DinnerDrop <info@…>": a bare address (RESEND_FROM_EMAIL=info@dinnerdrop.app) showed as just "info" in inboxes. */
+export function fromAddress(): string {
+  const env = (process.env.RESEND_FROM_EMAIL || '').trim()
+  if (env.includes('<')) return env
+  return `Sarah at DinnerDrop <${env || 'info@dinnerdrop.app'}>`
+}
+
+/**
+ * Every email gets: a sender name, Reply-To Sarah (replies are a strong "not spam" signal), and — when the
+ * recipient is a DinnerDrop account — a working one-click unsubscribe (List-Unsubscribe + RFC 8058 POST, which
+ * Gmail and Yahoo require of bulk senders) and a personal footer unsubscribe link (the generic /unsubscribe
+ * link couldn't tell who was asking). Nov 6 2026.
+ */
 export async function sendEmail(to: string, subject: string, html: string, opts: { replyTo?: string; text?: string } = {}): Promise<{ ok: boolean; id?: string; error?: string }> {
   if (!process.env.RESEND_API_KEY) {
     console.log('[notify] RESEND_API_KEY missing — would email', to, subject)
     return { ok: false, error: 'RESEND_API_KEY not configured' }
   }
+  let uid: string | null = null
+  try {
+    const { createClient } = await import('@supabase/supabase-js')
+    const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+    const { data } = await admin.from('profiles').select('id').ilike('email', to.trim()).limit(1).maybeSingle()
+    uid = (data?.id as string | undefined) ?? null
+  } catch { /* unsubscribe headers are best-effort */ }
+  const pageUrl = uid ? `${APP}/unsubscribe?uid=${uid}` : null
+  const oneClick = uid ? `${APP}/api/email/unsubscribe?uid=${uid}` : null
+  const body = pageUrl ? html.split(`href="${APP}/unsubscribe"`).join(`href="${pageUrl}"`) : html
+  const text = opts.text && pageUrl ? opts.text.split(`${APP}/unsubscribe`).join(pageUrl) : opts.text
+
   const resend = new Resend(process.env.RESEND_API_KEY)
   const { data, error } = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',
+    from: fromAddress(),
     to,
     subject,
-    html,
-    ...(opts.replyTo ? { replyTo: opts.replyTo } : {}),
-    ...(opts.text ? { text: opts.text } : {}),
+    html: body,
+    reply_to: opts.replyTo || REPLY_TO,
+    ...(text ? { text } : {}),
+    ...(oneClick ? { headers: { 'List-Unsubscribe': `<${oneClick}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' } } : {}),
   })
   if (error) return { ok: false, error: typeof error === 'string' ? error : (error as { message?: string }).message ?? 'send failed' }
   return { ok: true, id: data?.id }

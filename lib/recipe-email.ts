@@ -1,3 +1,4 @@
+import { fromAddress } from '@/lib/notify'
 /**
  * "Your recipes for the week" — sent once per plan, right after the family sends the list to
  * Instacart or Kroger (or on demand from the grocery list page). One printable PDF per dinner.
@@ -47,7 +48,7 @@ export async function sendWeekRecipes(admin: SupabaseClient, userId: string, opt
 
   const resend = new Resend(process.env.RESEND_API_KEY)
   const { data, error } = await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',
+    from: fromAddress(),
     to: prof.email as string,
     subject: `Your recipes for the week — ${meals.length} dinners, one card each`,
     html,

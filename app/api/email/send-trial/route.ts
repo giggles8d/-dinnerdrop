@@ -1,3 +1,4 @@
+import { fromAddress } from '@/lib/notify'
 import React from 'react'
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
@@ -56,12 +57,12 @@ export async function POST(request: NextRequest) {
   )
 
   const send = () => getResend().emails.send({
-    from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',
+    from: fromAddress(),
     to: userEmail,
     subject: config.subject,
     html,
     headers: {
-      'List-Unsubscribe': `<${unsubscribeUrl}>`,
+      'List-Unsubscribe': `<${unsubscribeUrl.replace('/unsubscribe?', '/api/email/unsubscribe?')}>`,
       'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
     },
   })

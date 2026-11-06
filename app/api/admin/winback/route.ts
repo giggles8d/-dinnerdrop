@@ -189,7 +189,7 @@ async function handle(request: NextRequest, dryRun: boolean) {
         subject: 'We rebuilt DinnerDrop — your week of dinners now takes 30 seconds',
         html,
         headers: {
-          'List-Unsubscribe': `<${unsubscribeUrl}>`,
+          'List-Unsubscribe': `<${unsubscribeUrl.replace('/unsubscribe?', '/api/email/unsubscribe?')}>`,
           'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
         },
       })

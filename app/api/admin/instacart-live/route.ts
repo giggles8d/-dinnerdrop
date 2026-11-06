@@ -220,7 +220,7 @@ async function handle(request: NextRequest, dryRun: boolean) {
       const { error } = await resend.emails.send({
         from, to: t.email, subject: subjectFor(t.kind), html,
         headers: {
-          'List-Unsubscribe': `<${unsubscribeUrl}>`,
+          'List-Unsubscribe': `<${unsubscribeUrl.replace('/unsubscribe?', '/api/email/unsubscribe?')}>`,
           'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
         },
       })
