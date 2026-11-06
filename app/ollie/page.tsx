@@ -3,9 +3,9 @@ import Link from 'next/link'
 import PublicHeader from '@/components/site/PublicHeader'
 import OllieImportForm from './OllieImportForm'
 
-const title = 'Ollie is closing Nov 6 — keep your family dinners going with DinnerDrop (free)'
+const title = 'Ollie closed Nov 6 — keep your family dinners going with DinnerDrop (free)'
 const description =
-  'Ollie shuts down November 6, 2026. Type the dinners your family loved and DinnerDrop plans your week around them, builds one grocery list and loads your Instacart cart. Free, no card. Code OLLIE adds 3 months of Family.'
+  'Ollie shut down on November 6, 2026. Type the dinners your family loved and DinnerDrop plans your week around them, builds one grocery list and loads your Instacart cart. Free, no card. Code OLLIE adds 3 months of Family.'
 
 export const metadata: Metadata = {
   title,
@@ -28,10 +28,10 @@ export default function OllieSwitchPage() {
           For Ollie families
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4" style={{ color: GREEN }}>
-          Ollie closes November 6. <span style={{ color: GOLD }}>Dinner doesn&apos;t have to stop.</span>
+          Ollie closed November 6. <span style={{ color: GOLD }}>Dinner doesn&apos;t have to stop.</span>
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed mb-4">
-          Ollie announced on October 30 that it is shutting down on November 6. DinnerDrop does the part families relied on: five dinners planned around your family, one grocery list, and the whole list in your Instacart cart in one tap. It&apos;s free with no card, on the web and your phone.
+          Ollie announced on October 30 that it would shut down on November 6, and it has now closed. DinnerDrop does the part families relied on: five dinners planned around your family, one grocery list, and the whole list in your Instacart cart in one tap. It&apos;s free with no card, on the web and your phone.
         </p>
         <div className="rounded-2xl p-5 mb-8 border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD }}>
           <p className="font-bold" style={{ color: GREEN }}>Code OLLIE: 3 months of Family free</p>
@@ -42,7 +42,7 @@ export default function OllieSwitchPage() {
 
         <OllieImportForm />
         <p className="text-xs text-gray-500 mt-3">
-          Ollie is texting families an export of their data before it closes. Save it, then paste it into the box above. Want a recipe exactly as written? Paste it on your Recipes page after you sign up.
+          Ollie texted families an export of their data before it closed. If you saved it, paste it into the box above. Want a recipe exactly as written? Paste it on your Recipes page after you sign up.
         </p>
 
         <section className="mt-14">
@@ -69,7 +69,7 @@ export default function OllieSwitchPage() {
           <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
             <li><strong className="text-gray-800">Ollie was a chat-first app.</strong> DinnerDrop plans the week for you and you swap any dinner in one tap. On the Family plan, the family can text the DinnerDrop number to vote, add to the list, or suggest a dinner.</li>
             <li><strong className="text-gray-800">Ollie had native iPhone and Android apps.</strong> DinnerDrop works in any phone browser and saves to your home screen. An iPhone app is on the way.</li>
-            <li><strong className="text-gray-800">Ollie connected to Walmart and Amazon Fresh.</strong> DinnerDrop sends your list to Instacart (any store on it) or straight into a Kroger cart. Walmart isn&apos;t supported yet.</li>
+            <li><strong className="text-gray-800">Ollie connected to Walmart and Amazon Fresh.</strong> DinnerDrop sends your list to Instacart (any store on it), a Walmart cart, or straight into a Kroger cart. Amazon Fresh isn&apos;t supported yet.</li>
             <li><strong className="text-gray-800">Pricing.</strong> Planning and the Instacart cart are free, always. Family is $4.99 a month or $39 a year if you keep it after your free months.</li>
           </ul>
         </section>
