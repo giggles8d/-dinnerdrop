@@ -73,7 +73,7 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
     for (let i = 0; i < take.length; i += 6) groups.push(take.slice(i, i + 6))
     const conceptFocuses: Focus[] = groups.map((c, i) => ({
       label: `concepts ${i + 1}`, maxMinutes: 40, concepts: c,
-      note: `Each recipe is YOUR OWN original take on one of these dinner ideas, in this order, one recipe per idea: ${c.map((x, n) => `${n + 1}. ${x}`).join('; ')}. Use the idea as a theme only — choose your own ingredients, amounts, method and a fresh name (don't reuse the idea's wording); keep it a weeknight dinner for 4 that fits the rules.`,
+      note: `Each recipe is YOUR OWN original take on one of these dinner ideas, in this order, one recipe per idea: ${c.map((x, n) => `${n + 1}. ${x}`).join('; ')}. Use the idea as a theme only — choose your own ingredients, amounts, method and a fresh name (don't reuse the idea's wording); keep it a weeknight dinner for 4 that fits the rules. Keep it everyday family food a picky 8-year-old would eat: familiar flavors and supermarket staples (meat and potatoes, pasta, tacos, casseroles); swap fancy extras (goat cheese, arugula, beets, fennel, pistachios, dates, herb oils) for everyday ones, and no tofu unless the idea itself is vegetarian.`,
     }))
     return [...conceptFocuses, ...focuses].slice(0, Math.max(batches, conceptFocuses.length) + 1)
   }
