@@ -58,7 +58,7 @@ const ROWS: Row[] = [
   },
   {
     name: 'Carly', best: 'Dinners planned around your calendar, by text',
-    grocery: 'Texts an aisle-sorted grocery list', texting: 'Texts you (one person)',
+    grocery: 'Texts an aisle-sorted grocery list', texting: 'Texts you your meals and list',
     price: 'Free workflows; AI agents from $35/month',
     src: { label: 'Carly', href: 'https://www.usecarly.com/blog/ollie-meal-planner-alternatives/' },
   },
@@ -130,7 +130,7 @@ export default function OllieAlternativesPage() {
         <section className="mt-12 space-y-6 text-gray-700 leading-relaxed">
           <h2 className="text-2xl font-bold" style={{ color: GREEN }}>How to choose</h2>
           <p><strong>You want the week planned and the cart filled:</strong> DinnerDrop or eMeals. DinnerDrop plans around each person&apos;s tastes and allergies and sends the list to Instacart in one tap; eMeals gives you set menus by diet and works with more grocers.</p>
-          <p><strong>Your family used to text Ollie:</strong> DinnerDrop is the only app here where everyone in the house can text one number to vote on dinners and add to the shared list. Carly texts, but with one person.</p>
+          <p><strong>Your family used to text Ollie:</strong> DinnerDrop is the one app here built for everyone in the house to text one number to vote on dinners and add to the shared list. Carly texts the person who set it up.</p>
           <p><strong>You mostly need a family calendar:</strong> Cozi Max puts meals next to everyone&apos;s schedule.</p>
           <p><strong>You cook from your own recipes:</strong> Plan to Eat. <strong>You need strict diet filters on a budget:</strong> Mealime.</p>
         </section>
