@@ -276,7 +276,7 @@ export default function StartPage() {
       {/* Mobile sticky bottom CTA — most traffic is mobile */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 px-4 pt-2 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-lg">
         <Link
-          href={FREE_HREF + '&utm_source=mobile_sticky'}
+          href={FREE_HREF + '&cta=mobile_sticky'}
           className="block w-full text-center px-6 py-3 rounded-xl text-white font-bold text-base"
           style={{ backgroundColor: GREEN }}
         >

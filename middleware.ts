@@ -107,6 +107,14 @@ export async function middleware(request: NextRequest) {
  */
 function visitSource(request: NextRequest): string | null {
   const q = request.nextUrl.searchParams
+  // A tagged link clicked on our own pages (the mobile "Start free" bar, the exit-intent popup) must not
+  // replace the ad or site the family actually came from. Nov 6 2026: 85 of 169 sign-ups showed "mobile_sticky".
+  const fromOwnSite = (() => {
+    const r = request.headers.get('referer')
+    if (!r) return false
+    try { return /(^|\.)dinnerdrop\.app$/.test(new URL(r).hostname) } catch { return false }
+  })()
+  if (fromOwnSite && request.cookies.get('dd_src')?.value) return null
   const ext = (() => {
     const r = request.headers.get('referer')
     if (!r) return ''
