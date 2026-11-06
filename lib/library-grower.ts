@@ -48,36 +48,27 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
     { label: `${thinnest[2]} 30-min`, diet: thinnest[2], maxMinutes: 30, note: '' },
     { label: 'budget family favorites', maxMinutes: 30, note: 'Classic kid-friendly family dinners under $3 per serving.' },
   ]
-  // Concept queue (app_kv 'recipe_concepts'): dish ideas families already know — e.g. the dinners ex-Mealime users
-  // will look for — written from scratch in our own words. Two batches a night come from the queue while it lasts.
-  let { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
-  if (!kv) {
-    // First run: seed from the repo file.
-    try {
-      const file = (await import('@/data/recipe-concepts.json')).default as { concepts: string[] }
-      const value = { pending: file.concepts, done: 0, source: 'data/recipe-concepts.json' }
-      await admin.from('app_kv').upsert({ key: 'recipe_concepts', value, updated_at: new Date().toISOString() })
-      kv = { value }
-    } catch { /* no seed file */ }
-  }
-  let queue = ((kv?.value as { pending?: string[] } | null)?.pending ?? []).filter((x) => typeof x === 'string' && x.trim())
-  if (!queue.length) {
-    // Queue drained (or was seeded from an older, shorter file): top it up from the repo file, skipping the ideas already used.
-    try {
-      const file = (await import('@/data/recipe-concepts.json')).default as { concepts: string[] }
-      const done = Number((kv?.value as { done?: number } | null)?.done ?? 0)
-      const rest = file.concepts.slice(done)
-      if (rest.length) {
-        const value = { ...((kv?.value as object | null) ?? {}), pending: rest, done, source: 'data/recipe-concepts.json' }
-        const { error } = await admin.from('app_kv').upsert({ key: 'recipe_concepts', value, updated_at: new Date().toISOString() })
-        if (error) console.error('[grow-library] concept queue refill failed', error)
-        queue = rest
-      }
-    } catch { /* no seed file */ }
-  }
-  if (queue.length) {
-    // 12 batches of 6 ideas a night (all batches run in parallel) → ~72 new dinners a night, the queue clears in ~3 weeks (Sarah: faster).
-    const take = queue.slice(0, 72)
+  // Concept queue: dish ideas families already know, written from scratch in our own words.
+  // Source of truth is a CURSOR into data/recipe-concepts.json (app_kv 'recipe_concepts'.done). It is advanced
+  // BEFORE tonight's batches run and read back to confirm, so an unfinished run or a lost write can never make
+  // the next night redo the same ideas (Nov 2026: ideas 72–143 were rewritten every night for a week).
+  let concepts: string[] = []
+  try { concepts = ((await import('@/data/recipe-concepts.json')).default as { concepts: string[] }).concepts } catch { /* no seed file */ }
+  const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
+  const v = (kv?.value as { done?: number } | null) ?? {}
+  const done = Math.max(0, Number(v.done ?? 0) || 0)
+  const take = concepts.slice(done, done + 72)
+  if (take.length) {
+    const next = done + take.length
+    const value = { ...v, done: next, pending: concepts.length - next, last: new Date().toISOString(), lastRange: [done, next - 1], source: 'data/recipe-concepts.json' }
+    const { error } = await admin.from('app_kv').upsert({ key: 'recipe_concepts', value, updated_at: new Date().toISOString() }, { onConflict: 'key' })
+    const { data: check } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
+    const saved = Number((check?.value as { done?: number } | null)?.done ?? -1)
+    if (error || saved !== next) {
+      console.error('[grow-library] could not advance the concept cursor; skipping concept batches tonight', error)
+      return focuses.slice(0, batches)
+    }
+    // 12 batches of 6 ideas a night (run in parallel) → ~72 new dinners a night.
     const groups: string[][] = []
     for (let i = 0; i < take.length; i += 6) groups.push(take.slice(i, i + 6))
     const conceptFocuses: Focus[] = groups.map((c, i) => ({
@@ -206,15 +197,37 @@ export function check(m: Meal & { dietary?: string[] }, maxMinutes: number): str
   return null
 }
 
+const STOP = new Set(['with', 'and', 'the', 'a', 'of', 'in', 'on', 'over', 'quick', 'easy', 'creamy', 'crispy', 'smoky', 'savory', 'hearty', 'herb', 'herbed', 'roasted', 'grilled', 'baked', 'sheet', 'pan', 'skillet', 'style', 'one', 'pot', 'bowl', 'bowls', 'sauce', 'fresh', 'simple', 'warm', 'charred', 'glazed', 'seared', 'toast', 'toasts'])
+const STAPLE = new Set(['chicken', 'beef', 'pork', 'turkey', 'ground', 'slow', 'cooker', 'stir', 'fry', 'fried', 'air', 'fryer', 'instant', 'pressure', 'crock', 'cilantro', 'rice', 'pasta', 'salad', 'potato', 'potatoe', 'noodle', 'bread', 'cheese', 'cheesy', 'garlic', 'lemon', 'lime', 'onion', 'pepper', 'tomato', 'butter', 'honey', 'parmesan', 'cheddar', 'oil', 'green', 'red', 'side'])
+const nameWords = (n: string) => new Set(n.toLowerCase().replace(/&/g, ' ').replace(/[^a-z ]/g, ' ').split(/\s+/).map((w) => (w.length > 3 && w.endsWith('s') ? w.slice(0, -1) : w)).filter((w) => w.length > 2 && !STOP.has(w)))
+const distinct = (n: string) => { const w = nameWords(n); STAPLE.forEach((x) => w.delete(x)); return w }
+/** An existing dinner that is the same dish under another name ("Smoky Chicken & Pepper Pita Melts" vs "…Pita Flatbreads"). */
+export function nearTwin(name: string, existing: string[]): string | null {
+  const a = distinct(name)
+  if (a.size < 2) return null
+  for (const e of existing) {
+    const b = distinct(e)
+    if (b.size < 2) continue
+    let shared = 0
+    a.forEach((w) => { if (b.has(w)) shared++ })
+    // Same dish = three distinctive words in common, or every distinctive word of the shorter name (salmon + eggplant).
+    if (shared >= 3 || (shared >= 2 && shared === Math.min(a.size, b.size))) return e
+  }
+  return null
+}
+
 export async function growLibrary(admin: SupabaseClient, opts: { batches?: number; perBatch?: number } = {}): Promise<GrowReport> {
   const batches = Math.min(Math.max(opts.batches ?? 4, 1), 6)
   const perBatch = Math.min(Math.max(opts.perBatch ?? 5, 1), 8)
   const focuses = await chooseFocuses(admin, batches)
   const report: GrowReport = { requested: batches * perBatch, saved: [], rejected: [], focuses: focuses.map((f) => f.label) }
-  const usedConcepts = focuses.flatMap((f) => f.concepts ?? [])
 
-  const { data: existing } = await admin.from('recipes').select('normalized_name, name, dietary').limit(5000)
+  const { data: existing } = await admin.from('recipes').select('normalized_name, name, dietary, source, created_at').limit(5000)
   const known = new Set((existing ?? []).map((r) => r.normalized_name as string))
+  // Repeat guard: compare with dinners the grower added in the last 3 weeks (the failure mode was the same ideas
+  // rewritten night after night); the older library is already covered by the prompt's avoid list.
+  const since = Date.now() - 21 * 864e5
+  const names: string[] = (existing ?? []).filter((r) => r.source === 'generated' && Date.parse(String(r.created_at)) > since).map((r) => r.name as string).filter(Boolean)
 
   const results = await Promise.allSettled(focuses.map(async (f) => {
     const avoid = (existing ?? [])
@@ -260,9 +273,12 @@ Categories must be one of: ${Array.from(CATEGORIES).join(', ')}.`
       m = normalize(m)
       const norm = normalizeName(m.name ?? '')
       if (known.has(norm)) { report.rejected.push({ name: m.name, why: 'duplicate' }); continue }
+      const twin = nearTwin(m.name ?? '', names)
+      if (twin) { report.rejected.push({ name: m.name, why: `near-duplicate of ${twin}` }); continue }
       const why = check(m, f.maxMinutes)
       if (why) { report.rejected.push({ name: m.name, why }); continue }
       known.add(norm)
+      names.push(m.name)
       try {
         await upsertRecipes(admin, [m], { dietary: m.dietary, fetchImages: false })
         report.saved.push(m.name)
@@ -270,20 +286,6 @@ Categories must be one of: ${Array.from(CATEGORIES).join(', ')}.`
         report.rejected.push({ name: m.name, why: `save failed: ${String(e).slice(0, 80)}` })
       }
     }
-  }
-  // Pop the concepts we tried tonight (saved or rejected — a rejected idea isn't retried; the pool is large).
-  if (usedConcepts.length) {
-    const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
-    const v = (kv?.value as { pending?: string[]; done?: number } | null) ?? {}
-    // Pop from the queue we actually ran with (the in-memory one), not only what the row holds: on Oct 31 the
-    // refill upsert didn't persist and the end-of-run pop wrote an empty queue over 1,296 remaining ideas.
-    let base: string[] = v.pending ?? []
-    if (!base.length) {
-      try { base = ((await import('@/data/recipe-concepts.json')).default as { concepts: string[] }).concepts.slice(Number(v.done ?? 0)) } catch { /* no seed file */ }
-    }
-    const pending = base.filter((x) => !usedConcepts.includes(x))
-    const { error } = await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { ...v, pending, done: (v.done ?? 0) + usedConcepts.length, last: new Date().toISOString(), source: 'data/recipe-concepts.json' }, updated_at: new Date().toISOString() })
-    if (error) console.error('[grow-library] concept queue pop failed', error)
   }
   return report
 }
