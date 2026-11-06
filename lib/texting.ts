@@ -420,6 +420,9 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const rawFirst = (owner?.full_name || '').trim().split(' ')[0]
   const family = rawFirst ? rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1) : 'your family'
   const settings = mergeSettings(owner?.settings)
+  // A member saved as "Me" (the planner's own row) isn't greeted as "Me"; texts relayed to others use the planner's name.
+  const hi = /^(me|myself|self|you|i)$/i.test((m.name ?? '').trim()) ? '' : (m.name ?? '').trim()
+  const sender = hi || (m.profile_id ? family : 'A family member')
 
   // Reply to "Want this on this week's dinners too?" (asked after a health need is saved).
   if (ctx.askedNeedsTiming && owner) {
@@ -435,14 +438,14 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       if (!m.phone_opt_in_at || m.phone_opted_out) {
         await admin.from('household_members').update({ phone_opt_in_at: new Date().toISOString(), phone_opted_out: false }).eq('id', m.id)
       }
-      return { reply: `You're in, ${m.name}. You'll get ${family}'s dinners to vote on each week. Text ADD + anything for the grocery list anytime (e.g. "add bananas"). Text MENU for this week, LIST for the list, STOP to opt out.`, handled: true, member: m }
+      return { reply: `You're in${hi ? `, ${hi}` : ''}. You'll get ${family}'s dinners to vote on each week. Text ADD + anything for the grocery list anytime (e.g. "add bananas"). Text MENU for this week, LIST for the list, STOP to opt out.`, handled: true, member: m }
     case 'stop':
       // STOP is about the phone, not one row: opt out every member row with this number.
       await admin.from('household_members').update({ phone_opted_out: true }).eq('phone', phone)
       return { reply: `You're opted out of DinnerDrop texts. Reply START to rejoin.`, handled: true, member: m }
     case 'start':
       await admin.from('household_members').update({ phone_opted_out: false, phone_opt_in_at: m.phone_opt_in_at ?? new Date().toISOString() }).eq('id', m.id)
-      return { reply: `Welcome back, ${m.name}. Text MENU for this week's dinners or ADD + an item for the list.`, handled: true, member: m }
+      return { reply: `Welcome back${hi ? `, ${hi}` : ''}. Text MENU for this week's dinners or ADD + an item for the list.`, handled: true, member: m }
     case 'order_total': {
       if (!owner) return { reply: '', handled: false }
       const { data: hs } = await admin.from('grocery_handoffs').select('id, est_total, created_at, week_start').eq('user_id', owner.id).order('created_at', { ascending: false }).limit(1)
@@ -478,7 +481,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       return { reply: `Got it — ${items.join(', ')} flagged to use up. The next plan builds dinners around ${items.length === 1 ? 'it' : 'them'} and keeps ${items.length === 1 ? 'it' : 'them'} off the shopping list.`, handled: true, member: m }
     }
     case 'thanks':
-      return { reply: `Anytime, ${m.name} 🙂`, handled: true, member: m }
+      return { reply: `Anytime${hi ? `, ${hi}` : ''} 🙂`, handled: true, member: m }
     case 'help':
       return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, TALLY for the vote so far, SUGGEST + a dish for a future week, TONIGHT, RECIPE + number, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items, MENU, LIST, STOP.`, handled: true, member: m }
     default:
@@ -498,17 +501,17 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   // A texted Walmart link goes on the list with its item id, so "Add Walmart picks to cart" can add the exact product (Nov 1 2026).
   const walmartUrls = walmartUrlsIn(body)
   if (walmartUrls.length && owner) {
-    if (!m.can_add) return { reply: `Adding to the list is turned off for you, ${m.name}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
+    if (!m.can_add) return { reply: `Adding to the list is turned off for you${hi ? `, ${hi}` : ''}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
     // Planner's choice (Settings → texting): straight to a one-tap Walmart cart link instead of the list.
     if (settings.texting.walmartLinks === 'cart') {
       const links = (await Promise.all(walmartUrls.slice(0, 10).map((u) => resolveWalmartLink(u)))).filter((l): l is WalmartLink => !!l)
-      if (!links.length) return { reply: `I couldn't read that Walmart link, ${m.name}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
+      if (!links.length) return { reply: `I couldn't read that Walmart link${hi ? `, ${hi}` : ''}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
       const names = links.map((l) => l.name ?? 'a Walmart item').join(', ')
       const url = cartUrl(links.map((l) => ({ itemId: l.itemId, qty: 1 })))
       const to = await ownerPhone(admin, owner)
       const isPlanner = m.profile_id === owner.id || (!!to && to === m.phone)
       if (isPlanner || !to) return { reply: `Tap to add ${names} to your Walmart cart: ${url}`, handled: true, member: m }
-      const r = await sendSms(to, `${m.name} wants ${names} from Walmart. Tap to add to your Walmart cart: ${url}`)
+      const r = await sendSms(to, `${sender} wants ${names} from Walmart. Tap to add to your Walmart cart: ${url}`)
       await admin.from('sms_messages').insert({ household_id: m.household_id, direction: 'out', to_number: to, body: `walmart pick from ${m.name}: ${names}`, intent: 'walmart_pick', twilio_sid: r.sid ?? null })
       return { reply: r.ok ? `Sent to ${family}: ${names}. One tap puts it in the Walmart cart. ✅` : `I couldn't reach ${family} just now. Try again in a bit.`, handled: true, member: m }
     }
@@ -527,7 +530,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       }
       added.push(label)
     }
-    if (!added.length) return { reply: `I couldn't read that Walmart link, ${m.name}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
+    if (!added.length) return { reply: `I couldn't read that Walmart link${hi ? `, ${hi}` : ''}. Try sharing it again, or text the item name, like "add paper towels".`, handled: true, member: m }
     const tail = unnamed ? ` (The link didn't say what it is. Text "add" and the name if ${family} should know.)` : ''
     return { reply: `Added from your Walmart link: ${added.join(', ')}. ✅ ${family} can put all the Walmart picks in the Walmart cart in one tap.${tail}`, handled: true, member: m }
   }
@@ -569,7 +572,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     case 'none':
     case 'skip':
     case 'again': {
-      if (!m.can_vote) return { reply: `Thanks ${m.name} — voting is turned off for you, but you can still ADD items to the list.`, handled: true, member: m }
+      if (!m.can_vote) return { reply: `Thanks${hi ? ` ${hi}` : ''} — voting is turned off for you, but you can still ADD items to the list.`, handled: true, member: m }
       // Open round: numbers are PICKS from the candidates; top picks become the week.
       if (round && parsed.kind !== 'again') {
         const cands = round.candidates
@@ -580,8 +583,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         picked.forEach((name) => rows.push({ household_id: m.household_id, member_id: m.id, week_start: round.week_start, meal_name: name, vote: 'keep' }))
         await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', round.week_start).eq('vote', 'keep')
         if (rows.length) await admin.from('meal_votes').insert(rows)
-        if (parsed.kind === 'allgood') return { reply: `Got it, ${m.name} — they all work for you. 🙌`, handled: true, member: m }
-        if (parsed.kind === 'none') return { reply: `Noted, ${m.name} — no picks from you this week.`, handled: true, member: m }
+        if (parsed.kind === 'allgood') return { reply: `Got it${hi ? `, ${hi}` : ''} — they all work for you. 🙌`, handled: true, member: m }
+        if (parsed.kind === 'none') return { reply: `Noted${hi ? `, ${hi}` : ''} — no picks from you this week.`, handled: true, member: m }
         return { reply: picked.length ? `Got it — your picks: ${picked.join(', ')}. The top ${round.picks_needed} make the week.` : `I didn't catch which numbers. Reply like "1 3 5" with the dinners you want.`, handled: true, member: m }
       }
       if (!meals.length || !plan) return { reply: `Nothing to vote on yet — ${family} hasn't planned this week.`, handled: true, member: m }
@@ -594,16 +597,21 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         await admin.from('meal_votes').insert(rows)
       }
       if (parsed.kind === 'allgood') return { reply: `Got it — all ${meals.length} dinners kept. 🙌`, handled: true, member: m }
-      if (parsed.kind === 'none') return { reply: `Noted, ${m.name}.`, handled: true, member: m }
+      if (parsed.kind === 'none') return { reply: `Noted${hi ? `, ${hi}` : ''}.`, handled: true, member: m }
       if (parsed.kind === 'skip') {
         const names = parsed.numbers.map((n) => meals[n - 1]?.name).filter(Boolean)
         return { reply: names.length ? `Got it — you'd skip ${names.join(' and ')}. ${family} will see the votes.` : `I didn't catch which numbers. Reply like "2 4" to skip those dinners.`, handled: true, member: m }
       }
       const names = parsed.numbers.map((n) => againMeals[n - 1]?.name).filter(Boolean)
-      return { reply: names.length ? `Bring back ${names.join(' and ')} — noted. 🍽️` : `Reply like "again 1 3" to pick the ones that should come back.`, handled: true, member: m }
+      const outOfRange = parsed.numbers.filter((n) => !againMeals[n - 1])
+      if (!names.length && againMeals.length) {
+        const opts = againMeals.length === 1 ? 'just 1' : againMeals.length === 2 ? '1 or 2' : `1 to ${againMeals.length}`
+        return { reply: `${outOfRange.length ? `There's no #${outOfRange[0]} this time — ` : ''}pick from ${opts}:\n${menuLines(againMeals)}\n\nReply like "again ${againMeals.length > 1 ? '1 2' : '1'}", or NONE.`, handled: true, member: m }
+      }
+      return { reply: names.length ? `Bring back ${names.join(' and ')} — noted. 🍽️${outOfRange.length ? ` (There's no #${outOfRange.join(', #')} on this list.)` : ''}` : `Reply like "again 1 3" to pick the ones that should come back.`, handled: true, member: m }
     }
     case 'add': {
-      if (!m.can_add) return { reply: `Adding to the list is turned off for you, ${m.name}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
+      if (!m.can_add) return { reply: `Adding to the list is turned off for you${hi ? `, ${hi}` : ''}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
       if (!owner) break
       const weekStart = plan?.week_start ?? mondayOf(new Date())
       const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
@@ -659,8 +667,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       return { reply: n ? `Sent to ${others.filter((x) => x.phone).map((x) => x.name).join(', ')}.` : `Nobody else has joined the texts yet.`, handled: true, member: m }
     }
     if (to && to !== m.phone) {
-      const r = await sendSms(to, `${m.name}: ${body.trim().slice(0, 600)}\n(Reply here to text the family back.)`)
-      await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: to, body: `${m.name}: ${body.trim().slice(0, 600)}`, intent: 'relay', twilio_sid: r.sid ?? null })
+      const r = await sendSms(to, `${sender}: ${body.trim().slice(0, 600)}\n(Reply here to text the family back.)`)
+      await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: to, body: `${sender}: ${body.trim().slice(0, 600)}`, intent: 'relay', twilio_sid: r.sid ?? null })
       await admin.from('sms_messages').update({ intent: 'for_planner' }).eq('twilio_sid', sid ?? '')
       return { reply: `Passed that on to ${family} 👍`, handled: true, member: m }
     }
@@ -786,11 +794,11 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   if (prefNote.length) parts.push(`saved to your profile: ${prefNote.join('; ')}`)
   if (u.removeLastAdded) parts.push('took that off the grocery list')
   if (needsReply) {
-    const lead = parts.length ? `Got it, ${m.name} — ${parts.join('; ')}. ` : ''
+    const lead = parts.length ? `Got it${hi ? `, ${hi}` : ''} — ${parts.join('; ')}. ` : ''
     return { reply: `${lead}${needsReply}`, handled: true, member: m }
   }
   if (parts.length) {
-    const lead = u.correction ? `Sorry about that, ${m.name} — fixed: ` : `Got it, ${m.name} — `
+    const lead = u.correction ? `Sorry about that${hi ? `, ${hi}` : ''} — fixed: ` : `Got it${hi ? `, ${hi}` : ''} — `
     const tail = mode === 'round' && !u.picks.length && !u.allGood && !u.none && u.skips.length ? ` Which ones DO you want? Reply numbers, e.g. "1 3 5".` : ''
     return { reply: `${lead}${parts.join('; ')}.${tail}${u.answer ? `\n\n${u.answer}` : ''}`, handled: true, member: m }
   }
@@ -802,8 +810,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     const to = await ownerPhone(admin, owner)
     const isPlanner = m.profile_id === owner.id || (!!to && to === m.phone)
     if (to && !isPlanner) {
-      const r = await sendSms(to, `${m.name}: ${body.trim().slice(0, 600)}\n(Reply here to text them back.)`)
-      await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: to, body: `${m.name}: ${body.trim().slice(0, 600)}`, intent: 'relay', twilio_sid: r.sid ?? null })
+      const r = await sendSms(to, `${sender}: ${body.trim().slice(0, 600)}\n(Reply here to text them back.)`)
+      await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: to, body: `${sender}: ${body.trim().slice(0, 600)}`, intent: 'relay', twilio_sid: r.sid ?? null })
       await admin.from('sms_messages').update({ intent: 'for_planner' }).eq('twilio_sid', sid ?? '')
       return { reply: `I passed that to ${family} so a person can sort it out. ${helpFor(mode, family)}`, handled: true, member: m }
     }
