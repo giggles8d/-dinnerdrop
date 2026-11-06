@@ -4,6 +4,7 @@ import { runComeback } from '@/lib/comeback'
 import { runThanksgiving } from '@/lib/thanksgiving-campaign'
 import { runCheckin } from '@/lib/checkin-campaign'
 import { runTexting } from '@/lib/texting-campaign'
+import { runWeekend } from '@/lib/weekend-campaign'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -16,5 +17,6 @@ export async function GET(request: NextRequest) {
   const thanksgiving = await runThanksgiving(admin, new Date(), { budgetMs: 150000 }).catch((e) => ({ error: String(e) }))
   const checkin = await runCheckin(admin, new Date(), { budgetMs: 100000 }).catch((e) => ({ error: String(e) }))
   const texting = await runTexting(admin, new Date(), { budgetMs: 60000 }).catch((e) => ({ error: String(e) }))
-  return NextResponse.json({ ok: true, comeback, thanksgiving, checkin, texting })
+  const weekend = await runWeekend(admin, new Date(), { budgetMs: 60000 }).catch((e) => ({ error: String(e) }))
+  return NextResponse.json({ ok: true, comeback, thanksgiving, checkin, texting, weekend })
 }
