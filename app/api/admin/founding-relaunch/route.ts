@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
         from, to: t.email, reply_to: ADMIN_EMAIL,
         subject: 'Same list, five stores — DinnerDrop now tells you which one to pick',
         html,
-        headers: { 'List-Unsubscribe': `<${unsubscribeUrl}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
+        headers: { 'List-Unsubscribe': `<${unsubscribeUrl.replace('/unsubscribe?', '/api/email/unsubscribe?')}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
         tags: [{ name: 'campaign', value: CAMPAIGN }],
       })
       if (error) { failed.push({ email: t.email, error: typeof error === 'string' ? error : JSON.stringify(error) }); continue }

@@ -97,7 +97,7 @@ export async function runCheckin(admin: SupabaseClient, now = new Date(), opts: 
     const { error } = await resend.emails.send({
       from: FROM, reply_to: 'sarah@dinnerdrop.app', to: r.email, subject: CHECKIN_SUBJECT,
       html: checkinHtml(r.firstName, r.unsubscribeUrl), text: checkinText(r.firstName, r.unsubscribeUrl),
-      headers: { 'List-Unsubscribe': `<${r.unsubscribeUrl}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
+      headers: { 'List-Unsubscribe': `<${r.unsubscribeUrl.replace('/unsubscribe?', '/api/email/unsubscribe?')}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
     })
     if (error) { report.failed++; await new Promise((res) => setTimeout(res, 1100)); continue }
     await admin.from('campaign_sends').insert({ campaign: CHECKIN, email: r.email.toLowerCase(), user_id: r.userId, variant: 'checkin', sent_at: now.toISOString() })

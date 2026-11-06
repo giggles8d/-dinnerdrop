@@ -1,41 +1,44 @@
-import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
 
+/**
+ * Unsubscribe. Two callers:
+ *  - the /unsubscribe page (JSON body { uid } or { email });
+ *  - mail apps' one-click unsubscribe (RFC 8058): POST to the List-Unsubscribe URL
+ *    `/api/email/unsubscribe?uid=…` with the form body `List-Unsubscribe=One-Click`.
+ * Runs with the service role: people unsubscribe from their inbox, signed out (Nov 6 2026: the old
+ * user-session client meant clicks from email never saved — 0 unsubscribes in 60 days).
+ */
 export async function POST(request: NextRequest) {
-  let body: { uid?: string; email?: string }
-  try {
-    body = await request.json()
-  } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
-  }
-
-  const { uid, email } = body
+  const q = request.nextUrl.searchParams
+  let uid = q.get('uid') ?? undefined
+  let email = q.get('email') ?? undefined
   if (!uid && !email) {
-    return NextResponse.json({ error: 'Missing uid or email' }, { status: 400 })
+    try {
+      const ct = request.headers.get('content-type') ?? ''
+      if (ct.includes('application/json')) {
+        const b = (await request.json()) as { uid?: string; email?: string }
+        uid = b.uid; email = b.email
+      }
+    } catch { /* fall through */ }
   }
+  if (!uid && !email) return NextResponse.json({ error: 'Missing uid or email' }, { status: 400 })
+  if (uid && !/^[0-9a-f-]{36}$/i.test(uid)) return NextResponse.json({ error: 'Bad uid' }, { status: 400 })
 
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   try {
-    const supabase = await createServerSupabaseClient()
     if (uid) {
-      await supabase
-        .from('profiles')
-        .update({ email_unsubscribed: true })
-        .eq('id', uid)
+      await admin.from('profiles').update({ email_unsubscribed: true }).eq('id', uid)
     } else if (email) {
-      // Newsletter-only subscribers (waitlist table): unsubscribing = removing
-      // the row. Needs service role — waitlist has RLS service-only access.
-      const { createClient } = await import('@supabase/supabase-js')
-      const admin = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
-      )
-      await admin.from('waitlist').delete().eq('email', email.toLowerCase().trim())
-      await admin.from('profiles').update({ email_unsubscribed: true }).eq('email', email.toLowerCase().trim())
+      const e = email.toLowerCase().trim()
+      // Newsletter-only subscribers live in waitlist: unsubscribing removes the row.
+      await admin.from('waitlist').delete().eq('email', e)
+      await admin.from('profiles').update({ email_unsubscribed: true }).eq('email', e)
     }
+    try { await admin.from('activation_events').insert({ user_id: uid ?? null, step: 'email_unsubscribe', meta: { via: q.get('uid') ? 'one-click' : 'page' } }) } catch { /* tracking only */ }
   } catch (err) {
-    // Log but don't fail — user intent is to unsubscribe, always confirm success
+    // Log but don't fail — the person's intent is to unsubscribe; always confirm.
     console.error('[api/email/unsubscribe] DB update failed:', err)
   }
-
   return NextResponse.json({ success: true })
 }
