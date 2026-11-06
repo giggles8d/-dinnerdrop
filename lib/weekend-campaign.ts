@@ -66,14 +66,20 @@ export async function weekendRecipients(admin: SupabaseClient, now = new Date())
   const cands = (profs ?? []).filter((p) => p.email && !p.email_unsubscribed && !INTERNAL.test(p.email))
   const ids = cands.map((p) => p.id)
   const sentList = new Set<string>()
+  const planned = new Set<string>()   // the email says "your week of dinners is ready", so only families with a plan
   for (let i = 0; i < ids.length; i += 200) {
-    const { data: hs } = await admin.from('grocery_handoffs').select('user_id').in('user_id', ids.slice(i, i + 200))
+    const chunk = ids.slice(i, i + 200)
+    const [{ data: hs }, { data: mp }] = await Promise.all([
+      admin.from('grocery_handoffs').select('user_id').in('user_id', chunk),
+      admin.from('meal_plans').select('user_id').in('user_id', chunk),
+    ])
     for (const r of hs ?? []) sentList.add(r.user_id)
+    for (const r of mp ?? []) planned.add(r.user_id)
   }
   const { data: recent } = await admin.from('campaign_sends').select('email, campaign').gt('sent_at', quiet)
   const recentlyEmailed = new Set((recent ?? []).filter((c) => c.campaign !== WEEKEND).map((c) => String(c.email).toLowerCase()))
   return cands
-    .filter((p) => !sentList.has(p.id) && !recentlyEmailed.has(String(p.email).toLowerCase()))
+    .filter((p) => planned.has(p.id) && !sentList.has(p.id) && !recentlyEmailed.has(String(p.email).toLowerCase()))
     .map((p) => ({
       email: p.email as string, userId: p.id,
       firstName: p.full_name ? String(p.full_name).split(' ')[0] : undefined,
