@@ -21,10 +21,11 @@ export async function GET(request: NextRequest) {
   // ?seed=1 loads data/recipe-concepts.json into the concept queue (only if the queue is empty), then returns.
   if (sp.get('seed')) {
     const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
-    const pending = (kv?.value as { pending?: string[] } | null)?.pending ?? []
-    if (pending.length) return NextResponse.json({ seeded: false, pending: pending.length })
+    // The queue is a cursor (lib/library-grower): never rewind it once it has started.
+    const v = (kv?.value as { done?: number; pending?: unknown } | null) ?? null
+    if (v && (Number(v.done) > 0 || (Array.isArray(v.pending) ? v.pending.length : Number(v.pending) || 0) > 0)) return NextResponse.json({ seeded: false, done: Number(v.done) || 0 })
     const file = (await import('@/data/recipe-concepts.json')).default as { concepts: string[] }
-    await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { pending: file.concepts, done: 0, source: 'data/recipe-concepts.json' }, updated_at: new Date().toISOString() })
+    await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { pending: file.concepts.length, done: 0, source: 'data/recipe-concepts.json' }, updated_at: new Date().toISOString() })
     return NextResponse.json({ seeded: true, pending: file.concepts.length })
   }
   const report = await growLibrary(admin, {
