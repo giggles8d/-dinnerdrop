@@ -5,7 +5,7 @@ import { sendSms, smsConfigured } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
 import { leaderLabel } from '@/lib/family-ask'
 import { mergeSettings } from '@/lib/settings'
-import { openRound, sendOptIn, voteBody, type MemberRow } from '@/lib/texting'
+import { menuImageUrl, openRound, sendOptIn, voteBody, type MemberRow } from '@/lib/texting'
 import { deliveryProblem, deliveryStatuses, intentLabel } from '@/lib/text-log'
 
 export const dynamic = 'force-dynamic'
@@ -14,7 +14,7 @@ export const maxDuration = 30
 /**
  * The planner's Texts screen (Sarah, Nov 7 2026): every text in and out, whether it reached the phone, and fixes.
  *  GET ?days=14 → people (status, texts this week) + every message, newest first, with delivery status
- *  POST { action: 'send' | 'vote_plain' | 'invite' | 'plain_text', memberId, message?, on? }
+ *  POST { action: 'send' | 'vote_plain' | 'vote_picture' | 'invite' | 'plain_text', memberId, message?, on? }
  */
 async function ctx() {
   const auth = createServerSupabaseClient()
@@ -114,13 +114,14 @@ export async function POST(req: Request) {
   }
   if (!m.phone || !m.phone_opt_in_at || m.phone_opted_out) return NextResponse.json({ error: `${m.name} hasn't joined the texts yet.` }, { status: 400 })
 
-  if (b.action === 'vote_plain') {
+  if (b.action === 'vote_plain' || b.action === 'vote_picture') {
     const round = await openRound(admin, profile.household_id)
     if (!round) return NextResponse.json({ error: 'There\'s no vote open right now.' }, { status: 400 })
     const body = voteBody(first, round)
-    const r = await sendSms(m.phone, body)
+    // vote_picture: the same vote with the dinner photos, to one person (a picture text that never arrived)
+    const r = await sendSms(m.phone, body, b.action === 'vote_picture' ? menuImageUrl(round.id) : undefined)
     await admin.from('sms_messages').insert({ household_id: profile.household_id, member_id: m.id, direction: 'out', to_number: m.phone, body, intent: `vote_request:${round.id}`, twilio_sid: r.sid ?? null })
-    return NextResponse.json({ ok: r.ok, note: r.ok ? `Sent ${m.name} the vote as a plain text.` : 'Could not send.' })
+    return NextResponse.json({ ok: r.ok, note: r.ok ? `Sent ${m.name} the vote${b.action === 'vote_picture' ? ' with the pictures' : ' as a plain text'}.` : 'Could not send.' })
   }
   if (b.action === 'send') {
     const message = String(b.message ?? '').trim().slice(0, 600)

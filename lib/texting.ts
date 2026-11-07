@@ -1048,7 +1048,7 @@ export function watchesCarbs(dietaryNeeds: string[] | null | undefined): boolean
 }
 
 /** The numbered photo collage of the choices, texted with the vote (see app/api/sms/menu-image). */
-function menuImageUrl(roundId: string): string {
+export function menuImageUrl(roundId: string): string {
   const base = (process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app').replace(/\/$/, '')
   // Version stamp so a re-send never gets a CDN copy rendered before a fix (Twilio fetches the image once, at send time).
   return `${base}/api/sms/menu-image/${roundId}?v=${Date.now().toString(36)}`
