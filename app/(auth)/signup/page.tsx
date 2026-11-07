@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { isNativeApp, nativePlatform } from '@/lib/native'
 import EmailCodeSignIn from '@/components/EmailCodeSignIn'
+import CartOfferBanner from '@/components/CartOfferBanner'
 
 function SignupForm() {
   const [email, setEmail] = useState('')
@@ -138,6 +139,7 @@ function SignupForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
+        {!toTrial && <CartOfferBanner compact />}
          <div className="text-center">
           <h1 className="text-3xl font-heading font-bold text-foreground">
             {toTrial ? 'Start your 14-day Family trial' : 'Create your free account'}

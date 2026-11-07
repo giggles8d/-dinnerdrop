@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createInstacartLink } from '@/lib/instacart'
 import { itemsForFamily, verifyFollowup } from '@/lib/followup'
+import { grantCartOffer } from '@/lib/cart-offer'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 30
@@ -42,6 +43,7 @@ export async function GET(req: NextRequest) {
     if (!result.link || result.fallback) return fallback
     try {
       await admin.from('grocery_handoffs').insert({ user_id: u, store: 'Instacart', item_count: items.length, est_total: estTotal, week_start: weekStart })
+      await grantCartOffer(u)
       await admin.from('activation_events').insert({ user_id: u, step: 'followup_shop', meta: { kind: k, items: items.length } })
     } catch (e) { console.error('[go/shop] log failed', e) }
     return NextResponse.redirect(result.link, 302)

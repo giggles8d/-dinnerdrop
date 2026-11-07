@@ -7,6 +7,7 @@ import StorePriceExample from '@/components/StorePriceExample'
 import { InstacartCarrot, InstacartBand, PoweredByInstacart } from '@/components/InstacartMark'
 import SampleWeek from '@/components/SampleWeek'
 import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, Clock3 } from 'lucide-react'
+import CartOfferBanner from '@/components/CartOfferBanner'
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://www.dinnerdrop.app' },
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 export default async function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
+      <CartOfferBanner />
 
       <header className="border-b border-border bg-white/90 backdrop-blur sticky top-0 z-10">
         <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">

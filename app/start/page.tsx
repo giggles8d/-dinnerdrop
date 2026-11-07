@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import StorePriceExample from '@/components/StorePriceExample'
 import { InstacartCarrot, PoweredByInstacart } from '@/components/InstacartMark'
 import FamilyTextingSection from '@/components/FamilyTextingSection'
+import CartOfferBanner from '@/components/CartOfferBanner'
 
 // Primary conversion page for ads and campaigns.
 // Offer (2026-10-18): Free forever, no card — unlimited plans + one-tap Instacart cart.
@@ -54,6 +55,7 @@ function WeekendOfferBanner() {
 export default function StartPage() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f9fafb' }}>
+      <CartOfferBanner />
       {/* Nav */}
       <header className="border-b border-gray-200 bg-white sticky top-0 z-10">
         <div className="container mx-auto px-4 max-w-5xl flex items-center justify-between h-16">
