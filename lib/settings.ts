@@ -24,7 +24,7 @@ export interface Settings {
     cookDays: Weekday[]             // which nights get a planned dinner
     weekdayCookTimes: Partial<Record<Weekday, number>>  // per-night max minutes (overrides max_cook_time)
     maxLongCookNights: number       // slow-cooker / Instant Pot all-day dinners per week; -1 = no limit
-    sundayDinner: { on: boolean; minutes: number; extraForMonday: boolean }  // one bigger sit-down Sunday dinner (Nov 7 2026)
+    sundayDinner: { on: boolean; minutes: number; times: number[]; options: number; extraForMonday: boolean }  // one bigger sit-down Sunday dinner (Nov 7 2026); times = the lengths to mix (60 / 120 / 240), minutes = the longest
   }
   food: {
     style: string | null            // first picked food style (kept for older code); see `styles`
@@ -105,7 +105,7 @@ export const DEFAULT_SETTINGS: Settings = {
     cookDays: ['mon', 'tue', 'wed', 'thu', 'fri'],
     weekdayCookTimes: {},
     maxLongCookNights: 1,
-    sundayDinner: { on: false, minutes: 120, extraForMonday: true },
+    sundayDinner: { on: false, minutes: 120, times: [120], options: 3, extraForMonday: true },
   },
   food: {
     style: null,
@@ -194,7 +194,13 @@ function deepMerge<T>(base: T, patch: unknown): T {
 
 /** Full settings from whatever is stored (null, {}, partial, or stale). */
 export function mergeSettings(stored: unknown): Settings {
-  return deepMerge(DEFAULT_SETTINGS, stored as DeepPartial<Settings>)
+  // A fresh copy every time: the merge shares untouched nested objects with DEFAULT_SETTINGS, so a caller that
+  // edits the result (s.plan.cookDays = …) would otherwise change the defaults for every family (Nov 7 2026).
+  const out = structuredClone(deepMerge(DEFAULT_SETTINGS, stored as DeepPartial<Settings>))
+  // Sunday dinner saved before "times" existed: its one length is the list.
+  const sd = (stored as { plan?: { sundayDinner?: { times?: unknown } } } | null)?.plan?.sundayDinner
+  if (sd && !Array.isArray(sd.times)) out.plan.sundayDinner.times = [out.plan.sundayDinner.minutes]
+  return out
 }
 
 export const CUISINE_OPTIONS = ['American', 'Mexican', 'Italian', 'Asian', 'Mediterranean', 'Indian', 'Southern', 'Tex-Mex', 'Middle Eastern']
@@ -224,10 +230,13 @@ export function tripsConfig(s: Settings): import('@/lib/trips').TripsConfig {
  * Sunday family dinner on/off, kept in step with the cook nights the planner already reads:
  * on → Sunday is a cook night with its own (longer) time; off → Sunday comes back out.
  */
-export function setSundayDinner(s: Settings, on: boolean, minutes?: number, extraForMonday?: boolean): void {
-  const mins = Math.min(Math.max(Number(minutes ?? s.plan.sundayDinner.minutes) || 120, 45), 300)
+export function setSundayDinner(s: Settings, on: boolean, times?: number[], extraForMonday?: boolean): void {
+  const prev = s.plan.sundayDinner.times?.length ? s.plan.sundayDinner.times : [s.plan.sundayDinner.minutes || 120]
+  const t = Array.from(new Set((times ?? prev).map((n) => Math.min(Math.max(Number(n) || 120, 45), 300)))).sort((a, b) => a - b)
+  const list = t.length ? t : [120]
+  const mins = Math.max(...list)
   const wasOn = s.plan.sundayDinner.on
-  s.plan.sundayDinner = { on, minutes: mins, extraForMonday: extraForMonday ?? s.plan.sundayDinner.extraForMonday }
+  s.plan.sundayDinner = { on, minutes: mins, times: list, options: s.plan.sundayDinner.options || 3, extraForMonday: extraForMonday ?? s.plan.sundayDinner.extraForMonday }
   if (on) {
     if (!s.plan.cookDays.includes('sun')) { s.plan.cookDays = [...s.plan.cookDays, 'sun']; if (!wasOn) s.plan.dinnersPerWeek = Math.min(7, s.plan.dinnersPerWeek + 1) }
     s.plan.weekdayCookTimes.sun = mins
@@ -235,4 +244,33 @@ export function setSundayDinner(s: Settings, on: boolean, minutes?: number, extr
     if (s.plan.cookDays.includes('sun')) { s.plan.cookDays = s.plan.cookDays.filter((d) => d !== 'sun'); s.plan.dinnersPerWeek = Math.max(3, s.plan.dinnersPerWeek - 1) }
     delete s.plan.weekdayCookTimes.sun
   }
+}
+
+/** How many Sunday dinner ideas the family is sent (2–5); 0 when Sunday dinner is off. */
+export const sundayOptions = (s: Settings) => (s.plan.sundayDinner?.on ? Math.min(Math.max(Number(s.plan.sundayDinner.options) || 3, 2), 5) : 0)
+
+/** Sunday-dinner option = one the planner marked for Sunday. */
+export const isSundayDinner = (m: { suggestedNight?: string | null }) => /^sun/i.test(String(m.suggestedNight ?? ''))
+
+/**
+ * The voted week keeps exactly one Sunday dinner when the family has Sunday dinner on: the top-voted Sunday
+ * idea goes in even if it ranked below the cut, and a second Sunday idea gives its spot to the next best
+ * weeknight dinner. `chosen` and `ranked` are in vote order; `meal` reads the dinner from an item.
+ */
+export function keepOneSunday<T>(chosen: T[], ranked: T[], meal: (t: T) => { suggestedNight?: string | null }, on: boolean): T[] {
+  if (!on) return chosen
+  const out = [...chosen]
+  const suns = out.filter((t) => isSundayDinner(meal(t)))
+  if (!suns.length) {
+    const best = ranked.find((t) => isSundayDinner(meal(t)))
+    const lastWeek = [...out].reverse().findIndex((t) => !isSundayDinner(meal(t)))
+    if (best && lastWeek >= 0) out[out.length - 1 - lastWeek] = best
+  } else if (suns.length > 1) {
+    for (const extra of suns.slice(1)) {
+      const sub = ranked.find((t) => !out.includes(t) && !isSundayDinner(meal(t)))
+      const idx = out.indexOf(extra)
+      if (sub && idx >= 0) out[idx] = sub
+    }
+  }
+  return out
 }

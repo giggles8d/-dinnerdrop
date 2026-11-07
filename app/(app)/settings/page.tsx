@@ -650,15 +650,21 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <div className={`rounded-2xl border-2 p-4 ${settings.plan.sundayDinner.on ? 'border-[#e8a838] bg-[#fef6e6]' : 'border-gray-200 bg-white'}`}>
-                  <Toggle checked={settings.plan.sundayDinner.on} onChange={(v) => patch((s) => setSundayDinner(s, v))} label="🍗 Sunday family dinner" hint="One bigger sit-down dinner on Sunday: a roast, pot roast, lasagna, roast chicken, with real sides. Two of your dinner ideas each week are Sunday dinners." />
+                  <Toggle checked={settings.plan.sundayDinner.on} onChange={(v) => patch((s) => setSundayDinner(s, v))} label="🍗 Sunday family dinner" hint="One bigger sit-down dinner on Sunday: a roast, pot roast, lasagna, roast chicken, with real sides. The family gets Sunday ideas as their own group in the vote text, then the weeknight ideas. The top-voted Sunday idea always goes on Sunday." />
                   {settings.plan.sundayDinner.on && (
                     <div className="mt-3 space-y-3">
                       <div>
-                        <p className="text-xs font-semibold text-foreground mb-1.5">How much time on Sunday?</p>
+                        <p className="text-xs font-semibold text-foreground mb-1.5">How much time on Sunday? <span className="font-normal text-muted-foreground">Pick more than one for a mix.</span></p>
                         <div className="flex flex-wrap gap-2">
                           {[{ m: 60, l: '1 hour' }, { m: 120, l: '2 hours' }, { m: 240, l: 'All afternoon' }].map((o) => (
-                            <PickChip key={o.m} on={settings.plan.sundayDinner.minutes === o.m} onClick={() => patch((s) => setSundayDinner(s, true, o.m))}>{o.l}</PickChip>
+                            <PickChip key={o.m} on={(settings.plan.sundayDinner.times ?? [settings.plan.sundayDinner.minutes]).includes(o.m)} onClick={() => patch((s) => { const cur = s.plan.sundayDinner.times?.length ? s.plan.sundayDinner.times : [s.plan.sundayDinner.minutes]; const next = cur.includes(o.m) ? cur.filter((x) => x !== o.m) : [...cur, o.m]; if (next.length) setSundayDinner(s, true, next) })}>{o.l}</PickChip>
                           ))}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-foreground mb-1.5">How many Sunday ideas to send the family? <span className="font-normal text-muted-foreground">They come in their own group, before the weeknights.</span></p>
+                        <div className="flex flex-wrap gap-2">
+                          {[2, 3, 4, 5].map((n) => <PickChip key={n} on={(settings.plan.sundayDinner.options || 3) === n} onClick={() => patch((s) => { s.plan.sundayDinner.options = n })}>{n}</PickChip>)}
                         </div>
                       </div>
                       <PickChip on={settings.plan.sundayDinner.extraForMonday} onClick={() => patch((s) => setSundayDinner(s, true, undefined, !s.plan.sundayDinner.extraForMonday))}>Make extra for Monday leftovers</PickChip>

@@ -63,8 +63,9 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   const [nights, setNights] = useState<Weekday[]>(['mon', 'tue', 'wed', 'thu', 'fri'])
   const [busy, setBusy] = useState(30)
   const [sunday, setSunday] = useState(false)
-  const [sundayMin, setSundayMin] = useState(120)
+  const [sundayTimes, setSundayTimes] = useState<number[]>([120])
   const [extraMonday, setExtraMonday] = useState(true)
+  const [sundayIdeas, setSundayIdeas] = useState(3)
   const [budget, setBudget] = useState('$150')
   const [storeBrands, setStoreBrands] = useState(false)
   const [voteDay, setVoteDay] = useState<Weekday>('sat')
@@ -93,7 +94,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
             goal, familySize, weeklyBudget: budget, dietaryNeeds: diets, styles,
             people: people.map((p) => ({ ...p, name: p.name.trim() })),
             mix, mixEvery: every, cookDays: nights, busyMinutes: busy,
-            sunday: { on: sunday, minutes: sundayMin, extraForMonday: extraMonday },
+            sunday: { on: sunday, times: sundayTimes, options: sundayIdeas, extraForMonday: extraMonday },
             storeBrands, voteDay,
           }),
         })
@@ -256,14 +257,16 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
             <label className="flex items-start justify-between gap-3 cursor-pointer">
               <span>
                 <span className="block text-sm font-bold text-foreground">🍗 Sunday family dinner</span>
-                <span className="block text-xs text-muted-foreground mt-0.5">One bigger sit-down dinner: roasts, lasagna, pot roast, real sides.</span>
+                <span className="block text-xs text-muted-foreground mt-0.5">One bigger sit-down dinner: roasts, lasagna, pot roast, real sides. Sunday ideas are texted as their own group, and the top-voted one goes on Sunday.</span>
               </span>
               <input type="checkbox" checked={sunday} onChange={(e) => setSunday(e.target.checked)} className="mt-1 h-5 w-5 accent-[#1a5c38]" />
             </label>
             {sunday && (
               <>
-                <Label>How much time on Sunday?</Label>
-                <div className="flex flex-wrap gap-2">{SUNDAY.map((o) => <Pick key={o.m} on={sundayMin === o.m} onClick={() => setSundayMin(o.m)}>{o.l}</Pick>)}</div>
+                <Label>How much time on Sunday? <span className="font-normal text-muted-foreground">Pick more than one for a mix.</span></Label>
+                <div className="flex flex-wrap gap-2">{SUNDAY.map((o) => <Pick key={o.m} on={sundayTimes.includes(o.m)} onClick={() => setSundayTimes((xs) => (xs.includes(o.m) ? (xs.length > 1 ? xs.filter((x) => x !== o.m) : xs) : [...xs, o.m]))}>{o.l}</Pick>)}</div>
+                <Label>How many Sunday ideas to send the family?</Label>
+                <div className="flex flex-wrap gap-2">{[2, 3, 4, 5].map((n) => <Pick key={n} on={sundayIdeas === n} onClick={() => setSundayIdeas(n)}>{n}</Pick>)}</div>
                 <div className="mt-3"><Pick on={extraMonday} onClick={() => setExtraMonday((v) => !v)}>Make extra for Monday leftovers</Pick></div>
               </>
             )}
@@ -315,7 +318,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
               styleNames.length ? styleNames.join(' · ') : 'A mix of family-friendly dinners',
               diets.length ? `Diet: ${diets.join(', ')}` : '',
               mix ? MIX_GROUPS.filter((g) => Number(mix[g.key]) > 0).map((g) => `${g.label} ${mix[g.key]}${(every[g.key] ?? 1) > 1 ? ` (${MIX_EVERY.find((o) => o.v === every[g.key])?.label.toLowerCase()})` : ''}`).join(' · ') : 'Any mix of proteins',
-              `${nights.map((d) => WEEKDAY_LABEL[d].slice(0, 3)).join(', ')} · ${busy} min a night${sunday ? ` · Sunday dinner, ${SUNDAY.find((o) => o.m === sundayMin)?.l.toLowerCase()}${extraMonday ? ' + Monday leftovers' : ''}` : ''}`,
+              `${nights.map((d) => WEEKDAY_LABEL[d].slice(0, 3)).join(', ')} · ${busy} min a night${sunday ? ` · Sunday dinner, ${SUNDAY.filter((o) => sundayTimes.includes(o.m)).map((o) => o.l.toLowerCase()).join(' / ')}${extraMonday ? ' + Monday leftovers' : ''}` : ''}`,
               `${budget} a week${storeBrands ? ' · store brands' : ''}`,
               people.some((p) => p.phone.replace(/\D/g, '').length >= 10) ? `Family votes by text on ${WEEKDAY_LABEL[voteDay]}s` : 'No texting for now',
             ].filter(Boolean).map((x) => <li key={x} className="bg-white border rounded-lg px-3 py-2">✓ {x}</li>)}
