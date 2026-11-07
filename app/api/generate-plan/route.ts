@@ -7,6 +7,7 @@ import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, tripsConfig, type Settings, 
 import { isClassic, resolveTrips, shoppingTrip, tripByKey } from '@/lib/trips'
 import { localNow } from '@/lib/plan'
 import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName, honestTags } from '@/lib/recipe-library'
+import { classicsDue } from '@/lib/family-recipes'
 import type { Meal } from '@/types'
 import { ensurePortions } from '@/lib/portions'
 import { currentSales, salesPromptBlock } from '@/lib/sales'
@@ -195,6 +196,14 @@ export async function POST(request: Request) {
       } catch (e) {
         console.error('bring-back lookup failed', e)
       }
+    }
+
+    // ---------- the family's own recipes (lib/family-recipes): rotate N a week into the options ----------
+    if (mode === 'fresh' && settings.food.familyRecipesPerWeek > 0) {
+      const blocked = (m: Meal) => hardExclusions.some((x) => x && m.ingredients?.some((i) => i.name.toLowerCase().includes(x.toLowerCase())))
+      const taken = new Set([...bringBack, ...keepMeals].map((m) => normalizeName(m.name)))
+      const own = classicsDue(profile.favoriteMeals.filter((m) => !blocked(m) && !taken.has(normalizeName(m.name))), (recentPlans ?? []).map((p) => (p.meals as Meal[]) ?? []), Math.min(settings.food.familyRecipesPerWeek, 3))
+      bringBack = [...bringBack, ...own.map((m, i) => ({ ...m, day: `F${i + 1}`, tags: Array.from(new Set(['family recipe', ...(m.tags ?? [])])) }))]
     }
 
     let libraryMeals: Meal[] = []

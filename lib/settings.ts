@@ -40,6 +40,7 @@ export interface Settings {
     useSales: boolean               // build the week around this week's store sales when a flyer is loaded
     mix: ProteinMix                 // dinners per week by protein group (chicken 2, beef 1…); null = any mix
     mixEvery: Partial<Record<import('@/lib/protein-mix').MixKey, 1 | 2 | 4>>  // how often a group is on: every week (1), every other week (2), once a month (4)
+    familyRecipesPerWeek: number    // the family's own recipes (lib/family-recipes) rotated into each week's options, 0–3
     productPrefs: import('@/lib/product-prefs').ProductPref[]  // "when a recipe needs X, buy Y" (lib/product-prefs)
     storeBrands: boolean            // prefer the store's own brand (Walmart, Kroger) when it matches as well
   }
@@ -68,6 +69,8 @@ export interface Settings {
     quietEnd: string
     weeklyCap: number               // max texts per member per week
     ownerPhone: string              // where "everyone's voted" + reminders for the planner go (E.164)
+    plainTextIds: string[]          // members whose phones can't get picture texts: their vote comes as plain text
+    askDinner: boolean              // 7 PM "what was dinner tonight?" text to the planner on nights with no planned dinner; the answer is saved as a family recipe
     walmartLinks: 'list' | 'cart'   // a texted Walmart link: put it on the grocery list, or text the planner a one-tap Walmart-cart link
     optionsToText: number           // dinner ideas texted for the family to pick from (>= dinnersPerWeek)
     lastCall: {
@@ -121,6 +124,7 @@ export const DEFAULT_SETTINGS: Settings = {
     useSales: true,
     mix: null,
     mixEvery: {},
+    familyRecipesPerWeek: 1,
     productPrefs: [],
     storeBrands: false,
   },
@@ -150,6 +154,8 @@ export const DEFAULT_SETTINGS: Settings = {
     quietEnd: '07:00',
     weeklyCap: 4,
     ownerPhone: '',
+    askDinner: false,
+    plainTextIds: [],
     walmartLinks: 'list',
     optionsToText: 8,
     lastCall: {

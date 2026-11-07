@@ -35,6 +35,11 @@ export interface Meal {
   usesPantry?: string[] // pantry items this dinner was built to use up
   cookedAt?: string     // ISO time the family marked it cooked (fades it on the plan)
   ideaBy?: string       // a family member suggested this dinner by text ("Rich's idea" on the vote)
+  familyRecipe?: boolean // the family's own dinner, written up from how they described it (lib/family-recipes)
+  addedBy?: string      // who added that family recipe (shown as "Rich's recipe")
+  original?: string     // the family's own words for it
+  swaps?: string[]      // easy alternatives for the vague parts ("any veg: green beans, corn, broccoli")
+  familyNote?: string   // e.g. a diet conflict in their recipe, flagged rather than silently changed
   base?: { servings: number; ingredients: Ingredient[]; estimatedCost: number } // as planned, before the family changed servings for this dinner
 }
 
