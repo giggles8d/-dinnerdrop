@@ -4,7 +4,7 @@ import { buildFamilyRecipes, describeDinnerFromPhotos, splitDescriptions } from 
 import type { ClaudeImage } from '@/lib/claude'
 
 export const dynamic = 'force-dynamic'
-export const maxDuration = 60
+export const maxDuration = 300
 
 const TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 

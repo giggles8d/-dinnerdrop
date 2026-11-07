@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Camera, Mic, MicOff, X, Check, Loader2 } from 'lucide-react'
 import type { Meal } from '@/types'
+import RecipeEditor from '@/components/RecipeEditor'
 
 type Img = { base64: string; mediaType: 'image/jpeg'; preview: string }
 
@@ -34,6 +35,7 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
   const [done, setDone] = useState('')
   const [preview, setPreview] = useState<Meal[] | null>(null)
   const [open, setOpen] = useState<number | null>(null)
+  const [share, setShare] = useState(false)
   const [listening, setListening] = useState(false)
   const [canTalk, setCanTalk] = useState(false)
   const recRef = useRef<SpeechRec | null>(null)
@@ -102,7 +104,7 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
     if (!preview?.length) return
     setBusy('save'); setError('')
     try {
-      const res = await fetch('/api/family-recipes/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ meals: preview }) })
+      const res = await fetch('/api/family-recipes/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ meals: preview.map((m) => ({ ...m, shareOk: share || undefined })) }) })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Could not save.')
       const saved: string[] = data.saved ?? []
@@ -167,7 +169,7 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
 
       {preview && (
         <div className="mt-4 space-y-3">
-          <p className="text-sm font-semibold text-foreground">Here&apos;s what we wrote up. Fix a name if you like, remove any you don&apos;t want, then save.</p>
+          <p className="text-sm font-semibold text-foreground">Here&apos;s what we wrote up. Tap <b>Edit recipe</b> to change anything (amounts, ingredients, steps), remove any you don&apos;t want, then save.</p>
           {preview.map((m, i) => (
             <div key={i} className="rounded-xl border border-border bg-card p-3">
               <div className="flex items-start gap-2">
@@ -178,8 +180,10 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
               {m.original && <p className="text-xs text-muted-foreground mt-0.5">From: &ldquo;{m.original}&rdquo;</p>}
               <p className="text-xs text-muted-foreground mt-1">{m.prepTime + m.cookTime} min · {m.servings} servings · about ${m.estimatedCost.toFixed(0)}</p>
               {m.familyNote && <p className="text-xs text-amber-700 mt-1">Note: {m.familyNote}</p>}
-              <button onClick={() => setOpen(open === i ? null : i)} className="text-xs font-semibold text-primary mt-1.5 hover:underline">{open === i ? 'Hide recipe' : 'See recipe'}</button>
-              {open === i && (
+              <button onClick={() => setOpen(open === i ? null : i)} className="text-xs font-semibold text-primary mt-1.5 hover:underline">{open === i ? 'Done editing' : 'Edit recipe'}</button>
+              {open === i ? (
+                <div className="mt-3"><RecipeEditor meal={m} onChange={(next) => setPreview((p) => p ? p.map((x, j) => (j === i ? next : x)) : p)} /></div>
+              ) : (
                 <div className="mt-2 grid sm:grid-cols-2 gap-3 text-sm">
                   <ul className="space-y-0.5">{m.ingredients.map((g, k) => <li key={k}>• {[g.quantity, g.unit, g.name].filter(Boolean).join(' ')}</li>)}</ul>
                   <ol className="space-y-1 list-decimal pl-4">{m.steps.map((s, k) => <li key={k}>{s}</li>)}</ol>
@@ -188,6 +192,10 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
               )}
             </div>
           ))}
+          <label className="flex items-start gap-2 text-xs text-muted-foreground">
+            <input type="checkbox" checked={share} onChange={(e) => setShare(e.target.checked)} className="mt-0.5" />
+            <span>Let DinnerDrop add {preview.length === 1 ? 'this recipe' : 'these recipes'} to its recipe library so other families can make {preview.length === 1 ? 'it' : 'them'} too. Your name is never shown. (Optional; your copy stays yours either way.)</span>
+          </label>
           <div className="flex flex-wrap gap-2">
             <button onClick={save} disabled={busy !== ''} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50">
               {busy === 'save' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}Save to my favorites

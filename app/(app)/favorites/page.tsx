@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import ConversionTracker from '@/components/ConversionTracker'
 import FamilyRecipes from '@/components/FamilyRecipes'
+import RecipeEditor from '@/components/RecipeEditor'
 import { recordMealSignal } from '@/lib/taste-profile'
 import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
@@ -29,6 +30,9 @@ export default function FavoritesPage() {
   const [importing, setImporting] = useState(false)
   const [importMsg, setImportMsg] = useState<string | null>(null)
   const [showImport, setShowImport] = useState(false)
+  const [editing, setEditing] = useState<{ id: string; meal: Meal } | null>(null)
+  const [editMsg, setEditMsg] = useState('')
+  const [editBusy, setEditBusy] = useState(false)
   const loadFavoritesRef = useRef<null | (() => Promise<void>)>(null)
   const supabase = createClient()
   // New signups from /mealime land here with ?new=1 — fire the same ad signup conversion as /dashboard.
@@ -115,6 +119,18 @@ export default function FavoritesPage() {
     }
   }
 
+  async function saveEdit() {
+    if (!editing) return
+    setEditBusy(true); setEditMsg('')
+    try {
+      const r = await fetch('/api/favorites/update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(editing) })
+      const d = await r.json()
+      if (!r.ok) { setEditMsg(d.error || 'Could not save.'); return }
+      setFavorites((prev) => prev.map((f) => (f.id === editing.id ? { ...f, meal_name: d.meal.name, meal_data: d.meal } : f)))
+      setEditing(null)
+    } finally { setEditBusy(false) }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -168,6 +184,20 @@ export default function FavoritesPage() {
             <FamilyRecipes onSaved={() => { loadFavoritesRef.current?.() }} />
           </div>
         </div>
+
+        {editing && (
+          <div className="fixed inset-0 z-50 bg-black/40 flex items-start sm:items-center justify-center p-3 overflow-y-auto" onClick={() => !editBusy && setEditing(null)}>
+            <div className="w-full max-w-3xl rounded-2xl bg-card border border-border p-5 my-6" onClick={(e) => e.stopPropagation()}>
+              <h2 className="text-lg font-heading font-bold text-foreground mb-3">Edit recipe</h2>
+              <RecipeEditor meal={editing.meal} onChange={(m) => setEditing({ ...editing, meal: m })} />
+              {editMsg && <p className="mt-3 text-sm text-red-700">{editMsg}</p>}
+              <div className="mt-4 flex gap-2">
+                <button onClick={saveEdit} disabled={editBusy} className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50">{editBusy ? 'Saving…' : 'Save changes'}</button>
+                <button onClick={() => setEditing(null)} disabled={editBusy} className="px-4 py-2 rounded-lg border border-border text-sm font-medium">Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {favorites.length === 0 ? (
           <div className="text-center py-16 space-y-4">
@@ -231,6 +261,7 @@ export default function FavoritesPage() {
                         ${meal.estimatedCost.toFixed(2)}
                       </div>
                     </Link>
+                    <button onClick={() => { setEditing({ id: fav.id, meal: JSON.parse(JSON.stringify(meal)) }); setEditMsg('') }} className="mx-4 mb-4 text-xs font-semibold text-primary hover:underline">Edit recipe</button>
                   </div>
                 </div>
               )

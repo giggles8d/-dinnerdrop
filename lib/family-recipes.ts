@@ -41,7 +41,7 @@ Return ONLY JSON, no markdown:
 {"meals":[{"name":"","original":"their words, as given","cuisine":"American","protein":"","prepTime":10,"cookTime":25,"servings":${servings},"estimatedCost":18.5,"ingredients":[{"name":"","quantity":"1","unit":"box","category":"Pantry & Dry Goods","searchTerm":""}],"steps":[""],"swaps":[""],"note":""}]}`
 }
 
-type Built = Meal & { original?: string; swaps?: string[]; note?: string }
+type Built = Meal & { original?: string; swaps?: string[]; note?: string; familyNote?: string; shareOk?: boolean }
 
 function clean(raw: Built[], servings: number, by: string | undefined): Meal[] {
   return raw
@@ -56,20 +56,22 @@ function clean(raw: Built[], servings: number, by: string | undefined): Meal[] {
       cookTime: Math.max(5, Math.round(Number(m.cookTime) || 25)),
       servings,
       estimatedCost: Math.max(0, Number(m.estimatedCost) || 0),
-      ingredients: m.ingredients.slice(0, 20).map((i) => ({
+      ingredients: m.ingredients.slice(0, 30).map((i) => ({
         name: String(i.name ?? '').slice(0, 60),
         quantity: String(i.quantity ?? '1').slice(0, 12),
         unit: String(i.unit ?? '').slice(0, 20),
         category: (CATEGORIES.includes(i.category) ? i.category : 'Pantry & Dry Goods') as Meal['ingredients'][number]['category'],
         searchTerm: String(i.searchTerm || i.name || '').slice(0, 60),
       })).filter((i) => i.name),
-      steps: m.steps.slice(0, 10).map((s) => String(s).slice(0, 400)),
+      steps: m.steps.slice(0, 15).map((s) => String(s).slice(0, 600)).filter((s) => s.trim()),
       tags: ['family recipe'],
       familyRecipe: true,
       addedBy: by,
       original: m.original ? String(m.original).slice(0, 400) : undefined,
       swaps: Array.isArray(m.swaps) ? m.swaps.map(String).filter(Boolean).slice(0, 4) : undefined,
-      familyNote: m.note ? String(m.note).slice(0, 200) : undefined,
+      familyNote: (m.note || m.familyNote) ? String(m.note || m.familyNote).slice(0, 200) : undefined,
+      shareOk: m.shareOk === true ? true : undefined,
+      imageUrl: typeof m.imageUrl === 'string' && /^https:\/\//.test(m.imageUrl) ? m.imageUrl : undefined,
     }))
 }
 
@@ -77,11 +79,18 @@ function clean(raw: Built[], servings: number, by: string | undefined): Meal[] {
 export async function buildFamilyRecipes(descriptions: string[], opts: { servings: number; dietary?: string[]; by?: string }): Promise<Meal[]> {
   const lines = descriptions.map((d) => d.trim()).filter(Boolean).slice(0, MAX_RECIPES_PER_TURN)
   if (!lines.length) return []
-  const prompt = promptFor(lines, opts.servings, opts.dietary ?? [])
-  let text: string
-  try { text = await generateSmart(prompt, 6000) } catch { text = await generateWithClaude(prompt, 6000) }
-  const parsed = parseClaudeJSON<{ meals: Built[] }>(text)
-  return clean(parsed.meals ?? [], opts.servings, opts.by)
+  // Two dinners per request, all at once: a list of 8 comes back in the time of 2.
+  const chunks: string[][] = []
+  for (let i = 0; i < lines.length; i += 2) chunks.push(lines.slice(i, i + 2))
+  const results = await Promise.all(chunks.map(async (chunk) => {
+    const prompt = promptFor(chunk, opts.servings, opts.dietary ?? [])
+    try {
+      let text: string
+      try { text = await generateSmart(prompt, 3500) } catch { text = await generateWithClaude(prompt, 3500) }
+      return parseClaudeJSON<{ meals: Built[] }>(text).meals ?? []
+    } catch (e) { console.error('[family-recipes] chunk failed', e); return [] as Built[] }
+  }))
+  return clean(results.flat(), opts.servings, opts.by)
 }
 
 /** A photo of the box, the plate, or a handwritten recipe card → a one-line description of the dinner. */

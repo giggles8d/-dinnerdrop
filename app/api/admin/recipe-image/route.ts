@@ -34,6 +34,11 @@ export async function GET(request: NextRequest) {
   if (!(await authorized(request))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const limit = Math.min(Number(request.nextUrl.searchParams.get('limit') ?? 40), 200)
+  // ?kind=favorites — families' own saved recipes (lib/family-recipes) that still have no photo.
+  if (request.nextUrl.searchParams.get('kind') === 'favorites') {
+    const { data } = await admin.from('favorites').select('id, meal_name, meal_data, created_at').eq('meal_data->>familyRecipe', 'true').is('meal_data->>imageUrl', null).order('created_at', { ascending: false }).limit(limit)
+    return NextResponse.json({ favorites: (data ?? []).map((f) => ({ id: f.id, name: f.meal_name, original: (f.meal_data as { original?: string })?.original ?? null, ingredients: ((f.meal_data as { ingredients?: Array<{ name: string }> })?.ingredients ?? []).map((i) => i.name) })) })
+  }
   const { data } = await admin
     .from('recipes')
     .select('id, name, cuisine, protein, tags, image_url, image_credit, times_planned')
@@ -46,8 +51,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   if (!(await authorized(request))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const body = await request.json().catch(() => ({}))
+  const favoriteId = String(body.favoriteId ?? '')
   const recipeId = String(body.recipeId ?? '')
-  if (!/^[0-9a-f-]{36}$/.test(recipeId)) return NextResponse.json({ error: 'recipeId required' }, { status: 400 })
+  if (!/^[0-9a-f-]{36}$/.test(recipeId) && !/^[0-9a-f-]{36}$/.test(favoriteId)) return NextResponse.json({ error: 'recipeId or favoriteId required' }, { status: 400 })
 
   let bytes: ArrayBuffer
   let contentType = 'image/jpeg'
@@ -66,11 +72,17 @@ export async function POST(request: NextRequest) {
 
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const ext = contentType.includes('png') ? 'png' : contentType.includes('webp') ? 'webp' : 'jpg'
-  const path = `${recipeId}.${ext}`
+  const path = favoriteId ? `fav-${favoriteId}.${ext}` : `${recipeId}.${ext}`
   const { error } = await admin.storage.from('recipe-images').upload(path, Buffer.from(bytes), { contentType, upsert: true, cacheControl: '31536000' })
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   const { data: pub } = admin.storage.from('recipe-images').getPublicUrl(path)
   const url = `${pub.publicUrl}?v=${Date.now()}`
+  if (favoriteId) {
+    const { data: fav } = await admin.from('favorites').select('meal_data').eq('id', favoriteId).maybeSingle()
+    if (!fav) return NextResponse.json({ error: 'favorite not found' }, { status: 404 })
+    await admin.from('favorites').update({ meal_data: { ...(fav.meal_data as object), imageUrl: url } }).eq('id', favoriteId)
+    return NextResponse.json({ ok: true, url })
+  }
   await admin.from('recipes').update({ image_url: url, image_credit: 'DinnerDrop', updated_at: new Date().toISOString() }).eq('id', recipeId)
   // Plans and favorites that already carry this dinner pick up the photo too.
   return NextResponse.json({ ok: true, url })
