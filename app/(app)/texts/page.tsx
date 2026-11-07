@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import FamilyAskPanel from '@/components/FamilyAskPanel'
 import { RefreshCw, CheckCheck, AlertTriangle, Image as ImageIcon, Send } from 'lucide-react'
 
 interface Person { id: string; name: string; you: boolean; phone: string | null; status: 'joined' | 'invited' | 'stopped' | 'no phone'; sentThisWeek: number; cap: number; plainText: boolean; lastReply: string | null; problem: { at: string; what: string | null; picture: boolean } | null }
@@ -65,6 +66,8 @@ export default function TextsPage() {
         </div>
 
         {note && <p className="mb-4 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2 text-sm text-foreground">{note}</p>}
+
+        <FamilyAskPanel />
 
         <section className="grid sm:grid-cols-2 gap-3 mb-8">
           {people.map((p) => (

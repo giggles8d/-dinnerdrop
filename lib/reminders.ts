@@ -5,6 +5,7 @@
  * settings pick the morning send vs. an afternoon send when the cron runs
  * more than once a day.
  */
+import { leaderLabel } from '@/lib/family-ask'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, WEEKDAY_LABEL, WEEKDAYS, tripsConfig, type Settings, type Channel } from '@/lib/settings'
 import { isClassic, resolveTrips, tripInstances, tonightTrip, voteTripOn, addDays } from '@/lib/trips'
@@ -189,7 +190,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
           if (!asked) {
             for (const m of (mem ?? []) as MemberRow[]) {
               if (!m.can_add) continue
-              await textMember(admin, m, `DinnerDrop: ${firstName(p)} sends the grocery order tomorrow. Anything you want this week? Reply ADD + items (or send a photo of it).`, 'anything_else', settings.texting.weeklyCap)
+              await textMember(admin, m, `DinnerDrop: ${m.profile_id === p.id ? 'You send' : `${leaderLabel(p)} sends`} the grocery order tomorrow. Anything you want this week? Reply ADD + items (or send a photo of it).`, 'anything_else', settings.texting.weeklyCap)
             }
           }
         }
