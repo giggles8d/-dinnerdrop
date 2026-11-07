@@ -39,6 +39,7 @@ export interface Meal {
   addedBy?: string      // who added that family recipe (shown as "Rich's recipe")
   original?: string     // the family's own words for it
   swaps?: string[]      // easy alternatives for the vague parts ("any veg: green beans, corn, broccoli")
+  familyRating?: number // the family's own 1–5 rating of their recipe; higher comes up in the vote more often
   shareOk?: boolean     // the family said DinnerDrop may add their recipe (no names) to the shared library
   familyNote?: string   // e.g. a diet conflict in their recipe, flagged rather than silently changed
   base?: { servings: number; ingredients: Ingredient[]; estimatedCost: number } // as planned, before the family changed servings for this dinner

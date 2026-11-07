@@ -14,13 +14,18 @@ export default function RecipeEditor({ meal, onChange }: { meal: Meal; onChange:
 
   return (
     <div className="space-y-4 text-sm">
-      <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto_auto] gap-2 items-end">
+      <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto_auto_auto] gap-2 items-end">
         <label className="space-y-1"><span className="text-xs text-muted-foreground">Name</span>
           <input value={meal.name} onChange={(e) => set({ name: e.target.value.slice(0, 60) })} className={`${input} w-full font-semibold`} /></label>
         <label className="space-y-1"><span className="text-xs text-muted-foreground">Prep min</span>
           <input type="number" min={0} max={600} value={meal.prepTime} onChange={(e) => set({ prepTime: Math.max(0, Number(e.target.value) || 0) })} className={`${input} w-20`} /></label>
         <label className="space-y-1"><span className="text-xs text-muted-foreground">Cook min</span>
           <input type="number" min={0} max={900} value={meal.cookTime} onChange={(e) => set({ cookTime: Math.max(0, Number(e.target.value) || 0) })} className={`${input} w-20`} /></label>
+        <label className="space-y-1"><span className="text-xs text-muted-foreground">Family rating</span>
+          <select value={meal.familyRating ?? ''} onChange={(e) => set({ familyRating: e.target.value ? Number(e.target.value) : undefined })} className={`${input} w-28`}>
+            <option value="">Not rated</option>
+            {[5, 4, 3, 2, 1].map((n) => <option key={n} value={n}>{'★'.repeat(n)}</option>)}
+          </select></label>
         <label className="space-y-1"><span className="text-xs text-muted-foreground">Servings</span>
           <input type="number" min={1} max={20} value={meal.servings} onChange={(e) => set({ servings: Math.min(20, Math.max(1, Number(e.target.value) || 1)) })} className={`${input} w-20`} /></label>
       </div>

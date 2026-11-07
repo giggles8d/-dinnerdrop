@@ -278,7 +278,7 @@ export default function FavoritesPage() {
                       </h3>
                       {meal.familyRecipe && (
                         <span className="inline-block rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-semibold text-accent-foreground">
-                          {meal.addedBy ? `${meal.addedBy}'s recipe` : 'Family recipe'}
+                          {meal.addedBy ? `${meal.addedBy}'s recipe` : 'Family recipe'}{meal.familyRating ? ` · ${'★'.repeat(meal.familyRating)}` : ''}
                         </span>
                       )}
                       <div className="flex items-center gap-3 text-sm text-muted-foreground">
