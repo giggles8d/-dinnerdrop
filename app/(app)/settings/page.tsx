@@ -15,7 +15,7 @@ import {
   mergeSettings, DEFAULT_SETTINGS, WEEKDAYS, WEEKDAY_LABEL, CUISINE_OPTIONS, PROTEIN_OPTIONS,
   EQUIPMENT_OPTIONS, DIETARY_OPTIONS, AGE_BANDS, type Settings, type Channel,
 } from '@/lib/settings'
-import { MIX_GROUPS, hasMix, type ProteinMix } from '@/lib/protein-mix'
+import { MIX_GROUPS, MIX_EVERY, hasMix, type ProteinMix } from '@/lib/protein-mix'
 
 /* ------------------------------------------------------------------ */
 /* Types                                                                */
@@ -524,10 +524,10 @@ export default function SettingsPage() {
                 <Field label="How your family eats" hint="Every dinner follows these, for the whole family. Keto: 20 g carbs or less per serving, no rice, pasta, bread, potatoes, beans or sugar. Low-carb: 30 g or less. More diets (dairy-free, halal…) are under Household.">
                   <Chips options={EATING_STYLES} value={(profile.dietary_needs || []).filter((d) => EATING_STYLES.includes(d))} onChange={(v) => patchProfile({ dietary_needs: [...(profile.dietary_needs || []).filter((d) => !EATING_STYLES.includes(d)), ...v] })} />
                 </Field>
-                <Field label="Your weekly mix" hint={hasMix(settings.food.mix) ? `Plans, the dinner ideas texted for votes, and the voted week all follow this. Set to ${mixTotal(settings.food.mix)} of ${settings.plan.dinnersPerWeek} dinners${mixTotal(settings.food.mix) !== settings.plan.dinnersPerWeek ? ' — the planner keeps these proportions' : ''}. 0 means none of that kind.` : 'Any mix: the planner spreads proteins out on its own. Or set how many dinners of each kind you want each week.'}>
+                <Field label="Your weekly mix" hint={hasMix(settings.food.mix) ? `Plans, the dinner ideas texted for votes, and the voted week all follow this. Set to ${mixTotal(settings.food.mix)} of ${settings.plan.dinnersPerWeek} dinners${mixTotal(settings.food.mix) !== settings.plan.dinnersPerWeek ? ' — the planner keeps these proportions' : ''}. 0 means none of that kind. Under each one, pick how often: every week, every other week or once a month.` : 'Any mix: the planner spreads proteins out on its own. Or set how many dinners of each kind you want each week.'}>
                   <div className="flex flex-wrap gap-2 mb-2">
-                    <button type="button" onClick={() => patch((s) => { s.food.mix = null })} className={`px-3 py-1.5 rounded-full border text-sm ${!hasMix(settings.food.mix) ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>Any mix</button>
-                    <button type="button" onClick={() => patch((s) => { if (!hasMix(s.food.mix)) s.food.mix = starterMix(s.plan.dinnersPerWeek) })} className={`px-3 py-1.5 rounded-full border text-sm ${hasMix(settings.food.mix) ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>Set my mix</button>
+                    <PickChip on={!hasMix(settings.food.mix)} onClick={() => patch((s) => { s.food.mix = null })}>Any mix</PickChip>
+                    <PickChip on={hasMix(settings.food.mix)} onClick={() => patch((s) => { if (!hasMix(s.food.mix)) s.food.mix = starterMix(s.plan.dinnersPerWeek) })}>Set my mix</PickChip>
                   </div>
                   {hasMix(settings.food.mix) && (
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -535,13 +535,22 @@ export default function SettingsPage() {
                         const n = Number(settings.food.mix?.[g.key]) || 0
                         const set = (v: number) => patch((s) => { s.food.mix = { ...(s.food.mix ?? {}), [g.key]: Math.max(0, Math.min(7, v)) } })
                         return (
-                          <div key={g.key} className={`flex items-center justify-between rounded-xl border px-3 py-2 ${n ? 'border-primary/40 bg-primary/5' : 'border-border bg-white'}`}>
-                            <span className="text-sm text-foreground">{g.label}</span>
-                            <span className="flex items-center gap-2">
-                              <button type="button" aria-label={`Fewer ${g.label}`} onClick={() => set(n - 1)} disabled={n === 0} className="w-7 h-7 rounded-full border border-border text-foreground disabled:opacity-30">−</button>
-                              <span className="w-4 text-center text-sm font-semibold tabular-nums">{n}</span>
-                              <button type="button" aria-label={`More ${g.label}`} onClick={() => set(n + 1)} className="w-7 h-7 rounded-full border border-border text-foreground">+</button>
-                            </span>
+                          <div key={g.key} className={`rounded-xl border-2 px-3 py-2 ${n ? 'border-primary bg-primary/5' : 'border-gray-200 bg-white'}`}>
+                            <div className="flex items-center justify-between">
+                              <span className={`text-sm ${n ? 'text-foreground font-semibold' : 'text-gray-500'}`}>{g.label}</span>
+                              <span className="flex items-center gap-2">
+                                <button type="button" aria-label={`Fewer ${g.label}`} onClick={() => set(n - 1)} disabled={n === 0} className="w-7 h-7 rounded-full border border-border text-foreground disabled:opacity-30">−</button>
+                                <span className="w-4 text-center text-sm font-semibold tabular-nums">{n}</span>
+                                <button type="button" aria-label={`More ${g.label}`} onClick={() => set(n + 1)} className="w-7 h-7 rounded-full border border-border text-foreground">+</button>
+                              </span>
+                            </div>
+                            {n > 0 && (
+                              <select aria-label={`How often ${g.label}`} value={Number(settings.food.mixEvery?.[g.key]) || 1}
+                                onChange={(e) => { const v = Number(e.target.value) as 1 | 2 | 4; patch((s) => { s.food.mixEvery = { ...(s.food.mixEvery ?? {}), [g.key]: v } }) }}
+                                className="mt-1.5 w-full text-xs rounded-md border border-border bg-white px-2 py-1 text-foreground">
+                                {MIX_EVERY.map((o) => <option key={o.v} value={o.v}>{o.label}</option>)}
+                              </select>
+                            )}
                           </div>
                         )
                       })}

@@ -38,6 +38,7 @@ export interface Settings {
     maxCalories: number             // per-serving calorie cap for planned dinners (0 = no cap)
     useSales: boolean               // build the week around this week's store sales when a flyer is loaded
     mix: ProteinMix                 // dinners per week by protein group (chicken 2, beef 1…); null = any mix
+    mixEvery: Partial<Record<import('@/lib/protein-mix').MixKey, 1 | 2 | 4>>  // how often a group is on: every week (1), every other week (2), once a month (4)
     productPrefs: import('@/lib/product-prefs').ProductPref[]  // "when a recipe needs X, buy Y" (lib/product-prefs)
     storeBrands: boolean            // prefer the store's own brand (Walmart, Kroger) when it matches as well
   }
@@ -117,6 +118,7 @@ export const DEFAULT_SETTINGS: Settings = {
     maxCalories: 0,
     useSales: true,
     mix: null,
+    mixEvery: {},
     productPrefs: [],
     storeBrands: false,
   },
