@@ -6,7 +6,7 @@
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { hasMix, scaleMix, pickByQuota, proteinGroup } from '@/lib/protein-mix'
-import { mergeSettings, tripsConfig, type Settings } from '@/lib/settings'
+import { mergeSettings, tripsConfig, keepOneSunday, isSundayDinner, sundayOptions, type Settings } from '@/lib/settings'
 import { isClassic, resolveTrips, shoppingTrip, tripInstances, voteTripOn } from '@/lib/trips'
 import { localNow, mondayOf } from '@/lib/plan'
 import { sendSms, smsConfigured, normalizePhone } from '@/lib/notify'
@@ -347,7 +347,7 @@ export async function roundStandings(admin: SupabaseClient, round: VoteRound): P
   const settings = mergeSettings(owner?.settings)
   const ranked = round.candidates.map((cnd, i) => ({ cnd, i, votes: tally[cnd.name]?.votes ?? 0 })).sort((a, b) => b.votes - a.votes || a.i - b.i)
   const mix = hasMix(settings.food.mix) ? scaleMix(settings.food.mix, round.picks_needed) : null
-  const inWeek = new Set((mix ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.cnd.protein, r.cnd.name)) : ranked.slice(0, round.picks_needed)).map((r) => r.cnd.name))
+  const inWeek = new Set(keepOneSunday(mix ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.cnd.protein, r.cnd.name)) : ranked.slice(0, round.picks_needed), ranked, (r) => r.cnd, settings.plan.sundayDinner?.on === true).map((r) => r.cnd.name))
   const people = (members ?? []).filter((m) => m.phone).map((m) => ({
     id: m.id as string,
     name: m.name as string,
@@ -997,7 +997,15 @@ function menuImageUrl(roundId: string): string {
 }
 
 function voteBody(familyName: string, round: VoteRound, showCarbs = false): string {
-  return `DinnerDrop — ${familyName}'s dinner ideas for the week of ${round.week_start.slice(5).replace('-', '/')}:\n${pickLines(round.candidates, showCarbs)}\n\nReply with the numbers you WANT (pick up to ${round.picks_needed}, e.g. "1 3 5"). The top picks make the week. Text ADD + anything for the grocery list.`
+  const week = round.week_start.slice(5).replace('-', '/')
+  const sun = round.candidates.filter((m) => isSundayDinner(m))
+  // Sunday family dinner: its ideas come first under their own heading, then the weeknights (one numbering).
+  if (sun.length && sun.length < round.candidates.length && round.candidates.slice(0, sun.length).every((m) => isSundayDinner(m))) {
+    const lines = pickLines(round.candidates, showCarbs).split('\n')
+    const weeknights = Math.max(round.picks_needed - 1, 1)
+    return `DinnerDrop — ${familyName}'s dinners for the week of ${week}\n\nSUNDAY FAMILY DINNER (pick 1):\n${lines.slice(0, sun.length).join('\n')}\n\nWEEKNIGHTS (pick up to ${weeknights}):\n${lines.slice(sun.length).join('\n')}\n\nReply with the numbers you WANT: 1 for Sunday and up to ${weeknights} for the week (e.g. "${1} ${sun.length + 1} ${sun.length + 3}"). The top picks make the week. Text ADD + anything for the grocery list.`
+  }
+  return `DinnerDrop — ${familyName}'s dinner ideas for the week of ${week}:\n${pickLines(round.candidates, showCarbs)}\n\nReply with the numbers you WANT (pick up to ${round.picks_needed}, e.g. "1 3 5"). The top picks make the week. Text ADD + anything for the grocery list.`
 }
 
 /**
@@ -1027,7 +1035,9 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
 
   // 1. open round (reuse one already open for this week unless forced)
   const picksNeeded = trip ? Math.min(Math.max(trip.nights.length, 1), 7) : Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
-  const count = Math.min(Math.max(settings.texting.optionsToText, picksNeeded, 5), 12)
+  // Weeknight ideas plus the family's own number of Sunday dinner ideas (texted as two groups).
+  const sundayN = trip ? 0 : sundayOptions(settings)
+  const count = Math.min(Math.max(settings.texting.optionsToText, picksNeeded, 5), 12) + sundayN
   let round = await openRound(admin, o.household_id)
   if (round && round.week_start !== weekStart) { await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id); round = null }
   if (opts.resend && !round) { report.skipped.push('no open vote to resend'); return report }
@@ -1042,7 +1052,10 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
       const m = await resolveSuggestion(admin, o, sug, [...meals, ...ideaMeals].map((x) => x.name))
       if (m) { ideaMeals.push(m); usedIdeas.push(sug.name) }
     }
-    const candidates = [...meals.slice(0, Math.max(picksNeeded, count - ideaMeals.length)), ...ideaMeals]
+    // Sunday ideas first (their own group in the text), then the weeknights and the family's own ideas.
+    const sunIdeas = sundayN ? meals.filter((m) => isSundayDinner(m)).slice(0, sundayN) : []
+    const weekIdeas = meals.filter((m) => !sunIdeas.includes(m))
+    const candidates = [...sunIdeas, ...weekIdeas.slice(0, Math.max(picksNeeded, count - sunIdeas.length - ideaMeals.length)), ...ideaMeals]
     const { data: created } = await admin.from('vote_rounds').insert({ household_id: o.household_id, user_id: o.id, week_start: weekStart, candidates, picks_needed: picksNeeded }).select('*').single()
     round = created as VoteRound
     report.planned = true
@@ -1262,9 +1275,11 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   // The family's weekly protein mix still holds: if fish wins three spots but the mix says one,
   // the next most-voted dinner that fits takes the extra spot.
   const mix = hasMix(settings.food.mix) ? scaleMix(settings.food.mix, round.picks_needed) : null
-  const chosen = mix
-    ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.c.protein, r.c.name)).map((r) => r.c)
-    : ranked.slice(0, round.picks_needed).map((r) => r.c)
+  const chosenR = mix
+    ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.c.protein, r.c.name))
+    : ranked.slice(0, round.picks_needed)
+  // Sunday family dinner: the top-voted Sunday idea always makes the week (one, not two).
+  const chosen = keepOneSunday(chosenR, ranked, (r) => r.c, settings.plan.sundayDinner?.on === true).map((r) => r.c)
   // Shopping trips: a trip's vote fills only that trip's nights.
   const tcfg = tripsConfig(settings)
   const tripNights = isClassic(tcfg) ? null : tripInstances(tcfg, round.week_start).find((t) => t.key === round.week_start)?.nights.map((n) => n.day) ?? null

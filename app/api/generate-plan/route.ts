@@ -117,7 +117,8 @@ export async function POST(request: Request) {
     const cookDays = trip ? trip.nights.map((n) => n.day) : settings.plan.cookDays.length ? settings.plan.cookDays : (['mon', 'tue', 'wed', 'thu', 'fri'] as Weekday[])
     const dinnersPerWeek = trip ? Math.min(Math.max(trip.nights.length, 1), 7) : Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
     const requested = Number(body.optionsCount) > 0 ? Number(body.optionsCount) : settings.plan.optionsCount
-    const optionsCount = Math.min(Math.max(requested, dinnersPerWeek, 5), 12)
+    // Up to 12 ideas, plus up to 5 Sunday dinner ideas when the family has Sunday dinner on.
+    const optionsCount = Math.min(Math.max(requested, dinnersPerWeek, 5), settings.plan.sundayDinner?.on ? 17 : 12)
     // Weekly protein mix (Settings → Food): counts for the cooked dinners, scaled to the options offered.
     // "How often" (every other week / once a month) can sit a group out this week, based on the last month's plans.
     let mix = hasMix(settings.food.mix) ? settings.food.mix : null
@@ -132,7 +133,8 @@ export async function POST(request: Request) {
     const quota = mix ? scaleMix(mix, optionsCount) : undefined
     // Sunday family dinner (Nov 7 2026): two of the options are bigger sit-down Sunday dinners, written fresh.
     const sunday = settings.plan.sundayDinner?.on && cookDays.includes('sun') ? settings.plan.sundayDinner : null
-    const sundaySlots = sunday && mode === 'fresh' ? 2 : 0
+    const sundayTimes = sunday ? (sunday.times?.length ? sunday.times : [sunday.minutes]) : []
+    const sundaySlots = sunday && mode === 'fresh' ? Math.min(Math.max(Number(sunday.options) || 3, sundayTimes.length, 2), 5, optionsCount - 3) : 0
     const libTarget = optionsCount - sundaySlots
     const nightTimes = cookDays.map((d) => ({ day: d, label: WEEKDAY_LABEL[d], minutes: cookTimeFor(d, settings, profile.maxCookTime) }))
     const fastestNight = Math.min(...nightTimes.map((n) => n.minutes))
@@ -361,8 +363,11 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
     const nightLines = nightTimes.map((n) => `- ${n.label}: ${n.minutes} min`).join('\n')
     for (const st of selectedStyles(settings.food)) if (st.rule) constraintLines.push(st.rule)
     if (sunday) {
-      const n = Math.min(2, generateCount)
-      constraintLines.push(`Sunday is this family's sit-down family dinner, with up to ${sunday.minutes} minutes. Make ${n} of these options Sunday dinners (suggestedNight "Sunday"): a bigger, comforting dinner the family sits down to, like a roast chicken, pot roast, lasagna, baked ziti, ham, braised short ribs or a roast with vegetables, with one or two real sides (mashed potatoes, rolls, a salad, green beans). For those Sunday options only, up to 10 ingredients and 6 steps are fine.${sunday.extraForMonday ? ` Make the Sunday options with ${Math.round(profile.familySize * 1.5)} servings so there are leftovers for Monday, and say so in the description.` : ''} The other options are regular weeknight dinners for the weeknights.`)
+      const n = Math.min(Math.max(sundaySlots, 2), generateCount)
+      // (n Sunday options; the rest of generateCount are weeknight dinners)
+      const label = (m: number) => (m >= 240 ? 'all afternoon (3 to 4 hours)' : m >= 120 ? 'about 2 hours' : 'about 1 hour')
+      const timeLine = sundayTimes.length > 1 ? ` Mix the Sunday options' times: ${sundayTimes.map(label).join(', ')} (one of each where you can).` : ` Each takes ${label(sundayTimes[0] ?? sunday.minutes)}.`
+      constraintLines.push(`Sunday is this family's sit-down family dinner. Make ${n} of these options Sunday dinners (suggestedNight "Sunday"): a bigger, comforting dinner the family sits down to, like a roast chicken, pot roast, lasagna, baked ziti, ham, braised short ribs or a roast with vegetables, with one or two real sides (mashed potatoes, rolls, a salad, green beans).${timeLine} For those Sunday options only, up to 10 ingredients and 6 steps are fine.${sunday.extraForMonday ? ` Make the Sunday options with ${Math.round(profile.familySize * 1.5)} servings so there are leftovers for Monday, and say so in the description.` : ''} The other options are regular weeknight dinners for the weeknights.`)
     }
     const timeRule = fastestNight === slowestNight
       ? `- Every dinner must be completable in ${slowestNight} minutes or less, prep included.`

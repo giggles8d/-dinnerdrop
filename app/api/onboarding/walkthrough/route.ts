@@ -53,8 +53,9 @@ export async function POST(request: Request) {
     const ev = (b.mixEvery && typeof b.mixEvery === 'object' ? b.mixEvery : {}) as Record<string, unknown>
     settings.food.mixEvery = Object.fromEntries(MIX_GROUPS.map((g) => [g.key, Number(ev[g.key])]).filter(([, v]) => v === 2 || v === 4)) as Settings['food']['mixEvery']
   }
-  const sun = (b.sunday && typeof b.sunday === 'object' ? b.sunday : {}) as { on?: boolean; minutes?: number; extraForMonday?: boolean }
-  if (sun.on) setSundayDinner(settings, true, Number(sun.minutes) || 120, sun.extraForMonday !== false)
+  const sun = (b.sunday && typeof b.sunday === 'object' ? b.sunday : {}) as { on?: boolean; minutes?: number; times?: number[]; options?: number; extraForMonday?: boolean }
+  if (sun.on) setSundayDinner(settings, true, Array.isArray(sun.times) && sun.times.length ? sun.times.map(Number) : [Number(sun.minutes) || 120], sun.extraForMonday !== false)
+  if (sun.on) settings.plan.sundayDinner.options = Math.min(Math.max(Number(sun.options) || 3, 2), 5)
   settings.food.storeBrands = b.storeBrands === true
   settings.texting.voteDay = voteDay
   if (people.some((x) => x.role === 'kid')) settings.food.kidFriendly = true
