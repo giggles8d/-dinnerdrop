@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { sendSms, smsConfigured } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
+import { leaderLabel } from '@/lib/family-ask'
 import { mergeSettings } from '@/lib/settings'
 import { openRound, sendOptIn, voteBody, type MemberRow } from '@/lib/texting'
 import { deliveryProblem, deliveryStatuses, intentLabel } from '@/lib/text-log'
@@ -40,7 +41,7 @@ export async function GET(req: Request) {
   ])
   const ms = (members ?? []) as MemberRow[]
   const delivery = await deliveryStatuses(ms.map((m) => m.phone).filter((p): p is string => !!p), Math.min(days, 14))
-  const first = (profile.full_name || 'You').trim().split(' ')[0]
+  const first = leaderLabel(profile)
   const byId = new Map(ms.map((m) => [m.id, m]))
 
   const messages = (rows ?? []).map((r) => {
@@ -94,7 +95,7 @@ export async function POST(req: Request) {
   const m = mrow as MemberRow | null
   if (!m) return NextResponse.json({ error: 'That person isn\'t in your family.' }, { status: 404 })
   const settings = mergeSettings(profile.settings)
-  const first = (profile.full_name || 'Your planner').trim().split(' ')[0]
+  const first = leaderLabel(profile)
 
   if (b.action === 'plain_text') {
     const ids = new Set(settings.texting.plainTextIds)

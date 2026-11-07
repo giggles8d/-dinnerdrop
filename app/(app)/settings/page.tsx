@@ -744,6 +744,13 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <div className="rounded-xl border border-border p-4 space-y-3">
+                  <Field label="What does your family call you?" hint={`Texts to the family use this name: "${settings.texting.leaderTitle.trim() || (profile?.full_name || 'Sarah').trim().split(' ')[0]} changed Tuesday to tacos." Leave blank to use your first name.`}>
+                    <input value={settings.texting.leaderTitle} onChange={(e) => patch((s) => { s.texting.leaderTitle = e.target.value.slice(0, 24) })} placeholder="Mom, Dad, Head Chef, Grandma…" className="w-full sm:w-72 rounded-md border border-input bg-background px-3 py-2 text-sm" />
+                  </Field>
+                  <Toggle checked={settings.texting.reviewFirst} onChange={(v) => patch((s) => { s.texting.reviewFirst = v })} label="Let me check the vote before the family gets it" hint="You get the dinner list first. Drop, swap or add dinners (here or by text), then send it. If you don't, it goes out on its own." />
+                  {settings.texting.reviewFirst && (
+                    <Field label="If I don't send it, send it after"><Select value={String(settings.texting.reviewHours)} onChange={(v) => patch((s) => { s.texting.reviewHours = Number(v) })} options={['1', '2', '3', '4', '6', '8', '12'].map((n) => ({ value: n, label: `${n} hour${n === '1' ? '' : 's'}` }))} /></Field>
+                  )}
                   <Field label="Your number" hint="Where the &quot;everyone&apos;s voted — add the rest and approve the order&quot; text goes.">
                     <input value={settings.texting.ownerPhone} onChange={(e) => patch((s) => { s.texting.ownerPhone = e.target.value })} placeholder="+1 555 123 4567" className="w-full sm:w-72 rounded-md border border-input bg-background px-3 py-2 text-sm" />
                   </Field>

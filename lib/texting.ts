@@ -23,6 +23,7 @@ import { walmartUrlsIn, resolveWalmartLink, type WalmartLink } from '@/lib/store
 import { cartUrl } from '@/lib/walmart'
 import type { Meal } from '@/types'
 import { buildFamilyRecipes, describeDinnerFromPhotos, saveFamilyRecipes } from '@/lib/family-recipes'
+import { leaderLabel, getDraft, setDraft, clearDraft, draftRoundIds, dueDrafts, parseLeaderCommand, getAsk, putAsk, openAsks, askIsLive, askSummary, askAck, askText, ASK_WINDOW_MIN, type LeaderCommand, type FamilyAsk } from '@/lib/family-ask'
 import { needsConfirmation, activeNeeds, applyNeeds, NEEDS_TIMING_ASK, type MemberNeed } from '@/lib/member-needs'
 
 export interface MemberRow {
@@ -249,6 +250,7 @@ export type Parsed =
   | { kind: 'tally' } | { kind: 'tonight' } | { kind: 'recipe'; number: number }
   | { kind: 'suggest'; items: string[] }
   | { kind: 'save_recipe'; text: string }
+  | { kind: 'text_only' }
   | { kind: 'unknown' }
 
 /** "save this: kielbasa and pierogies", "our recipe - …", "family recipe: …" → the family's own dinner, saved to favorites. */
@@ -267,6 +269,7 @@ export function parseInbound(raw: string): Parsed {
   if (new RegExp(`^(TONIGHT|WHAT'?S (FOR )?DINNER TONIGHT|DINNER TONIGHT|WHAT'?S TONIGHT|WHAT ARE WE (HAVING|EATING) TONIGHT)${end}`).test(u)) return { kind: 'tonight' }
   if (new RegExp(`^(MENU|DINNERS|PLAN|THIS WEEK|WHAT'?S FOR DINNER( THIS WEEK)?|WHAT'?S THE PLAN)${end}`).test(u)) return { kind: 'menu' }
   if (new RegExp(`^(TALLY|RESULTS?|SCORE|STANDINGS|VOTES?|VOTE (SO FAR|STATUS|COUNT|RESULTS?)|WHO('?S| HAS)? VOTED|WHAT'?S THE VOT(E|ING)( SO FAR)?|HOW'?S THE VOT(E|ING)( GOING)?|WHO'?S WINNING)${end}`).test(u)) return { kind: 'tally' }
+  if (new RegExp(`^(TEXT ONLY|TEXT|PLAIN|PLAIN TEXT|NO PICS|NO PICTURES?|WORDS ONLY|JUST TEXT|SEND (IT )?AS TEXT)${end}`).test(u)) return { kind: 'text_only' }
   const saveRecipe = t.match(SAVE_RECIPE_RE)
   if (saveRecipe && saveRecipe[1].trim().length >= 3 && !/^#?\s*\d{1,2}[\s.!?]*$/.test(saveRecipe[1])) return { kind: 'save_recipe', text: saveRecipe[1].trim() }
   const recipe = u.match(/^(?:RECIPE|INGREDIENTS(?: FOR)?|HOW (?:DO I|DO YOU|TO) (?:MAKE|COOK))\s*#?\s*(\d{1,2})[\s.!?]*$/)
@@ -433,6 +436,24 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   // A member saved as "Me" (the planner's own row) isn't greeted as "Me"; texts relayed to others use the planner's name.
   const hi = /^(me|myself|self|you|i)$/i.test((m.name ?? '').trim()) ? '' : (m.name ?? '').trim()
   const sender = hi || (m.profile_id ? family : 'A family member')
+  // The person in charge: review / change the week, ask the family, takeout.
+  if (owner && m.profile_id === owner.id) {
+    const cmd = parseLeaderCommand(body)
+    if (cmd) {
+      const reply = await leaderCommand(admin, owner, m, cmd)
+      if (reply) return { reply, handled: true, member: m }
+    }
+  } else if (owner) {
+    // An answer to the family question / takeout order the person in charge just sent.
+    const ask = await getAsk(admin, m.household_id)
+    const capture = ['unknown', 'optin', 'none', 'suggest', 'allgood', 'thanks', 'tonight'].includes(parsed.kind)
+    if (askIsLive(ask) && capture && ask.asked.some((p) => p.id === m.id) && !ask.answers[m.id]) {
+      ask.answers[m.id] = { name: m.name, text: body.trim().slice(0, 300), at: new Date().toISOString() }
+      await putAsk(admin, m.household_id, ask)
+      if (ask.asked.every((p) => ask.answers[p.id])) await finishAsk(admin, m.household_id, ask, owner)
+      return { reply: askAck(ask, leaderLabel(owner)), handled: true, member: m }
+    }
+  }
 
   // Reply to "Want this on this week's dinners too?" (asked after a health need is saved).
   if (ctx.askedNeedsTiming && owner) {
@@ -565,6 +586,14 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const r = src[parsed.number - 1]
       if (!r) return { reply: src.length ? `I have ${src.length} dinners numbered 1–${src.length}. Text RECIPE + the number, e.g. "recipe 2".` : `No dinners to show yet.`, handled: true, member: m }
       return { reply: recipeText(r), handled: true, member: m }
+    }
+    case 'text_only': {
+      if (!owner) return { reply: '', handled: false }
+      const raw = (owner.settings as Record<string, unknown> | null) ?? {}
+      const ids = new Set(settings.texting.plainTextIds); ids.add(m.id)
+      await admin.from('profiles').update({ settings: { ...raw, texting: { ...((raw.texting as object) ?? {}), plainTextIds: Array.from(ids) } } }).eq('id', owner.id)
+      if (round) return { reply: voteBody(leaderLabel(owner), round), handled: true, member: m }
+      return { reply: `Done${hi ? `, ${hi}` : ''}: your votes will come as plain text from now on.`, handled: true, member: m }
     }
     case 'save_recipe': {
       if (!owner) return { reply: '', handled: false }
@@ -911,7 +940,8 @@ Facts you may answer from (the planner is ${facts.family}):
 - Tonight's recipe: ${facts.tonightRecipe ?? 'none'}
 - The household: ${facts.people?.length ? facts.people.join(' | ') : 'unknown'}
 - ${facts.ownerMessage ? `${facts.family} recently texted the family: "${facts.ownerMessage}"` : `${facts.family} hasn't texted the family recently`}
-- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product or a store flyer, and any food, cooking or grocery question.` : ''}
+- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product, a store flyer, a dinner (box, plate or recipe card) or a screenshot, SAVE THIS + a dinner the way they make it (saved to the family's own recipes, which come up in future votes — this is how the family gets "our normal dinners"), TEXT ONLY (the vote comes as plain words instead of a picture, for phones that don't show pictures), and any food, cooking or grocery question.
+- Never offer or promise something texting can't do (e.g. sending dinners one at a time, or calling someone). If they can't see the pictures, tell them to reply TEXT ONLY.` : ''}
 
 Return ONLY JSON:
 {"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"likes":[],"dislikes":[],"allergies":[],"needs":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
@@ -1043,7 +1073,7 @@ export function voteBody(familyName: string, round: VoteRound, showCarbs = false
  *  3. the candidates to everyone who has, asking for their picks
  * When everyone has answered (or after 24h) the top picks become the week.
  */
-export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opts: { now?: Date; force?: boolean; resend?: boolean } = {}): Promise<CycleReport> {
+export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opts: { now?: Date; force?: boolean; resend?: boolean; sendDraft?: boolean } = {}): Promise<CycleReport> {
   const now = opts.now ?? new Date()
   const { data: o } = await admin
     .from('profiles')
@@ -1089,6 +1119,27 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     round = created as VoteRound
     report.planned = true
     if (usedIdeas.length) await markSuggestionsUsed(admin, o, usedIdeas)
+  }
+
+  // Review first: the person in charge checks the vote (drop / swap / add) before the family gets it.
+  if (!opts.resend && !opts.sendDraft) {
+    const draft = await getDraft(admin, o.household_id)
+    if (draft && draft.roundId === round.id) { report.skipped.push('waiting for review'); return report }
+    if (report.planned && settings.texting.reviewFirst) {
+      const sendAt = new Date(now.getTime() + Math.min(Math.max(settings.texting.reviewHours, 1), 12) * 3600000)
+      await setDraft(admin, o.household_id, { roundId: round.id, ownerId: o.id, sendAt: sendAt.toISOString() })
+      const at = new Intl.DateTimeFormat('en-US', { timeZone: o.timezone || 'America/New_York', hour: 'numeric', minute: '2-digit' }).format(sendAt)
+      const to = await ownerPhone(admin, o as OwnerRow)
+      const body = `DinnerDrop: this week's vote is ready for you to check before the family sees it:\n${pickLines(round.candidates)}\n\nReply SEND to send it now, DROP 3, SWAP 3 FOR tacos, or ADD DINNER chili. Or change it here: ${APP_URL}/vote-review\nIt goes to the family at ${at} if you don't change anything.`
+      const r = to ? await sendSms(to, body, menuImageUrl(round.id)) : { sid: undefined }
+      await admin.from('sms_messages').insert({ household_id: o.household_id, direction: 'out', to_number: to, body, intent: `vote_review:${round.id}`, twilio_sid: r.sid ?? null })
+      report.skipped.push('sent to the person in charge for review')
+      return report
+    }
+  }
+  if (opts.sendDraft) {
+    await clearDraft(admin, o.household_id)
+    await admin.from('vote_rounds').update({ created_at: new Date().toISOString() }).eq('id', round.id)
   }
 
   // 2 + 3. members
@@ -1150,17 +1201,26 @@ async function fetchMedia(sid: string): Promise<Array<{ base64: string; mediaTyp
 }
 
 /** A picture of a product / label / empty box → the grocery item to buy. */
-async function itemFromPhoto(img: { base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' }, caption: string): Promise<CleanItem | null> {
+type PhotoRead = { kind: 'product'; name: string; quantity: string; unit: string } | { kind: 'dinner'; dish: string } | { kind: 'other'; description: string }
+/** What a texted photo is: a product to buy, a dinner (box / plate / recipe card), or something else (a screenshot, a question). */
+async function readPhoto(img: { base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' }, caption: string): Promise<PhotoRead | null> {
   try {
     const text = await generateWithClaudeImage(
-      `This photo was texted to a family grocery list. Identify the grocery product to buy (brand and size if visible, e.g. "Chobani Vanilla Greek Yogurt 32 oz", "Purina Pro Plan Chicken & Rice dog food 35 lb"). ${caption ? `The sender also wrote: "${caption}".` : ''} Return ONLY JSON {"name":"<product>","quantity":"1","unit":"<whole|bag|box|can|jar|bottle|pack|lb|oz|gallon|dozen>"}; if it isn't a grocery/household product, return {"name":""}.`,
-      img, 200,
+      `A family member texted this photo to DinnerDrop, their family dinner planner (it runs their dinner vote and grocery list).${caption ? ` They also wrote: "${caption}".` : ' No message came with it.'}
+Decide what it is:
+- "product": a grocery or household product they want bought (a package, bottle, can, an empty container, a shelf item). Give its name with brand and size if visible.
+- "dinner": a cooked meal, a boxed/meal-kit dinner, or a written/printed recipe they want to make or keep. Give a one-line plain description the way a family would say it ("boxed scalloped potatoes with ham and peas").
+- "other": anything else — a screenshot (for example of DinnerDrop's dinner-vote picture or a text), a question, a receipt, a person, a pet. Describe exactly what's shown in one or two plain sentences, including any readable text that matters.
+Return ONLY JSON: {"kind":"product","name":"","quantity":"1","unit":"whole|bag|box|can|jar|bottle|pack|lb|oz|gallon|dozen"} or {"kind":"dinner","dish":""} or {"kind":"other","description":""}`,
+      img, 400,
     )
-    const j = parseClaudeJSON<{ name?: string; quantity?: string | number; unit?: string }>(text)
-    if (!j?.name?.trim()) return null
-    return { name: j.name.trim(), quantity: String(j.quantity ?? '1'), unit: (j.unit ?? '').trim() }
+    const j = parseClaudeJSON<{ kind?: string; name?: string; quantity?: string | number; unit?: string; dish?: string; description?: string }>(text)
+    if (j.kind === 'product' && j.name?.trim()) return { kind: 'product', name: j.name.trim(), quantity: String(j.quantity ?? '1'), unit: (j.unit ?? '').trim() }
+    if (j.kind === 'dinner' && j.dish?.trim()) return { kind: 'dinner', dish: j.dish.trim().slice(0, 300) }
+    return { kind: 'other', description: (j.description ?? '').trim().slice(0, 400) || 'a photo' }
   } catch { return null }
 }
+
 
 async function fetchInbound(sinceDays = 2): Promise<TwilioMsg[]> {
   const sid = process.env.TWILIO_ACCOUNT_SID, token = process.env.TWILIO_AUTH_TOKEN, from = process.env.TWILIO_FROM_NUMBER
@@ -1215,6 +1275,16 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
       try {
         if (Number(m.num_media) > 0) {
           const pr = await handlePhoto(admin, m)
+          if (pr?.passText) {
+            const r2 = await handleInbound(admin, m.from, pr.passText, null)
+            if (r2.handled && r2.reply) {
+              const sent = await sendSms(m.from, r2.reply)
+              await admin.from('sms_messages').insert({ household_id: pr.householdId, member_id: pr.memberId, direction: 'out', to_number: m.from, body: r2.reply, intent: 'reply', twilio_sid: sent.sid ?? null })
+              report.replies++
+            }
+            report.handled++
+            continue
+          }
           if (pr) { report.handled++; if (pr.reply) { const sent = await sendSms(m.from, pr.reply); await admin.from('sms_messages').insert({ household_id: pr.householdId, member_id: pr.memberId, direction: 'out', to_number: m.from, body: pr.reply, intent: 'reply', twilio_sid: sent.sid ?? null }); report.replies++ } }
           if (!m.body.trim() || pr) continue
         }
@@ -1241,12 +1311,14 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
   }
   try { report.completions = await checkVoteCompletion(admin) } catch (e) { report.errors.push(String(e)) }
   try { await dinnerAskSweep(admin) } catch (e) { report.errors.push(`dinnerAsk: ${String(e)}`) }
+  try { await draftSweep(admin) } catch (e) { report.errors.push(`drafts: ${String(e)}`) }
+  try { await familyAskSweep(admin) } catch (e) { report.errors.push(`asks: ${String(e)}`) }
   return report
 }
 
 
 /** MMS from a member: every attached picture becomes a grocery item (with the caption as a hint). */
-async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply: string; householdId: string; memberId: string } | null> {
+async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply: string; householdId: string; memberId: string; passText?: string } | null> {
   const phone = normalizePhone(m.from) ?? m.from
   const { data: rows } = await admin.from('household_members').select('*').eq('phone', phone).limit(1)
   const member = rows?.[0] as MemberRow | undefined
@@ -1290,17 +1362,40 @@ async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply
     } catch (e) { console.error('flyer import failed', e) }
   }
   if (saleCount) return { reply: `Got this week's sales${saleStore ? ` at ${saleStore}` : ''} — ${saleCount} items. The next menu will be built around them. 🏷️`, householdId: member.household_id, memberId: member.id }
+  const dinners: string[] = []
+  const seen: string[] = []
   for (const img of media) {
-    const it = await itemFromPhoto(img, caption)
-    if (!it) continue
+    const read = await readPhoto(img, caption)
+    if (!read) continue
+    if (read.kind === 'dinner') { dinners.push(read.dish); continue }
+    if (read.kind === 'other') { seen.push(read.description); continue }
+    const it = { name: read.name, quantity: read.quantity, unit: read.unit }
     const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
     const hit = (existing ?? []).find((e) => normalizeItemName(e.name) === normalizeItemName(it.name))
     if (hit) { if (hit.have) await admin.from('list_items').update({ have: false }).eq('id', hit.id) }
     else await admin.from('list_items').insert({ user_id: owner.id, household_id: member.household_id, week_start: weekStart, name: it.name, quantity: it.quantity, unit: it.unit || null, category: guessCategory(it.name), search_term: it.name, source: 'sms', added_by: member.name })
     added.push(`${it.name}${it.unit && it.unit !== 'whole' ? ` (${it.quantity} ${it.unit})` : ''}`)
   }
-  if (!added.length) return { reply: media.length ? `I couldn't tell what to buy from that photo — text me the name instead (e.g. "add Cheerios").` : `I couldn't open that picture. Try sending it again, or text the name.`, householdId: member.household_id, memberId: member.id }
-  return { reply: `Added from your photo: ${added.join(', ')}. ✅`, householdId: member.household_id, memberId: member.id }
+  const parts: string[] = []
+  if (added.length) parts.push(`Added from your photo: ${added.join(', ')}. ✅`)
+  if (dinners.length) {
+    // The person in charge's dinner photo is saved as a family recipe; anyone else's goes on the idea list for a vote.
+    if (member.profile_id === owner.id) {
+      try {
+        const { data: prof } = await admin.from('profiles').select('family_size, dietary_needs').eq('id', owner.id).single()
+        const meals = await buildFamilyRecipes(dinners.slice(0, 2), { servings: Number(prof?.family_size) || 4, dietary: (prof?.dietary_needs as string[] | null) ?? [] })
+        const r = await saveFamilyRecipes(admin, owner.id, meals)
+        parts.push(r.saved.length ? `Saved to your family recipes: ${r.saved.join(', ')}. 🍽️` : `That's already in your family recipes.`)
+      } catch (e) { console.error('photo dinner save failed', e) }
+    } else {
+      await addSuggestions(admin, owner, member.name, dinners.map((d) => d.slice(0, 60)))
+      parts.push(`Nice! ${dinners.map((d) => d.slice(0, 60)).join(', ')} ${dinners.length === 1 ? 'is' : 'are'} on the family's dinner ideas for a coming vote. 🍽️ (Text "save this: " + the dinner to save it as a family recipe.)`)
+    }
+  }
+  if (parts.length) return { reply: parts.join('\n'), householdId: member.household_id, memberId: member.id }
+  // A screenshot or something else: let the conversation handle it, with what the photo shows.
+  if (seen.length || caption) return { reply: '', householdId: member.household_id, memberId: member.id, passText: `${caption ? `${caption}\n` : ''}[They sent a photo. It shows: ${seen.join(' / ') || 'something unclear'}]` }
+  return { reply: media.length ? `I couldn't make out that photo. Can you tell me what it is or what you need?` : `I couldn't open that picture. Try sending it again.`, householdId: member.household_id, memberId: member.id }
 }
 
 /**
@@ -1310,8 +1405,10 @@ async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply
 export async function checkVoteCompletion(admin: SupabaseClient, opts: { maxAgeHours?: number } = {}): Promise<number> {
   const maxAge = (opts.maxAgeHours ?? 24) * 3600000
   const { data: rounds } = await admin.from('vote_rounds').select('*').eq('status', 'open')
+  const drafts = await draftRoundIds(admin)
   let n = 0
   for (const round of (rounds ?? []) as VoteRound[]) {
+    if (drafts.has(round.id)) continue   // still with the person in charge for review
     const { data: asked } = await admin.from('sms_messages').select('member_id').eq('intent', `vote_request:${round.id}`)
     const askedIds = Array.from(new Set((asked ?? []).map((a) => a.member_id).filter(Boolean))) as string[]
     const expired = Date.now() - new Date(round.created_at).getTime() > maxAge
@@ -1361,10 +1458,147 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
 
   const { data: names } = ctx.askedIds.length ? await admin.from('household_members').select('name').in('id', ctx.askedIds) : { data: [] as Array<{ name: string }> }
   const who = (names ?? []).map((x) => x.name).join(', ')
-  const lines = saved.map((m) => `• ${m.day.slice(0, 3)}: ${m.name}${tally[m.name] ? ` (${tally[m.name]} ${tally[m.name] === 1 ? 'vote' : 'votes'}${voters[m.name]?.length ? ` — ${voters[m.name].join(', ')}` : ''})` : ''}`)
+  const lines = saved.map((m, i) => `${i + 1}. ${m.day.slice(0, 3)}: ${m.name}${tally[m.name] ? ` (${tally[m.name]} ${tally[m.name] === 1 ? 'vote' : 'votes'}${voters[m.name]?.length ? ` — ${voters[m.name].join(', ')}` : ''})` : ''}`)
   const head = ctx.everyone ? `DinnerDrop: everyone's voted${who ? ` (${who})` : ''}.` : `DinnerDrop: voting closed${who ? ` — heard from ${who}` : ''}.`
-  const body = `${head} The week is set:\n${lines.join('\n')}\n\nNext: add anything else you need to the list, then approve the order → ${APP_URL}/grocery-list`
+  const body = `${head} The week is set:\n${lines.join('\n')}\n\nWant a change? Reply SWAP 2 FOR tacos. Next: add anything else you need to the list, then approve the order → ${APP_URL}/grocery-list`
   const to = await ownerPhone(admin, owner)
   const r = to ? await sendSms(to, body) : { sid: undefined }
   await admin.from('sms_messages').insert({ household_id: round.household_id, direction: 'out', to_number: to, body, intent: 'vote_complete', twilio_sid: r.sid ?? null })
+}
+
+/* ------------------------------------------------------------------ */
+/* The person in charge: review, change the week, ask the family      */
+/* ------------------------------------------------------------------ */
+
+async function ownerForResolve(admin: SupabaseClient, ownerId: string) {
+  const { data } = await admin.from('profiles').select('id, household_id, full_name, settings, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs').eq('id', ownerId).single()
+  return data
+}
+
+/** A dinner for a swap/add: one of their favorites by name, else the library / AI (like a family idea). */
+export async function dinnerFor(admin: SupabaseClient, ownerId: string, dish: string, exclude: string[]): Promise<Meal | null> {
+  const want = dish.trim().toLowerCase()
+  const { data: favs } = await admin.from('favorites').select('meal_name, meal_data').eq('user_id', ownerId)
+  const fav = (favs ?? []).find((f) => String(f.meal_name).toLowerCase() === want) ?? (favs ?? []).find((f) => String(f.meal_name).toLowerCase().includes(want) && want.length >= 4)
+  if (fav) return { ...(fav.meal_data as Meal) }
+  const o = await ownerForResolve(admin, ownerId)
+  if (!o) return null
+  const m = await resolveSuggestion(admin, o, { name: dish.slice(0, 60), by: '', at: new Date().toISOString() } as Suggestion, exclude)
+  return m ? { ...m, ideaBy: undefined } : null
+}
+
+/** Change a draft vote (not yet sent). Returns the updated round, or an error message. */
+export async function editDraftRound(admin: SupabaseClient, ownerId: string, round: VoteRound, op: { kind: 'drop'; n: number } | { kind: 'swap'; n: number; dish?: string; meal?: Meal } | { kind: 'add'; dish?: string; meal?: Meal }): Promise<{ round?: VoteRound; error?: string; name?: string }> {
+  const cands = [...round.candidates]
+  const names = cands.map((c) => c.name)
+  if (op.kind === 'drop') {
+    if (!cands[op.n - 1]) return { error: `There's no #${op.n}.` }
+    if (cands.length <= round.picks_needed) return { error: `The vote needs at least ${round.picks_needed} dinners. Swap it instead: SWAP ${op.n} FOR tacos.` }
+    const [gone] = cands.splice(op.n - 1, 1)
+    await admin.from('vote_rounds').update({ candidates: cands }).eq('id', round.id)
+    return { round: { ...round, candidates: cands }, name: gone.name }
+  }
+  if (op.kind === 'swap' && !cands[op.n - 1]) return { error: `There's no #${op.n}.` }
+  if (cands.length >= 15 && op.kind === 'add') return { error: 'The vote already has 15 dinners. Drop one first.' }
+  const meal = op.meal ?? (op.dish ? await dinnerFor(admin, ownerId, op.dish, names) : null)
+  if (!meal) return { error: `I couldn't make "${op.dish ?? 'that'}" fit your family's rules. Try another dinner.` }
+  if (op.kind === 'swap') cands[op.n - 1] = { ...meal, day: cands[op.n - 1].day }
+  else cands.push({ ...meal, day: '' })
+  await admin.from('vote_rounds').update({ candidates: cands }).eq('id', round.id)
+  return { round: { ...round, candidates: cands }, name: meal.name }
+}
+
+/** After the vote: replace dinner #n of the week (in the order texted) and tell the family. */
+export async function swapPlanDinner(admin: SupabaseClient, owner: OwnerRow, n: number, dish: string | Meal): Promise<string> {
+  const plan = await latestPlan(admin, owner.id)
+  if (!plan?.meals?.length) return `There's no week planned yet to change.`
+  const old = plan.meals[n - 1]
+  if (!old) return `There's no #${n} this week. Text MENU to see the numbers.`
+  const meal = typeof dish === 'string' ? await dinnerFor(admin, owner.id, dish, plan.meals.map((m) => m.name)) : dish
+  if (!meal) return `I couldn't make "${typeof dish === 'string' ? dish : 'that'}" fit your family's rules. Try another dinner.`
+  const meals = [...plan.meals]
+  meals[n - 1] = { ...meal, day: old.day, suggestedNight: old.suggestedNight }
+  const total = meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
+  await admin.from('meal_plans').update({ meals, total_estimated_cost: total }).eq('id', plan.id)
+  const leader = leaderLabel(owner)
+  const { data: fam } = await admin.from('household_members').select('*').eq('household_id', owner.household_id)
+  let told = 0
+  for (const mm of (fam ?? []) as MemberRow[]) {
+    if (mm.profile_id === owner.id) continue
+    if (await textMember(admin, mm, `${leader} changed ${old.day || 'a night'}: ${meal.name} (instead of ${old.name}).`, 'plan_change')) told++
+  }
+  return `Done: ${old.day ? `${old.day} is now ` : ''}${meal.name} (was ${old.name}).${told ? ` I let the family know.` : ''} The grocery list updates on its own.`
+}
+
+/** Start a family question or takeout round. */
+export async function startFamilyAsk(admin: SupabaseClient, owner: OwnerRow, kind: FamilyAsk['kind'], text: string): Promise<{ sent: number; error?: string }> {
+  const { data: fam } = await admin.from('household_members').select('*').eq('household_id', owner.household_id)
+  const to = ((fam ?? []) as MemberRow[]).filter((mm) => mm.profile_id !== owner.id && mm.phone && mm.phone_opt_in_at && !mm.phone_opted_out)
+  if (!to.length) return { sent: 0, error: 'Nobody else has joined the family texts yet.' }
+  const ask: FamilyAsk = { id: crypto.randomUUID(), kind, question: kind === 'question' ? text : 'takeout', place: kind === 'takeout' ? text : undefined, at: new Date().toISOString(), asked: to.map((mm) => ({ id: mm.id, name: mm.name })), answers: {} }
+  await putAsk(admin, owner.household_id, ask)
+  const leader = leaderLabel(owner)
+  let sent = 0
+  for (const mm of to) if (await textMember(admin, mm, askText(ask, leader), `family_ask:${ask.id}`)) sent++
+  return { sent }
+}
+
+async function finishAsk(admin: SupabaseClient, householdId: string, ask: FamilyAsk, owner: OwnerRow): Promise<void> {
+  if (ask.done) return
+  ask.done = true
+  await putAsk(admin, householdId, ask)
+  const to = await ownerPhone(admin, owner)
+  if (!to) return
+  const body = askSummary(ask)
+  const r = await sendSms(to, body)
+  await admin.from('sms_messages').insert({ household_id: householdId, direction: 'out', to_number: to, body, intent: `ask_result:${ask.id}`, twilio_sid: r.sid ?? null })
+}
+
+/** Questions/takeout rounds whose time is up: send what came in. */
+export async function familyAskSweep(admin: SupabaseClient): Promise<number> {
+  let n = 0
+  for (const a of await openAsks(admin)) {
+    const mins = (Date.now() - new Date(a.at).getTime()) / 60000
+    if (mins < ASK_WINDOW_MIN[a.kind]) continue
+    const owner = await ownerForHousehold(admin, a.householdId)
+    if (owner) { await finishAsk(admin, a.householdId, a, owner); n++ }
+  }
+  return n
+}
+
+/** Draft votes nobody touched by their send time go out to the family. */
+export async function draftSweep(admin: SupabaseClient): Promise<number> {
+  let n = 0
+  for (const d of await dueDrafts(admin)) {
+    try { await startVoteCycle(admin, d.ownerId, { sendDraft: true }); n++ } catch (e) { console.error('draftSweep', d.ownerId, e) }
+  }
+  return n
+}
+
+/** What the person in charge texted: act on it. Null = not this kind of message after all (falls through). */
+async function leaderCommand(admin: SupabaseClient, owner: OwnerRow, m: MemberRow, cmd: LeaderCommand): Promise<string | null> {
+  if (cmd.kind === 'ask' || cmd.kind === 'takeout') {
+    const r = await startFamilyAsk(admin, owner, cmd.kind === 'ask' ? 'question' : 'takeout', cmd.kind === 'ask' ? cmd.question : cmd.place)
+    if (r.error) return r.error
+    return cmd.kind === 'ask'
+      ? `Asked ${r.sent} ${r.sent === 1 ? 'person' : 'people'}. I'll text you the answers when everyone's replied (or in an hour).`
+      : `Asked everyone for their order${cmd.place ? ` from ${cmd.place}` : ''}. I'll text you the full list when everyone's answered (or in 45 minutes).`
+  }
+  const draft = await getDraft(admin, owner.household_id)
+  const round = draft ? await openRound(admin, owner.household_id) : null
+  if (draft && round && round.id === draft.roundId) {
+    if (cmd.kind === 'send') {
+      const r = await startVoteCycle(admin, owner.id, { sendDraft: true })
+      return `Sent to ${r.voteTextsSent} ${r.voteTextsSent === 1 ? 'person' : 'people'}. 🗳️`
+    }
+    const r = cmd.kind === 'drop' ? await editDraftRound(admin, owner.id, round, { kind: 'drop', n: cmd.n })
+      : cmd.kind === 'swap' ? await editDraftRound(admin, owner.id, round, { kind: 'swap', n: cmd.n, dish: cmd.dish })
+      : await editDraftRound(admin, owner.id, round, { kind: 'add', dish: cmd.dish })
+    if (r.error || !r.round) return r.error ?? 'That didn\'t work. Try again.'
+    const what = cmd.kind === 'drop' ? `Took off ${r.name}.` : cmd.kind === 'swap' ? `#${cmd.n} is now ${r.name}.` : `Added ${r.name}.`
+    return `${what} The vote now:\n${pickLines(r.round.candidates)}\n\nReply SEND when it looks right.`
+  }
+  if (cmd.kind === 'swap') return swapPlanDinner(admin, owner, cmd.n, cmd.dish)
+  if (cmd.kind === 'send') return `There's no vote waiting for you to send.`
+  return null   // drop / add dinner outside a draft: let the normal handling take it
 }

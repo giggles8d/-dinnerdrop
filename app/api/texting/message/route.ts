@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { sendSms, smsConfigured } from '@/lib/notify'
 import { isFamilyProfile } from '@/lib/access'
+import { leaderLabel } from '@/lib/family-ask'
 
 /**
  * The planner's note to the family, by text.
@@ -30,7 +31,7 @@ export async function GET() {
     admin.from('household_members').select('id, name, phone, phone_opt_in_at, phone_opted_out').eq('household_id', profile.household_id),
   ])
   const byId = new Map((members ?? []).map((m) => [m.id, m.name as string]))
-  const first = (profile.full_name || 'You').trim().split(' ')[0]
+  const first = leaderLabel(profile)
   const messages = (rows ?? []).reverse().map((r) => ({
     id: r.id,
     who: r.direction === 'in' ? (byId.get(r.member_id) ?? 'Someone') : r.intent === 'owner_message' ? first : 'DinnerDrop',
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => ({})) as { message?: string }
   const message = String(body.message ?? '').trim().slice(0, 600)
   if (message.length < 2) return NextResponse.json({ error: 'Say something first.' }, { status: 400 })
-  const first = (profile.full_name || 'Your planner').trim().split(' ')[0]
+  const first = leaderLabel(profile)
   const { data: members } = await admin.from('household_members').select('id, name, phone, phone_opt_in_at, phone_opted_out, profile_id').eq('household_id', profile.household_id)
   const to = (members ?? []).filter((m) => m.phone && m.phone_opt_in_at && !m.phone_opted_out && m.profile_id !== profile.id)
   if (!to.length) return NextResponse.json({ error: 'Nobody has joined the texts yet — add numbers under Settings → Family texting.' }, { status: 400 })
