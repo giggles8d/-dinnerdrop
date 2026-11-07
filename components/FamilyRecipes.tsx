@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Camera, Mic, MicOff, X, Check, Loader2 } from 'lucide-react'
 import type { Meal } from '@/types'
 
+const EXAMPLES = 'Kielbasa and pierogies with onions fried in butter\nBoxed scalloped potatoes with cut-up ham and peas\nChicken in the frying pan with Italian dressing, a veggie and potatoes'
+
 type Img = { base64: string; mediaType: 'image/jpeg'; preview: string }
 
 /** Shrink a photo in the browser so it uploads fast (long side 1280px, JPEG). */
@@ -114,10 +116,14 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Tab' && !text.trim()) { e.preventDefault(); setText(EXAMPLES) } }}
             rows={4}
-            placeholder={'Kielbasa and pierogies with onions fried in butter\nBoxed scalloped potatoes with cut-up ham and peas\nChicken in the frying pan with Italian dressing, a veggie and potatoes'}
+            placeholder={EXAMPLES}
             className="mt-3 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
+          {!text.trim() && (
+            <button type="button" onClick={() => setText(EXAMPLES)} className="mt-1 text-xs font-semibold text-primary hover:underline">Use these examples (then edit them to match how you make them)</button>
+          )}
           {images.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-2">
               {images.map((im, i) => (
