@@ -88,10 +88,10 @@ export async function buildFamilyRecipes(descriptions: string[], opts: { serving
 export async function describeDinnerFromPhotos(images: ClaudeImage[], caption = ''): Promise<string[]> {
   if (!images.length) return []
   const text = await generateWithClaudeImages(`These photos show a family's dinner — the box or package they use, the finished plate, or a handwritten / printed recipe.
-${caption ? `They said: "${caption}"\n` : ''}Describe each distinct dinner in ONE plain line the way the family would say it, keeping boxed / brand-name items as they are (e.g. "Betty Crocker boxed scalloped potatoes with cut-up ham and frozen peas"). If it's a written recipe, put the main ingredients and method in that one line (up to 300 characters).
-Return ONLY JSON: {"dinners":["..."]} — an empty list if there's no food or recipe in the photos.`, images.slice(0, 4), 800)
+${caption ? `They said: "${caption}"\n` : ''}If it's a list of dinners (handwritten, typed or a screenshot), return EVERY dinner on it. Describe each distinct dinner in ONE plain line the way the family would say it, keeping boxed / brand-name items as they are (e.g. "Betty Crocker boxed scalloped potatoes with cut-up ham and frozen peas"). If it's a written recipe, put the main ingredients and method in that one line (up to 300 characters).
+Return ONLY JSON: {"dinners":["..."]} — an empty list if there's no food or recipe in the photos.`, images.slice(0, 4), 1500)
   const parsed = parseClaudeJSON<{ dinners: string[] }>(text)
-  return (parsed.dinners ?? []).map((d) => String(d).trim()).filter((d) => d.length >= 3).slice(0, 4)
+  return (parsed.dinners ?? []).map((d) => String(d).trim()).filter((d) => d.length >= 3).slice(0, MAX_RECIPES_PER_TURN)
 }
 
 /** Save to favorites (skips names already saved). Returns the names saved. */

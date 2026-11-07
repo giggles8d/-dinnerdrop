@@ -1201,7 +1201,7 @@ async function fetchMedia(sid: string): Promise<Array<{ base64: string; mediaTyp
 }
 
 /** A picture of a product / label / empty box → the grocery item to buy. */
-type PhotoRead = { kind: 'product'; name: string; quantity: string; unit: string } | { kind: 'dinner'; dish: string } | { kind: 'other'; description: string }
+type PhotoRead = { kind: 'product'; name: string; quantity: string; unit: string } | { kind: 'dinner'; dishes: string[] } | { kind: 'other'; description: string }
 /** What a texted photo is: a product to buy, a dinner (box / plate / recipe card), or something else (a screenshot, a question). */
 async function readPhoto(img: { base64: string; mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif' }, caption: string): Promise<PhotoRead | null> {
   try {
@@ -1209,14 +1209,15 @@ async function readPhoto(img: { base64: string; mediaType: 'image/jpeg' | 'image
       `A family member texted this photo to DinnerDrop, their family dinner planner (it runs their dinner vote and grocery list).${caption ? ` They also wrote: "${caption}".` : ' No message came with it.'}
 Decide what it is:
 - "product": a grocery or household product they want bought (a package, bottle, can, an empty container, a shelf item). Give its name with brand and size if visible.
-- "dinner": a cooked meal, a boxed/meal-kit dinner, or a written/printed recipe they want to make or keep. Give a one-line plain description the way a family would say it ("boxed scalloped potatoes with ham and peas").
+- "dinner": a cooked meal, a boxed/meal-kit dinner, a written/printed recipe, or a LIST of dinners (handwritten, typed, a screenshot of notes). Give each dinner as a one-line plain description the way a family would say it ("boxed scalloped potatoes with ham and peas") — every dinner if it's a list.
 - "other": anything else — a screenshot (for example of DinnerDrop's dinner-vote picture or a text), a question, a receipt, a person, a pet. Describe exactly what's shown in one or two plain sentences, including any readable text that matters.
-Return ONLY JSON: {"kind":"product","name":"","quantity":"1","unit":"whole|bag|box|can|jar|bottle|pack|lb|oz|gallon|dozen"} or {"kind":"dinner","dish":""} or {"kind":"other","description":""}`,
+Return ONLY JSON: {"kind":"product","name":"","quantity":"1","unit":"whole|bag|box|can|jar|bottle|pack|lb|oz|gallon|dozen"} or {"kind":"dinner","dishes":[""]} or {"kind":"other","description":""}`,
       img, 400,
     )
-    const j = parseClaudeJSON<{ kind?: string; name?: string; quantity?: string | number; unit?: string; dish?: string; description?: string }>(text)
+    const j = parseClaudeJSON<{ kind?: string; name?: string; quantity?: string | number; unit?: string; dish?: string; dishes?: string[]; description?: string }>(text)
     if (j.kind === 'product' && j.name?.trim()) return { kind: 'product', name: j.name.trim(), quantity: String(j.quantity ?? '1'), unit: (j.unit ?? '').trim() }
-    if (j.kind === 'dinner' && j.dish?.trim()) return { kind: 'dinner', dish: j.dish.trim().slice(0, 300) }
+    const dishes = (Array.isArray(j.dishes) ? j.dishes : j.dish ? [j.dish] : []).map((d) => String(d).trim().slice(0, 300)).filter((d) => d.length >= 3)
+    if (j.kind === 'dinner' && dishes.length) return { kind: 'dinner', dishes: dishes.slice(0, 12) }
     return { kind: 'other', description: (j.description ?? '').trim().slice(0, 400) || 'a photo' }
   } catch { return null }
 }
@@ -1367,7 +1368,7 @@ async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply
   for (const img of media) {
     const read = await readPhoto(img, caption)
     if (!read) continue
-    if (read.kind === 'dinner') { dinners.push(read.dish); continue }
+    if (read.kind === 'dinner') { dinners.push(...read.dishes); continue }
     if (read.kind === 'other') { seen.push(read.description); continue }
     const it = { name: read.name, quantity: read.quantity, unit: read.unit }
     const { data: existing } = await admin.from('list_items').select('id, name, have').eq('user_id', owner.id).eq('week_start', weekStart).is('ordered_at', null)
@@ -1383,13 +1384,15 @@ async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply
     if (member.profile_id === owner.id) {
       try {
         const { data: prof } = await admin.from('profiles').select('family_size, dietary_needs').eq('id', owner.id).single()
-        const meals = await buildFamilyRecipes(dinners.slice(0, 2), { servings: Number(prof?.family_size) || 4, dietary: (prof?.dietary_needs as string[] | null) ?? [] })
+        const meals = await buildFamilyRecipes(dinners.slice(0, 8), { servings: Number(prof?.family_size) || 4, dietary: (prof?.dietary_needs as string[] | null) ?? [] })
         const r = await saveFamilyRecipes(admin, owner.id, meals)
         parts.push(r.saved.length ? `Saved to your family recipes: ${r.saved.join(', ')}. 🍽️` : `That's already in your family recipes.`)
       } catch (e) { console.error('photo dinner save failed', e) }
     } else {
       await addSuggestions(admin, owner, member.name, dinners.map((d) => d.slice(0, 60)))
-      parts.push(`Nice! ${dinners.map((d) => d.slice(0, 60)).join(', ')} ${dinners.length === 1 ? 'is' : 'are'} on the family's dinner ideas for a coming vote. 🍽️ (Text "save this: " + the dinner to save it as a family recipe.)`)
+      parts.push(dinners.length > 2
+        ? `Got your list of ${dinners.length} dinners: ${dinners.map((d) => d.slice(0, 40)).join(', ')}. They're on the family's dinner ideas, and ${leaderLabel(owner)} can save them as family recipes from the Texts screen. 🍽️`
+        : `Nice! ${dinners.map((d) => d.slice(0, 60)).join(', ')} ${dinners.length === 1 ? 'is' : 'are'} on the family's dinner ideas for a coming vote. 🍽️`)
     }
   }
   if (parts.length) return { reply: parts.join('\n'), householdId: member.household_id, memberId: member.id }
