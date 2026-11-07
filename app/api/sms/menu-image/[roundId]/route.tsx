@@ -71,7 +71,7 @@ export async function GET(_req: Request, { params }: { params: { roundId: string
   const rows = Math.ceil(meals.length / 2)
   const H = 104 + rows * tileH + (rows - 1) * GAP + PAD + 48
 
-  return new ImageResponse(
+  const png = new ImageResponse(
     (
       <div style={{ width: W, height: H, display: 'flex', flexDirection: 'column', background: CREAM, padding: PAD, fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 14 }}>
@@ -99,6 +99,10 @@ export async function GET(_req: Request, { params }: { params: { roundId: string
         <div style={{ display: 'flex', marginTop: 'auto', justifyContent: 'center', fontSize: 20, color: GREEN, fontWeight: 700 }}>DinnerDrop</div>
       </div>
     ),
-    { width: W, height: H, headers: { 'Cache-Control': 'public, max-age=300' } },
+    { width: W, height: H },
   )
+  // Sent as a JPEG: the PNG of 10 photos is ~1.5 MB, which some carriers hold and never deliver as a picture text.
+  const sharp = (await import('sharp')).default
+  const jpg = await sharp(Buffer.from(await png.arrayBuffer())).jpeg({ quality: 78, mozjpeg: true }).toBuffer()
+  return new Response(new Uint8Array(jpg), { headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=300' } })
 }
