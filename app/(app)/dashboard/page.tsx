@@ -10,7 +10,8 @@ import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
 import FamilyVoteCard from '@/components/FamilyVoteCard'
 import DealsCard from '@/components/DealsCard'
-import QuickSetup, { type QuickSetupAnswers } from '@/components/QuickSetup'
+import { type QuickSetupAnswers } from '@/components/QuickSetup'
+import Walkthrough from '@/components/Walkthrough'
 import FirstWeekReveal from '@/components/FirstWeekReveal'
 import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
@@ -762,7 +763,7 @@ function DashboardContent() {
         </div>
 
         {showQuickSetup && (
-          <QuickSetup
+          <Walkthrough
             onDone={(a) => {
               setBudget(a.weeklyBudget)
               setFirstAnswers(a)

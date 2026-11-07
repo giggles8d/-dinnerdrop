@@ -24,6 +24,7 @@ export interface Settings {
     cookDays: Weekday[]             // which nights get a planned dinner
     weekdayCookTimes: Partial<Record<Weekday, number>>  // per-night max minutes (overrides max_cook_time)
     maxLongCookNights: number       // slow-cooker / Instant Pot all-day dinners per week; -1 = no limit
+    sundayDinner: { on: boolean; minutes: number; extraForMonday: boolean }  // one bigger sit-down Sunday dinner (Nov 7 2026)
   }
   food: {
     style: string | null            // first picked food style (kept for older code); see `styles`
@@ -104,6 +105,7 @@ export const DEFAULT_SETTINGS: Settings = {
     cookDays: ['mon', 'tue', 'wed', 'thu', 'fri'],
     weekdayCookTimes: {},
     maxLongCookNights: 1,
+    sundayDinner: { on: false, minutes: 120, extraForMonday: true },
   },
   food: {
     style: null,
@@ -216,4 +218,21 @@ export function cookTimeFor(day: Weekday, settings: Settings, fallback: number):
 /** The trip setup the planner, list and texting read (defaults reproduce the original Monday week, one trip). */
 export function tripsConfig(s: Settings): import('@/lib/trips').TripsConfig {
   return { weekStart: s.schedule.weekStart, trips: s.schedule.trips ?? [], cookDays: s.plan.cookDays, shopDay: s.schedule.reminders.shopBy.day }
+}
+
+/**
+ * Sunday family dinner on/off, kept in step with the cook nights the planner already reads:
+ * on → Sunday is a cook night with its own (longer) time; off → Sunday comes back out.
+ */
+export function setSundayDinner(s: Settings, on: boolean, minutes?: number, extraForMonday?: boolean): void {
+  const mins = Math.min(Math.max(Number(minutes ?? s.plan.sundayDinner.minutes) || 120, 45), 300)
+  const wasOn = s.plan.sundayDinner.on
+  s.plan.sundayDinner = { on, minutes: mins, extraForMonday: extraForMonday ?? s.plan.sundayDinner.extraForMonday }
+  if (on) {
+    if (!s.plan.cookDays.includes('sun')) { s.plan.cookDays = [...s.plan.cookDays, 'sun']; if (!wasOn) s.plan.dinnersPerWeek = Math.min(7, s.plan.dinnersPerWeek + 1) }
+    s.plan.weekdayCookTimes.sun = mins
+  } else if (wasOn) {
+    if (s.plan.cookDays.includes('sun')) { s.plan.cookDays = s.plan.cookDays.filter((d) => d !== 'sun'); s.plan.dinnersPerWeek = Math.max(3, s.plan.dinnersPerWeek - 1) }
+    delete s.plan.weekdayCookTimes.sun
+  }
 }

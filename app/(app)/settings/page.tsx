@@ -13,7 +13,7 @@ import { applyStyles } from '@/lib/apply-style'
 import { createClient } from '@/lib/supabase'
 import {
   mergeSettings, DEFAULT_SETTINGS, WEEKDAYS, WEEKDAY_LABEL, CUISINE_OPTIONS, PROTEIN_OPTIONS,
-  EQUIPMENT_OPTIONS, DIETARY_OPTIONS, AGE_BANDS, type Settings, type Channel,
+  EQUIPMENT_OPTIONS, DIETARY_OPTIONS, AGE_BANDS, setSundayDinner, type Settings, type Channel,
 } from '@/lib/settings'
 import { MIX_GROUPS, MIX_EVERY, hasMix, type ProteinMix } from '@/lib/protein-mix'
 
@@ -648,6 +648,22 @@ export default function SettingsPage() {
                       )
                     })}
                   </div>
+                </div>
+                <div className={`rounded-2xl border-2 p-4 ${settings.plan.sundayDinner.on ? 'border-[#e8a838] bg-[#fef6e6]' : 'border-gray-200 bg-white'}`}>
+                  <Toggle checked={settings.plan.sundayDinner.on} onChange={(v) => patch((s) => setSundayDinner(s, v))} label="🍗 Sunday family dinner" hint="One bigger sit-down dinner on Sunday: a roast, pot roast, lasagna, roast chicken, with real sides. Two of your dinner ideas each week are Sunday dinners." />
+                  {settings.plan.sundayDinner.on && (
+                    <div className="mt-3 space-y-3">
+                      <div>
+                        <p className="text-xs font-semibold text-foreground mb-1.5">How much time on Sunday?</p>
+                        <div className="flex flex-wrap gap-2">
+                          {[{ m: 60, l: '1 hour' }, { m: 120, l: '2 hours' }, { m: 240, l: 'All afternoon' }].map((o) => (
+                            <PickChip key={o.m} on={settings.plan.sundayDinner.minutes === o.m} onClick={() => patch((s) => setSundayDinner(s, true, o.m))}>{o.l}</PickChip>
+                          ))}
+                        </div>
+                      </div>
+                      <PickChip on={settings.plan.sundayDinner.extraForMonday} onClick={() => patch((s) => setSundayDinner(s, true, undefined, !s.plan.sundayDinner.extraForMonday))}>Make extra for Monday leftovers</PickChip>
+                    </div>
+                  )}
                 </div>
                 <Field label="All-day dinners per week" hint="Slow cooker or Instant Pot dinners that cook for hours. Keeps the planner from filling the week with them.">
                   <Select value={String(settings.plan.maxLongCookNights)} onChange={(v) => patch((s) => { s.plan.maxLongCookNights = Number(v) })} options={[{ value: '0', label: 'None' }, { value: '1', label: 'Up to 1' }, { value: '2', label: 'Up to 2' }, { value: '3', label: 'Up to 3' }, { value: '-1', label: 'No limit' }]} />

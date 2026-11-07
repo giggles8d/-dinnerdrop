@@ -130,6 +130,10 @@ export async function POST(request: Request) {
       mix = mixForThisWeek(mix, settings.food.mixEvery, recent)
     }
     const quota = mix ? scaleMix(mix, optionsCount) : undefined
+    // Sunday family dinner (Nov 7 2026): two of the options are bigger sit-down Sunday dinners, written fresh.
+    const sunday = settings.plan.sundayDinner?.on && cookDays.includes('sun') ? settings.plan.sundayDinner : null
+    const sundaySlots = sunday && mode === 'fresh' ? 2 : 0
+    const libTarget = optionsCount - sundaySlots
     const nightTimes = cookDays.map((d) => ({ day: d, label: WEEKDAY_LABEL[d], minutes: cookTimeFor(d, settings, profile.maxCookTime) }))
     const fastestNight = Math.min(...nightTimes.map((n) => n.minutes))
     const slowestNight = Math.max(...nightTimes.map((n) => n.minutes))
@@ -215,7 +219,7 @@ export async function POST(request: Request) {
         // before ever asking AI. Allergies, never-ingredients and diets are never relaxed.
         let picks = await pickLibraryRecipes(supabase, libOpts)
         let affordable = toAffordable(picks, 1.4)
-        const need = optionsCount - bringBack.length
+        const need = libTarget - bringBack.length
         const relaxations: Array<[string, Partial<typeof libOpts>, number]> = [
           ['cuisines', { cuisines: [] }, 1.4],
           ['recent repeats', { cuisines: [], excludeNames: keepMeals.map((m) => m.name) }, 1.4],
@@ -241,9 +245,9 @@ export async function POST(request: Request) {
             const n = left[g] ?? 0
             if (n > 0) picked.push(...pickWithOverlap(fresh.filter((m) => proteinGroup(m.protein, m.name) === g), n, [...keepMeals, ...bringBack, ...picked]))
           }
-          libraryMeals = [...bringBack, ...picked].slice(0, optionsCount)
+          libraryMeals = [...bringBack, ...picked].slice(0, libTarget)
         } else {
-          libraryMeals = [...bringBack, ...pickWithOverlap(fresh, optionsCount - bringBack.length, [...keepMeals, ...bringBack])]
+          libraryMeals = [...bringBack, ...pickWithOverlap(fresh, libTarget - bringBack.length, [...keepMeals, ...bringBack])]
         }
         // Everyone gets something: each voter with a track record should see at least two options they're
         // likely to pick. If not, swap in their best fit from the spares (same protein group when a mix is set),
@@ -356,6 +360,10 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
     }
     const nightLines = nightTimes.map((n) => `- ${n.label}: ${n.minutes} min`).join('\n')
     for (const st of selectedStyles(settings.food)) if (st.rule) constraintLines.push(st.rule)
+    if (sunday) {
+      const n = Math.min(2, generateCount)
+      constraintLines.push(`Sunday is this family's sit-down family dinner, with up to ${sunday.minutes} minutes. Make ${n} of these options Sunday dinners (suggestedNight "Sunday"): a bigger, comforting dinner the family sits down to, like a roast chicken, pot roast, lasagna, baked ziti, ham, braised short ribs or a roast with vegetables, with one or two real sides (mashed potatoes, rolls, a salad, green beans). For those Sunday options only, up to 10 ingredients and 6 steps are fine.${sunday.extraForMonday ? ` Make the Sunday options with ${Math.round(profile.familySize * 1.5)} servings so there are leftovers for Monday, and say so in the description.` : ''} The other options are regular weeknight dinners for the weeknights.`)
+    }
     const timeRule = fastestNight === slowestNight
       ? `- Every dinner must be completable in ${slowestNight} minutes or less, prep included.`
       : `- Cook nights and the time available each night:\n${nightLines}\n- At least ${Math.max(2, Math.ceil(generateCount / 3))} options must take ${fastestNight} minutes or less (for the fastest nights). No option may exceed ${slowestNight} minutes. Set "suggestedNight" to the night each dinner fits best.`
