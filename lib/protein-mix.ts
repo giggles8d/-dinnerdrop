@@ -20,6 +20,30 @@ export const MIX_GROUPS: Array<{ key: Exclude<ProteinGroup, 'other'>; label: str
 
 /** Counts per group for the cooked dinners of a week. null = any mix (the default). */
 export type ProteinMix = Partial<Record<Exclude<ProteinGroup, 'other'>, number>> | null
+export type MixKey = Exclude<ProteinGroup, 'other'>
+
+/** "How often" choices for a group in the mix (Sarah, Nov 7 2026: "fish every other week or once a month"). */
+export const MIX_EVERY: Array<{ v: 1 | 2 | 4; label: string }> = [
+  { v: 1, label: 'Every week' },
+  { v: 2, label: 'Every other week' },
+  { v: 4, label: 'Once a month' },
+]
+
+/**
+ * This week's mix after "how often": a group set to every other week (or once a month) sits out when it was
+ * already in a plan made in the last 10 days (or 24 days). `recent` is each recent plan's age in days and the
+ * protein groups its dinners used. Returns null when nothing is left in the mix (then any mix).
+ */
+export function mixForThisWeek(mix: NonNullable<ProteinMix>, every: Partial<Record<MixKey, number>> | undefined, recent: Array<{ ageDays: number; groups: string[] }>): ProteinMix {
+  const out: NonNullable<ProteinMix> = { ...mix }
+  for (const g of MIX_GROUPS) {
+    const c = Number(every?.[g.key]) || 1
+    if (c <= 1 || !(Number(out[g.key]) > 0)) continue
+    const window = c >= 4 ? 24 : 10
+    if (recent.some((r) => r.ageDays < window && r.groups.includes(g.key))) out[g.key] = 0
+  }
+  return Object.values(out).some((n) => Number(n) > 0) ? out : null
+}
 
 const FISH = /\b(fish|salmon|tuna|cod|tilapia|halibut|catfish|mahi|swordfish|sea bass|trout|snapper|haddock|pollock|sardines?|anchov\w*|shrimp|prawns?|scallops?|clams?|mussels?|crab|lobster|calamari|squid|seafood|white fish)\b/i
 const TURKEY = /\bturkey\b/i

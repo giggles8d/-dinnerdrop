@@ -12,7 +12,7 @@ import { ensurePortions } from '@/lib/portions'
 import { currentSales, salesPromptBlock } from '@/lib/sales'
 import { loadPantry, pantryPromptBlock } from '@/lib/pantry'
 import { pickWithOverlap, isFresh } from '@/lib/overlap'
-import { hasMix, scaleMix, mixLabel, proteinGroup, MIX_GROUPS } from '@/lib/protein-mix'
+import { hasMix, scaleMix, mixLabel, proteinGroup, MIX_GROUPS, mixForThisWeek } from '@/lib/protein-mix'
 import { computeTastes, householdBoost, learned, likeScore, type MemberTaste } from '@/lib/tastes'
 import { activeNeeds, applyNeeds, needsPromptLines } from '@/lib/member-needs'
 
@@ -119,7 +119,16 @@ export async function POST(request: Request) {
     const requested = Number(body.optionsCount) > 0 ? Number(body.optionsCount) : settings.plan.optionsCount
     const optionsCount = Math.min(Math.max(requested, dinnersPerWeek, 5), 12)
     // Weekly protein mix (Settings → Food): counts for the cooked dinners, scaled to the options offered.
-    const mix = hasMix(settings.food.mix) ? settings.food.mix : null
+    // "How often" (every other week / once a month) can sit a group out this week, based on the last month's plans.
+    let mix = hasMix(settings.food.mix) ? settings.food.mix : null
+    if (mix && Object.values(settings.food.mixEvery ?? {}).some((c) => Number(c) > 1)) {
+      const { data: monthPlans } = await supabase.from('meal_plans').select('meals, created_at').eq('user_id', profile.userId).gte('created_at', new Date(Date.now() - 24 * 86400000).toISOString())
+      const recent = (monthPlans ?? []).map((p) => ({
+        ageDays: (Date.now() - new Date(p.created_at as string).getTime()) / 86400000,
+        groups: ((p.meals as Meal[]) ?? []).map((m) => proteinGroup(m.protein, m.name)),
+      }))
+      mix = mixForThisWeek(mix, settings.food.mixEvery, recent)
+    }
     const quota = mix ? scaleMix(mix, optionsCount) : undefined
     const nightTimes = cookDays.map((d) => ({ day: d, label: WEEKDAY_LABEL[d], minutes: cookTimeFor(d, settings, profile.maxCookTime) }))
     const fastestNight = Math.min(...nightTimes.map((n) => n.minutes))
