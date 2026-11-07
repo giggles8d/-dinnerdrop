@@ -58,6 +58,7 @@ export async function GET(req: Request) {
       body: r.body ?? '',
       kind: intentLabel(r.intent, r.direction),
       picture: mms && r.direction === 'out',
+      photo: mms && r.direction === 'in' ? `/api/texting/photo?id=${r.id}` : null,
       at: r.created_at,
       delivery: r.direction === 'out' ? (d ? (failed ? 'failed' : d.status === 'delivered' ? 'delivered' : d.status === 'read' ? 'delivered' : 'sending') : r.twilio_sid ? 'unknown' : 'not sent') : null,
       problem: failed ? deliveryProblem(d!.errorCode, mms) : null,

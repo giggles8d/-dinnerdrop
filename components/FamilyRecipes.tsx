@@ -39,6 +39,20 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
   const recRef = useRef<SpeechRec | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
+  // Arrived from the Texts screen with a texted photo (?photo=<message id>): load it into the box.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get('photo')
+    if (!id) return
+    fetch(`/api/texting/photo?id=${encodeURIComponent(id)}`).then(async (r) => {
+      if (!r.ok) throw new Error()
+      const blob = await r.blob()
+      const img = await shrink(new File([blob], 'photo.jpg', { type: blob.type || 'image/jpeg' }))
+      setImages([img])
+      setText('These are dinners we make')
+      document.getElementById('family-recipes')?.scrollIntoView({ behavior: 'smooth' })
+    }).catch(() => setError("That photo couldn't be loaded."))
+  }, [])
+
   useEffect(() => {
     const w = window as unknown as { SpeechRecognition?: new () => SpeechRec; webkitSpeechRecognition?: new () => SpeechRec }
     setCanTalk(!!(w.SpeechRecognition || w.webkitSpeechRecognition))
@@ -103,7 +117,7 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
   const drop = (i: number) => setPreview((p) => { const n = p ? p.filter((_, j) => j !== i) : p; return n && n.length ? n : null })
 
   return (
-    <div className={`rounded-2xl border border-primary/20 bg-primary/5 ${compact ? 'p-4' : 'p-5'}`}>
+    <div id="family-recipes" className={`rounded-2xl border border-primary/20 bg-primary/5 ${compact ? 'p-4' : 'p-5'}`}>
       <h2 className="text-lg font-heading font-bold text-foreground">Add your family&apos;s own dinners</h2>
       <p className="text-sm text-muted-foreground mt-1">
         No recipe needed. Say it the way you&apos;d tell a friend, one dinner per line. Boxed stays boxed. We&apos;ll write it up your way.

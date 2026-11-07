@@ -6,7 +6,7 @@ import FamilyAskPanel from '@/components/FamilyAskPanel'
 import { RefreshCw, CheckCheck, AlertTriangle, Image as ImageIcon, Send } from 'lucide-react'
 
 interface Person { id: string; name: string; you: boolean; phone: string | null; status: 'joined' | 'invited' | 'stopped' | 'no phone'; sentThisWeek: number; cap: number; plainText: boolean; lastReply: string | null; problem: { at: string; what: string | null; picture: boolean } | null }
-interface Msg { id: string; memberId: string | null; person: string; direction: 'in' | 'out'; from: string; body: string; kind: string; picture: boolean; at: string; delivery: 'delivered' | 'failed' | 'sending' | 'unknown' | 'not sent' | null; problem: string | null }
+interface Msg { id: string; memberId: string | null; person: string; direction: 'in' | 'out'; from: string; body: string; kind: string; picture: boolean; photo: string | null; at: string; delivery: 'delivered' | 'failed' | 'sending' | 'unknown' | 'not sent' | null; problem: string | null }
 
 const when = (iso: string) => new Date(iso).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
 const STATUS: Record<Person['status'], { label: string; cls: string }> = {
@@ -143,7 +143,16 @@ export default function TextsPage() {
                   {m.direction === 'out' && m.delivery === 'sending' && <span>Sending…</span>}
                   {m.direction === 'out' && m.delivery === 'failed' && <span className="inline-flex items-center gap-0.5 text-amber-800 font-semibold"><AlertTriangle className="w-3.5 h-3.5" />Not delivered</span>}
                 </div>
-                <p className="text-sm text-foreground whitespace-pre-wrap break-words">{m.body}</p>
+                {m.body && m.body !== '[photo]' && <p className="text-sm text-foreground whitespace-pre-wrap break-words">{m.body}</p>}
+                {m.photo && (
+                  <div className="mt-2">
+                    <a href={m.photo} target="_blank" rel="noreferrer">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={m.photo} alt={`Photo from ${m.from}`} className="max-h-72 rounded-lg border border-border" />
+                    </a>
+                    <Link href={`/favorites?photo=${encodeURIComponent(m.id)}`} className="mt-1.5 inline-block text-xs font-semibold text-primary hover:underline">Turn this photo into family recipes →</Link>
+                  </div>
+                )}
                 {m.problem && <p className="mt-1 text-xs text-amber-800">{m.problem}</p>}
               </li>
             ))}
