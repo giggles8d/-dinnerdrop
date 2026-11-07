@@ -14,6 +14,8 @@ export interface Collection {
 const re = (p: RegExp) => (r: { name: string }) => p.test(r.name)
 
 export const COLLECTIONS: Collection[] = [
+  { slug: 'family-favorites', name: 'From DinnerDrop families', emoji: '🏡', blurb: 'Real dinners real families make on repeat, shared (without names) with their star ratings.',
+    match: (r) => r.tags.includes('family-favorite') },
   { slug: 'thanksgiving', name: 'Thanksgiving week', emoji: '🦃', blurb: 'Turkey without the whole bird, sides that travel, and what to do with the leftovers.', window: { from: [11, 1], to: [11, 30] },
     match: re(/\b(thanksgiving|turkey (breast|cutlets?|tenderloin|meatballs?|pot pie|tetrazzini)|stuffing|cranberr|sweet potato (casserole|mash)|green bean casserole|mashed potatoes?|pumpkin|butternut|acorn squash|brussels|leftover turkey|gravy)\b/i) },
   { slug: 'game-day', name: 'Game day', emoji: '🏈', blurb: 'Wings, sliders, nachos, chili — dinners that double as the spread.', window: { from: [9, 1], to: [2, 15] },
