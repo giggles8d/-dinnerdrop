@@ -35,7 +35,7 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
   const [done, setDone] = useState('')
   const [preview, setPreview] = useState<Meal[] | null>(null)
   const [open, setOpen] = useState<number | null>(null)
-  const [share, setShare] = useState(false)
+  const [share, setShare] = useState(true)   // on by default (Sarah, Nov 7 2026); the family can untick it
   const [listening, setListening] = useState(false)
   const [canTalk, setCanTalk] = useState(false)
   const recRef = useRef<SpeechRec | null>(null)
@@ -194,7 +194,7 @@ export default function FamilyRecipes({ onSaved, compact = false }: { onSaved?: 
           ))}
           <label className="flex items-start gap-2 text-xs text-muted-foreground">
             <input type="checkbox" checked={share} onChange={(e) => setShare(e.target.checked)} className="mt-0.5" />
-            <span>Let DinnerDrop add {preview.length === 1 ? 'this recipe' : 'these recipes'} to its recipe library so other families can make {preview.length === 1 ? 'it' : 'them'} too. Your name is never shown. (Optional; your copy stays yours either way.)</span>
+            <span>Let DinnerDrop add {preview.length === 1 ? 'this recipe' : 'these recipes'} to its recipe library so other families can make {preview.length === 1 ? 'it' : 'them'} too. Your name is never shown. Untick to keep {preview.length === 1 ? "it" : "them"} private. Your copy stays yours either way.</span>
           </label>
           <div className="flex flex-wrap gap-2">
             <button onClick={save} disabled={busy !== ''} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50">
