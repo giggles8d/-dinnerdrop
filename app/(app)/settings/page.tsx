@@ -174,7 +174,7 @@ function TagInput({ value, onChange, placeholder, suggestions }: { value: string
   )
 }
 
-function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+function Field({ label, hint, children }: { label: string; hint?: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
       <label className="block text-sm font-medium text-foreground">{label}</label>
@@ -596,6 +596,7 @@ export default function SettingsPage() {
                 </Field>
                 <div className="space-y-3">
                   <Toggle checked={settings.food.kidFriendly} onChange={(v) => patch((s) => { s.food.kidFriendly = v })} label="Kid-friendly by default" hint="Familiar flavors, components kept separate, one safe thing on every plate." />
+                  <Field label="Your family recipes in each week's options" hint={<>Your own dinners from <a href="/favorites" className="underline">Favorites</a> (the ones you typed, said, texted or snapped) rotate in, least recent first, labeled &ldquo;family recipe&rdquo; in the vote.</>}><Select value={String(settings.food.familyRecipesPerWeek)} onChange={(v) => patch((s) => { s.food.familyRecipesPerWeek = Number(v) })} options={[{ value: '0', label: 'None' }, { value: '1', label: '1 a week' }, { value: '2', label: '2 a week' }, { value: '3', label: '3 a week' }]} /></Field>
                   <Toggle checked={settings.food.nutritionInfo} onChange={(v) => patch((s) => { s.food.nutritionInfo = v })} label="Show nutrition per serving (calories, protein, carbs, fat)" />
                 </div>
                 <Field label="Calories per serving" hint="Dinners are planned under this number. Estimates from the ingredients; brands and portions vary.">
@@ -760,6 +761,7 @@ export default function SettingsPage() {
                   <Field label="Quiet hours start"><input type="time" value={settings.texting.quietStart} onChange={(e) => patch((s) => { s.texting.quietStart = e.target.value })} className="rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                   <Field label="Quiet hours end"><input type="time" value={settings.texting.quietEnd} onChange={(e) => patch((s) => { s.texting.quietEnd = e.target.value })} className="rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                   <Field label="Dinner ideas to text" hint={`The family picks from these; the top ${settings.plan.dinnersPerWeek} make the week.`}><Select value={String(Math.max(settings.texting.optionsToText, settings.plan.dinnersPerWeek))} onChange={(v) => patch((s) => { s.texting.optionsToText = Number(v) })} options={['5', '6', '7', '8', '9', '10', '12'].filter((n) => Number(n) >= settings.plan.dinnersPerWeek).map((n) => ({ value: n, label: n }))} /></Field>
+                  <Toggle checked={settings.texting.askDinner} onChange={(v) => patch((s) => { s.texting.askDinner = v })} label="Text me at 7 PM: “what was dinner tonight?”" hint="Only on nights with nothing planned, and only to you. Reply the way you'd say it and it's saved to your family recipes. Reply NO to skip. Doesn't count toward the weekly text limit." />
                   <Field label="Max texts per person per week"><Select value={String(settings.texting.weeklyCap)} onChange={(v) => patch((s) => { s.texting.weeklyCap = Number(v) })} options={['2', '3', '4', '6', '8', '10', '12', '15'].map((n) => ({ value: n, label: n }))} /></Field>
                   <Field label="When someone texts a Walmart link" hint={settings.texting.walmartLinks === 'cart' ? 'You get a text right away with a one-tap link that adds it to your Walmart cart. Walmart needs that one tap from you.' : 'It goes on the grocery list, and \u201cWalmart picks\u201d puts them all in your Walmart cart in one tap.'}><Select value={settings.texting.walmartLinks} onChange={(v) => patch((s) => { s.texting.walmartLinks = v as 'list' | 'cart' })} options={[{ value: 'list', label: 'Add it to the grocery list' }, { value: 'cart', label: 'Text me a one-tap Walmart cart link' }]} /></Field>
                 </div>

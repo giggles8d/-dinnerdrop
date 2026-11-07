@@ -22,6 +22,7 @@ import { markAllOpenOrdered } from '@/lib/list-ordered'
 import { walmartUrlsIn, resolveWalmartLink, type WalmartLink } from '@/lib/store-links'
 import { cartUrl } from '@/lib/walmart'
 import type { Meal } from '@/types'
+import { buildFamilyRecipes, describeDinnerFromPhotos, saveFamilyRecipes } from '@/lib/family-recipes'
 import { needsConfirmation, activeNeeds, applyNeeds, NEEDS_TIMING_ASK, type MemberNeed } from '@/lib/member-needs'
 
 export interface MemberRow {
@@ -148,7 +149,7 @@ function againListFrom(body: string | null | undefined): string[] {
 async function sentThisWeek(admin: SupabaseClient, memberId: string): Promise<number> {
   const since = new Date(Date.now() - 7 * 86400000).toISOString()
   // Only proactive texts count toward the weekly cap — replies to their own messages and the opt-in don't.
-  const { count } = await admin.from('sms_messages').select('id', { count: 'exact', head: true }).eq('member_id', memberId).eq('direction', 'out').gte('created_at', since).not('intent', 'in', '("reply","opt_in")')
+  const { count } = await admin.from('sms_messages').select('id', { count: 'exact', head: true }).eq('member_id', memberId).eq('direction', 'out').gte('created_at', since).not('intent', 'in', '("reply","opt_in","dinner_ask")')
   return count ?? 0
 }
 
@@ -247,7 +248,11 @@ export type Parsed =
   | { kind: 'use_up'; items: string[] }
   | { kind: 'tally' } | { kind: 'tonight' } | { kind: 'recipe'; number: number }
   | { kind: 'suggest'; items: string[] }
+  | { kind: 'save_recipe'; text: string }
   | { kind: 'unknown' }
+
+/** "save this: kielbasa and pierogies", "our recipe - …", "family recipe: …" → the family's own dinner, saved to favorites. */
+export const SAVE_RECIPE_RE = /^(?:save(?: this| that| it| our| my)?(?: recipe| dinner)?|our recipe|my recipe|family recipe|add (?:a |our |my )?recipe|new recipe)\s*[:\-–]?\s+([\s\S]+)$/i
 
 export function parseInbound(raw: string): Parsed {
   const t = raw.trim()
@@ -262,6 +267,8 @@ export function parseInbound(raw: string): Parsed {
   if (new RegExp(`^(TONIGHT|WHAT'?S (FOR )?DINNER TONIGHT|DINNER TONIGHT|WHAT'?S TONIGHT|WHAT ARE WE (HAVING|EATING) TONIGHT)${end}`).test(u)) return { kind: 'tonight' }
   if (new RegExp(`^(MENU|DINNERS|PLAN|THIS WEEK|WHAT'?S FOR DINNER( THIS WEEK)?|WHAT'?S THE PLAN)${end}`).test(u)) return { kind: 'menu' }
   if (new RegExp(`^(TALLY|RESULTS?|SCORE|STANDINGS|VOTES?|VOTE (SO FAR|STATUS|COUNT|RESULTS?)|WHO('?S| HAS)? VOTED|WHAT'?S THE VOT(E|ING)( SO FAR)?|HOW'?S THE VOT(E|ING)( GOING)?|WHO'?S WINNING)${end}`).test(u)) return { kind: 'tally' }
+  const saveRecipe = t.match(SAVE_RECIPE_RE)
+  if (saveRecipe && saveRecipe[1].trim().length >= 3 && !/^#?\s*\d{1,2}[\s.!?]*$/.test(saveRecipe[1])) return { kind: 'save_recipe', text: saveRecipe[1].trim() }
   const recipe = u.match(/^(?:RECIPE|INGREDIENTS(?: FOR)?|HOW (?:DO I|DO YOU|TO) (?:MAKE|COOK))\s*#?\s*(\d{1,2})[\s.!?]*$/)
   if (recipe) return { kind: 'recipe', number: Number(recipe[1]) }
   const suggest = t.match(/^(?:(?:can|could|may) (?:i|we) |i'?d like to |i want to |i wanna )?(?:suggest|recommend|request|propose)(?:ing)?\s*(?:a|an|some)?\s*[:\-]?\s*(.*)$|^(?:how about|what about|can we (?:do|have|make|get)|could we (?:do|have|make)|let'?s (?:do|have|make)|we should (?:do|have|make|try)|i'?d love|put on|idea[:\-]?)\s+(.+)$/i)
@@ -413,9 +420,12 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const ctx = await smsContext(admin, m.id)
   // Bare numbers answer the question we asked: after "which should come back?" they mean AGAIN, not skip.
   if (parsed.kind === 'skip' && !parsed.explicit && !round && ctx.lastAsk === 'again') parsed = { kind: 'again', numbers: parsed.numbers }
+  if (ctx.askedDinner && (parsed.kind === 'unknown' || parsed.kind === 'suggest') && body.trim().length >= 3 && !/^(no|nope|nothing|skip|leftovers?|out|takeout|take out|pizza delivery|ate out|we went out)\b/i.test(body.trim())) parsed = { kind: 'save_recipe', text: body.trim() }
+  const dinnerNo = !!ctx.askedDinner && /^(no|nope|nah|skip|nothing|n\/a|leftovers?|ate out|takeout|take out|we went out)\b/i.test(body.trim())
   const intent = round && parsed.kind === 'skip' ? 'pick' : parsed.kind
   await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'in', from_number: phone, body, intent, twilio_sid: sid })
 
+  if (dinnerNo) return { reply: 'No problem. 👍', handled: true, member: m }
   const owner = await ownerForHousehold(admin, m.household_id)
   const rawFirst = (owner?.full_name || '').trim().split(' ')[0]
   const family = rawFirst ? rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1) : 'your family'
@@ -555,6 +565,22 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const r = src[parsed.number - 1]
       if (!r) return { reply: src.length ? `I have ${src.length} dinners numbered 1–${src.length}. Text RECIPE + the number, e.g. "recipe 2".` : `No dinners to show yet.`, handled: true, member: m }
       return { reply: recipeText(r), handled: true, member: m }
+    }
+    case 'save_recipe': {
+      if (!owner) return { reply: '', handled: false }
+      if (!m.can_add && !m.profile_id) return { reply: `Saving recipes is turned off for you, ${m.name}. Ask ${family} to add it.`, handled: true, member: m }
+      try {
+        const { data: prof } = await admin.from('profiles').select('family_size, dietary_needs').eq('id', owner.id).single()
+        const meals = await buildFamilyRecipes([parsed.text.slice(0, 400)], { servings: Number(prof?.family_size) || 4, dietary: (prof?.dietary_needs as string[] | null) ?? [], by: m.profile_id ? undefined : (hi || undefined) })
+        if (!meals.length) return { reply: `I couldn't tell what dinner that is. Try "save this: kielbasa and pierogies with onions".`, handled: true, member: m }
+        const r = await saveFamilyRecipes(admin, owner.id, meals)
+        const name = meals[0].name
+        if (!r.saved.length) return { reply: `"${name}" is already in ${family}'s family recipes. 👍`, handled: true, member: m }
+        return { reply: `Saved "${name}" to ${m.profile_id ? 'your' : `${family}'s`} family recipes${meals[0].swaps?.length ? ` (easy swap: ${meals[0].swaps[0]})` : ''}. It'll come up in a vote soon. 🍽️${m.profile_id ? `\nSee or edit it: ${APP_URL}/favorites` : ''}`, handled: true, member: m }
+      } catch (e) {
+        console.error('save_recipe failed', e)
+        return { reply: `Sorry, I couldn't save that one. Try again in a minute.`, handled: true, member: m }
+      }
     }
     case 'suggest': {
       if (!owner) break
@@ -827,13 +853,13 @@ function helpFor(mode: 'round' | 'again' | 'week', family: string): string {
   return `Text MENU for this week's dinners, LIST for the grocery list, ADD + items to add to it — or ask me anything about cooking, recipes or groceries.`
 }
 
-export interface SmsContext { lastAsk: 'again' | 'vote' | null; lastAskBody?: string; askedNeedsTiming?: boolean; lastList?: 'menu' | 'vote' | null; menuShown?: string[]; ownerMessage?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
+export interface SmsContext { askedDinner?: boolean; lastAsk: 'again' | 'vote' | null; lastAskBody?: string; askedNeedsTiming?: boolean; lastList?: 'menu' | 'vote' | null; menuShown?: string[]; ownerMessage?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
 
 /** The last few texts with this person (both ways) and the last question we asked them. */
 export async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsContext> {
   const since = new Date(Date.now() - 4 * 86400000).toISOString()
   const { data } = await admin.from('sms_messages').select('direction, body, intent, created_at').eq('member_id', memberId).gte('created_at', since).order('created_at', { ascending: false }).limit(14)
-  const rows = (data ?? []) as Array<{ direction: string; body: string | null; intent: string | null }>
+  const rows = (data ?? []) as Array<{ direction: string; body: string | null; intent: string | null; created_at?: string }>
   const ask = rows.find((r) => r.direction === 'out' && (r.intent === 'again_request' || r.intent === 'vote_request'))
   const note = rows.find((r) => r.direction === 'out' && r.intent === 'owner_message')
   // The most recent numbered list this person saw: our MENU reply ("This week:\n1. Mon — Name") or a vote/again request.
@@ -844,6 +870,8 @@ export async function smsContext(admin: SupabaseClient, memberId: string): Promi
   const lastOut = rows.find((r) => r.direction === 'out')
   return {
     askedNeedsTiming: !!lastOut?.body?.includes(NEEDS_TIMING_ASK),
+    // "What was dinner tonight?" (dinnerAskSweep) asked in the last 8 hours: a plain answer is a dinner to save.
+    askedDinner: lastOut?.intent === 'dinner_ask' && Date.now() - new Date(lastOut.created_at ?? 0).getTime() < 8 * 3600000,
     lastList: listRow ? (isMenu ? 'menu' : 'vote') : null,
     menuShown,
     lastAsk: ask?.intent === 'again_request' ? 'again' : ask ? 'vote' : null,
@@ -980,7 +1008,7 @@ export async function openRound(admin: SupabaseClient, householdId: string): Pro
 function pickLines(meals: Meal[], showCarbs = false): string {
   return meals.map((m, i) => {
     const bits = [m.cookTime ? timeLabel(m) : '', showCarbs && typeof m.nutrition?.carbs === 'number' ? `${m.nutrition.carbs}g carbs` : ''].filter(Boolean)
-    return `${i + 1}. ${m.name}${bits.length ? ` (${bits.join(' · ')})` : ''}${m.ideaBy ? ` — ${m.ideaBy}'s idea` : ''}`
+    return `${i + 1}. ${m.name}${bits.length ? ` (${bits.join(' · ')})` : ''}${m.ideaBy ? ` — ${m.ideaBy}'s idea` : m.familyRecipe ? (m.addedBy ? ` — ${m.addedBy}'s recipe` : ' — family recipe') : ''}`
   }).join('\n')
 }
 
@@ -996,7 +1024,7 @@ function menuImageUrl(roundId: string): string {
   return `${base}/api/sms/menu-image/${roundId}?v=${Date.now().toString(36)}`
 }
 
-function voteBody(familyName: string, round: VoteRound, showCarbs = false): string {
+export function voteBody(familyName: string, round: VoteRound, showCarbs = false): string {
   const week = round.week_start.slice(5).replace('-', '/')
   const sun = round.candidates.filter((m) => isSundayDinner(m))
   // Sunday family dinner: its ideas come first under their own heading, then the weeknights (one numbering).
@@ -1081,7 +1109,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     const askedAlready = await sentForRound(admin, mm.id, round.id)
     // resend: the same round's menu again (e.g. after a picture fix) — only to people who already got it
     if (opts.resend ? !askedAlready : (!opts.force && askedAlready)) continue
-    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap * Math.max(1, settings.schedule.trips.length), menuImageUrl(round.id))) report.voteTextsSent++
+    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap * Math.max(1, settings.schedule.trips.length), settings.texting.plainTextIds.includes(mm.id) ? undefined : menuImageUrl(round.id))) report.voteTextsSent++
     // Their idea made the ballot: say so (once per round, not counted against the weekly cap).
     const theirs = round.candidates.map((c, i) => ({ c, n: i + 1 })).filter(({ c }) => c.ideaBy && c.ideaBy.toLowerCase() === mm.name.toLowerCase())
     if (theirs.length && !opts.resend && !(await alreadySentTo(admin, mm.id, `idea_in_vote:${round.id}`, 7))) {
@@ -1147,6 +1175,32 @@ async function fetchInbound(sinceDays = 2): Promise<TwilioMsg[]> {
 
 export interface PollReport { fetched: number; handled: number; replies: number; completions: number; errors: string[] }
 
+/**
+ * 7 PM "What was dinner tonight?" (Sarah, Nov 7 2026): for planners who turned it on, on nights with no planned
+ * dinner, one text to the planner. Their answer is written up and saved as a family recipe (handleInbound
+ * save_recipe). Runs from the 5-minute text poll; the first poll in the 7 PM hour sends it, once a day.
+ */
+export async function dinnerAskSweep(admin: SupabaseClient, now: Date = new Date()): Promise<number> {
+  const { data: owners } = await admin.from('profiles')
+    .select('id, household_id, full_name, timezone, settings, subscription_status, is_beta_member, family_until')
+    .eq('settings->texting->>askDinner', 'true').not('household_id', 'is', null)
+  let sent = 0
+  for (const o of (owners ?? []) as OwnerRow[]) {
+    try {
+      const tz = o.timezone || 'America/New_York'
+      const hour = Number(new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', hour12: false }).format(now)) % 24
+      if (hour !== 19 || !isFamilyProfile(o)) continue
+      const { data: me } = await admin.from('household_members').select('*').eq('household_id', o.household_id).eq('profile_id', o.id).limit(1)
+      const planner = me?.[0] as MemberRow | undefined
+      if (!planner || await alreadySentTo(admin, planner.id, 'dinner_ask', 0.8)) continue
+      const plan = await latestPlan(admin, o.id)
+      if (plan && tonightMeal(plan.meals, tz)) continue
+      if (await textMember(admin, planner, `DinnerDrop: what was dinner tonight? Reply the way you'd say it (e.g. "kielbasa and pierogies with onions") and I'll save it to your family recipes. Reply NO to skip.`, 'dinner_ask')) sent++
+    } catch (e) { console.error('dinnerAskSweep', o.id, e) }
+  }
+  return sent
+}
+
 /** Read new inbound texts from Twilio, handle the ones from our members, reply, then check for finished votes. */
 export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
   const report: PollReport = { fetched: 0, handled: 0, replies: 0, completions: 0, errors: [] }
@@ -1186,6 +1240,7 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
     }
   }
   try { report.completions = await checkVoteCompletion(admin) } catch (e) { report.errors.push(String(e)) }
+  try { await dinnerAskSweep(admin) } catch (e) { report.errors.push(`dinnerAsk: ${String(e)}`) }
   return report
 }
 
@@ -1205,6 +1260,22 @@ async function handlePhoto(admin: SupabaseClient, m: TwilioMsg): Promise<{ reply
   const weekStart = plan?.week_start ?? mondayOf(new Date())
   const media = await fetchMedia(m.sid)
   const added: string[] = []
+  // "save this" (or "our recipe") with a photo of the box, plate or recipe card → a family recipe, not a list item.
+  const capRaw = m.body?.trim() ?? ''
+  if (media.length && /^(save|our recipe|my recipe|family recipe|add (a |our |my )?recipe|new recipe|recipe)\b/i.test(capRaw)) {
+    try {
+      const hint = capRaw.match(SAVE_RECIPE_RE)?.[1] ?? ''
+      const said = await describeDinnerFromPhotos(media, hint)
+      const { data: prof } = await admin.from('profiles').select('family_size, dietary_needs').eq('id', owner.id).single()
+      const meals = said.length ? await buildFamilyRecipes(said.slice(0, 1), { servings: Number(prof?.family_size) || 4, dietary: (prof?.dietary_needs as string[] | null) ?? [], by: member.profile_id ? undefined : member.name }) : []
+      if (!meals.length) return { reply: `I couldn't tell what dinner that is from the photo. Text it instead, like "save this: kielbasa and pierogies".`, householdId: member.household_id, memberId: member.id }
+      const r = await saveFamilyRecipes(admin, owner.id, meals)
+      return { reply: r.saved.length ? `Saved "${meals[0].name}" to the family recipes from your photo. It'll come up in a vote soon. 🍽️` : `"${meals[0].name}" is already in the family recipes. 👍`, householdId: member.household_id, memberId: member.id }
+    } catch (e) {
+      console.error('photo recipe failed', e)
+      return { reply: `Sorry, I couldn't save that one. Try again in a minute.`, householdId: member.household_id, memberId: member.id }
+    }
+  }
   // A store flyer (or "SALE" in the caption) loads this week's sales instead of adding a list item.
   const caption = m.body?.trim() ?? ''
   const saleHint = /\b(sale|sales|flyer|ad|deals|circular)\b/i.test(caption)

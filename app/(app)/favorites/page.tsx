@@ -6,6 +6,7 @@ import { Heart, Download } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import ConversionTracker from '@/components/ConversionTracker'
+import FamilyRecipes from '@/components/FamilyRecipes'
 import { recordMealSignal } from '@/lib/taste-profile'
 import { attachLibraryImages } from '@/lib/library-images'
 import type { Meal } from '@/types'
@@ -138,7 +139,7 @@ export default function FavoritesPage() {
             className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
           >
             <Download className="w-4 h-4" />
-            Bring dinners you already love (from Mealime, a notebook, anywhere)
+            Import dinners by name (from Mealime or another app)
           </button>
           {showImport && (
             <div className="mt-3 rounded-xl border border-border bg-card p-4 max-w-2xl">
@@ -163,6 +164,9 @@ export default function FavoritesPage() {
           )}
           {importMsg && <p className="mt-3 text-sm text-foreground">{importMsg}</p>}
           {importing && !showImport && <p className="mt-3 text-sm text-muted-foreground">Rebuilding the dinners you brought with you…</p>}
+          <div className="mt-6 max-w-3xl">
+            <FamilyRecipes onSaved={() => { loadFavoritesRef.current?.() }} />
+          </div>
         </div>
 
         {favorites.length === 0 ? (
@@ -213,6 +217,11 @@ export default function FavoritesPage() {
                       <h3 className="text-base font-heading font-semibold text-card-foreground leading-tight pr-8">
                         {meal.name}
                       </h3>
+                      {meal.familyRecipe && (
+                        <span className="inline-block rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-semibold text-accent-foreground">
+                          {meal.addedBy ? `${meal.addedBy}'s recipe` : 'Family recipe'}
+                        </span>
+                      )}
                       <div className="flex items-center gap-3 text-sm text-muted-foreground">
                         <span>{meal.cookTime} min</span>
                         <span>&middot;</span>
