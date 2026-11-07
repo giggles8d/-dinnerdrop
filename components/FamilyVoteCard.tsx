@@ -9,7 +9,7 @@ interface Round { id: string; week_start: string; picks_needed: number; created_
 interface Person { name: string; status: string }
 
 /** Dashboard card: the family vote in progress — who's answered, running tally, close now. */
-export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) {
+export default function FamilyVoteCard({ onClosed, onRound }: { onClosed?: () => void; onRound?: (r: { weekStart: string; picks: number } | null) => void }) {
   const [round, setRound] = useState<Round | null>(null)
   const [people, setPeople] = useState<Person[]>([])
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
@@ -21,8 +21,9 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
       const r = await fetch('/api/vote-round', { cache: 'no-store' })
       const j = await r.json()
       setRound(j.round ?? null); setPeople(j.people ?? []); setSuggestions(j.suggestions ?? [])
+      onRound?.(j.round ? { weekStart: j.round.week_start, picks: j.round.picks_needed } : null)
     } catch { /* ignore */ } finally { setLoaded(true) }
-  }, [])
+  }, [onRound])
 
   useEffect(() => {
     load(); const t = setInterval(load, 60_000)

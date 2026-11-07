@@ -39,6 +39,7 @@ export default function DashboardPage() {
 }
 
 function DashboardContent() {
+  const [openVote, setOpenVote] = useState<{ weekStart: string; picks: number } | null>(null)
   const [meals, setMeals] = useState<Meal[]>([])
   const [totalCost, setTotalCost] = useState(0)
   const [budget, setBudget] = useState('$100')
@@ -773,7 +774,12 @@ function DashboardContent() {
             }}
           />
         )}
-        {!isPickingMeals && !showQuickSetup && <FamilyVoteCard onClosed={() => loadExistingPlan()} />}
+        {!isPickingMeals && !showQuickSetup && <FamilyVoteCard onClosed={() => loadExistingPlan()} onRound={setOpenVote} />}
+        {!isPickingMeals && !showQuickSetup && openVote && meals.length > 0 && (
+          <div className="mb-6 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            <b>Heads up:</b> the dinners below are a placeholder from before the vote. When the family&apos;s vote closes, the {openVote.picks} winners replace them for those nights. You don&apos;t need to shop for these.
+          </div>
+        )}
         {!isPickingMeals && !showQuickSetup && <FamilyMessages />}
         {!isPickingMeals && !showQuickSetup && (
           <Link href="/tonight" className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 hover:border-primary/40 transition-colors">
