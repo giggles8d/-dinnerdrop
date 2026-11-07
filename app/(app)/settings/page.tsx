@@ -564,7 +564,7 @@ export default function SettingsPage() {
                       const on = picked.includes(st.key)
                       return (
                         <PickChip key={st.key} on={on} title={st.blurb}
-                          onClick={async () => { if (!profile) return; setSaving(true); await applyStyles(supabase, profile.id, on ? picked.filter((k) => k !== st.key) : [...picked, st.key]); await load(); setSaving(false); setSaved(on ? 'Style removed' : 'Style added') }}>
+                          onClick={async () => { if (!profile) return; if (dirty) await save(); setSaving(true); await applyStyles(supabase, profile.id, on ? picked.filter((k) => k !== st.key) : [...picked, st.key]); await load(); setSaving(false); setSaved(on ? 'Style removed (your other changes were saved too)' : 'Style added (your other changes were saved too)') }}>
                           {st.emoji} {st.name}
                         </PickChip>
                       )
@@ -671,7 +671,7 @@ export default function SettingsPage() {
                     </div>
                   )}
                 </div>
-                <Field label="All-day dinners per week" hint="Slow cooker or Instant Pot dinners that cook for hours. Keeps the planner from filling the week with them.">
+                <Field label="All-day dinners per week" hint="Slow cooker dinners that cook for hours (Instant Pot dinners are quick and don't count). Keeps the planner from filling the week with them.">
                   <Select value={String(settings.plan.maxLongCookNights)} onChange={(v) => patch((s) => { s.plan.maxLongCookNights = Number(v) })} options={[{ value: '0', label: 'None' }, { value: '1', label: 'Up to 1' }, { value: '2', label: 'Up to 2' }, { value: '3', label: 'Up to 3' }, { value: '-1', label: 'No limit' }]} />
                 </Field>
                 <div className="space-y-3">
