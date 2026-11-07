@@ -119,6 +119,25 @@ export default function FavoritesPage() {
     }
   }
 
+  async function uploadPhoto(file: File | undefined) {
+    if (!file || !editing) return
+    setEditBusy(true); setEditMsg('')
+    try {
+      const url = URL.createObjectURL(file)
+      const img = await new Promise<HTMLImageElement>((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url })
+      const scale = Math.min(1, 1200 / Math.max(img.width, img.height))
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale)
+      c.getContext('2d')!.drawImage(img, 0, 0, c.width, c.height)
+      URL.revokeObjectURL(url)
+      const r = await fetch('/api/favorites/photo', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: editing.id, dataUrl: c.toDataURL('image/jpeg', 0.82) }) })
+      const d = await r.json()
+      if (!r.ok) { setEditMsg(d.error || 'Could not save the photo.'); return }
+      setEditing({ ...editing, meal: { ...editing.meal, imageUrl: d.url } })
+      setFavorites((prev) => prev.map((f) => (f.id === editing.id ? { ...f, meal_data: d.meal } : f)))
+    } catch { setEditMsg('That photo couldn\'t be opened.') }
+    finally { setEditBusy(false) }
+  }
+
   async function saveEdit() {
     if (!editing) return
     setEditBusy(true); setEditMsg('')
@@ -189,6 +208,16 @@ export default function FavoritesPage() {
           <div className="fixed inset-0 z-50 bg-black/40 flex items-start sm:items-center justify-center p-3 overflow-y-auto" onClick={() => !editBusy && setEditing(null)}>
             <div className="w-full max-w-3xl rounded-2xl bg-card border border-border p-5 my-6" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-lg font-heading font-bold text-foreground mb-3">Edit recipe</h2>
+              <div className="mb-4 flex items-center gap-3">
+                {editing.meal.imageUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={editing.meal.imageUrl} alt="" className="w-24 h-18 object-cover rounded-lg border border-border" />
+                )}
+                <label className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border text-sm font-medium cursor-pointer hover:bg-muted/40">
+                  {editing.meal.imageUrl ? 'Use my own photo instead' : 'Add my own photo'}
+                  <input type="file" accept="image/*" className="hidden" onChange={(e) => { uploadPhoto(e.target.files?.[0]); e.target.value = '' }} />
+                </label>
+              </div>
               <RecipeEditor meal={editing.meal} onChange={(m) => setEditing({ ...editing, meal: m })} />
               {editMsg && <p className="mt-3 text-sm text-red-700">{editMsg}</p>}
               <div className="mt-4 flex gap-2">
