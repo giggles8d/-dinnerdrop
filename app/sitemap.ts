@@ -61,10 +61,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     { url: `${BASE}/recipes`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 0.8 },
-    ...['gluten-free-family-dinners', 'picky-eater-dinners', 'dinners-under-30-minutes', 'family-dinners-under-100'].map((slug) => ({
+    ...['gluten-free-family-dinners', 'picky-eater-dinners', 'dinners-under-30-minutes', 'family-dinners-under-100', 'easy-chicken-dinners', 'ground-beef-dinners'].map((slug) => ({
       url: `${BASE}/dinners/${slug}`,
-      lastModified: new Date('2026-10-18'),
-      changeFrequency: 'monthly' as const,
+      lastModified: new Date('2026-11-07'),
+      changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
     {
