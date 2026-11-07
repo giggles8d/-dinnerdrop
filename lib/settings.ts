@@ -26,7 +26,8 @@ export interface Settings {
     maxLongCookNights: number       // slow-cooker / Instant Pot all-day dinners per week; -1 = no limit
   }
   food: {
-    style: string | null            // food style preset key (lib/styles.ts), or null
+    style: string | null            // first picked food style (kept for older code); see `styles`
+    styles: string[]                // every food style preset the family picked (lib/styles.ts); combine
     cuisines: string[]              // preferred cuisines (empty = mixed)
     avoidProteins: string[]
     neverIngredients: string[]      // hard exclusions (beyond dietary needs)
@@ -105,6 +106,7 @@ export const DEFAULT_SETTINGS: Settings = {
   },
   food: {
     style: null,
+    styles: [],
     cuisines: [],
     avoidProteins: [],
     neverIngredients: [],
