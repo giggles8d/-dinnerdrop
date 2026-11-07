@@ -202,7 +202,7 @@ export async function POST(request: Request) {
     if (mode === 'fresh' && settings.food.familyRecipesPerWeek > 0) {
       const blocked = (m: Meal) => hardExclusions.some((x) => x && m.ingredients?.some((i) => i.name.toLowerCase().includes(x.toLowerCase())))
       const taken = new Set([...bringBack, ...keepMeals].map((m) => normalizeName(m.name)))
-      const own = classicsDue(profile.favoriteMeals.filter((m) => !blocked(m) && !taken.has(normalizeName(m.name))), (recentPlans ?? []).map((p) => (p.meals as Meal[]) ?? []), Math.min(settings.food.familyRecipesPerWeek, 3))
+      const own = classicsDue(profile.favoriteMeals.filter((m) => !blocked(m) && !taken.has(normalizeName(m.name))), (recentPlans ?? []).map((p) => (p.meals as Meal[]) ?? []), Math.min(settings.food.familyRecipesPerWeek, Math.max(optionsCount - 1, 0)))
       bringBack = [...bringBack, ...own.map((m, i) => ({ ...m, day: `F${i + 1}`, tags: Array.from(new Set(['family recipe', ...(m.tags ?? [])])) }))]
     }
 
