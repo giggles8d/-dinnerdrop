@@ -8,8 +8,8 @@ import Link from 'next/link'
 import ProductPrefsEditor from '@/components/ProductPrefsEditor'
 import SalesCard from '@/components/SalesCard'
 import StoreDealsSettings from '@/components/StoreDealsSettings'
-import { FOOD_STYLES, styleByKey } from '@/lib/styles'
-import { applyStyle } from '@/lib/apply-style'
+import { FOOD_STYLES, selectedStyles } from '@/lib/styles'
+import { applyStyles } from '@/lib/apply-style'
 import { createClient } from '@/lib/supabase'
 import {
   mergeSettings, DEFAULT_SETTINGS, WEEKDAYS, WEEKDAY_LABEL, CUISINE_OPTIONS, PROTEIN_OPTIONS,
@@ -92,21 +92,37 @@ function starterMix(dinners: number): NonNullable<ProteinMix> {
   return mix
 }
 
+/** A choice button whose picked state is unmistakable: solid green with a check when on, a plain "+" when off. */
+function PickChip({ on, onClick, title, children }: { on: boolean; onClick: () => void; title?: string; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      title={title}
+      aria-pressed={on}
+      onClick={onClick}
+      className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border-2 text-sm transition-colors ${on
+        ? 'bg-primary text-primary-foreground border-primary font-semibold shadow-sm'
+        : 'bg-white text-gray-600 border-gray-200 hover:border-primary/60 hover:text-foreground'}`}
+    >
+      <span aria-hidden="true" className={`inline-flex items-center justify-center w-4 h-4 rounded-full text-[11px] leading-none ${on ? 'bg-white text-primary font-bold' : 'border border-gray-300 text-gray-400'}`}>{on ? '✓' : '+'}</span>
+      {children}
+    </button>
+  )
+}
+
+/** Plain-words summary under a chip group, so a family can see at a glance what is (and isn't) set. */
+function PickedLine({ names, none }: { names: string[]; none: string }) {
+  return names.length
+    ? <p className="text-xs mt-2 text-primary font-medium">✓ Picked: {names.join(', ')}</p>
+    : <p className="text-xs mt-2 text-amber-700">{none}</p>
+}
+
 function Chips({ options, value, onChange }: { options: string[]; value: string[]; onChange: (v: string[]) => void }) {
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((o) => {
         const on = value.includes(o)
-        return (
-          <button
-            key={o}
-            type="button"
-            onClick={() => onChange(on ? value.filter((v) => v !== o) : [...value, o])}
-            className={`px-3 py-1.5 rounded-full border text-sm transition-colors ${on ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}
-          >
-            {o}
-          </button>
-        )
+        return <PickChip key={o} on={on} onClick={() => onChange(on ? value.filter((v) => v !== o) : [...value, o])}>{o}</PickChip>
       })}
     </div>
   )
@@ -532,20 +548,25 @@ export default function SettingsPage() {
                     </div>
                   )}
                 </Field>
-                <Field label="Your style" hint="A one-tap preset: it sets diets, time, calories or equipment for you. Change any of those below afterwards.">
+                <Field label="Your style" hint="Pick as many as fit your family (Keto + Slow cooker, say). Each one sets diets, time, calories or equipment for you; change any of those below afterwards.">
                   <div className="flex flex-wrap gap-2">
                     {FOOD_STYLES.map((st) => {
-                      const on = settings.food.style === st.key
+                      const picked = selectedStyles(settings.food).map((x) => x.key)
+                      const on = picked.includes(st.key)
                       return (
-                        <button key={st.key} type="button" title={st.blurb}
-                          onClick={async () => { if (!profile) return; setSaving(true); await applyStyle(supabase, profile.id, on ? null : st.key); await load(); setSaving(false); setSaved('Style applied') }}
-                          className={`px-3 py-1.5 rounded-full border text-sm transition-colors ${on ? 'bg-primary text-primary-foreground border-primary' : 'bg-white text-foreground border-border hover:border-primary/50'}`}>
+                        <PickChip key={st.key} on={on} title={st.blurb}
+                          onClick={async () => { if (!profile) return; setSaving(true); await applyStyles(supabase, profile.id, on ? picked.filter((k) => k !== st.key) : [...picked, st.key]); await load(); setSaving(false); setSaved(on ? 'Style removed' : 'Style added') }}>
                           {st.emoji} {st.name}
-                        </button>
+                        </PickChip>
                       )
                     })}
                   </div>
-                  {styleByKey(settings.food.style) && <p className="text-xs text-muted-foreground mt-2">{styleByKey(settings.food.style)!.blurb}</p>}
+                  <PickedLine names={selectedStyles(settings.food).map((x) => x.name)} none="No style picked yet: tap any that fit your family." />
+                  {selectedStyles(settings.food).length > 0 && (
+                    <ul className="text-xs text-muted-foreground mt-1 space-y-0.5">
+                      {selectedStyles(settings.food).map((x) => <li key={x.key}><span className="font-medium text-foreground">{x.name}:</span> {x.blurb}</li>)}
+                    </ul>
+                  )}
                 </Field>
                 <Field label="Cuisines you like" hint="Leave empty for a mix.">
                   <Chips options={CUISINE_OPTIONS} value={settings.food.cuisines} onChange={(v) => patch((s) => { s.food.cuisines = v })} />

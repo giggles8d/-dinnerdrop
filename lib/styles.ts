@@ -44,3 +44,9 @@ export const FOOD_STYLES: FoodStyle[] = [
 ]
 
 export const styleByKey = (key: string | null | undefined) => FOOD_STYLES.find((s) => s.key === key) ?? null
+
+/** The styles a family picked (several can be on at once; older accounts stored only `style`). */
+export function selectedStyles(food: { style?: string | null; styles?: string[] | null }): FoodStyle[] {
+  const keys = food.styles && food.styles.length ? food.styles : food.style ? [food.style] : []
+  return keys.map((k) => styleByKey(k)).filter((s): s is FoodStyle => !!s)
+}
