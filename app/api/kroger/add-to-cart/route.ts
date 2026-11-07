@@ -7,6 +7,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getClientCredentialsToken, searchProduct, addItemsToCart, refreshKrogerToken } from '@/lib/kroger'
 import type { GroceryItem } from '@/types'
 import { loadProductPrefs, applyPrefsToItems } from '@/lib/product-prefs'
+import { grantCartOffer } from '@/lib/cart-offer'
 
 export async function POST(request: Request) {
   try {
@@ -88,6 +89,7 @@ export async function POST(request: Request) {
         item_count: cartItems.length,
         week_start: typeof weekStart === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(weekStart) ? weekStart : null,
       })
+      await grantCartOffer(user.id)
     } catch (logErr) {
       console.error('[kroger] handoff log failed:', logErr)
     }

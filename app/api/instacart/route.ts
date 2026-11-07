@@ -7,6 +7,7 @@ import { stockStaplesFromList } from '@/lib/pantry'
 import { grantWeekendOffer } from '@/lib/weekend-offer'
 import { loadProductPrefs, applyPrefsToItems } from '@/lib/product-prefs'
 import type { GroceryItem } from '@/types'
+import { grantCartOffer } from '@/lib/cart-offer'
 
 export async function POST(request: Request) {
   try {
@@ -45,6 +46,7 @@ export async function POST(request: Request) {
           est_total: Number(estTotal) > 0 ? Number(estTotal) : null,
           week_start: typeof weekStart === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(weekStart) ? weekStart : null,
         })
+        if (!quoteOnly) await grantCartOffer(user.id)
       } catch (logErr) {
         console.error('[instacart] handoff log failed:', logErr)
       }

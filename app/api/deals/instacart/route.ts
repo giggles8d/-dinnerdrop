@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { createInstacartLink } from '@/lib/instacart'
 import type { GroceryCategory, GroceryItem } from '@/types'
+import { grantCartOffer } from '@/lib/cart-offer'
 
 export const dynamic = 'force-dynamic'
 
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
   if (result.link && !result.fallback) {
     try {
       await supabase.from('grocery_handoffs').insert({ user_id: user.id, store: 'Instacart · deals', item_count: items.length, est_total: null, week_start: null })
+      await grantCartOffer(user.id)
     } catch (e) { console.error('[deals/instacart] handoff log failed', e) }
   }
   return NextResponse.json(result)

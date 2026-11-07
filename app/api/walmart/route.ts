@@ -6,6 +6,7 @@ import { sendWeekRecipes } from '@/lib/recipe-email'
 import { stockStaplesFromList } from '@/lib/pantry'
 import { loadProductPrefs, applyPrefsToItems } from '@/lib/product-prefs'
 import type { GroceryItem } from '@/types'
+import { grantCartOffer } from '@/lib/cart-offer'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -42,6 +43,7 @@ export async function POST(request: Request) {
         est_total: Number(body.estTotal) > 0 ? Number(body.estTotal) : null,
         week_start: typeof body.weekStart === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(body.weekStart) ? body.weekStart : null,
       })
+      await grantCartOffer(user.id)
       await stockStaplesFromList(admin, user.id, typeof body.weekStart === 'string' ? body.weekStart : null).catch((e) => console.error('[walmart] staple stock failed:', e))
       await sendWeekRecipes(admin, user.id).catch((e) => console.error('[walmart] recipe email failed:', e))
     } catch (e) {
