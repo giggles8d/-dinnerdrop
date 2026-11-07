@@ -4,6 +4,8 @@ import type { Meal } from '@/types'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
+// Never reuse a cached database read: a photo fixed on a round must show on the very next render.
+export const fetchCache = 'force-no-store'
 
 const GREEN = '#1b5a3c'
 const CREAM = '#faf7f0'
@@ -32,7 +34,9 @@ async function tilePhoto(url: string, w: number, h: number): Promise<string | nu
     return `data:image/jpeg;base64,${buf.toString('base64')}`
   } catch {
     const jpg = url.replace(/\.webp(\?|$)/, '.jpg$1')
-    return jpg !== url ? jpg : null
+    if (jpg !== url) return jpg
+    // A plain JPEG/PNG photo can be drawn as-is when the resize step isn't available.
+    return /\.(jpe?g|png)(\?|$)/i.test(url) ? url : null
   }
 }
 
@@ -43,7 +47,9 @@ async function tilePhoto(url: string, w: number, h: number): Promise<string | nu
  */
 export async function GET(_req: Request, { params }: { params: { roundId: string } }) {
   if (!/^[0-9a-f-]{36}$/i.test(params.roundId)) return new Response('Not found', { status: 404 })
-  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
+    global: { fetch: (input, init) => fetch(input, { ...init, cache: 'no-store' }) },
+  })
   const { data } = await admin.from('vote_rounds').select('candidates').eq('id', params.roundId).single()
   const meals = ((data?.candidates as Meal[]) ?? []).slice(0, 12)
   if (!meals.length) return new Response('Not found', { status: 404 })
