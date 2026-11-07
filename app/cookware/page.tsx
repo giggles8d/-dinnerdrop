@@ -32,8 +32,8 @@ export default function CookwarePage() {
           so you can set it all out before you start.
         </p>
         <p className="text-xs text-muted-foreground mb-10 border-l-2 border-accent pl-3">
-          As an Amazon Associate, DinnerDrop earns from qualifying purchases. Links go to Amazon search results so you can
-          compare options and prices; it never changes what you pay. <Link href="/disclosure" className="underline">Disclosure</Link>
+          As an Amazon Associate, DinnerDrop earns from qualifying purchases. Each link goes to one well-reviewed product on Amazon;
+          it never changes what you pay. <Link href="/disclosure" className="underline">Disclosure</Link>
         </p>
 
         <section className="mb-12 rounded-2xl border border-primary/20 bg-primary/5 p-5">
@@ -58,6 +58,12 @@ export default function CookwarePage() {
                   <div>
                     <p className="text-sm font-semibold text-foreground">{it.name}{it.starter && <span className="ml-2 align-middle rounded-full bg-accent/15 text-accent-foreground px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Start here</span>}</p>
                     <p className="text-sm text-muted-foreground">{it.why}</p>
+                    {it.product && (
+                      <p className="text-xs text-foreground/80 mt-1">
+                        {it.founderPick ? <span className="font-semibold text-primary">Founder&apos;s pick: </span> : <span className="font-semibold">Pick: </span>}
+                        {it.product}{it.founderPick && <span className="text-muted-foreground"> — the pan Sarah cooks with at home</span>}
+                      </p>
+                    )}
                   </div>
                   <a href={cookwareUrl(it)} target="_blank" rel="sponsored nofollow noopener noreferrer"
                     className="shrink-0 mt-0.5 px-3 py-1.5 rounded-lg border border-primary/30 text-xs font-semibold text-primary hover:bg-primary/5 whitespace-nowrap">
