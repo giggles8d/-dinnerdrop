@@ -1036,7 +1036,8 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
   // 1. open round (reuse one already open for this week unless forced)
   const picksNeeded = trip ? Math.min(Math.max(trip.nights.length, 1), 7) : Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
   // Weeknight ideas plus the family's own number of Sunday dinner ideas (texted as two groups).
-  const sundayN = trip ? 0 : sundayOptions(settings)
+  // With shopping trips, the Sunday group goes with whichever trip has Sunday night in it.
+  const sundayN = !trip || trip.nights.some((n) => n.day === 'sun') ? sundayOptions(settings) : 0
   const count = Math.min(Math.max(settings.texting.optionsToText, picksNeeded, 5), 12) + sundayN
   let round = await openRound(admin, o.household_id)
   if (round && round.week_start !== weekStart) { await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id); round = null }
