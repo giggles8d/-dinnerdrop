@@ -14,6 +14,7 @@ import { isFamilyProfile } from '@/lib/access'
 import { generateCandidates, savePlan } from '@/lib/autoplan'
 import { markSuggestionsUsed, pendingSuggestions, resolveSuggestion, type Suggestion } from '@/lib/suggestions'
 import { timeLabel, type PlanShape } from '@/lib/plan'
+import { tapVoteUrl } from '@/lib/tap-vote'
 import { guessCategory, normalizeItemName } from '@/lib/list'
 import { generateWithClaude, generateWithClaudeImage, generateSmart, parseClaudeJSON } from '@/lib/claude'
 import { looksLikeFlyer, salesFromImage, saveSales } from '@/lib/sales'
@@ -1181,7 +1182,8 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
     const askedAlready = await sentForRound(admin, mm.id, round.id)
     // resend: the same round's menu again (e.g. after a picture fix) — only to people who already got it
     if (opts.resend ? !askedAlready : (!opts.force && askedAlready)) continue
-    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)), `vote_request:${round.id}`, settings.texting.weeklyCap * Math.max(1, settings.schedule.trips.length), settings.texting.plainTextIds.includes(mm.id) ? undefined : menuImageUrl(round.id))) report.voteTextsSent++
+    const tapLine = (settings.texting.tapVoteIds ?? []).includes(mm.id) ? `\n\nOr tap the dinners you want (with photos): ${await tapVoteUrl(admin, round.id, mm.id)}` : ''
+    if (await textMember(admin, mm, voteBody(familyName, round, watchesCarbs(o.dietary_needs as string[] | null)) + tapLine, `vote_request:${round.id}`, settings.texting.weeklyCap * Math.max(1, settings.schedule.trips.length), settings.texting.plainTextIds.includes(mm.id) ? undefined : menuImageUrl(round.id))) report.voteTextsSent++
     // Their idea made the ballot: say so (once per round, not counted against the weekly cap).
     const theirs = round.candidates.map((c, i) => ({ c, n: i + 1 })).filter(({ c }) => c.ideaBy && c.ideaBy.toLowerCase() === mm.name.toLowerCase())
     if (theirs.length && !opts.resend && !(await alreadySentTo(admin, mm.id, `idea_in_vote:${round.id}`, 7))) {
