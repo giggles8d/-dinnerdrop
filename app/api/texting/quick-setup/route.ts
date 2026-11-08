@@ -28,10 +28,13 @@ export async function GET() {
   const settings = mergeSettings(profile.settings)
   const [{ count: plans }, { count: phones }] = await Promise.all([
     admin.from('meal_plans').select('id', { count: 'exact', head: true }).eq('user_id', profile.id),
-    profile.household_id ? admin.from('household_members').select('id', { count: 'exact', head: true }).eq('household_id', profile.household_id).not('phone', 'is', null) : Promise.resolve({ count: 0 }),
+    // Family numbers only: the planner's own row (profile_id = them) doesn't count.
+    profile.household_id ? admin.from('household_members').select('id', { count: 'exact', head: true }).eq('household_id', profile.household_id).not('phone', 'is', null).or(`profile_id.is.null,profile_id.neq.${profile.id}`) : Promise.resolve({ count: 0 }),
   ])
-  const show = (plans ?? 0) > 0 && (phones ?? 0) === 0 && !settings.texting.enabled && !settings.texting.ownerPhone
-  return NextResponse.json({ show, family: isFamilyProfile(profile) })
+  // Nov 7 2026: also shown to planners who gave us their own number but no family yet (most of them) —
+  // until then the card only showed when nobody had a number, so they never got asked.
+  const show = (plans ?? 0) > 0 && (phones ?? 0) === 0
+  return NextResponse.json({ show, family: isFamilyProfile(profile), hasOwnerPhone: !!settings.texting.ownerPhone })
 }
 
 export async function POST(request: Request) {
