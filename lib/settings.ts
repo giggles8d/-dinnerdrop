@@ -74,6 +74,7 @@ export interface Settings {
     reviewFirst: boolean            // the vote waits for the person in charge to review (drop / swap / add) before it goes out
     reviewHours: number             // …and goes out on its own this many hours later if they don't
     plainTextIds: string[]          // members whose phones can't get picture texts: their vote comes as plain text
+    tapVoteIds: string[]            // members whose vote text also carries a tap-to-vote link with photos (lib/tap-vote)
     askDinner: boolean              // 7 PM "what was dinner tonight?" text to the planner on nights with no planned dinner; the answer is saved as a family recipe
     walmartLinks: 'list' | 'cart'   // a texted Walmart link: put it on the grocery list, or text the planner a one-tap Walmart-cart link
     optionsToText: number           // dinner ideas texted for the family to pick from (>= dinnersPerWeek)
@@ -161,6 +162,7 @@ export const DEFAULT_SETTINGS: Settings = {
     ownerPhone: '',
     askDinner: false,
     plainTextIds: [],
+    tapVoteIds: [],
     leaderTitle: '',
     reviewFirst: false,
     reviewHours: 3,
