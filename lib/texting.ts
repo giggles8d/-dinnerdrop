@@ -960,7 +960,7 @@ Facts you may answer from (the planner is ${facts.family}):
 - The household: ${facts.people?.length ? facts.people.join(' | ') : 'unknown'}
 - ${facts.ownerMessage ? `${facts.family} recently texted the family: "${facts.ownerMessage}"` : `${facts.family} hasn't texted the family recently`}
 - What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product, a store flyer, a dinner (box, plate or recipe card) or a screenshot, SAVE THIS + a dinner the way they make it (saved to the family's own recipes, which come up in future votes — this is how the family gets "our normal dinners"), TEXT ONLY (the vote comes as plain words instead of a picture, for phones that don't show pictures), and any food, cooking or grocery question.
-- Never offer or promise something texting can't do (e.g. sending dinners one at a time, or calling someone). If they can't see the pictures, tell them to reply TEXT ONLY.` : ''}
+- Never offer or promise something texting can't do (e.g. sending dinners one at a time, calling someone, or "rebuilding" / "fixing" the grocery list). Never say you did or are doing something unless it's one of the commands above. The grocery list rebuilds itself from the week's dinners when they open it; if they say it's wrong, say Sarah has been told and will fix it, and set relay true. If they can't see the pictures, tell them to reply TEXT ONLY.` : ''}
 
 Return ONLY JSON:
 {"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"likes":[],"dislikes":[],"allergies":[],"needs":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
@@ -1543,7 +1543,9 @@ export async function swapPlanDinner(admin: SupabaseClient, owner: OwnerRow, n: 
   const meals = [...plan.meals]
   meals[n - 1] = { ...meal, day: old.day, suggestedNight: old.suggestedNight }
   const total = meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
-  await admin.from('meal_plans').update({ meals, total_estimated_cost: total }).eq('id', plan.id)
+  // grocery_list {} = the grocery page rebuilds this week's list from the new dinners (Nov 8 2026: a texted swap left the old
+  // dinner's ingredients on the list). Lines already sent to a store are kept by the page.
+  await admin.from('meal_plans').update({ meals, total_estimated_cost: total, grocery_list: {} }).eq('id', plan.id)
   const leader = leaderLabel(owner)
   const { data: fam } = await admin.from('household_members').select('*').eq('household_id', owner.household_id)
   let told = 0
@@ -1551,7 +1553,7 @@ export async function swapPlanDinner(admin: SupabaseClient, owner: OwnerRow, n: 
     if (mm.profile_id === owner.id) continue
     if (await textMember(admin, mm, `${leader} changed ${old.day || 'a night'}: ${meal.name} (instead of ${old.name}).`, 'plan_change')) told++
   }
-  return `Done: ${old.day ? `${old.day} is now ` : ''}${meal.name} (was ${old.name}).${told ? ` I let the family know.` : ''} The grocery list updates on its own.`
+  return `Done: ${old.day ? `${old.day} is now ` : ''}${meal.name} (was ${old.name}).${told ? ` I let the family know.` : ''} Your grocery list updates the next time you open it.`
 }
 
 /** Start a family question or takeout round. */
