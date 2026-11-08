@@ -85,3 +85,11 @@ export async function sendWelcomeEmails(admin: SupabaseClient, now = new Date())
   }
   return { sent }
 }
+
+/** One test send of the welcome email (admin route), same sender and headers as the real one. */
+export async function sendWelcomeTest(to: string, name = 'Jen'): Promise<{ ok: boolean; id?: string; error?: string }> {
+  if (!process.env.RESEND_API_KEY) return { ok: false, error: 'RESEND_API_KEY missing' }
+  const m = welcomeEmail(name, null)
+  const { data, error } = await new Resend(process.env.RESEND_API_KEY).emails.send({ from: FROM, to, subject: `[Test] ${m.subject}`, html: m.html, text: m.text, reply_to: 'sarah@dinnerdrop.app' })
+  return error ? { ok: false, error: String((error as { message?: string }).message ?? error) } : { ok: true, id: data?.id }
+}
