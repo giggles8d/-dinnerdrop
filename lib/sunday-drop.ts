@@ -207,7 +207,7 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
   let tip: DropProps['tip'] = null
   if (seg !== 'list') {
     const [{ count: phones }, { count: carts }] = await Promise.all([
-      p.household_id ? admin.from('household_members').select('id', { count: 'exact', head: true }).eq('household_id', p.household_id).neq('profile_id', p.id).not('phone', 'is', null) : Promise.resolve({ count: 0 }),
+      p.household_id ? admin.from('household_members').select('id', { count: 'exact', head: true }).eq('household_id', p.household_id).or(`profile_id.is.null,profile_id.neq.${p.id}`).not('phone', 'is', null) : Promise.resolve({ count: 0 }),
       admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id),
     ])
     const familyEnds = p.family_until && p.subscription_status !== 'active' ? Date.parse(p.family_until) : 0
