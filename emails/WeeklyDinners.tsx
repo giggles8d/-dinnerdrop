@@ -83,11 +83,12 @@ export default function WeeklyDinners({ issue, firstName, unsubscribeUrl = 'http
           {/* Kitchen must-have (Amazon affiliate) */}
           <Section style={{ padding: '0 28px' }}>
             <Text style={kicker}>KITCHEN MUST-HAVE</Text>
-            <Text style={h2}>{issue.kitchen.name}</Text>
+            <Text style={h2}>{issue.kitchen.product}</Text>
+            <Text style={paragraph}>Our pick for a {issue.kitchen.name.toLowerCase()}.</Text>
             <Text style={paragraph}><strong>Why it earns its spot:</strong> {issue.kitchen.why}</Text>
             <Text style={paragraph}><strong>What to look for:</strong> {issue.kitchen.lookFor}</Text>
             <Text style={paragraph}><strong>Heads up:</strong> {issue.kitchen.headsUp}</Text>
-            <Button style={button} href={issue.kitchen.url}>See options on Amazon →</Button>
+            <Button style={button} href={issue.kitchen.url}>See it on Amazon →</Button>
             <Text style={{ ...footerText, margin: '10px 0 0' }}>As an Amazon Associate, DinnerDrop earns from qualifying purchases. It never changes what we recommend or what you pay.</Text>
             <Hr style={hr} />
           </Section>
