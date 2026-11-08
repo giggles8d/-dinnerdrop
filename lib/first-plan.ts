@@ -26,6 +26,22 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
 
   // Every new family starts with 14 days of Family (texting, profiles, reminders) — no card.
   await grantNewFamilyTrial(admin, userId).catch(() => {})
+  const built = await libraryWeek(admin, userId)
+  if (!built.ok) {
+    if (built.reason === 'not enough library recipes') await trackStep(admin, userId, 'first_plan_failed', { found: built.found ?? 0 })
+    return { ok: false, reason: built.reason }
+  }
+  const saved = await savePlan(admin, userId, mondayOf(new Date()), built.meals, built.shape)
+  const totalCost = saved.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
+  await trackStep(admin, userId, 'first_plan_saved', { source: 'library', count: saved.length })
+  return { ok: true, meals: saved, totalCost, existing: false }
+}
+
+/**
+ * A week picked from the recipe library for this family's settings — fast, no AI. Used for a new family's first
+ * week and by the Sunday Drop ("I picked 5 dinners for you", lib/sunday-drop). Not saved; the caller saves it.
+ */
+export async function libraryWeek(admin: SupabaseClient, userId: string, excludeNames: string[] = []): Promise<{ ok: true; meals: Meal[]; shape: PlanShape } | { ok: false; reason: string; found?: number }> {
   const { data: p } = await admin.from('profiles').select('family_size, weekly_budget, max_cook_time, dietary_needs, settings').eq('id', userId).single()
   if (!p) return { ok: false, reason: 'no profile' }
   const settings = mergeSettings(p.settings)
@@ -42,7 +58,7 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
     maxCookTime: maxCook,
     dietary: p.dietary_needs ?? [],
     excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
-    excludeNames: [],
+    excludeNames,
     cuisines: settings.food.cuisines,
     ignoreKept: true,
   })
@@ -55,14 +71,7 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
   const pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
   const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 150
   const meals = settings.food.fullPlate ? completePlates(fitBudget(pool, dinners, budget), { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitBudget(pool, dinners, budget)
-  if (meals.length < Math.min(3, dinners)) {
-    await trackStep(admin, userId, 'first_plan_failed', { found: meals.length })
-    return { ok: false, reason: 'not enough library recipes' }
-  }
-
+  if (meals.length < Math.min(3, dinners)) return { ok: false, reason: 'not enough library recipes', found: meals.length }
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
-  const saved = await savePlan(admin, userId, mondayOf(new Date()), meals, shape)
-  const totalCost = saved.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
-  await trackStep(admin, userId, 'first_plan_saved', { source: 'library', count: saved.length })
-  return { ok: true, meals: saved, totalCost, existing: false }
+  return { ok: true, meals, shape }
 }

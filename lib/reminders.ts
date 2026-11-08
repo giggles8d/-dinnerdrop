@@ -14,6 +14,7 @@ import { autoPlan } from '@/lib/autoplan'
 import { sendEmail, sendSms, emailShell, smsConfigured } from '@/lib/notify'
 import { attachLibraryImages } from '@/lib/library-images'
 import { planReadySubject, planReadyHtml } from '@/lib/plan-ready-email'
+import { dropConfig, sendDrop, type DropProfile } from '@/lib/sunday-drop'
 import { shopUrl, logFollowup } from '@/lib/followup'
 import { sendListWaitingText, type SetupProfile } from '@/lib/texting-setup'
 import { isFamilyProfile } from '@/lib/access'
@@ -88,6 +89,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
   if (Date.now() - lockedAt < 10 * 60000) { report.errors.push('another run is in progress — skipped'); return report }
   await admin.from('app_kv').upsert({ key: LOCK, value: { at: new Date().toISOString() }, updated_at: new Date().toISOString() })
   try {
+  const dropCfg = await dropConfig(admin)
   const { data: profiles } = await admin
     .from('profiles')
     .select('id, email, full_name, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, subscription_status, is_beta_member, family_until, email_unsubscribed, created_at')
@@ -125,7 +127,15 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
               await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned —\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
             }
-            if (wantsEmail(settings.schedule.reminders.planReady) && canEmail) {
+            // The Sunday Drop v3 is this family's week email now (one email, not two); the plain plan email only
+            // when the Drop isn't live or already went out in the last 5 days (a second shopping trip that week).
+            let dropSent = false
+            if (wantsEmail(settings.schedule.reminders.planReady) && canEmail && dropCfg.live) {
+              const r = await sendDrop(admin, p as unknown as DropProfile, dropCfg, { now, given: { weekStart: voteTrip.key, meals } })
+              dropSent = r.sent || (!r.recent && !r.error)
+              if (r.sent) await logFollowup(admin, p.id, 'plan_ready')
+            }
+            if (wantsEmail(settings.schedule.reminders.planReady) && canEmail && !dropSent) {
               const withPhotos = await attachLibraryImages(admin, meals)
               const weekLabel = new Date(`${voteTrip.shopDate}T12:00:00Z`).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
               await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready') }))
@@ -155,7 +165,13 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
           if (meals) {
             report.autoPlans++
             const names = meals.map((m) => `${m.day}: ${m.name}`)
-            if (wantsEmail(settings.schedule.reminders.planReady) && canEmail) {
+            let dropSent = false
+            if (wantsEmail(settings.schedule.reminders.planReady) && canEmail && dropCfg.live) {
+              const r = await sendDrop(admin, p as unknown as DropProfile, dropCfg, { now, given: { weekStart: target, meals } })
+              dropSent = r.sent || (!r.recent && !r.error)
+              if (r.sent) await logFollowup(admin, p.id, 'plan_ready')
+            }
+            if (wantsEmail(settings.schedule.reminders.planReady) && canEmail && !dropSent) {
               const withPhotos = await attachLibraryImages(admin, meals)
               const weekLabel = new Date(`${target}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
               await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready') }))

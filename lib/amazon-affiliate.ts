@@ -12,8 +12,8 @@ export function amazonSearchUrl(term: string): string {
 }
 
 /** Build an Amazon product URL (by ASIN) with the affiliate tag attached. */
-export function amazonProductUrl(asin: string): string {
-  const tag = AMAZON_ASSOCIATES_TAG
+export function amazonProductUrl(asin: string, tagOverride?: string): string {
+  const tag = tagOverride || AMAZON_ASSOCIATES_TAG
   return `https://www.amazon.com/dp/${asin}${tag ? `?tag=${tag}` : ''}`
 }
 

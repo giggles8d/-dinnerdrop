@@ -2,163 +2,68 @@ import React from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 import { render } from '@react-email/render'
-import { Resend } from 'resend'
-import WeeklyDinners from '@/emails/WeeklyDinners'
-import { buildWeeklyIssue, recordIssue } from '@/lib/weekly-newsletter'
+import SundayDrop from '@/emails/SundayDrop'
+import { buildDrop, dropConfig, sendDropPreviews, DROP_PROFILE_COLS, type DropProfile, type Segment } from '@/lib/sunday-drop'
+import { libraryWeek } from '@/lib/first-plan'
 
-// "The Sunday Drop" — WEEKLY Allrecipes-style dinner email (Oct 28 2026; was a biweekly static calendar).
-// The daily cron calls this on Sundays (8 AM ET). Content comes from the real recipe library each week.
-//
-// KILL SWITCH: full sends only happen when NEWSLETTER_LIVE is true.
-// ?preview=1  → sends ONE email to PREVIEW_RECIPIENT only (works while not live)
-// ?dryRun=1   → returns assembled content + recipient counts, sends nothing
-// ?html=1     → (admin) returns the rendered email HTML for review
-const NEWSLETTER_LIVE = true   // approved by Sarah 2026-10-28: weekly, starting Sun Nov 1
-const PREVIEW_RECIPIENT = 'setzl1979@gmail.com'
+// The Sunday Drop v3 (Nov 8 2026). Sending no longer happens here: each family gets it on their planning day from the
+// daily reminders, and everyone else on Sunday from the texting poll's sweep (lib/sunday-drop). This route is the
+// admin preview:
+//   ?preview=1[&segments=shop,vote,picked,done,comeback]  → one test email per version to Sarah (built from her account)
+//   ?html=1&segment=shop                                   → that version's HTML (nothing saved, nothing sent)
+// Auth: Sarah's logged-in session or the admin x-image-token header.
 
 export const dynamic = 'force-dynamic'
-export const maxDuration = 300   // ~300 recipients × 250 ms pacing
+export const maxDuration = 120
 
 const ADMIN_EMAIL = 'setzl1979@gmail.com'
+const ALL: Segment[] = ['shop', 'vote', 'picked', 'done', 'comeback']
 
-// Preview/dry-run may also be triggered from Sarah's logged-in browser session
-// (so approving issue #1 is one click). Full sends remain cron-secret only.
 async function isAdminSession(): Promise<boolean> {
   try {
     const { createServerClient } = await import('@supabase/ssr')
     const { cookies } = await import('next/headers')
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (!supabaseUrl || !supabaseAnonKey) return false
     const cookieStore = cookies()
-    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
-      cookies: {
-        get(name: string) { return cookieStore.get(name)?.value },
-        set() { /* read-only */ },
-        remove() { /* read-only */ },
-      },
+    const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
+      cookies: { get(name: string) { return cookieStore.get(name)?.value }, set() {}, remove() {} },
     })
     const { data: { user } } = await supabase.auth.getUser()
     return user?.email?.toLowerCase() === ADMIN_EMAIL
-  } catch {
-    return false
-  }
+  } catch { return false }
 }
 
 export async function GET(request: NextRequest) {
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const url = new URL(request.url)
-  const dryRun = url.searchParams.get('dryRun') === '1'
-  const preview = url.searchParams.get('preview') === '1'
-
-  const authHeader = request.headers.get('authorization')
-  const hasCronAuth = authHeader === `Bearer ${process.env.CRON_SECRET}`
-  const canUseSession = (preview || dryRun) && (await isAdminSession())
-  if (!hasCronAuth && !canUseSession) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (request.headers.get('authorization') === `Bearer ${process.env.CRON_SECRET}` && !url.searchParams.get('preview') && !url.searchParams.get('html')) {
+    return NextResponse.json({ skipped: 'The Sunday Drop now sends from the daily reminders and the Sunday poll sweep (lib/sunday-drop).' })
   }
-
-  const now = new Date()
-  const issue = await buildWeeklyIssue(createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!), now)
-  const appStoreUrl = process.env.APP_STORE_URL || null
-  if (url.searchParams.get('html') === '1' && canUseSession) {
-    const html = await render(React.createElement(WeeklyDinners, { issue, firstName: 'Sarah', appStoreUrl }))
-    return new NextResponse(html, { headers: { 'content-type': 'text/html; charset=utf-8' } })
+  const token = request.headers.get('x-image-token')
+  let ok = await isAdminSession()
+  if (!ok && token && token.length >= 32) {
+    const { data } = await admin.from('app_kv').select('value').eq('key', 'recipe_image_token').maybeSingle()
+    ok = (data?.value as { token?: string } | null)?.token === token
   }
+  if (!ok) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  // Gather recipients: all profiles (not unsubscribed) + waitlist, deduped
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  )
-
-  type Recipient = { email: string; firstName?: string; isBetaMember: boolean; unsubscribeUrl: string }
-  const recipients = new Map<string, Recipient>()
-
-  const { data: profiles } = await supabase
-    .from('profiles')
-    .select('id, email, full_name, is_beta_member, email_unsubscribed')
-    .not('email_unsubscribed', 'eq', true)
-  for (const p of profiles || []) {
-    if (!p.email) continue
-    recipients.set(p.email.toLowerCase(), {
-      email: p.email,
-      firstName: p.full_name ? p.full_name.split(' ')[0] : undefined,
-      isBetaMember: !!p.is_beta_member,
-      unsubscribeUrl: `https://www.dinnerdrop.app/unsubscribe?uid=${p.id}`,
-    })
-  }
-
-  const { data: waitlist } = await supabase.from('waitlist').select('email')
-  for (const w of waitlist || []) {
-    if (!w.email) continue
-    const key = w.email.toLowerCase()
-    if (recipients.has(key)) continue
-    recipients.set(key, {
-      email: w.email,
-      isBetaMember: false,
-      unsubscribeUrl: `https://www.dinnerdrop.app/unsubscribe?email=${encodeURIComponent(w.email)}`,
-    })
-  }
-
-  if (dryRun) {
-    return NextResponse.json({
-      dryRun: true,
-      live: NEWSLETTER_LIVE,
-      subject: issue.subject,
-      featured: issue.featured.slug,
-      trending: issue.trending.map((t) => t.slug),
-      recipientCount: recipients.size,
-    })
-  }
-
-  if (!process.env.RESEND_API_KEY) {
-    return NextResponse.json({ skipped: true, reason: 'RESEND_API_KEY not configured', sent: 0 })
-  }
-  const resend = new Resend(process.env.RESEND_API_KEY)
-  const from = process.env.RESEND_FROM_EMAIL ?? 'DinnerDrop <info@dinnerdrop.app>'
-
-  const targets: Recipient[] = preview
-    ? [{
-        email: PREVIEW_RECIPIENT,
-        firstName: 'Sarah',
-        isBetaMember: true,
-        unsubscribeUrl: 'https://www.dinnerdrop.app/unsubscribe',
-      }]
-    : Array.from(recipients.values())
-
-  if (!preview && !NEWSLETTER_LIVE) {
-    return NextResponse.json({ skipped: true, reason: 'NEWSLETTER_LIVE is false (kill switch)', recipientCount: recipients.size, sent: 0 })
-  }
-
-  let sent = 0
-  const failures: string[] = []
-  for (const r of targets) {
-    try {
-      const html = await render(
-        React.createElement(WeeklyDinners, {
-          issue,
-          firstName: r.firstName,
-          unsubscribeUrl: r.unsubscribeUrl,
-          appStoreUrl,
-        })
-      )
-      const { error } = await resend.emails.send({
-        from,
-        to: r.email,
-        reply_to: process.env.NEWSLETTER_REPLY_TO ?? 'sarah@dinnerdrop.app',
-        subject: preview ? `[PREVIEW] ${issue.subject}` : issue.subject,
-        html,
-      })
-      if (error) failures.push(`${r.email}: ${error.message}`)
-      else sent++
-    } catch (err) {
-      failures.push(`${r.email}: ${err instanceof Error ? err.message : String(err)}`)
+  if (url.searchParams.get('html') === '1') {
+    const seg = (url.searchParams.get('segment') ?? 'shop') as Segment
+    const { data: p } = await admin.from('profiles').select(DROP_PROFILE_COLS).eq('email', ADMIN_EMAIL).maybeSingle()
+    if (!p) return NextResponse.json({ error: 'no profile' }, { status: 404 })
+    const cfg = await dropConfig(admin)
+    const b = await buildDrop(admin, p as DropProfile, { address: cfg.address || '[mailing address goes here]', dryRun: true, force: seg })
+    if ((seg === 'picked' || seg === 'comeback')) {
+      const built = await libraryWeek(admin, (p as DropProfile).id)
+      if (built.ok) { b.props.dinners = built.meals.slice(0, 3).map((m) => ({ day: (m.day || '').slice(0, 3), name: m.name })); b.props.moreCount = Math.max(0, built.meals.length - 3) }
     }
-    // Resend rate limit ~5/sec
-    await new Promise((res) => setTimeout(res, 250))
+    if (seg === 'vote' && !b.props.vote) b.props.vote = { voted: 3, members: 5, leaders: ['Meatloaf', 'Chicken Alfredo'] }
+    const html = await render(React.createElement(SundayDrop, b.props))
+    return new NextResponse(html, { headers: { 'content-type': 'text/html; charset=utf-8', 'x-drop-subject': encodeURIComponent(b.subject) } })
   }
-
-  if (!preview && sent > 0) await recordIssue(supabase, issue)
-  console.log(`[cron/newsletter] ${issue.weekKey} "${issue.featured.name}" sent=${sent} failed=${failures.length}${preview ? ' (preview)' : ''}`)
-  return NextResponse.json({ sent, failed: failures.length, failures, preview, subject: issue.subject })
+  if (url.searchParams.get('preview') === '1') {
+    const wanted = (url.searchParams.get('segments') ?? '').split(',').filter((s): s is Segment => (ALL as string[]).includes(s))
+    const results = await sendDropPreviews(admin, wanted.length ? wanted : ALL)
+    return NextResponse.json({ preview: true, results })
+  }
+  return NextResponse.json({ usage: '?preview=1[&segments=shop,vote,picked,done,comeback] or ?html=1&segment=shop', live: (await dropConfig(admin)).live })
 }

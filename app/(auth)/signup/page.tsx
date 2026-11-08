@@ -213,7 +213,7 @@ function SignupForm() {
         <p className="text-center text-xs text-muted-foreground">
           By creating an account you agree to our{' '}
           <Link href="/terms" className="underline hover:text-foreground">Terms</Link> and{' '}
-          <Link href="/privacy" className="underline hover:text-foreground">Privacy Policy</Link>.
+          <Link href="/privacy" className="underline hover:text-foreground">Privacy Policy</Link>. We&apos;ll send a weekly email with your dinners, an easy recipe and the occasional kitchen pick. Unsubscribe anytime.
         </p>
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{' '}
