@@ -24,10 +24,16 @@ export default async function TapVotePage({ params }: { params: { code: string }
   const meals = await attachLibraryImages(admin, r.candidates)
   const { data: mine } = await admin.from('meal_votes').select('meal_name').eq('member_id', m.id).eq('week_start', r.week_start).eq('vote', 'keep')
   const chosen = new Set((mine ?? []).map((v) => v.meal_name))
+  // The family's saved favorites, for "add a family favorite to this week's vote".
+  const { data: favRows } = await admin.from('favorites').select('meal_name, meal_data').eq('user_id', r.user_id).order('created_at', { ascending: false }).limit(60)
+  const inVote = new Set(r.candidates.map((c) => c.name))
+  const favorites = ((favRows ?? []) as Array<{ meal_name: string; meal_data: { imageUrl?: string } | null }>)
+    .filter((f) => !inVote.has(f.meal_name))
+    .map((f) => ({ name: f.meal_name, image: f.meal_data?.imageUrl ?? null }))
   const dinners = meals.map((x, i) => ({ n: i + 1, name: x.name, image: x.imageUrl ?? null, time: x.cookTime ? timeLabel(x) : '', sunday: isSundayDinner(x), picked: chosen.has(x.name) }))
   const first = String(m.name ?? '').trim().split(/\s+/)[0]
   return (
     <TapVote code={params.code} name={/^\d+$/.test(first) ? '' : first} week={r.week_start.slice(5).replace('-', '/')}
-      dinners={dinners} max={Math.max(r.picks_needed, 1)} closed={r.status !== 'open' && !tc.test} test={!!tc.test} />
+      dinners={dinners} favorites={favorites} needed={Math.max(r.picks_needed, 1)} closed={r.status !== 'open' && !tc.test} test={!!tc.test} />
   )
 }
