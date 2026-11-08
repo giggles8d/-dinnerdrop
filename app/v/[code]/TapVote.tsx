@@ -5,7 +5,7 @@ import { useState } from 'react'
 interface Dinner { n: number; name: string; image: string | null; time: string; sunday: boolean; picked: boolean }
 
 export default function TapVote({ code, name, week, dinners, max, closed, test }: { code: string; name: string; week: string; dinners: Dinner[]; max: number; closed: boolean; test: boolean }) {
-  const [sel, setSel] = useState<number[]>(dinners.filter((d) => d.picked).map((d) => d.n))
+  const [sel, setSel] = useState<number[]>(test ? [] : dinners.filter((d) => d.picked).map((d) => d.n).slice(0, max))
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
   const [msg, setMsg] = useState('')
   const toggle = (n: number) => {
