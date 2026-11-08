@@ -276,7 +276,7 @@ export default function RecipesClient({ initialRows = [], total = 0 }: { initial
               <nav aria-label="Browse the whole library" className="mt-12 pt-6 border-t border-border text-sm print:hidden">
           <p className="text-xs font-bold text-primary uppercase tracking-widest mb-3">Browse everything</p>
           <ul className="flex flex-wrap gap-2 mb-5">
-            {Array.from({ length: Math.max(1, Math.ceil(total / 100)) }, (_, i) => i + 1).map((p) => <li key={p}><Link href={`/recipes/browse/${p}`} className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">All recipes, page {p}</Link></li>)}
+            {Array.from({ length: Math.max(1, Math.ceil(total / 100)) }, (_, i) => i + 1).map((p) => <li key={p}><Link href={`/recipes/browse/${p}`} className="inline-block rounded-full border border-border px-3 py-1.5 hover:bg-muted">Page {p}</Link></li>)}
           </ul>
           <p className="text-xs font-bold text-primary uppercase tracking-widest mb-3">Collections &amp; guides</p>
           <ul className="flex flex-wrap gap-2">
