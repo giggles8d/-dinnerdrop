@@ -27,7 +27,8 @@ export function welcomeEmail(name: string, uid: string | null): { subject: strin
   const unsub = uid ? `${APP}/unsubscribe?uid=${uid}` : `${APP}/unsubscribe`
   const lines = [
     hi,
-    `I'm Sarah, a working mom of three and the person who started DinnerDrop. I just wanted to say thank you for signing up. It really does mean a lot.`,
+    `I'm Sarah, the founder of DinnerDrop, and I just wanted to say thank you for signing up. It really does mean a lot.`,
+    `I'm a working mom of three, and I built DinnerDrop for my own family first. I know the everyday chore of figuring out dinner and getting the groceries, and I felt there had to be an easier way. I still use it every week to make my own life easier, so I'm always adding new time-savers. You'll see it keep getting better.`,
     `We're a small startup, and taking care of the families who use DinnerDrop is the thing we care about most. That means a real person (me) reads every reply to this email. If something is confusing, a dinner doesn't fit your family, or you have an idea or a complaint, just hit reply. I'd love to hear from you, and I'll write back.`,
     `A few things worth trying this week:`,
   ]
