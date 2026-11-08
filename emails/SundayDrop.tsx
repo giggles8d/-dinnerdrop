@@ -59,16 +59,17 @@ export default function SundayDrop(p: DropProps) {
 
           {/* 2. One dinner worth trying */}
           {p.hero ? (
-            <Section style={sec}>
-              <Text style={kicker}>{p.segment === 'done' ? 'ONE TO SAVE FOR NEXT WEEK' : 'AN EASY ONE TO KEEP IN YOUR BACK POCKET'}</Text>
+            <Section style={sec}><Section style={heroBox}>
+              <Text style={kicker}>{p.segment === 'done' ? 'A NEW IDEA FOR NEXT WEEK' : p.segment === 'list' ? 'AN EASY DINNER TO TRY' : 'A NEW DINNER TO TRY'}</Text>
+              {p.segment !== 'list' ? <Text style={notOnList}>{p.segment === 'done' ? 'Not on your list. Save it for next week if it sounds good.' : "This one is not on your list. It's an extra idea: add it to your week only if it sounds good."}</Text> : null}
               <Link href={p.hero.href}><Img src={p.hero.image} alt={p.hero.name} width="520" style={heroImg} /></Link>
               <Text style={h2}><Link href={p.hero.href} style={titleLink}>{p.hero.name}</Link></Text>
               {meta ? <Text style={small}>{meta}</Text> : null}
               <Text style={para}>{p.hero.blurb}</Text>
               {p.hero.ctaIsButton
                 ? <Button style={button} href={p.hero.href}>{p.hero.cta}</Button>
-                : <Text style={para}><Link href={p.hero.href} style={textLink}>{p.hero.cta} →</Link></Text>}
-            </Section>
+                : <Text style={{ ...para, margin: 0 }}><Link href={p.hero.href} style={textLink}>{p.hero.cta} →</Link></Text>}
+            </Section></Section>
           ) : null}
 
           {/* 3. Kitchen pick (Amazon) — a text link so it never competes with the main button */}
@@ -118,10 +119,12 @@ const links = { textAlign: 'center' as const, fontSize: '14px', margin: '12px 0 
 const textLink = { color: green, fontWeight: 700, textDecoration: 'none' }
 const hr = { borderColor: '#e6e2d8', margin: '14px 0 0' }
 const kicker = { color: green, fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em', margin: '0 0 8px' }
-const heroImg = { width: '100%', maxWidth: '520px', height: 'auto', borderRadius: '10px', display: 'block' }
+const heroImg = { width: '100%', maxWidth: '500px', height: 'auto', borderRadius: '10px', display: 'block' }
 const h2 = { fontSize: '19px', fontWeight: 700, color: '#1f2a24', margin: '12px 0 2px', lineHeight: '1.25' }
 const h3 = { fontSize: '16px', fontWeight: 700, color: '#1f2a24', margin: '0 0 6px', lineHeight: '1.3' }
 const titleLink = { color: '#1f2a24', textDecoration: 'none' }
+const heroBox = { border: '2px dashed #d9d3c4', borderRadius: '12px', padding: '14px 14px 12px' }
+const notOnList = { color: '#7a5a12', backgroundColor: '#fdf3dc', fontSize: '13px', lineHeight: '1.4', margin: '0 0 10px', padding: '8px 10px', borderRadius: '8px' }
 const pickBox = { backgroundColor: '#f6f4ef', borderRadius: '10px', padding: '14px 16px' }
 const disc = { color: '#7a7568', fontSize: '12px', lineHeight: '1.4', margin: '6px 0 0' }
 const footer = { padding: '14px 20px 20px' }

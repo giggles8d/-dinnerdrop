@@ -252,7 +252,7 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
       name: hero.name, image: hero.image, minutes: hero.minutes, cost: hero.cost, kept: hero.kept,
       blurb: await heroBlurb(hero),
       href: link(`/recipes/${hero.slug}`, seg),
-      cta: seg === 'done' ? 'Save it for next week' : seg === 'list' ? 'Get the recipe' : 'Add it to my week',
+      cta: seg === 'done' ? 'Save it for next week' : seg === 'list' ? 'Get the recipe' : 'See it and add it to my week',
       ctaIsButton: seg === 'done',
     } : null,
     pick: pick ? { product: pick.product, why: pick.why, href: pickUrl(pick) } : null,
