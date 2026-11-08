@@ -241,7 +241,7 @@ export async function runTextingDay(admin: SupabaseClient, now: Date = new Date(
 
 export type Parsed =
   | { kind: 'optin' } | { kind: 'stop' } | { kind: 'start' } | { kind: 'help' }
-  | { kind: 'list' } | { kind: 'menu' }
+  | { kind: 'list' } | { kind: 'menu' } | { kind: 'prefs' }
   | { kind: 'allgood' } | { kind: 'none' } | { kind: 'thanks' }
   | { kind: 'skip'; numbers: number[]; explicit?: boolean } | { kind: 'again'; numbers: number[] }
   | { kind: 'add'; items: string[] }
@@ -266,6 +266,10 @@ export function parseInbound(raw: string): Parsed {
   if (/^(START|UNSTOP|RESUME)\b/.test(u)) return { kind: 'start' }
   if (new RegExp(`^(HELP|INFO|\\?)${end}`).test(u)) return { kind: 'help' }
   if (new RegExp(`^(LIST|GROCERY|GROCERIES|GROCERY LIST|THE LIST)${end}`).test(u)) return { kind: 'list' }
+  // PREFS (approved Nov 2 2026, from Rich: "I should be able to see my preferences").
+  if (new RegExp(`^(PREFS?|PREFERENCES|MY (PREFS?|PREFERENCES|PROFILE|TASTES?|LIKES|FOODS?)|WHAT (DO I|I) LIKE|WHAT ARE MY (PREFS?|PREFERENCES|LIKES|TASTES?)|SHOW (ME )?MY (PREFS?|PREFERENCES|PROFILE|TASTES?)|(CAN I )?SEE MY (PREFS?|PREFERENCES|PROFILE|TASTES?))${end}`).test(u)) return { kind: 'prefs' }
+  // A bare "Add" (Lucas, Nov 1): ask what to add instead of guessing.
+  if (new RegExp(`^(ADD|NEED|BUY|GET|GRAB)${end}`).test(u)) return { kind: 'add', items: [] }
   if (new RegExp(`^(TONIGHT|WHAT'?S (FOR )?DINNER TONIGHT|DINNER TONIGHT|WHAT'?S TONIGHT|WHAT ARE WE (HAVING|EATING) TONIGHT)${end}`).test(u)) return { kind: 'tonight' }
   if (new RegExp(`^(MENU|DINNERS|PLAN|THIS WEEK|WHAT'?S FOR DINNER( THIS WEEK)?|WHAT'?S THE PLAN)${end}`).test(u)) return { kind: 'menu' }
   if (new RegExp(`^(TALLY|RESULTS?|SCORE|STANDINGS|VOTES?|VOTE (SO FAR|STATUS|COUNT|RESULTS?)|WHO('?S| HAS)? VOTED|WHAT'?S THE VOT(E|ING)( SO FAR)?|HOW'?S THE VOT(E|ING)( GOING)?|WHO'?S WINNING)${end}`).test(u)) return { kind: 'tally' }
@@ -285,13 +289,15 @@ export function parseInbound(raw: string): Parsed {
   // "ORDER 317.97", "total 317.97", "it came to $317.97", "order was $317" — the planner recording the real bill.
   const order = t.match(/^(?:order|total|order total|bill|it came to|came to|cost|spent|paid)\s*(?:was|is|came to|:)?\s*\$?\s*(\d{1,4}(?:[.,]\d{2})?)\s*(?:(?:at|@|from)\s+)?([A-Za-z'&. ]{2,30})?\s*$/i)
   if (order) return { kind: 'order_total', total: Number(order[1].replace(',', '.')), store: order[2]?.trim() || undefined }
-  const again = u.match(/^(AGAIN|REPEAT|BRING BACK)\s*[:\-]?\s*([\d\s,and&]+)$/)
+  const again = u.match(/^(AGAIN|REPEAT|BRING BACK)\s*[:\-]?\s*((?:\d+|\s|,|&|AND)+)$/)
   if (again) return { kind: 'again', numbers: numbersIn(again[2]) }
   const useup = t.match(/^(?:use up|use first|expiring|going bad|have to use|must use|in the fridge)\s*[:\-]?\s*(.+)$/i)
   if (useup) return { kind: 'use_up', items: splitItems(useup[1]) }
-  const add = t.match(/^(?:add|\+|need|we need|we'?re out of|out of|get|buy|pick up|grab)\s*[:\-]?\s*(.+)$/i)
-  if (add) return { kind: 'add', items: splitItems(add[1]) }
-  const skip = u.match(/^(SKIP|NOT|NO|DROP)?\s*[:\-]?\s*([\d\s,and&]+)$/)
+  // Whole words only, and not a sentence: "Addressing me by name…" and "Need to know what's for dinner" aren't grocery adds
+  // (approved Nov 2 2026). Sentences go to the AI step instead.
+  const add = t.match(/^(?:(?:add|need|we need|we'?re out of|out of|get|buy|pick up|grab)\b|\+)(?!\s+(?:to|you|me|us|a way|help|it|that|this|my|your|more time|the (?:vote|votes|menu|recipe|plan|link|pics?|pictures?))\b)\s*[:\-]?\s*(.+)$/i)
+  if (add && !(add[1].split(/\s+/).length > 7 && !/[,\n]/.test(add[1]))) return { kind: 'add', items: splitItems(add[1]) }
+  const skip = u.match(/^(SKIP|NOT|NO|DROP)?\s*[:\-]?\s*((?:\d+|\s|,|&|AND)+)$/)
   if (skip && numbersIn(skip[2]).length) return { kind: 'skip', numbers: numbersIn(skip[2]), explicit: !!skip[1] }
   return { kind: 'unknown' }
 }
@@ -514,7 +520,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     case 'thanks':
       return { reply: `Anytime${hi ? `, ${hi}` : ''} 🙂`, handled: true, member: m }
     case 'help':
-      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, TALLY for the vote so far, SUGGEST + a dish for a future week, TONIGHT, RECIPE + number, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items, MENU, LIST, STOP.`, handled: true, member: m }
+      return { reply: `DinnerDrop: reply the numbers of the dinners you WANT (e.g. "1 3 5"), ALL GOOD if they all work, TALLY for the vote so far, SUGGEST + a dish for a future week, TONIGHT, RECIPE + number, ADD + items (or a photo of the product) for the grocery list, a photo of the store flyer to plan around the sales, USE UP + items, MENU, LIST, PREFS to see what you've told me you like, STOP.`, handled: true, member: m }
     default:
       break
   }
@@ -665,7 +671,20 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       }
       return { reply: names.length ? `Bring back ${names.join(' and ')} — noted. 🍽️${outOfRange.length ? ` (There's no #${outOfRange.join(', #')} on this list.)` : ''}` : `Reply like "again 1 3" to pick the ones that should come back.`, handled: true, member: m }
     }
+    case 'prefs': {
+      const { data: me } = await admin.from('household_members').select('likes, dislikes, allergies, safe_foods').eq('id', m.id).maybeSingle()
+      const row = (me ?? {}) as { likes?: string[] | null; dislikes?: string[] | null; allergies?: string[] | null; safe_foods?: string[] | null }
+      const part = (label: string, xs?: string[] | null) => (xs && xs.length ? `${label}: ${xs.slice(0, 12).join(', ')}` : '')
+      const lines = [part('Likes', row.likes), part("Doesn't like", row.dislikes), part('Allergies / off-limits', row.allergies), part('Safe foods', row.safe_foods)].filter(Boolean)
+      return {
+        reply: lines.length
+          ? `Here's what I have for you${hi ? `, ${hi}` : ''}:\n${lines.join('\n')}\nText anything to change it, like "I don't like mushrooms" or "I love tacos".`
+          : `Nothing saved for you yet${hi ? `, ${hi}` : ''}. Just text what you like or don't, like "I love tacos" or "no mushrooms", and the planner uses it.`,
+        handled: true, member: m,
+      }
+    }
     case 'add': {
+      if (!parsed.items.length) return { reply: `What should I add${hi ? `, ${hi}` : ''}? Text ADD and the items, like "ADD milk, eggs, bananas".`, handled: true, member: m }
       if (!m.can_add) return { reply: `Adding to the list is turned off for you${hi ? `, ${hi}` : ''}. Ask ${family} to switch it on in Settings.`, handled: true, member: m }
       if (!owner) break
       const weekStart = plan?.week_start ?? mondayOf(new Date())
