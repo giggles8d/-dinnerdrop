@@ -18,7 +18,7 @@ export const maxDuration = 300
  *  - reminders + automatic weekly plans (lib/reminders)
  *  - family texting day jobs: vote day, "bring it back?" day (lib/texting)
  *  - the activation email sequence (existing route)
- *  - the Sunday newsletter (existing route)
+ *  - the Sunday Drop: sent from runDailyReminders (planning day) and the texting poll sweep (lib/sunday-drop)
  *  - Monday: Sarah's weekly checkout report (lib/weekly-report)
  * Consolidated so the project stays within the hosting plan's cron limits.
  */
@@ -30,13 +30,7 @@ export async function GET(request: NextRequest) {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const now = new Date()
   const out: Record<string, unknown> = {}
-  // Sunday: start the weekly newsletter first (its own function, up to 300 s for ~300 sends) and collect the result at the end.
-  const nlBase = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
-  const newsletter = now.getUTCDay() === 0
-    ? fetch(`${nlBase}/api/cron/newsletter`, { headers: { authorization: `Bearer ${process.env.CRON_SECRET}` }, cache: 'no-store' })
-        .then((r) => r.json().catch(() => ({ status: r.status })))
-        .catch((e) => ({ error: String(e) }))
-    : null
+  // The Sunday Drop (lib/sunday-drop) sends from runDailyReminders (planning day) and the texting poll's Sunday sweep.
 
   try { out.cartOfferReminder = await sendCartOfferReminders(admin, now) } catch (e) { out.cartOfferReminder = { error: String(e) } }
   try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
@@ -64,10 +58,6 @@ export async function GET(request: NextRequest) {
   const shrinkMs = Math.min(120000, 230000 - (Date.now() - now.getTime()))
   if (shrinkMs > 15000) { try { out.shrinkImages = await shrinkRecipeImages(admin, { limit: 400, budgetMs: shrinkMs }) } catch (e) { out.shrinkImages = { error: String(e) } } }
   else out.shrinkImages = { skipped: 'out of time today' }
-  if (newsletter) {
-    const nlMs = Math.max(1000, 280000 - (Date.now() - now.getTime()))
-    out.newsletter = await Promise.race([newsletter, new Promise((res) => setTimeout(() => res({ still: 'sending in its own function' }), nlMs))])
-  }
   out.campaigns = await Promise.race([campaigns, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), Math.max(1000, 283000 - (Date.now() - now.getTime()))))])
   // Don't let the nutrition fill hold this function past its own limit; it keeps running in its own function.
   const leftMs = Math.max(1000, 285000 - (Date.now() - now.getTime()))

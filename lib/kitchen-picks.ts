@@ -1,68 +1,85 @@
 /**
- * "Kitchen must-have" for the weekly Sunday Drop (Sarah, Oct 29 2026): one tool a week with an
- * Amazon affiliate link to ONE specific product (Sarah, Nov 8 2026: search links earn no credit; same ASINs
- * as the /cookware page, lib/cookware.ts) and a short, honest
- * editorial review — what it does for weeknight dinners, what to look for, one honest caveat.
- * Written as general guidance, not a claim that we personally tested a specific product.
+ * The Sunday Drop's kitchen pick (Sarah, Nov 8 2026; plan reviewed by ChatGPT 9/10 and Gemini 9.2/10).
+ * ONE Amazon product per email, matched to the dinner the email features. Every product is an exact Amazon
+ * product page (never a search link — search links earn no credit). All 19 were opened on Amazon on Nov 8 2026:
+ * in stock, 4.7★ or better. About half are things families run out of and buy again; no $100+ appliances
+ * (a big-ticket appliance next to a $15 dinner reads as a sales pitch).
+ * Copy is general guidance, never a claim that Sarah personally tested a product.
+ * Links in emails use the newsletter tracking ID so newsletter sales show up on their own.
  */
 import { amazonProductUrl } from '@/lib/amazon-affiliate'
 
-export interface KitchenPick { name: string; search: string; asin: string; product: string; why: string; lookFor: string; headsUp: string }
+/** Amazon tracking ID for the Sunday Drop (created Nov 8 2026 in Associates Central). One ID for everyone: never per person. */
+export const NEWSLETTER_TAG = 'dinnerdropnl-20'
 
+export interface KitchenPick {
+  asin: string
+  product: string
+  /** Two short, honest lines on why it helps with this kind of dinner. */
+  why: string
+  /** Which dinners it goes with (tested against the dinner's name + ingredients). */
+  fits: RegExp
+  /** Runs out and gets bought again (preferred when two picks fit). */
+  consumable: boolean
+}
+
+const SHEET = /\bsheet[- ]?pan|roast(ed)?\b|\bbaked?\b|tray/i
 export const KITCHEN_PICKS: KitchenPick[] = [
-  { name: 'Instant-read meat thermometer', search: 'instant read meat thermometer digital', asin: 'B07XXSYLL8', product: "ThermoPro TempSwift Instant-Read Thermometer",
-    why: 'Takes the guesswork out of chicken, pork and steak — no more cutting into dinner to check, and no more dry, overcooked meat.',
-    lookFor: 'A reading in 3 seconds or less, a backlit display and a probe that folds away.',
-    headsUp: 'The cheapest ones can be slow; spend a little more for speed.' },
-  { name: 'Large rimmed sheet pan', search: 'rimmed half sheet pan set aluminum', asin: 'B0049C2S32', product: "Nordic Ware Naturals Half Sheet Pan",
-    why: 'Sheet-pan dinners are the easiest weeknight meal there is: protein and vegetables on one pan, one thing to wash.',
-    lookFor: 'Heavy-gauge aluminum "half sheet" size (about 18 x 13 in) that won\'t warp in a hot oven.',
-    headsUp: 'Thin pans buckle at 425°F; pair with parchment paper to skip scrubbing.' },
-  { name: '6-quart electric pressure cooker', search: '6 quart electric pressure cooker multicooker', asin: 'B00FLYWNYQ', product: "Instant Pot Duo 6-Qt 7-in-1",
-    why: 'Turns "I forgot to start dinner" into dinner in 30 minutes — shredded chicken, chili, rice and soups without watching the stove.',
-    lookFor: '6-quart size for a family of 4, a stainless-steel inner pot and a sauté setting.',
-    headsUp: 'Add about 15 minutes to any recipe for it to come up to pressure.' },
-  { name: 'Air fryer (5–6 quart)', search: 'air fryer 6 quart', asin: 'B0CSZ7WBYW', product: "Ninja Air Fryer Pro 5-Qt",
-    why: 'Crispy chicken, frozen fries and roasted vegetables faster than heating the oven — and kids tend to eat what comes out of it.',
-    lookFor: 'A basket big enough for a family (5 quarts or more) and dishwasher-safe parts.',
-    headsUp: 'It takes counter space; smaller baskets mean cooking in batches.' },
-  { name: "8-inch chef's knife", search: '8 inch chef knife', asin: 'B008M5U1C2', product: "Victorinox Fibrox Pro 8\" Chef's Knife",
-    why: 'A sharp, comfortable knife makes chopping faster and safer than a drawer of dull ones.',
-    lookFor: 'A full-tang blade, a handle that feels good in your hand, and a price that leaves room for a sharpener.',
-    headsUp: 'Hand-wash it — the dishwasher dulls blades fast.' },
-  { name: 'Large cutting board with juice groove', search: 'large cutting board juice groove', asin: 'B07WBTRRMT', product: "OXO Good Grips 2-Piece Cutting Board Set",
-    why: 'Room to chop a whole dinner\'s worth of vegetables without things rolling onto the counter.',
-    lookFor: 'At least 18 x 12 inches, a groove to catch juices, and non-slip feet or edges.',
-    headsUp: 'Keep a separate board for raw meat.' },
-  { name: '12-inch nonstick skillet', search: '12 inch nonstick skillet', asin: 'B07W62FH16', product: "HexClad 12\" Hybrid Nonstick Frying Pan",
-    why: 'The workhorse for eggs, stir-fries, quesadillas and one-pan pastas — food releases and cleanup takes a minute.',
-    lookFor: 'A heavy base that heats evenly, an oven-safe handle and a lid.',
-    headsUp: 'Nonstick wears out; use wooden or silicone tools and skip high heat to make it last.' },
-  { name: 'Glass meal-prep containers', search: 'glass meal prep containers with lids', asin: 'B07L51SFVS', product: "Pyrex Simply Store Glass Containers (12-pc)",
-    why: 'Leftovers become tomorrow\'s lunch: oven- and microwave-safe, and they don\'t stain from tomato sauce.',
-    lookFor: 'Snap-lock lids, a mix of sizes, and glass that\'s safe in the oven (lids off).',
-    headsUp: 'Glass is heavier than plastic for lunch bags.' },
-  { name: '6-quart slow cooker', search: '6 quart programmable slow cooker', asin: 'B004P2NG0K', product: "Crock-Pot 6-Qt Programmable Cook & Carry",
-    why: 'Load it in the morning, walk in to dinner at 6. Great for roasts, chili and pulled chicken on busy days.',
-    lookFor: 'A programmable timer that switches to "warm" when done.',
-    headsUp: 'Most recipes need 6–8 hours, so it\'s a morning-planning tool.' },
-  { name: 'Locking tongs with silicone tips', search: 'silicone kitchen utensil set tongs spatula', asin: 'B003L0OYK8', product: "OXO Good Grips 12\" Tongs with Silicone Heads",
-    why: 'Heat-safe tools that won\'t scratch your pans — the ones you reach for every single night.',
-    lookFor: 'One-piece silicone heads (no gaps for food to hide) and locking tongs.',
-    headsUp: 'Cheap sets can melt near a hot burner; check the heat rating.' },
-  { name: 'Salad spinner', search: 'salad spinner', asin: 'B00004OCKR', product: "OXO Good Grips Salad Spinner",
-    why: 'Washed, dry greens in a minute — so the side salad actually happens on a weeknight.',
-    lookFor: 'A pump or crank that works one-handed and a basket that doubles as a colander.',
-    headsUp: 'It\'s bulky to store.' },
-  { name: 'Digital rice cooker', search: 'digital rice cooker', asin: 'B007WQ9YNO', product: 'AROMA Digital Rice Cooker 4-Cup',
-    why: 'Perfect rice (or quinoa) every night without watching a pot, so the starch side of dinner takes care of itself.',
-    lookFor: 'A keep-warm setting, a nonstick inner pot and a size that fits your family (4 cups uncooked feeds about 6).',
-    headsUp: 'Brown rice takes close to an hour; start it first.' },
+  { asin: 'B00C37QN2C', product: 'Reynolds Kitchens Stay Flat Parchment Paper', consumable: true, fits: /sheet[- ]?pan|roast(ed)?|baked? (salmon|cod|fish|chicken)|salmon|cod|tilapia|glaze/i,
+    why: 'Line the pan, roast, toss the paper. No scrubbing burnt glaze off the sheet pan, and the grid lines help you cut even portions.' },
+  { asin: 'B001T6JTMY', product: 'If You Care Parchment Paper (70 sq ft)', consumable: true, fits: /sheet[- ]?pan|roast(ed)?|cookies?|biscuits?/i,
+    why: 'Unbleached parchment that keeps sheet-pan dinners from sticking. One long roll lasts most families a couple of months.' },
+  { asin: 'B09F8PHR1L', product: 'Reynolds Wrap Non-Stick Aluminum Foil', consumable: true, fits: /casserole|\bbake\b|lasagna|ziti|enchiladas?|hotdish|nachos/i,
+    why: 'Cheese and sauce lift right off instead of tearing the top of the casserole. Cover the dish, then use it to line the pan for leftovers.' },
+  { asin: 'B00IE76Q7M', product: 'Reynolds Kitchens Slow Cooker Liners', consumable: true, fits: /slow[- ]?cooker|crock[- ]?pot|pulled|pot roast/i,
+    why: 'The liner goes in the crock, dinner cooks, the mess goes in the trash. No soaking a crusted slow cooker overnight.' },
+  { asin: 'B000VDSS3C', product: 'Better Than Bouillon Roasted Chicken Base', consumable: true, fits: /soup|stew|chowder|pot pie|chicken and rice|risotto|gravy|dumplings/i,
+    why: 'A spoonful makes a cup of broth, so you never run out mid-recipe. One jar replaces about 9 cartons of stock in the pantry.' },
+  { asin: 'B000VDWQXA', product: 'Better Than Bouillon Roasted Beef Base', consumable: true, fits: /stroganoff|beef stew|pot roast|french dip|chili|gravy|shepherd|beef and (noodles|broccoli)/i,
+    why: 'Deep beef flavor for stroganoff, stew and gravy from one spoonful. It keeps in the fridge for months.' },
+  { asin: 'B0DGNHJVLY', product: 'Ziploc Gallon Freezer Bags (2-pack)', consumable: true, fits: /marinat|freez|meatballs?|burgers?|chili|soup|batch|make[- ]ahead/i,
+    why: 'Freeze half a batch flat so it thaws fast, or marinate tomorrow\'s chicken tonight. Thick enough to stop freezer burn.' },
+  { asin: 'B07GSSR5V2', product: 'Souper Cubes 1-Cup Freezer Trays (2-pack)', consumable: false, fits: /soup|chili|stew|chowder|sauce|bolognese|make[- ]ahead/i,
+    why: 'Freeze leftover soup or chili in single portions and pop out one or four. They stack flat in the freezer and go in the dishwasher.' },
+  { asin: 'B07L51SFVS', product: 'Pyrex Simply Store Glass Containers (12-pc)', consumable: false, fits: /leftover|meal prep|casserole|bowls?|lasagna|bake/i,
+    why: 'Leftovers become tomorrow\'s lunch. Oven and microwave safe (lids off), and they don\'t stain from tomato sauce.' },
+  { asin: 'B07JRCSTKT', product: 'Mutti Double Concentrated Tomato Paste (4 tubes)', consumable: true, fits: /spaghetti|bolognese|marinara|lasagna|ziti|chili|tomato|meatballs?|parm/i,
+    why: 'Squeeze out the tablespoon the recipe needs and cap it. No more half-used cans going fuzzy in the fridge.' },
+  { asin: 'B0C1G4TSY1', product: 'Tajín Clásico Chile Lime Seasoning (2-pack)', consumable: true, fits: /tacos?|fajitas?|street corn|elote|chili[- ]lime|grilled chicken|quesadilla|burrito/i,
+    why: 'Chile, lime and salt in one shake for tacos, grilled chicken and corn. Mild enough that most kids like it.' },
+  { asin: 'B006R1UE52', product: 'Lee Kum Kee Premium Oyster Sauce', consumable: true, fits: /stir[- ]?fry|lo mein|chow mein|fried rice|beef and broccoli|bok choy|asian noodles?|drunken noodles/i,
+    why: 'The savory backbone of takeout-style stir-fries. A couple of spoonfuls and the sauce tastes like the restaurant\'s.' },
+  { asin: 'B002HMN6SC', product: 'Kadoya Roasted Sesame Oil', consumable: true, fits: /teriyaki|stir[- ]?fry|fried rice|sesame|soy|rice bowls?|korean|asian/i,
+    why: 'A few drops at the end make teriyaki and fried rice smell like takeout. One bottle lasts months.' },
+  { asin: 'B07XXSYLL8', product: 'ThermoPro TempSwift Instant-Read Thermometer', consumable: false, fits: /pork chops?|chicken breasts?|chicken thighs?|steak|roast chicken|tenderloin|meatloaf|salmon|turkey breast/i,
+    why: 'Reads in a couple of seconds, so you stop cutting into dinner to check. No more dry pork chops or pink chicken.' },
+  { asin: 'B000KILLXM', product: 'OXO Good Grips Kitchen Shears', consumable: false, fits: /chicken|pizza|bacon|herbs?|tortillas?|wings/i,
+    why: 'Trim chicken, snip bacon straight into the pan and cut pizza for the kids. The blades come apart for the dishwasher.' },
+  { asin: 'B00KSMBL26', product: 'DI ORO Silicone Spatula Set (3-pc)', consumable: false, fits: /skillet|mac and cheese|alfredo|sauce|scrambl|stroganoff|cream/i,
+    why: 'Heat-safe spatulas that scrape every bit of sauce out of the pan without scratching nonstick.' },
+  { asin: 'B003L0OYK8', product: 'OXO Good Grips 12" Tongs', consumable: false, fits: /grill(ed)?|spaghetti|noodles?|sheet[- ]?pan|wings|sausage|kebab|skewers?/i,
+    why: 'Flip chicken, toss pasta and pull things off a hot sheet pan. The silicone tips are safe on nonstick.' },
+  { asin: 'B0000CCY1Y', product: 'OXO Good Grips Angled Measuring Cups', consumable: false, fits: /rice|quinoa|oats|pancakes?|muffins?|biscuits?|casserole/i,
+    why: 'Read the amount from above while you pour, which makes it easy to hand measuring to a kid who wants to help.' },
+  { asin: 'B0049C2S32', product: 'Nordic Ware Naturals Half Sheet Pan', consumable: false, fits: SHEET,
+    why: 'Heavy aluminum that doesn\'t warp at 425°F, and big enough to roast dinner for four on one pan.' },
 ]
 
-/** One pick per week, rotating through the list. */
-export function kitchenPickFor(date: Date): KitchenPick & { url: string } {
-  const week = Math.floor(date.getTime() / (7 * 86400000))
-  const p = KITCHEN_PICKS[week % KITCHEN_PICKS.length]
-  return { ...p, url: amazonProductUrl(p.asin) }
+/** Amazon product page with the newsletter tracking ID. */
+export const pickUrl = (p: KitchenPick) => amazonProductUrl(p.asin, NEWSLETTER_TAG)
+
+/**
+ * The pick for this dinner: fits its name/ingredients, not shown to this family in their last 8 emails,
+ * consumables first. null = nothing fits well enough, and the email leaves the block out that week.
+ */
+export function pickForDinner(dinner: { name: string; ingredients?: Array<{ name: string }> }, recentAsins: string[] = [], rotate = 0): KitchenPick | null {
+  const name = dinner.name
+  const all = `${name} ${(dinner.ingredients ?? []).map((i) => i.name).join(' ')}`
+  const recent = new Set(recentAsins)
+  // A match on the dinner's own name beats one only in the ingredients.
+  const score = (p: KitchenPick) => (p.fits.test(name) ? 2 : p.fits.test(all) ? 1 : 0) + (p.consumable ? 0.5 : 0)
+  const ranked = KITCHEN_PICKS.filter((p) => !recent.has(p.asin) && score(p) >= 1).sort((a, b) => score(b) - score(a))
+  if (!ranked.length) return null
+  const top = ranked.filter((p) => score(p) === score(ranked[0]))
+  return top[rotate % top.length]
 }
