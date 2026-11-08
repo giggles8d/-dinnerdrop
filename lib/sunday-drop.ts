@@ -75,17 +75,28 @@ function storeLabel(s: Settings): string {
   const u = (s.stores.usualStore || '').trim()
   return u && u.length <= 18 ? u : 'Instacart'
 }
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+/** "Monday" → "Mon"; a library placeholder ("L14") → the night by position. */
+export const dayLabel = (d: string | undefined, i: number) => (/^(mon|tue|wed|thu|fri|sat|sun)/i.test(d ?? '') ? String(d).slice(0, 3) : DAYS[i % 7])
 const hash = (s: string) => s.split("").reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7)
 
 interface Hero { name: string; slug: string; image: string; minutes: number; cost: number | null; kept: number; ingredients: Array<{ name: string }> }
 
 /** One easy library dinner for this family that isn't in their week, wasn't skipped, and keeps to the variety rules. */
 async function pickHero(admin: SupabaseClient, p: DropProfile | null, settings: Settings, week: Meal[], avoidNames: string[]): Promise<Hero | null> {
+  // Everyone in the household's allergies and dislikes (a texted "lemon pepper sends me to the ER" counts).
+  let allergies: string[] = [], dislikes: string[] = []
+  if (p?.household_id) {
+    const { data: mem } = await admin.from('household_members').select('allergies, dislikes').eq('household_id', p.household_id)
+    for (const m of (mem ?? []) as Array<{ allergies: string[] | null; dislikes: string[] | null }>) { allergies.push(...(m.allergies ?? [])); dislikes.push(...(m.dislikes ?? [])) }
+    allergies = allergies.filter((a) => a && a.trim()); dislikes = dislikes.filter((d) => d && d.trim().length > 2)
+  }
   const rows = await pickLibraryRecipes(admin, {
     limit: 40,
     maxCookTime: Math.max(20, Math.min(p?.max_cook_time || 45, 60)),
     dietary: p?.dietary_needs ?? [],
-    excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
+    allergies,
+    excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allergies, ...dislikes],
     excludeNames: [...week.map((m) => m.name), ...avoidNames],
     cuisines: settings.food.cuisines,
   })
@@ -223,7 +234,7 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
     greeting: seg === 'picked' || seg === 'comeback'
       ? `Hi ${name || 'there'}, I picked ${n || 5} dinners that fit your family${p.family_size ? ` of ${p.family_size}` : ''} and your weeknights.`
       : seg === 'done' ? `Hi ${name || 'there'}, you're set for this week.` : seg === 'vote' ? `Hi ${name || 'there'}, your family is voting on this week's dinners.` : seg === 'list' ? 'Hi there, here is one easy dinner for this week.' : `Hi ${name || 'there'}, here's your week.`,
-    dinners: seg === 'done' || seg === 'list' || seg === 'vote' ? [] : st.meals.slice(0, seg === 'shop' ? 7 : 3).map((m) => ({ day: (m.day || '').slice(0, 3), name: m.name.length > 44 ? short(m.name) : m.name })),
+    dinners: seg === 'done' || seg === 'list' || seg === 'vote' ? [] : st.meals.slice(0, seg === 'shop' ? 7 : 3).map((m, i) => ({ day: dayLabel(m.day, i), name: m.name.length > 44 ? short(m.name) : m.name })),
     moreCount: seg === 'picked' || seg === 'comeback' ? Math.max(0, n - 3) : 0,
     estimate: seg === 'shop' && st.total > 0 ? Math.round(st.total) : null,
     vote: st.vote ?? null,
@@ -358,7 +369,7 @@ export async function sendDropPreviews(admin: SupabaseClient, segments: Segment[
     const b = await buildDrop(admin, p as DropProfile, { address: cfg.address || '[mailing address goes here]', dryRun: true, force: seg, given })
     if ((seg === 'picked' || seg === 'comeback') && b.props.dinners.length === 0) {
       const built = await libraryWeek(admin, (p as DropProfile).id)
-      if (built.ok) { b.props.dinners = built.meals.slice(0, 3).map((m) => ({ day: (m.day || '').slice(0, 3), name: m.name })); b.props.moreCount = Math.max(0, built.meals.length - 3) }
+      if (built.ok) { b.props.dinners = built.meals.slice(0, 3).map((m, i) => ({ day: dayLabel(m.day, i), name: m.name })); b.props.moreCount = Math.max(0, built.meals.length - 3) }
     }
     if (seg === 'vote' && !b.props.vote) b.props.vote = { voted: 3, members: 5, leaders: ['Meatloaf', 'Chicken Alfredo'] }
     const r = await sendBuilt(SARAH, b, (p as DropProfile).id, `[TEST ${seg}] `)

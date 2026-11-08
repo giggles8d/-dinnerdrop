@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 import { render } from '@react-email/render'
 import SundayDrop from '@/emails/SundayDrop'
-import { buildDrop, dropConfig, sendDropPreviews, DROP_PROFILE_COLS, type DropProfile, type Segment } from '@/lib/sunday-drop'
+import { buildDrop, dayLabel, dropConfig, sendDropPreviews, DROP_PROFILE_COLS, type DropProfile, type Segment } from '@/lib/sunday-drop'
 import { libraryWeek } from '@/lib/first-plan'
 
 // The Sunday Drop v3 (Nov 8 2026). Sending no longer happens here: each family gets it on their planning day from the
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
     const b = await buildDrop(admin, p as DropProfile, { address: cfg.address || '[mailing address goes here]', dryRun: true, force: seg })
     if ((seg === 'picked' || seg === 'comeback')) {
       const built = await libraryWeek(admin, (p as DropProfile).id)
-      if (built.ok) { b.props.dinners = built.meals.slice(0, 3).map((m) => ({ day: (m.day || '').slice(0, 3), name: m.name })); b.props.moreCount = Math.max(0, built.meals.length - 3) }
+      if (built.ok) { b.props.dinners = built.meals.slice(0, 3).map((m, i) => ({ day: dayLabel(m.day, i), name: m.name })); b.props.moreCount = Math.max(0, built.meals.length - 3) }
     }
     if (seg === 'vote' && !b.props.vote) b.props.vote = { voted: 3, members: 5, leaders: ['Meatloaf', 'Chicken Alfredo'] }
     const html = await render(React.createElement(SundayDrop, b.props))
