@@ -172,20 +172,12 @@ export default async function TopicPage({ params }: { params: { topic: string } 
     itemListElement: hubRows.map((r, i) => ({ '@type': 'ListItem', position: i + 1, url: `https://www.dinnerdrop.app/recipes/${r.slug}`, name: r.name })),
   } : null
 
-  const recipeSchema = (week?.meals ?? []).map((m) => ({
-    '@context': 'https://schema.org',
-    '@type': 'Recipe',
-    name: m.name,
-    author: { '@type': 'Organization', name: 'DinnerDrop' },
-    recipeCuisine: m.cuisine,
-    recipeYield: `${m.servings} servings`,
-    prepTime: `PT${m.prepTime}M`,
-    cookTime: `PT${m.cookTime}M`,
-    totalTime: `PT${m.prepTime + m.cookTime}M`,
-    recipeIngredient: m.ingredients.map((i) => `${i.quantity} ${i.unit} ${i.name}`.trim()),
-    recipeInstructions: m.steps.map((s) => ({ '@type': 'HowToStep', text: s })),
-    keywords: `${t.slug.replace(/-/g, ' ')}, weeknight dinner, family dinner`,
-  }))
+  // No Recipe markup on these topic pages (Nov 8 2026): Search Console flagged the 15 sample-week dinners as invalid
+  // recipes (no photo, no own page). Recipe rich results come from each /recipes/<slug> page; this page lists them.
+  const weekList = week?.meals?.length ? {
+    '@context': 'https://schema.org', '@type': 'ItemList', name: `${t.slug.replace(/-/g, ' ')}: a sample week`,
+    itemListElement: week.meals.map((m, i) => ({ '@type': 'ListItem', position: i + 1, name: m.name })),
+  } : null
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -194,7 +186,7 @@ export default async function TopicPage({ params }: { params: { topic: string } 
 
   return (
     <div className="min-h-screen bg-white">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([...recipeSchema, faqSchema, ...(itemList ? [itemList] : [])]) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([faqSchema, ...(weekList ? [weekList] : []), ...(itemList ? [itemList] : [])]) }} />
       <header className="border-b border-border bg-white/90 backdrop-blur sticky top-0 z-10">
         <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
