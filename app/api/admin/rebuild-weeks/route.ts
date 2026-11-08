@@ -27,10 +27,10 @@ export async function POST(req: NextRequest) {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   if (!(await authorized(req, admin))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const b = await req.json().catch(() => ({})) as { weekStart?: string; limit?: number; apply?: boolean; round?: string; onlyMexican?: boolean }
-  // round: a second pass gets its own done-markers; onlyMexican: only weeks with 2+ Mexican-style dinners (Nov 8 2026).
-  const tag = b.round ? `${weekStart}:${String(b.round).replace(/[^a-z0-9]/gi, '')}` : weekStart
   const weekStart = String(b.weekStart ?? '')
   if (!/^\d{4}-\d{2}-\d{2}$/.test(weekStart)) return NextResponse.json({ error: 'weekStart YYYY-MM-DD required' }, { status: 400 })
+  // round: a second pass gets its own done-markers; onlyMexican: only weeks with 2+ Mexican-style dinners (Nov 8 2026).
+  const tag = b.round ? `${weekStart}:${String(b.round).replace(/[^a-z0-9]/gi, '')}` : weekStart
 
   const { data: sarah } = await admin.from('profiles').select('id, household_id').eq('email', SARAH).maybeSingle()
   const { data: plans } = await admin.from('meal_plans').select('id, user_id, created_at, meals').eq('week_start', weekStart).order('created_at', { ascending: false })
