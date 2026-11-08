@@ -86,3 +86,32 @@ export async function savePlan(admin: SupabaseClient, userId: string, weekStart:
   }
   return chosen
 }
+
+/**
+ * Rebuild a family's already-saved week in place (same week, replaced): used once on Nov 7 2026 to re-plan the
+ * auto-built weeks with the variety and full-plate rules (app/api/admin/rebuild-weeks).
+ */
+export async function rebuildWeek(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<Meal[] | null> {
+  const base = process.env.NEXT_PUBLIC_APP_URL || APP
+  const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
+  const res = await fetch(`${base}/api/generate-plan`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId: p.id,
+      familySize: p.family_size,
+      weeklyBudget: p.weekly_budget,
+      maxCookTime: p.max_cook_time,
+      cuisinePreference: p.cuisine_preference,
+      dietaryNeeds: p.dietary_needs || [],
+      favoriteMeals: (favs ?? []).map((f) => f.meal_data),
+      tripKey: weekStart,
+    }),
+  })
+  if (!res.ok) throw new Error(`generate-plan ${res.status}`)
+  const data = await res.json() as { meals: Meal[]; plan?: PlanShape }
+  const shape: PlanShape = data.plan ?? { dinnersPerWeek: settings.plan.dinnersPerWeek, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
+  const picked = pickVaried(data.meals ?? [], shape.dinnersPerWeek, [], varietyLimits(shape.dinnersPerWeek))
+  if (!picked.length) return null
+  return savePlan(admin, p.id, weekStart, picked, shape)
+}
