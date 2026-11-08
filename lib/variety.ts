@@ -104,8 +104,8 @@ export async function recentUsage(supabase: SupabaseClient): Promise<Map<string,
   return counts
 }
 
-/** Score penalty for a recipe many families already got this week (0 … 1.6). */
+/** Score penalty for a recipe many families already got this week (0 … 0.7: enough to rotate, not enough to let poor fits win). */
 export function overusePenalty(counts: Map<string, number>, name: string): number {
   const c = counts.get(normalizeName(name)) ?? 0
-  return c <= 2 ? 0 : Math.min((c - 2) * 0.08, 1.6)
+  return c <= 3 ? 0 : Math.min((c - 3) * 0.04, 0.7)
 }

@@ -25,6 +25,9 @@ export function honestTags(tags: string[], totalMinutes: number): string[] {
   })
 }
 
+/** Recipes that aren't a weeknight dinner (Nov 7 2026: "Warm Strawberry Brioche with Mascarpone" made a week). */
+const NOT_DINNER = /\b(brioche|pancakes?|waffles?|french toast|smoothies?|muffins?|oatmeal|overnight oats|parfaits?|(?<!crab |salmon |fish |potato |rice |corn |tuna |zucchini |chicken )cakes?|cookies?|brownies?|desserts?|scones?|granola|crepes?|cobbler|tarts?|pudding|power bowl|breakfast(?! for dinner))\b|\b(?<!pot |shepherd'?s |cottage |tamale |taco |pizza |chicken |turkey |meat )pies?\b/i
+
 export function normalizeName(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ')
 }
@@ -230,6 +233,7 @@ export async function pickLibraryRecipes(
   const allergyList = (opts.allergies ?? []).filter((a) => a && a.trim())
   const pool = ((data ?? []) as Lite[]).filter((r) => {
     if (excludeNorm.has(r.normalized_name)) return false
+    if (NOT_DINNER.test(r.name)) return false   // breakfast / dessert recipes that slipped into the library
     if (quota && !((quota[proteinGroup(r.protein, r.name)] ?? 0) > 0)) return false
     if (opts.maxCalories && r.nutrition?.calories && r.nutrition.calories > opts.maxCalories) return false
     if (cuisines.length && r.cuisine && !cuisines.includes(r.cuisine.toLowerCase())) return false
