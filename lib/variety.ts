@@ -14,7 +14,7 @@ type Lite = Pick<Meal, 'name'> & { cuisine?: string | null; tags?: string[] | nu
 
 const TYPES: Array<[string, RegExp]> = [
   ['taco', /\b(tacos?|tostadas?|fajitas?|quesadillas?|burritos?|nachos|enchiladas?|chimichangas?|flautas?|taquitos?)\b/],
-  ['pasta', /\b(pasta|spaghetti|penne|rigatoni|ziti|lasagna|fettuccine|linguine|alfredo|mac and cheese|macaroni|tortellini|ravioli|gnocchi|noodle bake|carbonara|orzo)\b/],
+  ['pasta', /\b(pasta|spaghetti|penne|rigatoni|ziti|lasagna|fettuccine|linguine|alfredo|mac|mac and cheese|macaroni|tortellini|ravioli|gnocchi|noodle bake|carbonara|orzo)\b/],
   ['soup', /\b(soup|chili|stew|chowder|pozole|gumbo)\b/],
   ['salad', /\b(salad)\b/],
   ['sandwich', /\b(sandwich(es)?|melts?|sliders?|burgers?|wraps?|pitas?|flatbreads?|subs?|hoagies?|sloppy joes?|paninis?)\b/],
