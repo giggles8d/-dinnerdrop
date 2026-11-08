@@ -33,10 +33,11 @@ export async function POST(request: Request) {
       return Response.json({ error: 'meals must be a non-empty array' }, { status: 400 })
     }
 
-    // A side added for someone's health need (lib/member-needs: "Carson: add the rice") is part of the shop.
-    const allIngredients = meals.flatMap((meal: { ingredients: unknown[]; side?: { for?: string[]; items?: unknown[] } }) => [
+    // A side added for someone's health need (lib/member-needs: "Carson: add the rice") or to complete the plate
+    // (lib/full-plate: protein + starch + vegetable) is part of the shop.
+    const allIngredients = meals.flatMap((meal: { ingredients: unknown[]; side?: { for?: string[]; onList?: boolean; items?: unknown[] } }) => [
       ...(Array.isArray(meal.ingredients) ? meal.ingredients : []),
-      ...(meal.side?.for?.length && Array.isArray(meal.side.items) ? meal.side.items : []),
+      ...((meal.side?.for?.length || meal.side?.onList) && Array.isArray(meal.side.items) ? meal.side.items : []),
     ])
 
     if (allIngredients.length === 0) {

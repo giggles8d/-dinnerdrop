@@ -6,6 +6,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Settings } from '@/lib/settings'
 import { assignNights, type PlanShape } from '@/lib/plan'
 import type { Meal } from '@/types'
+import { pickVaried, varietyLimits } from '@/lib/variety'
 
 const APP = 'https://www.dinnerdrop.app'
 
@@ -39,7 +40,8 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
   if (!res.ok) throw new Error(`generate-plan ${res.status}`)
   const data = await res.json() as { meals: Meal[]; plan?: PlanShape }
   const shape: PlanShape = data.plan ?? { dinnersPerWeek: settings.plan.dinnersPerWeek, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
-  const chosen = assignNights((data.meals ?? []).slice(0, shape.dinnersPerWeek), shape)
+  // Family picks and ideas lead the list; the rest of the week keeps to the variety rules (lib/variety).
+  const chosen = assignNights(pickVaried(data.meals ?? [], shape.dinnersPerWeek, [], varietyLimits(shape.dinnersPerWeek)), shape)
   if (!chosen.length) return null
   const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
@@ -83,4 +85,33 @@ export async function savePlan(admin: SupabaseClient, userId: string, weekStart:
     await admin.from('meal_plans').insert({ user_id: userId, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
   }
   return chosen
+}
+
+/**
+ * Rebuild a family's already-saved week in place (same week, replaced): used once on Nov 7 2026 to re-plan the
+ * auto-built weeks with the variety and full-plate rules (app/api/admin/rebuild-weeks).
+ */
+export async function rebuildWeek(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<Meal[] | null> {
+  const base = process.env.NEXT_PUBLIC_APP_URL || APP
+  const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
+  const res = await fetch(`${base}/api/generate-plan`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId: p.id,
+      familySize: p.family_size,
+      weeklyBudget: p.weekly_budget,
+      maxCookTime: p.max_cook_time,
+      cuisinePreference: p.cuisine_preference,
+      dietaryNeeds: p.dietary_needs || [],
+      favoriteMeals: (favs ?? []).map((f) => f.meal_data),
+      tripKey: weekStart,
+    }),
+  })
+  if (!res.ok) throw new Error(`generate-plan ${res.status}`)
+  const data = await res.json() as { meals: Meal[]; plan?: PlanShape }
+  const shape: PlanShape = data.plan ?? { dinnersPerWeek: settings.plan.dinnersPerWeek, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
+  const picked = pickVaried(data.meals ?? [], shape.dinnersPerWeek, [], varietyLimits(shape.dinnersPerWeek))
+  if (!picked.length) return null
+  return savePlan(admin, p.id, weekStart, picked, shape)
 }

@@ -26,6 +26,7 @@ import FamilyMessages from '@/components/FamilyMessages'
 import SavingsCard from '@/components/SavingsCard'
 import ShareWeekButton from '@/components/ShareWeekButton'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
+import { varietyLimits, varietyOk } from '@/lib/variety'
 import { repeatPlan, lastWeekPlan, mondayISO } from '@/lib/repeat-plan'
 import { mergeSettings, tripsConfig } from '@/lib/settings'
 import { isClassic, currentKey } from '@/lib/trips'
@@ -404,7 +405,7 @@ function DashboardContent() {
           // Kept picks stay on top (re-keyed so their ids can't clash with the new options), and the
           // rest of the week is pre-filled with the new options that share the most fresh ingredients.
           const kept = keepMeals.map((m, i) => ({ ...m, day: `K${i + 1}` }))
-          const fill = pickWithOverlap(data.meals, Math.max(shape.dinnersPerWeek - kept.length, 0), kept)
+          const fill = pickWithOverlap(data.meals, Math.max(shape.dinnersPerWeek - kept.length, 0), kept, (m, ch) => varietyOk(m, ch, varietyLimits(shape.dinnersPerWeek)))
           setPendingMeals([...kept, ...data.meals])
           setSelectedIds(new Set([...kept.map(m => m.day), ...fill.map(m => m.day)]))
         } else {
@@ -416,7 +417,7 @@ function DashboardContent() {
           const familyPicks = data.meals.filter(m => (m.tags ?? []).includes('family pick')).slice(0, shape.dinnersPerWeek)
           setSelectedIds(
             planCount === 0 && !hasGenerated
-              ? new Set(pickWithOverlap(data.meals, shape.dinnersPerWeek).map(m => m.day))
+              ? new Set(pickWithOverlap(data.meals, shape.dinnersPerWeek, [], (m, ch) => varietyOk(m, ch, varietyLimits(shape.dinnersPerWeek))).map(m => m.day))
               : new Set(familyPicks.map(m => m.day))
           )
         }
@@ -463,7 +464,7 @@ function DashboardContent() {
 
   /** Mealime-style auto-builder: keep whatever is picked and fill the week with the options that share the most fresh ingredients. */
   function pickForMe() {
-    const fill = pickWithOverlap(pendingMeals, Math.max(planShape.dinnersPerWeek - selectedMeals.length, 0), selectedMeals)
+    const fill = pickWithOverlap(pendingMeals, Math.max(planShape.dinnersPerWeek - selectedMeals.length, 0), selectedMeals, (m, ch) => varietyOk(m, ch, varietyLimits(planShape.dinnersPerWeek)))
     setSelectedIds(new Set([...selectedMeals.map(m => m.day), ...fill.map(m => m.day)]))
   }
 
