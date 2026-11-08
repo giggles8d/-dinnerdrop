@@ -53,6 +53,8 @@ export default function RootLayout({
       <head>
         <meta name="google-site-verification" content="aRL3GZUE7P9djb-TJ4-DGsySJ-a4ga092frVWuHVvmo" />
         <meta name="p:domain_verify" content="427458932d59da42a3de89511f35be98" />
+        {/* Pinterest website claim for the DinnerDrop business account (pinterest.com/dinnerdrop), Nov 8 2026 */}
+        <meta name="p:domain_verify" content="32b8d7be088cfe7e099217925ecf0216" />
         {/* Impact.com domain verification — uses the non-standard `value=` attribute per their docs, so we spread to bypass React's strict <meta> types */}
         <meta {...({ name: 'impact-site-verification', value: '873816be-9855-4c55-995a-412f97a0bbac' } as React.MetaHTMLAttributes<HTMLMetaElement>)} />
         {/* In the native app, mark <html data-native> before first paint so .web-only (anything that sells the subscription) never flashes. */}
