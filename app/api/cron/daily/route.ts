@@ -9,6 +9,7 @@ import { runWeeklyReport } from '@/lib/weekly-report'
 import { shrinkRecipeImages } from '@/lib/shrink-images'
 import { reconcileGifts } from '@/lib/gifts'
 import Stripe from 'stripe'
+import { sendCartOfferReminders } from '@/lib/cart-offer'
 
 export const maxDuration = 300
 
@@ -37,6 +38,7 @@ export async function GET(request: NextRequest) {
         .catch((e) => ({ error: String(e) }))
     : null
 
+  try { out.cartOfferReminder = await sendCartOfferReminders(admin, now) } catch (e) { out.cartOfferReminder = { error: String(e) } }
   try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
   try { out.orderFollowups = await runOrderFollowups(admin, now) } catch (e) { out.orderFollowups = { error: String(e) } }
   try { out.texting = await runTextingDay(admin, now) } catch (e) { out.texting = { error: String(e) } }

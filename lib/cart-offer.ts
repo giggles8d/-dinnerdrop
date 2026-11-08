@@ -50,3 +50,40 @@ export async function grantCartOffer(userId: string | null | undefined): Promise
     return false
   }
 }
+
+/**
+ * Last-day reminder (Sarah, Nov 7 2026): on Sunday Nov 8 the daily cron emails everyone who signed up in the
+ * last 30 days and still hasn't sent a cart. Once per person; skipped once the offer ends.
+ */
+export async function sendCartOfferReminders(admin: SupabaseClient, now = new Date()): Promise<{ sent: number } | { skipped: string }> {
+  const etDay = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
+  if (etDay !== '2026-11-08' || !cartOfferLive(now)) return { skipped: 'not the last day of the offer' }
+  const since = new Date(now.getTime() - 30 * 86400000).toISOString()
+  const { data: profs } = await admin.from('profiles').select('id, email_unsubscribed, subscription_status').gte('created_at', since)
+  const ids = (profs ?? []).filter((p) => !p.email_unsubscribed && p.subscription_status !== 'active').map((p) => p.id as string)
+  if (!ids.length) return { sent: 0 }
+  const { data: carts } = await admin.from('grocery_handoffs').select('user_id').in('user_id', ids)
+  const hasCart = new Set((carts ?? []).map((c) => c.user_id as string))
+  let sent = 0
+  for (const id of ids.filter((x) => !hasCart.has(x))) {
+    const key = `cart_offer_reminder:${id}`
+    const { error } = await admin.from('app_kv').insert({ key, value: { at: new Date().toISOString() }, updated_at: new Date().toISOString() })
+    if (error) continue
+    const { data } = await admin.auth.admin.getUserById(id)
+    const email = data?.user?.email
+    if (!email || /@camcomfginc\.com$/i.test(email) || email.toLowerCase() === 'setzl1979@gmail.com') continue
+    const r = await sendEmail(email, 'Last day: send your cart tonight, get 3 months free',
+      `<div style="font-family:system-ui,sans-serif;max-width:520px;margin:auto;padding:24px;color:#1a1a1a;line-height:1.5">
+<p style="font-weight:700;color:#2f6b4f;letter-spacing:.08em;text-transform:uppercase;font-size:13px;margin:0 0 10px">DinnerDrop</p>
+<h1 style="font-size:22px;margin:0 0 12px">Your week is planned. Send the cart by tonight for 3 months free.</h1>
+<p>Today's the last day: send your first grocery cart by <b>11:59 PM ET tonight</b> and we'll add <b>3 months of DinnerDrop Family</b> to your account. No card.</p>
+<p>Open your week, tap <b>Shop ingredients</b>, and the whole list lands in your Instacart, Walmart or Kroger cart. You can review it before you check out.</p>
+<p><a href="https://www.dinnerdrop.app/grocery-list?utm_source=email&utm_medium=offer&utm_campaign=cart3_reminder" style="display:inline-block;background:#2f6b4f;color:#fff;padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:700">Send my cart</a></p>
+<p style="font-size:13px;color:#666">For your first cart on DinnerDrop; one per account.</p>
+</div>`,
+      { text: "Last day: send your first grocery cart by 11:59 PM ET tonight and get 3 months of DinnerDrop Family free, no card. https://www.dinnerdrop.app/grocery-list" })
+    if (r.ok) sent++
+    await new Promise((ok) => setTimeout(ok, 120))
+  }
+  return { sent }
+}
