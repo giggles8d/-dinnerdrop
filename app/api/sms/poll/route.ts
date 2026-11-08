@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { pollInbound } from '@/lib/texting'
 import { sendSignupAlerts } from '@/lib/signup-alerts'
+import { sendWelcomeEmails } from '@/lib/welcome-email'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -23,8 +24,11 @@ export async function POST() {
   // New sign-up alerts to Sarah's phone (lib/signup-alerts); never let them break the poll.
   let signupAlerts: unknown = null
   try { signupAlerts = await sendSignupAlerts(admin) } catch (e) { console.error('[signup-alerts]', e) }
-  await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, signupAlerts, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
-  return NextResponse.json({ ...report, signupAlerts })
+  // Sarah's personal welcome email to every new sign-up (lib/welcome-email).
+  let welcome: unknown = null
+  try { welcome = await sendWelcomeEmails(admin) } catch (e) { console.error('[welcome]', e) }
+  await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, signupAlerts, welcome, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
+  return NextResponse.json({ ...report, signupAlerts, welcome })
 }
 
 export async function GET() { return POST() }
