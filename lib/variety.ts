@@ -84,9 +84,9 @@ export function pickVaried<T extends Lite>(pool: T[], n: number, seed: Lite[], l
 // ---------- "everyone gets the same dinners": how often each recipe went out this week ----------
 let usageCache: { at: number; counts: Map<string, number> } | null = null
 
-/** normalized recipe name → number of weeks (all families) built in the last 7 days that included it. Cached 10 min. */
+/** normalized recipe name → number of weeks (all families) built in the last 7 days that included it. Cached 90 s. */
 export async function recentUsage(supabase: SupabaseClient): Promise<Map<string, number>> {
-  if (usageCache && Date.now() - usageCache.at < 10 * 60000) return usageCache.counts
+  if (usageCache && Date.now() - usageCache.at < 90000) return usageCache.counts
   const counts = new Map<string, number>()
   try {
     const cols = Array.from({ length: 7 }, (_, i) => `n${i}:meals->${i}->>name`).join(',')
@@ -104,8 +104,8 @@ export async function recentUsage(supabase: SupabaseClient): Promise<Map<string,
   return counts
 }
 
-/** Score penalty for a recipe many families already got this week (0 … 0.7: enough to rotate, not enough to let poor fits win). */
+/** Score penalty for a recipe many families already got this week (0 … 0.9: enough to rotate, not enough to let poor fits win). */
 export function overusePenalty(counts: Map<string, number>, name: string): number {
   const c = counts.get(normalizeName(name)) ?? 0
-  return c <= 3 ? 0 : Math.min((c - 3) * 0.04, 0.7)
+  return c <= 3 ? 0 : Math.min((c - 3) * 0.06, 0.9)
 }
