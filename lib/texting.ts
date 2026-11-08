@@ -1073,7 +1073,7 @@ export function voteBody(familyName: string, round: VoteRound, showCarbs = false
  *  3. the candidates to everyone who has, asking for their picks
  * When everyone has answered (or after 24h) the top picks become the week.
  */
-export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opts: { now?: Date; force?: boolean; resend?: boolean; sendDraft?: boolean } = {}): Promise<CycleReport> {
+export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opts: { now?: Date; force?: boolean; resend?: boolean; sendDraft?: boolean; weekStart?: string } = {}): Promise<CycleReport> {
   const now = opts.now ?? new Date()
   const { data: o } = await admin
     .from('profiles')
@@ -1085,7 +1085,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
   const { weekday, dateStr } = localNow(o.timezone || 'America/New_York', now)
   const tcfg = tripsConfig(settings)
   const trip = isClassic(tcfg) ? null : (voteTripOn(tcfg, dateStr) ?? shoppingTrip(tcfg, dateStr))
-  const weekStart = trip ? trip.key : targetWeekFor(now, weekday)
+  const weekStart = trip ? trip.key : (opts.weekStart ?? targetWeekFor(now, weekday))
   const report: CycleReport = { weekStart, planned: false, optInsSent: 0, voteTextsSent: 0, skipped: [] }
   if (!smsConfigured()) { report.skipped.push('Twilio not configured'); return report }
   if (!settings.texting.enabled) { report.skipped.push('texting off in settings'); return report }
@@ -1098,7 +1098,9 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
   const sundayN = !trip || trip.nights.some((n) => n.day === 'sun') ? sundayOptions(settings) : 0
   const count = Math.min(Math.max(settings.texting.optionsToText, picksNeeded, 5), 12) + sundayN
   let round = await openRound(admin, o.household_id)
-  if (round && round.week_start !== weekStart) { await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id); round = null }
+  // A family's first vote can be for next week (opened mid-week, see startFirstVote): it stays open until that week.
+  if (round && round.week_start !== weekStart && (trip || round.week_start < weekStart)) { await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id); round = null }
+  if (round && !trip && round.week_start > weekStart) report.weekStart = round.week_start
   if (opts.resend && !round) { report.skipped.push('no open vote to resend'); return report }
   if (!round || opts.force) {
     if (round) await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString() }).eq('id', round.id)
@@ -1300,10 +1302,10 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
         // Just opted in while a vote is open? Send them the menu right away.
         if (parseInbound(m.body).kind === 'optin') {
           const round = await openRound(admin, r.member.household_id)
-          if (round) {
-            const owner = await ownerForHousehold(admin, r.member.household_id)
-            if (owner) await startVoteCycle(admin, owner.id)
-          }
+          const owner = await ownerForHousehold(admin, r.member.household_id)
+          if (round && owner) await startVoteCycle(admin, owner.id)
+          // First person ever to say YES: start the family's first vote now instead of waiting for vote day.
+          else if (!round && owner) await startFirstVote(admin, owner.id, r.member.household_id)
         }
       } catch (e) {
         report.errors.push(`${m.sid}: ${e instanceof Error ? e.message : String(e)}`)
@@ -1604,4 +1606,22 @@ async function leaderCommand(admin: SupabaseClient, owner: OwnerRow, m: MemberRo
   if (cmd.kind === 'swap') return swapPlanDinner(admin, owner, cmd.n, cmd.dish)
   if (cmd.kind === 'send') return `There's no vote waiting for you to send.`
   return null   // drop / add dinner outside a draft: let the normal handling take it
+}
+
+/**
+ * A family's first vote, sent as soon as the first family member replies YES (Sarah, Nov 7 2026) instead of
+ * waiting for vote day. Once per household (only if it has never had a vote), classic weekly plans only.
+ * Fri–Sun it's for the coming week as usual; Mon–Thu it's for NEXT week, so this week's plan isn't replaced.
+ */
+export async function startFirstVote(admin: SupabaseClient, ownerId: string, householdId: string, now = new Date()): Promise<CycleReport | null> {
+  const { count } = await admin.from('vote_rounds').select('id', { count: 'exact', head: true }).eq('household_id', householdId)
+  if ((count ?? 0) > 0) return null
+  const { data: o } = await admin.from('profiles').select('timezone, settings').eq('id', ownerId).maybeSingle()
+  if (!o) return null
+  if (!isClassic(tripsConfig(mergeSettings(o.settings)))) return null
+  const { weekday } = localNow(o.timezone || 'America/New_York', now)
+  const weekStart = ['fri', 'sat', 'sun'].includes(weekday)
+    ? (weekday === 'fri' ? mondayOf(new Date(now.getTime() + 3 * 86400000)) : targetWeekFor(now, weekday))
+    : mondayOf(new Date(now.getTime() + 7 * 86400000))
+  try { return await startVoteCycle(admin, ownerId, { now, weekStart }) } catch (e) { console.error('[first-vote]', e); return null }
 }
