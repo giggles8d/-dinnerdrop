@@ -1,4 +1,4 @@
-import { amazonSearchUrl, type AffiliateGroup } from '@/lib/amazon-affiliate'
+import { amazonProductUrl, type AffiliateGroup } from '@/lib/amazon-affiliate'
 
 /**
  * Presentational affiliate block. Renders categorized Amazon links as chips.
@@ -33,7 +33,8 @@ export function AmazonRestock({
               {group.items.map((item) => (
                 <a
                   key={item.name}
-                  href={amazonSearchUrl(item.search)}
+                  href={amazonProductUrl(item.asin)}
+                  title={item.product}
                   target="_blank"
                   rel="sponsored nofollow noopener noreferrer"
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border border-border bg-background text-sm text-foreground hover:border-primary hover:text-primary transition-colors"
