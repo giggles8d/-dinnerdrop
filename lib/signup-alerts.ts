@@ -2,8 +2,8 @@
  * New sign-up alerts (Sarah, Nov 7 2026): "notify me of every new sign up so I can make sure they get one on one
  * care". Each new account is texted to Sarah's phone about 10 minutes after it signs up (so the quiz answers and
  * first week are in): name, email, where they came from, family size, diet, store, and whether their first week
- * was built. Once per account (app_kv signup_alert:<id>). Quiet 10 PM–7 AM ET: overnight sign-ups arrive together
- * in one text after 7 AM. Run from the 2-minute texting poll.
+ * was built. Once per account (app_kv signup_alert:<id>). Sent any time of day (Sarah asked for no quiet hours).
+ * Run from the 2-minute texting poll.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { sendSms, smsConfigured, normalizePhone } from '@/lib/notify'
@@ -14,11 +14,7 @@ const SARAH_PHONE_FALLBACK = '+16072871236'
 
 const SOURCE: Record<string, string> = { facebook: 'Facebook', fb: 'Facebook', ig: 'Instagram', instagram: 'Instagram', google: 'Google', tiktok: 'TikTok', reddit: 'Reddit', pinterest: 'Pinterest', email: 'email', youtube: 'YouTube' }
 
-function etHour(d = new Date()): number {
-  return Number(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', hourCycle: 'h23' }).format(d))
-}
-
-export async function sendSignupAlerts(admin: SupabaseClient, now = new Date()): Promise<{ sent: number; held?: number }> {
+export async function sendSignupAlerts(admin: SupabaseClient, now = new Date()): Promise<{ sent: number }> {
   if (!smsConfigured()) return { sent: 0 }
   const from = new Date(now.getTime() - 14 * 3600000).toISOString()
   const until = new Date(now.getTime() - 10 * 60000).toISOString()
@@ -31,8 +27,7 @@ export async function sendSignupAlerts(admin: SupabaseClient, now = new Date()):
   const doneSet = new Set((done ?? []).map((d) => String(d.key)))
   const todo = fresh.filter((p) => !doneSet.has(`signup_alert:${p.id}`))
   if (!todo.length) return { sent: 0 }
-  const h = etHour(now)
-  if (h >= 22 || h < 7) return { sent: 0, held: todo.length }
+  // Sarah, Nov 7 2026: text her no matter the time (no quiet hours).
 
   const ids = todo.map((p) => p.id as string)
   const [{ data: plans }, { data: carts }, { data: sarah }] = await Promise.all([
@@ -66,8 +61,8 @@ export async function sendSignupAlerts(admin: SupabaseClient, now = new Date()):
 
   let body: string
   if (claimed.length === 1) body = `DinnerDrop: new sign-up!\n${line(claimed[0])}`
-  else if (claimed.length <= 4) body = `DinnerDrop: ${claimed.length} new sign-ups${h < 8 ? ' overnight' : ''}:\n${claimed.map((p, i) => `${i + 1}. ${line(p)}`).join('\n')}`
-  else body = `DinnerDrop: ${claimed.length} new sign-ups${h < 8 ? ' overnight' : ''}. First 4:\n${claimed.slice(0, 4).map((p, i) => `${i + 1}. ${line(p)}`).join('\n')}\n+${claimed.length - 4} more: ${claimed.slice(4).map((p) => p.email).join(', ')}`
+  else if (claimed.length <= 4) body = `DinnerDrop: ${claimed.length} new sign-ups:\n${claimed.map((p, i) => `${i + 1}. ${line(p)}`).join('\n')}`
+  else body = `DinnerDrop: ${claimed.length} new sign-ups. First 4:\n${claimed.slice(0, 4).map((p, i) => `${i + 1}. ${line(p)}`).join('\n')}\n+${claimed.length - 4} more: ${claimed.slice(4).map((p) => p.email).join(', ')}`
   const r = await sendSms(to, body.slice(0, 1500))
   await admin.from('sms_messages').insert({ household_id: null, member_id: null, direction: 'out', to_number: to, body: body.slice(0, 1500), intent: 'signup_alert', twilio_sid: r.sid ?? null })
   return { sent: r.ok ? claimed.length : 0 }
