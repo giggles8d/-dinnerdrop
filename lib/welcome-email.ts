@@ -56,11 +56,11 @@ ${close.map((c) => p(link(c))).join('\n')}
   return { subject: name ? `Thank you for joining DinnerDrop, ${name}` : 'Thank you for joining DinnerDrop', html, text }
 }
 
-/** Welcome every account created in the last 3 hours that hasn't had one. */
+/** Welcome every account created in the last 12 hours that hasn't had one. */
 export async function sendWelcomeEmails(admin: SupabaseClient, now = new Date()): Promise<{ sent: number }> {
   if (!process.env.RESEND_API_KEY) return { sent: 0 }
   const { data: profs } = await admin.from('profiles').select('id, email, full_name, email_unsubscribed')
-    .gte('created_at', new Date(now.getTime() - 3 * 3600000).toISOString()).limit(50)
+    .gte('created_at', new Date(now.getTime() - 12 * 3600000).toISOString()).limit(50)
   const todo = (profs ?? []).filter((p) => p.email && !p.email_unsubscribed && !SKIP.test(String(p.email)) && String(p.email).toLowerCase() !== 'setzl1979@gmail.com')
   if (!todo.length) return { sent: 0 }
   const resend = new Resend(process.env.RESEND_API_KEY)
