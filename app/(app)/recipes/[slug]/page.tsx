@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
+import { retryFetch } from '@/lib/retry-fetch'
 import RecipeClient, { type RecipeRow } from './RecipeClient'
 import { recipeIntro } from '@/lib/recipe-intro'
 
@@ -9,7 +10,7 @@ export const revalidate = 600
 
 async function getRecipe(slug: string): Promise<RecipeRow | null> {
   try {
-    const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+    const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, { global: { fetch: retryFetch } })
     const { data } = await admin.from('recipes').select('*').eq('slug', slug).maybeSingle()
     return (data as RecipeRow) ?? null
   } catch { return null }

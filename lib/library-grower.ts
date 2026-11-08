@@ -62,7 +62,9 @@ async function chooseFocuses(admin: SupabaseClient, batches: number): Promise<Fo
     const next = done + take.length
     const value = { ...v, done: next, pending: concepts.length - next, last: new Date().toISOString(), lastRange: [done, next - 1], source: 'data/recipe-concepts.json' }
     const { error } = await admin.from('app_kv').upsert({ key: 'recipe_concepts', value, updated_at: new Date().toISOString() }, { onConflict: 'key' })
-    const { data: check } = await admin.from('app_kv').select('value').eq('key', 'recipe_concepts').maybeSingle()
+    // A different select than the read above: the identical GET came back from Next's fetch cache with the old
+    // cursor, so every night looked like a failed write and the concept batches were skipped (Nov 7–8 2026).
+    const { data: check } = await admin.from('app_kv').select('value, updated_at').eq('key', 'recipe_concepts').maybeSingle()
     const saved = Number((check?.value as { done?: number } | null)?.done ?? -1)
     if (error || saved !== next) {
       console.error('[grow-library] could not advance the concept cursor; skipping concept batches tonight', error)
