@@ -13,7 +13,7 @@ const normalizeName = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g
 type Lite = Pick<Meal, 'name'> & { cuisine?: string | null; tags?: string[] | null }
 
 const TYPES: Array<[string, RegExp]> = [
-  ['taco', /\b(tacos?|tostadas?|fajitas?|quesadillas?|burritos?|nachos|enchiladas?|chimichangas?|flautas?|taquitos?)\b/],
+  ['taco', /\b(tacos?|tostadas?|fajitas?|quesadillas?|burritos?|nachos|enchiladas?|chimichangas?|flautas?|taquitos?|tortas?|tamales?|carnitas|al pastor|gorditas?|sopes?|chalupas?|tinga)\b/],
   ['pasta', /\b(pasta|spaghetti|penne|rigatoni|ziti|lasagna|fettuccine|linguine|alfredo|mac|mac and cheese|macaroni|tortellini|ravioli|gnocchi|noodle bake|carbonara|orzo)\b/],
   ['soup', /\b(soup|chili|stew|chowder|pozole|gumbo)\b/],
   ['salad', /\b(salad)\b/],
@@ -44,11 +44,18 @@ export function cuisineGroup(m: Lite): string | null {
   return c
 }
 
-export interface VarietyLimits { taco: number; perType: number; perCuisine: number }
+/** Mexican-style even when the cuisine field says American: chipotle, salsa, street corn, cilantro-lime… (Nov 8 2026). */
+const MEXICAN_WORDS = /\b(chipotle|salsa|street corn|elote|cilantro[- ]lime|chili[- ]lime|southwest(ern)?|tex[- ]mex|mexican|pozole|mole|adobo|ancho|jalape[nñ]o|pico de gallo|guacamole|queso|refried|enchilada|taco)\b/
+export function isMexicanStyle(m: Lite): boolean {
+  return dishType(m) === 'taco' || cuisineGroup(m) === 'mexican' || MEXICAN_WORDS.test(m.name.toLowerCase())
+}
+
+export interface VarietyLimits { taco: number; perType: number; perCuisine: number; mexican: number }
 
 /** Limits scaled to how many dinners are on offer (a 10-dinner vote may carry two taco nights; a 5-dinner week one). */
 export function varietyLimits(count: number): VarietyLimits {
-  return count > 7 ? { taco: 2, perType: 3, perCuisine: 3 } : { taco: 1, perType: 2, perCuisine: 2 }
+  // Sarah, Nov 8 2026: a 5-dinner week still read as "all Mexican" with 2 Mexican-style dinners; one is the limit.
+  return count > 7 ? { taco: 2, perType: 3, perCuisine: 3, mexican: 2 } : { taco: 1, perType: 2, perCuisine: 2, mexican: 1 }
 }
 
 /** Would adding `m` to `chosen` break the variety rules? */
@@ -62,8 +69,8 @@ export function varietyOk(m: Lite, chosen: Lite[], lim: VarietyLimits): boolean 
   }
   const g = cuisineGroup(m)
   if (g && chosen.filter((c) => cuisineGroup(c) === g).length >= lim.perCuisine) return false
-  // Taco-style counts against Mexican even when the recipe's cuisine field is blank.
-  if (t === 'taco' && g !== 'mexican' && chosen.filter((c) => cuisineGroup(c) === 'mexican' || dishType(c) === 'taco').length >= lim.perCuisine) return false
+  // Mexican-style (taco-type, Mexican cuisine, or chipotle/salsa/street-corn names) has its own, tighter cap.
+  if (isMexicanStyle(m) && chosen.filter(isMexicanStyle).length >= lim.mexican) return false
   return true
 }
 
