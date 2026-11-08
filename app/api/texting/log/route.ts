@@ -79,6 +79,7 @@ export async function GET(req: Request) {
       sentThisWeek: outWeek,
       cap: settings.texting.weeklyCap,
       plainText: settings.texting.plainTextIds.includes(m.id),
+      tapVote: !(settings.texting.tapVoteOffIds ?? []).includes(m.id),
       lastReply: lastIn?.at ?? null,
       problem: lastFail ? { at: lastFail.at, what: lastFail.problem, picture: lastFail.picture } : null,
     }
@@ -103,6 +104,14 @@ export async function POST(req: Request) {
     if (b.on) ids.add(m.id); else ids.delete(m.id)
     const raw = (profile.settings as Record<string, unknown> | null) ?? {}
     const texting = { ...((raw.texting as object) ?? {}), plainTextIds: Array.from(ids) }
+    await admin.from('profiles').update({ settings: { ...raw, texting } }).eq('id', profile.id)
+    return NextResponse.json({ ok: true })
+  }
+  if (b.action === 'tap_vote') {
+    const ids = new Set(settings.texting.tapVoteOffIds ?? [])
+    if (b.on) ids.delete(m.id); else ids.add(m.id)
+    const raw = (profile.settings as Record<string, unknown> | null) ?? {}
+    const texting = { ...((raw.texting as object) ?? {}), tapVoteOffIds: Array.from(ids) }
     await admin.from('profiles').update({ settings: { ...raw, texting } }).eq('id', profile.id)
     return NextResponse.json({ ok: true })
   }

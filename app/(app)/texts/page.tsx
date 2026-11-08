@@ -5,7 +5,7 @@ import Link from 'next/link'
 import FamilyAskPanel from '@/components/FamilyAskPanel'
 import { RefreshCw, CheckCheck, AlertTriangle, Image as ImageIcon, Send } from 'lucide-react'
 
-interface Person { id: string; name: string; you: boolean; phone: string | null; status: 'joined' | 'invited' | 'stopped' | 'no phone'; sentThisWeek: number; cap: number; plainText: boolean; lastReply: string | null; problem: { at: string; what: string | null; picture: boolean } | null }
+interface Person { id: string; name: string; you: boolean; phone: string | null; status: 'joined' | 'invited' | 'stopped' | 'no phone'; sentThisWeek: number; cap: number; plainText: boolean; tapVote: boolean; lastReply: string | null; problem: { at: string; what: string | null; picture: boolean } | null }
 interface Msg { id: string; memberId: string | null; person: string; direction: 'in' | 'out'; from: string; body: string; kind: string; picture: boolean; photo: string | null; at: string; delivery: 'delivered' | 'failed' | 'sending' | 'unknown' | 'not sent' | null; problem: string | null }
 
 const when = (iso: string) => new Date(iso).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
@@ -99,6 +99,12 @@ export default function TextsPage() {
                 <label className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
                   <input type="checkbox" checked={p.plainText} onChange={(e) => act('plain_text', p.id, { on: e.target.checked })} disabled={!!busy} />
                   Send {p.you ? 'my' : 'their'} votes as plain text (for phones that don&apos;t get picture texts)
+                </label>
+              )}
+              {p.status === 'joined' && (
+                <label className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                  <input type="checkbox" checked={p.tapVote} onChange={(e) => act('tap_vote', p.id, { on: e.target.checked })} disabled={!!busy} />
+                  Include a link to vote by tapping photos (they can still reply with numbers)
                 </label>
               )}
               {p.status === 'stopped' && <p className="mt-2 text-xs text-muted-foreground">They need to text START to (866) 722-4708 to get texts again.</p>}
