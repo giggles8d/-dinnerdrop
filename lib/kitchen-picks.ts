@@ -33,7 +33,7 @@ export const KITCHEN_PICKS: KitchenPick[] = [
     why: 'Cheese and sauce lift right off instead of tearing the top of the casserole. Cover the dish, then use it to line the pan for leftovers.' },
   { asin: 'B00IE76Q7M', product: 'Reynolds Kitchens Slow Cooker Liners', consumable: true, fits: /slow[- ]?cooker|crock[- ]?pot|pulled|pot roast/i,
     why: 'The liner goes in the crock, dinner cooks, the mess goes in the trash. No soaking a crusted slow cooker overnight.' },
-  { asin: 'B000VDSS3C', product: 'Better Than Bouillon Roasted Chicken Base', consumable: true, fits: /soup|stew|chowder|pot pie|chicken and rice|risotto|gravy|noodle/i,
+  { asin: 'B000VDSS3C', product: 'Better Than Bouillon Roasted Chicken Base', consumable: true, fits: /soup|stew|chowder|pot pie|chicken and rice|risotto|gravy|dumplings/i,
     why: 'A spoonful makes a cup of broth, so you never run out mid-recipe. One jar replaces about 9 cartons of stock in the pantry.' },
   { asin: 'B000VDWQXA', product: 'Better Than Bouillon Roasted Beef Base', consumable: true, fits: /stroganoff|beef stew|pot roast|french dip|chili|gravy|shepherd|beef and (noodles|broccoli)/i,
     why: 'Deep beef flavor for stroganoff, stew and gravy from one spoonful. It keeps in the fridge for months.' },
