@@ -1,0 +1,10 @@
+{
+ "element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
+ "voice": "Hallie preset 10274bf1-fb93-554f-b59f-d620a920fd36 (voice_change on every clip)",
+ "start_frames": {"c1": "3c0d0ddf-ed57-4731-a834-5c08c84d47cc (inside car, drive-thru line; take 1 39085659 showed a menu board, regenerated)", "c2": "d6dffaa5-81d5-424d-88c8-fccd0869098d (open fridge, counter cam)", "c3": "12980490-c1e4-44a3-8315-16c243b5f434 (stove; take 1 c5808cb0 had a brand patch on the fleece)", "c4": "9d97ac04-c06d-4f19-97c6-112c0f5426c6 (kitchen table, three bowls, no kids)"},
+ "veo_jobs": {"c1": "24a0e26b-303c-4668-877b-9d37fba4beb7", "c2": "173a4e8f-f52d-46a2-b253-d92cdc2bca04", "c3": "839311a3-af92-46a4-b7ce-9ddf423c6949", "c4": "c9ea193e-2668-4968-b5fa-a4cc5d971f12"},
+ "voice_changed": {"c1": "a4e1be9e-1abd-4d73-8643-26fd5a74c30d", "c2": "16569305-2b4b-4202-b3bb-b9e1937671e0", "c3": "3b044f60-c7f2-42f6-9357-73c5d27f4601", "c4": "569f3a0f-b734-4bf2-bdf5-5632ad30cb55"},
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/dc6ce595-f1d2-4559-aee3-3e890a95825d.mp4",
+ "status": "SCHEDULED 2026-11-09 4:30 PM ET on TikTok, YouTube Shorts, Facebook Reels via Publer (by Claude, 11-08)",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-09"
+}

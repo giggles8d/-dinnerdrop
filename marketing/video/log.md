@@ -2,6 +2,10 @@
 
 | Date | Time | Slot | Video | Notes |
 |---|---|---|---|---|
+| 2026-11-09 | 4:30 PM | Mom (Nurse Mom) | Nurse Mom Ep 3 "ER nurse vs. the drive-thru" — feature: snap the fridge, dinner tonight from what you have (+ week plan, one-tap cart); hook location: drive-thru line (then open fridge, stove, kitchen table payoff) | TikTok/YT/FB via Publer (scheduled 11-08 by Claude; mom/nurse/2026-11-09, veo3_1 high + Hallie voice_change, no on-screen AI label, code NURSE, 32.3 s); final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/dc6ce595-f1d2-4559-aee3-3e890a95825d.mp4 |
+| 2026-11-09 | 11:30 AM | Recipe | Grilled Chicken Street Tacos (slug grilled-chicken-street-tacos-1yb6) | TikTok/YT/FB via Publer (scheduled 11-08 by Claude; recipe/tacos, 46.4 s, VO speed 1.12); final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/17dfa523-2bca-4916-8e31-c4d9b0578743.mp4 |
+| 2026-11-08 | 7:30 PM | Fruit | Fruit Moms Ep 13 "Sunday Scaries" (Sunday night, zero dinners planned, Monday is tomorrow) | TikTok/YT/FB via Publer (scheduled 11-08 by Claude; fruit e13, veo3_1 high, clips c161–c163; c161/c162 take 1 had burned-in gibberish subtitles, regenerated with "No on-screen text of any kind"); next episode = Ep 14; final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/fe27244c-4643-41d1-8772-00c1023a9f7d.mp4 |
+| 2026-11-08 | 4:30 PM | Mom (DinnerDrop-Mom, eMeals) | "Not prepaying a whole year just to plan dinner" (eMeals $59.99-up-front angle, code EMEALS) | Found already scheduled in Publer on 11-08 (TikTok/YT/FB) — not logged by the run that made it; 11-07 rows also missing |
 | 2026-11-06 | 4:30 PM | Mom (Ollie window, DinnerDrop-Mom) | "Meal app shutting down today? Planning from the pickup line" — angle 6 (one menu for a picky eater AND a no-fish kid); hook location: school pickup line (then kitchen counter, stove) | TikTok/YT/FB via Publer (scheduled 11-05 by Claude; mom/2026-11-06, veo3_1 high, ai_banner false, OLLIE end card; last Ollie-window video); final https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/effc65bb-ec87-4695-9cc1-1204d97dfda5.mp4 |
 | 2026-11-06 | 11:30 AM | Recipe | Beef Stir-Fry Rice Bowls (slug beef-stir-fry-rice-bowl-k36j) | TikTok/YT/FB via Publer (scheduled 11-05 by Claude; recipe/beefbowl, 43.3 s, VO speed 1.12) |
 | 2026-11-05 | 7:30 PM | Fruit | Fruit Moms Ep 12 "Takeout Thursday" (four nights of takeout, delivery guy knows their names) | TikTok/YT/FB via Publer (scheduled 11-05 by Claude; fruit e12, veo3_1 high, clips c151–c153; c153 take 1 had Blueberry/Lemon swapping outfits, regenerated); next episode = Ep 13 |
@@ -35,4 +39,6 @@ Mom-video angles used (don't repeat within 6 days): 11-01 angle 7 · 11-02 angle
 
 Credits note 2026-11-03: 115.75 left after this run (under ~120). Topped up by 11-04 (1512.75 at start of the 11-04 run).
 
-Nurse Mom features used (don't repeat within 6 days): 11-03 Ep 1 kids vote by text (+ picky eater, one-tap cart) · 11-05 Ep 2 teen texts "we're out of milk" onto the list. Nurse Mom locations used: garage/kitchen/bleachers/table (Ep 1), break room/kitchen/laundry room/fridge (Ep 2).
+Nurse Mom features used (don't repeat within 6 days): 11-03 Ep 1 kids vote by text (+ picky eater, one-tap cart) · 11-05 Ep 2 teen texts "we're out of milk" onto the list · 11-09 Ep 3 snap the fridge. Nurse Mom locations used: garage/kitchen/bleachers/table (Ep 1), break room/kitchen/laundry room/fridge (Ep 2), drive-thru line/fridge/stove/table (Ep 3).
+
+Credits note 2026-11-08: 520 at start, 207 after this run (Nurse Ep 3 + Fruit Ep 13 + 2 fruit retakes). Under ~300 — next run skips Fruit and posts a second recipe Short unless topped up.

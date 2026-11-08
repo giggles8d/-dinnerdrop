@@ -1,0 +1,60 @@
+{
+ "out": "2026-11-09_NurseMom_Ep3_DriveThru.mp4",
+ "ai_banner": false,
+ "end_ai_line": false,
+ "hook_text": [
+  "ER nurse vs. the drive-thru"
+ ],
+ "bubbles": {
+  "c1.mp4": [
+   [
+    "what's for dinner",
+    1.2,
+    "in"
+   ],
+   [
+    "mom??",
+    2.4,
+    "in"
+   ]
+  ]
+ },
+ "labels": {
+  "c2.mp4": "Snap the fridge"
+ },
+ "app_over": {
+  "c3.mp4": {
+   "face": 2.0,
+   "segs": [
+    [
+     88,
+     97,
+     "Then the rest of the week"
+    ],
+    [
+     136,
+     152,
+     "List to your cart, one tap"
+    ]
+   ]
+  }
+ },
+ "app_after": 0,
+ "app": [],
+ "cta_y": [
+  1180,
+  1290
+ ],
+ "end_seconds": 1.8,
+ "end": [
+  "Try it free, no card",
+  "Code NURSE = 3 months of Family free",
+  "dinnerdrop.app/go/nurse"
+ ],
+ "clip_end": {
+  "c1.mp4": 8.0,
+  "c2.mp4": 7.45,
+  "c3.mp4": 7.6,
+  "c4.mp4": 7.4
+ }
+}
