@@ -5,6 +5,24 @@ import { useState } from 'react'
 interface Dinner { n: number; name: string; image: string | null; time: string; sunday: boolean; picked: boolean }
 interface Fav { name: string; image: string | null }
 
+function Card({ on, image, title, sub, tag, onClick, closed }: { on: boolean; image: string | null; title: string; sub?: string; tag?: string; onClick: () => void; closed: boolean }) {
+  return (
+    <button type="button" onClick={onClick} aria-pressed={on}
+      className={`relative text-left rounded-2xl overflow-hidden border-2 transition ${on ? 'border-primary ring-2 ring-primary/30' : 'border-border'} ${closed ? 'opacity-70' : ''}`}>
+      <div className="aspect-[4/3] bg-secondary">
+        {image ? <img src={image} alt="" className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-3xl">🍽️</div>}
+      </div>
+      <span className={`absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center text-base font-bold shadow ${on ? 'bg-primary text-primary-foreground' : 'bg-white/90 text-transparent border border-border'}`}>✓</span>
+      <div className="p-2.5">
+        {tag && <p className="text-[11px] font-semibold text-primary uppercase tracking-wide">{tag}</p>}
+        <p className="text-sm font-semibold text-foreground leading-snug">{title}</p>
+        {sub && <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>}
+      </div>
+    </button>
+  )
+}
+
+
 /**
  * Tap-to-vote (lib/tap-vote). Tap as many dinners as you like (Rich, Nov 8: not just the week's number); the top picks
  * across the family still make the week. "Family favorites" adds one of the family's saved dinners to this week's vote.
@@ -38,21 +56,6 @@ export default function TapVote({ code, name, week, dinners, favorites, needed, 
     } catch { setMsg('That didn’t go through. Check your connection and try again.'); setState('error') }
   }
 
-  const Card = ({ on, image, title, sub, tag, onClick }: { on: boolean; image: string | null; title: string; sub?: string; tag?: string; onClick: () => void }) => (
-    <button type="button" onClick={onClick} aria-pressed={on}
-      className={`relative text-left rounded-2xl overflow-hidden border-2 transition ${on ? 'border-primary ring-2 ring-primary/30' : 'border-border'} ${closed ? 'opacity-70' : ''}`}>
-      <div className="aspect-[4/3] bg-secondary">
-        {image ? <img src={image} alt="" className="w-full h-full object-cover" loading="lazy" /> : <div className="w-full h-full flex items-center justify-center text-3xl">🍽️</div>}
-      </div>
-      <span className={`absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center text-base font-bold shadow ${on ? 'bg-primary text-primary-foreground' : 'bg-white/90 text-transparent border border-border'}`}>✓</span>
-      <div className="p-2.5">
-        {tag && <p className="text-[11px] font-semibold text-primary uppercase tracking-wide">{tag}</p>}
-        <p className="text-sm font-semibold text-foreground leading-snug">{title}</p>
-        {sub && <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>}
-      </div>
-    </button>
-  )
-
   const addedFavs = favorites.filter((f) => favSel.includes(f.name))
   return (
     <main className="min-h-screen bg-background pb-36">
@@ -64,10 +67,10 @@ export default function TapVote({ code, name, week, dinners, favorites, needed, 
 
         <div className="grid grid-cols-2 gap-3 mt-5">
           {dinners.map((d) => (
-            <Card key={d.n} on={sel.includes(d.n)} image={d.image} title={d.name} sub={d.time} tag={d.sunday ? 'Sunday dinner' : undefined} onClick={() => toggle(d.n)} />
+            <Card key={d.n} on={sel.includes(d.n)} image={d.image} title={d.name} sub={d.time} tag={d.sunday ? 'Sunday dinner' : undefined} onClick={() => toggle(d.n)} closed={closed} />
           ))}
           {addedFavs.map((f) => (
-            <Card key={f.name} on image={f.image} title={f.name} tag="Family favorite · added by you" onClick={() => toggleFav(f.name)} />
+            <Card key={f.name} on image={f.image} title={f.name} tag="Family favorite · added by you" onClick={() => toggleFav(f.name)} closed={closed} />
           ))}
         </div>
 
@@ -82,7 +85,7 @@ export default function TapVote({ code, name, week, dinners, favorites, needed, 
                 <p className="text-sm text-muted-foreground mt-3">Tap one to add it to this week&apos;s vote. It counts as your pick, and if enough of the family wants it, it makes the week.</p>
                 <div className="grid grid-cols-2 gap-3 mt-3">
                   {favorites.map((f) => (
-                    <Card key={f.name} on={favSel.includes(f.name)} image={f.image} title={f.name} onClick={() => toggleFav(f.name)} />
+                    <Card key={f.name} on={favSel.includes(f.name)} image={f.image} title={f.name} onClick={() => toggleFav(f.name)} closed={closed} />
                   ))}
                 </div>
               </>
