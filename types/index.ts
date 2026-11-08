@@ -30,7 +30,7 @@ export interface Meal {
   leftoverFriendly?: boolean
   saleItems?: string[]  // "chicken thighs $1.99/lb" — sale items this dinner was built around
   safeBite?: string     // the one plain component a picky eater can eat on its own ("plain rice")
-  side?: { name: string; minutes: number; items: Ingredient[]; for?: string[] } // what goes with it (planner-given, else suggested by lib/sides); `for` = added for these people's health needs, so its items go on the list
+  side?: { name: string; minutes: number; items: Ingredient[]; for?: string[]; onList?: boolean } // what goes with it (planner-given, else suggested by lib/sides); `for` = added for these people's health needs, `onList` = added to complete the plate (lib/full-plate); either way its items go on the list
   plateNotes?: string[] // per-person fit for health needs ("Carson: add the rice", "Cia: main is about 18 g carbs") — lib/member-needs
   usesPantry?: string[] // pantry items this dinner was built to use up
   cookedAt?: string     // ISO time the family marked it cooked (fades it on the plan)

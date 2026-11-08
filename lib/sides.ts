@@ -5,20 +5,20 @@ import type { Meal, Ingredient } from '@/types'
  * an explicit `side`; otherwise one is suggested from what the dinner already has, so a pasta doesn't get rice and a
  * sheet-pan dinner with two vegetables gets bread, not more vegetables. Client-safe, no AI.
  */
-export interface Side { name: string; minutes: number; items: Ingredient[] }
+export interface Side { name: string; minutes: number; items: Ingredient[]; onList?: boolean }
 
 type Lite = Pick<Meal, 'name' | 'ingredients'> & { side?: Side }
 
 const hay = (m: Lite) => `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' | ')}`.toLowerCase()
-const HAS_STARCH = /\b(rice|pasta|spaghetti|penne|noodles?|tortillas?|potato|fries|bread|buns?|rolls?|naan|pita|couscous|quinoa|polenta|grits|gnocchi|lasagna|pizza|sandwich|wraps?|tacos?|burrito|quesadilla|tots)\b/
-const HAS_GREEN = /\b(salad|greens|lettuce|romaine|arugula|spinach|kale|broccoli|green beans|asparagus|brussels|zucchini|slaw|cabbage|cucumber)\b/
-const HAS_VEG = /\b(broccoli|green beans|asparagus|brussels|zucchini|carrots?|peppers?|squash|cauliflower|peas|corn|spinach|kale|salad|slaw|tomato(es)?)\b/
-const SOUP = /\b(soup|chili|stew|chowder)\b/
-const ASIAN = /\b(asian|chinese|japanese|korean|thai|vietnamese|teriyaki|stir[- ]fry|sesame|soy|ginger|miso|curry)\b/
-const MEX = /\b(mexican|tex[- ]mex|taco|burrito|enchilada|fajita|quesadilla|salsa|chipotle)\b/
-const MED = /\b(mediterranean|greek|italian|lemon|feta|olive|pesto|tzatziki)\b/
+export const HAS_STARCH = /\b(rice|pasta|spaghetti|penne|noodles?|tortillas?|potato|fries|bread|buns?|rolls?|naan|pita|couscous|quinoa|polenta|grits|gnocchi|lasagna|pizza|sandwich|wraps?|tacos?|burrito|quesadilla|tots)\b/
+export const HAS_GREEN = /\b(salad|greens|lettuce|romaine|arugula|spinach|kale|broccoli|green beans|asparagus|brussels|zucchini|slaw|cabbage|cucumber)\b/
+export const HAS_VEG = /\b(broccoli|green beans|asparagus|brussels|zucchini|carrots?|peppers?|squash|cauliflower|peas|corn|spinach|kale|salad|slaw|tomato(es)?)\b/
+export const SOUP = /\b(soup|chili|stew|chowder)\b/
+export const ASIAN = /\b(asian|chinese|japanese|korean|thai|vietnamese|teriyaki|stir[- ]fry|sesame|soy|ginger|miso|curry)\b/
+export const MEX = /\b(mexican|tex[- ]mex|taco|burrito|enchilada|fajita|quesadilla|salsa|chipotle)\b/
+export const MED = /\b(mediterranean|greek|italian|lemon|feta|olive|pesto|tzatziki)\b/
 
-const SIDES = {
+export const SIDES = {
   salad: { name: 'Simple green salad', minutes: 5, items: [{ name: 'Bagged salad greens', quantity: '1', unit: 'bag', category: 'Produce' as const }, { name: 'Salad dressing', quantity: '1', unit: 'bottle', category: 'Pantry & Dry Goods' as const }] },
   garlicBread: { name: 'Garlic bread', minutes: 10, items: [{ name: 'Frozen garlic bread', quantity: '1', unit: 'package', category: 'Frozen' as const }] },
   rice: { name: 'Steamed rice', minutes: 20, items: [{ name: 'Long grain white rice', quantity: '1', unit: 'cup', category: 'Pantry & Dry Goods' as const }] },

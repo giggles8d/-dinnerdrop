@@ -16,6 +16,9 @@ import { pickWithOverlap, isFresh } from '@/lib/overlap'
 import { hasMix, scaleMix, mixLabel, proteinGroup, MIX_GROUPS, mixForThisWeek } from '@/lib/protein-mix'
 import { computeTastes, householdBoost, learned, likeScore, type MemberTaste } from '@/lib/tastes'
 import { activeNeeds, applyNeeds, needsPromptLines } from '@/lib/member-needs'
+import { varietyLimits, varietyOk, pickVaried, recentUsage, overusePenalty } from '@/lib/variety'
+import { completePlates } from '@/lib/full-plate'
+import { pendingSuggestions, resolveSuggestion, markSuggestionsUsed } from '@/lib/suggestions'
 
 // Extend serverless timeout — AI generation needs up to 55s
 export const maxDuration = 60
@@ -177,6 +180,35 @@ export async function POST(request: Request) {
       (recentPlans ?? []).flatMap((p) => ((p.meals as Meal[]) ?? []).map((m) => m.name)).filter(Boolean)
     ))
 
+    // ---------- variety + listening to the family (Sarah, Nov 7 2026) ----------
+    // At most one taco-style dinner a week, no more than two of one dish type or cuisine (lib/variety), dinners lots of
+    // families already got this week pushed down, every dinner a full plate (lib/full-plate), and nothing the family
+    // skipped comes back.
+    const lim = varietyLimits(optionsCount)
+    const vOk = (m: Meal, chosen: Meal[]) => varietyOk(m, chosen, lim)
+    const usage = mode === 'fresh' ? await recentUsage(supabase) : new Map<string, number>()
+    let skippedNames: string[] = []
+    if (profileRow.household_id) {
+      try {
+        const { data: votes } = await supabase.from('meal_votes').select('meal_name, vote').eq('household_id', profileRow.household_id).in('vote', ['keep', 'skip', 'again']).gte('created_at', new Date(Date.now() - 120 * 86400000).toISOString())
+        const tally = new Map<string, { name: string; skip: number; keep: number }>()
+        for (const v of votes ?? []) {
+          const k = normalizeName(String(v.meal_name ?? ''))
+          if (!k) continue
+          const t = tally.get(k) ?? { name: String(v.meal_name), skip: 0, keep: 0 }
+          if (v.vote === 'skip') t.skip++; else t.keep++
+          tally.set(k, t)
+        }
+        // Skipped more than kept = the family doesn't want it.
+        skippedNames = Array.from(tally.values()).filter((t) => t.skip > t.keep).map((t) => t.name)
+      } catch (e) {
+        console.error('skip lookup failed', e)
+      }
+    }
+    const skippedSet = new Set(skippedNames.map(normalizeName))
+    const notSkipped = (m: Meal) => !skippedSet.has(normalizeName(m.name))
+    const plate = (ms: Meal[]) => settings.food.fullPlate ? completePlates(ms, { dietaryNeeds: profile.dietaryNeeds, avoid: [...allDislikes, ...hardExclusions] }) : ms
+
     // ---------- library picks: proven dinners that fit, no generation needed ----------
     // Library first (instant): the library is grown nightly by /api/cron/grow-library, so
     // most weeks are filled entirely from it. AI writes live only to cover what the library
@@ -206,6 +238,27 @@ export async function POST(request: Request) {
       bringBack = [...bringBack, ...own.map((m, i) => ({ ...m, day: `F${i + 1}`, tags: Array.from(new Set(['family recipe', ...(m.tags ?? [])])) }))]
     }
 
+    // ---------- dinners the family texted in as ideas ("can we have spaghetti and meatballs?") go into the week ----------
+    // The vote (optionsCount set by the texting cycle) adds them itself; this covers the weekly auto-plan and the dashboard.
+    if (mode === 'fresh' && !(Number(body.optionsCount) > 0) && !keepMeals.length) {
+      try {
+        const ideas = pendingSuggestions(profileRow.settings).slice(0, 2)
+        const used: string[] = []
+        for (const sug of ideas) {
+          const taken = [...bringBack, ...keepMeals].map((m) => m.name)
+          const m = await resolveSuggestion(supabase, profileRow, sug, [...taken, ...skippedNames])
+          if (m && notSkipped(m)) {
+            bringBack.push({ ...m, day: `I${bringBack.length + 1}`, tags: Array.from(new Set(['family pick', 'family idea', ...(m.tags ?? [])])) })
+            used.push(sug.name)
+          }
+        }
+        if (used.length) await markSuggestionsUsed(supabase, profileRow, used)
+      } catch (e) {
+        console.error('family ideas failed', e)
+      }
+    }
+    bringBack = bringBack.filter(notSkipped)
+
     let libraryMeals: Meal[] = []
     if (mode === 'fresh') {
       try {
@@ -216,10 +269,13 @@ export async function POST(request: Request) {
           dietary: profile.dietaryNeeds,
           excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allDislikes],
           allergies: allergyPeople.flatMap((p) => p.allergies),
-          excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name), ...keepMeals.map((m) => m.name)],
+          excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name), ...keepMeals.map((m) => m.name), ...skippedNames],
           cuisines: settings.food.cuisines,
           quota,
-          boost: householdBoost(tastes),
+          boost: (() => {
+            const hb = householdBoost(tastes)
+            return (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) => (hb ? hb(r) : 0) - overusePenalty(usage, r.name)
+          })(),
         }
         const perDinner = Number(perMealBudget) || 20
         const toAffordable = (rows: Awaited<ReturnType<typeof pickLibraryRecipes>>, slack: number) => rows
@@ -233,9 +289,9 @@ export async function POST(request: Request) {
         const need = libTarget - bringBack.length
         const relaxations: Array<[string, Partial<typeof libOpts>, number]> = [
           ['cuisines', { cuisines: [] }, 1.4],
-          ['recent repeats', { cuisines: [], excludeNames: keepMeals.map((m) => m.name) }, 1.4],
-          ['cook time', { cuisines: [], excludeNames: keepMeals.map((m) => m.name), maxCookTime: slowestNight + 20, maxCalories: 0 }, 1.6],
-          ['budget', { cuisines: [], excludeNames: keepMeals.map((m) => m.name), maxCookTime: slowestNight + 30, maxCalories: 0 }, 2.5],
+          ['recent repeats', { cuisines: [], excludeNames: [...keepMeals.map((m) => m.name), ...skippedNames] }, 1.4],
+          ['cook time', { cuisines: [], excludeNames: [...keepMeals.map((m) => m.name), ...skippedNames], maxCookTime: slowestNight + 20, maxCalories: 0 }, 1.6],
+          ['budget', { cuisines: [], excludeNames: [...keepMeals.map((m) => m.name), ...skippedNames], maxCookTime: slowestNight + 30, maxCalories: 0 }, 2.5],
         ]
         for (const [label, extra, slack] of relaxations) {
           if (affordable.length >= need) break
@@ -246,7 +302,7 @@ export async function POST(request: Request) {
         // Favor options that share fresh ingredients with each other (and with kept picks),
         // so whatever the family picks uses whole bunches/bags instead of half of each.
         const backNames = new Set(bringBack.map((m) => normalizeName(m.name)))
-        const fresh = affordable.filter((m) => !backNames.has(normalizeName(m.name)))
+        const fresh = affordable.filter((m) => !backNames.has(normalizeName(m.name)) && notSkipped(m))
         if (quota) {
           // Fill each protein group's count (bring-backs use up their group's slots), still favoring shared ingredients.
           const left = { ...quota }
@@ -254,11 +310,11 @@ export async function POST(request: Request) {
           const picked: Meal[] = []
           for (const g of MIX_GROUPS.map((x) => x.key)) {
             const n = left[g] ?? 0
-            if (n > 0) picked.push(...pickWithOverlap(fresh.filter((m) => proteinGroup(m.protein, m.name) === g), n, [...keepMeals, ...bringBack, ...picked]))
+            if (n > 0) picked.push(...pickWithOverlap(fresh.filter((m) => proteinGroup(m.protein, m.name) === g), n, [...keepMeals, ...bringBack, ...picked], vOk))
           }
           libraryMeals = [...bringBack, ...picked].slice(0, libTarget)
         } else {
-          libraryMeals = [...bringBack, ...pickWithOverlap(fresh, libTarget - bringBack.length, [...keepMeals, ...bringBack])]
+          libraryMeals = [...bringBack, ...pickWithOverlap(fresh, libTarget - bringBack.length, [...keepMeals, ...bringBack], vOk)]
         }
         // Everyone gets something: each voter with a track record should see at least two options they're
         // likely to pick. If not, swap in their best fit from the spares (same protein group when a mix is set),
@@ -272,7 +328,7 @@ export async function POST(request: Request) {
             for (let tries = 0; liked < 2 && tries < 2; tries++) {
               const taken = chosenNames()
               const spares = fresh.filter((m) => !taken.has(normalizeName(m.name)) && likeScore(t, m) > 0.5).sort((a, b) => likeScore(t, b) - likeScore(t, a))
-              const swapIn = spares.find((sp) => libraryMeals.some((m, i) => i >= bringBack.length && likeScore(t, m) <= 0.5 && (!quota || proteinGroup(m.protein, m.name) === proteinGroup(sp.protein, sp.name))))
+              const swapIn = spares.find((sp) => libraryMeals.some((m, i) => i >= bringBack.length && likeScore(t, m) <= 0.5 && (!quota || proteinGroup(m.protein, m.name) === proteinGroup(sp.protein, sp.name)) && varietyOk(sp, libraryMeals.filter((_, j) => j !== i), lim)))
               if (!swapIn) break
               const outIdx = libraryMeals
                 .map((m, i) => ({ m, i }))
@@ -290,7 +346,7 @@ export async function POST(request: Request) {
     }
     if (mode === 'fresh' && libraryMeals.length >= optionsCount) {
       return Response.json({
-        meals: fitNeeds(libraryMeals),
+        meals: plate(fitNeeds(libraryMeals)),
         totalEstimatedCost: libraryMeals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0),
         plan: { dinnersPerWeek, cookDays, nightTimes, leftoverNight: settings.plan.leftoverNight },
         source: 'library',
@@ -353,6 +409,8 @@ Include 1–2 of them (exactly as named; adjust servings to ${profile.familySize
     {
       const d = profile.dietaryNeeds.map((x: string) => x.toLowerCase())
       constraintLines.push(`Everyday family dinners: most options should be the familiar meals a typical household makes (chicken, beef, pork, meat and potatoes, spaghetti and pasta, tacos, casseroles, burgers). Keep restaurant-style or unusual dishes to one at most.`)
+      constraintLines.push(`Variety: at most ${lim.taco} taco/fajita/quesadilla/burrito-style dinner${lim.taco === 1 ? '' : 's'}, and no more than ${lim.perCuisine} from any one cuisine or ${lim.perType} of one dish type (pasta, soup, sandwich, bowl, casserole).`)
+      if (skippedNames.length) constraintLines.push(`The family turned these down; don't offer them or close copies: ${skippedNames.slice(0, 15).join(', ')}.`)
       if (!d.some((x: string) => x === 'vegetarian' || x === 'vegan')) constraintLines.push(`No tofu, tempeh or seitan.`)
       if (!d.some((x: string) => x === 'low-carb' || x === 'keto' || x === 'paleo')) constraintLines.push(`No low-carb swaps: no cauliflower rice, lettuce wraps or cups, zucchini noodles or spaghetti squash — use regular rice, pasta, potatoes, tortillas and bread.`)
     }
@@ -488,7 +546,9 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
       console.warn(`[generate-plan] skipped library upsert, generation took ${elapsed}ms`)
     }
 
-    const meals = fitNeeds([...generated, ...libraryMeals])
+    // Varied dinners first, so the week (the first N) keeps to the rules even when the AI leaned one way.
+    const ordered = pickVaried([...libraryMeals.slice(0, bringBack.length), ...generated.filter(notSkipped), ...libraryMeals.slice(bringBack.length)], generated.length + libraryMeals.length, [...keepMeals], lim)
+    const meals = plate(fitNeeds(ordered))
     const totalEstimatedCost = meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
 
     return Response.json({

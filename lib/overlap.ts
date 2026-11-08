@@ -80,19 +80,24 @@ export function overlapWith(meal: Meal, chosen: Meal[]): string[] {
  * Greedy: start from the pool's order (the planner's ranking), then each step takes the dinner
  * that adds the most shared fresh items, with a penalty for repeating a protein.
  */
-export function pickWithOverlap(pool: Meal[], n: number, seed: Meal[] = []): Meal[] {
+export function pickWithOverlap(pool: Meal[], n: number, seed: Meal[] = [], ok?: (m: Meal, chosen: Meal[]) => boolean): Meal[] {
   const picked: Meal[] = []
   const seedNames = new Set(seed.map((s) => s.name.toLowerCase()))
   const left = pool.filter((m) => !seedNames.has(m.name.toLowerCase()))
   while (picked.length < n && left.length) {
     const chosen = [...seed, ...picked]
-    let best = 0, bestScore = -Infinity
+    let best = -1, bestScore = -Infinity
+    // Variety rules (lib/variety) first; if nothing left passes them, take the best of what's left.
+    const allowed = ok ? left.map((m) => ok(m, chosen)) : left.map(() => true)
+    const anyAllowed = allowed.some(Boolean)
     left.forEach((m, i) => {
+      if (anyAllowed && !allowed[i]) return
       const shared = chosen.length ? overlapWith(m, chosen).length : freshKeys(m).filter((k) => left.some((o) => o !== m && freshKeys(o).some((x) => sameIngredient(x, k)))).length
       const sameProtein = chosen.filter((c) => c.protein && m.protein && c.protein.toLowerCase() === m.protein.toLowerCase()).length
       const score = shared * 2 - sameProtein * 3 - i * 0.05
       if (score > bestScore) { bestScore = score; best = i }
     })
+    if (best < 0) break
     picked.push(left.splice(best, 1)[0])
   }
   return picked

@@ -6,6 +6,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Settings } from '@/lib/settings'
 import { assignNights, type PlanShape } from '@/lib/plan'
 import type { Meal } from '@/types'
+import { pickVaried, varietyLimits } from '@/lib/variety'
 
 const APP = 'https://www.dinnerdrop.app'
 
@@ -39,7 +40,8 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
   if (!res.ok) throw new Error(`generate-plan ${res.status}`)
   const data = await res.json() as { meals: Meal[]; plan?: PlanShape }
   const shape: PlanShape = data.plan ?? { dinnersPerWeek: settings.plan.dinnersPerWeek, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
-  const chosen = assignNights((data.meals ?? []).slice(0, shape.dinnersPerWeek), shape)
+  // Family picks and ideas lead the list; the rest of the week keeps to the variety rules (lib/variety).
+  const chosen = assignNights(pickVaried(data.meals ?? [], shape.dinnersPerWeek, [], varietyLimits(shape.dinnersPerWeek)), shape)
   if (!chosen.length) return null
   const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })

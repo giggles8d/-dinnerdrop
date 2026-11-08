@@ -43,6 +43,7 @@ export interface Settings {
     familyRecipesPerWeek: number    // the family's own recipes (lib/family-recipes) rotated into each week's options, 0–3
     productPrefs: import('@/lib/product-prefs').ProductPref[]  // "when a recipe needs X, buy Y" (lib/product-prefs)
     storeBrands: boolean            // prefer the store's own brand (Walmart, Kroger) when it matches as well
+    fullPlate: boolean              // every dinner gets a protein, a starch and a vegetable; missing ones added as a side (lib/full-plate)
   }
   deals: {
     stockUp: boolean                // "Stock up while it's cheap" on the list (multi-buys, pantry/drink deals)
@@ -130,6 +131,7 @@ export const DEFAULT_SETTINGS: Settings = {
     familyRecipesPerWeek: 1,
     productPrefs: [],
     storeBrands: false,
+    fullPlate: true,
   },
   deals: {
     stockUp: true,

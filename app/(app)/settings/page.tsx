@@ -596,6 +596,7 @@ export default function SettingsPage() {
                 </Field>
                 <div className="space-y-3">
                   <Toggle checked={settings.food.kidFriendly} onChange={(v) => patch((s) => { s.food.kidFriendly = v })} label="Kid-friendly by default" hint="Familiar flavors, components kept separate, one safe thing on every plate." />
+                  <Toggle checked={settings.food.fullPlate} onChange={(v) => patch((s) => { s.food.fullPlate = v })} label="Full plate" hint="Every dinner has a protein, a starch and a vegetable. If a recipe is missing one, a simple side is added and goes on your list. Low-carb families get a second vegetable instead of the starch." />
                   <Field label="Family recipes vs. new ideas in each vote" hint={<>How many of the dinner ideas the family votes on are your own recipes from <a href="/favorites" className="underline">Favorites</a>; the rest are new ideas. Higher-starred recipes come up more often. Labeled &ldquo;family recipe&rdquo; in the vote.</>}><Select value={String(settings.food.familyRecipesPerWeek)} onChange={(v) => patch((s) => { s.food.familyRecipesPerWeek = Number(v) })} options={[0, 1, 2, 3, 4, 5, 6, 8].map((n) => ({ value: String(n), label: n === 0 ? 'None (all new ideas)' : `${n} family recipe${n === 1 ? '' : 's'}, rest new` }))} /></Field>
                   <Toggle checked={settings.food.nutritionInfo} onChange={(v) => patch((s) => { s.food.nutritionInfo = v })} label="Show nutrition per serving (calories, protein, carbs, fat)" />
                 </div>

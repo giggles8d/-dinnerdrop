@@ -7,6 +7,8 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, type Weekday } from '@/lib/settings'
 import { pickLibraryRecipes, recipeToMeal, fitBudget } from '@/lib/recipe-library'
 import { pickWithOverlap } from '@/lib/overlap'
+import { varietyLimits, varietyOk, recentUsage, overusePenalty } from '@/lib/variety'
+import { completePlates } from '@/lib/full-plate'
 import { DEFAULT_SHAPE, mondayOf, type PlanShape } from '@/lib/plan'
 import { savePlan } from '@/lib/autoplan'
 import { trackStep } from '@/lib/activation'
@@ -31,8 +33,12 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
   const dinners = Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
   const maxCook = Math.max(...cookDays.map((d) => cookTimeFor(d, settings, p.max_cook_time || 30)))
 
+  // Nov 7 2026: everyone's first week was the same few dinners (one pita recipe went to 86 families in 3 days).
+  // Recipes many families already got this week are pushed down, and the week keeps to the variety rules.
+  const usage = await recentUsage(admin)
   const picks = await pickLibraryRecipes(admin, {
-    limit: dinners + 14,
+    boost: (r) => -overusePenalty(usage, r.name),
+    limit: dinners + 24,
     maxCookTime: maxCook,
     dietary: p.dietary_needs ?? [],
     excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
@@ -45,9 +51,10 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string): Pro
   const withPhoto = picks.filter((r) => r.image_url).map((r, i) => recipeToMeal(r, `L${i + 1}`, size))
   const noPhoto = picks.filter((r) => !r.image_url).map((r, i) => recipeToMeal(r, `N${i + 1}`, size))
   // Within the photo-first order, lead with dinners that share fresh ingredients (whole packages get used).
-  const pool = [...pickWithOverlap(withPhoto, withPhoto.length), ...noPhoto]
+  const lim = varietyLimits(dinners)
+  const pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
   const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 150
-  const meals = fitBudget(pool, dinners, budget)
+  const meals = settings.food.fullPlate ? completePlates(fitBudget(pool, dinners, budget), { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitBudget(pool, dinners, budget)
   if (meals.length < Math.min(3, dinners)) {
     await trackStep(admin, userId, 'first_plan_failed', { found: meals.length })
     return { ok: false, reason: 'not enough library recipes' }
