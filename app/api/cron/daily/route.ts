@@ -60,11 +60,15 @@ export async function GET(request: NextRequest) {
   // Gift purchases that never reached the thank-you page (closed tab) still get their code + emails.
   try { out.gifts = await reconcileGifts(admin, new Stripe(process.env.STRIPE_SECRET_KEY!)) } catch (e) { out.gifts = { error: String(e) } }
   // Recipe photo diet: ~1 MB JPEGs → 900px WebP, a time-boxed batch per day (new photos included).
-  try { out.shrinkImages = await shrinkRecipeImages(admin, { limit: 400, budgetMs: 120000 }) } catch (e) { out.shrinkImages = { error: String(e) } }
+  // Only with the time that's left (Nov 8 2026: a long Sunday ran this function into its 300 s limit).
+  const shrinkMs = Math.min(120000, 230000 - (Date.now() - now.getTime()))
+  if (shrinkMs > 15000) { try { out.shrinkImages = await shrinkRecipeImages(admin, { limit: 400, budgetMs: shrinkMs }) } catch (e) { out.shrinkImages = { error: String(e) } } }
+  else out.shrinkImages = { skipped: 'out of time today' }
   if (newsletter) {
-    out.newsletter = await newsletter
+    const nlMs = Math.max(1000, 280000 - (Date.now() - now.getTime()))
+    out.newsletter = await Promise.race([newsletter, new Promise((res) => setTimeout(() => res({ still: 'sending in its own function' }), nlMs))])
   }
-  out.campaigns = await campaigns
+  out.campaigns = await Promise.race([campaigns, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), Math.max(1000, 283000 - (Date.now() - now.getTime()))))])
   // Don't let the nutrition fill hold this function past its own limit; it keeps running in its own function.
   const leftMs = Math.max(1000, 285000 - (Date.now() - now.getTime()))
   out.nutrition = await Promise.race([nutrition, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), leftMs))])

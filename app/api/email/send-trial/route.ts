@@ -44,6 +44,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Missing or invalid params' }, { status: 400 })
   }
 
+  // A typo'd address ("name@hot") can't be delivered; skip it quietly instead of erroring on every send.
+  if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(String(userEmail).trim())) {
+    return NextResponse.json({ skipped: true, reason: 'invalid email address' })
+  }
   const config = EMAIL_CONFIG[emailNumber as EmailNumber]
   const unsubscribeUrl = `https://www.dinnerdrop.app/unsubscribe?uid=${userId}`
 

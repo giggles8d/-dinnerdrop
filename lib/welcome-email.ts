@@ -79,9 +79,11 @@ export async function sendWelcomeEmails(admin: SupabaseClient, now = new Date())
       headers: { 'List-Unsubscribe': `<${APP}/api/email/unsubscribe?uid=${p.id}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
     })
     if (error) {
-      console.error('[welcome] send failed', p.id, error)
-      await admin.from('app_kv').update({ value: { at: now.toISOString(), error: String((error as { message?: string }).message ?? error) } }).eq('key', `welcome:${p.id}`)
+      // Release the claim so the next poll (2–5 min) tries again; Resend allows 10 sends a second.
+      console.error('[welcome] send failed, will retry', p.id, error)
+      await admin.from('app_kv').delete().eq('key', `welcome:${p.id}`)
     } else sent++
+    await new Promise((r) => setTimeout(r, 300))
   }
   return { sent }
 }

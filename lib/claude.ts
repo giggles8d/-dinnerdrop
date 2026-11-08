@@ -16,8 +16,36 @@ export async function generateWithClaude(prompt: string, maxTokens: number = 400
   return text
 }
 
+/**
+ * Close a JSON document that was cut off or broke mid-way: keep everything up to the last complete array/object
+ * element before `upTo`, then close whatever brackets are still open. Loses the broken element, keeps the rest
+ * (Nov 8 2026: a store ad with 380 items failed whole on one bad line; meal plans the same).
+ */
+export function salvageJSON(text: string, upTo = text.length): string | null {
+  const s = text.slice(0, upTo)
+  // Last place an element ended: a "}" or "]" (outside strings) followed by a comma or the end.
+  let inStr = false, esc = false, lastEnd = -1
+  const stack: string[] = []
+  const stackAt: string[][] = []
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]
+    if (inStr) { if (esc) esc = false; else if (c === '\\') esc = true; else if (c === '"') inStr = false; continue }
+    if (c === '"') { inStr = true; continue }
+    if (c === '{' || c === '[') stack.push(c === '{' ? '}' : ']')
+    else if (c === '}' || c === ']') { stack.pop(); lastEnd = i; stackAt[i] = [...stack] }
+  }
+  if (lastEnd < 0) return null
+  const open = stackAt[lastEnd] ?? []
+  if (!open.length) return s.slice(0, lastEnd + 1)
+  return s.slice(0, lastEnd + 1) + open.slice().reverse().join('')
+}
+
 export function parseClaudeJSON<T>(text: string): T {
   const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
+    // 12" pizza / 9x13" pan inside a string: an inch mark the model forgot to escape.
+    .replace(/(\d)"(?=\s*(?:[A-Za-z(]|x\s*\d|-))/g, '$1 in')
+    // Trailing commas before a closing bracket.
+    .replace(/,(\s*[}\]])/g, '$1')
   // Be forgiving: the model occasionally wraps the JSON in a sentence or two.
   // Extract the outermost object/array so stray prose doesn't break parsing.
   try {
@@ -26,7 +54,23 @@ export function parseClaudeJSON<T>(text: string): T {
     const firstObj = cleaned.search(/[{[]/)
     const lastObj = Math.max(cleaned.lastIndexOf('}'), cleaned.lastIndexOf(']'))
     if (firstObj >= 0 && lastObj > firstObj) {
-      return JSON.parse(cleaned.slice(firstObj, lastObj + 1)) as T
+      const body = cleaned.slice(firstObj, lastObj + 1)
+      try {
+        return JSON.parse(body) as T
+      } catch (e) {
+        // Cut at the error (or the end, if the reply was truncated) and keep the complete elements before it.
+        const at = Number(String((e as Error).message).match(/position (\d+)/)?.[1] ?? body.length)
+        for (const cut of [at, body.length]) {
+          const fixed = salvageJSON(body, cut)
+          if (fixed) { try { return JSON.parse(fixed) as T } catch { /* try the next cut */ } }
+        }
+        throw e
+      }
+    }
+    const start = cleaned.search(/[{[]/)
+    if (start >= 0) {
+      const fixed = salvageJSON(cleaned.slice(start))
+      if (fixed) return JSON.parse(fixed) as T
     }
     throw new Error('No JSON found in model response')
   }
