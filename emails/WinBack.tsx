@@ -16,7 +16,7 @@ interface WinBackProps {
 export default function WinBack({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
-  amazonPickUrl = 'https://www.amazon.com/s?k=nonstick+sheet+pan+set&tag=dinnerdrop-20',
+  amazonPickUrl = 'https://www.amazon.com/dp/B0049C2S32?tag=dinnerdrop-20',
 }: WinBackProps) {
   return (
     <Html>
@@ -60,7 +60,7 @@ export default function WinBack({
             <Text style={paragraph}>
               Half the dinners we plan land on a sheet pan — it&apos;s the fastest,
               lowest-cleanup way to cook for a family. If yours is warped and sticky,{' '}
-              <Link href={amazonPickUrl} style={inlineLink}>a basic nonstick sheet-pan set</Link>{' '}
+              <Link href={amazonPickUrl} style={inlineLink}>a good half sheet pan</Link>{' '}
               (~$20) is the single best kitchen upgrade we know.
             </Text>
             <Text style={disclosure}>

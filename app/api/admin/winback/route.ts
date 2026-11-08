@@ -6,7 +6,7 @@ import { cookies } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import { render } from '@react-email/render'
 import WinBack from '@/emails/WinBack'
-import { amazonSearchUrl } from '@/lib/amazon-affiliate'
+import { amazonProductUrl } from '@/lib/amazon-affiliate'
 
 const ADMIN_EMAIL = 'setzl1979@gmail.com'
 
@@ -83,7 +83,7 @@ async function handleTest(request: NextRequest) {
     React.createElement(WinBack, {
       firstName: 'Sarah',
       unsubscribeUrl: 'https://www.dinnerdrop.app/unsubscribe',
-      amazonPickUrl: amazonSearchUrl('nonstick sheet pan set'),
+      amazonPickUrl: amazonProductUrl('B0049C2S32'),
     })
   )
   const { data, error } = await resend.emails.send({
@@ -164,7 +164,7 @@ async function handle(request: NextRequest, dryRun: boolean) {
 
   const resend = new Resend(process.env.RESEND_API_KEY)
   const fromAddress = process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>'
-  const amazonPickUrl = amazonSearchUrl('nonstick sheet pan set')
+  const amazonPickUrl = amazonProductUrl('B0049C2S32')
   const sent: Array<{ email: string; id?: string }> = []
   const failed: Array<{ email: string; error: string }> = []
   const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
