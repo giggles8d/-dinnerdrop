@@ -6,7 +6,7 @@ import FamilyTextingSection from '@/components/FamilyTextingSection'
 import StorePriceExample from '@/components/StorePriceExample'
 import { InstacartCarrot, InstacartBand, PoweredByInstacart } from '@/components/InstacartMark'
 import SampleWeek from '@/components/SampleWeek'
-import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, Clock3 } from 'lucide-react'
+import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, MessageSquareText } from 'lucide-react'
 import CartOfferBanner from '@/components/CartOfferBanner'
 
 export const metadata: Metadata = {
@@ -45,15 +45,15 @@ export default async function LandingPage() {
               <div className="flex flex-wrap items-center gap-2 mb-6">
                 <PoweredByInstacart />
                 <span className="inline-flex items-center gap-2 bg-white text-primary text-xs font-bold px-3 py-1.5 rounded-full border border-primary/20 shadow-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
-                  Free weekly dinner plans
+                  <MessageSquareText className="w-3.5 h-3.5" />
+                  Your family votes on dinner by text
                 </span>
               </div>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-heading font-bold text-foreground leading-[1.05] mb-6">
                 Dinner,<br />handled.
               </h1>
               <p className="text-xl text-muted-foreground max-w-xl leading-relaxed mb-9">
-                Five weeknight dinners planned around your family and your budget. Tap once and your whole list lands in <span className="font-semibold text-foreground">your Instacart or Walmart cart</span> with every item matched — review, check out. Free, no card needed.
+                DinnerDrop <span className="font-semibold text-foreground">texts everyone in your house</span> the week&apos;s dinner ideas. They reply with the numbers they want &mdash; no app for the kids, no group chat &mdash; and the winners become your week. Then one tap puts the whole list in <span className="font-semibold text-foreground">your Instacart or Walmart cart</span>.
               </p>
               <div className="flex flex-col sm:flex-row items-start gap-3">
                 <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
@@ -63,7 +63,7 @@ export default async function LandingPage() {
                   See a sample week
                 </a>
               </div>
-              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-2"><InstacartCarrot height={14} /> Works with Instacart (and every store on it), Walmart and Kroger &middot; Free forever &middot; Family plan $4.99/month, 14 days free</p>
+              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-2"><InstacartCarrot height={14} /> Family texting free for 14 days, no card &middot; Works with Instacart, Walmart and Kroger &middot; Then $4.99/month, or keep the free plan</p>
             </div>
 
             <div className="relative">
@@ -79,10 +79,10 @@ export default async function LandingPage() {
                 </div>
               </div>
               <div className="absolute -top-4 right-6 bg-white rounded-2xl shadow-lg px-5 py-3 flex items-center gap-3 ring-1 ring-black/5">
-                <Clock3 className="w-6 h-6 text-accent" />
+                <MessageSquareText className="w-6 h-6 text-accent" />
                 <div>
-                  <p className="font-heading font-bold text-primary leading-none">5 dinners</p>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">built to your cook time and budget</p>
+                  <p className="font-heading font-bold text-primary leading-none">&ldquo;2 and 4!&rdquo; &mdash; votes by text</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">everyone picks from their own phone</p>
                 </div>
               </div>
             </div>
@@ -96,6 +96,9 @@ export default async function LandingPage() {
         <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart, Walmart or Kroger account. You review every item and check out there at that store&apos;s prices. We never charge your grocery account and never add to the price. Over 200 families plan dinner with DinnerDrop.
         {' '}<span className="font-semibold text-foreground">On your phone:</span> open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em> — it works like an app, nothing to download.
       </p>
+
+      {/* Family texting — what makes DinnerDrop different, right after the hero (Sarah, Nov 7 2026) */}
+      <FamilyTextingSection ctaHref="/signup" />
 
       {/* Sample week — the product, before any signup */}
       <section id="sample-week" className="container mx-auto px-4 py-20 max-w-6xl">
@@ -202,7 +205,6 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <FamilyTextingSection ctaHref={'/signup?redirect=' + encodeURIComponent('/subscribe?auto=1')} />
 
       {/* Pricing */}
       <section id="pricing" className="container mx-auto px-4 py-20 max-w-4xl scroll-mt-20">
