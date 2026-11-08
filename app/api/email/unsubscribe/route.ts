@@ -13,12 +13,18 @@ export async function POST(request: NextRequest) {
   const q = request.nextUrl.searchParams
   let uid = q.get('uid') ?? undefined
   let email = q.get('email') ?? undefined
+  // The goodbye page (Nov 8 2026) also sends { reason, note } after unsubscribing, or { action: 'resubscribe' }.
+  let action: 'unsubscribe' | 'reason' | 'resubscribe' = 'unsubscribe'
+  let reason = '', note = ''
   if (!uid && !email) {
     try {
       const ct = request.headers.get('content-type') ?? ''
       if (ct.includes('application/json')) {
-        const b = (await request.json()) as { uid?: string; email?: string }
+        const b = (await request.json()) as { uid?: string; email?: string; action?: string; reason?: string; note?: string }
         uid = b.uid; email = b.email
+        if (b.action === 'reason' || b.action === 'resubscribe') action = b.action
+        reason = String(b.reason ?? '').slice(0, 40)
+        note = String(b.note ?? '').slice(0, 500)
       }
     } catch { /* fall through */ }
   }
@@ -26,6 +32,19 @@ export async function POST(request: NextRequest) {
   if (uid && !/^[0-9a-f-]{36}$/i.test(uid)) return NextResponse.json({ error: 'Bad uid' }, { status: 400 })
 
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  if (action === 'reason') {
+    const REASONS = ['too_many', 'not_useful', 'not_using', 'never_signed_up', 'other']
+    if (!REASONS.includes(reason)) return NextResponse.json({ error: 'Bad reason' }, { status: 400 })
+    try { await admin.from('activation_events').insert({ user_id: uid ?? null, step: 'email_unsubscribe_reason', meta: { reason, note: note || null, email: uid ? null : (email ?? null) } }) } catch { /* tracking only */ }
+    return NextResponse.json({ success: true })
+  }
+  if (action === 'resubscribe') {
+    // Only for accounts (a uid link); turns the emails back on after an accidental click.
+    if (!uid) return NextResponse.json({ error: 'Missing uid' }, { status: 400 })
+    await admin.from('profiles').update({ email_unsubscribed: false }).eq('id', uid)
+    try { await admin.from('activation_events').insert({ user_id: uid, step: 'email_resubscribe', meta: {} }) } catch { /* tracking only */ }
+    return NextResponse.json({ success: true })
+  }
   try {
     if (uid) {
       await admin.from('profiles').update({ email_unsubscribed: true }).eq('id', uid)
