@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   const [bold, medium] = await Promise.all([700, 500].map((w) => fetch(fontUrl(w), { next: { revalidate: 86400 } }).then((x) => (x.ok ? x.arrayBuffer() : null)).catch(() => null)))
   const fonts = [bold && { name: 'Inter', data: bold, weight: 700 as const, style: 'normal' as const }, medium && { name: 'Inter', data: medium, weight: 500 as const, style: 'normal' as const }].filter((f): f is NonNullable<typeof f> => !!f)
 
-  return new ImageResponse(
+  const png = new ImageResponse(
     (
       <div style={{ width: 1200, height: 630, display: 'flex', flexDirection: 'column', justifyContent: 'center', background: GREEN, padding: '0 80px', fontFamily: fonts.length ? 'Inter' : 'sans-serif' }}>
         <div style={{ display: 'flex', color: GOLD, fontSize: 34, fontWeight: 700, letterSpacing: 1 }}>DinnerDrop</div>
@@ -31,6 +31,10 @@ export async function GET(req: Request) {
         </div>
       </div>
     ),
-    { width: 1200, height: 630, headers: { 'Cache-Control': 'public, s-maxage=86400, max-age=3600' }, ...(fonts.length ? { fonts } : {}) },
+    { width: 1200, height: 630, ...(fonts.length ? { fonts } : {}) },
   )
+  // Facebook's scraper rejected the streamed PNG as "corrupted" (Nov 8 2026): send a finished JPEG with a length.
+  const sharp = (await import('sharp')).default
+  const jpg = await sharp(Buffer.from(await png.arrayBuffer())).jpeg({ quality: 88, mozjpeg: true }).toBuffer()
+  return new Response(new Uint8Array(jpg), { headers: { 'Content-Type': 'image/jpeg', 'Content-Length': String(jpg.length), 'Cache-Control': 'public, s-maxage=86400, max-age=3600' } })
 }
