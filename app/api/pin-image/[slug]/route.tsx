@@ -33,6 +33,11 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
     return new Response('Photo unavailable', { status: 502 })
   }
 
+  // Inter (OFL) from the @fontsource package on jsDelivr: the renderer's built-in font has no bold. Cached for a day.
+  const fontUrl = (w: number) => `https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/files/inter-latin-${w}-normal.woff`
+  const [bold, medium] = await Promise.all([700, 500].map((w) => fetch(fontUrl(w), { next: { revalidate: 86400 } }).then((x) => (x.ok ? x.arrayBuffer() : null)).catch(() => null)))
+  const fonts = [bold && { name: 'Inter', data: bold, weight: 700 as const, style: 'normal' as const }, medium && { name: 'Inter', data: medium, weight: 500 as const, style: 'normal' as const }].filter((f): f is NonNullable<typeof f> => !!f)
+
   const kicker = (new URL(req.url).searchParams.get('k') ?? '').replace(/[^A-Za-z0-9 ·&,'+-]/g, '').slice(0, 32).trim()
   const time = r.time > 120 ? `${Math.round(r.time / 60)} hrs on low` : `${r.time} minutes`
   const meta = [time, r.cost ? `about $${Math.round(r.cost)}` : '', r.servings ? `serves ${r.servings}` : ''].filter(Boolean).join('  ·  ')
@@ -41,7 +46,7 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
 
   const png = new ImageResponse(
     (
-      <div style={{ width: 1000, height: 1500, display: 'flex', flexDirection: 'column', background: GREEN, fontFamily: 'sans-serif' }}>
+      <div style={{ width: 1000, height: 1500, display: 'flex', flexDirection: 'column', background: GREEN, fontFamily: fonts.length ? 'Inter' : 'sans-serif' }}>
         <div style={{ width: 1000, height: 1000, display: 'flex', position: 'relative' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={photo} width={1000} height={1000} style={{ objectFit: 'cover' }} alt="" />
@@ -50,15 +55,15 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
           ) : null}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, padding: '44px 50px 40px' }}>
-          <div style={{ display: 'flex', color: '#fff', fontSize: titleSize, fontWeight: 800, lineHeight: 1.12 }}>{title}</div>
-          <div style={{ display: 'flex', color: GOLD, fontSize: 40, marginTop: 18 }}>{meta}</div>
+          <div style={{ display: 'flex', color: '#fff', fontSize: titleSize, fontWeight: 700, lineHeight: 1.12 }}>{title}</div>
+          <div style={{ display: 'flex', color: GOLD, fontSize: 40, fontWeight: 500, marginTop: 18 }}>{meta}</div>
           <div style={{ display: 'flex', marginTop: 'auto', justifyContent: 'space-between', color: '#fff', fontSize: 36, fontWeight: 700 }}>
-            <span>dinnerdrop.app</span><span>Full recipe →</span>
+            <span>dinnerdrop.app</span><span>Full recipe</span>
           </div>
         </div>
       </div>
     ),
-    { width: 1000, height: 1500 },
+    { width: 1000, height: 1500, ...(fonts.length ? { fonts } : {}) },
   )
   const jpg = await sharp(Buffer.from(await png.arrayBuffer())).jpeg({ quality: 86, mozjpeg: true }).toBuffer()
   return new Response(new Uint8Array(jpg), { headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, s-maxage=86400, max-age=3600' } })
