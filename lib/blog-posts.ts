@@ -346,16 +346,18 @@ Either way: stop making the "what's for dinner?" decision at 5:47pm. That versio
     slug: 'best-meal-planning-app-for-families',
     title: 'The 7 Best Meal Planning Apps for Families in 2026 (Compared)',
     description:
-      "Seven meal planning apps for families — DinnerDrop, Mealime, Plan to Eat, " +
-      "Paprika, Samsung Food, Prepear, and Cozi — compared on AI features, grocery handoff, and price. Written by DinnerDrop's founder.",
+      "Seven meal planning apps for families — DinnerDrop, eMeals, Plan to Eat, " +
+      "Paprika, Samsung Food, Prepear, and Cozi — compared on family features, grocery handoff, and price, now that Mealime and Ollie have closed. Written by DinnerDrop's founder.",
     publishDate: '2026-05-14',
     readingTimeMinutes: 11,
     primaryKeyword: 'best meal planning app for families',
-    content: `You\'ve probably Googled "best meal planning app" at least once, stared at a wall of options, and closed the tab without downloading anything.
+    content: `*Updated November 9, 2026: Mealime closed on October 21 and Ollie on November 6, so both are out of the ranking. eMeals is in.*
+
+You\'ve probably Googled "best meal planning app" at least once, stared at a wall of options, and closed the tab without downloading anything.
 
 This roundup is different. It looks at seven apps through a family lens — not single adults, not couples without kids, but households where at least one person is a picky eater, budgets are real, and 5pm comes fast.
 
-**Who is writing this:** DinnerDrop's founder, a parent of three in upstate New York. We make one of the apps below, so read our #1 with that in mind. The others are described from their current app-store listings, pricing pages and our own use; prices were checked October 2026.
+**Who is writing this:** DinnerDrop's founder, a parent of three in upstate New York. We make one of the apps below, so read our #1 with that in mind. The others are described from their current app-store listings, pricing pages and our own use; prices were checked November 2026.
 
 Our ranking criteria: AI vs. manual, grocery integration, dietary filter support, price, and how quickly a total newcomer can get a usable dinner plan on a Tuesday night.
 
@@ -363,8 +365,8 @@ Our ranking criteria: AI vs. manual, grocery integration, dietary filter support
 
 | App | AI | Grocery Handoff | Price |
 |-----|-----|----------------|-------|
-| DinnerDrop | Yes (full) | Yes (Instacart one-tap cart; Kroger on Family) | Free / $4.99/mo Family |
-| Mealime | Partial | Aisle-sorted list + grocery delivery partners | Shutting down Oct 21, 2026 |
+| DinnerDrop | Yes (full) | Yes (one-tap Instacart or Walmart cart; Kroger cart on Family) | Free / Family $4.99/mo or $39/yr |
+| eMeals | No (curated menus) | One-tap Walmart (iPhone app) | $59.99/yr dinner plan, card for trial |
 | Plan to Eat | No | Shopping list only | $5.95/mo or $49/yr |
 | Paprika | No | Shopping list only | $4.99 one-time |
 | Samsung Food (formerly Whisk) | In paid Food+ | Some stores | Free / Food+ $6.99/mo |
@@ -375,13 +377,16 @@ Our ranking criteria: AI vs. manual, grocery integration, dietary filter support
 
 **Price:** Free (unlimited plans + one-tap Instacart cart). Family plan $4.99/month or $39/year.
 
-DinnerDrop takes a completely different approach than every other app on this list. Instead of asking you to search recipes, save them, and schedule them manually — DinnerDrop generates everything from your family profile.
+DinnerDrop takes a different approach from the other apps on this list. Instead of asking you to search recipes, save them, and schedule them manually, DinnerDrop builds the week from your family profile.
 
-You enter your family size, weekly grocery budget, dietary restrictions, and preferred cook time. Hit generate. In about 30 seconds, you have five weeknight dinners and a deduplicated, organized grocery list ready to send to Instacart or Kroger.
+You enter your family size, weekly grocery budget, dietary restrictions, and preferred cook time. Hit generate. In about a minute, you have five weeknight dinners and one combined grocery list, ready to send to Instacart, Walmart or Kroger.
 
 **What makes it different:**
 - AI builds the plan from your family profile, not a recipe database you browse
-- One-tap grocery handoff: your whole list pre-loaded in your Instacart cart, or pushed to a Kroger cart on Family
+- One-tap grocery handoff: your whole list pre-loaded in your Instacart or Walmart cart, or pushed to your Kroger cart on Family
+- The whole family votes on dinner by text (or by tapping photos), with no app for the kids to download, on the Family plan
+- Anyone can text items onto the shared grocery list ("we\'re out of milk")
+- Plan styles for real needs: Diabetic-friendly, Heart-healthy, Mediterranean, Slow cooker, 30-minute, Budget and more
 - Picky eater swap: tap any meal you don\'t love, get a replacement in seconds
 - Budget optimization: every plan is built to hit your weekly food number
 - Learns your family\'s taste preferences over time
@@ -390,14 +395,14 @@ You enter your family size, weekly grocery budget, dietary restrictions, and pre
 
 [Try DinnerDrop free →](https://www.dinnerdrop.app/start)
 
-## 2. Mealime — Was the Best Free Option (Shutting Down October 21, 2026)
+## 2. eMeals — Best for Walmart Shoppers Who Want a Fixed Menu
 
-**Price:** Was free, with a paid Pro upgrade. Albertsons, which owns Mealime, is closing the app on October 21, 2026 and folding it into the "Meals Hub" inside its own grocery apps.
+**Price:** Dinner plan $59.99/year after a 14-day trial (card required to start). Breakfast and lunch plans cost extra.
 
-Mealime had been around since 2016 with a clean interface, a solid recipe library (500+ recipes), shopping lists organized by grocery store section, and hand-offs to grocery delivery partners. It was the app parents recommended to each other most.
+eMeals has been around since 2003 and has a big library (20,000+ recipes) organized into menu plans like Clean Eating, Keto and Kid-Friendly. Each week you get that plan\'s set of dinners and a shopping list.
 
-**What worked:** Beautiful recipes, strong dietary filters (vegetarian, vegan, gluten-free, keto, etc.), a free tier that was genuinely useful.
-**What doesn\'t:** It is going away, and there is no export — saved plans, favorites, and lists don\'t transfer. If you are a Mealime family, [DinnerDrop](https://www.dinnerdrop.app/start) is free and you can rebuild your favorites by typing in their names.
+**What works:** Easy, kid-approved recipes, lots of plan styles, and a well-loved one-tap Walmart transfer on the iPhone app.
+**What doesn\'t:** It\'s a curated menu, not a plan built around each person in your family. Planning happens in the app (little on the web), the trial needs a card, and cancellation and auto-renewal are the most common complaints in its reviews. Switching? [Bring your eMeals favorites to DinnerDrop](https://www.dinnerdrop.app/emeals).
 
 ## 3. Plan to Eat — Best for Recipe Collectors
 
@@ -449,12 +454,17 @@ Cozi is a family organizer with meal planning as one feature. If you already use
 - **Want less than 2 minutes of weekly planning?** → DinnerDrop
 - **Have a recipe collection to organize?** → Plan to Eat or Paprika
 - **Want free and functional right now?** → DinnerDrop or Samsung Food
+- **Shop at Walmart and want a ready-made menu?** → eMeals (or DinnerDrop, which also fills a Walmart cart)
 - **Both partners want a visual shared plan?** → Prepear
 - **Already use Cozi for family scheduling?** → Cozi (add DinnerDrop for AI meal generation)
 
+## What Happened to Mealime and Ollie?
+
+Mealime closed on October 21, 2026, and Ollie closed on November 6, 2026. Neither lets you keep using your saved plans. If you were a Mealime family, [start here](https://www.dinnerdrop.app/mealime); if you used Ollie, you can [paste your Ollie export](https://www.dinnerdrop.app/ollie) and DinnerDrop pulls in your family\'s dinners. We also compared [seven Ollie alternatives](https://www.dinnerdrop.app/ollie-alternatives).
+
 ## The Bottom Line
 
-Most apps on this list support a cook who is already doing the planning work. DinnerDrop eliminates the planning decision entirely — AI builds the plan, generates the grocery list, and opens it in Instacart with every item matched. That\'s the meaningful distinction.
+Most apps on this list support a cook who is already doing the planning work. DinnerDrop eliminates the planning decision entirely — it builds the plan, makes the grocery list, and fills your Instacart or Walmart cart in one tap. That\'s the meaningful distinction.
 
 [DinnerDrop](https://www.dinnerdrop.app/start) is free, no card needed.
 
