@@ -1,0 +1,7 @@
+{"out": "2026-11-10_Mom_FreeNoCard5PM.mp4",
+ "hook_text": ["It's 5 PM. No dinner plan.", "Free to try. No card."],
+ "labels": {"c2.mp4": "Free to try. No card.", "c3.mp4": "Whole list, one tap"},
+ "app": [[88, 97, "5 dinners for your week"], [110, 122, "The grocery list, done"]],
+ "app_after": 1, "app_seconds": 6.5,
+ "ai_banner": false,
+ "end": ["Switching from eMeals?", "Code EMEALS = 3 months of Family free", "dinnerdrop.app/emeals"]}

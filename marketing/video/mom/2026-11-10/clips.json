@@ -1,0 +1,9 @@
+{"c1": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261109_174201_f9a79d56-2245-44e3-9be8-1b3b2b6d44a6.mp4",
+ "c2": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261109_174522_681d43aa-16f2-4cfc-acda-9bb9d996bbd3.mp4",
+ "c3": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261109_174201_529da993-b47c-4771-aef3-8caee046cb3e.mp4",
+ "start_frames": ["2a1dee40-1c70-4e48-969a-d1d93a5ea98d", "8eb0d713-2258-407f-8baa-0624bb4c7c1a", "44527a5a-7630-47ff-ad8b-b1ed9f031de9"],
+ "lines": {"c1": "It's five o'clock, and nobody knows what's for dinner. Including me. Watch this.",
+           "c2": "No card to try it. Three quick questions... and five dinners just showed up for the whole week.",
+           "c3": "The grocery list builds itself. One tap to Instacart. Code's on the screen."},
+ "model": "veo3_1 quality basic (credits 207)",
+ "build": "python3 mom/build_mom.py mom/2026-11-10"}
