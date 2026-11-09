@@ -7,6 +7,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, type Weekday } from '@/lib/settings'
 import { pickLibraryRecipes, recipeToMeal, fitBudget } from '@/lib/recipe-library'
 import { pickWithOverlap } from '@/lib/overlap'
+import { proteinGroup } from '@/lib/protein-mix'
 import { varietyLimits, varietyOk, recentUsage, overusePenalty } from '@/lib/variety'
 import { completePlates } from '@/lib/full-plate'
 import { DEFAULT_SHAPE, mondayOf, type PlanShape } from '@/lib/plan'
@@ -29,7 +30,7 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string, opts
 
   // Every new family starts with 14 days of Family (texting, profiles, reminders) — no card.
   await grantNewFamilyTrial(admin, userId).catch(() => {})
-  const built = await libraryWeek(admin, userId)
+  const built = await libraryWeek(admin, userId, [], { firstWeek: true })
   if (!built.ok) {
     if (built.reason === 'not enough library recipes') await trackStep(admin, userId, 'first_plan_failed', { found: built.found ?? 0 })
     return { ok: false, reason: built.reason }
@@ -44,7 +45,7 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string, opts
  * A week picked from the recipe library for this family's settings — fast, no AI. Used for a new family's first
  * week and by the Sunday Drop ("I picked 5 dinners for you", lib/sunday-drop). Not saved; the caller saves it.
  */
-export async function libraryWeek(admin: SupabaseClient, userId: string, excludeNames: string[] = []): Promise<{ ok: true; meals: Meal[]; shape: PlanShape } | { ok: false; reason: string; found?: number }> {
+export async function libraryWeek(admin: SupabaseClient, userId: string, excludeNames: string[] = [], opts: { firstWeek?: boolean } = {}): Promise<{ ok: true; meals: Meal[]; shape: PlanShape } | { ok: false; reason: string; found?: number }> {
   const { data: p } = await admin.from('profiles').select('family_size, weekly_budget, max_cook_time, dietary_needs, settings').eq('id', userId).single()
   if (!p) return { ok: false, reason: 'no profile' }
   const settings = mergeSettings(p.settings)
@@ -55,6 +56,16 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   // Nov 7 2026: everyone's first week was the same few dinners (one pita recipe went to 86 families in 3 days).
   // Recipes many families already got this week are pushed down, and the week keeps to the variety rules.
   const usage = await recentUsage(admin)
+  // First week (Sarah, Nov 9 2026, after comparing 194 first weeks: weeks with 2+ seafood/adventurous dinners were sent
+  // to a store 5% of the time, weeks with 2+ familiar favorites about 13%): no seafood unless the family asked for it
+  // (pescatarian, fish in their weekly mix, or Mediterranean), and when no diet is picked, familiar kid favorites lead.
+  const diets = (p.dietary_needs ?? []).map((d: string) => d.toLowerCase())
+  const styles: string[] = (settings.food as { styles?: string[] }).styles ?? []
+  const wantsSeafood = diets.includes('pescatarian') || styles.includes('mediterranean') || Number((settings.food.mix as Record<string, number> | null)?.fish ?? 0) > 0
+  const noSeafood = !!opts.firstWeek && !wantsSeafood
+  const favoritesFirst = !!opts.firstWeek && diets.length === 0
+  const firstWeekBoost = (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) =>
+    favoritesFirst && (r.tags ?? []).some((t) => t === 'kid-favorite' || t === 'comfort-food') ? 3 : 0
   // Nov 9 2026: a family ticked six diets at once (vegetarian + keto + paleo + …) and no dinner fits all of them,
   // so their first week failed. When too few dinners fit, loosen step by step: cuisines first, then the softer
   // diet styles one at a time. Hard needs (vegetarian, vegan, allergies) are never dropped.
@@ -62,7 +73,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   let picks: Awaited<ReturnType<typeof pickLibraryRecipes>> = []
   for (const step of relaxSteps(p.dietary_needs ?? [], settings.food.cuisines)) {
     picks = await pickLibraryRecipes(admin, {
-      boost: (r) => -overusePenalty(usage, r.name),
+      boost: (r) => -overusePenalty(usage, r.name) + firstWeekBoost(r),
       limit: dinners + 24,
       maxCookTime: maxCook,
       dietary: step.dietary,
@@ -71,6 +82,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
       cuisines: step.cuisines,
       ignoreKept: true,
     })
+    if (noSeafood) picks = picks.filter((r) => proteinGroup(r.protein, r.name) !== 'fish')
     if (picks.length >= want) break
   }
   // First impressions: dinners with a photo first. Sized to the family (cost included).
