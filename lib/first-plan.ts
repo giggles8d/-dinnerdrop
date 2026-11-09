@@ -64,14 +64,29 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   const wantsSeafood = diets.includes('pescatarian') || styles.includes('mediterranean') || Number((settings.food.mix as Record<string, number> | null)?.fish ?? 0) > 0
   const noSeafood = !!opts.firstWeek && !wantsSeafood
   const favoritesFirst = !!opts.firstWeek && diets.length === 0
+  // What the family said they like in setup (Tacos, Pasta, Mac and cheese…) leads too, and a cuisine picked as one
+  // style among several (e.g. Mediterranean + family + budget) is a preference, not the only food they eat
+  // (Nov 9 2026: a taco-and-mac-and-cheese family got fava beans and lamb kebabs).
+  let likes: string[] = []
+  if (opts.firstWeek) {
+    const { data: hh } = await admin.from('profiles').select('household_id').eq('id', userId).single()
+    if (hh?.household_id) {
+      const { data: mem } = await admin.from('household_members').select('likes').eq('household_id', hh.household_id)
+      likes = Array.from(new Set(((mem ?? []) as Array<{ likes: string[] | null }>).flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
+    }
+  }
+  const softCuisine = !!opts.firstWeek && styles.length > 1
+  const preferred = softCuisine ? settings.food.cuisines.map((c) => c.toLowerCase()) : []
   const firstWeekBoost = (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) =>
-    favoritesFirst && (r.tags ?? []).some((t) => t === 'kid-favorite' || t === 'comfort-food') ? 3 : 0
+    (favoritesFirst && (r.tags ?? []).some((t) => t === 'kid-favorite' || t === 'comfort-food') ? 3 : 0)
+    + (likes.some((l) => r.name.toLowerCase().includes(l)) ? 2 : 0)
+    + (preferred.length && r.cuisine && preferred.includes(r.cuisine.toLowerCase()) ? 0.7 : 0)
   // Nov 9 2026: a family ticked six diets at once (vegetarian + keto + paleo + …) and no dinner fits all of them,
   // so their first week failed. When too few dinners fit, loosen step by step: cuisines first, then the softer
   // diet styles one at a time. Hard needs (vegetarian, vegan, allergies) are never dropped.
   const want = Math.min(3, dinners) + 2
   let picks: Awaited<ReturnType<typeof pickLibraryRecipes>> = []
-  for (const step of relaxSteps(p.dietary_needs ?? [], settings.food.cuisines)) {
+  for (const step of relaxSteps(p.dietary_needs ?? [], softCuisine ? [] : settings.food.cuisines)) {
     picks = await pickLibraryRecipes(admin, {
       boost: (r) => -overusePenalty(usage, r.name) + firstWeekBoost(r),
       limit: dinners + 24,

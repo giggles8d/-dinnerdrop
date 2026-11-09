@@ -5,6 +5,7 @@ import { sendSignupAlerts } from '@/lib/signup-alerts'
 import { buildStarterWeeks } from '@/lib/starter-week'
 import { sendWelcomeEmails } from '@/lib/welcome-email'
 import { runSundayDropSweep } from '@/lib/sunday-drop'
+import { runMenuDraftSweep, inDraftWindow } from '@/lib/menu-drafts'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -35,11 +36,17 @@ export async function POST() {
   // The Sunday Drop (lib/sunday-drop): on Sundays, a time-boxed batch per poll until every family has this week's.
   let drop: unknown = null
   const now = new Date()
+  // Menus going out (lib/menu-drafts): Fridays and early Saturday, build next week's drafts for Sarah's review and
+  // apply her edits from the Command Center.
+  let drafts: unknown = null
+  if (inDraftWindow(now)) {
+    try { drafts = await runMenuDraftSweep(admin, now, 20000) } catch (e) { console.error('[menu-drafts]', e) }
+  }
   if (now.getUTCDay() === 0 || (now.getUTCDay() === 1 && now.getUTCHours() < 8)) {
     try { drop = await runSundayDropSweep(admin, now, 25000) } catch (e) { console.error('[sunday-drop]', e) }
   }
   await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, starter, signupAlerts, welcome, drop, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
-  return NextResponse.json({ ...report, signupAlerts, welcome, drop })
+  return NextResponse.json({ ...report, signupAlerts, welcome, drop, drafts })
 }
 
 export async function GET() { return POST() }
