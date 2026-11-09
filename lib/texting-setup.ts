@@ -106,8 +106,9 @@ export async function sendFirstPlanText(admin: SupabaseClient, profile: SetupPro
   const me = await ownerMember(admin, profile)
   if (!me) return false
   if (await sentBefore(admin, profile.household_id, 'first_plan')) return false
-  const lines = meals.slice(0, 7).map((m, i) => `${i + 1}. ${m.day ? `${m.day.slice(0, 3)} — ` : ''}${m.name}`).join('\n')
-  const body = `DinnerDrop: your week is ready 🍽️\n${lines}\nYour grocery list is built — one tap sends it to Instacart or Walmart: ${APP_URL}/grocery-list\nText ADD milk (or anything) to put it on the list. Reply STOP to opt out.`
+  // Nov 9 2026: most families never replied to the old first text (a list + a link). Lead with one easy reply.
+  const lines = meals.slice(0, 7).map((m, i) => `${i + 1}. ${m.day ? `${m.day.slice(0, 3)}: ` : ''}${m.name}`).join('\n')
+  const body = `DinnerDrop: your week is ready 🍽️\n${lines}\n\nDon't love one? Reply SWAP + its number (like SWAP 2) and I'll change it.\nNeed something? Text ADD milk and it goes on your list.\nList: ${APP_URL}/grocery-list · STOP to opt out`
   return textMember(admin, me, body, 'first_plan')
 }
 
