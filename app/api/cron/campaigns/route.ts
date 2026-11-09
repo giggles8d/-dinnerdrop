@@ -5,6 +5,7 @@ import { runThanksgiving } from '@/lib/thanksgiving-campaign'
 import { runCheckin } from '@/lib/checkin-campaign'
 import { runTexting } from '@/lib/texting-campaign'
 import { runWeekend } from '@/lib/weekend-campaign'
+import { runFamilyExtend } from '@/lib/family-extend'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -13,10 +14,12 @@ export const maxDuration = 300
 export async function GET(request: NextRequest) {
   if (request.headers.get('authorization') !== `Bearer ${process.env.CRON_SECRET}`) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  // First: time-sensitive and small (a few families a day): free Family ending → 3 more months + email.
+  const familyExtend = await runFamilyExtend(admin, new Date(), { budgetMs: 40000 }).catch((e) => ({ error: String(e) }))
   const comeback = await runComeback(admin, new Date(), { budgetMs: 120000 }).catch((e) => ({ error: String(e) }))
   const thanksgiving = await runThanksgiving(admin, new Date(), { budgetMs: 150000 }).catch((e) => ({ error: String(e) }))
   const checkin = await runCheckin(admin, new Date(), { budgetMs: 100000 }).catch((e) => ({ error: String(e) }))
   const texting = await runTexting(admin, new Date(), { budgetMs: 60000 }).catch((e) => ({ error: String(e) }))
   const weekend = await runWeekend(admin, new Date(), { budgetMs: 60000 }).catch((e) => ({ error: String(e) }))
-  return NextResponse.json({ ok: true, comeback, thanksgiving, checkin, texting, weekend })
+  return NextResponse.json({ ok: true, familyExtend, comeback, thanksgiving, checkin, texting, weekend })
 }
