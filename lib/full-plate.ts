@@ -6,6 +6,7 @@
  */
 import type { Ingredient, Meal } from '@/types'
 import { SIDES, SOUP, ASIAN, MEX, MED, type Side } from '@/lib/sides'
+import { allergyConflicts } from '@/lib/allergens'
 
 const STARCH = /\b(rice|pasta|spaghetti|penne|rigatoni|ziti|macaroni|orzo|noodles?|tortillas?|potato(es)?|fries|tots|hash ?browns?|bread|buns?|rolls?|biscuits?|cornbread|naan|pitas?|flatbreads?|couscous|quinoa|polenta|grits|gnocchi|lasagna|pizza|sandwich|wraps?|tacos?|burritos?|quesadillas?|tostadas?|enchiladas?|pierogi|dumplings?|stuffing|baguette|croutons|tater|sliders?|hoagie|sub rolls?|english muffins?|pancakes?|waffles?)\b/
 const VEG = /\b(broccoli|broccolini|green beans|asparagus|brussels|zucchini|carrots?|(?:bell|sweet|red|green|yellow|orange|mini|poblano|banana) peppers?|peppers|squash|cauliflower|peas|snap peas|snow peas|corn(?! tortillas?| chips| ?starch| syrup| ?meal| ?bread| flakes)|spinach|kale|salad|greens|lettuce|romaine|arugula|slaw|cabbage|cucumbers?|bok choy|eggplant|mushrooms?|okra|beets?|edamame|vegetables?(?! oil| broth| stock| spray| shortening)|veggies?|celery|sweet potato(es)?|butternut)\b/
@@ -36,7 +37,7 @@ function starchSide(m: Meal, i: number): SideDef {
   return [SIDES.rice, extra.roastPotatoes, extra.rolls][i % 3]
 }
 
-function vegSide(m: Meal, i: number, avoid: string[]): SideDef {
+function vegSide(m: Meal, i: number, avoid: string[], safe: (s: SideDef) => boolean = () => true): SideDef {
   const h = text(m)
   let options: SideDef[]
   if (ASIAN.test(h)) options = [SIDES.broccoli, extra.peas, SIDES.cucumber]
@@ -44,18 +45,26 @@ function vegSide(m: Meal, i: number, avoid: string[]): SideDef {
   else if (MED.test(h) || /\b(pasta|spaghetti|lasagna|italian|mac|macaroni|penne|rigatoni)\b/.test(h)) options = [SIDES.salad, SIDES.broccoli, SIDES.greenBeans]
   else if (/\b(bbq|barbecue|burgers?|sliders?|hot dogs?|pulled pork)\b/.test(h)) options = [SIDES.cornCob, SIDES.slaw, extra.carrots]
   else options = [SIDES.greenBeans, SIDES.broccoli, extra.carrots, SIDES.salad, extra.corn]
-  const ok = options.filter((o) => !avoid.some((w) => w.length > 2 && o.items.some((it) => it.name.toLowerCase().includes(w.toLowerCase().replace(/s$/, '')))))
-  const list = ok.length ? ok : options
+  const ok = options.filter((o) => safe(o) && !avoid.some((w) => w.length > 2 && o.items.some((it) => it.name.toLowerCase().includes(w.toLowerCase().replace(/s$/, '')))))
+  const list = ok.length ? ok : options.some(safe) ? options.filter(safe) : options
   return list[i % list.length]
 }
 
 /**
  * Give every dinner a starch and a vegetable. `avoid` = household dislikes/allergies (sides that use them are skipped).
+ * `allergies` are matched by allergen, not by word (Nov 9 2026: a family with a gluten allergy got garlic bread as the
+ * side three nights): no bread, rolls or pita for gluten, no hummus for sesame; rice or potatoes instead.
  * Sides already on the dinner count (a health-need starch side stays; a vegetable is added to it if missing).
  */
-export function completePlates(meals: Meal[], opts: { dietaryNeeds: string[]; avoid?: string[] }): Meal[] {
+export function completePlates(meals: Meal[], opts: { dietaryNeeds: string[]; avoid?: string[]; allergies?: string[] }): Meal[] {
   const lowCarb = opts.dietaryNeeds.some((d) => LOW_CARB.test(d))
   const avoid = opts.avoid ?? []
+  const allergies = (opts.allergies ?? []).filter((a) => a && a.trim())
+  const safe = (sd: SideDef) => !allergies.length || !allergyConflicts(sd.items, [{ name: '', allergies }]).length
+  const starch = (m: Meal, i: number): SideDef => {
+    const sd = starchSide(m, i)
+    return safe(sd) ? sd : [SIDES.rice, extra.roastPotatoes, SIDES.mash].find(safe) ?? sd
+  }
   return meals.map((m, i) => {
     const main = text(m)
     const base = m.side && m.side.name ? m.side : null
@@ -64,12 +73,12 @@ export function completePlates(meals: Meal[], opts: { dietaryNeeds: string[]; av
     const mainStarch = STARCH.test(main), sideStarch = !!base && STARCH.test(sideText)
     const mainVeg = vegIn(main), sideVeg = base ? vegIn(sideText) : 0
     const add: SideDef[] = []
-    if (!mainVeg && !sideVeg) add.push(vegSide(m, i, avoid))
+    if (!mainVeg && !sideVeg) add.push(vegSide(m, i, avoid, safe))
     if (!mainStarch && !sideStarch) {
-      if (!lowCarb) add.push(starchSide(m, i))
+      if (!lowCarb) add.push(starch(m, i))
       else if (mainVeg + sideVeg + add.length < 2) {   // low-carb: a second vegetable instead of the starch
-        const second = vegSide(m, i + 1, avoid)
-        add.push(add.some((a) => a.name === second.name) ? vegSide(m, i + 2, avoid) : second)
+        const second = vegSide(m, i + 1, avoid, safe)
+        add.push(add.some((a) => a.name === second.name) ? vegSide(m, i + 2, avoid, safe) : second)
       }
     }
     // A suggested side that fills a gap in the main becomes part of the shop.

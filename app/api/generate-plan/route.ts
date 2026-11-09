@@ -211,7 +211,7 @@ export async function POST(request: Request) {
     }
     const skippedSet = new Set(skippedNames.map(normalizeName))
     const notSkipped = (m: Meal) => !skippedSet.has(normalizeName(m.name))
-    const plate = (ms: Meal[]) => settings.food.fullPlate ? completePlates(ms, { dietaryNeeds: profile.dietaryNeeds, avoid: [...allDislikes, ...hardExclusions] }) : ms
+    const plate = (ms: Meal[]) => settings.food.fullPlate ? completePlates(ms, { dietaryNeeds: profile.dietaryNeeds, avoid: [...allDislikes, ...hardExclusions], allergies: allergyPeople.flatMap((p) => p.allergies) }) : ms
 
     // ---------- library picks: proven dinners that fit, no generation needed ----------
     // Library first (instant): the library is grown nightly by /api/cron/grow-library, so

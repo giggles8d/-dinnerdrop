@@ -46,9 +46,20 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string, opts
  * week and by the Sunday Drop ("I picked 5 dinners for you", lib/sunday-drop). Not saved; the caller saves it.
  */
 export async function libraryWeek(admin: SupabaseClient, userId: string, excludeNames: string[] = [], opts: { firstWeek?: boolean } = {}): Promise<{ ok: true; meals: Meal[]; shape: PlanShape } | { ok: false; reason: string; found?: number }> {
-  const { data: p } = await admin.from('profiles').select('family_size, weekly_budget, max_cook_time, dietary_needs, settings').eq('id', userId).single()
+  const { data: p } = await admin.from('profiles').select('family_size, weekly_budget, max_cook_time, dietary_needs, settings, household_id').eq('id', userId).single()
   if (!p) return { ok: false, reason: 'no profile' }
   const settings = mergeSettings(p.settings)
+  // Everyone's allergies and won't-eats, from setup (Nov 9 2026: a new family with a shellfish allergy got Shrimp Po' Boys
+  // in their first week; this picker never looked at them). Allergies are a hard filter by allergen, like the main
+  // planner's; "-free" diets count too (Gluten-free → gluten). Won't-eats are dropped whenever enough dinners remain.
+  const { data: mem } = p.household_id
+    ? await admin.from('household_members').select('likes, dislikes, allergies').eq('household_id', p.household_id)
+    : { data: [] }
+  const members = (mem ?? []) as Array<{ likes: string[] | null; dislikes: string[] | null; allergies: string[] | null }>
+  const freeDiets = ((p.dietary_needs ?? []) as string[]).filter((d) => /-free$/i.test(d.trim())).map((d) => d.replace(/-free$/i, '').trim())
+  const allergies = Array.from(new Set([...members.flatMap((x) => x.allergies ?? []), ...freeDiets].map((a) => a.trim()).filter(Boolean)))
+  const wontEat = Array.from(new Set(members.flatMap((x) => x.dislikes ?? []).map((d) => d.toLowerCase().trim()).filter((d) => d.length > 2)))
+  const offSeafood = [...allergies, ...wontEat].some((w) => /\b(seafood|fish)\b/i.test(w))
   const cookDays: Weekday[] = settings.plan.cookDays.length ? settings.plan.cookDays : DEFAULT_SHAPE.cookDays
   const dinners = Math.min(Math.max(settings.plan.dinnersPerWeek, 3), 7)
   const maxCook = Math.max(...cookDays.map((d) => cookTimeFor(d, settings, p.max_cook_time || 30)))
@@ -62,19 +73,14 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   const diets = (p.dietary_needs ?? []).map((d: string) => d.toLowerCase())
   const styles: string[] = (settings.food as { styles?: string[] }).styles ?? []
   const wantsSeafood = diets.includes('pescatarian') || styles.includes('mediterranean') || Number((settings.food.mix as Record<string, number> | null)?.fish ?? 0) > 0
-  const noSeafood = !!opts.firstWeek && !wantsSeafood
+  const noSeafood = offSeafood || (!!opts.firstWeek && !wantsSeafood)
   const favoritesFirst = !!opts.firstWeek && diets.length === 0
   // What the family said they like in setup (Tacos, Pasta, Mac and cheese…) leads too, and a cuisine picked as one
   // style among several (e.g. Mediterranean + family + budget) is a preference, not the only food they eat
   // (Nov 9 2026: a taco-and-mac-and-cheese family got fava beans and lamb kebabs).
-  let likes: string[] = []
-  if (opts.firstWeek) {
-    const { data: hh } = await admin.from('profiles').select('household_id').eq('id', userId).single()
-    if (hh?.household_id) {
-      const { data: mem } = await admin.from('household_members').select('likes').eq('household_id', hh.household_id)
-      likes = Array.from(new Set(((mem ?? []) as Array<{ likes: string[] | null }>).flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
-    }
-  }
+  const likes: string[] = opts.firstWeek
+    ? Array.from(new Set(members.flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
+    : []
   const softCuisine = !!opts.firstWeek && styles.length > 1
   const preferred = softCuisine ? settings.food.cuisines.map((c) => c.toLowerCase()) : []
   const firstWeekBoost = (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) =>
@@ -94,11 +100,21 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
       dietary: step.dietary,
       excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
       excludeNames,
+      allergies,
       cuisines: step.cuisines,
       ignoreKept: true,
     })
     if (noSeafood) picks = picks.filter((r) => proteinGroup(r.protein, r.name) !== 'fish')
     if (picks.length >= want) break
+  }
+  if (wontEat.length) {
+    // Whole words, singular or plural ("eggs" is not eggplant; "olives" is not olive oil).
+    const res = wontEat.map((w) => new RegExp(`\\b${w.replace(/oes$/, 'o').replace(/s$/, '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(e?s)?\\b`))
+    const fine = picks.filter((r) => {
+      const hay = `${r.name} ${(r.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase().replace(/olive oil/g, 'oil')
+      return !res.some((re) => re.test(hay))
+    })
+    if (fine.length >= dinners + 2) picks = fine
   }
   // First impressions: dinners with a photo first. Sized to the family (cost included).
   const size = p.family_size || 4
@@ -108,7 +124,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   const lim = varietyLimits(dinners)
   const pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
   const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 150
-  const meals = settings.food.fullPlate ? completePlates(fitBudget(pool, dinners, budget), { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitBudget(pool, dinners, budget)
+  const meals = settings.food.fullPlate ? completePlates(fitBudget(pool, dinners, budget), { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allergies, ...wontEat], allergies }) : fitBudget(pool, dinners, budget)
   if (meals.length < Math.min(3, dinners)) return { ok: false, reason: 'not enough library recipes', found: meals.length }
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   return { ok: true, meals, shape }
