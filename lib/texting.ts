@@ -1494,6 +1494,17 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const tally: Record<string, number> = {}
   const voters: Record<string, string[]> = {}
   for (const c of round.candidates) tally[c.name] = 0
+  // Nobody voted and this week is already planned (the automatic plan they were emailed): keep the week they have
+  // rather than swapping in dinners no one picked (Nov 9 2026: 29 planned weeks were replaced at 8 AM Monday, each
+  // with zero votes, minutes after two families were texted a different "tonight").
+  if (!ctx.everyone && !(votes ?? []).length) {
+    const { data: have } = await admin.from('meal_plans').select('meals').eq('user_id', owner.id).eq('week_start', round.week_start).order('created_at', { ascending: false }).limit(1)
+    const kept = ((have?.[0]?.meals as Meal[] | undefined) ?? [])
+    if (kept.length) {
+      await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString(), result: { chosen: kept.map((x) => x.name), tally } }).eq('id', round.id)
+      return
+    }
+  }
   for (const v of (votes ?? []) as Array<{ meal_name: string; vote: string; household_members: { name: string } | { name: string }[] | null }>) {
     if (!(v.meal_name in tally)) continue
     tally[v.meal_name] += v.vote === 'skip' ? -1 : 1
