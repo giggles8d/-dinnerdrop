@@ -19,7 +19,8 @@ export async function generateMetadata({ searchParams }: { searchParams: Record<
     const offer = months >= 1 ? `${months} month${months > 1 ? 's' : ''}` : `${p.family_days} days`
     const title = `${offer} of DinnerDrop Family, free`
     const description = 'Your week of family dinners planned in about a minute, the family votes by text, and one tap sends the grocery list to Instacart. No card needed.'
-    const image = `https://www.dinnerdrop.app/api/promo-image?code=${encodeURIComponent(p.code)}&f=.jpg`
+    // Facebook's scraper would not read the generated image ("corrupted"), so the common 3-month offer uses a static file.
+    const image = months === 3 ? 'https://www.dinnerdrop.app/og/promo-3-months.jpg' : `https://www.dinnerdrop.app/api/promo-image?code=${encodeURIComponent(p.code)}&f=.jpg`
     const url = `https://www.dinnerdrop.app/start?code=${encodeURIComponent(p.code)}`
     return {
       title, description,
