@@ -37,6 +37,7 @@ export interface Meal {
   ideaBy?: string       // a family member suggested this dinner by text ("Rich's idea" on the vote)
   familyRecipe?: boolean // the family's own dinner, written up from how they described it (lib/family-recipes)
   addedBy?: string      // who added that family recipe (shown as "Rich's recipe")
+  heartedBy?: string    // a family member saved this to favorites from a tap-to-vote page ("♥ added by Rich"); the planner can remove it
   original?: string     // the family's own words for it
   swaps?: string[]      // easy alternatives for the vague parts ("any veg: green beans, corn, broccoli")
   familyRating?: number // the family's own 1–5 rating of their recipe; higher comes up in the vote more often

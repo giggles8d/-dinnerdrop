@@ -14,7 +14,7 @@ import { isFamilyProfile } from '@/lib/access'
 import { generateCandidates, savePlan } from '@/lib/autoplan'
 import { markSuggestionsUsed, pendingSuggestions, resolveSuggestion, type Suggestion } from '@/lib/suggestions'
 import { timeLabel, type PlanShape } from '@/lib/plan'
-import { tapVoteUrl } from '@/lib/tap-vote'
+import { tapVoteUrl, againTapUrl } from '@/lib/tap-vote'
 import { guessCategory, normalizeItemName } from '@/lib/list'
 import { generateWithClaude, generateWithClaudeImage, generateSmart, parseClaudeJSON } from '@/lib/claude'
 import { looksLikeFlyer, salesFromImage, saveSales } from '@/lib/sales'
@@ -227,7 +227,14 @@ export async function runTextingDay(admin: SupabaseClient, now: Date = new Date(
         const { data: members } = await admin.from('household_members').select('*').eq('household_id', o.household_id).not('phone', 'is', null)
         const voters = ((members ?? []) as MemberRow[]).filter((m) => m.can_vote && m.phone_opt_in_at && !m.phone_opted_out)
         const body = `DinnerDrop — which dinners should come back soon?\n${menuLines(plan.meals)}\n\nReply AGAIN + numbers (e.g. "again 1 3"), or NONE.`
-        for (const m of voters) if (await textMember(admin, m, body, 'again_request', settings.texting.weeklyCap)) report.againTexts++
+        // Tap version (Nov 8 2026): the same dinners as photos; votes file under the current plan week, like texted numbers.
+        const cur = await latestPlan(admin, o.id)
+        for (const m of voters) {
+          const tap = cur && !(settings.texting.tapVoteOffIds ?? []).includes(m.id)
+            ? `\n\nOr tap the ones to bring back (with photos): ${await againTapUrl(admin, { ownerId: o.id, memberId: m.id, weekStart: cur.week_start, meals: plan.meals.map((x) => x.name), day: dateStr })}`
+            : ''
+          if (await textMember(admin, m, body + tap, 'again_request', settings.texting.weeklyCap)) report.againTexts++
+        }
       }
     } catch (e) {
       report.errors.push(`${o.id}: ${e instanceof Error ? e.message : String(e)}`)
