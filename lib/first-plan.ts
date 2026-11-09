@@ -112,3 +112,28 @@ export function relaxSteps(dietary: string[], cuisines: string[]): { dietary: st
   }
   return steps
 }
+
+
+/**
+ * 12–15 dinners for a family that has never ordered (Sarah, Nov 9 2026: "every week we need to try very hard to get
+ * all the ones that have signed up but have not bought … give them more options to pick from and more family
+ * friendly options"). Their current week leads (pre-checked on the dashboard), then more dinners that fit them
+ * under the first-week rules (familiar favorites, no seafood unless asked). Keys O1…On; [] if fewer than 12.
+ */
+export async function weekOptions(admin: SupabaseClient, userId: string, current: Meal[]): Promise<Meal[]> {
+  const pool: Meal[] = [...current]
+  for (let i = 0; i < 3 && pool.length < 15; i++) {
+    const more = await libraryWeek(admin, userId, pool.map((m) => m.name), { firstWeek: true }).catch(() => null)
+    if (!more || !more.ok || !more.meals.length) break
+    pool.push(...more.meals.filter((m) => !pool.some((x) => x.name === m.name)))
+  }
+  return pool.length >= 12 ? pool.slice(0, 15).map((m, i) => ({ ...m, day: `O${i + 1}` })) : []
+}
+
+/** Never ordered and this week's dinners weren't picked by the family themselves → show them options. */
+export async function shouldOfferOptions(admin: SupabaseClient, userId: string, latest: Meal[] | null): Promise<boolean> {
+  if (!latest?.length) return false
+  if (latest.some((m) => (m as Meal & { pickedByFamily?: boolean }).pickedByFamily)) return false
+  const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', userId)
+  return !(count ?? 0)
+}

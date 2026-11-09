@@ -199,6 +199,13 @@ function DashboardContent() {
 
       setPlanCount(countRes.count ?? 0)
 
+      // Families who have never ordered get their week as options to pick from, every week until they order.
+      if (plan && !owner.isPartner) {
+        fetch('/api/week-options').then((r) => r.json()).then((j: { options?: Meal[] }) => {
+          if (j.options?.length) offerOptions(j.options, plan.meals as Meal[], 'weekly')
+        }).catch(() => {})
+      }
+
       // First-ever visit with no plan: kick off generation automatically so the
       // user's first experience is watching their dinners appear.
       if (!plan && (countRes.count ?? 0) === 0 && !owner.isPartner) {
@@ -230,6 +237,17 @@ function DashboardContent() {
 
   useEffect(() => { trackOnce('dashboard_view') }, [])
 
+  /** Never ordered (Sarah, Nov 9 2026): open as "pick your week" from 12–15 dinners, their current week pre-checked. */
+  function offerOptions(options: Meal[], current: Meal[], source: string) {
+    if (options.length < 12 || !current.length) return
+    const n = current.length
+    const nights = current.map((m) => String(m.day ?? '').slice(0, 3).toLowerCase()).filter((d) => ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].includes(d)) as PlanShape['cookDays']
+    setPendingMeals(options)
+    setSelectedIds(new Set(options.slice(0, n).map((m) => m.day)))
+    setPlanShape((s) => ({ ...s, dinnersPerWeek: n, cookDays: nights.length === n ? nights : s.cookDays }))
+    track('first_week_options', { options: options.length, picks: n, source })
+  }
+
   async function instantFirstPlan() {
     setLoading(true)
     try {
@@ -237,14 +255,7 @@ function DashboardContent() {
       const r = await res.json().catch(() => null) as { ok?: boolean; meals?: Meal[]; totalCost?: number; options?: Meal[]; pickCount?: number } | null
       if (r?.ok && r.meals?.length) {
         // 12–15 dinners to choose from, with the starter week pre-picked (the saved week stays as a fallback).
-        if (r.options && r.options.length >= 12) {
-          const n = r.pickCount ?? r.meals.length
-          setPendingMeals(r.options)
-          setSelectedIds(new Set(r.options.slice(0, n).map((m) => m.day)))
-          const nights = r.meals.map((m) => String(m.day ?? '').slice(0, 3).toLowerCase()).filter((d) => ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].includes(d)) as PlanShape['cookDays']
-          setPlanShape((s) => ({ ...s, dinnersPerWeek: n, cookDays: nights.length === n ? nights : s.cookDays }))
-          track('first_week_options', { options: r.options.length, picks: n })
-        }
+        if (r.options) offerOptions(r.options, r.meals, 'first')
         setMeals(r.meals)
         setListSent(false)
         setTotalCost(r.totalCost ?? r.meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0))
@@ -510,7 +521,8 @@ function DashboardContent() {
     setLoading(true)
     setGenerateError('')
     try {
-      const confirmed = assignNights(selectedMeals, planShape)
+      // pickedByFamily: they chose these themselves, so the "pick your week" options don't reopen (/api/week-options).
+      const confirmed = assignNights(selectedMeals, planShape).map((m) => ({ ...m, pickedByFamily: true }))
       const confirmedCost = confirmed.reduce((sum, m) => sum + m.estimatedCost, 0)
 
       // Library signal: what this family kept vs. passed on (fire and forget).
@@ -688,7 +700,7 @@ function DashboardContent() {
             </h1>
             <p className="text-muted-foreground mt-2">
               {isPickingMeals
-                ? planCount <= 1 && pendingMeals.length >= 12 && pendingMeals[0]?.day === 'O1'
+                ? pendingMeals.length >= 12 && pendingMeals[0]?.day === 'O1'
                   ? `Pick ${planShape.dinnersPerWeek} from these ${pendingMeals.length} dinners. We checked ${planShape.dinnersPerWeek} to start; tap to change · ${selectedMeals.length} picked`
                   : planCount === 0
                   ? `We picked ${planShape.dinnersPerWeek} to get you started — tap any to swap · ${selectedMeals.length} selected`

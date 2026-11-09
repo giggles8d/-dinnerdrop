@@ -21,6 +21,26 @@ export interface AutoPlanProfile {
 
 /** Generate + save a plan for a family without them lifting a finger. */
 export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<Meal[] | null> {
+  // Never ordered (Sarah, Nov 9 2026: "try very hard every week" for families who signed up but haven't bought):
+  // their weekly menu follows the first-week rules (familiar kid favorites, no seafood unless asked), not new AI
+  // dishes. Last week's dinners are left out so it's a fresh week. Falls back to the AI planner if the library can't.
+  const { count: sends } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
+  if (!(sends ?? 0)) {
+    try {
+      const { libraryWeek } = await import('@/lib/first-plan')
+      const { data: last } = await admin.from('meal_plans').select('meals').eq('user_id', p.id).order('created_at', { ascending: false }).limit(2)
+      const recent = (last ?? []).flatMap((x) => ((x.meals ?? []) as Meal[]).map((m) => m.name))
+      const lw = await libraryWeek(admin, p.id, recent, { firstWeek: true })
+      if (lw.ok && lw.meals.length) {
+        const chosen = assignNights(lw.meals, lw.shape)
+        const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
+        await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
+        return chosen
+      }
+    } catch (e) {
+      console.error('autoPlan library week', p.id, e)
+    }
+  }
   const base = process.env.NEXT_PUBLIC_APP_URL || APP
   const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
   const res = await fetch(`${base}/api/generate-plan`, {
