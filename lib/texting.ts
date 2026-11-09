@@ -1490,10 +1490,14 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const saved = await savePlan(admin, owner.id, round.week_start, chosen, shape)
   await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString(), result: { chosen: saved.map((m) => m.name), tally } }).eq('id', round.id)
 
-  const { data: names } = ctx.askedIds.length ? await admin.from('household_members').select('name').in('id', ctx.askedIds) : { data: [] as Array<{ name: string }> }
-  const who = (names ?? []).map((x) => x.name).join(', ')
+  // Name only the people who actually answered (Nov 9 2026: a family that never replied was told "heard from Me").
+  const answered = Array.from(new Set(((votes ?? []) as Array<{ household_members: { name: string } | { name: string }[] | null }>)
+    .map((v) => (Array.isArray(v.household_members) ? v.household_members[0] : v.household_members)?.name).filter((n): n is string => !!n)))
+  const who = answered.join(', ')
   const lines = saved.map((m, i) => `${i + 1}. ${m.day.slice(0, 3)}: ${m.name}${tally[m.name] ? ` (${tally[m.name]} ${tally[m.name] === 1 ? 'vote' : 'votes'}${voters[m.name]?.length ? ` — ${voters[m.name].join(', ')}` : ''})` : ''}`)
-  const head = ctx.everyone ? `DinnerDrop: everyone's voted${who ? ` (${who})` : ''}.` : `DinnerDrop: voting closed${who ? ` — heard from ${who}` : ''}.`
+  const head = ctx.everyone ? `DinnerDrop: everyone's voted${who ? ` (${who})` : ''}.`
+    : who ? `DinnerDrop: voting closed — heard from ${who}.`
+    : `DinnerDrop: no votes came in, so I kept the top picks.`
   const body = `${head} The week is set:\n${lines.join('\n')}\n\nWant a change? Reply SWAP 2 FOR tacos. Next: add anything else you need to the list, then approve the order → ${APP_URL}/grocery-list`
   const to = await ownerPhone(admin, owner)
   const r = to ? await sendSms(to, body) : { sid: undefined }
