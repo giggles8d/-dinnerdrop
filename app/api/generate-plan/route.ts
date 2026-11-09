@@ -1,4 +1,5 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { mayActFor } from '@/lib/route-auth'
 import { selectedStyles } from '@/lib/styles'
 import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
@@ -64,6 +65,9 @@ export async function POST(request: Request) {
       .single()
 
     if (!profileRow) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    if (!(await mayActFor(request, supabase, body.userId))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
 

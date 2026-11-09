@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { mayActFor } from '@/lib/route-auth'
 import { createClient } from '@supabase/supabase-js'
 
 const ALLOWED_MEDIA_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
@@ -21,6 +22,9 @@ export async function POST(request: Request) {
     )
     const { data: profile } = await supabase.from('profiles').select('id').eq('id', userId).single()
     if (!profile) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    if (!(await mayActFor(request, supabase, String(userId)))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
