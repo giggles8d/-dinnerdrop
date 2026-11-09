@@ -234,8 +234,17 @@ function DashboardContent() {
     setLoading(true)
     try {
       const res = await fetch('/api/first-plan', { method: 'POST' })
-      const r = await res.json().catch(() => null) as { ok?: boolean; meals?: Meal[]; totalCost?: number } | null
+      const r = await res.json().catch(() => null) as { ok?: boolean; meals?: Meal[]; totalCost?: number; options?: Meal[]; pickCount?: number } | null
       if (r?.ok && r.meals?.length) {
+        // 12–15 dinners to choose from, with the starter week pre-picked (the saved week stays as a fallback).
+        if (r.options && r.options.length >= 12) {
+          const n = r.pickCount ?? r.meals.length
+          setPendingMeals(r.options)
+          setSelectedIds(new Set(r.options.slice(0, n).map((m) => m.day)))
+          const nights = r.meals.map((m) => String(m.day ?? '').slice(0, 3).toLowerCase()).filter((d) => ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].includes(d)) as PlanShape['cookDays']
+          setPlanShape((s) => ({ ...s, dinnersPerWeek: n, cookDays: nights.length === n ? nights : s.cookDays }))
+          track('first_week_options', { options: r.options.length, picks: n })
+        }
         setMeals(r.meals)
         setListSent(false)
         setTotalCost(r.totalCost ?? r.meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0))
@@ -679,7 +688,9 @@ function DashboardContent() {
             </h1>
             <p className="text-muted-foreground mt-2">
               {isPickingMeals
-                ? planCount === 0
+                ? planCount <= 1 && pendingMeals.length >= 12 && pendingMeals[0]?.day === 'O1'
+                  ? `Pick ${planShape.dinnersPerWeek} from these ${pendingMeals.length} dinners. We checked ${planShape.dinnersPerWeek} to start; tap to change · ${selectedMeals.length} picked`
+                  : planCount === 0
                   ? `We picked ${planShape.dinnersPerWeek} to get you started — tap any to swap · ${selectedMeals.length} selected`
                   : `Tap the dinners you want this week — pick about ${planShape.dinnersPerWeek} · ${selectedMeals.length} selected`
                 : meals.length > 0
