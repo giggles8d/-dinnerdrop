@@ -297,7 +297,7 @@ export default async function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t border-border bg-white">
-        <div className="container mx-auto px-4 py-6 max-w-6xl flex items-center justify-between text-xs text-muted-foreground">
+        <div className="container mx-auto px-4 py-6 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-accent" />
             <span className="font-heading font-bold text-sm text-primary">DinnerDrop</span>

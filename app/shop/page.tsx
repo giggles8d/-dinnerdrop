@@ -57,11 +57,11 @@ export default function ShopPage() {
       </section>
 
       <footer className="border-t border-border bg-white">
-        <div className="container mx-auto px-4 py-6 max-w-5xl flex items-center justify-between text-xs text-muted-foreground">
+        <div className="container mx-auto px-4 py-6 max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-muted-foreground">
           <span className="font-heading font-bold text-sm text-primary">DinnerDrop</span>
           <p>&copy; 2026 DinnerDrop</p>
           <SocialLinks />
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
           </div>

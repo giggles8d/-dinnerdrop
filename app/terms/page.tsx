@@ -227,10 +227,10 @@ export default function TermsPage() {
       </main>
 
       <footer className="border-t border-border">
-        <div className="container mx-auto px-4 py-6 max-w-3xl flex items-center justify-between text-xs text-muted-foreground">
+        <div className="container mx-auto px-4 py-6 max-w-3xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-muted-foreground">
           <p>&copy; 2026 DinnerDrop. All rights reserved.</p>
           <SocialLinks />
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4 justify-center">
             <span className="font-medium text-foreground">Terms</span>
             <Link href="/privacy" className="hover:text-foreground transition-colors">
               Privacy

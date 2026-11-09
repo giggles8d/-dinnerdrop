@@ -379,11 +379,11 @@ export default async function TopicPage({ params }: { params: { topic: string } 
       </main>
 
       <footer className="border-t border-border bg-white">
-        <div className="container mx-auto px-4 py-6 max-w-6xl flex items-center justify-between text-xs text-muted-foreground">
+        <div className="container mx-auto px-4 py-6 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-muted-foreground">
           <span className="font-heading font-bold text-sm text-primary">DinnerDrop</span>
           <p>&copy; 2026 DinnerDrop</p>
           <SocialLinks />
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/about" className="hover:text-foreground">About</Link>
             <Link href="/blog" className="hover:text-foreground">Blog</Link>
             <Link href="/terms" className="hover:text-foreground">Terms</Link>
