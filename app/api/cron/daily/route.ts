@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { runDailyReminders } from '@/lib/reminders'
-import { runTextingDay } from '@/lib/texting'
+import { runTextingDay, checkVoteCompletion } from '@/lib/texting'
 import { creditReferrals } from '@/lib/referrals'
 import { runOrderFollowups } from '@/lib/order-followup'
 import { runWeeklyReport } from '@/lib/weekly-report'
@@ -34,6 +34,10 @@ export async function GET(request: NextRequest) {
   const upkeep = fetch(`${base}/api/cron/upkeep`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
 
   try { out.cartOfferReminder = await sendCartOfferReminders(admin, now) } catch (e) { out.cartOfferReminder = { error: String(e) } }
+  // Votes sent on yesterday's run close first, so the week is final before today's "tonight" and list texts go out
+  // (Nov 9 2026: "tonight: turkey burgers" at 7:52, then the vote closed at 8:00 with a different Monday). 23 hours,
+  // because this cron fires at a slightly different minute each day.
+  try { out.votesClosed = await checkVoteCompletion(admin, { maxAgeHours: 23 }) } catch (e) { out.votesClosed = { error: String(e) } }
   try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
   try { out.orderFollowups = await runOrderFollowups(admin, now) } catch (e) { out.orderFollowups = { error: String(e) } }
   try { out.texting = await runTextingDay(admin, now) } catch (e) { out.texting = { error: String(e) } }

@@ -246,9 +246,12 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       const cook = settings.schedule.reminders.cookTonight
       if (cook.channel !== 'off' && settings.plan.cookDays.includes(weekday)) {
         const tt = tripMode ? tonightTrip(tcfg, today) : null
-        const cq = admin.from('meal_plans').select('meals').eq('user_id', p.id)
+        const cq = admin.from('meal_plans').select('meals, week_start').eq('user_id', p.id)
         const { data: plan } = tripMode && !tt ? { data: null } : await (tt ? cq.eq('week_start', tt.key) : cq).order('created_at', { ascending: false }).limit(1).single()
-        const tonight = ((plan?.meals as Meal[]) ?? []).find((m) => m.day === todayLabel)
+        // Only a week that covers today: a family with no plan yet this week was texted last Monday's dinner as
+        // "tonight" (Nov 9 2026). A classic week runs 7 days from its week_start.
+        const stale = !tt && !!plan?.week_start && today > addDays(String(plan.week_start), 6)
+        const tonight = stale ? undefined : ((plan?.meals as Meal[]) ?? []).find((m) => m.day === todayLabel)
         if (tonight) {
           const line = `${tonight.name} — ${timeLabel(tonight)}`
           if (wantsEmail(cook.channel) && canEmail) {
