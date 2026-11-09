@@ -22,13 +22,14 @@ export async function POST() {
     const r = await buildFirstPlan(admin, user.id, { afterSetup: !!prof?.onboarding_complete })
     if (!r.ok) return NextResponse.json(r)
     const meals = await attachLibraryImages(admin, r.meals)
-    // First text for a family that gave us a number in setup: "your week is ready" + the list link.
-    if (!r.existing) {
+    // Nov 9 2026: alongside the saved week, 12–15 dinners that fit the family so they pick their own week.
+    const options = (await shouldOfferOptions(admin, user.id, meals)) ? await attachLibraryImages(admin, await weekOptions(admin, user.id, meals)) : []
+    // First text for a family that gave us a number in setup. When they're picking their own week, it waits for
+    // their picks (/api/texting/week-picked, or the poll's 30-minute fallback) so the numbers match what they chose.
+    if (!r.existing && !options.length) {
       const { data: p } = await admin.from('profiles').select('id, household_id, full_name, settings, subscription_status, is_beta_member, family_until').eq('id', user.id).single()
       if (p) await sendFirstPlanText(admin, p as SetupProfile, meals).catch((e) => console.error('[first-plan] text', e))
     }
-    // Nov 9 2026: alongside the saved week, 12–15 dinners that fit the family so they pick their own week.
-    const options = (await shouldOfferOptions(admin, user.id, meals)) ? await attachLibraryImages(admin, await weekOptions(admin, user.id, meals)) : []
     return NextResponse.json({ ...r, meals, options, pickCount: meals.length })
   } catch (e) {
     console.error('[first-plan]', e)
