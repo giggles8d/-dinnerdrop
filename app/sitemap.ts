@@ -85,6 +85,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.6,
     },
+    // Help and Shop were public but missing from the sitemap (site review, Nov 8 2026).
+    { url: `${BASE}/help`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE}/shop`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     {
       url: `${BASE}/cookware`,
       lastModified: new Date(),

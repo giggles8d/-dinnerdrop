@@ -21,7 +21,7 @@ import { completePlates } from '@/lib/full-plate'
 import { pendingSuggestions, resolveSuggestion, markSuggestionsUsed } from '@/lib/suggestions'
 
 // Extend serverless timeout — AI generation needs up to 55s
-export const maxDuration = 60
+export const maxDuration = 120
 
 interface GeneratePlanResponse {
   meals: Meal[]
@@ -494,14 +494,12 @@ Return ONLY valid JSON with this exact structure, no markdown:
 Categories must be one of: Produce, Meat & Seafood, Dairy & Eggs, Pantry & Dry Goods, Frozen, Bakery, Beverages.
 Use "day" values "1" through "${generateCount}" as unique identifiers.`
 
-    const text = await generateWithClaude(prompt, 7000)
-    let planData: GeneratePlanResponse
-    try {
-      planData = parseClaudeJSON<GeneratePlanResponse>(text)
-    } catch {
-      console.error('Failed to parse Claude response:', text.slice(0, 200))
-      return Response.json({ error: 'AI returned an unexpected format. Please try again.' }, { status: 500 })
-    }
+    // A long plan (nutrition, sides, sales) sometimes ran past 7,000 tokens and came back cut off, so the family saw
+    // "try again" (4 times Oct 31–Nov 7). More room instead of a retry, which wouldn't fit in the time limit (Nov 8 2026).
+    let planData: GeneratePlanResponse | null = null
+    const text = await generateWithClaude(prompt, 12000)
+    try { planData = parseClaudeJSON<GeneratePlanResponse>(text) } catch { console.error('Failed to parse Claude response:', text.slice(-200)) }
+    if (!planData) return Response.json({ error: 'AI returned an unexpected format. Please try again.' }, { status: 500 })
 
     // Safety net on hard exclusions (allergies / never list): drop any option that slipped through.
     const excl = [...settings.food.neverIngredients, ...settings.food.avoidProteins].map((w) => w.toLowerCase()) // allergies: checked by allergen below

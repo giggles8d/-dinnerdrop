@@ -110,14 +110,14 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
       <div className="container mx-auto px-4 py-8 max-w-3xl">
         <Link href="/recipes" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 print:hidden"><ArrowLeft className="w-4 h-4" /> Recipe library</Link>
         {cooking && <CookMode meal={meal} onClose={() => setCooking(false)} />}
-        <div className="rounded-xl overflow-hidden mb-6 print:hidden"><MealCardImage mealName={r.name} dayLabel={r.source === 'user' && r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} /></div>
+        <div className="rounded-xl overflow-hidden mb-6 print:hidden"><MealCardImage mealName={r.name} dayLabel={r.source === 'user' && !!userId && r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} /></div>
         <div className="flex items-start justify-between gap-4 mb-4">
           <h1 className="text-4xl font-heading font-bold text-foreground leading-tight">{r.name}</h1>
           {r.tags.includes('family-favorite') && (() => {
             const stars = Number(r.tags.find((t) => t.startsWith('family-rating-'))?.slice(14)) || 0
             return <p className="mt-2 inline-block rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold text-accent-foreground">🏡 A family favorite{stars ? ` · ${'★'.repeat(stars)} from the family that shared it` : ''}</p>
           })()}
-          <div className="flex items-center gap-1 print:hidden">{r.source === 'user' && r.created_by === userId && <Link href={`/recipes/${r.slug}/edit`} className="px-3 py-1.5 rounded-full border border-border text-xs font-semibold text-foreground hover:bg-muted">Edit</Link>}<PrintButton /><button onClick={toggleFav} className="p-2 rounded-full hover:bg-muted" aria-label="Favorite"><Heart className={`w-6 h-6 ${fav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} /></button></div>
+          <div className="flex items-center gap-1 print:hidden">{r.source === 'user' && !!userId && r.created_by === userId && <Link href={`/recipes/${r.slug}/edit`} className="px-3 py-1.5 rounded-full border border-border text-xs font-semibold text-foreground hover:bg-muted">Edit</Link>}<PrintButton /><button onClick={toggleFav} className="p-2 rounded-full hover:bg-muted" aria-label="Favorite"><Heart className={`w-6 h-6 ${fav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} /></button></div>
         </div>
         <div className="flex flex-wrap items-center gap-2 mb-6 pb-6 border-b border-border">
           <span className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground"><Clock className="w-3.5 h-3.5" />{timeLabel(meal)}</span>
