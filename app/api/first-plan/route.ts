@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
-import { buildFirstPlan } from '@/lib/first-plan'
+import { buildFirstPlan, weekOptions, shouldOfferOptions } from '@/lib/first-plan'
 import { attachLibraryImages } from '@/lib/library-images'
 import { sendFirstPlanText, type SetupProfile } from '@/lib/texting-setup'
 
@@ -27,7 +27,9 @@ export async function POST() {
       const { data: p } = await admin.from('profiles').select('id, household_id, full_name, settings, subscription_status, is_beta_member, family_until').eq('id', user.id).single()
       if (p) await sendFirstPlanText(admin, p as SetupProfile, meals).catch((e) => console.error('[first-plan] text', e))
     }
-    return NextResponse.json({ ...r, meals })
+    // Nov 9 2026: alongside the saved week, 12–15 dinners that fit the family so they pick their own week.
+    const options = (await shouldOfferOptions(admin, user.id, meals)) ? await attachLibraryImages(admin, await weekOptions(admin, user.id, meals)) : []
+    return NextResponse.json({ ...r, meals, options, pickCount: meals.length })
   } catch (e) {
     console.error('[first-plan]', e)
     return NextResponse.json({ ok: false, reason: 'error' })
