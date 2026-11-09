@@ -1,5 +1,6 @@
 'use client'
 
+import FamilyEndingBanner from '@/components/FamilyEndingBanner'
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -82,6 +83,7 @@ function DashboardContent() {
 
   const [isFoundingMember, setIsFoundingMember] = useState(false)
   const [familyCredit, setFamilyCredit] = useState(false)
+  const [familyUntil, setFamilyUntil] = useState<string | null>(null)
   const [promoApplied, setPromoApplied] = useState<{ code: string; until: string; days: number } | null>(null)
   // Founding families have Family free for their first year (through 2027-10-18).
   const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing' || isFoundingMember || familyCredit
@@ -117,7 +119,7 @@ function DashboardContent() {
         setBudget(profile.weekly_budget)
         setSubscriptionStatus(profile.subscription_status || 'free')
         setIsFoundingMember(profile.is_beta_member === true)
-        setFamilyCredit(!!profile.family_until && new Date(profile.family_until) > new Date())
+        setFamilyCredit(!!profile.family_until && new Date(profile.family_until) > new Date()); setFamilyUntil(profile.family_until ?? null)
         // Don't gate the dashboard behind the quiz anymore — show the product
         // first, offer personalization after. (This was where 95% of signups
         // used to vanish.)
@@ -268,7 +270,7 @@ function DashboardContent() {
         if (profile) {
           setSubscriptionStatus(profile.subscription_status || 'free')
           setIsFoundingMember(profile.is_beta_member === true)
-          setFamilyCredit(!!profile.family_until && new Date(profile.family_until) > new Date())
+          setFamilyCredit(!!profile.family_until && new Date(profile.family_until) > new Date()); setFamilyUntil(profile.family_until ?? null)
         }
       }
       refresh()
@@ -584,6 +586,9 @@ function DashboardContent() {
         {hasGenerated && meals.length > 0 && !loading && <TextingNudge forceOpen={searchParams.get('texting') === '1'} />}
         {hasGenerated && meals.length > 0 && !loading && <DinnerReminders meals={meals} />}
         <EngagementTracker page="dashboard" ready={hasGenerated && meals.length > 0 && !loading} />
+
+        {/* Free Family ending soon (lib/family-ending): keep it, or it falls back to the free plan. */}
+        {familyUntil && !isFoundingMember && !['active', 'trialing', 'past_due'].includes(subscriptionStatus) && <FamilyEndingBanner familyUntil={familyUntil} />}
 
         {/* Past due payment banner */}
         {subscriptionStatus === 'past_due' && (
