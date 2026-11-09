@@ -25,7 +25,7 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
   const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
   const res = await fetch(`${base}/api/generate-plan`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', authorization: `Bearer ${process.env.CRON_SECRET}` },
     body: JSON.stringify({
       userId: p.id,
       familySize: p.family_size,
@@ -55,7 +55,7 @@ export async function generateCandidates(admin: SupabaseClient, p: AutoPlanProfi
   const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
   const res = await fetch(`${base}/api/generate-plan`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', authorization: `Bearer ${process.env.CRON_SECRET}` },
     body: JSON.stringify({
       userId: p.id,
       familySize: p.family_size,
@@ -96,7 +96,7 @@ export async function rebuildWeek(admin: SupabaseClient, p: AutoPlanProfile, set
   const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
   const res = await fetch(`${base}/api/generate-plan`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', authorization: `Bearer ${process.env.CRON_SECRET}` },
     body: JSON.stringify({
       userId: p.id,
       familySize: p.family_size,

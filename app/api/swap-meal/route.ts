@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { mayActFor } from '@/lib/route-auth'
 import { allergyConflicts } from '@/lib/allergens'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
@@ -28,6 +29,9 @@ export async function POST(request: Request) {
       .eq('id', userId)
       .single()
     if (!profileRow) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    if (!(await mayActFor(request, supabase, String(userId)))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
 

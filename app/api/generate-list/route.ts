@@ -1,4 +1,5 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { mayActFor } from '@/lib/route-auth'
 import { createClient } from '@supabase/supabase-js'
 import type { GroceryCategory, GroceryItem } from '@/types'
 
@@ -25,6 +26,9 @@ export async function POST(request: Request) {
       .eq('id', userId)
       .single()
     if (!profile) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    if (!(await mayActFor(request, supabase, String(userId)))) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
 

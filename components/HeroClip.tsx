@@ -24,7 +24,14 @@ export default function HeroClip({ className = '', name = 'cart-clip', width = 1
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
     v.muted = true
     v.defaultMuted = true
-    v.play().catch(() => {})
+    // Load and play only when the clip is on (or near) the screen (Nov 8 2026: the two clips were 1.4 MB of the
+    // homepage's 2.2 MB on a phone, downloaded before anyone scrolled to them). Pauses when scrolled away.
+    if (!('IntersectionObserver' in window)) { v.preload = 'auto'; v.play().catch(() => {}); return }
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { v.preload = 'auto'; v.play().catch(() => {}) } else if (!v.paused) v.pause()
+    }, { rootMargin: '200px 0px' })
+    io.observe(v)
+    return () => io.disconnect()
   }, [])
   return (
     <video
@@ -36,7 +43,7 @@ export default function HeroClip({ className = '', name = 'cart-clip', width = 1
       loop
       muted
       playsInline
-      preload="metadata"
+      preload="none"
       aria-label={label}
     >
       <source src={`/${name}.webm`} type="video/webm" />
