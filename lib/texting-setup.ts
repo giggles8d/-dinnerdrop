@@ -126,3 +126,29 @@ export async function sendListWaitingText(admin: SupabaseClient, profile: SetupP
   const body = `DinnerDrop: ${firstName ? `${firstName}, your` : 'your'} grocery list for the week is still waiting. One tap sends it to your Instacart or Walmart cart: ${APP_URL}/grocery-list — you check out there. Already shopped? Text "spent $120" and we'll mark it done.`
   return textMember(admin, me, body, 'list_waiting')
 }
+
+
+/**
+ * The first "your week" text for families who were picking their own week (Nov 9 2026): sent when they confirm
+ * their picks, or by the poll 30 minutes after setup if they never did. Uses their latest plan, so the numbers
+ * match what they see. Once per household (sendFirstPlanText checks).
+ */
+export async function sendWeekText(admin: SupabaseClient, userId: string): Promise<boolean> {
+  const { data: p } = await admin.from('profiles').select('id, household_id, full_name, settings, subscription_status, is_beta_member, family_until').eq('id', userId).single()
+  if (!p) return false
+  const { data: plan } = await admin.from('meal_plans').select('meals').eq('user_id', userId).order('created_at', { ascending: false }).limit(1)
+  const meals = (plan?.[0]?.meals ?? []) as Meal[]
+  return meals.length ? sendFirstPlanText(admin, p as SetupProfile, meals) : false
+}
+
+export async function sendLateWeekTexts(admin: SupabaseClient, now = new Date()): Promise<number> {
+  const { data: profs } = await admin.from('profiles').select('id, settings')
+    .gte('created_at', new Date(now.getTime() - 24 * 3600000).toISOString())
+    .lte('created_at', new Date(now.getTime() - 30 * 60000).toISOString()).limit(80)
+  let sent = 0
+  for (const p of profs ?? []) {
+    if (!mergeSettings(p.settings).texting.enabled) continue
+    if (await sendWeekText(admin, p.id as string).catch(() => false)) sent++
+  }
+  return sent
+}

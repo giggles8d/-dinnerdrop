@@ -39,8 +39,12 @@ export function assignNights(selected: Meal[], shape: PlanShape): Meal[] {
     const m = placed[i] ?? rest[r++]
     if (m) out.push({ ...m, day: labels[i] })
   }
-  for (; r < rest.length; r++) out.push({ ...rest[r], day: `Day ${out.length + 1}` })
-  return out
+  // More dinners than cook nights (a family picked an extra one): give it a real night, not "Day 5".
+  const ALL: Weekday[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+  const spare = ALL.filter((d) => !days.includes(d)).map((d) => WEEKDAY_LABEL[d])
+  for (; r < rest.length; r++) out.push({ ...rest[r], day: spare.shift() ?? `Day ${out.length + 1}` })
+  const order = ALL.map((d) => WEEKDAY_LABEL[d])
+  return out.sort((a, b) => (order.indexOf(a.day) < 0 ? 99 : order.indexOf(a.day)) - (order.indexOf(b.day) < 0 ? 99 : order.indexOf(b.day)))
 }
 
 /** ISO date (YYYY-MM-DD) of the Monday that starts the week containing `d`. */

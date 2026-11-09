@@ -543,6 +543,8 @@ function DashboardContent() {
         grocery_list: {},
         total_estimated_cost: confirmedCost,
       })
+      // Their first "your week" text waits for their picks, so its numbers match what they chose.
+      fetch('/api/texting/week-picked', { method: 'POST' }).catch(() => {})
 
       setMeals(confirmed)
       setListSent(false)

@@ -6,6 +6,7 @@ import { buildStarterWeeks } from '@/lib/starter-week'
 import { sendWelcomeEmails } from '@/lib/welcome-email'
 import { runSundayDropSweep } from '@/lib/sunday-drop'
 import { runMenuDraftSweep, inDraftWindow } from '@/lib/menu-drafts'
+import { sendLateWeekTexts } from '@/lib/texting-setup'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -36,6 +37,9 @@ export async function POST() {
   // The Sunday Drop (lib/sunday-drop): on Sundays, a time-boxed batch per poll until every family has this week's.
   let drop: unknown = null
   const now = new Date()
+  // First "your week" text for families who were picking their own week but never confirmed (30 min after setup).
+  let weekTexts: unknown = null
+  try { weekTexts = await sendLateWeekTexts(admin) } catch (e) { console.error('[week-texts]', e) }
   // Menus going out (lib/menu-drafts): Fridays and early Saturday, build next week's drafts for Sarah's review and
   // apply her edits from the Command Center.
   let drafts: unknown = null
@@ -46,7 +50,7 @@ export async function POST() {
     try { drop = await runSundayDropSweep(admin, now, 25000) } catch (e) { console.error('[sunday-drop]', e) }
   }
   await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, starter, signupAlerts, welcome, drop, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
-  return NextResponse.json({ ...report, signupAlerts, welcome, drop, drafts })
+  return NextResponse.json({ ...report, signupAlerts, welcome, drop, drafts, weekTexts })
 }
 
 export async function GET() { return POST() }
