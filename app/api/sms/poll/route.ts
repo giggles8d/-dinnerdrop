@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { pollInbound } from '@/lib/texting'
 import { sendSignupAlerts } from '@/lib/signup-alerts'
+import { buildStarterWeeks } from '@/lib/starter-week'
 import { sendWelcomeEmails } from '@/lib/welcome-email'
 import { runSundayDropSweep } from '@/lib/sunday-drop'
 
@@ -24,6 +25,9 @@ export async function POST() {
   const report = await pollInbound(admin)
   // New sign-up alerts to Sarah's phone (lib/signup-alerts); never let them break the poll.
   let signupAlerts: unknown = null
+  // Before the sign-up text, so it can say a starter week was built (lib/starter-week).
+  let starter: unknown = null
+  try { starter = await buildStarterWeeks(admin) } catch (e) { console.error('[starter-week]', e) }
   try { signupAlerts = await sendSignupAlerts(admin) } catch (e) { console.error('[signup-alerts]', e) }
   // Sarah's personal welcome email to every new sign-up (lib/welcome-email).
   let welcome: unknown = null
@@ -34,7 +38,7 @@ export async function POST() {
   if (now.getUTCDay() === 0 || (now.getUTCDay() === 1 && now.getUTCHours() < 8)) {
     try { drop = await runSundayDropSweep(admin, now, 25000) } catch (e) { console.error('[sunday-drop]', e) }
   }
-  await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, signupAlerts, welcome, drop, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
+  await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, starter, signupAlerts, welcome, drop, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
   return NextResponse.json({ ...report, signupAlerts, welcome, drop })
 }
 

@@ -181,6 +181,8 @@ function OnboardingQuizInner() {
       return
     }
 
+    // A starter week we built while they were away (lib/starter-week) is rebuilt from these answers.
+    await fetch('/api/first-plan', { method: 'POST' }).catch(() => {})
     const destination = nextUrl && nextUrl.startsWith('/') ? nextUrl : '/dashboard'
     router.push(destination)
     router.refresh()

@@ -17,7 +17,9 @@ export async function POST() {
   if (!user) return NextResponse.json({ ok: false, reason: 'signed out' }, { status: 401 })
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   try {
-    const r = await buildFirstPlan(admin, user.id)
+    // Setup finished (the walkthrough sets onboarding_complete) → a waiting starter week is rebuilt from the answers.
+    const { data: prof } = await admin.from('profiles').select('onboarding_complete').eq('id', user.id).single()
+    const r = await buildFirstPlan(admin, user.id, { afterSetup: !!prof?.onboarding_complete })
     if (!r.ok) return NextResponse.json(r)
     const meals = await attachLibraryImages(admin, r.meals)
     // First text for a family that gave us a number in setup: "your week is ready" + the list link.
