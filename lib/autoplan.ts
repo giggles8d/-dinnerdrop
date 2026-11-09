@@ -19,11 +19,12 @@ export interface AutoPlanProfile {
   dietary_needs: string[] | null
 }
 
-/** Generate + save a plan for a family without them lifting a finger. */
-export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<Meal[] | null> {
-  // Never ordered (Sarah, Nov 9 2026: "try very hard every week" for families who signed up but haven't bought):
-  // their weekly menu follows the first-week rules (familiar kid favorites, no seafood unless asked), not new AI
-  // dishes. Last week's dinners are left out so it's a fresh week. Falls back to the AI planner if the library can't.
+/**
+ * Next week's dinners for a family, not saved. Never ordered (Sarah, Nov 9 2026: "try very hard every week"): the
+ * first-week rules (familiar kid favorites, no seafood unless asked, none of last week's dinners) from the library.
+ * Everyone else, or if the library can't fill it: the AI planner.
+ */
+export async function buildWeekMeals(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<{ meals: Meal[]; source: 'library' | 'ai' } | null> {
   const { count: sends } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
   if (!(sends ?? 0)) {
     try {
@@ -31,14 +32,9 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
       const { data: last } = await admin.from('meal_plans').select('meals').eq('user_id', p.id).order('created_at', { ascending: false }).limit(2)
       const recent = (last ?? []).flatMap((x) => ((x.meals ?? []) as Meal[]).map((m) => m.name))
       const lw = await libraryWeek(admin, p.id, recent, { firstWeek: true })
-      if (lw.ok && lw.meals.length) {
-        const chosen = assignNights(lw.meals, lw.shape)
-        const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
-        await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
-        return chosen
-      }
+      if (lw.ok && lw.meals.length) return { meals: assignNights(lw.meals, lw.shape), source: 'library' }
     } catch (e) {
-      console.error('autoPlan library week', p.id, e)
+      console.error('buildWeekMeals library week', p.id, e)
     }
   }
   const base = process.env.NEXT_PUBLIC_APP_URL || APP
@@ -62,9 +58,27 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
   const shape: PlanShape = data.plan ?? { dinnersPerWeek: settings.plan.dinnersPerWeek, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   // Family picks and ideas lead the list; the rest of the week keeps to the variety rules (lib/variety).
   const chosen = assignNights(pickVaried(data.meals ?? [], shape.dinnersPerWeek, [], varietyLimits(shape.dinnersPerWeek)), shape)
-  if (!chosen.length) return null
+  return chosen.length ? { meals: chosen, source: 'ai' } : null
+}
+
+/**
+ * Generate + save a plan for a family without them lifting a finger. If Sarah reviewed this week's menu on the
+ * Command Center (lib/menu-drafts), the reviewed draft goes out instead (or nothing, if she skipped the family).
+ */
+export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<Meal[] | null> {
+  const { data: draft } = await admin.from('menu_drafts').select('id, user_id, week_start, meals, edits, status').eq('user_id', p.id).eq('week_start', weekStart).maybeSingle()
+  let chosen: Meal[] | null = null
+  if (draft) {
+    if (draft.status === 'skipped') return null
+    if (draft.status === 'sent') return null
+    const { applyDraftEdits } = await import('@/lib/menu-drafts')
+    chosen = await applyDraftEdits(admin, draft as never)
+  }
+  if (!chosen?.length) chosen = (await buildWeekMeals(admin, p, settings, weekStart))?.meals ?? null
+  if (!chosen?.length) return null
   const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
+  if (draft) await admin.from('menu_drafts').update({ status: 'sent', sent_at: new Date().toISOString() }).eq('id', draft.id)
   return chosen
 }
 
