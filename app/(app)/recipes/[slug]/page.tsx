@@ -23,8 +23,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const cost = Number(r.estimated_cost ?? 0)
   const description = `${r.name}: ${mins ? `${mins} minutes` : 'weeknight dinner'}, serves ${r.servings ?? 4}${cost > 0 ? `, about $${cost.toFixed(0)}` : ''}. Ingredients, steps, and a grocery list that lands in your Instacart cart in one tap.`
   const url = `https://www.dinnerdrop.app/recipes/${r.slug}`
+  // Google shows about 60 characters of a title (Nov 8 2026 review: 755 recipe titles ran past that).
+  // Longest form that fits: "Name — Family Dinner Recipe | DinnerDrop", then "Name | DinnerDrop", then the name alone.
+  const title = [`${r.name} — Family Dinner Recipe | DinnerDrop`, `${r.name} Recipe | DinnerDrop`, `${r.name} | DinnerDrop`].find((t) => t.length <= 60) ?? r.name
   return {
-    title: `${r.name} — Family Dinner Recipe | DinnerDrop`,
+    title,
     description,
     alternates: { canonical: url },
     openGraph: { title: r.name, description, url, siteName: 'DinnerDrop', type: 'article', images: [r.image_url ? { url: r.image_url, alt: r.name } : { url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] },

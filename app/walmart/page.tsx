@@ -5,7 +5,8 @@ export const metadata: Metadata = {
   title: 'Meal Plan with Walmart Grocery Pickup — DinnerDrop',
   description: 'Five weeknight dinners planned for your family and budget, every ingredient matched to a Walmart product, and one tap fills your Walmart cart for pickup or delivery. Free, no card.',
   alternates: { canonical: 'https://www.dinnerdrop.app/walmart' },
-  openGraph: { title: 'Meal Plan with Walmart Grocery Pickup — DinnerDrop', description: 'Five dinners, one list, your Walmart cart filled in one tap. Free.' },
+  openGraph: { title: 'Meal Plan with Walmart Grocery Pickup — DinnerDrop', description: 'Five dinners, one list, your Walmart cart filled in one tap. Free.', url: 'https://www.dinnerdrop.app/walmart', siteName: 'DinnerDrop', type: 'website', images: [{ url: 'https://www.dinnerdrop.app/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] },
+  twitter: { card: 'summary_large_image', images: ['https://www.dinnerdrop.app/og-image.png'] },
 }
 
 const GREEN = '#1a5c38'

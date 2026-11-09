@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import PwaRegister from "@/components/PwaRegister";
+import { SOCIAL } from "@/lib/social";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -70,6 +71,7 @@ export default function RootLayout({
               "name": "DinnerDrop",
               "url": "https://www.dinnerdrop.app",
               "logo": "https://www.dinnerdrop.app/logo.png",
+              "sameAs": SOCIAL.map((s) => s.href),
               "email": "sarah@dinnerdrop.app",
               "founder": { "@type": "Person", "name": "Sarah Etzl" },
               "contactPoint": { "@type": "ContactPoint", "email": "sarah@dinnerdrop.app", "contactType": "customer support", "url": "https://www.dinnerdrop.app/help" }

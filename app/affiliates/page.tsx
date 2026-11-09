@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   title: 'DinnerDrop Affiliate Program — earn 30% recommending a dinner planner parents keep',
   description: 'Creators, bloggers and newsletter writers: earn 30% of the first year of every Family subscription you refer. 60-day cookie, monthly payouts, a free product to recommend.',
   alternates: { canonical: 'https://www.dinnerdrop.app/affiliates' },
-  openGraph: { title: 'DinnerDrop Affiliate Program', description: 'Earn 30% of the first year of every Family subscription you refer.', url: 'https://www.dinnerdrop.app/affiliates', siteName: 'DinnerDrop', type: 'website' },
+  openGraph: { title: 'DinnerDrop Affiliate Program', description: 'Earn 30% of the first year of every Family subscription you refer.', url: 'https://www.dinnerdrop.app/affiliates', siteName: 'DinnerDrop', type: 'website', images: [{ url: 'https://www.dinnerdrop.app/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] },
+  twitter: { card: 'summary_large_image', images: ['https://www.dinnerdrop.app/og-image.png'] },
 }
 
 const TERMS = [

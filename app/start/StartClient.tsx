@@ -7,6 +7,7 @@ import StorePriceExample from '@/components/StorePriceExample'
 import { InstacartCarrot, PoweredByInstacart } from '@/components/InstacartMark'
 import FamilyTextingSection from '@/components/FamilyTextingSection'
 import CartOfferBanner from '@/components/CartOfferBanner'
+import SocialLinks from '@/components/SocialLinks'
 
 // Primary conversion page for ads and campaigns.
 // Offer (2026-10-18): Free forever, no card — unlimited plans + one-tap Instacart cart.
@@ -80,7 +81,7 @@ export default function StartPage() {
           <PoweredByInstacart />
           <span className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD, color: GREEN }}>
             <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ backgroundColor: GOLD }} />
-            Over 200 families plan dinner with DinnerDrop
+            Over 400 families plan dinner with DinnerDrop
           </span>
         </div>
         <Suspense fallback={null}><PromoBanner /></Suspense>
@@ -268,6 +269,7 @@ export default function StartPage() {
             <span className="font-bold text-sm" style={{ color: GREEN }}>DinnerDrop</span>
           </div>
           <p>&copy; 2026 DinnerDrop</p>
+          <SocialLinks />
           <div className="flex gap-4">
             <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms</Link>
             <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy</Link>

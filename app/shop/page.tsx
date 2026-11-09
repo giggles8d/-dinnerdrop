@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { activeProducts } from '@/lib/products'
 import BuyButton from '@/components/BuyButton'
 import PublicHeader from '@/components/site/PublicHeader'
+import SocialLinks from '@/components/SocialLinks'
 
 export const metadata: Metadata = {
   title: 'Shop — Printable Meal Planners & Family Kitchen Downloads | DinnerDrop',
@@ -59,6 +60,7 @@ export default function ShopPage() {
         <div className="container mx-auto px-4 py-6 max-w-5xl flex items-center justify-between text-xs text-muted-foreground">
           <span className="font-heading font-bold text-sm text-primary">DinnerDrop</span>
           <p>&copy; 2026 DinnerDrop</p>
+          <SocialLinks />
           <div className="flex gap-4">
             <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>

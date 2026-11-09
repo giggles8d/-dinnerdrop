@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import PublicHeader from '@/components/site/PublicHeader'
+import SocialLinks from '@/components/SocialLinks'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — DinnerDrop',
@@ -271,6 +272,7 @@ export default function PrivacyPage() {
       <footer className="border-t border-border">
         <div className="container mx-auto px-4 py-6 max-w-3xl flex items-center justify-between text-xs text-muted-foreground">
           <p>&copy; 2026 DinnerDrop. All rights reserved.</p>
+          <SocialLinks />
           <div className="flex gap-4">
             <Link href="/terms" className="hover:text-foreground transition-colors">
               Terms
