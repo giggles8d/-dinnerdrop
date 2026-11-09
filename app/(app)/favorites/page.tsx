@@ -276,19 +276,24 @@ export default function FavoritesPage() {
                       <h3 className="text-base font-heading font-semibold text-card-foreground leading-tight pr-8">
                         {meal.name}
                       </h3>
+                      {meal.heartedBy && !meal.familyRecipe && (
+                        <span className="inline-block rounded-full bg-red-50 px-2 py-0.5 text-[11px] font-semibold text-red-700">♥ added by {meal.heartedBy}</span>
+                      )}
                       {meal.familyRecipe && (
                         <span className="inline-block rounded-full bg-accent/15 px-2 py-0.5 text-[11px] font-semibold text-accent-foreground">
                           {meal.addedBy ? `${meal.addedBy}'s recipe` : 'Family recipe'}{meal.familyRating ? ` · ${'★'.repeat(meal.familyRating)}` : ''}
                         </span>
                       )}
                       <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                        <span>{meal.cookTime} min</span>
-                        <span>&middot;</span>
-                        <span>{meal.servings} servings</span>
+                        {meal.cookTime ? <span>{meal.cookTime} min</span> : null}
+                        {meal.cookTime && meal.servings ? <span>&middot;</span> : null}
+                        {meal.servings ? <span>{meal.servings} servings</span> : null}
                       </div>
-                      <div className="inline-block rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
-                        ${meal.estimatedCost.toFixed(2)}
-                      </div>
+                      {typeof meal.estimatedCost === 'number' && (
+                        <div className="inline-block rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
+                          ${meal.estimatedCost.toFixed(2)}
+                        </div>
+                      )}
                     </Link>
                     <button onClick={() => { setEditing({ id: fav.id, meal: JSON.parse(JSON.stringify(meal)) }); setEditMsg('') }} className="mx-4 mb-4 text-xs font-semibold text-primary hover:underline">Edit recipe</button>
                   </div>

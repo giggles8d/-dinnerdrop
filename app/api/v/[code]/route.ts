@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { readTapCode } from '@/lib/tap-vote'
-import type { VoteRound } from '@/lib/texting'
+import { latestPlan, type VoteRound } from '@/lib/texting'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,8 +17,22 @@ export async function POST(req: NextRequest, { params }: { params: { code: strin
   const body = (await req.json().catch(() => ({}))) as { picks?: unknown; favorites?: unknown }
   const favNames = Array.isArray(body.favorites) ? Array.from(new Set(body.favorites.map((x) => String(x).slice(0, 120)))).slice(0, 10) : []
   const picks = Array.isArray(body.picks) ? Array.from(new Set(body.picks.map(Number).filter((n) => Number.isInteger(n) && n > 0))) : []
+
+  // "Which dinners should come back?" (Thursday text, mode 'again'): taps = 'again' votes, exactly like "again 1 3". None = NONE.
+  if (tc.mode === 'again') {
+    const { data: am } = await admin.from('household_members').select('id, household_id, can_vote').eq('id', tc.memberId).maybeSingle()
+    if (!am) return NextResponse.json({ error: 'This link has expired.' }, { status: 404 })
+    const againNames = picks.map((n) => tc.meals![n - 1]).filter((x): x is string => !!x)
+    if (tc.test) return NextResponse.json({ ok: true, test: true, names: againNames })
+    if (am.can_vote === false) return NextResponse.json({ error: 'Voting is turned off for you.' }, { status: 403 })
+    const weekStart = (await latestPlan(admin, tc.ownerId!))?.week_start ?? tc.weekStart!
+    await admin.from('meal_votes').delete().eq('member_id', am.id).eq('week_start', weekStart).eq('vote', 'again')
+    if (againNames.length) await admin.from('meal_votes').insert(againNames.map((meal_name) => ({ household_id: am.household_id, member_id: am.id, week_start: weekStart, meal_name, vote: 'again' })))
+    await admin.from('sms_messages').insert({ household_id: am.household_id, member_id: am.id, direction: 'in', from_number: null, body: `[tapped on the web] ${againNames.length ? `again ${picks.join(' ')}` : 'none to bring back'}`, intent: 'again', twilio_sid: null })
+    return NextResponse.json({ ok: true, names: againNames })
+  }
   const [{ data: round }, { data: m }] = await Promise.all([
-    admin.from('vote_rounds').select('*').eq('id', tc.roundId).maybeSingle(),
+    admin.from('vote_rounds').select('*').eq('id', tc.roundId!).maybeSingle(),
     admin.from('household_members').select('id, household_id, name, can_vote').eq('id', tc.memberId).maybeSingle(),
   ])
   if (!round || !m) return NextResponse.json({ error: 'This link has expired.' }, { status: 404 })
