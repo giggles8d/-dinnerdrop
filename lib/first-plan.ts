@@ -55,16 +55,24 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   // Nov 7 2026: everyone's first week was the same few dinners (one pita recipe went to 86 families in 3 days).
   // Recipes many families already got this week are pushed down, and the week keeps to the variety rules.
   const usage = await recentUsage(admin)
-  const picks = await pickLibraryRecipes(admin, {
-    boost: (r) => -overusePenalty(usage, r.name),
-    limit: dinners + 24,
-    maxCookTime: maxCook,
-    dietary: p.dietary_needs ?? [],
-    excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
-    excludeNames,
-    cuisines: settings.food.cuisines,
-    ignoreKept: true,
-  })
+  // Nov 9 2026: a family ticked six diets at once (vegetarian + keto + paleo + …) and no dinner fits all of them,
+  // so their first week failed. When too few dinners fit, loosen step by step: cuisines first, then the softer
+  // diet styles one at a time. Hard needs (vegetarian, vegan, allergies) are never dropped.
+  const want = Math.min(3, dinners) + 2
+  let picks: Awaited<ReturnType<typeof pickLibraryRecipes>> = []
+  for (const step of relaxSteps(p.dietary_needs ?? [], settings.food.cuisines)) {
+    picks = await pickLibraryRecipes(admin, {
+      boost: (r) => -overusePenalty(usage, r.name),
+      limit: dinners + 24,
+      maxCookTime: maxCook,
+      dietary: step.dietary,
+      excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
+      excludeNames,
+      cuisines: step.cuisines,
+      ignoreKept: true,
+    })
+    if (picks.length >= want) break
+  }
   // First impressions: dinners with a photo first. Sized to the family (cost included).
   const size = p.family_size || 4
   const withPhoto = picks.filter((r) => r.image_url).map((r, i) => recipeToMeal(r, `L${i + 1}`, size))
@@ -77,4 +85,18 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   if (meals.length < Math.min(3, dinners)) return { ok: false, reason: 'not enough library recipes', found: meals.length }
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   return { ok: true, meals, shape }
+}
+
+/** Softer styles drop first (first in this list goes first); anything not listed (vegetarian, vegan, allergies) stays. */
+const SOFT_DIETS = ['paleo', 'keto', 'mediterranean', 'low-carb', 'high-protein', 'heart-healthy', 'diabetic-friendly']
+
+export function relaxSteps(dietary: string[], cuisines: string[]): { dietary: string[]; cuisines: string[] }[] {
+  const steps = [{ dietary, cuisines }]
+  if (cuisines.length) steps.push({ dietary, cuisines: [] })
+  let d = dietary
+  for (const soft of SOFT_DIETS) {
+    const next = d.filter((x) => x.toLowerCase() !== soft)
+    if (next.length !== d.length) { d = next; steps.push({ dietary: d, cuisines: [] }) }
+  }
+  return steps
 }
