@@ -7,14 +7,37 @@ import { selectedStyles, styleByKey, type FoodStyle } from '@/lib/styles'
  * the settings each style presets. The previous styles' presets are removed first; everything else is kept.
  * When styles overlap, the stricter value wins (lowest calorie cap and cook time, every diet, every equipment).
  */
+/**
+ * Which styles win when they clash (Sarah, Nov 9 2026). Families pick up to 3, most important first.
+ * 1. Health needs always apply: Diabetic-friendly, Heart-healthy, Gluten-free.
+ * 2. Then the family's own order.
+ * 3. Only one eating pattern is enforced (Keto, Low-carb, Paleo, Plant-based clash): the highest-ranked one.
+ * 4. A cuisine style (Mediterranean) only limits the cuisine when it is their #1 pick.
+ * 5. Time / budget / equipment styles combine; the strictest time and budget win (below).
+ */
+export const MAX_STYLES = 3
+const HEALTH = ['diabetic', 'heart', 'glutenfree']
+const PATTERNS = ['keto', 'lowcarb', 'paleo', 'plant']
+export function rankStyles(keys: string[]): string[] {
+  const uniq = Array.from(new Set(keys)).filter((k) => !!styleByKey(k))
+  const health = uniq.filter((k) => HEALTH.includes(k))
+  const rest = uniq.filter((k) => !HEALTH.includes(k))
+  return [...health, ...rest].slice(0, Math.max(MAX_STYLES, health.length))
+}
+/** The diets a ranked style list turns on: every health need, plus only the first eating pattern. */
+export function styleDiets(ranked: FoodStyle[]): string[] {
+  const pattern = ranked.find((s) => PATTERNS.includes(s.key))
+  return Array.from(new Set(ranked.filter((s) => HEALTH.includes(s.key) || s === pattern).flatMap((s) => s.diets ?? [])))
+}
+
 export async function applyStyles(supabase: SupabaseClient, userId: string, keys: string[]): Promise<void> {
   const { data: p } = await supabase.from('profiles').select('settings, dietary_needs, weekly_budget, max_cook_time').eq('id', userId).single()
   const settings = mergeSettings(p?.settings)
   const prev = selectedStyles(settings.food)
-  const next = Array.from(new Set(keys)).map((k) => styleByKey(k)).filter((s): s is FoodStyle => !!s)
+  const next = rankStyles(keys).map((k) => styleByKey(k)).filter((s): s is FoodStyle => !!s)
   const prevDiets = new Set(prev.flatMap((s) => s.diets ?? []))
   let diets = ((p?.dietary_needs as string[] | null) ?? []).filter((d) => !prevDiets.has(d))
-  diets = Array.from(new Set([...diets, ...next.flatMap((s) => s.diets ?? [])]))
+  diets = Array.from(new Set([...diets, ...styleDiets(next)]))
 
   const food = { ...settings.food, style: next[0]?.key ?? null, styles: next.map((s) => s.key) }
   for (const st of next) {
@@ -25,7 +48,9 @@ export async function applyStyles(supabase: SupabaseClient, userId: string, keys
   const cals = next.map((s) => s.maxCalories).filter((n): n is number => !!n)
   if (cals.length) food.maxCalories = Math.min(...cals)
   else if (prev.some((s) => s.maxCalories)) food.maxCalories = 0
-  const cuisines = next.flatMap((s) => s.cuisines ?? [])
+  // A cuisine only limits the week when it's their top pick (after any health needs).
+  const top = next.find((s) => !HEALTH.includes(s.key))
+  const cuisines = top?.cuisines ?? []
   if (cuisines.length) food.cuisines = Array.from(new Set(cuisines))
   else if (prev.some((s) => s.cuisines?.length)) food.cuisines = []
 
