@@ -30,12 +30,12 @@ export async function looksLikeFlyer(img: Img): Promise<boolean> {
 }
 
 export async function salesFromImage(img: Img, hint = ''): Promise<{ store: string; validFrom: string; validTo: string; items: SaleItem[] }> {
-  const text = await generateWithClaudeImage(`This is a page of a grocery store's weekly sale flyer${hint ? ` (${hint})` : ''}. Read every sale item with its price. ${EXTRACT_RULES}`, img, 3500)
+  const text = await generateWithClaudeImage(`This is a page of a grocery store's weekly sale flyer${hint ? ` (${hint})` : ''}. Read every sale item with its price. ${EXTRACT_RULES}`, img, 6000)
   return normalize(parseClaudeJSON(text))
 }
 
 export async function salesFromText(text: string, hint = ''): Promise<{ store: string; validFrom: string; validTo: string; items: SaleItem[] }> {
-  const out = await generateWithClaude(`Below is the text of a grocery store's weekly ad${hint ? ` (${hint})` : ''}. Extract every sale item with its price. ${EXTRACT_RULES}\n\nTEXT:\n${text.slice(0, 14000)}`, 3500)
+  const out = await generateWithClaude(`Below is the text of a grocery store's weekly ad${hint ? ` (${hint})` : ''}. Extract every sale item with its price. ${EXTRACT_RULES}\n\nTEXT:\n${text.slice(0, 14000)}`, 6000)
   return normalize(parseClaudeJSON(out))
 }
 

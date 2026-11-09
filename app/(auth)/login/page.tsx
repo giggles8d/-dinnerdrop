@@ -214,7 +214,8 @@ function LoginForm() {
           </button>
         </form>
       )}
-      {!(isNativeApp() && nativePlatform() === 'ios') && (<>
+      {/* Google sign-in is hidden until the Google provider is switched on in Supabase: it has never been on, and every tap ended in "provider is not enabled" (~12 a day, site review Nov 8 2026). Set NEXT_PUBLIC_GOOGLE_SIGNIN=on to show it. */}
+      {process.env.NEXT_PUBLIC_GOOGLE_SIGNIN === 'on' && !(isNativeApp() && nativePlatform() === 'ios') && (<>
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
