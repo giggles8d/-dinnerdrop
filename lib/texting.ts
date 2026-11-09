@@ -281,7 +281,9 @@ export function parseInbound(raw: string): Parsed {
   if (new RegExp(`^(PREFS?|PREFERENCES|MY (PREFS?|PREFERENCES|PROFILE|TASTES?|LIKES|FOODS?)|WHAT (DO I|I) LIKE|WHAT ARE MY (PREFS?|PREFERENCES|LIKES|TASTES?)|SHOW (ME )?MY (PREFS?|PREFERENCES|PROFILE|TASTES?)|(CAN I )?SEE MY (PREFS?|PREFERENCES|PROFILE|TASTES?))${end}`).test(u)) return { kind: 'prefs' }
   // A bare "Add" (Lucas, Nov 1): ask what to add instead of guessing.
   if (new RegExp(`^(ADD|NEED|BUY|GET|GRAB)${end}`).test(u)) return { kind: 'add', items: [] }
-  if (new RegExp(`^(TONIGHT|WHAT'?S (FOR )?DINNER TONIGHT|DINNER TONIGHT|WHAT'?S TONIGHT|WHAT ARE WE (HAVING|EATING) TONIGHT)${end}`).test(u)) return { kind: 'tonight' }
+  // Typos and "today" count ("Whatd for dinner tonight?" went to the AI step and came back as cooking steps, Nov 9 2026),
+  // and so does asking for tonight's picture.
+  if (new RegExp(`^(TONIGHT|WHAT('?[SD]| IS)? (FOR )?DINNER (TONIGHT|TODAY)|DINNER TONIGHT|WHAT'?S TONIGHT|WHAT ARE WE (HAVING|EATING)( FOR DINNER)? (TONIGHT|TODAY)|((SEND|SHOW)( ME)? )?(A |THE )?(PIC|PICTURE|PHOTO|IMAGE) (OF|FOR) (TONIGHT|TONIGHT'?S (DINNER|MEAL)|DINNER( TONIGHT)?))${end}`).test(u)) return { kind: 'tonight' }
   if (new RegExp(`^(MENU|DINNERS|PLAN|THIS WEEK|WHAT'?S FOR DINNER( THIS WEEK)?|WHAT'?S THE PLAN)${end}`).test(u)) return { kind: 'menu' }
   if (new RegExp(`^(TALLY|RESULTS?|SCORE|STANDINGS|VOTES?|VOTE (SO FAR|STATUS|COUNT|RESULTS?)|WHO('?S| HAS)? VOTED|WHAT'?S THE VOT(E|ING)( SO FAR)?|HOW'?S THE VOT(E|ING)( GOING)?|WHO'?S WINNING)${end}`).test(u)) return { kind: 'tally' }
   if (new RegExp(`^(TEXT ONLY|TEXT|PLAIN|PLAIN TEXT|NO PICS|NO PICTURES?|WORDS ONLY|JUST TEXT|SEND (IT )?AS TEXT)${end}`).test(u)) return { kind: 'text_only' }
@@ -647,7 +649,15 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       const t = tonightMeal(meals, tz)
       if (!t) return { reply: meals.length ? `Nothing planned for tonight. This week:\n${menuLines(meals)}` : `No dinners planned yet — ${family} hasn't built this week.`, handled: true, member: m }
       const n = meals.indexOf(t) + 1
-      return { reply: `Tonight: ${t.name}${t.cookTime ? ` · ${t.cookTime} min` : ''}${t.side?.name ? ` · with ${t.side.name}` : ''}${t.cookedAt ? ' (already cooked ✓)' : ''}.${t.plateNotes?.length ? ` ${t.plateNotes.join(' ')}` : ''} Text RECIPE ${n} for the how-to.`, handled: true, member: m }
+      const line = `Tonight: ${t.name}${t.cookTime ? ` · ${t.cookTime} min` : ''}${t.side?.name ? ` · with ${t.side.name}` : ''}${t.cookedAt ? ' (already cooked ✓)' : ''}.${t.plateNotes?.length ? ` ${t.plateNotes.join(' ')}` : ''} Text RECIPE ${n} for the how-to.`
+      // The dinner's photo goes with it (Rich, Nov 9 2026: "I don't need the cooking instructions, just the image"),
+      // unless they chose TEXT ONLY. Sent here as one picture message; the plain reply is the fallback when the
+      // photo isn't ready or the picture message can't go.
+      if (plan && t.imageUrl && !settings.texting.plainTextIds.includes(m.id)) {
+        const pic = dinnerImageUrl(plan.id, n)
+        if (await pictureReady(pic) && await textMember(admin, m, line, 'reply', undefined, pic)) return { reply: '', handled: true, member: m }
+      }
+      return { reply: line, handled: true, member: m }
     }
     case 'recipe': {
       const src = round ? round.candidates : meals
@@ -1021,8 +1031,8 @@ Facts you may answer from (the planner is ${facts.family}):
 - Tonight's recipe: ${facts.tonightRecipe ?? 'none'}
 - The household: ${facts.people?.length ? facts.people.join(' | ') : 'unknown'}
 - ${facts.ownerMessage ? `${facts.family} recently texted the family: "${facts.ownerMessage}"` : `${facts.family} hasn't texted the family recently`}
-- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product, a store flyer, a dinner (box, plate or recipe card) or a screenshot, SAVE THIS + a dinner the way they make it (saved to the family's own recipes, which come up in future votes — this is how the family gets "our normal dinners"), TEXT ONLY (the vote comes as plain words instead of a picture, for phones that don't show pictures), and any food, cooking or grocery question.
-- Never offer or promise something texting can't do (e.g. sending dinners one at a time, calling someone, or "rebuilding" / "fixing" the grocery list). Never say you did or are doing something unless it's one of the commands above. The grocery list rebuilds itself from the week's dinners when they open it; if they say it's still wrong after opening it, say the DinnerDrop team will check it today and text them back (someone reviews every text twice a day). If they can't see the pictures, tell them to reply TEXT ONLY.` : ''}
+- What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT (tonight's dinner with its photo, no cooking steps), TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product, a store flyer, a dinner (box, plate or recipe card) or a screenshot, SAVE THIS + a dinner the way they make it (saved to the family's own recipes, which come up in future votes — this is how the family gets "our normal dinners"), TEXT ONLY (the vote comes as plain words instead of a picture, for phones that don't show pictures), and any food, cooking or grocery question.
+- Never offer or promise something texting can't do (e.g. sending dinners one at a time, calling someone, or "rebuilding" / "fixing" the grocery list). Never say you did or are doing something unless it's one of the commands above. The grocery list rebuilds itself from the week's dinners when they open it; if they say it's still wrong after opening it, say the DinnerDrop team will check it today and text them back (someone reviews every text twice a day). You can't send a picture yourself and you can't change how future texts look, so never say you will: if they want the picture of tonight's dinner, want it without the cooking steps, or say a dinner's picture didn't come, tell them to text TONIGHT. Only when pictures don't show on their phone at all, tell them to reply TEXT ONLY.` : ''}
 
 Return ONLY JSON:
 {"picks":[],"skips":[],"again":[],"add":[],"suggest":[],"likes":[],"dislikes":[],"allergies":[],"needs":[],"allGood":false,"none":false,"correction":false,"removeLastAdded":false,"question":false,"relay":false,"answer":"","clarify":""}
@@ -1133,6 +1143,20 @@ function menuImageUrl(roundId: string): string {
   const base = (process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app').replace(/\/$/, '')
   // Version stamp so a re-send never gets a CDN copy rendered before a fix (Twilio fetches the image once, at send time).
   return `${base}/api/sms/menu-image/${roundId}?v=${Date.now().toString(36)}`
+}
+
+/** One planned dinner's photo as a JPEG, texted with the TONIGHT reply (see app/api/sms/dinner-image). n is 1-based. */
+function dinnerImageUrl(planId: string, n: number): string {
+  const base = (process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app').replace(/\/$/, '')
+  return `${base}/api/sms/dinner-image/${planId}/${n}`
+}
+
+/** True when the picture really loads: a picture message whose image can't be fetched is never delivered at all. */
+async function pictureReady(url: string): Promise<boolean> {
+  try {
+    const r = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(6000) })
+    return r.ok && (r.headers.get('content-type') ?? '').startsWith('image/')
+  } catch { return false }
 }
 
 export function voteBody(familyName: string, round: VoteRound, showCarbs = false): string {
