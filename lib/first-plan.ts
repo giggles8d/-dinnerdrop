@@ -13,13 +13,16 @@ import { DEFAULT_SHAPE, mondayOf, type PlanShape } from '@/lib/plan'
 import { savePlan } from '@/lib/autoplan'
 import { trackStep } from '@/lib/activation'
 import { grantNewFamilyTrial } from '@/lib/family-grant'
+import { dropStarterWeek } from '@/lib/starter-week'
 import type { Meal } from '@/types'
 
 export type FirstPlanResult =
   | { ok: true; meals: Meal[]; totalCost: number; existing: boolean }
   | { ok: false; reason: string }
 
-export async function buildFirstPlan(admin: SupabaseClient, userId: string): Promise<FirstPlanResult> {
+export async function buildFirstPlan(admin: SupabaseClient, userId: string, opts: { afterSetup?: boolean } = {}): Promise<FirstPlanResult> {
+  // Finished setup after we'd built them a starter week (lib/starter-week)? Rebuild it from their answers.
+  if (opts.afterSetup) await dropStarterWeek(admin, userId).catch(() => false)
   // Never overwrite: anyone who already has a plan keeps it.
   const { data: existing } = await admin.from('meal_plans').select('meals, total_estimated_cost').eq('user_id', userId).order('created_at', { ascending: false }).limit(1)
   if (existing?.[0]) return { ok: true, meals: existing[0].meals as Meal[], totalCost: Number(existing[0].total_estimated_cost) || 0, existing: true }

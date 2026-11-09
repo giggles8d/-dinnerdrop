@@ -8,6 +8,7 @@ export const ACTIVATION_STEPS = [
   'dashboard_view',      // opened the dashboard (once per browser session)
   'first_plan_saved',    // first week saved for them (meta.source: library | ai)
   'first_plan_failed',   // instant plan couldn't be built; fell back to AI generation
+  'starter_week_built',  // left before setup; we built a week from their sign-up answers (lib/starter-week)
   'recipe_view',         // opened a recipe (once per session)
   'grocery_list_view',   // opened the grocery list (once per session)
   'quick_setup_done',    // answered the 3 first-visit questions (size, budget, avoid)
