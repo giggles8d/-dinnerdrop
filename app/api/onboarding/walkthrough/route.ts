@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   const familySize = Math.min(Math.max(Number(b.familySize) || people.length || 4, 1), 12)
   const weeklyBudget = /^\$\d{2,4}\+?$/.test(String(b.weeklyBudget ?? '')) ? String(b.weeklyBudget) : '$150'
   const dietaryNeeds = list(b.dietaryNeeds, 8)
-  const styles = list(b.styles, 13).filter((k) => FOOD_STYLES.some((s) => s.key === k))
+  const styles = list(b.styles, 13).filter((k) => FOOD_STYLES.some((s) => s.key === k))   // ranked + capped in applyStyles
   const busy = [15, 20, 30, 45, 60].includes(Number(b.busyMinutes)) ? Number(b.busyMinutes) : 30
   const cookDays = list(b.cookDays, 7).filter((d): d is Weekday => (WEEKDAYS as string[]).includes(d) && d !== 'sun')
   const voteDay = (WEEKDAYS as string[]).includes(String(b.voteDay)) ? (String(b.voteDay) as Weekday) : 'sat'

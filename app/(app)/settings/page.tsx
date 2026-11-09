@@ -9,7 +9,7 @@ import ProductPrefsEditor from '@/components/ProductPrefsEditor'
 import SalesCard from '@/components/SalesCard'
 import StoreDealsSettings from '@/components/StoreDealsSettings'
 import { FOOD_STYLES, selectedStyles } from '@/lib/styles'
-import { applyStyles } from '@/lib/apply-style'
+import { applyStyles, MAX_STYLES } from '@/lib/apply-style'
 import { createClient } from '@/lib/supabase'
 import {
   mergeSettings, DEFAULT_SETTINGS, WEEKDAYS, WEEKDAY_LABEL, CUISINE_OPTIONS, PROTEIN_OPTIONS,
@@ -557,14 +557,14 @@ export default function SettingsPage() {
                     </div>
                   )}
                 </Field>
-                <Field label="Your style" hint="Pick as many as fit your family (Keto + Slow cooker, say). Each one sets diets, time, calories or equipment for you; change any of those below afterwards.">
+                <Field label="Your style" hint="Pick up to 3, most important first (Keto + Slow cooker, say). Health needs like Diabetic-friendly always come first, and only one eating pattern (Keto, Low-carb, Paleo or Plant-based) is used. Each one sets diets, time, calories or equipment for you; change any of those below afterwards.">
                   <div className="flex flex-wrap gap-2">
                     {FOOD_STYLES.map((st) => {
                       const picked = selectedStyles(settings.food).map((x) => x.key)
                       const on = picked.includes(st.key)
                       return (
                         <PickChip key={st.key} on={on} title={st.blurb}
-                          onClick={async () => { if (!profile) return; if (dirty) await save(); setSaving(true); await applyStyles(supabase, profile.id, on ? picked.filter((k) => k !== st.key) : [...picked, st.key]); await load(); setSaving(false); setSaved(on ? 'Style removed (your other changes were saved too)' : 'Style added (your other changes were saved too)') }}>
+                          onClick={async () => { if (!profile) return; if (!on && picked.length >= MAX_STYLES) { setSaved(`Up to ${MAX_STYLES} styles: remove one first`); return } if (dirty) await save(); setSaving(true); await applyStyles(supabase, profile.id, on ? picked.filter((k) => k !== st.key) : [...picked, st.key]); await load(); setSaving(false); setSaved(on ? 'Style removed (your other changes were saved too)' : 'Style added (your other changes were saved too)') }}>
                           {st.emoji} {st.name}
                         </PickChip>
                       )

@@ -179,11 +179,15 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
 
       {step === 2 && (
         <div>
-          {head('Your style', 'Pick as many as fit your family. You can change these anytime in Settings.')}
+          {head('Your style', 'Pick up to 3 that matter most, most important first. Health needs like Diabetic-friendly always come first. You can change these anytime in Settings.')}
           <div className="flex flex-wrap gap-2 mt-5">
-            {FOOD_STYLES.map((s) => <Pick key={s.key} on={styles.includes(s.key)} onClick={() => setStyles((xs) => toggle(xs, s.key))}>{s.emoji} {s.name}</Pick>)}
+            {FOOD_STYLES.map((s) => {
+              const rank = styles.indexOf(s.key)
+              const full = rank < 0 && styles.length >= 3
+              return <Pick key={s.key} on={rank >= 0} onClick={() => { if (!full) setStyles((xs) => toggle(xs, s.key)) }}>{rank >= 0 ? `${rank + 1} · ` : ''}{s.emoji} {s.name}</Pick>
+            })}
           </div>
-          {styleNames.length ? <p className="text-xs mt-2 text-primary font-medium">✓ Picked: {styleNames.join(', ')}</p> : <p className="text-xs mt-2 text-amber-700">Nothing picked yet: you’ll get a mix of family-friendly dinners.</p>}
+          {styleNames.length ? <p className="text-xs mt-2 text-primary font-medium">✓ In order: {styles.map((k) => { const st = FOOD_STYLES.find((x) => x.key === k); return st ? `${st.emoji} ${st.name}` : k }).join(' → ')}{styles.length >= 3 ? ' (that’s 3: tap one to swap it out)' : ''}</p> : <p className="text-xs mt-2 text-amber-700">Nothing picked yet: you’ll get a mix of family-friendly dinners.</p>}
           <Label>Any diet for the whole table? <span className="font-normal text-muted-foreground">(skip if not)</span></Label>
           <div className="flex flex-wrap gap-2">{DIETS.map((d) => <Pick key={d} on={diets.includes(d)} onClick={() => setDiets((xs) => toggle(xs, d))}>{d}</Pick>)}</div>
           {nextBtn()}
