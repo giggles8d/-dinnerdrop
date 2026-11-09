@@ -165,6 +165,14 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
           </div>
           {people.length < 10 && <button type="button" onClick={() => setPeople((xs) => [...xs, { name: '', role: 'kid', likes: [], dislikes: [], allergies: [], phone: '' }])} className="mt-2 text-sm font-semibold text-primary">+ Add someone</button>}
           <p className="text-xs mt-2 text-primary font-medium">✓ {familySize} {familySize === 1 ? 'person' : 'people'} at dinner</p>
+          {/* Nov 9 2026: the number was only asked on screen 8, and 7 in 10 never gave one. Ask here, for the parent's own benefit. */}
+          <div className="mt-5 bg-primary/5 border border-primary/20 rounded-xl px-3 py-3">
+            <label htmlFor="wt-phone" className="block text-sm font-semibold text-foreground">📱 Text me my week and grocery list <span className="font-normal text-muted-foreground">(optional)</span></label>
+            <p className="text-xs text-muted-foreground mt-0.5">Swap a dinner or add milk to the list just by texting back. No app to open.</p>
+            <input id="wt-phone" value={people[0]?.phone ?? ''} onChange={(e) => setPerson(0, { phone: e.target.value })} inputMode="tel" autoComplete="tel" placeholder="(555) 555-1234"
+              className="mt-2 w-full sm:w-64 px-2 py-1.5 text-base rounded-md border border-input bg-background" />
+            <p className="text-[11px] text-muted-foreground mt-1.5">Msg & data rates may apply. Reply STOP anytime.</p>
+          </div>
           {nextBtn()}
         </div>
       )}
@@ -296,7 +304,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
 
       {step === 7 && (
         <div>
-          {head('Let the family vote', 'Everyone gets the dinner ideas by text, replies with numbers, and anyone can text ADD milk to put it on the list. All optional.')}
+          {head('Let the family vote', 'Everyone gets the dinner ideas by text, replies with numbers, and anyone can text ADD milk to put it on the list. All optional. After setup you can also send them a link to join themselves.')}
           <div className="mt-5 space-y-2">
             {people.map((p, i) => (p.name.trim() || i === 0) && (
               <div key={i} className="flex items-center gap-3 bg-white border rounded-xl px-3 py-2">

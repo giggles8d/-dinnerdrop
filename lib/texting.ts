@@ -423,13 +423,42 @@ function recipeText(m: Meal): string {
 export interface InboundResult { reply: string; handled: boolean; member?: MemberRow }
 
 /** Handle a text from a known member. Returns the reply to send (via TwiML). */
+/**
+ * A family member joins by texting "JOIN <code> <first name>" from the link the planner shared (/join/<code>,
+ * Nov 9 2026: typing everyone's numbers in setup almost never happened). <code> is the planner's referral code.
+ * Texting us themselves is the opt-in. Unknown numbers that don't say JOIN are left alone, as before.
+ */
+async function joinByText(admin: SupabaseClient, phone: string, body: string, sid: string | null): Promise<InboundResult> {
+  const j = body.trim().match(/^join\s+([a-z0-9]{6,10})\b\s*(.{0,40})$/i)
+  if (!j) return { reply: '', handled: false }
+  const { data: owner } = await admin.from('profiles').select('id, household_id, full_name').eq('referral_code', j[1].toUpperCase()).maybeSingle()
+  // Not a DinnerDrop family code: leave it alone (this number is shared with FamCEO, which may have its own JOIN codes).
+  if (!owner?.household_id) return { reply: '', handled: false }
+  const name = (j[2] || '').replace(/[^A-Za-z0-9À-ÿ '.-]/g, '').trim().split(/\s+/)[0]?.slice(0, 30) || 'Family'
+  const nice = name.charAt(0).toUpperCase() + name.slice(1)
+  const now = new Date().toISOString()
+  const { data: row } = await admin.from('household_members').insert({ household_id: owner.household_id, name: nice, role: 'adult', age_band: 'adult', phone, phone_opt_in_at: now, phone_opted_out: false, can_vote: true, can_add: true }).select('*').single()
+  await admin.from('sms_messages').insert({ household_id: owner.household_id, member_id: row?.id ?? null, direction: 'in', from_number: phone, body, intent: 'join', twilio_sid: sid })
+  try { await admin.from('activation_events').insert({ user_id: owner.id, step: 'texting_setup', meta: { via: 'join_link' } }) } catch { /* tracking only */ }
+  const first = (owner.full_name || '').trim().split(' ')[0]
+  const fam = first ? `${first.charAt(0).toUpperCase() + first.slice(1)}'s family` : 'the family'
+  // Let the planner know who joined.
+  const { data: me } = await admin.from('household_members').select('*').eq('household_id', owner.household_id).eq('profile_id', owner.id).not('phone', 'is', null).limit(1)
+  if (me?.[0]) await textMember(admin, me[0] as MemberRow, `DinnerDrop: ${nice} joined the family dinner texts. 🎉`, 'member_joined')
+  return {
+    reply: `DinnerDrop: welcome${nice !== 'Family' ? `, ${nice}` : ''}! You're in ${fam}'s dinner texts. You'll get the week's dinner ideas to vote on, and you can text ADD + anything (like ADD granola bars) to put it on the grocery list. Reply STOP anytime.`,
+    handled: true,
+    member: row as MemberRow | undefined,
+  }
+}
+
 export async function handleInbound(admin: SupabaseClient, from: string, body: string, sid: string | null): Promise<InboundResult> {
   const phone = normalizePhone(from) ?? from
   // One phone can sit on two rows (the planner's number typed in a family row): prefer the planner's own row.
   const { data: mrows } = await admin.from('household_members').select('*').eq('phone', phone).order('profile_id', { ascending: true, nullsFirst: false }).limit(5)
   const rowsForPhone = (mrows ?? []) as MemberRow[]
   const m = rowsForPhone.find((r) => r.profile_id) ?? rowsForPhone[0]
-  if (!m) return { reply: '', handled: false }
+  if (!m) return joinByText(admin, phone, body, sid)
 
   let parsed = parseInbound(body)
   const round = await openRound(admin, m.household_id)
@@ -1514,6 +1543,13 @@ async function ownerForResolve(admin: SupabaseClient, ownerId: string) {
 }
 
 /** A dinner for a swap/add: one of their favorites by name, else the library / AI (like a family idea). */
+/** "SWAP 2" with no dish named: the best library dinner for this family that isn't already in the week. */
+export async function anyOtherDinner(admin: SupabaseClient, ownerId: string, exclude: string[]): Promise<Meal | null> {
+  const { libraryWeek } = await import('@/lib/first-plan')
+  const r = await libraryWeek(admin, ownerId, exclude).catch(() => null)
+  return r && r.ok && r.meals[0] ? { ...r.meals[0] } : null
+}
+
 export async function dinnerFor(admin: SupabaseClient, ownerId: string, dish: string, exclude: string[]): Promise<Meal | null> {
   const want = dish.trim().toLowerCase()
   const { data: favs } = await admin.from('favorites').select('meal_name, meal_data').eq('user_id', ownerId)
@@ -1538,7 +1574,7 @@ export async function editDraftRound(admin: SupabaseClient, ownerId: string, rou
   }
   if (op.kind === 'swap' && !cands[op.n - 1]) return { error: `There's no #${op.n}.` }
   if (cands.length >= 15 && op.kind === 'add') return { error: 'The vote already has 15 dinners. Drop one first.' }
-  const meal = op.meal ?? (op.dish ? await dinnerFor(admin, ownerId, op.dish, names) : null)
+  const meal = op.meal ?? (op.dish ? await dinnerFor(admin, ownerId, op.dish, names) : op.kind === 'swap' ? await anyOtherDinner(admin, ownerId, names) : null)
   if (!meal) return { error: `I couldn't make "${op.dish ?? 'that'}" fit your family's rules. Try another dinner.` }
   if (op.kind === 'swap') cands[op.n - 1] = { ...meal, day: cands[op.n - 1].day }
   else cands.push({ ...meal, day: '' })
@@ -1552,7 +1588,9 @@ export async function swapPlanDinner(admin: SupabaseClient, owner: OwnerRow, n: 
   if (!plan?.meals?.length) return `There's no week planned yet to change.`
   const old = plan.meals[n - 1]
   if (!old) return `There's no #${n} this week. Text MENU to see the numbers.`
-  const meal = typeof dish === 'string' ? await dinnerFor(admin, owner.id, dish, plan.meals.map((m) => m.name)) : dish
+  const meal = typeof dish !== 'string' ? dish
+    : dish.trim() ? await dinnerFor(admin, owner.id, dish, plan.meals.map((m) => m.name))
+    : await anyOtherDinner(admin, owner.id, plan.meals.map((m) => m.name))
   if (!meal) return `I couldn't make "${typeof dish === 'string' ? dish : 'that'}" fit your family's rules. Try another dinner.`
   const meals = [...plan.meals]
   meals[n - 1] = { ...meal, day: old.day, suggestedNight: old.suggestedNight }

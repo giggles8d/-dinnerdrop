@@ -68,6 +68,9 @@ export function parseLeaderCommand(raw: string): LeaderCommand | null {
   if (/^(send|send it|send now|send the vote|send vote|looks good,? send( it)?|ok,? send( it)?)$/i.test(t)) return { kind: 'send' }
   let m = t.match(/^(?:swap|change|replace|switch)\s*#?\s*(\d{1,2})\s*(?:for|with|to|into)\s+(.{2,80})$/i)
   if (m) return { kind: 'swap', n: Number(m[1]), dish: m[2].trim() }
+  // "SWAP 2" on its own: any other dinner that fits the family (the first text invites exactly this, Nov 9 2026).
+  m = t.match(/^(?:swap|change|replace|switch|new)\s*#?\s*(\d{1,2})$/i)
+  if (m) return { kind: 'swap', n: Number(m[1]), dish: '' }
   m = t.match(/^(?:drop|remove|cut|take off|delete)\s*#?\s*(\d{1,2})$/i)
   if (m) return { kind: 'drop', n: Number(m[1]) }
   m = t.match(/^add\s+(?:a\s+)?(?:dinner|meal|option)\s*[:\-]?\s*(.{2,80})$/i)
