@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { trackOnce } from '@/lib/activation'
 import { FOOD_STYLES } from '@/lib/styles'
+import { takePickedStyle, clearPickedStyle } from '@/lib/picked-style'
 import { GOALS, type Goal } from '@/lib/onboarding'
 import { MIX_GROUPS, MIX_EVERY, type MixKey } from '@/lib/protein-mix'
 import { WEEKDAY_LABEL, type Weekday } from '@/lib/settings'
@@ -57,6 +58,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   ])
   const [who, setWho] = useState(0)
   const [styles, setStyles] = useState<string[]>([])
+  // A style picked on a landing page before sign-up (lib/picked-style) starts out selected.
+  useEffect(() => { if (demo) return; const k = takePickedStyle(); if (k) setStyles((xs) => (xs.length ? xs : [k])) }, [demo])
   const [diets, setDiets] = useState<string[]>([])
   const [mix, setMix] = useState<Partial<Record<MixKey, number>> | null>(null)
   const [every, setEvery] = useState<Partial<Record<MixKey, 1 | 2 | 4>>>({})
@@ -84,6 +87,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
 
   async function save() {
     setSaving(true)
+    clearPickedStyle()
     const answers: QuickSetupAnswers = { familySize, weeklyBudget: budget, dietaryNeeds: diets, style: styles[0] ?? null, goal, phone: people[0]?.phone || undefined }
     if (!demo) {
       try {

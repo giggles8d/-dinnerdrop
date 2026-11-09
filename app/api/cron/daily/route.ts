@@ -3,12 +3,8 @@ import { createClient } from '@supabase/supabase-js'
 import { runDailyReminders } from '@/lib/reminders'
 import { runTextingDay } from '@/lib/texting'
 import { creditReferrals } from '@/lib/referrals'
-import { backfillImages } from '@/lib/recipe-library'
 import { runOrderFollowups } from '@/lib/order-followup'
 import { runWeeklyReport } from '@/lib/weekly-report'
-import { shrinkRecipeImages } from '@/lib/shrink-images'
-import { reconcileGifts } from '@/lib/gifts'
-import Stripe from 'stripe'
 import { sendCartOfferReminders } from '@/lib/cart-offer'
 
 export const maxDuration = 300
@@ -20,6 +16,7 @@ export const maxDuration = 300
  *  - the activation email sequence (existing route)
  *  - the Sunday Drop: sent from runDailyReminders (planning day) and the texting poll sweep (lib/sunday-drop)
  *  - Monday: Sarah's weekly checkout report (lib/weekly-report)
+ *  - /api/cron/upkeep in its own function: gift check, recipe photos, photo shrinking (split out Nov 8 2026)
  * Consolidated so the project stays within the hosting plan's cron limits.
  */
 export async function GET(request: NextRequest) {
@@ -31,17 +28,18 @@ export async function GET(request: NextRequest) {
   const now = new Date()
   const out: Record<string, unknown> = {}
   // The Sunday Drop (lib/sunday-drop) sends from runDailyReminders (planning day) and the texting poll's Sunday sweep.
+  const base = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
+  const headers = { authorization: `Bearer ${process.env.CRON_SECRET}` }
+  // Upkeep (gifts, recipe photos, photo shrinking) runs in its own function with its own 300 s; started first.
+  const upkeep = fetch(`${base}/api/cron/upkeep`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
 
   try { out.cartOfferReminder = await sendCartOfferReminders(admin, now) } catch (e) { out.cartOfferReminder = { error: String(e) } }
   try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
   try { out.orderFollowups = await runOrderFollowups(admin, now) } catch (e) { out.orderFollowups = { error: String(e) } }
   try { out.texting = await runTextingDay(admin, now) } catch (e) { out.texting = { error: String(e) } }
   try { out.referrals = await creditReferrals(admin) } catch (e) { out.referrals = { error: String(e) } }
-  try { out.recipeImages = await backfillImages(admin) } catch (e) { out.recipeImages = { error: String(e) } }
   try { out.weeklyReport = await runWeeklyReport(admin, now) } catch (e) { out.weeklyReport = { error: String(e) } }
 
-  const base = process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
-  const headers = { authorization: `Bearer ${process.env.CRON_SECRET}` }
   // Email campaigns run in their own function (own 300s budget); started now, awaited at the end.
   const campaigns = fetch(`${base}/api/cron/campaigns`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
   // Recipe nutrition fill (carbs, fat, fiber, sugar, sodium) also runs in its own function; started now, not awaited
@@ -51,16 +49,10 @@ export async function GET(request: NextRequest) {
     const r = await fetch(`${base}/api/cron/email-sequences`, { headers, cache: 'no-store' })
     out.emailSequences = await r.json().catch(() => ({ status: r.status }))
   } catch (e) { out.emailSequences = { error: String(e) } }
-  // Gift purchases that never reached the thank-you page (closed tab) still get their code + emails.
-  try { out.gifts = await reconcileGifts(admin, new Stripe(process.env.STRIPE_SECRET_KEY!)) } catch (e) { out.gifts = { error: String(e) } }
-  // Recipe photo diet: ~1 MB JPEGs → 900px WebP, a time-boxed batch per day (new photos included).
-  // Only with the time that's left (Nov 8 2026: a long Sunday ran this function into its 300 s limit).
-  const shrinkMs = Math.min(120000, 230000 - (Date.now() - now.getTime()))
-  if (shrinkMs > 15000) { try { out.shrinkImages = await shrinkRecipeImages(admin, { limit: 400, budgetMs: shrinkMs }) } catch (e) { out.shrinkImages = { error: String(e) } } }
-  else out.shrinkImages = { skipped: 'out of time today' }
   out.campaigns = await Promise.race([campaigns, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), Math.max(1000, 283000 - (Date.now() - now.getTime()))))])
   // Don't let the nutrition fill hold this function past its own limit; it keeps running in its own function.
   const leftMs = Math.max(1000, 285000 - (Date.now() - now.getTime()))
   out.nutrition = await Promise.race([nutrition, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), leftMs))])
+  out.upkeep = await Promise.race([upkeep, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), Math.max(1000, 286000 - (Date.now() - now.getTime()))))])
   return NextResponse.json({ ok: true, at: now.toISOString(), ...out })
 }

@@ -1,21 +1,28 @@
 'use client'
 
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { isNativeApp, nativePlatform } from '@/lib/native'
 import EmailCodeSignIn from '@/components/EmailCodeSignIn'
 import CartOfferBanner from '@/components/CartOfferBanner'
+import { emailProblem } from '@/lib/email-check'
+import { rememberPickedStyle } from '@/lib/picked-style'
 
 function SignupForm() {
   const [email, setEmail] = useState('')
+  // Typo check: shown once; submitting the same address again goes through (it may be right).
+  const [warnedFor, setWarnedFor] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [magicSent, setMagicSent] = useState(false)
   const [codeSent, setCodeSent] = useState(false)
   const searchParams = useSearchParams()
   const nextUrl = searchParams.get('redirect') || null
+  // From a plan-style landing page (/dinners/…): pre-pick that style in the setup walkthrough.
+  const pickedStyle = searchParams.get('style')
+  useEffect(() => { rememberPickedStyle(pickedStyle) }, [pickedStyle])
   // Coming from a "Try Family" button: the next step is Stripe Checkout
   // (14-day trial), so the "no card" line would be false here.
   const toTrial = !!nextUrl && nextUrl.startsWith('/subscribe')
@@ -40,6 +47,12 @@ function SignupForm() {
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault()
+    const problem = emailProblem(email)
+    if (problem && warnedFor !== email.trim().toLowerCase()) {
+      setWarnedFor(email.trim().toLowerCase())
+      setError(`${problem} Fix it above, or tap the button again if it's right.`)
+      return
+    }
     setLoading(true)
     setError('')
 

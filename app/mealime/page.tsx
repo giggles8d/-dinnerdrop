@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import MealimeImportForm from './MealimeImportForm'
 import MealimeDeadline from '@/components/MealimeDeadline'
+import SocialLinks from '@/components/SocialLinks'
 
 const title = 'Mealime has closed — bring your dinners to DinnerDrop (free)'
 const description =
@@ -98,10 +99,11 @@ export default function MealimePage() {
       </main>
 
       <footer className="border-t border-gray-200 bg-white mt-20">
-        <div className="container mx-auto px-4 py-6 max-w-5xl flex items-center justify-between text-xs text-gray-500">
+        <div className="container mx-auto px-4 py-6 max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-gray-500">
           <span className="font-bold text-sm" style={{ color: GREEN }}>DinnerDrop</span>
           <p>&copy; 2026 DinnerDrop</p>
-          <div className="flex gap-4">
+          <SocialLinks />
+          <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/terms" className="hover:text-gray-700">Terms</Link>
             <Link href="/privacy" className="hover:text-gray-700">Privacy</Link>
           </div>

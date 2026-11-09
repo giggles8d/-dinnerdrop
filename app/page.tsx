@@ -8,6 +8,7 @@ import { InstacartCarrot, InstacartBand, PoweredByInstacart } from '@/components
 import SampleWeek from '@/components/SampleWeek'
 import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, MessageSquareText } from 'lucide-react'
 import CartOfferBanner from '@/components/CartOfferBanner'
+import SocialLinks from '@/components/SocialLinks'
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://www.dinnerdrop.app' },
@@ -93,7 +94,7 @@ export default async function LandingPage() {
       <InstacartBand />
 
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
-        <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart, Walmart or Kroger account. You review every item and check out there at that store&apos;s prices. We never charge your grocery account and never add to the price. Over 200 families plan dinner with DinnerDrop.
+        <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart, Walmart or Kroger account. You review every item and check out there at that store&apos;s prices. We never charge your grocery account and never add to the price. Over 400 families plan dinner with DinnerDrop.
         {' '}<span className="font-semibold text-foreground">On your phone:</span> open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em> — it works like an app, nothing to download.
       </p>
 
@@ -296,12 +297,13 @@ export default async function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t border-border bg-white">
-        <div className="container mx-auto px-4 py-6 max-w-6xl flex items-center justify-between text-xs text-muted-foreground">
+        <div className="container mx-auto px-4 py-6 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-accent" />
             <span className="font-heading font-bold text-sm text-primary">DinnerDrop</span>
           </div>
           <p>&copy; 2026 DinnerDrop</p>
+          <SocialLinks />
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
             <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
@@ -311,6 +313,10 @@ export default async function LandingPage() {
             <Link href="/dinners/dinners-under-30-minutes" className="hover:text-foreground transition-colors">30-minute dinners</Link>
             <Link href="/dinners/family-dinners-under-100" className="hover:text-foreground transition-colors">Dinners under $100</Link>
             <Link href="/dinners/gluten-free-family-dinners" className="hover:text-foreground transition-colors">Gluten-free dinners</Link>
+            <Link href="/dinners/diabetic-friendly-dinners" className="hover:text-foreground transition-colors">Diabetic-friendly dinners</Link>
+            <Link href="/dinners/heart-healthy-dinners" className="hover:text-foreground transition-colors">Heart-healthy dinners</Link>
+            <Link href="/dinners/mediterranean-family-dinners" className="hover:text-foreground transition-colors">Mediterranean dinners</Link>
+            <Link href="/dinners/slow-cooker-family-dinners" className="hover:text-foreground transition-colors">Slow cooker dinners</Link>
             <Link href="/vs/emeals" className="hover:text-foreground transition-colors">DinnerDrop vs eMeals</Link>
             <Link href="/gift" className="hover:text-foreground transition-colors">Give DinnerDrop</Link>
             <Link href="/affiliates" className="hover:text-foreground transition-colors">Affiliates</Link>

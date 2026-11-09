@@ -6,6 +6,22 @@ import MealCardImage from '@/components/MealCardImage'
 import { getSampleWeek, sampleWeekTotal } from '@/lib/sample-weeks'
 import { libraryIndex } from '@/lib/recipe-index'
 import type { LibRow } from '@/lib/recipe-filters'
+import { createClient } from '@supabase/supabase-js'
+import { styleByKey } from '@/lib/styles'
+
+/** Per-serving nutrition from the recipe library (estimated), for the plan-style hubs. */
+type Nut = { carbs?: number; sugar?: number; fiber?: number; sodium?: number; satFat?: number; calories?: number }
+async function nutritionById(): Promise<Map<string, Nut>> {
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  const out = new Map<string, Nut>()
+  for (let from = 0; from < 5000; from += 1000) {
+    const { data } = await admin.from('recipes').select('id, nutrition').eq('is_public', true).not('nutrition', 'is', null).order('id').range(from, from + 999)
+    for (const r of data ?? []) out.set(r.id as string, r.nutrition as Nut)
+    if (!data || data.length < 1000) break
+  }
+  return out
+}
+import SocialLinks from '@/components/SocialLinks'
 
 export const revalidate = 3600
 
@@ -18,7 +34,10 @@ interface Topic {
   slug: string
   week?: string                 // a sample week (lib/sample-weeks), shown when set
   /** Recipe hub (Nov 7 2026): real library recipes for the search this page answers, each linking to its recipe page. */
-  hub?: { heading: string; blurb: string; match: (r: LibRow) => boolean; limit: number }
+  hub?: { heading: string; blurb: string; match: (r: LibRow, n: Nut | null) => boolean; limit: number; nutrition?: boolean }
+  /** Plan style (lib/styles) this page sells: its sign-up links pre-pick that style in the setup walkthrough. */
+  style?: string
+  bulletsHeading?: string
   title: string
   h1: string
   intro: string
@@ -140,6 +159,89 @@ const TOPICS: Topic[] = [
       { q: 'How long does cooked ground beef keep?', a: 'Three to four days in the fridge, or about three months in the freezer.' },
     ],
   },
+  {
+    slug: 'diabetic-friendly-dinners',
+    style: 'diabetic',
+    hub: { heading: 'Diabetic-friendly family dinners from our recipe library', blurb: 'Each one is 45 g of carbs or less, 10 g of sugar or less and at least 4 g of fiber per serving (estimated).', match: (_r, n) => !!n && n.carbs != null && n.carbs <= 45 && (n.sugar ?? 99) <= 10 && (n.fiber ?? 0) >= 4, limit: 48, nutrition: true },
+    title: 'Diabetic-Friendly Family Dinners, Planned Weekly | DinnerDrop',
+    h1: 'Diabetic-friendly dinners the whole family eats, planned every week',
+    intro: 'Pick the Diabetic-friendly plan and every dinner keeps carbs modest, skips added sugar and leans on vegetables, beans and lean protein. It is regular family food, not a separate “diet” plate, and the grocery list goes to your cart in one tap.',
+    description: 'Weekly diabetic-friendly dinner plans for families: modest carbs, no added sugar, more fiber, one grocery list and a one-tap Instacart, Walmart or Kroger cart. Free to start.',
+    bulletsHeading: 'How the Diabetic-friendly plan works',
+    bullets: [
+      'Every dinner aims for 45 g of carbs or less per serving, with no added sugar or sweet sauces. Carbs come from vegetables, beans and whole grains in measured portions.',
+      'Each recipe shows estimated calories, carbs, fiber, sugar and sodium per serving, so you can see the numbers before you cook.',
+      'One dinner for everyone: the kids eat the same meal, so nobody cooks twice.',
+      'Need a carb target for one person? Family members can each have their own health needs, and the planner fits each dinner around them.',
+      'This is meal planning, not medical advice. Nutrition numbers are estimates; follow the plan your doctor or dietitian gave you.',
+    ],
+    faq: [
+      { q: 'Is this a medical diet?', a: 'No. It is a family meal plan built around common diabetes-friendly guidelines: modest carbs, no added sugar, more fiber and lean protein. Your doctor or dietitian has the final word on your own targets.' },
+      { q: 'Can I combine it with other plans?', a: 'Yes. Diabetic-friendly works together with Gluten-free, Heart-healthy, Slow cooker, 30-minute and the other plan styles, and with any allergies in your family.' },
+      { q: 'Where do the nutrition numbers come from?', a: 'Each recipe is estimated from its ingredients and serving size. They are close, not lab-tested, so treat them as a guide.' },
+    ],
+  },
+  {
+    slug: 'heart-healthy-dinners',
+    style: 'heart',
+    hub: { heading: 'Heart-healthy family dinners from our recipe library', blurb: 'Each one is under 600 mg of sodium and under 6 g of saturated fat per serving (estimated).', match: (_r, n) => !!n && n.sodium != null && n.satFat != null && n.sodium < 600 && n.satFat < 6, limit: 48, nutrition: true },
+    title: 'Heart-Healthy Family Dinners, Planned Weekly | DinnerDrop',
+    h1: 'Heart-healthy family dinners, planned for you every week',
+    intro: 'Pick the Heart-healthy plan and every dinner stays lower in sodium and saturated fat: fish, poultry, beans, olive oil and plenty of vegetables. Five dinners your family will actually eat, with the grocery list in your cart in one tap.',
+    description: 'Weekly heart-healthy dinner plans for families: lower sodium and saturated fat, fish, poultry and beans, one grocery list and a one-tap Instacart, Walmart or Kroger cart. Free to start.',
+    bulletsHeading: 'How the Heart-healthy plan works',
+    bullets: [
+      'Every dinner aims for under 600 mg of sodium and under 6 g of saturated fat per serving.',
+      'No bacon, sausage, deli meat or salty sauces. Flavor comes from herbs, garlic, citrus and spices instead.',
+      'Each recipe shows estimated sodium, saturated fat and calories per serving.',
+      'Everyday dinners, not diet food: sheet-pan salmon, turkey chili, chicken fajitas and pasta with lots of vegetables.',
+      'This is meal planning, not medical advice. If your doctor gave you a sodium or fat target, follow theirs.',
+    ],
+    faq: [
+      { q: 'How much sodium is in each dinner?', a: 'The plan aims for under 600 mg per serving, and each recipe page shows its estimate. Choosing low-sodium broth and canned beans at the store lowers it further.' },
+      { q: 'Will my kids eat it?', a: 'That is the point. The dinners are familiar family meals made with leaner proteins and less salt, and you can swap any dinner in one tap.' },
+    ],
+  },
+  {
+    slug: 'mediterranean-family-dinners',
+    style: 'mediterranean',
+    hub: { heading: 'Mediterranean family dinners from our recipe library', blurb: 'Olive oil, fish, chicken, beans, vegetables, lemon and herbs.', match: (r) => r.cg === 'mediterranean', limit: 48 },
+    title: 'Mediterranean Family Dinners, Planned Weekly | DinnerDrop',
+    h1: 'Mediterranean dinners for the whole family, planned every week',
+    intro: 'Pick the Mediterranean plan and your week fills with olive oil, fish, chicken, beans, vegetables and fresh herbs, with red meat at most once. Kid-friendly versions of the dishes, one combined grocery list, and your cart filled in one tap.',
+    description: 'Weekly Mediterranean diet dinner plans for families: fish, chicken, beans, olive oil and vegetables, one grocery list and a one-tap Instacart, Walmart or Kroger cart. Free to start.',
+    bulletsHeading: 'How the Mediterranean plan works',
+    bullets: [
+      'Fish or beans most nights, chicken on others, red meat at most once a week.',
+      'Kid-friendly versions: chicken souvlaki with pita, Greek sheet-pan chicken and potatoes, lemon orzo, salmon with rice.',
+      'Pantry staples repeat on purpose (olive oil, lemons, feta, chickpeas), so the grocery bill stays down.',
+      'Combine it with 30-minute, Budget or Gluten-free if you need dinners to be quick, cheap or wheat-free too.',
+    ],
+    faq: [
+      { q: 'Is the Mediterranean diet expensive?', a: 'It does not have to be. Beans, lentils, chicken thighs, canned fish and seasonal vegetables carry most dinners, and you set the weekly budget.' },
+      { q: 'Can I still have pasta and bread?', a: 'Yes. Whole-grain pasta, pita and crusty bread are part of the Mediterranean pattern; the plan just keeps portions sensible and adds vegetables.' },
+    ],
+  },
+  {
+    slug: 'slow-cooker-family-dinners',
+    style: 'slowcooker',
+    hub: { heading: 'Slow cooker family dinners from our recipe library', blurb: 'About 15 minutes of morning prep, dinner done when you get home.', match: (r) => r.tags.includes('slow-cooker'), limit: 48 },
+    title: 'Slow Cooker Family Dinners, Planned Weekly | DinnerDrop',
+    h1: 'Slow cooker dinners, planned for your busiest nights',
+    intro: 'Pick the Slow cooker plan and at least two dinners a week go in the slow cooker in the morning and are ready when you walk in. The rest stay quick weeknight meals, and the whole grocery list lands in your cart in one tap.',
+    description: 'Weekly slow cooker dinner plans for families: set it in the morning, dinner is ready at night. One grocery list and a one-tap Instacart, Walmart or Kroger cart. Free to start.',
+    bulletsHeading: 'How the Slow cooker plan works',
+    bullets: [
+      'At least two slow cooker dinners each week, about 15 minutes of morning prep and 6 to 8 hours on low.',
+      'Swap any dinner in one tap if the week changes.',
+      'Big batches on purpose: many slow cooker dinners double as next-day lunches or a leftover night.',
+      'Prefer an Instant Pot? Pick the Instant Pot plan instead, or both.',
+    ],
+    faq: [
+      { q: 'Can I prep the night before?', a: 'Yes. Most slow cooker dinners can be loaded into the crock the night before and kept in the fridge, then started in the morning.' },
+      { q: 'How many slow cooker dinners will I get?', a: 'At least two a week. You can set how many all-day dinners you want in Settings.' },
+    ],
+  },
 ]
 
 export function generateStaticParams() {
@@ -166,7 +268,14 @@ export default async function TopicPage({ params }: { params: { topic: string } 
   if (t.week && !week) notFound()
   const total = week ? sampleWeekTotal(week) : 0
   let hubRows: LibRow[] = []
-  if (t.hub) { try { hubRows = (await libraryIndex()).filter(t.hub.match).slice(0, t.hub.limit) } catch { hubRows = [] } }
+  if (t.hub) {
+    try {
+      const nut = t.hub.nutrition ? await nutritionById() : null
+      hubRows = (await libraryIndex()).filter((r) => t.hub!.match(r, nut?.get(r.id) ?? null)).slice(0, t.hub.limit)
+    } catch { hubRows = [] }
+  }
+  const signupHref = t.style ? `/signup?style=${t.style}` : '/signup'
+  const style = t.style ? styleByKey(t.style) : null
   const itemList = hubRows.length ? {
     '@context': 'https://schema.org', '@type': 'ItemList', name: t.hub!.heading,
     itemListElement: hubRows.map((r, i) => ({ '@type': 'ListItem', position: i + 1, url: `https://www.dinnerdrop.app/recipes/${r.slug}`, name: r.name })),
@@ -195,7 +304,7 @@ export default async function TopicPage({ params }: { params: { topic: string } 
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground">Sign in</Link>
-            <Link href="/signup" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90">Start free</Link>
+            <Link href={signupHref} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90">Start free</Link>
           </div>
         </div>
       </header>
@@ -205,8 +314,8 @@ export default async function TopicPage({ params }: { params: { topic: string } 
           <h1 className="text-4xl sm:text-5xl font-heading font-bold text-foreground leading-tight mb-5">{t.h1}</h1>
           <p className="text-lg text-muted-foreground leading-relaxed mb-6">{t.intro}</p>
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
-            <Link href="/signup" className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 shadow-md text-center">Start free &mdash; no card needed &rarr;</Link>
-            <span className="text-sm text-muted-foreground">Free forever for planning and your Instacart cart.</span>
+            <Link href={signupHref} className="px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 shadow-md text-center">Start free &mdash; no card needed &rarr;</Link>
+            <span className="text-sm text-muted-foreground">{style ? `${style.emoji} The ${style.name} plan is picked for you at sign-up. Free to start.` : 'Free forever for planning and your Instacart cart.'}</span>
           </div>
         </section>
 
@@ -238,7 +347,7 @@ export default async function TopicPage({ params }: { params: { topic: string } 
         )}
 
         <section className="pb-14 max-w-3xl">
-          <h2 className="text-2xl font-heading font-bold text-foreground mb-5">{t.week ? 'How DinnerDrop handles it' : 'Tips that make it easier'}</h2>
+          <h2 className="text-2xl font-heading font-bold text-foreground mb-5">{t.bulletsHeading ?? (t.week ? 'How DinnerDrop handles it' : 'Tips that make it easier')}</h2>
           <ul className="space-y-3">
             {t.bullets.map((b) => (
               <li key={b} className="flex gap-3 text-foreground leading-relaxed"><span className="text-primary font-bold">&#10003;</span><span>{b}</span></li>
@@ -259,7 +368,7 @@ export default async function TopicPage({ params }: { params: { topic: string } 
         </section>
 
         <section className="pb-20 text-center">
-          <Link href="/signup" className="inline-block px-10 py-4 rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 shadow-md">Plan my week free &rarr;</Link>
+          <Link href={signupHref} className="inline-block px-10 py-4 rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 shadow-md">Plan my week free &rarr;</Link>
           <p className="text-sm text-muted-foreground mt-3">Two minutes to set up. Your first week is ready right away.</p>
           <p className="text-sm text-muted-foreground mt-6">
             More: {TOPICS.filter((x) => x.slug !== t.slug).map((x, i) => (
@@ -270,10 +379,11 @@ export default async function TopicPage({ params }: { params: { topic: string } 
       </main>
 
       <footer className="border-t border-border bg-white">
-        <div className="container mx-auto px-4 py-6 max-w-6xl flex items-center justify-between text-xs text-muted-foreground">
+        <div className="container mx-auto px-4 py-6 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-muted-foreground">
           <span className="font-heading font-bold text-sm text-primary">DinnerDrop</span>
           <p>&copy; 2026 DinnerDrop</p>
-          <div className="flex gap-4">
+          <SocialLinks />
+          <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/about" className="hover:text-foreground">About</Link>
             <Link href="/blog" className="hover:text-foreground">Blog</Link>
             <Link href="/terms" className="hover:text-foreground">Terms</Link>

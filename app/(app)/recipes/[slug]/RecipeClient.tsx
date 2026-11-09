@@ -31,6 +31,17 @@ interface RecipeRow {
 export type { RecipeRow }
 
 /** Client half of /recipes/[slug]. The server page fetches the recipe and passes it in, so the page renders without JS and is indexable. */
+/** Pinterest's "create pin" link: this recipe's page, its photo and a short description. */
+function pinterestSaveUrl(r: { slug: string; name: string; image_url: string | null; cook_time?: number | null; prep_time?: number | null }): string {
+  const mins = (r.cook_time ?? 0) + (r.prep_time ?? 0)
+  const q = new URLSearchParams({
+    url: `https://www.dinnerdrop.app/recipes/${r.slug}`,
+    media: r.image_url ?? '',
+    description: `${r.name}${mins ? ` (${mins} minutes)` : ''}: an easy family dinner recipe from DinnerDrop`,
+  })
+  return `https://www.pinterest.com/pin/create/button/?${q.toString()}`
+}
+
 export default function RecipeClient({ initial }: { initial: RecipeRow }) {
   const slug = initial.slug
   const supabase = useMemo(() => createClient(), [])
@@ -110,7 +121,17 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
       <div className="container mx-auto px-4 py-8 max-w-3xl">
         <Link href="/recipes" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 print:hidden"><ArrowLeft className="w-4 h-4" /> Recipe library</Link>
         {cooking && <CookMode meal={meal} onClose={() => setCooking(false)} />}
-        <div className="rounded-xl overflow-hidden mb-6 print:hidden"><MealCardImage mealName={r.name} dayLabel={r.source === 'user' && !!userId && r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} /></div>
+        <div className="relative rounded-xl overflow-hidden mb-6 print:hidden">
+          <MealCardImage mealName={r.name} dayLabel={r.source === 'user' && !!userId && r.created_by === userId ? 'Your recipe' : ''} imageUrl={r.image_url ?? undefined} />
+          {/* Save to Pinterest (Nov 8 2026): the pin links back here, and Pinterest reads the recipe details from this page. */}
+          {r.image_url && (
+            <a href={pinterestSaveUrl(r)} target="_blank" rel="noopener noreferrer" aria-label={`Save ${r.name} to Pinterest`}
+              className="absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-full bg-[#e60023] px-3.5 py-2 text-sm font-bold text-white shadow-md hover:bg-[#ad081b]">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.3-5.4s-.3-.7-.3-1.6c0-1.5.9-2.7 2-2.7.9 0 1.4.7 1.4 1.6 0 1-.6 2.4-.9 3.7-.3 1.1.6 2 1.7 2 2 0 3.5-2.1 3.5-5.2 0-2.7-2-4.6-4.8-4.6-3.2 0-5.1 2.4-5.1 4.9 0 1 .4 2 .9 2.6.1.1.1.2.1.3l-.3 1.3c-.1.2-.2.3-.4.2-1.4-.7-2.3-2.7-2.3-4.4 0-3.6 2.6-6.9 7.5-6.9 3.9 0 7 2.8 7 6.6 0 3.9-2.5 7.1-5.9 7.1-1.2 0-2.3-.6-2.6-1.3l-.7 2.7c-.3 1-1 2.2-1.4 3A10 10 0 1 0 12 2Z" /></svg>
+              Save
+            </a>
+          )}
+        </div>
         <div className="flex items-start justify-between gap-4 mb-4">
           <h1 className="text-4xl font-heading font-bold text-foreground leading-tight">{r.name}</h1>
           {r.tags.includes('family-favorite') && (() => {
