@@ -481,6 +481,17 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const sender = hi || (m.profile_id ? family : 'A family member')
   // The person in charge: review / change the week, ask the family, takeout.
   if (owner && m.profile_id === owner.id) {
+    // The planner texting numbers with no vote open means "swap these" (the first text says "Reply SWAP 2"):
+    // "2", "#2", "swap 2", "1 and 3", "swap #1, #4". "SWAP" alone shows the week to pick from.
+    const t = body.trim().replace(/[.!]+$/, '')
+    if (!round && ctx.lastAsk !== 'again') {
+      if (/^(swap|change|replace|switch)$/i.test(t)) return { reply: await swapWhich(admin, owner), handled: true, member: m }
+      const nm = t.match(/^(?:(?:swap|change|replace|switch|new)\s*)?#?\s*\d{1,2}(?:\s*(?:,|&|\+|and|\s)\s*#?\s*\d{1,2})*$/i)
+      if (nm) {
+        const nums = (t.match(/\d{1,2}/g) ?? []).map(Number).filter((n) => n >= 1 && n <= 14)
+        if (nums.length) return { reply: await swapPlanDinners(admin, owner, nums), handled: true, member: m }
+      }
+    }
     const cmd = parseLeaderCommand(body)
     if (cmd) {
       const reply = await leaderCommand(admin, owner, m, cmd)
@@ -1544,10 +1555,14 @@ async function ownerForResolve(admin: SupabaseClient, ownerId: string) {
 
 /** A dinner for a swap/add: one of their favorites by name, else the library / AI (like a family idea). */
 /** "SWAP 2" with no dish named: the best library dinner for this family that isn't already in the week. */
-export async function anyOtherDinner(admin: SupabaseClient, ownerId: string, exclude: string[]): Promise<Meal | null> {
+export async function anyOtherDinner(admin: SupabaseClient, ownerId: string, exclude: string[], like?: Meal): Promise<Meal | null> {
   const { libraryWeek } = await import('@/lib/first-plan')
-  const r = await libraryWeek(admin, ownerId, exclude).catch(() => null)
-  return r && r.ok && r.meals[0] ? { ...r.meals[0] } : null
+  const { proteinGroup } = await import('@/lib/protein-mix')
+  const r = await libraryWeek(admin, ownerId, exclude, { firstWeek: true }).catch(() => null)
+  if (!r || !r.ok || !r.meals.length) return null
+  const want = like ? proteinGroup(like.protein ?? null, like.name) : null
+  const same = want ? r.meals.find((m) => proteinGroup(m.protein ?? null, m.name) === want) : undefined
+  return { ...(same ?? r.meals[0]) }
 }
 
 export async function dinnerFor(admin: SupabaseClient, ownerId: string, dish: string, exclude: string[]): Promise<Meal | null> {
@@ -1584,16 +1599,37 @@ export async function editDraftRound(admin: SupabaseClient, ownerId: string, rou
 
 /** After the vote: replace dinner #n of the week (in the order texted) and tell the family. */
 export async function swapPlanDinner(admin: SupabaseClient, owner: OwnerRow, n: number, dish: string | Meal): Promise<string> {
+  return swapPlanDinners(admin, owner, [n], dish)
+}
+
+/** This week as the numbered list the family texts against (MENU numbering). */
+function numberedWeek(meals: Meal[], fresh: Set<number> = new Set()): string {
+  return meals.map((m, i) => `${i + 1}. ${m.day ? `${String(m.day).slice(0, 3)}: ` : ''}${m.name}${fresh.has(i + 1) ? ' ✨' : ''}`).join('\n')
+}
+
+/**
+ * Swap one or more of this week's dinners in ONE text (Sarah, Nov 9 2026: "this should not take so many messages").
+ * No dish named: another dinner that fits the family, same kind of protein when possible (chicken for chicken).
+ * The reply always shows the whole week with its current numbers, so the next text matches.
+ */
+export async function swapPlanDinners(admin: SupabaseClient, owner: OwnerRow, numbers: number[], dish: string | Meal = ''): Promise<string> {
   const plan = await latestPlan(admin, owner.id)
   if (!plan?.meals?.length) return `There's no week planned yet to change.`
-  const old = plan.meals[n - 1]
-  if (!old) return `There's no #${n} this week. Text MENU to see the numbers.`
-  const meal = typeof dish !== 'string' ? dish
-    : dish.trim() ? await dinnerFor(admin, owner.id, dish, plan.meals.map((m) => m.name))
-    : await anyOtherDinner(admin, owner.id, plan.meals.map((m) => m.name))
-  if (!meal) return `I couldn't make "${typeof dish === 'string' ? dish : 'that'}" fit your family's rules. Try another dinner.`
   const meals = [...plan.meals]
-  meals[n - 1] = { ...meal, day: old.day, suggestedNight: old.suggestedNight }
+  const bad = numbers.filter((n) => !meals[n - 1])
+  if (bad.length === numbers.length) return `There's no #${bad[0]} this week. Your week:\n${numberedWeek(meals)}\nReply a number to swap that dinner.`
+  const changed: Array<{ n: number; old: Meal; meal: Meal }> = []
+  for (const n of Array.from(new Set(numbers)).filter((x) => meals[x - 1])) {
+    const old = meals[n - 1]
+    const names = meals.map((m) => m.name)
+    const meal = typeof dish !== 'string' ? dish
+      : dish.trim() ? await dinnerFor(admin, owner.id, dish, names)
+      : await anyOtherDinner(admin, owner.id, names, old)
+    if (!meal) continue
+    meals[n - 1] = { ...meal, day: old.day, suggestedNight: old.suggestedNight }
+    changed.push({ n, old, meal })
+  }
+  if (!changed.length) return `I couldn't find another dinner that fits your family's rules for that one. Text SWAP ${numbers[0]} FOR + a dish you'd like.`
   const total = meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   // grocery_list {} = the grocery page rebuilds this week's list from the new dinners (Nov 8 2026: a texted swap left the old
   // dinner's ingredients on the list). Lines already sent to a store are kept by the page.
@@ -1603,9 +1639,16 @@ export async function swapPlanDinner(admin: SupabaseClient, owner: OwnerRow, n: 
   let told = 0
   for (const mm of (fam ?? []) as MemberRow[]) {
     if (mm.profile_id === owner.id) continue
-    if (await textMember(admin, mm, `${leader} changed ${old.day || 'a night'}: ${meal.name} (instead of ${old.name}).`, 'plan_change')) told++
+    if (await textMember(admin, mm, `${leader} changed the week: ${changed.map((c) => `${c.old.day || 'a night'} is now ${c.meal.name}`).join('; ')}.`, 'plan_change')) told++
   }
-  return `Done: ${old.day ? `${old.day} is now ` : ''}${meal.name} (was ${old.name}).${told ? ` I let the family know.` : ''} Your grocery list updates the next time you open it.`
+  return `Done ✨ Your week now:\n${numberedWeek(meals, new Set(changed.map((c) => c.n)))}\nWant another change? Reply its number.${told ? ' I let the family know.' : ''} Your list updates when you open it.`
+}
+
+/** "SWAP" with no number: show the week so one reply does it. */
+export async function swapWhich(admin: SupabaseClient, owner: OwnerRow): Promise<string> {
+  const plan = await latestPlan(admin, owner.id)
+  if (!plan?.meals?.length) return `There's no week planned yet to change.`
+  return `Which one? Reply its number (or a few, like "1 3"):\n${numberedWeek(plan.meals)}`
 }
 
 /** Start a family question or takeout round. */
