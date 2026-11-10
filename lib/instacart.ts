@@ -17,6 +17,7 @@ interface InstacartLineItem {
   quantity?: number
   unit?: string | null
   display_text?: string
+  filters?: { brand_filters?: string[] }
 }
 
 interface InstacartPayload {
@@ -121,8 +122,12 @@ export function instacartUnit(unit: string | null | undefined): string {
 
 export async function createInstacartLink(
   items: GroceryItem[],
-  title = 'DinnerDrop Weekly Groceries'
+  title = 'DinnerDrop Weekly Groceries',
+  opts: { brands?: string[] } = {}
 ): Promise<{ link: string; fallback: boolean }> {
+  // "Buy store brand" (lib/store-brands): packaged lines prefer the family's stores' own brands.
+  const brands = (opts.brands ?? []).slice(0, 10)
+  const branded = new Set<string>(['Pantry & Dry Goods', 'Dairy & Eggs', 'Frozen', 'Bakery', 'Beverages'])
   const apiKey = process.env.INSTACART_API_KEY
   if (!apiKey) {
     console.error('INSTACART_API_KEY is not set')
@@ -142,7 +147,7 @@ export async function createInstacartLink(
       // so Instacart doesn't have to guess the package (Sarah, Oct 29 2026). See lib/package-match.ts.
       const li = lineItemFor(item)
       const recipeAmount = `${item.quantity ?? ''} ${item.unit ?? ''} ${item.name}`.replace(/\s+/g, ' ').trim()
-      return { name: li.name, quantity: li.quantity, unit: li.unit, display_text: `${recipeAmount} (${li.label})` }
+      return { name: li.name, quantity: li.quantity, unit: li.unit, display_text: `${recipeAmount} (${li.label})`, ...(brands.length && branded.has(item.category) ? { filters: { brand_filters: brands } } : {}) }
     }),
     landing_page_configuration: {
       partner_linkback_url: 'https://dinnerdrop.app/grocery-list',

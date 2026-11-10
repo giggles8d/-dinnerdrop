@@ -1,3 +1,4 @@
+import { familyFactor } from '@/lib/price-factor'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { mayActFor } from '@/lib/route-auth'
 import { selectedStyles } from '@/lib/styles'
@@ -150,7 +151,10 @@ export async function POST(request: Request) {
     // The family's budget is what they'll pay at their store; estimates are at typical prices,
     // so plan to budget ÷ priceFactor (learned from their real orders; 1 until the first one).
     const priceFactor = Number(settings.stores.priceFactor) > 0 ? Number(settings.stores.priceFactor) : 1
-    const weeklyBudget = (Number(String(profile.weeklyBudget).replace(/[^0-9.]/g, '')) || 100) / priceFactor
+    // Plan to what they'll pay at checkout (lib/budget, Nov 10 2026): Instacart prices and fees or their learned
+    // store factor, and store brands. (priceFactor is folded into familyFactor.)
+    void priceFactor
+    const weeklyBudget = (Number(String(profile.weeklyBudget).replace(/[^0-9.]/g, '')) || 100) / familyFactor(settings.stores)
     // A trip spends its share of the weekly dinner budget.
     const budgetNumber = trip && weekNights > 0 ? weeklyBudget * (trip.nights.length / weekNights) : weeklyBudget
     const perMealBudget = (budgetNumber / dinnersPerWeek).toFixed(0)

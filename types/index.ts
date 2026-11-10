@@ -22,6 +22,7 @@ export interface Meal {
   cuisine?: string      // e.g. "Italian", "Mexican"
   protein?: string      // e.g. "chicken", "beef", "tofu"
   tags?: string[]       // 'quick' | 'leftover-friendly' | 'kid-favorite' | 'sheet-pan' | ...
+  budgetPick?: boolean  // swapped in to keep the week inside the family's budget (lib/budget); shown as "Budget pick"
   nutrition?: { calories: number; protein: number; carbs?: number; fat?: number; satFat?: number; fiber?: number; sugar?: number; sodium?: number }   // per serving (g; sodium mg), estimated
   imageUrl?: string     // stored once in the recipe library (skips the Unsplash lookup)
   recipeId?: string     // public.recipes.id

@@ -31,3 +31,13 @@ export function effectiveFactor(learned: number | undefined | null): number {
   return f > 0 && f !== 1 ? f : DEFAULT_FACTOR
 }
 
+/**
+ * What this family actually pays vs our shelf-price estimates: their learned store factor (or the Instacart default),
+ * 1.0 when they shop in the store themselves and we haven't learned otherwise, times ~0.85 with "Buy store brand".
+ */
+export function familyFactor(stores: { priceFactor?: number; mode?: string; storeBrand?: boolean } | null | undefined): number {
+  const learned = Number(stores?.priceFactor)
+  const base = learned > 0 && learned !== 1 ? learned : stores?.mode === 'instore' ? 1 : DEFAULT_FACTOR
+  return base * (stores?.storeBrand ? 0.85 : 1)
+}
+

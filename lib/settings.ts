@@ -96,6 +96,7 @@ export interface Settings {
     priceFactor: number             // what this family's store (+ Instacart fees) charges vs our typical-price estimates; learned from real orders
     myStores: Array<{ name: string; factor?: number }>   // the stores they compare (Wegmans, Tops, Aldi…), each with its own learned factor
     takeoutPerServing: number       // what a takeout/delivery dinner costs this family per person — the "you saved" comparison
+    storeBrand: boolean             // prefer store brands for packaged groceries (lib/store-brands, Nov 10 2026)
   }
   notifications: {
     email: boolean
@@ -186,6 +187,7 @@ export const DEFAULT_SETTINGS: Settings = {
     priceFactor: 1,
     myStores: [],
     takeoutPerServing: 15,
+    storeBrand: false,
   },
   notifications: {
     email: true,

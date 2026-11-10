@@ -621,7 +621,7 @@ export default function SettingsPage() {
                   <Field label="Options to choose from" hint="How many ideas the planner offers before you pick.">
                     <Select value={String(settings.plan.optionsCount)} onChange={(v) => patch((s) => { s.plan.optionsCount = Number(v) })} options={['5', '6', '8', '10', '12'].map((n) => ({ value: n, label: n }))} />
                   </Field>
-                  <Field label="Weekly dinner budget">
+                  <Field label="Weekly dinner budget" hint="What you want to pay at checkout. Every week stays inside it; dinners picked to fit are marked “Budget pick”. Raise it for more choice.">
                     <Select value={profile.weekly_budget} onChange={(v) => patchProfile({ weekly_budget: v })} options={BUDGETS.map((b) => ({ value: b, label: b }))} />
                   </Field>
                   <Field label="Takeout costs us about (per person)" hint="Used for the “you saved vs takeout” number on your dashboard.">
@@ -795,6 +795,7 @@ export default function SettingsPage() {
                 </Field>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <Field label="Delivery or pickup"><Select value={settings.stores.fulfillment} onChange={(v) => patch((s) => { s.stores.fulfillment = v })} options={[{ value: 'delivery', label: 'Delivery' }, { value: 'pickup', label: 'Pickup' }]} /></Field>
+                  <div className="sm:col-span-2"><Toggle checked={!!settings.stores.storeBrand} onChange={(v) => patch((s) => { s.stores.storeBrand = v })} label="Buy store brand" hint="Pantry items, dairy, frozen, bread and drinks go to your cart as your store's own brand (Great Value, Aldi's brands, Kroger…) when they have one. Usually about 15% less, so your budget goes further." /></div>
                   <Field label="Usual store" hint="Shown on the list; Instacart lets you pick at checkout."><input value={settings.stores.usualStore} onChange={(e) => patch((s) => { s.stores.usualStore = e.target.value })} placeholder="Wegmans, Kroger, Aldi…" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                 </div>
                 <p className="text-sm text-muted-foreground">Connect or disconnect Kroger from the <Link href="/grocery-list" className="text-primary underline">grocery list</Link> page.</p>
