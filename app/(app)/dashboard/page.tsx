@@ -29,7 +29,7 @@ import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
 import { varietyLimits, varietyOk } from '@/lib/variety'
 import { repeatPlan, lastWeekPlan, mondayISO } from '@/lib/repeat-plan'
 import { mergeSettings, tripsConfig } from '@/lib/settings'
-import { familyFactor } from '@/lib/price-factor'
+import { listRatio, storeFactor } from '@/lib/budget-math'
 import { isClassic, currentKey } from '@/lib/trips'
 
 export default function DashboardPage() {
@@ -44,7 +44,7 @@ function DashboardContent() {
   const [meals, setMeals] = useState<Meal[]>([])
   const [totalCost, setTotalCost] = useState(0)
   // What they'll actually pay vs shelf estimates (Instacart prices + fees, learned store factor, store brands).
-  const [payFactor, setPayFactor] = useState(1.25)
+  const [payFactor, setPayFactor] = useState(2)
   const [inStoreMode, setInStoreMode] = useState(false)
   const [budget, setBudget] = useState('$100')
   const [loading, setLoading] = useState(false)
@@ -128,7 +128,7 @@ function DashboardContent() {
         setNeedsPersonalize(!profile.onboarding_complete)
       }
       const tcfg = tripsConfig(mergeSettings(profile?.settings))
-      { const st = mergeSettings(profile?.settings).stores; setPayFactor(familyFactor(st)); setInStoreMode(st.mode === 'instore') }
+      { const st = mergeSettings(profile?.settings).stores; setPayFactor(listRatio(st) * storeFactor(st)); setInStoreMode(st.mode === 'instore') }
       const trips = !isClassic(tcfg)
       setTripMode(trips)
       const now = new Date()
@@ -888,7 +888,7 @@ function DashboardContent() {
             <div className="mt-8 p-4 rounded-lg border border-border bg-card">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-foreground">
-                  {inStoreMode ? 'Estimated total' : 'Estimated total through Instacart'}
+                  {inStoreMode ? 'Estimated grocery total' : 'Estimated cart through Instacart'}
                 </span>
                 <span className="text-sm text-muted-foreground">
                   Budget: {budget}
@@ -909,7 +909,7 @@ function DashboardContent() {
               </div>
               {/* Honest pricing (Nov 10 2026): a family planned at $73 shelf prices met a much bigger Instacart total. */}
               <p className="text-xs text-muted-foreground mt-2">
-                {Math.abs(payFactor - 1) < 0.01 ? `At typical store prices.` : `About $${totalCost.toFixed(0)} at store-shelf prices; ${payFactor > 1 ? 'Instacart prices and fees usually add 20–30%' : 'store brands bring it down'}. Picking up or shopping in person usually costs less.`}
+                {`The dinners use about $${totalCost.toFixed(0)} of ingredients, but the cart buys whole packages${inStoreMode ? '' : ' and Instacart adds its prices and fees'}. Tap “have it” on your grocery list for anything already in your pantry to lower it.${inStoreMode ? '' : ' Pickup or shopping in person usually costs less.'}`}
               </p>
             </div>
 
