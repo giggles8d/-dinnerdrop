@@ -5,6 +5,7 @@
  * settings pick the morning send vs. an afternoon send when the cron runs
  * more than once a day.
  */
+import { hasOrdered, reorderText, REORDER_ASK } from '@/lib/reorder'
 import { leaderLabel } from '@/lib/family-ask'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, WEEKDAY_LABEL, WEEKDAYS, tripsConfig, type Settings, type Channel } from '@/lib/settings'
@@ -125,7 +126,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
           if (meals) {
             report.autoPlans++
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
-              await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned —\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
+              // Ordered before → the one-tap reorder text (lib/reorder): YES gets the Instacart cart link.
+              if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals), REORDER_ASK)
+              else await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned —\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
             }
             // The Sunday Drop v3 is this family's week email now (one email, not two); the plain plan email only
             // when the Drop isn't live or already went out in the last 5 days (a second shopping trip that week).
@@ -178,7 +181,8 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
               await logFollowup(admin, p.id, 'plan_ready')
             }
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
-              await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned —\n${names.join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
+              if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals), REORDER_ASK)
+              else await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned —\n${names.join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
             }
           }
         }

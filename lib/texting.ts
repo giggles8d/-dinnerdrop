@@ -25,6 +25,7 @@ import { cartUrl } from '@/lib/walmart'
 import type { Meal } from '@/types'
 import { buildFamilyRecipes, describeDinnerFromPhotos, saveFamilyRecipes } from '@/lib/family-recipes'
 import { leaderLabel, getDraft, setDraft, clearDraft, draftRoundIds, dueDrafts, parseLeaderCommand, getAsk, putAsk, openAsks, askIsLive, askSummary, askAck, askText, ASK_WINDOW_MIN, type LeaderCommand, type FamilyAsk } from '@/lib/family-ask'
+import { reorderAsked, reorderCartReply } from '@/lib/reorder'
 import { needsConfirmation, activeNeeds, applyNeeds, NEEDS_TIMING_ASK, type MemberNeed } from '@/lib/member-needs'
 
 export interface MemberRow {
@@ -420,7 +421,7 @@ function recipeText(m: Meal): string {
   return out
 }
 
-export interface InboundResult { reply: string; handled: boolean; member?: MemberRow }
+export interface InboundResult { reply: string; handled: boolean; member?: MemberRow; intent?: string }
 
 /** Handle a text from a known member. Returns the reply to send (via TwiML). */
 /**
@@ -506,6 +507,17 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       await putAsk(admin, m.household_id, ask)
       if (ask.asked.every((p) => ask.answers[p.id])) await finishAsk(admin, m.household_id, ask, owner)
       return { reply: askAck(ask, leaderLabel(owner)), handled: true, member: m }
+    }
+  }
+
+  // Weekly one-tap reorder (lib/reorder): YES to "Reply YES and I'll text your Instacart cart link", or CART anytime
+  // from someone already in the family texts. Checked before opt-in, which YES would otherwise mean.
+  if (owner && m.phone_opt_in_at && !m.phone_opted_out) {
+    const t = body.trim().replace(/[.!]+$/, '')
+    const wantsCart = /^(cart|my cart|send (my )?cart)$/i.test(t) || (parsed.kind === 'optin' && await reorderAsked(admin, m.household_id, phone))
+    if (wantsCart) {
+      const reply = await reorderCartReply(admin, owner.id)
+      return { reply, handled: true, member: m, intent: 'reorder_cart' }
     }
   }
 
@@ -1365,11 +1377,11 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
         report.handled++
         if (r.reply) {
           const sent = await sendSms(m.from, r.reply)
-          await admin.from('sms_messages').insert({ household_id: r.member.household_id, member_id: r.member.id, direction: 'out', to_number: m.from, body: r.reply, intent: 'reply', twilio_sid: sent.sid ?? null })
+          await admin.from('sms_messages').insert({ household_id: r.member.household_id, member_id: r.member.id, direction: 'out', to_number: m.from, body: r.reply, intent: r.intent ?? 'reply', twilio_sid: sent.sid ?? null })
           report.replies++
         }
-        // Just opted in while a vote is open? Send them the menu right away.
-        if (parseInbound(m.body).kind === 'optin') {
+        // Just opted in while a vote is open? Send them the menu right away. (A YES to the reorder text isn't an opt-in.)
+        if (parseInbound(m.body).kind === 'optin' && r.intent !== 'reorder_cart') {
           const round = await openRound(admin, r.member.household_id)
           const owner = await ownerForHousehold(admin, r.member.household_id)
           if (round && owner) await startVoteCycle(admin, owner.id)
