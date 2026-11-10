@@ -150,5 +150,7 @@ export async function rebuildWeek(admin: SupabaseClient, p: AutoPlanProfile, set
   const shape: PlanShape = data.plan ?? { dinnersPerWeek: settings.plan.dinnersPerWeek, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   const picked = pickVaried(data.meals ?? [], shape.dinnersPerWeek, [], varietyLimits(shape.dinnersPerWeek))
   if (!picked.length) return null
-  return savePlan(admin, p.id, weekStart, picked, shape)
+  // Inside the budget at checkout price (lib/budget); the other generated ideas stand in first.
+  const fitted = await keepInBudget(admin, p.id, picked, p.weekly_budget, settings, { prefer: (data.meals ?? []).filter((m) => !picked.includes(m)) })
+  return savePlan(admin, p.id, weekStart, fitted, shape)
 }

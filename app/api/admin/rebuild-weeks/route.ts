@@ -26,7 +26,7 @@ async function authorized(req: NextRequest, admin: SupabaseClient): Promise<bool
 export async function POST(req: NextRequest) {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   if (!(await authorized(req, admin))) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const b = await req.json().catch(() => ({})) as { weekStart?: string; limit?: number; apply?: boolean; round?: string; onlyMexican?: boolean }
+  const b = await req.json().catch(() => ({})) as { weekStart?: string; limit?: number; apply?: boolean; round?: string; onlyMexican?: boolean; userId?: string }
   const weekStart = String(b.weekStart ?? '')
   if (!/^\d{4}-\d{2}-\d{2}$/.test(weekStart)) return NextResponse.json({ error: 'weekStart YYYY-MM-DD required' }, { status: 400 })
   // round: a second pass gets its own done-markers; onlyMexican: only weeks with 2+ Mexican-style dinners (Nov 8 2026).
@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
     const prof = byId.get(uid)
     if (!prof) return false
     if (uid === sarah?.id || (sarah?.household_id && prof.household_id === sarah.household_id)) return false
+    if (b.userId && uid !== b.userId) return false   // one family only (e.g. a budget fix after their email, Nov 10 2026)
     const plan = latest.get(uid)!
     if (b.onlyMexican && (plan.meals ?? []).filter((m) => isMexicanStyle(m as { name: string; cuisine?: string })).length < 2) return false
     return !(carts ?? []).some((c) => c.user_id === uid && String(c.created_at) > plan.created_at)
