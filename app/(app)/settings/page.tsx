@@ -437,7 +437,7 @@ export default function SettingsPage() {
                     <Select value={String(profile.family_size)} onChange={(v) => patchProfile({ family_size: Number(v) })} options={['1', '2', '3', '4', '5', '6', '7', '8'].map((n) => ({ value: n, label: n }))} />
                   </Field>
                   <Field label="Time zone" hint="For reminders and automatic plans.">
-                    <Select value={profile.timezone ?? 'America/New_York'} onChange={(v) => patchProfile({ timezone: v })} options={TIMEZONES.map((t) => ({ value: t, label: t.replace('America/', '').replace('Pacific/', '').replace('_', ' ') }))} />
+                    <Select value={profile.timezone ?? 'America/New_York'} onChange={(v) => { patchProfile({ timezone: v }); patch((s) => { s.tzKnown = true; s.tzManual = true }) }} options={TIMEZONES.map((t) => ({ value: t, label: t.replace('America/', '').replace('Pacific/', '').replace('_', ' ') }))} />
                   </Field>
                 </div>
 
@@ -617,6 +617,7 @@ export default function SettingsPage() {
                   <Field label="Dinners to cook each week" hint={settings.schedule.trips.length > 1 ? 'With more than one trip, each trip plans the nights it covers (checked below).' : 'Leftover and takeout nights are the rest.'}>
                     <Select value={String(settings.plan.dinnersPerWeek)} onChange={(v) => patch((s) => { s.plan.dinnersPerWeek = Number(v) })} options={['3', '4', '5', '6', '7'].map((n) => ({ value: n, label: n }))} />
                   </Field>
+                  <div className="sm:col-span-3"><Toggle checked={settings.plan.pickMyOwn} onChange={(v) => patch((s) => { s.plan.pickMyOwn = v })} label="I pick my dinners each week" hint="Every week your dashboard shows 12–15 dinners that fit your family, and your week is only the ones you choose. Off: we pick the week and you swap what you don't love." /></div>
                   <Field label="Options to choose from" hint="How many ideas the planner offers before you pick.">
                     <Select value={String(settings.plan.optionsCount)} onChange={(v) => patch((s) => { s.plan.optionsCount = Number(v) })} options={['5', '6', '8', '10', '12'].map((n) => ({ value: n, label: n }))} />
                   </Field>
@@ -766,8 +767,8 @@ export default function SettingsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <Field label="Vote day" hint="The week's dinners are texted this day for keep/skip."><Select value={settings.texting.voteDay} onChange={(v) => patch((s) => { s.texting.voteDay = v })} options={DAY_OPTIONS} /></Field>
                   <Field label="'Bring it back?' day" hint="Everyone picks which dinners should return."><Select value={settings.texting.againDay} onChange={(v) => patch((s) => { s.texting.againDay = v })} options={DAY_OPTIONS} /></Field>
-                  <Field label="Quiet hours start"><input type="time" value={settings.texting.quietStart} onChange={(e) => patch((s) => { s.texting.quietStart = e.target.value })} className="rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
-                  <Field label="Quiet hours end"><input type="time" value={settings.texting.quietEnd} onChange={(e) => patch((s) => { s.texting.quietEnd = e.target.value })} className="rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
+                  <Field label="No texts before" hint="In your time zone (Household). Default 9 AM."><input type="time" value={settings.texting.quietEnd} onChange={(e) => patch((s) => { s.texting.quietEnd = e.target.value })} className="rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
+                  <Field label="No texts after" hint="Default 8 PM. Reminders set outside these hours wait until morning."><input type="time" value={settings.texting.quietStart} onChange={(e) => patch((s) => { s.texting.quietStart = e.target.value })} className="rounded-md border border-input bg-background px-3 py-2 text-sm" /></Field>
                   <Field label="Dinner ideas to text" hint={`The family picks from these; the top ${settings.plan.dinnersPerWeek} make the week.`}><Select value={String(Math.max(settings.texting.optionsToText, settings.plan.dinnersPerWeek))} onChange={(v) => patch((s) => { s.texting.optionsToText = Number(v) })} options={['5', '6', '7', '8', '9', '10', '12'].filter((n) => Number(n) >= settings.plan.dinnersPerWeek).map((n) => ({ value: n, label: n }))} /></Field>
                   <Toggle checked={settings.texting.askDinner} onChange={(v) => patch((s) => { s.texting.askDinner = v })} label="Text me at 7 PM: “what was dinner tonight?”" hint="Only on nights with nothing planned, and only to you. Reply the way you'd say it and it's saved to your family recipes. Reply NO to skip. Doesn't count toward the weekly text limit." />
                   <Field label="Max texts per person per week"><Select value={String(settings.texting.weeklyCap)} onChange={(v) => patch((s) => { s.texting.weeklyCap = Number(v) })} options={['2', '3', '4', '6', '8', '10', '12', '15'].map((n) => ({ value: n, label: n }))} /></Field>

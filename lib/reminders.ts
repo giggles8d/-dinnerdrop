@@ -5,6 +5,7 @@
  * settings pick the morning send vs. an afternoon send when the cron runs
  * more than once a day.
  */
+import { sendFamilyText } from '@/lib/send-window'
 import { hasOrdered, reorderText, REORDER_ASK } from '@/lib/reorder'
 import { leaderLabel } from '@/lib/family-ask'
 import type { SupabaseClient } from '@supabase/supabase-js'
@@ -12,7 +13,7 @@ import { mergeSettings, WEEKDAY_LABEL, WEEKDAYS, tripsConfig, type Settings, typ
 import { isClassic, resolveTrips, tripInstances, tonightTrip, voteTripOn, addDays } from '@/lib/trips'
 import { localNow, mondayOf, timeLabel } from '@/lib/plan'
 import { autoPlan } from '@/lib/autoplan'
-import { sendEmail, sendSms, emailShell, smsConfigured } from '@/lib/notify'
+import { sendEmail, emailShell, smsConfigured } from '@/lib/notify'
 import { attachLibraryImages } from '@/lib/library-images'
 import { planReadySubject, planReadyHtml } from '@/lib/plan-ready-email'
 import { dropConfig, sendDrop, type DropProfile } from '@/lib/sunday-drop'
@@ -70,13 +71,11 @@ async function optedInPhones(admin: SupabaseClient, householdId: string | null):
     .map((m) => ({ name: m.name, phone: m.phone as string, role: m.role }))
 }
 
-async function textAdults(admin: SupabaseClient, p: ProfileRow, settings: Settings, body: string, intent: string) {
-  if (!smsConfigured() || !settings.texting.enabled) return
+async function textAdults(admin: SupabaseClient, p: ProfileRow, settings: Settings, body: string, intent: string, opts: { at?: string; sameDayOnly?: boolean } = {}) {
+  if (!smsConfigured() || !settings.texting.enabled || !p.household_id) return
   const adults = await optedInPhones(admin, p.household_id)
-  for (const a of adults) {
-    const r = await sendSms(a.phone, body)
-    await admin.from('sms_messages').insert({ household_id: p.household_id, direction: 'out', to_number: a.phone, body, intent, twilio_sid: r.sid ?? null })
-  }
+  // Held until the family's texting hours, or the reminder's own time (lib/send-window).
+  for (const a of adults) await sendFamilyText(admin, { householdId: p.household_id, to: a.phone, body, intent }, opts)
 }
 
 export async function runDailyReminders(admin: SupabaseClient, now: Date = new Date(), opts: { onlyAutoPlan?: boolean } = {}): Promise<DailyReport> {
@@ -127,7 +126,8 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             report.autoPlans++
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
               // Ordered before → the one-tap reorder text (lib/reorder): YES gets the Instacart cart link.
-              if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals), REORDER_ASK)
+              if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
+              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals), REORDER_ASK)
               else await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned —\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
             }
             // The Sunday Drop v3 is this family's week email now (one email, not two); the plain plan email only
@@ -181,7 +181,8 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
               await logFollowup(admin, p.id, 'plan_ready')
             }
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
-              if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals), REORDER_ASK)
+              if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
+              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals), REORDER_ASK)
               else await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned —\n${names.join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
             }
           }
@@ -234,7 +235,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
               report.shopReminders++
             }
             if (wantsSms(shop.channel) && family) {
-              await textAdults(admin, p, settings, `DinnerDrop: your grocery list for ${n} dinners is ready. One tap to your cart: ${APP}/grocery-list`, 'shop_reminder')
+              await textAdults(admin, p, settings, `DinnerDrop: your grocery list for ${n} dinners is ready. One tap to your cart: ${APP}/grocery-list`, 'shop_reminder', { at: shop.time, sameDayOnly: true })
               report.shopReminders++
             }
           }
@@ -259,7 +260,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             report.cookReminders++
           }
           if (wantsSms(cook.channel) && family) {
-            await textAdults(admin, p, settings, `DinnerDrop tonight: ${line}. Steps: ${APP}/recipe/${encodeURIComponent(tonight.day.toLowerCase())}?cook=1`, 'cook_tonight')
+            await textAdults(admin, p, settings, `DinnerDrop tonight: ${line}. Steps: ${APP}/recipe/${encodeURIComponent(tonight.day.toLowerCase())}?cook=1`, 'cook_tonight', { at: cook.time, sameDayOnly: true })
             report.cookReminders++
           }
         }

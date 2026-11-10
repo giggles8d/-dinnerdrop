@@ -20,7 +20,9 @@ export async function GET() {
     const { data: plan } = await admin.from('meal_plans').select('meals').eq('user_id', user.id).order('created_at', { ascending: false }).limit(1)
     const current = (plan?.[0]?.meals ?? null) as Meal[] | null
     if (!(await shouldOfferOptions(admin, user.id, current))) return NextResponse.json({ options: [] })
-    const options = await attachLibraryImages(admin, await weekOptions(admin, user.id, current ?? []))
+    // First-week rules (familiar, no seafood unless asked) only for families who have never ordered.
+    const { count: carts } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', user.id)
+    const options = await attachLibraryImages(admin, await weekOptions(admin, user.id, current ?? [], { firstWeek: !carts }))
     return NextResponse.json({ options, pickCount: current?.length ?? 0, nights: (current ?? []).map((m) => m.day) })
   } catch (e) {
     console.error('[week-options]', e)

@@ -236,6 +236,13 @@ function DashboardContent() {
   }, [initialLoading, shouldAutoGen])
 
   useEffect(() => { trackOnce('dashboard_view') }, [])
+  // Their real time zone, so texts come at a decent hour where they live (app/api/profile/timezone).
+  useEffect(() => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+      if (tz) fetch('/api/profile/timezone', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tz }) }).catch(() => {})
+    } catch { /* older browsers: keep the default */ }
+  }, [])
 
   /** Never ordered (Sarah, Nov 9 2026): open as "pick your week" from 12–15 dinners, their current week pre-checked. */
   function offerOptions(options: Meal[], current: Meal[], source: string) {
