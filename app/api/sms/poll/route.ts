@@ -8,6 +8,7 @@ import { runSundayDropSweep } from '@/lib/sunday-drop'
 import { runMenuDraftSweep, inDraftWindow } from '@/lib/menu-drafts'
 import { sendLateWeekTexts } from '@/lib/texting-setup'
 import { runCartAsk } from '@/lib/cart-ask-campaign'
+import { flushOutbox } from '@/lib/send-window'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
@@ -50,10 +51,13 @@ export async function POST() {
   if (now.getUTCDay() === 0 || (now.getUTCDay() === 1 && now.getUTCHours() < 8)) {
     try { drop = await runSundayDropSweep(admin, now, 25000) } catch (e) { console.error('[sunday-drop]', e) }
   }
+  // Texts held for the family's texting hours (lib/send-window) that are now due.
+  let outbox: unknown = null
+  try { outbox = await flushOutbox(admin, 15000) } catch (e) { console.error('[outbox]', e) }
   // One-off "how did your order go?" email to families who sent a cart (lib/cart-ask-campaign), only once approved.
   let cartAsk: unknown = null
   try { cartAsk = await runCartAsk(admin, now, { budgetMs: 15000 }) } catch (e) { console.error('[cart-ask]', e) }
-  await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, cartAsk, starter, signupAlerts, welcome, drop, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
+  await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, outbox, cartAsk, starter, signupAlerts, welcome, drop, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
   return NextResponse.json({ ...report, signupAlerts, welcome, drop, drafts, weekTexts })
 }
 

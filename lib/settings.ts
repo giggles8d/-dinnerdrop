@@ -15,9 +15,12 @@ export const WEEKDAY_LABEL: Record<Weekday, string> = { mon: 'Monday', tue: 'Tue
 export type Channel = 'email' | 'sms' | 'both' | 'off'
 
 export interface Settings {
+  tzKnown?: boolean               // profiles.timezone came from the family's phone/browser or their own pick (lib/send-window)
+  tzManual?: boolean              // they picked it in Settings: never replaced by the browser's
   plan: {
     dinnersPerWeek: number          // 3–7 cooked dinners
     optionsCount: number            // 5–10 options to pick from
+    pickMyOwn: boolean              // every week, show 12–15 dinners to choose from instead of an assigned week (Nov 10 2026)
     leftoverNight: boolean          // plan one fewer cook and mark a leftover night
     includeLunches: boolean         // add simple lunches to the grocery list
     includeBreakfasts: boolean
@@ -108,6 +111,7 @@ export const DEFAULT_SETTINGS: Settings = {
   plan: {
     dinnersPerWeek: 5,
     optionsCount: 10,
+    pickMyOwn: false,
     leftoverNight: false,
     includeLunches: false,
     includeBreakfasts: false,
@@ -157,8 +161,8 @@ export const DEFAULT_SETTINGS: Settings = {
     enabled: false,
     voteDay: 'sun',
     againDay: 'thu',
-    quietStart: '21:00',
-    quietEnd: '07:00',
+    quietStart: '20:00',  // no texts after 8 PM (Sarah, Nov 10 2026: texting hours 9 AM–8 PM by default)
+    quietEnd: '09:00',    // …or before 9 AM
     weeklyCap: 4,
     ownerPhone: '',
     askDinner: false,
@@ -218,6 +222,8 @@ export function mergeSettings(stored: unknown): Settings {
   // Sunday dinner saved before "times" existed: its one length is the list.
   const sd = (stored as { plan?: { sundayDinner?: { times?: unknown } } } | null)?.plan?.sundayDinner
   if (sd && !Array.isArray(sd.times)) out.plan.sundayDinner.times = [out.plan.sundayDinner.minutes]
+  // The old default texting hours (no texts 9 PM–7 AM) were never a family's choice: show and use 9 AM–8 PM.
+  if (out.texting.quietStart === '21:00' && out.texting.quietEnd === '07:00') { out.texting.quietStart = '20:00'; out.texting.quietEnd = '09:00' }
   return out
 }
 

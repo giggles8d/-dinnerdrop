@@ -135,20 +135,31 @@ export function relaxSteps(dietary: string[], cuisines: string[]): { dietary: st
  * friendly options"). Their current week leads (pre-checked on the dashboard), then more dinners that fit them
  * under the first-week rules (familiar favorites, no seafood unless asked). Keys O1…On; [] if fewer than 12.
  */
-export async function weekOptions(admin: SupabaseClient, userId: string, current: Meal[]): Promise<Meal[]> {
+export async function weekOptions(admin: SupabaseClient, userId: string, current: Meal[], opts: { firstWeek?: boolean } = { firstWeek: true }): Promise<Meal[]> {
   const pool: Meal[] = [...current]
   for (let i = 0; i < 3 && pool.length < 15; i++) {
-    const more = await libraryWeek(admin, userId, pool.map((m) => m.name), { firstWeek: true }).catch(() => null)
+    const more = await libraryWeek(admin, userId, pool.map((m) => m.name), { firstWeek: opts.firstWeek !== false }).catch(() => null)
     if (!more || !more.ok || !more.meals.length) break
     pool.push(...more.meals.filter((m) => !pool.some((x) => x.name === m.name)))
   }
   return pool.length >= 12 ? pool.slice(0, 15).map((m, i) => ({ ...m, day: `O${i + 1}` })) : []
 }
 
-/** Never ordered and this week's dinners weren't picked by the family themselves → show them options. */
+/**
+ * Show options when this week's dinners weren't picked by the family themselves and either they have never ordered,
+ * or they turned on "I pick my dinners" (settings.plan.pickMyOwn — Sarah, Nov 10 2026, after a family who had ordered
+ * asked to pick recipes instead of having them assigned).
+ */
 export async function shouldOfferOptions(admin: SupabaseClient, userId: string, latest: Meal[] | null): Promise<boolean> {
   if (!latest?.length) return false
   if (latest.some((m) => (m as Meal & { pickedByFamily?: boolean }).pickedByFamily)) return false
+  if (await picksOwn(admin, userId)) return true
   const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', userId)
   return !(count ?? 0)
+}
+
+/** "I pick my dinners" is on for this family (the plan owner's setting). */
+export async function picksOwn(admin: SupabaseClient, userId: string): Promise<boolean> {
+  const { data } = await admin.from('profiles').select('settings').eq('id', userId).maybeSingle()
+  return mergeSettings(data?.settings).plan.pickMyOwn === true
 }

@@ -26,6 +26,7 @@ import type { Meal } from '@/types'
 import { buildFamilyRecipes, describeDinnerFromPhotos, saveFamilyRecipes } from '@/lib/family-recipes'
 import { leaderLabel, getDraft, setDraft, clearDraft, draftRoundIds, dueDrafts, parseLeaderCommand, getAsk, putAsk, openAsks, askIsLive, askSummary, askAck, askText, ASK_WINDOW_MIN, type LeaderCommand, type FamilyAsk } from '@/lib/family-ask'
 import { reorderAsked, reorderCartReply } from '@/lib/reorder'
+import { sendFamilyText } from '@/lib/send-window'
 import { needsConfirmation, activeNeeds, applyNeeds, NEEDS_TIMING_ASK, type MemberNeed } from '@/lib/member-needs'
 
 export interface MemberRow {
@@ -165,9 +166,9 @@ async function alreadySent(admin: SupabaseClient, householdId: string, intent: s
 export async function textMember(admin: SupabaseClient, m: MemberRow, body: string, intent: string, cap?: number, mediaUrl?: string): Promise<boolean> {
   if (!m.phone || !m.phone_opt_in_at || m.phone_opted_out) return false
   if (cap !== undefined && (await sentThisWeek(admin, m.id)) >= cap) return false
-  const r = await sendSms(m.phone, body, mediaUrl)
-  await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: m.phone, body, intent, twilio_sid: r.sid ?? null })
-  return r.ok
+  // Held until the family's texting hours if needed (lib/send-window).
+  const r = await sendFamilyText(admin, { householdId: m.household_id, memberId: m.id, to: m.phone, body, intent, mediaUrl })
+  return r === 'sent' || r === 'queued'
 }
 
 function menuLines(meals: Meal[]): string {
@@ -1212,8 +1213,7 @@ export async function startVoteCycle(admin: SupabaseClient, ownerId: string, opt
       const at = new Intl.DateTimeFormat('en-US', { timeZone: o.timezone || 'America/New_York', hour: 'numeric', minute: '2-digit' }).format(sendAt)
       const to = await ownerPhone(admin, o as OwnerRow)
       const body = `DinnerDrop: this week's vote is ready for you to check before the family sees it:\n${pickLines(round.candidates)}\n\nReply SEND to send it now, DROP 3, SWAP 3 FOR tacos, or ADD DINNER chili. Or change it here: ${APP_URL}/vote-review\nIt goes to the family at ${at} if you don't change anything.`
-      const r = to ? await sendSms(to, body, menuImageUrl(round.id)) : { sid: undefined }
-      await admin.from('sms_messages').insert({ household_id: o.household_id, direction: 'out', to_number: to, body, intent: `vote_review:${round.id}`, twilio_sid: r.sid ?? null })
+      if (to) await sendFamilyText(admin, { householdId: o.household_id, to, body, intent: `vote_review:${round.id}`, mediaUrl: menuImageUrl(round.id) })
       report.skipped.push('sent to the person in charge for review')
       return report
     }
@@ -1552,8 +1552,7 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
     : `DinnerDrop: no votes came in, so I kept the top picks.`
   const body = `${head} The week is set:\n${lines.join('\n')}\n\nWant a change? Reply SWAP 2 FOR tacos. Next: add anything else you need to the list, then approve the order → ${APP_URL}/grocery-list`
   const to = await ownerPhone(admin, owner)
-  const r = to ? await sendSms(to, body) : { sid: undefined }
-  await admin.from('sms_messages').insert({ household_id: round.household_id, direction: 'out', to_number: to, body, intent: 'vote_complete', twilio_sid: r.sid ?? null })
+  if (to) await sendFamilyText(admin, { householdId: round.household_id, to, body, intent: 'vote_complete' })
 }
 
 /* ------------------------------------------------------------------ */
