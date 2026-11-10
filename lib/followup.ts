@@ -12,7 +12,7 @@ import { normalizeItemName, guessCategory } from '@/lib/list'
  */
 
 const APP = 'https://www.dinnerdrop.app'
-export type FollowupKind = 'day1' | 'day3' | 'day7' | 'plan_ready' | 'campaign' | 'texting' | 'receipt'
+export type FollowupKind = 'day1' | 'day3' | 'day7' | 'plan_ready' | 'campaign' | 'texting' | 'receipt' | 'reorder'
 
 function secret(): string {
   return process.env.FOLLOWUP_LINK_SECRET || process.env.CRON_SECRET || ''

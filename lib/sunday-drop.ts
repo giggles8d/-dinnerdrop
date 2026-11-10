@@ -195,10 +195,14 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
 
   const store = storeLabel(settings)
   const n = st.meals.length
+  // Weekly one-tap reorder (lib/reorder, Nov 10 2026): a family that has sent a cart before gets the cart, not a list.
+  // The one-tap link always builds an Instacart cart, so it says Instacart.
+  const { count: cartsEver } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
+  const reorder = st.segment === 'shop' && (cartsEver ?? 0) > 0 && settings.stores.mode !== 'kroger'
   const firstDinner = n ? short(st.meals[0].name) : ''
   const seg = st.segment
   const subject = {
-    shop: `Your ${store} list is ready: ${firstDinner}${n > 1 ? ` + ${n - 1} more` : ''}`,
+    shop: reorder ? 'Your week is ready. Your Instacart cart is one tap away' : `Your ${store} list is ready: ${firstDinner}${n > 1 ? ` + ${n - 1} more` : ''}`,
     vote: st.vote?.voted && st.vote.leaders[0] ? `${st.vote.voted} ${st.vote.voted === 1 ? 'vote' : 'votes'} in: ${st.vote.leaders[0]} is leading` : "Your family's dinner vote is open",
     picked: `Your ${n || 5} dinners are picked${name ? `, ${name}` : ''}. Want them?`,
     comeback: `I picked ${n || 5} dinners for you this week`,
@@ -206,7 +210,7 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
     list: hero ? `This week's easy dinner: ${short(hero.name)}` : 'One easy dinner idea for this week',
   }[seg]
   const preview = {
-    shop: 'One list. Your store. Your week.',
+    shop: reorder ? `${firstDinner}${n > 1 ? ` + ${n - 1} more` : ''}. Tap once and the groceries are in your cart.` : 'One list. Your store. Your week.',
     vote: 'See the picks and finish your week.',
     picked: 'Built from your settings. Swap anything, then one tap builds your list.',
     comeback: 'Built from your settings. One tap and dinner is handled.',
@@ -239,7 +243,7 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
     estimate: seg === 'shop' && st.total > 0 ? Math.round(st.total) : null,
     vote: st.vote ?? null,
     main: {
-      shop: { label: `Send my list to ${store}`, href: shopUrl(p.id, 'plan_ready') },
+      shop: reorder ? { label: 'Send this week to Instacart', href: shopUrl(p.id, 'reorder') } : { label: `Send my list to ${store}`, href: shopUrl(p.id, 'plan_ready') },
       vote: { label: 'Review the dinner votes', href: link('/vote-review', seg) },
       picked: { label: "Use this week's dinners", href: link('/dashboard', seg) },
       comeback: { label: "Use this week's dinners", href: link('/dashboard', seg) },
