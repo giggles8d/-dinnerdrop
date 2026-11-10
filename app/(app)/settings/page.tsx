@@ -1,5 +1,6 @@
 'use client'
 
+import { dinnersCovered } from '@/lib/budget-math'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import DeleteAccount from '@/components/DeleteAccount'
 import TripsSettings from '@/components/TripsSettings'
@@ -623,6 +624,13 @@ export default function SettingsPage() {
                   </Field>
                   <Field label="Weekly dinner budget" hint="What you want to pay at checkout. Every week stays inside it; dinners picked to fit are marked “Budget pick”. Raise it for more choice.">
                     <Select value={profile.weekly_budget} onChange={(v) => patchProfile({ weekly_budget: v })} options={BUDGETS.map((b) => ({ value: b, label: b }))} />
+                    {(() => {
+                      // Budgets we can't hit (Nov 10 2026): say how many dinners it really covers, at checkout prices.
+                      const covers = dinnersCovered(profile.weekly_budget, settings.stores, profile.family_size)
+                      if (!covers || covers >= settings.plan.dinnersPerWeek) return null
+                      const how = settings.stores.mode === 'instore' ? 'at the store' : 'through Instacart'
+                      return <p className="text-xs text-amber-700 mt-2">{profile.weekly_budget} {how} usually covers about {Math.max(1, covers)}{covers >= 2 ? `–${covers + 1}` : ''} dinners for {profile.family_size}, not {settings.plan.dinnersPerWeek}. We&apos;ll stay inside it with the cheapest dinners. {settings.stores.mode === 'instore' ? '' : 'Pickup or shopping in person stretches it further. '}Or raise the budget, or plan fewer dinners.</p>
+                    })()}
                   </Field>
                   <Field label="Takeout costs us about (per person)" hint="Used for the “you saved vs takeout” number on your dashboard.">
                     <Select value={String(settings.stores.takeoutPerServing ?? 15)} onChange={(v) => patch((s) => { s.stores.takeoutPerServing = Number(v) })} options={[8, 10, 12, 15, 18, 20, 25, 30].map((n) => ({ value: String(n), label: `$${n}` }))} />

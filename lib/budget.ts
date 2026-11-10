@@ -1,38 +1,27 @@
 /**
  * Every week stays inside the family's budget (Sarah, Nov 10 2026: "we should hold to the budget and if it is a
  * problem then they can change their budget"). The budget is what they pay at checkout, so a week fits when its
- * shelf-price estimate × their price factor (Instacart prices and fees or a learned store factor, store brands —
- * lib/price-factor) is within it. When it doesn't, the priciest dinners are swapped for cheaper library dinners,
+ * dinner estimate × whole-package ratio × store factor (lib/budget-math) is within it. When it doesn't, the priciest dinners are swapped for cheaper library dinners,
  * keeping each night, and the swapped-in dinners are tagged `budgetPick` so the family sees why (and that raising
  * the budget in Settings brings back more choice).
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Settings } from '@/lib/settings'
+import { dinnerBudget, listRatio, storeFactor } from '@/lib/budget-math'
 import type { Meal } from '@/types'
 
 export type BudgetMeal = Meal & { budgetPick?: boolean; suggestedNight?: string }
 
-export function budgetNumber(weeklyBudget: string | null | undefined): number {
-  return Number(String(weeklyBudget ?? '').replace(/[^0-9.]/g, '')) || 0
-}
+export { budgetNumber, LIST_RATIO, PLANNING_DELIVERY_FACTOR, checkoutTotal, dinnersCovered } from '@/lib/budget-math'
 
-/**
- * The factor planning uses — on purpose more cautious than the one shown on the list (Sarah, Nov 10 2026: "we can't
- * promise something and then fail a second time"). Prices aren't pulled live from each family's store, so until a
- * family's real order total teaches us their factor, plan for Instacart at 1.35× shelf prices (our one measured order
- * ran 1.34× with fees) and don't count store-brand savings toward the budget — those are a bonus.
- */
-export const PLANNING_DELIVERY_FACTOR = 1.35
+/** The factor between dinner estimates and checkout (whole packages × store prices) — lib/budget-math. */
 export function planningFactor(stores: Pick<Settings, 'stores'>['stores']): number {
-  const learned = Number(stores?.priceFactor)
-  if (learned > 0 && learned !== 1) return learned
-  return stores?.mode === 'instore' ? 1.05 : PLANNING_DELIVERY_FACTOR
+  return listRatio(stores) * storeFactor(stores)
 }
 
-/** The shelf-price total a week may reach for this family to pay no more than their budget. */
+/** The dinner-estimate total a week may reach for the cart to stay within the family's budget. */
 export function shelfBudget(weeklyBudget: string | null | undefined, settings: Pick<Settings, 'stores'>): number {
-  const b = budgetNumber(weeklyBudget)
-  return b > 0 ? b / planningFactor(settings.stores) : 0
+  return dinnerBudget(weeklyBudget, settings.stores)
 }
 
 const cost = (m: Meal) => Number(m.estimatedCost) || 0

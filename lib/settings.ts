@@ -97,6 +97,7 @@ export interface Settings {
     myStores: Array<{ name: string; factor?: number }>   // the stores they compare (Wegmans, Tops, Aldi…), each with its own learned factor
     takeoutPerServing: number       // what a takeout/delivery dinner costs this family per person — the "you saved" comparison
     storeBrand: boolean             // prefer store brands for packaged groceries (lib/store-brands, Nov 10 2026)
+    listRatio?: number              // this family's grocery-list cost per $1 of dinner estimate, once learned (lib/budget-math)
   }
   notifications: {
     email: boolean

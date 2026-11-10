@@ -12,6 +12,7 @@ import { mealsUsing } from '@/lib/overlap'
 import { toPackages } from '@/lib/package-match'
 import { matchSale, isUpcoming, type WeeklySales } from '@/lib/sales-shared'
 import DealsBanner from '@/components/DealsBanner'
+import PantryCheck from '@/components/PantryCheck'
 import StockUpDeals from '@/components/StockUpDeals'
 import SwapToSave from '@/components/SwapToSave'
 import RestOfShop from '@/components/RestOfShop'
@@ -346,6 +347,13 @@ export default function GroceryListPage() {
     setItems((xs) => xs.map((x) => (x.id === item.id ? { ...x, have: !x.have } : x)))
     await supabase.from('list_items').update({ have: !item.have }).eq('id', item.id)
   }
+  /** Pantry check (components/PantryCheck): mark the staples they already have so they stay off the cart. */
+  async function keepOff(ids: string[]) {
+    if (!ids.length) return
+    setItems((xs) => xs.map((x) => (ids.includes(x.id) ? { ...x, have: true } : x)))
+    await supabase.from('list_items').update({ have: true }).in('id', ids)
+    trackOnce('pantry_check_used')
+  }
   async function changeQuantity(item: ListItem, quantity: string) {
     tapHaptic()
     setItems((xs) => xs.map((x) => (x.id === item.id ? { ...x, quantity } : x)))
@@ -522,6 +530,7 @@ export default function GroceryListPage() {
 
         {/* Ask the family first — top of the page, no scrolling */}
         <LastCallCard onItems={load} />
+        <PantryCheck rows={items} weekKey={weekStart ?? 'now'} onKeepOff={keepOff} />
         <SidesCard meals={planMeals} have={items.map((i) => i.name)} onAdd={(name, category, searchTerm, qty) => addItem(name, category, searchTerm, 'extra', qty)} />
 
         {/* Budget bar */}
