@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { FAMILY_TRIAL_DAYS, getFamilyPriceId, type FamilyInterval } from '@/lib/stripe'
 
@@ -39,7 +40,9 @@ export async function POST(req: NextRequest) {
       })
       customerId = customer.id
 
-      await supabase
+      // Billing columns are locked against signed-in writes (migration 039), so the server key saves it.
+      const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+      await admin
         .from('profiles')
         .update({ stripe_customer_id: customerId })
         .eq('id', user.id)

@@ -81,7 +81,7 @@ export default function StartPage() {
           <PoweredByInstacart />
           <span className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD, color: GREEN }}>
             <span className="w-1.5 h-1.5 rounded-full inline-block" style={{ backgroundColor: GOLD }} />
-            Over 400 families plan dinner with DinnerDrop
+            Over 400 families have signed up for DinnerDrop
           </span>
         </div>
         <Suspense fallback={null}><PromoBanner /></Suspense>
@@ -99,7 +99,7 @@ export default function StartPage() {
             Start free &mdash; no card needed &rarr;
           </Link>
           <p className="text-sm text-gray-600 flex items-center justify-center gap-2 flex-wrap">
-            <InstacartCarrot height={14} /> Works with Instacart (and every store on it), Walmart and Kroger &middot; Free forever &middot; Family plan free for your first 14 days, no card
+            <InstacartCarrot height={14} /> Works with Instacart (and every store on it) and Walmart, free forever &middot; Kroger cart on Family &middot; Family plan free for your first 14 days, no card
           </p>
         </div>
 
