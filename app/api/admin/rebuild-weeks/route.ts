@@ -50,7 +50,8 @@ export async function POST(req: NextRequest) {
     if (b.userId && uid !== b.userId) return false   // one family only (e.g. a budget fix after their email, Nov 10 2026)
     const plan = latest.get(uid)!
     if (b.onlyMexican && (plan.meals ?? []).filter((m) => isMexicanStyle(m as { name: string; cuisine?: string })).length < 2) return false
-    return !(carts ?? []).some((c) => c.user_id === uid && String(c.created_at) > plan.created_at)
+    // A one-family rebuild (userId) is a deliberate fix, even if that week's cart was already sent.
+    return !!b.userId || !(carts ?? []).some((c) => c.user_id === uid && String(c.created_at) > plan.created_at)
   })
   const todo = eligible.filter((uid) => !doneSet.has(uid))
   if (!b.apply) return NextResponse.json({ weekStart, plans: ids.length, eligible: eligible.length, alreadyDone: eligible.length - todo.length, todo: todo.length })
