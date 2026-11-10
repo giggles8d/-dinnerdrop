@@ -64,7 +64,7 @@ export default async function LandingPage() {
                   See a sample week
                 </a>
               </div>
-              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-2"><InstacartCarrot height={14} /> Family texting free for 14 days, no card &middot; Works with Instacart, Walmart and Kroger &middot; Then $4.99/month, or keep the free plan</p>
+              <p className="text-sm text-muted-foreground mt-4 flex items-center gap-2"><InstacartCarrot height={14} /> Family texting free for 14 days, no card &middot; Works with Instacart and Walmart (Kroger cart on Family) &middot; Then $4.99/month, or keep the free plan</p>
             </div>
 
             <div className="relative">
@@ -94,7 +94,7 @@ export default async function LandingPage() {
       <InstacartBand />
 
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
-        <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart, Walmart or Kroger account. You review every item and check out there at that store&apos;s prices. We never charge your grocery account and never add to the price. Over 400 families plan dinner with DinnerDrop.
+        <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart, Walmart or Kroger account. You review every item and check out there at that store&apos;s prices. We never charge your grocery account and never add to the price. Over 400 families have signed up for DinnerDrop.
         {' '}<span className="font-semibold text-foreground">On your phone:</span> open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em> — it works like an app, nothing to download.
       </p>
 

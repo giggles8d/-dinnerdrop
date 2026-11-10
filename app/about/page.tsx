@@ -85,7 +85,7 @@ export default function AboutPage() {
               little time and a little sanity every week.
             </p>
             <p className="mb-3">
-              Over 400 families plan dinner with DinnerDrop, and their feedback shapes
+              Over 400 families have signed up for DinnerDrop, and their feedback shapes
               everything &mdash; including the one-tap Instacart cart. Planning and the cart are
               free for every family; the Family plan adds the rest of the household. If you have
               thoughts, I want to hear them.
