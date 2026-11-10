@@ -110,7 +110,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   const pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
   // The budget is what they pay at checkout (lib/budget): Instacart prices and fees, store brands. Dinners swapped in
   // to fit it are tagged budgetPick so the family knows a higher budget brings back more choice.
-  const budget = shelfBudget(p.weekly_budget, settings) || 150 / 1.25
+  const budget = shelfBudget(p.weekly_budget, settings) || 150 / 1.35
   const top = new Set(pool.slice(0, dinners).map((m) => m.name))
   const fitted = fitBudget(pool, dinners, budget).map((m) => (top.has(m.name) ? m : { ...m, budgetPick: true }))
   const meals = settings.food.fullPlate ? completePlates(fitted, { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitted

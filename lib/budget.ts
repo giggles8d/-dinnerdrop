@@ -7,7 +7,6 @@
  * the budget in Settings brings back more choice).
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { familyFactor } from '@/lib/price-factor'
 import type { Settings } from '@/lib/settings'
 import type { Meal } from '@/types'
 
@@ -17,10 +16,23 @@ export function budgetNumber(weeklyBudget: string | null | undefined): number {
   return Number(String(weeklyBudget ?? '').replace(/[^0-9.]/g, '')) || 0
 }
 
+/**
+ * The factor planning uses — on purpose more cautious than the one shown on the list (Sarah, Nov 10 2026: "we can't
+ * promise something and then fail a second time"). Prices aren't pulled live from each family's store, so until a
+ * family's real order total teaches us their factor, plan for Instacart at 1.35× shelf prices (our one measured order
+ * ran 1.34× with fees) and don't count store-brand savings toward the budget — those are a bonus.
+ */
+export const PLANNING_DELIVERY_FACTOR = 1.35
+export function planningFactor(stores: Pick<Settings, 'stores'>['stores']): number {
+  const learned = Number(stores?.priceFactor)
+  if (learned > 0 && learned !== 1) return learned
+  return stores?.mode === 'instore' ? 1.05 : PLANNING_DELIVERY_FACTOR
+}
+
 /** The shelf-price total a week may reach for this family to pay no more than their budget. */
 export function shelfBudget(weeklyBudget: string | null | undefined, settings: Pick<Settings, 'stores'>): number {
   const b = budgetNumber(weeklyBudget)
-  return b > 0 ? b / familyFactor(settings.stores) : 0
+  return b > 0 ? b / planningFactor(settings.stores) : 0
 }
 
 const cost = (m: Meal) => Number(m.estimatedCost) || 0
