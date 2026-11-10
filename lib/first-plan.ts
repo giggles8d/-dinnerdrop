@@ -15,6 +15,7 @@ import { savePlan } from '@/lib/autoplan'
 import { trackStep } from '@/lib/activation'
 import { grantNewFamilyTrial } from '@/lib/family-grant'
 import { dropStarterWeek } from '@/lib/starter-week'
+import { shelfBudget } from '@/lib/budget'
 import type { Meal } from '@/types'
 
 export type FirstPlanResult =
@@ -107,8 +108,12 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   // Within the photo-first order, lead with dinners that share fresh ingredients (whole packages get used).
   const lim = varietyLimits(dinners)
   const pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
-  const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 150
-  const meals = settings.food.fullPlate ? completePlates(fitBudget(pool, dinners, budget), { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitBudget(pool, dinners, budget)
+  // The budget is what they pay at checkout (lib/budget): Instacart prices and fees, store brands. Dinners swapped in
+  // to fit it are tagged budgetPick so the family knows a higher budget brings back more choice.
+  const budget = shelfBudget(p.weekly_budget, settings) || 150 / 1.25
+  const top = new Set(pool.slice(0, dinners).map((m) => m.name))
+  const fitted = fitBudget(pool, dinners, budget).map((m) => (top.has(m.name) ? m : { ...m, budgetPick: true }))
+  const meals = settings.food.fullPlate ? completePlates(fitted, { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitted
   if (meals.length < Math.min(3, dinners)) return { ok: false, reason: 'not enough library recipes', found: meals.length }
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   return { ok: true, meals, shape }

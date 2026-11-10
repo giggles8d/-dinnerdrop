@@ -3,6 +3,8 @@ import { createClient } from '@supabase/supabase-js'
 import { createInstacartLink } from '@/lib/instacart'
 import { itemsForFamily, verifyFollowup } from '@/lib/followup'
 import { grantCartOffer } from '@/lib/cart-offer'
+import { mergeSettings } from '@/lib/settings'
+import { storeBrandsFor } from '@/lib/store-brands'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 30
@@ -39,7 +41,8 @@ export async function GET(req: NextRequest) {
   try {
     const { items, weekStart, estTotal } = await itemsForFamily(admin, u)
     if (!items.length) return fallback
-    const result = await createInstacartLink(items, 'DinnerDrop Weekly Groceries')
+    const { data: prof } = await admin.from('profiles').select('settings').eq('id', u).maybeSingle()
+    const result = await createInstacartLink(items, 'DinnerDrop Weekly Groceries', { brands: storeBrandsFor(mergeSettings(prof?.settings)) })
     if (!result.link || result.fallback) return fallback
     try {
       await admin.from('grocery_handoffs').insert({ user_id: u, store: 'Instacart', item_count: items.length, est_total: estTotal, week_start: weekStart })

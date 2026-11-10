@@ -2,6 +2,7 @@
  * Generate + save a week for a family without them lifting a finger.
  * Used by the daily cron (plan day) and by the vote-day texting cycle.
  */
+import { keepInBudget } from '@/lib/budget'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Settings } from '@/lib/settings'
 import { assignNights, type PlanShape } from '@/lib/plan'
@@ -76,6 +77,8 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
   }
   if (!chosen?.length) chosen = (await buildWeekMeals(admin, p, settings, weekStart))?.meals ?? null
   if (!chosen?.length) return null
+  // Every week stays inside the family's budget at what they'll pay (lib/budget); swapped dinners are tagged.
+  chosen = await keepInBudget(admin, p.id, chosen, p.weekly_budget, settings)
   const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
   if (draft) await admin.from('menu_drafts').update({ status: 'sent', sent_at: new Date().toISOString() }).eq('id', draft.id)
@@ -147,5 +150,7 @@ export async function rebuildWeek(admin: SupabaseClient, p: AutoPlanProfile, set
   const shape: PlanShape = data.plan ?? { dinnersPerWeek: settings.plan.dinnersPerWeek, cookDays: settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   const picked = pickVaried(data.meals ?? [], shape.dinnersPerWeek, [], varietyLimits(shape.dinnersPerWeek))
   if (!picked.length) return null
-  return savePlan(admin, p.id, weekStart, picked, shape)
+  // Inside the budget at checkout price (lib/budget); the other generated ideas stand in first.
+  const fitted = await keepInBudget(admin, p.id, picked, p.weekly_budget, settings, { prefer: (data.meals ?? []).filter((m) => !picked.includes(m)) })
+  return savePlan(admin, p.id, weekStart, fitted, shape)
 }

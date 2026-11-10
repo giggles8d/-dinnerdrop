@@ -27,6 +27,7 @@ import { buildFamilyRecipes, describeDinnerFromPhotos, saveFamilyRecipes } from 
 import { leaderLabel, getDraft, setDraft, clearDraft, draftRoundIds, dueDrafts, parseLeaderCommand, getAsk, putAsk, openAsks, askIsLive, askSummary, askAck, askText, ASK_WINDOW_MIN, type LeaderCommand, type FamilyAsk } from '@/lib/family-ask'
 import { reorderAsked, reorderCartReply } from '@/lib/reorder'
 import { sendFamilyText } from '@/lib/send-window'
+import { keepInBudget } from '@/lib/budget'
 import { needsConfirmation, activeNeeds, applyNeeds, NEEDS_TIMING_ASK, type MemberNeed } from '@/lib/member-needs'
 
 export interface MemberRow {
@@ -1539,7 +1540,10 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const tcfg = tripsConfig(settings)
   const tripNights = isClassic(tcfg) ? null : tripInstances(tcfg, round.week_start).find((t) => t.key === round.week_start)?.nights.map((n) => n.day) ?? null
   const shape: PlanShape = { dinnersPerWeek: round.picks_needed, cookDays: tripNights?.length ? tripNights : settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
-  const saved = await savePlan(admin, owner.id, round.week_start, chosen, shape)
+  // The week stays inside the family's budget (lib/budget): the next vote winners stand in first, tagged as budget picks.
+  const { data: ob } = await admin.from('profiles').select('weekly_budget').eq('id', owner.id).maybeSingle()
+  const inBudget = await keepInBudget(admin, owner.id, chosen, ob?.weekly_budget as string | null, settings, { prefer: ranked.map((r) => r.c).filter((c) => !chosen.includes(c)) })
+  const saved = await savePlan(admin, owner.id, round.week_start, inBudget, shape)
   await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString(), result: { chosen: saved.map((m) => m.name), tally } }).eq('id', round.id)
 
   // Name only the people who actually answered (Nov 9 2026: a family that never replied was told "heard from Me").

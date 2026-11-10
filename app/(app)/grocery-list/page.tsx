@@ -35,7 +35,7 @@ import {
   listToText, guessCategory, normalizeItemName, parseTypedItem,
 } from '@/lib/list'
 import type { GroceryCategory, GroceryItem, Meal } from '@/types'
-import { DEFAULT_FACTOR, effectiveFactor, fallbackPrice } from '@/lib/price-factor'
+import { DEFAULT_FACTOR, familyFactor, fallbackPrice } from '@/lib/price-factor'
 
 type GroceryListData = Record<GroceryCategory, GroceryItem[]>
 
@@ -61,6 +61,8 @@ export default function GroceryListPage() {
   const [stockUpOn, setStockUpOn] = useState(true)
   const [storeQuotes, setStoreQuotes] = useState<Array<{ store: string; total: number; item_count: number | null; missing: string[]; created_at: string }>>([])
   const [priceFactor, setPriceFactor] = useState(1)
+  const [storeBrand, setStoreBrand] = useState(false)
+  const [inStore, setInStore] = useState(false)
   const [usuals, setUsuals] = useState<UsualItem[]>([])
   const [myStores, setMyStores] = useState<StorePref[]>([])
   const [krogerReview, setKrogerReview] = useState(false)
@@ -167,6 +169,8 @@ export default function GroceryListPage() {
     const settings = mergeSettings(profile?.settings)
 
     setPriceFactor(Number(settings.stores.priceFactor) || 1)
+    setStoreBrand(!!settings.stores.storeBrand)
+    setInStore(settings.stores.mode === 'instore')
     setMyStores(Array.isArray(settings.stores.myStores) ? settings.stores.myStores : [])
     setStockUpOn(settings.deals.stockUp)
     setKrogerLoc({ id: settings.stores.krogerLocationId, name: settings.stores.krogerLocationName })
@@ -479,7 +483,7 @@ export default function GroceryListPage() {
   const extrasEst = openRows.filter((i) => i.source !== 'plan').reduce((n, i) => n + baseline(i), 0)
   const listEst = dinnersEst + extrasEst
   const learned = priceFactor !== 1
-  const storeEst = listEst * effectiveFactor(priceFactor)
+  const storeEst = listEst * familyFactor({ priceFactor, mode: inStore ? 'instore' : 'instacart', storeBrand })
   const over = budget > 0 && storeEst > budget
 
   return (
@@ -682,7 +686,7 @@ export default function GroceryListPage() {
           </div>
           <p className="text-[11px] text-primary-foreground/50 mt-1">
             Dinners ${dinnersEst.toFixed(0)}{extrasEst > 0 ? ` + other items $${extrasEst.toFixed(0)}` : ''} at typical prices
-            {learned ? ` × ${priceFactor.toFixed(2)} for your store and fees, learned from your orders` : ` + about ${Math.round((DEFAULT_FACTOR - 1) * 100)}% for Instacart prices and fees (we'll learn your store's real number from your first order)`}. Tip not included.
+            {learned ? ` × ${priceFactor.toFixed(2)} for your store and fees, learned from your orders` : inStore ? ' at the store' : ` + about ${Math.round((DEFAULT_FACTOR - 1) * 100)}% for Instacart prices and fees (we'll learn your store's real number from your first order)`}{storeBrand ? ', with store brands (about 15% less)' : ''}. Tip not included.
             {' '}{shoppableCount} items go to the cart{haveCount ? ` · ${haveCount} you already have stay off it` : ''}.
           </p>
           {askActual && !actualSaved && (

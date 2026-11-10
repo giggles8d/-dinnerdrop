@@ -8,6 +8,8 @@ import { grantWeekendOffer } from '@/lib/weekend-offer'
 import { loadProductPrefs, applyPrefsToItems } from '@/lib/product-prefs'
 import type { GroceryItem } from '@/types'
 import { grantCartOffer } from '@/lib/cart-offer'
+import { mergeSettings } from '@/lib/settings'
+import { storeBrandsFor } from '@/lib/store-brands'
 
 export async function POST(request: Request) {
   try {
@@ -33,7 +35,9 @@ export async function POST(request: Request) {
     // The family's own products (lib/product-prefs). Instacart picks the store at checkout, so no store-brand step here.
     const allItems = applyPrefsToItems(listed, (await loadProductPrefs(supabase, user.id)).prefs)
 
-    const result = await createInstacartLink(allItems, storeName ? `DinnerDrop — ${storeName} list` : 'DinnerDrop Weekly Groceries')
+    const { data: me } = await supabase.from('profiles').select('settings').eq('id', user.id).maybeSingle()
+    const brands = storeBrandsFor(mergeSettings(me?.settings))
+    const result = await createInstacartLink(allItems, storeName ? `DinnerDrop — ${storeName} list` : 'DinnerDrop Weekly Groceries', { brands })
 
     // Log the handoff (best-effort — never block the response on analytics).
     if (result.link && !result.fallback) {
