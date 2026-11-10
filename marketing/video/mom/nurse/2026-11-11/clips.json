@@ -1,0 +1,10 @@
+{
+ "element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
+ "voice": "Hallie preset 10274bf1-fb93-554f-b59f-d620a920fd36 (voice_change on every clip)",
+ "start_frames": {"c1": "a484441d-f7e6-44e2-b8db-d6ef167cd956 (bleachers, empty rows; frame 6874f533 with tiny players on the court was skipped to avoid the kids/nsfw block)", "c2": "a484441d-f7e6-44e2-b8db-d6ef167cd956 (same frame)", "c3": "fba840ce-417f-4c51-a39c-edc56a460ff9 (stove, honey garlic chicken thighs)", "c4": "7361f79d-81e9-4456-a1a9-07e587e8e818 (kitchen table, three plates, basketball, backpack)"},
+ "veo_jobs": {"c1": "163c0523-fee6-4674-924f-756651aeb4c4", "c2": "bc2e893e-0806-4f6f-bf90-4eb5c7e06cda", "c3": "dd17ed74-3e6f-42a5-8a9d-e33754e7d5b7", "c4": "02fe4b5f-3185-4ef7-af21-7919d93d8945"},
+ "voice_changed": {"c1": "ec16bdbd-e4fd-4540-8e9f-a5c5bdfb91c7", "c2": "dfb21fa9-c313-46e5-91ba-d90fec5dd82d", "c3": "580e204e-7902-42e1-ba76-f07b07465422", "c4": "b6b6913c-73b0-4c95-a4ad-fb7327bc255a"},
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/9a44255e-d1b8-4948-bfbc-efb023f6a8d9.mp4",
+ "status": "SCHEDULED 2026-11-11 4:30 PM ET on TikTok, YouTube Shorts, Facebook Reels via Publer (by Claude, 11-10)",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-11"
+}

@@ -1,0 +1,15 @@
+{
+ "out": "2026-11-11_NurseMom_Ep4_TextACook.mp4",
+ "ai_banner": false,
+ "end_ai_line": false,
+ "hook_text": ["ER nurse vs. chicken thighs"],
+ "bubbles": {"c2.mp4": [["chicken thighs, 20 min, go", 3.0, "out"], ["Honey garlic skillet. One pan.", 5.6, "in"]]},
+ "labels": {"c2.mp4": "Text it like a person"},
+ "app_over": {"c3.mp4": {"face": 2.0, "segs": [[88, 97, "Then the rest of the week"], [136, 152, "List to your cart, one tap"]]}},
+ "app_after": 0,
+ "app": [],
+ "cta_y": [1180, 1290],
+ "end_seconds": 1.8,
+ "end": ["Try it free, no card", "Code NURSE = 3 months of Family free", "dinnerdrop.app/go/nurse"],
+ "clip_end": {"c1.mp4": 7.5, "c2.mp4": 8.0, "c3.mp4": 7.65, "c4.mp4": 7.7}
+}
