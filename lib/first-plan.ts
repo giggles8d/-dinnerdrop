@@ -67,14 +67,24 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   // What the family said they like in setup (Tacos, Pasta, Mac and cheese…) leads too, and a cuisine picked as one
   // style among several (e.g. Mediterranean + family + budget) is a preference, not the only food they eat
   // (Nov 9 2026: a taco-and-mac-and-cheese family got fava beans and lamb kebabs).
+  // Nov 10 2026: a mom who listed tomatoes, onions and bell peppers as dislikes in setup got Greek green beans in
+  // tomato sauce, taco pasta and a burger with charred peppers in her first week (the 12–15 options she picked from
+  // ignored everyone's dislikes and allergies too). Everyone in the household's allergies and dislikes now keep
+  // those dinners and sides out, the same way the Sunday Drop and the AI planner already do.
   let likes: string[] = []
-  if (opts.firstWeek) {
+  let allergies: string[] = []
+  let dislikes: string[] = []
+  {
     const { data: hh } = await admin.from('profiles').select('household_id').eq('id', userId).single()
     if (hh?.household_id) {
-      const { data: mem } = await admin.from('household_members').select('likes').eq('household_id', hh.household_id)
-      likes = Array.from(new Set(((mem ?? []) as Array<{ likes: string[] | null }>).flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
+      const { data: mem } = await admin.from('household_members').select('likes, allergies, dislikes').eq('household_id', hh.household_id)
+      const rows = (mem ?? []) as Array<{ likes: string[] | null; allergies: string[] | null; dislikes: string[] | null }>
+      if (opts.firstWeek) likes = Array.from(new Set(rows.flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
+      allergies = Array.from(new Set(rows.flatMap((x) => x.allergies ?? []).map((a) => a.trim()).filter(Boolean)))
+      dislikes = Array.from(new Set(rows.flatMap((x) => x.dislikes ?? []).map(dislikeWord).filter((d) => d.length > 2)))
     }
   }
+  const avoid = [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allergies, ...dislikes]
   const softCuisine = !!opts.firstWeek && styles.length > 1
   const preferred = softCuisine ? settings.food.cuisines.map((c) => c.toLowerCase()) : []
   const firstWeekBoost = (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) =>
@@ -92,7 +102,8 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
       limit: dinners + 24,
       maxCookTime: maxCook,
       dietary: step.dietary,
-      excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
+      allergies,
+      excludeWords: avoid,
       excludeNames,
       cuisines: step.cuisines,
       ignoreKept: true,
@@ -108,10 +119,18 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   const lim = varietyLimits(dinners)
   const pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
   const budget = Number(String(p.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 150
-  const meals = settings.food.fullPlate ? completePlates(fitBudget(pool, dinners, budget), { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitBudget(pool, dinners, budget)
+  const meals = settings.food.fullPlate ? completePlates(fitBudget(pool, dinners, budget), { dietaryNeeds: p.dietary_needs ?? [], avoid }) : fitBudget(pool, dinners, budget)
   if (meals.length < Math.min(3, dinners)) return { ok: false, reason: 'not enough library recipes', found: meals.length }
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   return { ok: true, meals, shape }
+}
+
+/** A setup dislike as a word that matches ingredient lines: "Tomatoes" → "tomato" (hits "diced tomatoes" and "tomato paste"), "Bell peppers" → "bell pepper". */
+export function dislikeWord(d: string): string {
+  const w = d.toLowerCase().trim()
+  if (w.endsWith('oes')) return w.slice(0, -2)
+  if (w.endsWith('s') && !w.endsWith('ss')) return w.slice(0, -1)
+  return w
 }
 
 /** Softer styles drop first (first in this list goes first); anything not listed (vegetarian, vegan, allergies) stays. */
