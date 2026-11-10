@@ -47,6 +47,9 @@ function weekdayOfKey(date: string): (typeof WEEKDAY_KEYS)[number] {
 }
 
 export default function GroceryListPage() {
+  const [justPicked, setJustPicked] = useState(false)
+  const [listSentHere, setListSentHere] = useState(false)
+  useEffect(() => { try { setJustPicked(new URLSearchParams(window.location.search).get('picked') === '1') } catch { /* ignore */ } }, [])
   const supabase = useMemo(() => createClient(), [])
   const [userId, setUserId] = useState<string | null>(null)
   const [isPartner, setIsPartner] = useState(false)
@@ -496,6 +499,18 @@ export default function GroceryListPage() {
             <button onClick={() => window.print()} title="Print" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted"><Printer className="w-4 h-4" /></button>
           </div>
         </div>
+
+        {/* Just picked their week on the dashboard (?picked=1): the one thing left is sending this list. */}
+        {justPicked && shoppableCount > 0 && !listSentHere && (
+          <div className="mb-6 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5 print:hidden">
+            <p className="font-heading font-bold text-xl text-foreground">✓ Your dinners are set. One step left.</p>
+            <p className="text-sm text-muted-foreground mt-1">Your list has {shoppableCount} items{storeEst > 0 ? ` (about $${Math.round(storeEst)})` : ''}. Send it to your cart, check it over there, and check out when you&apos;re ready.</p>
+            <div className="mt-4">
+              <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={() => { setListSentHere(true); afterSent() }} familyStores={myStores.map((s) => s.name)} />
+            </div>
+            <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-3 text-xs text-muted-foreground underline">Walmart, Kroger or print instead ↓</button>
+          </div>
+        )}
 
         {/* Inside Facebook/Instagram's browser, Instacart sign-in can fail: offer Safari/Chrome first. */}
         <div className="print:hidden"><InAppBrowserNotice /></div>

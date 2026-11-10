@@ -553,8 +553,12 @@ function DashboardContent() {
       setIsPlanStale(false)
       setPlanCount(prev => prev + 1)
       localStorage.setItem('current-meals', JSON.stringify(confirmed))
+      // Nov 10 2026: 7 of 9 new families picked their week but only 1 sent it to a store. After picking from the
+      // week's options, go straight to the list with the send button up top.
+      const fromOptions = pendingMeals[0]?.day === 'O1'
       setPendingMeals([])
       setSelectedIds(new Set())
+      if (fromOptions) { track('picked_to_list', { dinners: confirmed.length }); router.push('/grocery-list?picked=1') }
     } catch (error) {
       console.error('Error confirming plan:', error)
       setGenerateError('Something went wrong saving your plan. Please try again.')
