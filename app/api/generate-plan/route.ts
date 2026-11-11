@@ -20,6 +20,7 @@ import { computeTastes, householdBoost, learned, likeScore, type MemberTaste } f
 import { activeNeeds, applyNeeds, needsPromptLines } from '@/lib/member-needs'
 import { varietyLimits, varietyOk, pickVaried, recentUsage, overusePenalty } from '@/lib/variety'
 import { completePlates } from '@/lib/full-plate'
+import { libraryWeek, weekOptions } from '@/lib/first-plan'
 import { pendingSuggestions, resolveSuggestion, markSuggestionsUsed } from '@/lib/suggestions'
 
 // Extend serverless timeout — AI generation needs up to 55s
@@ -266,6 +267,27 @@ export async function POST(request: Request) {
       }
     }
     bringBack = bringBack.filter(notSkipped)
+
+    // A family who has never ordered gets the same rules here as on their very first week (lib/first-plan): no seafood
+    // unless asked, familiar favorites first, each person's won't-eats, the variety rules — 12–15 options to pick from.
+    // (Nov 11 2026: three new families whose week came from this route instead got tilapia, clam chowder and two soups.)
+    if (mode === 'fresh' && !keepMeals.length && !(Number(body.optionsCount) > 0) && isClassic(tcfg)) {
+      const { count: carts } = await supabase.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', profile.userId)
+      if (!carts) {
+        const built = await libraryWeek(supabase, profile.userId, skippedNames, { firstWeek: true }).catch((e) => { console.error('[generate-plan] first-week library', e); return null })
+        if (built?.ok) {
+          const options = await weekOptions(supabase, profile.userId, built.meals).catch(() => [] as Meal[])
+          const meals = fitNeeds(options.length ? options : built.meals)
+          return Response.json({
+            meals,
+            totalEstimatedCost: built.meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0),
+            plan: built.shape,
+            source: 'library-first-week',
+            tripKey: null,
+          })
+        }
+      }
+    }
 
     let libraryMeals: Meal[] = []
     if (mode === 'fresh') {

@@ -84,7 +84,8 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
       dislikes = Array.from(new Set(rows.flatMap((x) => x.dislikes ?? []).map(dislikeWord).filter((w): w is string => !!w)))
     }
   }
-  const dislikeHit = (text: string) => dislikes.filter((w) => (w === 'bell pepper' ? /\b(bell )?peppers?\b(?!oni)/.test(text) && !/black pepper/.test(text) : new RegExp(`\\b${w}s?\\b`).test(text)))
+  // "black pepper" is seasoning, not a pepper (removed before matching, so a list with both still counts the bell pepper).
+  const dislikeHit = (text: string) => { const t = text.replace(/black pepper/g, ''); return dislikes.filter((w) => (DISLIKE_PATTERNS[w] ?? new RegExp(`\\b${w}s?\\b`)).test(t)) }
   const dislikePenalty = (r: { name: string; ingredients?: Array<{ name: string }> | null }) =>
     dislikeHit((r.ingredients ?? []).map((i) => i.name.toLowerCase()).join(' | ')).length * 3
   const softCuisine = !!opts.firstWeek && styles.length > 1
@@ -201,6 +202,13 @@ export async function shouldOfferOptions(admin: SupabaseClient, userId: string, 
 export async function picksOwn(admin: SupabaseClient, userId: string): Promise<boolean> {
   const { data } = await admin.from('profiles').select('settings').eq('id', userId).maybeSingle()
   return mergeSettings(data?.settings).plan.pickMyOwn === true
+}
+
+/** Won't-eats that a single word can't catch (Nov 11 2026: a mom who won't eat spicy food got Blackened Cod). */
+const DISLIKE_PATTERNS: Record<string, RegExp> = {
+  'bell pepper': /\b(bell )?peppers?\b(?!oni)/,
+  spicy: /\b(spicy|blackened|cajun|buffalo|chipotle|jalape[nñ]os?|habaneros?|serranos?|sriracha|hot sauce|nashville hot|diablo|arrabbiata|jerk|harissa|gochujang|chili crisp|red pepper flakes|crushed red pepper|cayenne)\b/,
+  seafood: /\b(seafood|fish|salmon|tilapia|cod|shrimp|prawns?|tuna|crab|clams?|scallops?|mussels?|lobster|halibut|mahi|catfish|haddock|oysters?|anchov(y|ies)|sardines?|trout|pollock)\b/,
 }
 
 /** A setup "won't eat" as a word to look for: "Bell peppers" → "bell pepper", "Spicy food" → "spicy". Too-broad ones
