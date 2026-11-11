@@ -68,14 +68,25 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   // What the family said they like in setup (Tacos, Pasta, Mac and cheese…) leads too, and a cuisine picked as one
   // style among several (e.g. Mediterranean + family + budget) is a preference, not the only food they eat
   // (Nov 9 2026: a taco-and-mac-and-cheese family got fava beans and lamb kebabs).
+  // Each person's likes, won't-eats and allergies from setup (Nov 11 2026: a mom who won't eat beans or bell peppers got
+  // black bean soup and sausage with peppers, because library weeks only read likes). Allergies are hard: a dinner with
+  // one never comes. A won't-eat in the dinner's name keeps it off the week; one only in the ingredients counts against it.
   let likes: string[] = []
-  if (opts.firstWeek) {
+  let allergies: string[] = []
+  let dislikes: string[] = []
+  {
     const { data: hh } = await admin.from('profiles').select('household_id').eq('id', userId).single()
     if (hh?.household_id) {
-      const { data: mem } = await admin.from('household_members').select('likes').eq('household_id', hh.household_id)
-      likes = Array.from(new Set(((mem ?? []) as Array<{ likes: string[] | null }>).flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
+      const { data: mem } = await admin.from('household_members').select('likes, dislikes, allergies').eq('household_id', hh.household_id)
+      const rows = (mem ?? []) as Array<{ likes: string[] | null; dislikes: string[] | null; allergies: string[] | null }>
+      if (opts.firstWeek) likes = Array.from(new Set(rows.flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
+      allergies = Array.from(new Set(rows.flatMap((x) => x.allergies ?? []).filter(Boolean)))
+      dislikes = Array.from(new Set(rows.flatMap((x) => x.dislikes ?? []).map(dislikeWord).filter((w): w is string => !!w)))
     }
   }
+  const dislikeHit = (text: string) => dislikes.filter((w) => (w === 'bell pepper' ? /\b(bell )?peppers?\b(?!oni)/.test(text) && !/black pepper/.test(text) : new RegExp(`\\b${w}s?\\b`).test(text)))
+  const dislikePenalty = (r: { name: string; ingredients?: Array<{ name: string }> | null }) =>
+    dislikeHit((r.ingredients ?? []).map((i) => i.name.toLowerCase()).join(' | ')).length * 1.5
   const softCuisine = !!opts.firstWeek && styles.length > 1
   const preferred = softCuisine ? settings.food.cuisines.map((c) => c.toLowerCase()) : []
   const firstWeekBoost = (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) =>
@@ -89,7 +100,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   let picks: Awaited<ReturnType<typeof pickLibraryRecipes>> = []
   for (const step of relaxSteps(p.dietary_needs ?? [], softCuisine ? [] : settings.food.cuisines)) {
     picks = await pickLibraryRecipes(admin, {
-      boost: (r) => -overusePenalty(usage, r.name) + firstWeekBoost(r),
+      boost: (r) => -overusePenalty(usage, r.name) + firstWeekBoost(r) - dislikePenalty(r as never),
       limit: dinners + 24,
       maxCookTime: maxCook,
       dietary: step.dietary,
@@ -97,10 +108,14 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
       excludeNames,
       cuisines: step.cuisines,
       ignoreKept: true,
+      allergies,
     })
     if (noSeafood) picks = picks.filter((r) => proteinGroup(r.protein, r.name) !== 'fish')
     if (picks.length >= want) break
   }
+  // A won't-eat in the dinner's name ("Black Bean Salsa Soup" for someone who won't eat beans) stays off the week.
+  const clear = picks.filter((r) => !dislikeHit(r.name.toLowerCase()).length)
+  if (clear.length >= dinners) picks = clear
   // First impressions: dinners with a photo first. Sized to the family (cost included).
   const size = p.family_size || 4
   const withPhoto = picks.filter((r) => r.image_url).map((r, i) => recipeToMeal(r, `L${i + 1}`, size))
@@ -186,4 +201,15 @@ export async function shouldOfferOptions(admin: SupabaseClient, userId: string, 
 export async function picksOwn(admin: SupabaseClient, userId: string): Promise<boolean> {
   const { data } = await admin.from('profiles').select('settings').eq('id', userId).maybeSingle()
   return mergeSettings(data?.settings).plan.pickMyOwn === true
+}
+
+/** A setup "won't eat" as a word to look for: "Bell peppers" → "bell pepper", "Spicy food" → "spicy". Too-broad ones
+ * ("Anything mixed together") are skipped. */
+function dislikeWord(raw: string): string | null {
+  const w = String(raw ?? '').toLowerCase().trim()
+  if (!w || /anything|mixed/.test(w)) return null
+  if (/spicy/.test(w)) return 'spicy'
+  const base = w.replace(/\s+food$/, '').replace(/(es|s)$/, (m) => (w.endsWith('tomatoes') || w.endsWith('potatoes') ? '' : m === 's' ? '' : 'e')).trim()
+  const fixed: Record<string, string> = { 'bell pepper': 'bell pepper', tomato: 'tomato', potato: 'potato', mushroom: 'mushroom', onion: 'onion', bean: 'bean', olive: 'olive', avocado: 'avocado', eggplant: 'eggplant', cilantro: 'cilantro', seafood: 'seafood' }
+  return fixed[base] ?? (base.length >= 3 ? base : null)
 }

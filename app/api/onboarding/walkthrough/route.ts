@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { floorBudget } from '@/lib/budget-math'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { applyStyles } from '@/lib/apply-style'
@@ -34,7 +35,6 @@ export async function POST(request: Request) {
   const people = (Array.isArray(b.people) ? (b.people as PersonIn[]) : []).slice(0, 10)
   const goal = GOAL_KEYS.includes(String(b.goal)) ? (b.goal as Goal) : null
   const familySize = Math.min(Math.max(Number(b.familySize) || people.length || 4, 1), 12)
-  const weeklyBudget = /^\$\d{2,4}\+?$/.test(String(b.weeklyBudget ?? '')) ? String(b.weeklyBudget) : '$150'
   const dietaryNeeds = list(b.dietaryNeeds, 8)
   const styles = list(b.styles, 13).filter((k) => FOOD_STYLES.some((s) => s.key === k))   // ranked + capped in applyStyles
   const busy = [15, 20, 30, 45, 60].includes(Number(b.busyMinutes)) ? Number(b.busyMinutes) : 30
@@ -59,6 +59,8 @@ export async function POST(request: Request) {
   settings.food.storeBrands = b.storeBrands === true
   settings.texting.voteDay = voteDay
   if (people.some((x) => x.role === 'kid')) settings.food.kidFriendly = true
+  // Never below the lowest choice for this family and number of dinners (an old copy of the page could still send $75).
+  const weeklyBudget = floorBudget(b.weeklyBudget, familySize, settings.plan.dinnersPerWeek + (settings.plan.sundayDinner?.on ? 1 : 0))
 
   await admin.from('profiles').update({
     family_size: familySize,

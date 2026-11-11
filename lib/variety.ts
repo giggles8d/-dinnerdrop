@@ -17,7 +17,10 @@ const TYPES: Array<[string, RegExp]> = [
   ['pasta', /\b(pasta|spaghetti|penne|rigatoni|ziti|lasagna|fettuccine|linguine|alfredo|mac|mac and cheese|macaroni|tortellini|ravioli|gnocchi|noodle bake|carbonara|orzo)\b/],
   ['soup', /\b(soup|chili|stew|chowder|pozole|gumbo)\b/],
   ['salad', /\b(salad)\b/],
-  ['sandwich', /\b(sandwich(es)?|melts?|sliders?|burgers?|wraps?|pitas?|flatbreads?|subs?|hoagies?|sloppy joes?|paninis?)\b/],
+  // Burgers have their own type with the taco limit: one burger night a week (Nov 11 2026: a burger-loving family got
+  // turkey burgers and black bean burgers in the same week).
+  ['burger', /\b(burgers?|sliders?|sloppy joes?|patty melts?)\b/],
+  ['sandwich', /\b(sandwich(es)?|melts?|wraps?|pitas?|flatbreads?|subs?|hoagies?|paninis?)\b/],
   ['bowl', /\b(bowls?|stir[- ]?fry|fried rice|lo mein)\b/],
   ['bake', /\b(casserole|bake|hotdish)\b/],
   ['pizza', /\b(pizza|calzone|stromboli)\b/],
@@ -65,7 +68,7 @@ export function varietyOk(m: Lite, chosen: Lite[], lim: VarietyLimits): boolean 
   const t = dishType(m)
   if (t) {
     const same = chosen.filter((c) => dishType(c) === t).length
-    if (same >= (t === 'taco' ? lim.taco : lim.perType)) return false
+    if (same >= (t === 'taco' || t === 'burger' ? lim.taco : lim.perType)) return false
   }
   const g = cuisineGroup(m)
   if (g && chosen.filter((c) => cuisineGroup(c) === g).length >= lim.perCuisine) return false

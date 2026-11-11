@@ -81,3 +81,13 @@ export function budgetOptions(familySize: number, dinners = 5): string[] {
 export function defaultBudget(familySize: number, dinners = 5): string {
   return budgetOptions(familySize, dinners)[2]
 }
+
+/**
+ * A saved budget never below the lowest choice for the family (Nov 11 2026: a family of 5 saved $75 from a sign-up
+ * page that was open since before the family-sized choices went live). Missing or unreadable → the default choice.
+ */
+export function floorBudget(raw: unknown, familySize: number, dinners = 5): string {
+  const s = String(raw ?? '')
+  if (!/^\$\d{2,4}\+?$/.test(s)) return defaultBudget(familySize, dinners)
+  return budgetNumber(s) < minWeeklyBudget(familySize, dinners) ? `$${minWeeklyBudget(familySize, dinners)}` : s
+}
