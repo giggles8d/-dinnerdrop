@@ -189,6 +189,21 @@ function everydayBonus(r: { tags?: string[] | null; cuisine: string | null }, ch
   return (kid ? 0.8 : 0) + (familiar ? 0.8 : 0)
 }
 
+/**
+ * The core everyday dinners (Sarah, Nov 10 2026: "start with 200 and it will grow as we get more favorites").
+ * Ids live in app_kv `core_recipes` ({ ids: [...] }); the nightly core job adds well-kept dinners and drops ones
+ * families skip. Weeks come mostly from the core, with about one "try something new" dinner in five.
+ */
+let coreCache: { ids: Set<string>; at: number } | null = null
+export async function coreRecipeIds(supabase: SupabaseClient): Promise<Set<string>> {
+  if (coreCache && Date.now() - coreCache.at < 5 * 60_000) return coreCache.ids
+  const { data } = await supabase.from('app_kv').select('value').eq('key', 'core_recipes').maybeSingle()
+  const ids = new Set<string>(((data?.value as { ids?: string[] } | null)?.ids ?? []).map(String))
+  coreCache = { ids, at: Date.now() }
+  return ids
+}
+const CORE_BONUS = 3
+
 export async function pickLibraryRecipes(
   supabase: SupabaseClient,
   opts: {
@@ -244,13 +259,21 @@ export async function pickLibraryRecipes(
     if (allergyList.length && allergyConflicts(r.ingredients ?? [], [{ name: '', allergies: allergyList }], r.name).length) return false
     return true
   })
-  const scored = pool
-    .map((r) => ({
-      r,
-      score: Math.random() + (opts.ignoreKept ? 0 : Math.min(r.kept_count ?? 0, 5) * 0.3) - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0)
-        + everydayBonus(r, cuisines.length > 0) + (opts.boost ? opts.boost(r) : 0),
-    }))
-    .sort((a, b) => b.score - a.score)
+  const base = pool.map((r) => ({
+    r,
+    score: Math.random() + (opts.ignoreKept ? 0 : Math.min(r.kept_count ?? 0, 5) * 0.3) - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0)
+      + everydayBonus(r, cuisines.length > 0) + (opts.boost ? opts.boost(r) : 0),
+  }))
+  // Core dinners lead. About one pick in five is a "try something new" dinner from outside the core: the best of
+  // those get the same lift, so they come through without crowding the week. Families whose diet the core barely
+  // covers (vegan, halal, keto…) simply get more of the wider library.
+  const core = await coreRecipeIds(supabase)
+  if (core.size) {
+    const newSlots = Math.max(1, Math.floor(opts.limit / 5))
+    const outside = base.filter((x) => !core.has(String(x.r.id))).sort((a, b) => b.score - a.score).slice(0, newSlots)
+    for (const x of base) if (core.has(String(x.r.id)) || outside.includes(x)) x.score += CORE_BONUS
+  }
+  const scored = base.sort((a, b) => b.score - a.score)
   // One dinner per main protein first; repeat proteins only if the pool runs short.
   const spread: Lite[] = []
   const usedProteins = new Set<string>()
