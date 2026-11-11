@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { growLibrary } from '@/lib/library-grower'
+import { growCore } from '@/lib/core-grow'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 300
@@ -28,6 +29,9 @@ export async function GET(request: NextRequest) {
     await admin.from('app_kv').upsert({ key: 'recipe_concepts', value: { pending: file.concepts.length, done: 0, source: 'data/recipe-concepts.json' }, updated_at: new Date().toISOString() })
     return NextResponse.json({ seeded: true, pending: file.concepts.length })
   }
+  // The core everyday dinners: add family favorites, retire ones families pass on (lib/core-grow).
+  const core = await growCore(admin).catch((e) => ({ error: String(e) }))
+  await admin.from('app_kv').upsert({ key: 'core_growth_last', value: { at: new Date().toISOString(), ...core }, updated_at: new Date().toISOString() })
   const report = await growLibrary(admin, {
     batches: Number(sp.get('batches')) || undefined,
     perBatch: Number(sp.get('perBatch')) || undefined,

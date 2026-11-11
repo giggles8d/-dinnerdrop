@@ -178,7 +178,7 @@ export async function upsertRecipes(
  * excluded ingredient word, and anything this family has seen recently.
  */
 const SOY_MAINS = /\b(tofu|tempeh|seitan)\b/
-const LOW_CARB_SWAPS = /\b(cauliflower rice|riced cauliflower|cauliflower mash|lettuce (wraps?|cups?|boats?)|zucchini noodles|zoodles|spaghetti squash|shirataki|cloud bread)\b/
+const LOW_CARB_SWAPS = /\b(cauliflower rice|riced cauliflower|cauliflower mash|mashed cauliflower|lettuce (wraps?|cups?|boats?)|zucchini noodles?|zoodles|spaghetti squash|shirataki|cloud bread)\b/
 
 const FAMILIAR_CUISINE = /^(american|mexican|italian|tex-mex|southern|italian-american|mexican-american|bbq|comfort)/i
 /** Kid-favorite / comfort-food dinners lead; for families who haven't chosen cuisines, familiar American, Mexican and Italian ones lead most. */
@@ -188,6 +188,21 @@ function everydayBonus(r: { tags?: string[] | null; cuisine: string | null }, ch
   const familiar = FAMILIAR_CUISINE.test(r.cuisine ?? '')
   return (kid ? 0.8 : 0) + (familiar ? 0.8 : 0)
 }
+
+/**
+ * The core everyday dinners (Sarah, Nov 10 2026: "start with 200 and it will grow as we get more favorites").
+ * Ids live in app_kv `core_recipes` ({ ids: [...] }); the nightly core job adds well-kept dinners and drops ones
+ * families skip. Weeks come mostly from the core, with about one "try something new" dinner in five.
+ */
+let coreCache: { ids: Set<string>; at: number } | null = null
+export async function coreRecipeIds(supabase: SupabaseClient): Promise<Set<string>> {
+  if (coreCache && Date.now() - coreCache.at < 5 * 60_000) return coreCache.ids
+  const { data } = await supabase.from('app_kv').select('value').eq('key', 'core_recipes').maybeSingle()
+  const ids = new Set<string>(((data?.value as { ids?: string[] } | null)?.ids ?? []).map(String))
+  coreCache = { ids, at: Date.now() }
+  return ids
+}
+const CORE_BONUS = 3
 
 export async function pickLibraryRecipes(
   supabase: SupabaseClient,
@@ -244,13 +259,26 @@ export async function pickLibraryRecipes(
     if (allergyList.length && allergyConflicts(r.ingredients ?? [], [{ name: '', allergies: allergyList }], r.name).length) return false
     return true
   })
-  const scored = pool
-    .map((r) => ({
+  // Core dinners lead. About one pick in five is a "try something new" dinner from outside the core: the best of
+  // those get the same lift, so they come through without crowding the week. Families whose diet the core barely
+  // covers (vegan, halal, keto…) simply get more of the wider library. The core is already everyday food, so inside
+  // it the everyday bonus is dropped and chance counts more — otherwise the same few core dinners go to everyone.
+  const core = await coreRecipeIds(supabase)
+  const isCore = (r: Lite) => core.has(String(r.id))
+  const base = pool.map((r) => {
+    const inCore = isCore(r)
+    return {
       r,
-      score: Math.random() + (opts.ignoreKept ? 0 : Math.min(r.kept_count ?? 0, 5) * 0.3) - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0)
-        + everydayBonus(r, cuisines.length > 0) + (opts.boost ? opts.boost(r) : 0),
-    }))
-    .sort((a, b) => b.score - a.score)
+      score: Math.random() * (inCore ? 2.5 : 1) + (opts.ignoreKept ? 0 : Math.min(r.kept_count ?? 0, 5) * 0.3) - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0)
+        + (inCore ? CORE_BONUS : everydayBonus(r, cuisines.length > 0)) + (opts.boost ? opts.boost(r) : 0),
+    }
+  })
+  if (core.size) {
+    const newSlots = Math.max(1, Math.floor(opts.limit / 5))
+    const outside = base.filter((x) => !isCore(x.r)).sort((a, b) => b.score - a.score).slice(0, newSlots)
+    for (const x of outside) x.score += CORE_BONUS
+  }
+  const scored = base.sort((a, b) => b.score - a.score)
   // One dinner per main protein first; repeat proteins only if the pool runs short.
   const spread: Lite[] = []
   const usedProteins = new Set<string>()
@@ -288,15 +316,22 @@ export async function backfillImages(supabase: SupabaseClient, limit = 40): Prom
  * Take `count` dinners from `pool` (in preference order) that fit the weekly budget:
  * while over budget, swap the priciest chosen dinner for the cheapest unused one.
  */
-export function fitBudget(pool: Meal[], count: number, budget: number): Meal[] {
+export function fitBudget(pool: Meal[], count: number, budget: number, ok?: (m: Meal, rest: Meal[]) => boolean): Meal[] {
   const cost = (m: Meal) => Number(m.estimatedCost) || 0
+  const group = (m: Meal) => proteinGroup(m.protein ?? null, m.name)
   const chosen = pool.slice(0, count)
   const spares = pool.slice(count).sort((a, b) => cost(a) - cost(b))
   let total = chosen.reduce((s, m) => s + cost(m), 0)
+  // Nov 10 2026: swaps keep the family's proteins and the variety rules (same protein first, then any that keeps
+  // the week varied, only then simply the cheapest).
   while (total > budget && spares.length) {
     const i = chosen.reduce((best, m, idx) => (cost(m) > cost(chosen[best]) ? idx : best), 0)
-    if (cost(spares[0]) >= cost(chosen[i])) break
-    const swapIn = spares.shift()!
+    const rest = chosen.filter((_, j) => j !== i)
+    const cheaper = spares.filter((s) => cost(s) < cost(chosen[i]))
+    if (!cheaper.length) break
+    const varied = ok ? cheaper.filter((s) => ok(s, rest)) : cheaper
+    const swapIn = varied.find((s) => group(s) === group(chosen[i])) ?? varied[0] ?? cheaper[0]
+    spares.splice(spares.indexOf(swapIn), 1)
     total += cost(swapIn) - cost(chosen[i])
     chosen[i] = swapIn
   }

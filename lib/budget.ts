@@ -9,6 +9,8 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Settings } from '@/lib/settings'
 import { dinnerBudget, listRatio, storeFactor } from '@/lib/budget-math'
 import type { Meal } from '@/types'
+import { varietyLimits, varietyOk } from '@/lib/variety'
+import { proteinGroup } from '@/lib/protein-mix'
 
 export type BudgetMeal = Meal & { budgetPick?: boolean; suggestedNight?: string }
 
@@ -40,10 +42,19 @@ export async function keepInBudget(admin: SupabaseClient, userId: string, meals:
   }
   spares.sort((a, b) => cost(a) - cost(b))
   const out: BudgetMeal[] = [...meals]
+  // Swaps keep the week varied and the family's proteins (Nov 10 2026: a family of 5 at $75 got four meatless
+  // dinners and three taco nights). Prefer a cheaper dinner of the same protein that passes the variety rules, then
+  // any cheaper one that passes them; only if none does, the cheapest one.
+  const lim = varietyLimits(out.length)
+  const group = (m: Meal) => proteinGroup(m.protein, m.name)
   while (total > cap && spares.length) {
     const i = out.reduce((best, m, idx) => (cost(m) > cost(out[best]) ? idx : best), 0)
-    if (cost(spares[0]) >= cost(out[i])) break
-    const swap = spares.shift()!
+    const rest = out.filter((_, j) => j !== i)
+    const cheaper = spares.filter((s) => cost(s) < cost(out[i]))
+    if (!cheaper.length) break
+    const varied = cheaper.filter((s) => varietyOk(s, rest, lim))
+    const swap = varied.find((s) => group(s) === group(out[i])) ?? varied[0] ?? cheaper[0]
+    spares.splice(spares.indexOf(swap), 1)
     total += cost(swap) - cost(out[i])
     out[i] = { ...swap, day: out[i].day, suggestedNight: out[i].suggestedNight, budgetPick: true }
   }
