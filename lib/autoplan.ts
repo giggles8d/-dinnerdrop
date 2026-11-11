@@ -129,6 +129,21 @@ export async function savePlan(admin: SupabaseClient, userId: string, weekStart:
  * auto-built weeks with the variety and full-plate rules (app/api/admin/rebuild-weeks).
  */
 export async function rebuildWeek(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<Meal[] | null> {
+  // Families who haven't ordered get their rebuilt week the same way as their Saturday week: from the library, with
+  // the core dinners, their allergies and won't-eats (Nov 11 2026: a rebuild through the AI planner gave a family who
+  // won't eat bell peppers two dinners with them). The AI planner stays the fallback.
+  const { count: sends } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
+  if (!(sends ?? 0)) {
+    try {
+      const { libraryWeek } = await import('@/lib/first-plan')
+      const { data: last } = await admin.from('meal_plans').select('meals').eq('user_id', p.id).order('created_at', { ascending: false }).limit(2)
+      const recent = (last ?? []).flatMap((x) => ((x.meals ?? []) as Meal[]).map((m) => m.name))
+      const lw = await libraryWeek(admin, p.id, recent, { firstWeek: true })
+      if (lw.ok && lw.meals.length) return savePlan(admin, p.id, weekStart, assignNights(lw.meals, lw.shape), lw.shape)
+    } catch (e) {
+      console.error('rebuildWeek library week', p.id, e)
+    }
+  }
   const base = process.env.NEXT_PUBLIC_APP_URL || APP
   const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
   const res = await fetch(`${base}/api/generate-plan`, {
