@@ -48,3 +48,28 @@ export function dinnersCovered(weeklyBudget: string | null | undefined, stores: 
   const b = dinnerBudget(weeklyBudget, stores)
   return b > 0 ? Math.floor(b / per) : 0
 }
+
+/**
+ * The weekly budget choices for a family (Sarah, Nov 10 2026: "the budget drop down populates based on the number of
+ * people. So a family of 5 never gets that low of an option"). A family of 5 had picked $75 and got four meatless
+ * dinners and three taco nights, the only week that fit.
+ *
+ * The lowest choice is the smallest budget that really covers the week through Instacart delivery: the library's budget
+ * dinners (~$9 for 4 at shelf prices) × whole packages × delivery prices, rounded up to $25. Then four steps up.
+ *   1 person $25 · 2 $50 · 3 $75 · 4 $100 · 5 $125 · 6 $150 (5 dinners)
+ */
+export function minWeeklyBudget(familySize: number, dinners = 5): number {
+  const perDinner = (9 * Math.max(1, familySize || 4)) / 4
+  const cart = perDinner * Math.max(1, dinners || 5) * LIST_RATIO * PLANNING_DELIVERY_FACTOR
+  return Math.max(25, Math.ceil(cart / 25) * 25)
+}
+
+export function budgetOptions(familySize: number, dinners = 5): string[] {
+  const b = minWeeklyBudget(familySize, dinners)
+  return [`$${b}`, `$${b + 25}`, `$${b + 50}`, `$${b + 100}`, `$${b + 150}+`]
+}
+
+/** The choice preselected for a new family: the middle one. */
+export function defaultBudget(familySize: number, dinners = 5): string {
+  return budgetOptions(familySize, dinners)[2]
+}

@@ -1,6 +1,6 @@
 'use client'
 
-import { dinnersCovered } from '@/lib/budget-math'
+import { budgetOptions, dinnersCovered } from '@/lib/budget-math'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import DeleteAccount from '@/components/DeleteAccount'
 import TripsSettings from '@/components/TripsSettings'
@@ -70,7 +70,6 @@ const SECTIONS: Array<{ key: Section; label: string }> = [
   { key: 'data', label: 'Data' },
 ]
 
-const BUDGETS = ['$50', '$75', '$100', '$125', '$150', '$200', '$250+']
 const COOK_TIMES = [15, 20, 30, 45, 60]
 const TIMEZONES = ['America/New_York', 'America/Chicago', 'America/Denver', 'America/Phoenix', 'America/Los_Angeles', 'America/Anchorage', 'Pacific/Honolulu']
 
@@ -623,7 +622,12 @@ export default function SettingsPage() {
                     <Select value={String(settings.plan.optionsCount)} onChange={(v) => patch((s) => { s.plan.optionsCount = Number(v) })} options={['5', '6', '8', '10', '12'].map((n) => ({ value: n, label: n }))} />
                   </Field>
                   <Field label="Weekly dinner budget" hint="What you want to pay at checkout. Every week stays inside it; dinners picked to fit are marked “Budget pick”. Raise it for more choice.">
-                    <Select value={profile.weekly_budget} onChange={(v) => patchProfile({ weekly_budget: v })} options={BUDGETS.map((b) => ({ value: b, label: b }))} />
+                    <Select value={profile.weekly_budget} onChange={(v) => patchProfile({ weekly_budget: v })} options={(() => {
+                      // Choices follow family size and dinners (Nov 10 2026). A budget saved before stays listed until changed.
+                      const opts = budgetOptions(profile.family_size, settings.plan.dinnersPerWeek)
+                      const all = profile.weekly_budget && !opts.includes(profile.weekly_budget) ? [profile.weekly_budget, ...opts] : opts
+                      return all.map((b) => ({ value: b, label: b }))
+                    })()} />
                     {(() => {
                       // Budgets we can't hit (Nov 10 2026): say how many dinners it really covers, at checkout prices.
                       const covers = dinnersCovered(profile.weekly_budget, settings.stores, profile.family_size)

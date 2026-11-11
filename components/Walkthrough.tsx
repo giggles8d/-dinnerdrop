@@ -9,6 +9,7 @@ import { GOALS, type Goal } from '@/lib/onboarding'
 import { MIX_GROUPS, MIX_EVERY, type MixKey } from '@/lib/protein-mix'
 import { WEEKDAY_LABEL, type Weekday } from '@/lib/settings'
 import type { QuickSetupAnswers } from '@/components/QuickSetup'
+import { budgetOptions, defaultBudget } from '@/lib/budget-math'
 
 /**
  * First-time walkthrough (Sarah, Nov 7 2026): eight short screens after sign-up so a new family's first week fits
@@ -23,7 +24,6 @@ type Role = 'adult' | 'kid'
 interface Person { name: string; role: Role; likes: string[]; dislikes: string[]; allergies: string[]; phone: string }
 
 const STEPS = 8
-const BUDGETS = ['$75', '$100', '$150', '$200', '$250+']
 const DIETS = ['Gluten-free', 'Dairy-free', 'Nut-free', 'Vegetarian', 'Pescatarian', 'Halal']
 const LIKES = ['Pasta', 'Tacos', 'Pizza', 'Chicken', 'Burgers', 'Steak', 'Soup', 'Rice bowls', 'Mac and cheese', 'Stir-fry', 'Potatoes', 'Broccoli']
 const DISLIKES = ['Mushrooms', 'Onions', 'Beans', 'Seafood', 'Spicy food', 'Olives', 'Cilantro', 'Tomatoes', 'Bell peppers', 'Avocado', 'Eggplant', 'Anything mixed together']
@@ -69,7 +69,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   const [sundayTimes, setSundayTimes] = useState<number[]>([120])
   const [extraMonday, setExtraMonday] = useState(true)
   const [sundayIdeas, setSundayIdeas] = useState(3)
-  const [budget, setBudget] = useState('$150')
+  // Budget choices follow the table size and nights (screen 2 and 6 come first): a family of 5 never sees $75.
+  const [pickedBudget, setPickedBudget] = useState<string | null>(null)
   const [storeBrands, setStoreBrands] = useState(false)
   const [voteDay, setVoteDay] = useState<Weekday>('sat')
   const [saving, setSaving] = useState(false)
@@ -77,6 +78,9 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   const named = people.map((p, i) => ({ ...p, i })).filter((p) => p.name.trim())
   const familySize = Math.max(people.length, 1)
   const dinners = nights.length + (sunday ? 1 : 0)
+  const budgets = budgetOptions(familySize, Math.max(dinners, 1))
+  const budget = pickedBudget && budgets.includes(pickedBudget) ? pickedBudget : defaultBudget(familySize, Math.max(dinners, 1))
+  const setBudget = (b: string) => setPickedBudget(b)
   const perDinner = Math.round((Number(budget.replace(/[^0-9.]/g, '')) || 0) / Math.max(dinners, 1))
   const mixTotal = mix ? Object.values(mix).reduce((s, n) => s + (Number(n) || 0), 0) : 0
   const styleNames = FOOD_STYLES.filter((s) => styles.includes(s.key)).map((s) => `${s.emoji} ${s.name}`)
@@ -295,8 +299,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         <div>
           {head('Budget', 'Every week is built to fit it.')}
           <Label>{`What do you want to spend on ${nights.length} weeknight dinners${sunday ? ' + Sunday dinner' : ''}?`}</Label>
-          <div className="flex flex-wrap gap-2">{BUDGETS.map((b) => <Pick key={b} on={budget === b} onClick={() => setBudget(b)}>{b}</Pick>)}</div>
-          <p className="text-xs text-muted-foreground mt-2">About ${perDinner}{budget.endsWith('+') ? '+' : ''} per dinner for {familySize} {familySize === 1 ? 'person' : 'people'}.</p>
+          <div className="flex flex-wrap gap-2">{budgets.map((b) => <Pick key={b} on={budget === b} onClick={() => setBudget(b)}>{b}</Pick>)}</div>
+          <p className="text-xs text-muted-foreground mt-2">About ${perDinner}{budget.endsWith('+') ? '+' : ''} per dinner for {familySize} {familySize === 1 ? 'person' : 'people'}. Choices start at what {dinners} dinner{dinners === 1 ? '' : 's'} for {familySize} really cost{dinners === 1 ? 's' : ''} through Instacart.</p>
           <Label>Prefer store brands when they match?</Label>
           <div className="flex flex-wrap gap-2">
             <Pick on={storeBrands} onClick={() => setStoreBrands(true)}>Yes</Pick>
