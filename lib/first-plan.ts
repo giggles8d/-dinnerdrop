@@ -86,7 +86,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   }
   const dislikeHit = (text: string) => dislikes.filter((w) => (w === 'bell pepper' ? /\b(bell )?peppers?\b(?!oni)/.test(text) && !/black pepper/.test(text) : new RegExp(`\\b${w}s?\\b`).test(text)))
   const dislikePenalty = (r: { name: string; ingredients?: Array<{ name: string }> | null }) =>
-    dislikeHit((r.ingredients ?? []).map((i) => i.name.toLowerCase()).join(' | ')).length * 1.5
+    dislikeHit((r.ingredients ?? []).map((i) => i.name.toLowerCase()).join(' | ')).length * 3
   const softCuisine = !!opts.firstWeek && styles.length > 1
   const preferred = softCuisine ? settings.food.cuisines.map((c) => c.toLowerCase()) : []
   const firstWeekBoost = (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) =>
