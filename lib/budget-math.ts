@@ -52,24 +52,35 @@ export function dinnersCovered(weeklyBudget: string | null | undefined, stores: 
 /**
  * The weekly budget choices for a family (Sarah, Nov 10 2026: "the budget drop down populates based on the number of
  * people. So a family of 5 never gets that low of an option"). A family of 5 had picked $75 and got four meatless
- * dinners and three taco nights, the only week that fit.
+ * dinners and three taco nights, the only week that fit. Her next note: the first try ($125 for 5) was still too low.
  *
- * The lowest choice is the smallest budget that really covers the week through Instacart delivery: the library's budget
- * dinners (~$9 for 4 at shelf prices) × whole packages × delivery prices, rounded up to $25. Then four steps up.
- *   1 person $25 · 2 $50 · 3 $75 · 4 $100 · 5 $125 · 6 $150 (5 dinners)
+ * Built from real weeks (meal_plans, last 30 days, 789 weeks), at checkout prices (× 1.5 whole packages × 1.35
+ * Instacart delivery):
+ *   people          1    2    3    4    5    6
+ *   cheaper week   $41  $85 $126 $146 $172 $196   (25th percentile)  → lowest choice
+ *   typical week   $47  $97 $136 $158 $207 $237   (median)           → preselected
+ * Rounded to $25. Over 6 people, +$25 a person. Other than 5 dinners: scaled by nights, rounded up to $25.
  */
+const LOWEST_FOR_5: Record<number, number> = { 1: 50, 2: 100, 3: 125, 4: 150, 5: 175, 6: 200 }
+const TYPICAL_FOR_5: Record<number, number> = { 1: 50, 2: 100, 3: 150, 4: 175, 5: 225, 6: 250 }
+const per5 = (table: Record<number, number>, fs: number) => {
+  const n = Math.max(1, Math.round(fs || 4))
+  return n <= 6 ? table[n] : table[6] + 25 * (n - 6)
+}
+const scale = (v: number, dinners: number) => Math.max(25, Math.ceil((v * Math.max(1, dinners || 5)) / 5 / 25) * 25)
+
 export function minWeeklyBudget(familySize: number, dinners = 5): number {
-  const perDinner = (9 * Math.max(1, familySize || 4)) / 4
-  const cart = perDinner * Math.max(1, dinners || 5) * LIST_RATIO * PLANNING_DELIVERY_FACTOR
-  return Math.max(25, Math.ceil(cart / 25) * 25)
+  return scale(per5(LOWEST_FOR_5, familySize), dinners)
 }
 
 export function budgetOptions(familySize: number, dinners = 5): string[] {
   const b = minWeeklyBudget(familySize, dinners)
-  return [`$${b}`, `$${b + 25}`, `$${b + 50}`, `$${b + 100}`, `$${b + 150}+`]
+  return [`$${b}`, `$${b + 25}`, `$${b + 50}`, `$${b + 75}`, `$${b + 125}+`]
 }
 
-/** The choice preselected for a new family: the middle one. */
+/** The choice preselected for a new family: what a typical week for them costs, or the nearest choice above it. */
 export function defaultBudget(familySize: number, dinners = 5): string {
-  return budgetOptions(familySize, dinners)[2]
+  const opts = budgetOptions(familySize, dinners)
+  const typical = scale(per5(TYPICAL_FOR_5, familySize), dinners)
+  return opts.find((o) => budgetNumber(o) >= typical) ?? opts[opts.length - 1]
 }
