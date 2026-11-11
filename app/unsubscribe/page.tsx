@@ -23,13 +23,25 @@ function UnsubscribeContent() {
   const [sent, setSent] = useState(false)
   const [resub, setResub] = useState<'' | 'sending' | 'done'>('')
 
-  async function sendReason(e: React.FormEvent) {
-    e.preventDefault()
-    if (!reason) return
-    setSending(true)
+  // One tap saves the reason (Nov 11 2026: people skipped the old pick-then-Send form, so we never learned why).
+  // A note is optional afterwards and is saved with the same reason.
+  async function postReason(r: string, n = '') {
     try {
-      await fetch('/api/email/unsubscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...(uid ? { uid } : { email }), action: 'reason', reason, note: note.trim() }) })
+      await fetch('/api/email/unsubscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...(uid ? { uid } : { email }), action: 'reason', reason: r, note: n }) })
     } catch { /* thanks either way */ }
+  }
+
+  async function pickReason(r: string) {
+    if (reason) return
+    setReason(r)
+    await postReason(r)
+  }
+
+  async function sendNote(e: React.FormEvent) {
+    e.preventDefault()
+    if (!reason || !note.trim()) return
+    setSending(true)
+    await postReason(reason, note.trim())
     setSent(true); setSending(false)
   }
 
@@ -92,23 +104,25 @@ function UnsubscribeContent() {
               <div className="rounded-xl bg-secondary/60 px-4 py-4 text-sm text-foreground">
                 Thank you. That really helps a small team like ours. — Sarah
               </div>
-            ) : (
-              <form onSubmit={sendReason} className="text-left rounded-xl border border-border p-4 space-y-3">
-                <p className="text-sm font-medium text-foreground">If you have a second, why are you leaving? <span className="text-muted-foreground font-normal">(optional)</span></p>
+            ) : !reason ? (
+              <div className="text-left rounded-xl border border-border p-4 space-y-3">
+                <p className="text-sm font-medium text-foreground">One tap: why are you leaving?</p>
                 <div className="space-y-2">
                   {REASONS.map((r) => (
-                    <label key={r.id} className={`flex items-center gap-3 rounded-lg border px-3 py-2.5 text-sm cursor-pointer ${reason === r.id ? 'border-primary bg-primary/5' : 'border-border'}`}>
-                      <input type="radio" name="reason" value={r.id} checked={reason === r.id} onChange={() => setReason(r.id)} className="accent-[hsl(var(--primary))]" />
+                    <button key={r.id} type="button" onClick={() => pickReason(r.id)}
+                      className="w-full text-left rounded-lg border border-border px-3 py-3 text-sm hover:border-primary hover:bg-primary/5">
                       {r.label}
-                    </label>
+                    </button>
                   ))}
                 </div>
-                {reason && (
-                  <textarea value={note} onChange={(e) => setNote(e.target.value)} maxLength={500} rows={3}
-                    placeholder={reason === 'other' ? 'Tell us what happened' : 'Anything we could do better? (optional)'}
-                    className="w-full rounded-lg border border-border px-3 py-2 text-sm" />
-                )}
-                <button type="submit" disabled={!reason || sending} className="w-full rounded-lg bg-primary text-primary-foreground py-2.5 text-sm font-semibold disabled:opacity-40">
+              </div>
+            ) : (
+              <form onSubmit={sendNote} className="text-left rounded-xl border border-border p-4 space-y-3">
+                <p className="text-sm font-medium text-foreground">Thank you, got it. Anything we could do better? <span className="text-muted-foreground font-normal">(optional)</span></p>
+                <textarea value={note} onChange={(e) => setNote(e.target.value)} maxLength={500} rows={3}
+                  placeholder={reason === 'other' ? 'Tell us what happened' : 'One line is plenty'}
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+                <button type="submit" disabled={!note.trim() || sending} className="w-full rounded-lg bg-primary text-primary-foreground py-2.5 text-sm font-semibold disabled:opacity-40">
                   {sending ? 'Sending…' : 'Send'}
                 </button>
               </form>
