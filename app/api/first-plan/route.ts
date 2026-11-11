@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { buildFirstPlan, weekOptions, shouldOfferOptions } from '@/lib/first-plan'
 import { attachLibraryImages } from '@/lib/library-images'
 import { sendFirstPlanText, type SetupProfile } from '@/lib/texting-setup'
+import { trackStep } from '@/lib/activation'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,7 +21,11 @@ export async function POST() {
     // Setup finished (the walkthrough sets onboarding_complete) → a waiting starter week is rebuilt from the answers.
     const { data: prof } = await admin.from('profiles').select('onboarding_complete').eq('id', user.id).single()
     const r = await buildFirstPlan(admin, user.id, { afterSetup: !!prof?.onboarding_complete })
-    if (!r.ok) return NextResponse.json(r)
+    // Every failure is recorded (Nov 11 2026: three first weeks fell back to the other planner and nothing said why).
+    if (!r.ok) {
+      if (r.reason !== 'not enough library recipes') await trackStep(admin, user.id, 'first_plan_failed', { reason: r.reason }).catch(() => {})
+      return NextResponse.json(r)
+    }
     const meals = await attachLibraryImages(admin, r.meals)
     // Nov 9 2026: alongside the saved week, 12–15 dinners that fit the family so they pick their own week.
     const options = (await shouldOfferOptions(admin, user.id, meals)) ? await attachLibraryImages(admin, await weekOptions(admin, user.id, meals)) : []
@@ -33,6 +38,7 @@ export async function POST() {
     return NextResponse.json({ ...r, meals, options, pickCount: meals.length })
   } catch (e) {
     console.error('[first-plan]', e)
+    await trackStep(admin, user.id, 'first_plan_failed', { reason: 'error', message: String(e).slice(0, 300) }).catch(() => {})
     return NextResponse.json({ ok: false, reason: 'error' })
   }
 }
