@@ -63,8 +63,8 @@ export async function applyStyles(supabase: SupabaseClient, userId: string, keys
   const patch: Record<string, unknown> = { settings: { ...settings, food, plan }, dietary_needs: diets }
   const times = next.map((s) => s.maxCookTime).filter((n): n is number => !!n)
   if (times.length) patch.max_cook_time = Math.min(...times)
-  const budget = next.find((s) => s.weeklyBudget)?.weeklyBudget
-  if (budget) patch.weekly_budget = budget
+  // The Budget style shapes the dinners (cheap proteins, under $3 a serving); it never changes the budget the family
+  // picked (Nov 11 2026: it set $75 after setup saved $325 for a family of 6 cooking 8 nights).
   await supabase.from('profiles').update(patch).eq('id', userId)
 }
 
