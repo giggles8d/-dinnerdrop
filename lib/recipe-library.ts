@@ -259,19 +259,24 @@ export async function pickLibraryRecipes(
     if (allergyList.length && allergyConflicts(r.ingredients ?? [], [{ name: '', allergies: allergyList }], r.name).length) return false
     return true
   })
-  const base = pool.map((r) => ({
-    r,
-    score: Math.random() + (opts.ignoreKept ? 0 : Math.min(r.kept_count ?? 0, 5) * 0.3) - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0)
-      + everydayBonus(r, cuisines.length > 0) + (opts.boost ? opts.boost(r) : 0),
-  }))
   // Core dinners lead. About one pick in five is a "try something new" dinner from outside the core: the best of
   // those get the same lift, so they come through without crowding the week. Families whose diet the core barely
-  // covers (vegan, halal, keto…) simply get more of the wider library.
+  // covers (vegan, halal, keto…) simply get more of the wider library. The core is already everyday food, so inside
+  // it the everyday bonus is dropped and chance counts more — otherwise the same few core dinners go to everyone.
   const core = await coreRecipeIds(supabase)
+  const isCore = (r: Lite) => core.has(String(r.id))
+  const base = pool.map((r) => {
+    const inCore = isCore(r)
+    return {
+      r,
+      score: Math.random() * (inCore ? 2.5 : 1) + (opts.ignoreKept ? 0 : Math.min(r.kept_count ?? 0, 5) * 0.3) - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0)
+        + (inCore ? CORE_BONUS : everydayBonus(r, cuisines.length > 0)) + (opts.boost ? opts.boost(r) : 0),
+    }
+  })
   if (core.size) {
     const newSlots = Math.max(1, Math.floor(opts.limit / 5))
-    const outside = base.filter((x) => !core.has(String(x.r.id))).sort((a, b) => b.score - a.score).slice(0, newSlots)
-    for (const x of base) if (core.has(String(x.r.id)) || outside.includes(x)) x.score += CORE_BONUS
+    const outside = base.filter((x) => !isCore(x.r)).sort((a, b) => b.score - a.score).slice(0, newSlots)
+    for (const x of outside) x.score += CORE_BONUS
   }
   const scored = base.sort((a, b) => b.score - a.score)
   // One dinner per main protein first; repeat proteins only if the pool runs short.

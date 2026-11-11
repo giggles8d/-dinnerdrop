@@ -7,7 +7,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, type Weekday } from '@/lib/settings'
 import { pickLibraryRecipes, recipeToMeal, fitBudget } from '@/lib/recipe-library'
 import { pickWithOverlap } from '@/lib/overlap'
-import { proteinGroup } from '@/lib/protein-mix'
+import { proteinGroup, scaleMix } from '@/lib/protein-mix'
 import { varietyLimits, varietyOk, recentUsage, overusePenalty } from '@/lib/variety'
 import { completePlates } from '@/lib/full-plate'
 import { DEFAULT_SHAPE, mondayOf, type PlanShape } from '@/lib/plan'
@@ -107,7 +107,26 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   const noPhoto = picks.filter((r) => !r.image_url).map((r, i) => recipeToMeal(r, `N${i + 1}`, size))
   // Within the photo-first order, lead with dinners that share fresh ingredients (whole packages get used).
   const lim = varietyLimits(dinners)
-  const pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
+  let pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
+  // The family's weekly mix (setup "how often do you want chicken, beef…"), kept within the variety rules
+  // (Nov 10 2026: a family who asked for chicken, beef, fish and turkey got four meatless dinners).
+  const mix = settings.food.mix as Record<string, number> | null
+  if (mix && Object.values(mix).some((n) => Number(n) > 0)) {
+    const quota = scaleMix(mix as never, dinners)
+    const left: Record<string, number> = { ...quota }
+    const group = (m: Meal) => proteinGroup(m.protein, m.name)
+    const head: Meal[] = []
+    for (const m of pool) {
+      if (head.length >= dinners) break
+      if ((left[group(m)] ?? 0) > 0 && varietyOk(m, head, lim)) { head.push(m); left[group(m)]-- }
+    }
+    for (const m of pool) {   // a group that can't fill its count: other groups in the mix, then anything
+      if (head.length >= dinners) break
+      if (!head.includes(m) && (quota[group(m)] ?? 0) > 0 && varietyOk(m, head, lim)) head.push(m)
+    }
+    for (const m of pool) { if (head.length >= dinners) break; if (!head.includes(m)) head.push(m) }
+    pool = [...head, ...pool.filter((m) => !head.includes(m))]
+  }
   // The budget is what they pay at checkout (lib/budget): Instacart prices and fees, store brands. Dinners swapped in
   // to fit it are tagged budgetPick so the family knows a higher budget brings back more choice.
   const budget = shelfBudget(p.weekly_budget, settings) || 150 / 2
