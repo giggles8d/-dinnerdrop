@@ -48,3 +48,36 @@ export function dinnersCovered(weeklyBudget: string | null | undefined, stores: 
   const b = dinnerBudget(weeklyBudget, stores)
   return b > 0 ? Math.floor(b / per) : 0
 }
+
+/**
+ * The weekly budget choices for a family (Sarah, Nov 10 2026: "the budget drop down populates based on the number of
+ * people. So a family of 5 never gets that low of an option"). A family of 5 had picked $75 and got four meatless
+ * dinners and three taco nights, the only week that fit. Her next note: the first try ($125 for 5) was still too low.
+ *
+ * Built from real weeks (meal_plans, last 30 days, 789 weeks), at checkout prices (× 1.5 whole packages × 1.35
+ * Instacart delivery):
+ *   people          1    2    3    4    5    6
+ *   cheaper week   $41  $85 $126 $146 $172 $196   (25th percentile)  → lowest choice
+ *   typical week   $47  $97 $136 $158 $207 $237   (median)           → for reference
+ * Rounded to $25. Over 6 people, +$25 a person. Other than 5 dinners: scaled by nights, rounded up to $25.
+ */
+const LOWEST_FOR_5: Record<number, number> = { 1: 50, 2: 100, 3: 125, 4: 150, 5: 175, 6: 200 }
+const per5 = (table: Record<number, number>, fs: number) => {
+  const n = Math.max(1, Math.round(fs || 4))
+  return n <= 6 ? table[n] : table[6] + 25 * (n - 6)
+}
+const scale = (v: number, dinners: number) => Math.max(25, Math.ceil((v * Math.max(1, dinners || 5)) / 5 / 25) * 25)
+
+export function minWeeklyBudget(familySize: number, dinners = 5): number {
+  return scale(per5(LOWEST_FOR_5, familySize), dinners)
+}
+
+export function budgetOptions(familySize: number, dinners = 5): string[] {
+  const b = minWeeklyBudget(familySize, dinners)
+  return [`$${b}`, `$${b + 25}`, `$${b + 50}`, `$${b + 75}`, `$${b + 125}+`]
+}
+
+/** The choice preselected for a new family: the third one (Sarah, Nov 10 2026). */
+export function defaultBudget(familySize: number, dinners = 5): string {
+  return budgetOptions(familySize, dinners)[2]
+}

@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react'
 import { trackOnce } from '@/lib/activation'
 import { FOOD_STYLES } from '@/lib/styles'
 import { GOALS, type Goal } from '@/lib/onboarding'
+import { budgetOptions, defaultBudget } from '@/lib/budget-math'
 
 /**
  * A brand-new family's first visit: four tap-first screens before their first week is built.
@@ -21,7 +22,6 @@ const SIZES = [
   { label: '4', value: 4 },
   { label: '5+', value: 5 },
 ]
-const BUDGETS = ['$75', '$100', '$150', '$200', '$250+']
 const AVOID = ['Vegetarian', 'Vegan', 'Pescatarian', 'Gluten-free', 'Dairy-free', 'Nut-free', 'Low-carb', 'Keto', 'Paleo', 'Halal']
 export const DEFAULT_FAMILY_SIZE = 4
 export const DEFAULT_BUDGET = '$150'
@@ -67,7 +67,10 @@ export default function QuickSetup({ onDone, demo = false, initialStep = 0 }: { 
   const [goal, setGoal] = useState<Goal | null>(null)
   const [familySize, setFamilySize] = useState(DEFAULT_FAMILY_SIZE)
   const [picky, setPicky] = useState('')
-  const [weeklyBudget, setWeeklyBudget] = useState(DEFAULT_BUDGET)
+  // Choices follow the family size (asked on the screen before): a family of 5 never sees $75.
+  const [pickedBudget, setWeeklyBudget] = useState<string | null>(null)
+  const budgets = budgetOptions(familySize)
+  const weeklyBudget = pickedBudget && budgets.includes(pickedBudget) ? pickedBudget : defaultBudget(familySize)
   const [avoid, setAvoid] = useState<string[]>([])
   const [style, setStyle] = useState<string | null>(null)
   const [phone, setPhone] = useState('')
@@ -166,9 +169,9 @@ export default function QuickSetup({ onDone, demo = false, initialStep = 0 }: { 
         <div>
           <h2 className="text-2xl font-heading font-bold text-foreground">Budget and food</h2>
           <p className="text-sm text-muted-foreground mt-1 mb-5">Every week is built to fit the number you pick.</p>
-          <p className="text-sm font-semibold text-foreground mb-2">What do you want to spend on 5 dinners?</p>
+          <p className="text-sm font-semibold text-foreground mb-2">What is your weekly food budget?</p>
           <div className="flex flex-wrap gap-2 mb-1">
-            {BUDGETS.map((b) => <Chip key={b} on={weeklyBudget === b} onClick={() => setWeeklyBudget(b)}>{b}</Chip>)}
+            {budgets.map((b) => <Chip key={b} on={weeklyBudget === b} onClick={() => setWeeklyBudget(b)}>{b}</Chip>)}
           </div>
           <p className="text-xs text-muted-foreground mb-5">About ${perDinner}{weeklyBudget.endsWith('+') ? '+' : ''} per dinner, for the whole table.</p>
           <p className="text-sm font-semibold text-foreground mb-2">What kind of week? <span className="font-normal text-muted-foreground">(optional)</span></p>
