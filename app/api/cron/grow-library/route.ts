@@ -32,6 +32,13 @@ export async function GET(request: NextRequest) {
   // The core everyday dinners: add family favorites, retire ones families pass on (lib/core-grow).
   const core = await growCore(admin).catch((e) => ({ error: String(e) }))
   await admin.from('app_kv').upsert({ key: 'core_growth_last', value: { at: new Date().toISOString(), ...core }, updated_at: new Date().toISOString() })
+  // Paused by Sarah (Nov 11 2026: "Pause making new recipes. I will load all new ones from here"). While app_kv
+  // `library_growth_paused` is { paused: true }, no new recipes are written; the core list still grows from favorites.
+  const { data: pause } = await admin.from('app_kv').select('value').eq('key', 'library_growth_paused').maybeSingle()
+  if ((pause?.value as { paused?: boolean } | null)?.paused) {
+    await admin.from('app_kv').upsert({ key: 'library_growth_last', value: { at: new Date().toISOString(), saved: 0, paused: true }, updated_at: new Date().toISOString() })
+    return NextResponse.json({ paused: true, core })
+  }
   const report = await growLibrary(admin, {
     batches: Number(sp.get('batches')) || undefined,
     perBatch: Number(sp.get('perBatch')) || undefined,
