@@ -330,7 +330,9 @@ export function fitBudget(pool: Meal[], count: number, budget: number, ok?: (m: 
     const cheaper = spares.filter((s) => cost(s) < cost(chosen[i]))
     if (!cheaper.length) break
     const varied = ok ? cheaper.filter((s) => ok(s, rest)) : cheaper
-    const swapIn = varied.find((s) => group(s) === group(chosen[i])) ?? varied[0] ?? cheaper[0]
+    // Never break the variety rules to save money (Nov 11 2026: four soups in one week); a little over budget is better.
+    const swapIn = varied.find((s) => group(s) === group(chosen[i])) ?? varied[0] ?? (ok ? null : cheaper[0])
+    if (!swapIn) break
     spares.splice(spares.indexOf(swapIn), 1)
     total += cost(swapIn) - cost(chosen[i])
     chosen[i] = swapIn

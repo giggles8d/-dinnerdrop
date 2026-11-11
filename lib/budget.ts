@@ -53,7 +53,9 @@ export async function keepInBudget(admin: SupabaseClient, userId: string, meals:
     const cheaper = spares.filter((s) => cost(s) < cost(out[i]))
     if (!cheaper.length) break
     const varied = cheaper.filter((s) => varietyOk(s, rest, lim))
-    const swap = varied.find((s) => group(s) === group(out[i])) ?? varied[0] ?? cheaper[0]
+    // Never break the variety rules to save money (Nov 11 2026: four soups in one week); a little over budget is better.
+    const swap = varied.find((s) => group(s) === group(out[i])) ?? varied[0]
+    if (!swap) break
     spares.splice(spares.indexOf(swap), 1)
     total += cost(swap) - cost(out[i])
     out[i] = { ...swap, day: out[i].day, suggestedNight: out[i].suggestedNight, budgetPick: true }
