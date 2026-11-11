@@ -178,7 +178,7 @@ export async function upsertRecipes(
  * excluded ingredient word, and anything this family has seen recently.
  */
 const SOY_MAINS = /\b(tofu|tempeh|seitan)\b/
-const LOW_CARB_SWAPS = /\b(cauliflower rice|riced cauliflower|cauliflower mash|lettuce (wraps?|cups?|boats?)|zucchini noodles|zoodles|spaghetti squash|shirataki|cloud bread)\b/
+const LOW_CARB_SWAPS = /\b(cauliflower rice|riced cauliflower|cauliflower mash|lettuce (wraps?|cups?|boats?)|zucchini noodles?|zoodles|spaghetti squash|shirataki|cloud bread)\b/
 
 const FAMILIAR_CUISINE = /^(american|mexican|italian|tex-mex|southern|italian-american|mexican-american|bbq|comfort)/i
 /** Kid-favorite / comfort-food dinners lead; for families who haven't chosen cuisines, familiar American, Mexican and Italian ones lead most. */

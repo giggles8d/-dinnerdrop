@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   const core = await coreRecipeIds(admin)
   const out = []
   for (const uid of ids) {
-    const w = await libraryWeek(admin, uid).catch((e) => ({ ok: false as const, reason: String(e) }))
+    const w = await libraryWeek(admin, uid, [], { firstWeek: true })   // as the Saturday plan (lib/autoplan) builds it.catch((e) => ({ ok: false as const, reason: String(e) }))
     out.push(w.ok
       ? { user: uid, meals: w.meals.map((m) => ({ name: m.name, core: !!m.recipeId && core.has(String(m.recipeId)), protein: m.protein, budgetPick: !!(m as { budgetPick?: boolean }).budgetPick })) }
       : { user: uid, error: w.reason })
