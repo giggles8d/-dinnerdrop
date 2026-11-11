@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { floorBudget } from '@/lib/budget-math'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { applyStyle } from '@/lib/apply-style'
@@ -28,7 +29,7 @@ export async function POST(request: Request) {
 
   const goal = GOAL_KEYS.includes(String(body.goal)) ? (body.goal as Goal) : null
   const familySize = Math.min(Math.max(Number(body.familySize) || 4, 1), 12)
-  const weeklyBudget = /^\$\d{2,4}\+?$/.test(String(body.weeklyBudget ?? '')) ? String(body.weeklyBudget) : '$150'
+  const weeklyBudget = floorBudget(body.weeklyBudget, familySize)   // never below the lowest choice for the family
   const dietaryNeeds = Array.isArray(body.dietaryNeeds) ? body.dietaryNeeds.map(String).slice(0, 8) : []
   const settings = { ...((profile.settings as Record<string, unknown> | null) ?? {}) }
   if (goal) settings.goal = goal
