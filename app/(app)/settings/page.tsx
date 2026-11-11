@@ -621,7 +621,7 @@ export default function SettingsPage() {
                   <Field label="Options to choose from" hint="How many ideas the planner offers before you pick.">
                     <Select value={String(settings.plan.optionsCount)} onChange={(v) => patch((s) => { s.plan.optionsCount = Number(v) })} options={['5', '6', '8', '10', '12'].map((n) => ({ value: n, label: n }))} />
                   </Field>
-                  <Field label="Weekly dinner budget" hint="What you want to pay at checkout. Every week stays inside it; dinners picked to fit are marked “Budget pick”. Raise it for more choice.">
+                  <Field label="Weekly food budget" hint="What you want to pay at checkout. Every week stays inside it; dinners picked to fit are marked “Budget pick”. Raise it for more choice.">
                     <Select value={profile.weekly_budget} onChange={(v) => patchProfile({ weekly_budget: v })} options={(() => {
                       // Choices follow family size and dinners (Nov 10 2026). A budget saved before stays listed until changed.
                       const opts = budgetOptions(profile.family_size, settings.plan.dinnersPerWeek)

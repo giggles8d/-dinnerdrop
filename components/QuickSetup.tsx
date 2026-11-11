@@ -169,7 +169,7 @@ export default function QuickSetup({ onDone, demo = false, initialStep = 0 }: { 
         <div>
           <h2 className="text-2xl font-heading font-bold text-foreground">Budget and food</h2>
           <p className="text-sm text-muted-foreground mt-1 mb-5">Every week is built to fit the number you pick.</p>
-          <p className="text-sm font-semibold text-foreground mb-2">What do you want to spend on 5 dinners?</p>
+          <p className="text-sm font-semibold text-foreground mb-2">What is your weekly food budget?</p>
           <div className="flex flex-wrap gap-2 mb-1">
             {budgets.map((b) => <Chip key={b} on={weeklyBudget === b} onClick={() => setWeeklyBudget(b)}>{b}</Chip>)}
           </div>

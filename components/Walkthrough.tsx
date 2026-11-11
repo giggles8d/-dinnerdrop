@@ -298,7 +298,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
       {step === 6 && (
         <div>
           {head('Budget', 'Every week is built to fit it.')}
-          <Label>{`What do you want to spend on ${nights.length} weeknight dinners${sunday ? ' + Sunday dinner' : ''}?`}</Label>
+          <Label>What is your weekly food budget?</Label>
           <div className="flex flex-wrap gap-2">{budgets.map((b) => <Pick key={b} on={budget === b} onClick={() => setBudget(b)}>{b}</Pick>)}</div>
           <p className="text-xs text-muted-foreground mt-2">About ${perDinner}{budget.endsWith('+') ? '+' : ''} per dinner for {familySize} {familySize === 1 ? 'person' : 'people'}. Choices start at what {dinners} dinner{dinners === 1 ? '' : 's'} for {familySize} really cost{dinners === 1 ? 's' : ''} through Instacart.</p>
           <Label>Prefer store brands when they match?</Label>
