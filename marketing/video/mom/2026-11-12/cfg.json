@@ -1,0 +1,7 @@
+{"out": "2026-11-12_Mom_FamilyVotes.mp4",
+ "hook_text": ["Same dinner fight every night?", "Let them vote."],
+ "labels": {"c2.mp4": "Everybody votes by text", "c3.mp4": "Whole list, one tap"},
+ "app": [[88, 97, "5 dinners they picked"], [110, 122, "The grocery list, done"]],
+ "app_after": 1, "app_seconds": 6.5,
+ "ai_banner": false,
+ "end": ["Switching from eMeals?", "Code EMEALS = 3 months of Family free", "dinnerdrop.app/emeals"]}

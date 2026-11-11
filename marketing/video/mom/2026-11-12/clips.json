@@ -1,0 +1,9 @@
+{"c1": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261111_175324_b3f42a6b-ee57-40c1-a723-1a4ab73c070d.mp4",
+ "c2": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261111_175043_426a4940-f67e-4c38-b7db-e4310c58c1c3.mp4",
+ "c3": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261111_175042_74269360-3f07-4927-8b6e-2712ee9b24c4.mp4",
+ "start_frames": ["f7b535d1-93c3-467c-91d4-7f3ed9507ee7", "c792fefd-f3c8-43ce-9aa6-337b10dfc51e", "515957f2-0942-4f12-abe0-26fae57dd7af"],
+ "lines": {"c1": "Every night it's the same fight. Nobody likes what I make. So I stopped picking. Watch this.",
+           "c2": "Now everybody votes on dinner by text. Five dinners for the week... and they picked every one.",
+           "c3": "One grocery list, one tap to Instacart. And no arguing at the table. Code's on the screen."},
+ "model": "veo3_1 quality high (credits 2818)",
+ "build": "python3 mom/build_mom.py mom/2026-11-12"}
