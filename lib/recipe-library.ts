@@ -316,15 +316,22 @@ export async function backfillImages(supabase: SupabaseClient, limit = 40): Prom
  * Take `count` dinners from `pool` (in preference order) that fit the weekly budget:
  * while over budget, swap the priciest chosen dinner for the cheapest unused one.
  */
-export function fitBudget(pool: Meal[], count: number, budget: number): Meal[] {
+export function fitBudget(pool: Meal[], count: number, budget: number, ok?: (m: Meal, rest: Meal[]) => boolean): Meal[] {
   const cost = (m: Meal) => Number(m.estimatedCost) || 0
+  const group = (m: Meal) => proteinGroup(m.protein ?? null, m.name)
   const chosen = pool.slice(0, count)
   const spares = pool.slice(count).sort((a, b) => cost(a) - cost(b))
   let total = chosen.reduce((s, m) => s + cost(m), 0)
+  // Nov 10 2026: swaps keep the family's proteins and the variety rules (same protein first, then any that keeps
+  // the week varied, only then simply the cheapest).
   while (total > budget && spares.length) {
     const i = chosen.reduce((best, m, idx) => (cost(m) > cost(chosen[best]) ? idx : best), 0)
-    if (cost(spares[0]) >= cost(chosen[i])) break
-    const swapIn = spares.shift()!
+    const rest = chosen.filter((_, j) => j !== i)
+    const cheaper = spares.filter((s) => cost(s) < cost(chosen[i]))
+    if (!cheaper.length) break
+    const varied = ok ? cheaper.filter((s) => ok(s, rest)) : cheaper
+    const swapIn = varied.find((s) => group(s) === group(chosen[i])) ?? varied[0] ?? cheaper[0]
+    spares.splice(spares.indexOf(swapIn), 1)
     total += cost(swapIn) - cost(chosen[i])
     chosen[i] = swapIn
   }

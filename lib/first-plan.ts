@@ -131,7 +131,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   // to fit it are tagged budgetPick so the family knows a higher budget brings back more choice.
   const budget = shelfBudget(p.weekly_budget, settings) || 150 / 2
   const top = new Set(pool.slice(0, dinners).map((m) => m.name))
-  const fitted = fitBudget(pool, dinners, budget).map((m) => (top.has(m.name) ? m : { ...m, budgetPick: true }))
+  const fitted = fitBudget(pool, dinners, budget, (m, rest) => varietyOk(m, rest, lim)).map((m) => (top.has(m.name) ? m : { ...m, budgetPick: true }))
   const meals = settings.food.fullPlate ? completePlates(fitted, { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitted
   if (meals.length < Math.min(3, dinners)) return { ok: false, reason: 'not enough library recipes', found: meals.length }
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
