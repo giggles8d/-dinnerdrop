@@ -287,16 +287,23 @@ export async function backfillImages(supabase: SupabaseClient, limit = 40): Prom
 /**
  * Take `count` dinners from `pool` (in preference order) that fit the weekly budget:
  * while over budget, swap the priciest chosen dinner for the cheapest unused one.
+ * `ok(spare, rest)` (optional) vetoes a swap that would break the week's variety rules — the cheapest spares
+ * are often the same taco/quesadilla dinners, and without this check a budget week turned into three of them
+ * (Nov 10 2026). When no spare fits, the priciest dinner stays and the loop moves on.
  */
-export function fitBudget(pool: Meal[], count: number, budget: number): Meal[] {
+export function fitBudget(pool: Meal[], count: number, budget: number, ok?: (spare: Meal, rest: Meal[]) => boolean): Meal[] {
   const cost = (m: Meal) => Number(m.estimatedCost) || 0
   const chosen = pool.slice(0, count)
   const spares = pool.slice(count).sort((a, b) => cost(a) - cost(b))
   let total = chosen.reduce((s, m) => s + cost(m), 0)
+  const tried = new Set<number>()
   while (total > budget && spares.length) {
-    const i = chosen.reduce((best, m, idx) => (cost(m) > cost(chosen[best]) ? idx : best), 0)
-    if (cost(spares[0]) >= cost(chosen[i])) break
-    const swapIn = spares.shift()!
+    const i = chosen.reduce((best, m, idx) => (!tried.has(idx) && (best < 0 || cost(m) > cost(chosen[best])) ? idx : best), -1)
+    if (i < 0) break
+    const rest = chosen.filter((_, idx) => idx !== i)
+    const j = spares.findIndex((s) => cost(s) < cost(chosen[i]) && (!ok || ok(s, rest)))
+    if (j < 0) { tried.add(i); continue }
+    const [swapIn] = spares.splice(j, 1)
     total += cost(swapIn) - cost(chosen[i])
     chosen[i] = swapIn
   }

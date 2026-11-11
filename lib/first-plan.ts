@@ -68,14 +68,24 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   // What the family said they like in setup (Tacos, Pasta, Mac and cheese…) leads too, and a cuisine picked as one
   // style among several (e.g. Mediterranean + family + budget) is a preference, not the only food they eat
   // (Nov 9 2026: a taco-and-mac-and-cheese family got fava beans and lamb kebabs).
+  // Nov 10 2026: a mom who listed tomatoes, onions and bell peppers as dislikes in setup got Greek green beans in
+  // tomato sauce, taco pasta and a burger with charred peppers in her first week (the 12–15 options she picked from
+  // ignored everyone's dislikes and allergies too). Everyone in the household's allergies and dislikes now keep
+  // those dinners and sides out, the same way the Sunday Drop and the AI planner already do.
   let likes: string[] = []
-  if (opts.firstWeek) {
+  let allergies: string[] = []
+  let dislikes: string[] = []
+  {
     const { data: hh } = await admin.from('profiles').select('household_id').eq('id', userId).single()
     if (hh?.household_id) {
-      const { data: mem } = await admin.from('household_members').select('likes').eq('household_id', hh.household_id)
-      likes = Array.from(new Set(((mem ?? []) as Array<{ likes: string[] | null }>).flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
+      const { data: mem } = await admin.from('household_members').select('likes, allergies, dislikes').eq('household_id', hh.household_id)
+      const rows = (mem ?? []) as Array<{ likes: string[] | null; allergies: string[] | null; dislikes: string[] | null }>
+      if (opts.firstWeek) likes = Array.from(new Set(rows.flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
+      allergies = Array.from(new Set(rows.flatMap((x) => x.allergies ?? []).map((a) => a.trim()).filter(Boolean)))
+      dislikes = Array.from(new Set(rows.flatMap((x) => x.dislikes ?? []).map(dislikeWord).filter((d) => d.length > 2)))
     }
   }
+  const avoid = [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allergies, ...dislikes]
   const softCuisine = !!opts.firstWeek && styles.length > 1
   const preferred = softCuisine ? settings.food.cuisines.map((c) => c.toLowerCase()) : []
   const firstWeekBoost = (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) =>
@@ -93,7 +103,8 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
       limit: dinners + 24,
       maxCookTime: maxCook,
       dietary: step.dietary,
-      excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
+      allergies,
+      excludeWords: avoid,
       excludeNames,
       cuisines: step.cuisines,
       ignoreKept: true,
@@ -110,13 +121,24 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   const pool = [...pickWithOverlap(withPhoto, withPhoto.length, [], (m, ch) => varietyOk(m, ch.slice(0, dinners), lim)), ...noPhoto]
   // The budget is what they pay at checkout (lib/budget): Instacart prices and fees, store brands. Dinners swapped in
   // to fit it are tagged budgetPick so the family knows a higher budget brings back more choice.
+  // Nov 10 2026: the budget swap ignored the variety rules, so a $150 family of four got black bean quesadillas,
+  // a taco skillet and sweet potato quesadillas (the cheapest spares) in one 6-dinner week. A spare now has to pass
+  // the same variety check as the week it joins.
   const budget = shelfBudget(p.weekly_budget, settings) || 150 / 2
   const top = new Set(pool.slice(0, dinners).map((m) => m.name))
-  const fitted = fitBudget(pool, dinners, budget).map((m) => (top.has(m.name) ? m : { ...m, budgetPick: true }))
-  const meals = settings.food.fullPlate ? completePlates(fitted, { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitted
+  const fitted = fitBudget(pool, dinners, budget, (m, chosen) => varietyOk(m, chosen, lim)).map((m) => (top.has(m.name) ? m : { ...m, budgetPick: true }))
+  const meals = settings.food.fullPlate ? completePlates(fitted, { dietaryNeeds: p.dietary_needs ?? [], avoid }) : fitted
   if (meals.length < Math.min(3, dinners)) return { ok: false, reason: 'not enough library recipes', found: meals.length }
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   return { ok: true, meals, shape }
+}
+
+/** A setup dislike as a word that matches ingredient lines: "Tomatoes" → "tomato" (hits "diced tomatoes" and "tomato paste"), "Bell peppers" → "bell pepper". */
+export function dislikeWord(d: string): string {
+  const w = d.toLowerCase().trim()
+  if (w.endsWith('oes')) return w.slice(0, -2)
+  if (w.endsWith('s') && !w.endsWith('ss')) return w.slice(0, -1)
+  return w
 }
 
 /** Softer styles drop first (first in this list goes first); anything not listed (vegetarian, vegan, allergies) stays. */
