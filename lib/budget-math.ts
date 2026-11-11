@@ -58,11 +58,10 @@ export function dinnersCovered(weeklyBudget: string | null | undefined, stores: 
  * Instacart delivery):
  *   people          1    2    3    4    5    6
  *   cheaper week   $41  $85 $126 $146 $172 $196   (25th percentile)  → lowest choice
- *   typical week   $47  $97 $136 $158 $207 $237   (median)           → preselected
+ *   typical week   $47  $97 $136 $158 $207 $237   (median)           → for reference
  * Rounded to $25. Over 6 people, +$25 a person. Other than 5 dinners: scaled by nights, rounded up to $25.
  */
 const LOWEST_FOR_5: Record<number, number> = { 1: 50, 2: 100, 3: 125, 4: 150, 5: 175, 6: 200 }
-const TYPICAL_FOR_5: Record<number, number> = { 1: 50, 2: 100, 3: 150, 4: 175, 5: 225, 6: 250 }
 const per5 = (table: Record<number, number>, fs: number) => {
   const n = Math.max(1, Math.round(fs || 4))
   return n <= 6 ? table[n] : table[6] + 25 * (n - 6)
@@ -78,9 +77,7 @@ export function budgetOptions(familySize: number, dinners = 5): string[] {
   return [`$${b}`, `$${b + 25}`, `$${b + 50}`, `$${b + 75}`, `$${b + 125}+`]
 }
 
-/** The choice preselected for a new family: what a typical week for them costs, or the nearest choice above it. */
+/** The choice preselected for a new family: the third one (Sarah, Nov 10 2026). */
 export function defaultBudget(familySize: number, dinners = 5): string {
-  const opts = budgetOptions(familySize, dinners)
-  const typical = scale(per5(TYPICAL_FOR_5, familySize), dinners)
-  return opts.find((o) => budgetNumber(o) >= typical) ?? opts[opts.length - 1]
+  return budgetOptions(familySize, dinners)[2]
 }
