@@ -10,13 +10,12 @@ import { withServings } from '@/lib/servings'
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Clock, Heart, ChefHat, CalendarPlus } from 'lucide-react'
+import { ArrowLeft, Heart, ChefHat, CalendarPlus } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import MealCardImage from '@/components/MealCardImage'
 import CookMode from '@/components/CookMode'
 import { formatQuantity } from '@/components/GroceryList'
 import type { Meal } from '@/types'
-import { timeLabel } from '@/lib/plan'
 import { safeBite, cookware } from '@/lib/meal-insights'
 import { recipeIntro, relatedLinks } from '@/lib/recipe-intro'
 import { InstacartCarrot } from '@/components/InstacartMark'
@@ -140,15 +139,26 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           })()}
           <div className="flex items-center gap-1 print:hidden">{r.source === 'user' && !!userId && r.created_by === userId && <Link href={`/recipes/${r.slug}/edit`} className="px-3 py-1.5 rounded-full border border-border text-xs font-semibold text-foreground hover:bg-muted">Edit</Link>}<PrintButton /><button onClick={toggleFav} className="p-2 rounded-full hover:bg-muted" aria-label="Favorite"><Heart className={`w-6 h-6 ${fav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} /></button></div>
         </div>
-        <div className="flex flex-wrap items-center gap-2 mb-6 pb-6 border-b border-border">
-          <span className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground"><Clock className="w-3.5 h-3.5" />{timeLabel(meal)}</span>
-          <ServingsStepper servings={meal.servings} onChange={setServings} />
-          <span className="bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground" title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
-          {safeBite(meal) && <span className="bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold" title="The one plain component a picky eater can have on its own">Picky-eater safe bet: {safeBite(meal)}</span>}
-          {meal.estimatedCost > 0 && <span className="bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold">${meal.estimatedCost.toFixed(2)}</span>}
-          {meal.nutrition && <span className="bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">{meal.nutrition.calories} cal · {meal.nutrition.protein}g protein</span>}
-          {r.kept_count > 0 && <span className="text-xs text-muted-foreground">kept by {r.kept_count} {r.kept_count === 1 ? 'family' : 'families'}</span>}
-          <div className="ml-auto flex flex-wrap gap-2 print:hidden">
+        {/* Recipe-card header (Nov 12 2026): one plain facts row, then tag chips, the way the Recipe Fix Desk shows a recipe. */}
+        <div className="mb-6 pb-6 border-b border-border space-y-4">
+          <dl className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base text-muted-foreground">
+            <div className="flex items-center gap-2"><dt className="sr-only">Serves</dt><dd className="font-semibold text-foreground"><ServingsStepper servings={meal.servings} onChange={setServings} /></dd></div>
+            <div className="flex items-center gap-1.5"><dt>Prep</dt><dd className="font-semibold text-foreground">{meal.prepTime} min</dd></div>
+            <div className="flex items-center gap-1.5"><dt>Cook</dt><dd className="font-semibold text-foreground">{meal.cookTime} min</dd></div>
+            {meal.estimatedCost > 0 && <div className="flex items-center gap-1.5"><dt>Cost</dt><dd className="font-semibold text-foreground">${meal.estimatedCost.toFixed(2)}</dd></div>}
+            {meal.nutrition && <div className="flex items-center gap-1.5"><dt className="sr-only">Nutrition</dt><dd><span className="font-semibold text-foreground">{meal.nutrition.calories}</span> cal · <span className="font-semibold text-foreground">{meal.nutrition.protein}g</span> protein</dd></div>}
+          </dl>
+          {r.tags.filter((t) => !t.startsWith('family-rating-') && t !== 'family-favorite').length > 0 && (
+            <ul className="flex flex-wrap gap-2" aria-label="Tags">
+              {r.tags.filter((t) => !t.startsWith('family-rating-') && t !== 'family-favorite').map((t) => <li key={t} className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground">{t}</li>)}
+            </ul>
+          )}
+          <p className="text-sm text-muted-foreground">
+            <span title="Pans and pots the steps use">🍳 {cookware(meal).label}</span>
+            {safeBite(meal) && <span title="The one plain component a picky eater can have on its own"> · Picky-eater safe bet: <span className="font-medium text-foreground">{safeBite(meal)}</span></span>}
+            {r.kept_count > 0 && <span> · kept by {r.kept_count} {r.kept_count === 1 ? 'family' : 'families'}</span>}
+          </p>
+          <div className="flex flex-wrap gap-2 print:hidden">
             <button onClick={shopIngredients} disabled={shopping === 'busy'} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-[#0AAD0A]/40 bg-white text-[#003D29] text-sm font-semibold hover:bg-[#0AAD0A]/5 disabled:opacity-60"><InstacartCarrot height={16} /> {shopping === 'busy' ? 'Opening Instacart…' : 'Shop ingredients'}</button>
             {userId ? (
               <button onClick={addToWeek} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-primary/30 text-primary text-sm font-semibold hover:bg-secondary"><CalendarPlus className="w-4 h-4" /> Add to this week</button>
@@ -176,18 +186,19 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
           <CookwareList meal={meal} />
         </div>
         <section className="mb-8">
-          <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">Ingredients</h2>
-          <ul className="space-y-1">
-            {meal.ingredients.map((ing, i) => (
-              <li key={i} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-muted/30"><span className="w-1.5 h-1.5 rounded-full bg-primary" /><span className="text-sm flex-1">{ing.name}</span><span className="text-xs font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-md">{formatQuantity(ing.quantity, ing.unit)}</span></li>
-            ))}
+          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-3">Ingredients</h2>
+          <ul className="list-disc pl-6 space-y-2 text-base leading-relaxed marker:text-foreground">
+            {meal.ingredients.map((ing, i) => {
+              const q = formatQuantity(ing.quantity, ing.unit)
+              return <li key={i}>{q && <span className="font-semibold">{q}</span>}{q ? ' ' : ''}{ing.name}</li>
+            })}
           </ul>
         </section>
         <section>
-          <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">Instructions</h2>
-          <ol className="space-y-4">
+          <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-3">Steps</h2>
+          <ol className="list-decimal pl-6 space-y-3 text-base leading-relaxed marker:text-foreground">
             {meal.steps.map((s, i) => (
-              <li key={i} className="flex gap-4"><span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center mt-0.5">{i + 1}</span><p className="text-sm leading-relaxed pt-1">{s}</p></li>
+              <li key={i} className="pl-1">{s}</li>
             ))}
           </ol>
         </section>
