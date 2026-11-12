@@ -148,9 +148,9 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
             {meal.estimatedCost > 0 && <div className="flex items-center gap-1.5"><dt>Cost</dt><dd className="font-semibold text-foreground">${meal.estimatedCost.toFixed(2)}</dd></div>}
             {meal.nutrition && <div className="flex items-center gap-1.5"><dt className="sr-only">Nutrition</dt><dd><span className="font-semibold text-foreground">{meal.nutrition.calories}</span> cal · <span className="font-semibold text-foreground">{meal.nutrition.protein}g</span> protein</dd></div>}
           </dl>
-          {r.tags.filter((t) => !t.startsWith('family-rating-')).length > 0 && (
+          {r.tags.filter((t) => !t.startsWith('family-rating-') && t !== 'family-favorite').length > 0 && (
             <ul className="flex flex-wrap gap-2" aria-label="Tags">
-              {r.tags.filter((t) => !t.startsWith('family-rating-')).map((t) => <li key={t} className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground">{t}</li>)}
+              {r.tags.filter((t) => !t.startsWith('family-rating-') && t !== 'family-favorite').map((t) => <li key={t} className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground">{t}</li>)}
             </ul>
           )}
           <p className="text-sm text-muted-foreground">
