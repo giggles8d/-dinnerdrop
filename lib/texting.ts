@@ -122,21 +122,37 @@ const DAY_INDEX: Record<string, number> = { mon: 0, tue: 1, wed: 2, thu: 3, fri:
  * had eaten yet). Looks across this week's and last week's plans; oldest first, one per name.
  */
 export async function recentDinners(admin: SupabaseClient, userId: string, todayStr: string): Promise<Meal[]> {
-  const { data } = await admin.from('meal_plans').select('week_start, meals, created_at').eq('user_id', userId).order('created_at', { ascending: false }).limit(4)
+  const { data } = await admin.from('meal_plans').select('week_start, meals, created_at').eq('user_id', userId).order('created_at', { ascending: false }).limit(8)
   const today = new Date(todayStr + 'T12:00:00Z').getTime()
   const seen = new Set<string>()
   const out: Array<{ meal: Meal; at: number }> = []
+  const plans = (data ?? []) as Array<{ week_start: string; meals: Meal[]; created_at: string }>
+  // When each week was first planned: a dinner on a night before that can't have been had
+  // (Nov 12 2026: a family who set up on Thursday was asked that morning whether Monday's and
+  // Tuesday's dinners should come back). A re-plan keeps the week's original date.
+  const firstPlanned = new Map<string, number>()
+  for (const p of plans) {
+    const t = new Date(p.created_at).getTime()
+    if (p.week_start && Number.isFinite(t)) firstPlanned.set(p.week_start, Math.min(firstPlanned.get(p.week_start) ?? Infinity, t))
+  }
   // Newest plan per week wins (a re-planned week replaces the old one).
   const weeks = new Set<string>()
-  for (const p of (data ?? []) as Array<{ week_start: string; meals: Meal[] }>) {
+  for (const p of plans) {
     if (!p.week_start || weeks.has(p.week_start)) continue
     weeks.add(p.week_start)
     const start = new Date(p.week_start + 'T12:00:00Z').getTime()
+    // Shopping-trip weeks can start on any weekday: a day name means its first occurrence on or
+    // after week_start, not week_start + Monday-based offset (Nov 12 2026: a Tuesday-start week
+    // put Wednesday's dinner on Thursday and left it off the list).
+    const startIdx = (new Date(start).getUTCDay() + 6) % 7 // Monday = 0
+    const since = firstPlanned.get(p.week_start) ?? 0
     for (const m of p.meals ?? []) {
       const idx = DAY_INDEX[String(m.day ?? '').slice(0, 3).toLowerCase()]
       if (idx === undefined) continue
-      const at = start + idx * 86400000
+      const at = start + ((idx - startIdx + 7) % 7) * 86400000
       if (at >= today || at < today - 7 * 86400000) continue
+      // Planned after that night had passed (end of that day): never cooked from this plan.
+      if (since > at + 24 * 3600000) continue
       const key = m.name.toLowerCase()
       if (seen.has(key)) continue
       seen.add(key)
