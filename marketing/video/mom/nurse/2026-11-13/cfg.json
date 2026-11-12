@@ -1,0 +1,14 @@
+{
+ "out": "2026-11-13_NurseMom_Ep5_OneMinuteWeek.mp4",
+ "ai_banner": false,
+ "end_ai_line": false,
+ "hook_text": ["ER nurse vs. one minute"],
+ "labels": {"c2.mp4": "No card. Nothing to download."},
+ "app_over": {"c2.mp4": {"face": 2.4, "segs": [[54, 62, "5 dinners in about a minute"]]}, "c3.mp4": {"face": 1.6, "segs": [[110, 122, "The list builds itself"], [136, 152, "To your cart, one tap"]]}},
+ "app_after": 0,
+ "app": [],
+ "cta_y": [1180, 1290],
+ "end_seconds": 1.8,
+ "end": ["Try it free, no card", "Code NURSE = 3 months of Family free", "dinnerdrop.app/go/nurse"],
+ "clip_end": {"c1.mp4": 8.95, "c2.mp4": 8.95, "c3.mp4": 7.98, "c4.mp4": 8.95}
+}

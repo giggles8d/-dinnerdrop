@@ -1,0 +1,11 @@
+{
+ "element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
+ "voice": "Hallie preset 10274bf1-fb93-554f-b59f-d620a920fd36 (voice_change on every clip)",
+ "model": "seedance_2_5 omni_reference 1080p (veo3_1 failing on 11-12)",
+ "start_frames": {"c1": "be2efe2c-d9f8-4577-81ec-34f91a2cec11", "c2": "be2efe2c-d9f8-4577-81ec-34f91a2cec11", "c3": "8cacecc0-e37e-470b-91f0-c199a9bece22", "c4": "c7489ad2-2194-4163-a11b-740561c46e03"},
+ "video_jobs": {"c1": "c805ac6d-226a-46b4-b75a-276ee1bc7d82", "c2": "cdb040e5-23f4-40ba-997c-a2f1140db6c7", "c3": "c95f8768-b0fd-456a-9106-bba2e26970df", "c4": "5cb774fe-c11b-484e-85d8-f04cfd0c41b0"},
+ "voice_changed": {"c1": "16b7a1a7-1325-482d-8cec-2d97c69d367a", "c2": "194e02e6-b973-453c-939a-c7b77f129811", "c3": "404f4fff-2c3e-4d4b-9b03-6c049f3ada7a", "c4": "ecece648-54da-4f81-a308-f59fa9fd5f01"},
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/1139ef7a-7d51-4783-a1b4-e5a3d4f28cea.mp4",
+ "status": "SCHEDULED 2026-11-13 4:30 PM ET on TikTok, YouTube Shorts, Facebook Reels via Publer (by Claude, 11-12)",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-13"
+}
