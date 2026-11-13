@@ -1,7 +1,7 @@
 /**
  * Weekend receipt reward (Sarah approved Nov 13 2026): a family that places a grocery order through DinnerDrop's
  * Instacart button on Sat Nov 14 or Sun Nov 15 (ET) and uploads that order's receipt by Mon Nov 16 11:59 PM ET gets a
- * $5 Instacart gift card, one per family, first 50 families. Shown on /start and above the receipt upload on the
+ * $5 Amazon gift card, one per family, first 50 families. Shown on /start and above the receipt upload on the
  * grocery list. Winners are pulled from grocery_handoffs + receipts after the deadline and sent by Sarah.
  */
 export const RECEIPT_REWARD = {
@@ -18,4 +18,4 @@ export function receiptRewardOpen(now = Date.now()): boolean {
   return now <= new Date(RECEIPT_REWARD.receiptBy).getTime()
 }
 
-export const RECEIPT_REWARD_TERMS = 'Order through DinnerDrop’s Shop with Instacart button on Saturday, Nov 14 or Sunday, Nov 15, then upload that order’s receipt here by Monday, Nov 16 at 11:59 PM ET. One $5 Instacart gift card per family, first 50 families, emailed within 7 days.'
+export const RECEIPT_REWARD_TERMS = 'Order through DinnerDrop’s Shop with Instacart button on Saturday, Nov 14 or Sunday, Nov 15, then upload that order’s receipt in DinnerDrop by Monday, Nov 16 at 11:59 PM ET. One $5 Amazon gift card per family, first 50 families, emailed within 7 days.'
