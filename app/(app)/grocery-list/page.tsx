@@ -1,5 +1,6 @@
 'use client'
 
+import ReceiptRewardBanner from '@/components/ReceiptRewardBanner'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Copy, Printer, Share2, Check } from 'lucide-react'
@@ -715,6 +716,7 @@ export default function GroceryListPage() {
         </div>
 
         <div id="receipt-upload" className="scroll-mt-24">
+          <ReceiptRewardBanner />
           <ReceiptUpload onDone={() => { setAskActual(null); load() }} />
         </div>
 

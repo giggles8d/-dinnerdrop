@@ -1,5 +1,6 @@
 'use client'
 
+import ReceiptRewardBanner from '@/components/ReceiptRewardBanner'
 import Link from 'next/link'
 import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
@@ -86,6 +87,7 @@ export default function StartPage() {
         </div>
         <Suspense fallback={null}><PromoBanner /></Suspense>
         <WeekendOfferBanner />
+        <ReceiptRewardBanner variant="start" />
         <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: GREEN }}>
           Less deciding. <span style={{ color: GOLD }}>More dinners.</span>
         </h1>
