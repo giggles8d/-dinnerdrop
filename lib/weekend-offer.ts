@@ -2,14 +2,16 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import { emailShell, sendEmail } from './notify'
 
 /**
- * Weekend push offer (Oct 31 – Nov 1 2026, ET): a family that signs up during the window and sends
- * its FIRST grocery list to Instacart before the deadline gets 90 days of Family, no card.
- * Granted automatically from the Instacart handoff route; once per family.
+ * Send-your-first-list offer, granted automatically from the Instacart handoff route; once per family.
+ * Now: the Thanksgiving offer (Sarah approved Nov 13 2026): any family that sends its FIRST grocery list to
+ * Instacart by Sun Nov 22 11:59 PM ET gets 90 days of Family, no card. Advertised in the Meta ad "J -
+ * Thanksgiving week image" and on /start (StartClient ThanksgivingOfferBanner); the Nov 19 reminder email is
+ * lib/weekend-campaign.ts. Earlier runs: weekend-2026-10-31 (Oct 31 – Nov 1), Nov 7–8.
  */
 export const WEEKEND_OFFER = {
-  id: 'weekend-2026-10-31',
-  signupFrom: '2026-10-31T04:00:00Z',   // Fri Oct 31 00:00 ET (offer is advertised Sat–Sun; Friday sign-ups count too)
-  sendBy: '2026-11-02T04:59:59Z',       // Sun Nov 1 11:59 PM ET (EST after the Nov 1 clock change)
+  id: 'thanksgiving-2026',
+  signupFrom: '2026-01-01T05:00:00Z',   // anyone who hasn't sent a list yet (the first-list check below does the rest)
+  sendBy: '2026-11-23T04:59:59Z',       // Sun Nov 22 11:59 PM ET
   days: 90,
   label: '3 months of Family free',
 }

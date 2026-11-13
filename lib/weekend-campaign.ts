@@ -1,5 +1,6 @@
 /**
- * "Your dinners are planned. One tap left." (Sarah approved the weekend push, Nov 6 2026).
+ * Thanksgiving offer reminder (Sarah approved Nov 13 2026; first used for the Nov 7 weekend push, Nov 6 2026):
+ * "3 days left" for the send-your-first-list offer in lib/weekend-offer.ts (ends Sun Nov 22 11:59 PM ET).
  * To families who signed up in the last 30 days and never sent a list to a store, skipping anyone who got any
  * campaign email in the 3 days before the send (no pile-ups). Includes their own invite link instead of a separate
  * referral blast. Sends once per address (campaign_sends) and only when app_kv `campaign_weekend` is
@@ -8,11 +9,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 
-export const WEEKEND = 'weekend-2026-11-07'
+export const WEEKEND = 'thanksgiving-offer-2026-11-19'
 const APP = 'https://www.dinnerdrop.app'
 const FROM = 'Sarah from DinnerDrop <sarah@dinnerdrop.app>'
 const INTERNAL = /(@dinnerdrop\.app$|^setzl1979(\+[^@]*)?@gmail\.com$|@camcomfginc\.com$)/i
-export const WEEKEND_SUBJECT = 'Your dinners are planned. One tap left.'
+export const WEEKEND_SUBJECT = '3 days left: send your list, get 3 months of Family free'
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
@@ -31,7 +32,8 @@ export function weekendHtml(r: Pick<Rec, 'firstName' | 'refCode' | 'unsubscribeU
 <body style="margin:0;background:#ffffff;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#1f2a24">
 <div style="max-width:560px;margin:0 auto;padding:24px 18px">
 ${p(`Hi ${esc(r.firstName || 'there')},`)}
-${p('Your week of dinners is ready in DinnerDrop, and the grocery list is already built from it. One tap sends the whole list to Instacart, Walmart or Kroger, so the weekend shop is done before you get off the couch.')}
+${p('Your week of dinners is ready in DinnerDrop, and the grocery list is already built from it. Send it to Instacart by <b>Sunday, Nov 22 at 11:59 PM ET</b> and you get <b>3 months of the Family plan free</b>, no card. It turns on by itself the moment your list goes through.')}
+${p('One less thing to think about before Thanksgiving week.')}
 <p style="margin:0 0 18px"><a href="${dash}" style="display:inline-block;background:#1a5c38;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:10px">Send my grocery list</a></p>
 ${p('Want everyone to add their own stuff? Add their phone numbers in Settings under Family texting, and they can text the DinnerDrop number something like “add granola bars.” It lands right on your list.')}
 ${p(`And if a friend dreads the dinner question too, here’s your invite link: <a href="${invite}" style="color:#1a5c38">${esc(invite.replace('https://www.', ''))}</a>. When they start the Family plan, you both get a month free.`)}
@@ -44,7 +46,9 @@ export function weekendText(r: Pick<Rec, 'firstName' | 'refCode' | 'unsubscribeU
   const { dash, invite } = links(r)
   return `Hi ${r.firstName || 'there'},
 
-Your week of dinners is ready in DinnerDrop, and the grocery list is already built from it. One tap sends the whole list to Instacart, Walmart or Kroger, so the weekend shop is done before you get off the couch.
+Your week of dinners is ready in DinnerDrop, and the grocery list is already built from it. Send it to Instacart by Sunday, Nov 22 at 11:59 PM ET and you get 3 months of the Family plan free, no card. It turns on by itself the moment your list goes through.
+
+One less thing to think about before Thanksgiving week.
 
 Send my grocery list: ${dash}
 

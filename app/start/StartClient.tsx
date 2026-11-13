@@ -37,9 +37,9 @@ function PromoBanner() {
   )
 }
 
-// Weekend push offer (Oct 31 – Nov 1 2026): first list sent to Instacart by Sunday 11:59 PM ET → 90 days of Family.
+// Thanksgiving offer (Nov 13–22 2026): first list sent to Instacart by Sun Nov 22 11:59 PM ET → 90 days of Family.
 // Granted automatically in /api/instacart (lib/weekend-offer.ts). The terms here must match the ad.
-const WEEKEND_OFFER_ENDS = Date.UTC(2026, 10, 2, 4, 59, 59) // Sun Nov 1 2026 11:59 PM ET
+const WEEKEND_OFFER_ENDS = Date.UTC(2026, 10, 23, 4, 59, 59) // Sun Nov 22 2026 11:59 PM ET
 
 function WeekendOfferBanner() {
   const [open, setOpen] = useState(false)
@@ -47,8 +47,8 @@ function WeekendOfferBanner() {
   if (!open) return null
   return (
     <div className="mx-auto max-w-2xl mb-5 sm:mb-6 rounded-2xl border-2 px-5 py-4 text-left shadow-sm" style={{ borderColor: GOLD, backgroundColor: '#fff8e8' }}>
-      <p className="text-sm font-bold" style={{ color: GREEN }}>🎉 This weekend: send your first grocery list to Instacart and get 3 months of Family free.</p>
-      <p className="text-sm text-gray-700 mt-1">Sign up free below, plan your week, tap Shop with Instacart once by Sunday, Nov 1 at 11:59 PM ET, and 90 days of the Family plan unlock automatically — family texting, per-person profiles, reminders. No card needed. New families only; you buy your own groceries at Instacart. When it ends you go back to the free plan, nothing to cancel.</p>
+      <p className="text-sm font-bold" style={{ color: GREEN }}>🦃 Thanksgiving offer: send your first grocery list by Sunday, Nov 22 and get 3 months of Family free.</p>
+      <p className="text-sm text-gray-700 mt-1">Sign up free below, plan your week, and tap Shop with Instacart once by Sunday, Nov 22 at 11:59 PM ET. 90 days of the Family plan unlock automatically: family texting, per-person profiles, reminders. No card needed. For families sending their first list; you buy your own groceries at Instacart. When it ends you go back to the free plan, nothing to cancel.</p>
     </div>
   )
 }
