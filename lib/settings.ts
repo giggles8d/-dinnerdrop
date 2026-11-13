@@ -47,6 +47,7 @@ export interface Settings {
     productPrefs: import('@/lib/product-prefs').ProductPref[]  // "when a recipe needs X, buy Y" (lib/product-prefs)
     storeBrands: boolean            // prefer the store's own brand (Walmart, Kroger) when it matches as well
     fullPlate: boolean              // every dinner gets a protein, a starch and a vegetable; missing ones added as a side (lib/full-plate)
+    prepped: boolean                // shopping list buys pre-cut / ready-to-use items when the recipe would chop or shred them (lib/prepped); costs more
   }
   deals: {
     stockUp: boolean                // "Stock up while it's cheap" on the list (multi-buys, pantry/drink deals)
@@ -140,6 +141,7 @@ export const DEFAULT_SETTINGS: Settings = {
     productPrefs: [],
     storeBrands: false,
     fullPlate: true,
+    prepped: false,
   },
   deals: {
     stockUp: true,

@@ -12,6 +12,7 @@ import StoreDealsSettings from '@/components/StoreDealsSettings'
 import { FOOD_STYLES, selectedStyles } from '@/lib/styles'
 import { applyStyles, MAX_STYLES } from '@/lib/apply-style'
 import { createClient } from '@/lib/supabase'
+import { PREPPED_COST_NOTE } from '@/lib/prepped'
 import {
   mergeSettings, DEFAULT_SETTINGS, WEEKDAYS, WEEKDAY_LABEL, CUISINE_OPTIONS, PROTEIN_OPTIONS,
   EQUIPMENT_OPTIONS, DIETARY_OPTIONS, AGE_BANDS, setSundayDinner, type Settings, type Channel,
@@ -218,6 +219,8 @@ export default function SettingsPage() {
   const supabase = useMemo(() => createClient(), [])
   const [profile, setProfile] = useState<ProfileRow | null>(null)
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
+  const [savedPrepped, setSavedPrepped] = useState(false)   // pre-cut setting as last saved: a change rebuilds this week's list
+  const [prepAsk, setPrepAsk] = useState(false)             // "costs more" check before turning pre-cut on
   const [members, setMembers] = useState<Member[]>([])
   const [section, setSection] = useState<Section>('household')
   const [loading, setLoading] = useState(true)
@@ -271,6 +274,7 @@ export default function SettingsPage() {
     if (data) {
       setProfile(data as ProfileRow)
       setSettings(mergeSettings((data as ProfileRow).settings))
+      setSavedPrepped(!!mergeSettings((data as ProfileRow).settings).food.prepped)
       if ((data as ProfileRow).household_id) {
         const { data: m } = await supabase.from('household_members').select('*').eq('household_id', (data as ProfileRow).household_id).order('created_at')
         setMembers((m as Member[]) || [])
@@ -330,6 +334,14 @@ export default function SettingsPage() {
     if (err) { setError(err.message); return }
     setDirty(false)
     let note = 'Saved. Your next plan uses these settings.'
+    // Pre-cut shortcuts on or off: this week's (and next week's) shopping lists rebuild the next time they're opened.
+    // Lines already sent to a store stay as they were (the list page keeps ordered lines).
+    if (settings.food.prepped !== savedPrepped) {
+      const since = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10)
+      await supabase.from('meal_plans').update({ grocery_list: {} }).eq('user_id', profile.id).gte('week_start', since)
+      setSavedPrepped(settings.food.prepped)
+      note = settings.food.prepped ? 'Saved. Your shopping list now asks for pre-cut items where the recipes chop or shred.' : 'Saved. Your shopping list is back to whole ingredients.'
+    }
     if (settings.texting.enabled && (settings.texting.ownerPhone || members.some((m) => m.phone && !m.phone_opt_in_at && !m.phone_opted_out))) {
       try {
         const r = await fetch('/api/sms/optin', { method: 'POST' })
@@ -596,6 +608,20 @@ export default function SettingsPage() {
                 </Field>
                 <div className="space-y-3">
                   <Toggle checked={settings.food.kidFriendly} onChange={(v) => patch((s) => { s.food.kidFriendly = v })} label="Kid-friendly by default" hint="Familiar flavors, components kept separate, one safe thing on every plate." />
+                  <div>
+                    <Toggle checked={settings.food.prepped || prepAsk} onChange={(v) => { if (v) setPrepAsk(true); else { setPrepAsk(false); patch((s) => { s.food.prepped = false }) } }} label="Pre-cut shortcuts" hint="When a recipe has you dice, slice, shred or grate something, your list asks for it already done: diced onion, pre-cut peppers, jarred minced garlic, coleslaw mix, shredded cheese, and a rotisserie chicken when the chicken gets shredded." />
+                    {prepAsk && !settings.food.prepped && (
+                      <div className="mt-2 ml-7 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-100" role="alert">
+                        <p className="font-medium">This costs more.</p>
+                        <p className="mt-1">{PREPPED_COST_NOTE}</p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <button type="button" className="rounded-md bg-[#1a5c38] px-3 py-1.5 text-sm font-medium text-white" onClick={() => { patch((s) => { s.food.prepped = true }); setPrepAsk(false) }}>Turn it on</button>
+                          <button type="button" className="rounded-md border border-amber-400 px-3 py-1.5 text-sm" onClick={() => setPrepAsk(false)}>Not now</button>
+                        </div>
+                      </div>
+                    )}
+                    {settings.food.prepped && <p className="mt-1 ml-7 text-xs text-amber-700 dark:text-amber-300">On: costs more than whole ingredients.</p>}
+                  </div>
                   <Toggle checked={settings.food.fullPlate} onChange={(v) => patch((s) => { s.food.fullPlate = v })} label="Full plate" hint="Every dinner has a protein, a starch and a vegetable. If a recipe is missing one, a simple side is added and goes on your list. Low-carb families get a second vegetable instead of the starch." />
                   <Field label="Family recipes vs. new ideas in each vote" hint={<>How many of the dinner ideas the family votes on are your own recipes from <a href="/favorites" className="underline">Favorites</a>; the rest are new ideas. Higher-starred recipes come up more often. Labeled &ldquo;family recipe&rdquo; in the vote.</>}><Select value={String(settings.food.familyRecipesPerWeek)} onChange={(v) => patch((s) => { s.food.familyRecipesPerWeek = Number(v) })} options={[0, 1, 2, 3, 4, 5, 6, 8].map((n) => ({ value: String(n), label: n === 0 ? 'None (all new ideas)' : `${n} family recipe${n === 1 ? '' : 's'}, rest new` }))} /></Field>
                   <Toggle checked={settings.food.nutritionInfo} onChange={(v) => patch((s) => { s.food.nutritionInfo = v })} label="Show nutrition per serving (calories, protein, carbs, fat)" />

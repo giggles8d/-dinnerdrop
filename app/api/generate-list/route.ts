@@ -3,6 +3,7 @@ import { mayActFor } from '@/lib/route-auth'
 import { createClient } from '@supabase/supabase-js'
 import type { GroceryCategory, GroceryItem, Ingredient } from '@/types'
 import { scaleSideItems } from '@/lib/side-steps'
+import { preppedIngredients } from '@/lib/prepped'
 
 type GroceryListResponse = Record<GroceryCategory, GroceryItem[]>
 
@@ -11,7 +12,7 @@ export const maxDuration = 60
 
 export async function POST(request: Request) {
   try {
-    const { meals, userId } = await request.json()
+    const { meals, userId, prepped } = await request.json()
 
     // Auth gate — validate userId to prevent unauthorized Claude API credit usage
     if (!userId) {
@@ -41,8 +42,9 @@ export async function POST(request: Request) {
     // A side added for someone's health need (lib/member-needs: "Carson: add the rice") or to complete the plate
     // (lib/full-plate: protein + starch + vegetable) is part of the shop.
     // Sides are written for 4 and sized to the dinner's servings here (lib/side-steps).
-    const allIngredients = meals.flatMap((meal: { servings?: number; ingredients: unknown[]; side?: { for?: string[]; onList?: boolean; items?: Ingredient[] } }) => [
-      ...(Array.isArray(meal.ingredients) ? meal.ingredients : []),
+    // Pre-cut shortcuts (settings.food.prepped): "dice the onion" buys diced onion, "shred the chicken" buys a rotisserie chicken.
+    const allIngredients = meals.flatMap((meal: { servings?: number; ingredients: Ingredient[]; steps?: string[]; tags?: string[]; name?: string; side?: { for?: string[]; onList?: boolean; items?: Ingredient[] } }) => [
+      ...(Array.isArray(meal.ingredients) ? (prepped ? preppedIngredients(meal).ingredients : meal.ingredients) : []),
       ...((meal.side?.for?.length || meal.side?.onList) && Array.isArray(meal.side.items) ? scaleSideItems(meal.side, meal.servings) : []),
     ])
 
@@ -56,6 +58,7 @@ export async function POST(request: Request) {
 3. Use quantities a shopper can actually buy: whole counts for produce and packaged goods ("1 head garlic", "2 lemons", "1 bunch cilantro"), fractions no finer than 1/4 for weights ("1 1/4 lb", never "0.625 lbs"), tablespoons/teaspoons for spices and butter under 1/2 cup, and "1 can"/"1 jar"/"1 package" for pantry items. Use singular units ("lb", "cup", "clove") — never "lbs"
 4. Organize by store section
 5. Create a clean, shopper-friendly search term for each item
+6. Keep ready-to-use items as written ("diced onion", "jarred minced garlic", "rotisserie chicken", "coleslaw mix"): never turn them back into whole produce or raw meat, and don't merge them with whole ones (diced onion and a whole red onion stay two lines)
 
 Ingredients:
 ${JSON.stringify(allIngredients, null, 2)}
