@@ -19,6 +19,7 @@ import NutritionPanel from '@/components/NutritionPanel'
 import AllergenNotice from '@/components/AllergenNotice'
 import { sideFor } from '@/lib/sides'
 import SideSteps from '@/components/SideSteps'
+import PreppedNote from '@/components/PreppedNote'
 import ServingsStepper from '@/components/ServingsStepper'
 import { withServings, saveDinnerServings } from '@/lib/servings'
 import { attachLibraryImages } from '@/lib/library-images'
@@ -414,6 +415,7 @@ function RecipeContent() {
           </ul>
         </section>
 
+        <PreppedNote meal={meal} />
         {/* Steps */}
         <section className="mb-8">
           <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-4">
