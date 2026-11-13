@@ -8,6 +8,7 @@ import { formatQuantity } from '@/components/GroceryList'
 import { timeLabel } from '@/lib/plan'
 import type { Meal } from '@/types'
 import { sideFor } from '@/lib/sides'
+import SideSteps from '@/components/SideSteps'
 
 /** Printable week: a one-page fridge sheet of the dinners, then each recipe on its own page. */
 export default function PrintWeekPage() {
@@ -103,6 +104,7 @@ export default function PrintWeekPage() {
                   <li key={n} className="flex gap-3"><span className="font-bold text-primary w-5 shrink-0">{n + 1}.</span><span className="leading-relaxed">{s}</span></li>
                 ))}
               </ol>
+              <SideSteps meal={m} variant="print" />
             </div>
           </div>
         </section>
