@@ -1,0 +1,9 @@
+{"c1": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261113_174235_11b483cd-8070-4220-a5fc-ec6dcbf68a65.mp4",
+ "c2": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261113_174235_0b6177e0-2d2e-43ad-ba48-707a44cd5aa5.mp4",
+ "c3": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261113_174235_3572f09e-f19c-4c5e-abdc-c45dd8df55e8.mp4",
+ "start_frames": ["1423ca15-26f7-466d-96fb-86aa25274a23", "a9319187-2d32-4b9c-a550-fa9738a9852c", "e2e9a568-ad7a-4b16-86cf-033a15a3a5aa"],
+ "lines": {"c1": "Saturday grocery run, and I still have no idea what we're eating this week. Watch this.",
+           "c2": "I just typed in the dinners my family actually loved... and it rebuilt them into this week's plan.",
+           "c3": "Five dinners, one grocery list, one tap to Instacart. Code's on the screen."},
+ "model": "seedance_2_5 omni_reference 720p (veo3_1 failed every submit; credits 1434)",
+ "build": "python3 mom/build_mom.py mom/2026-11-14"}
