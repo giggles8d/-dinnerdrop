@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { sideFor } from '@/lib/sides'
+import { scaleSideItems } from '@/lib/side-steps'
 import { normalizeItemName } from '@/lib/list'
 import type { Meal, GroceryCategory } from '@/types'
 
@@ -10,7 +11,7 @@ export default function SidesCard({ meals, have, onAdd }: { meals: Meal[]; have:
   const [open, setOpen] = useState(false)
   if (!meals.length) return null
   const haveSet = new Set(have.map(normalizeItemName))
-  const rows = meals.map((m) => ({ meal: m, side: sideFor(m) })).map((r) => ({ ...r, onList: r.side.items.every((i) => haveSet.has(normalizeItemName(i.name))) || added.has(r.meal.day + r.side.name) }))
+  const rows = meals.map((m) => { const s = sideFor(m); return { meal: m, side: { ...s, items: scaleSideItems(s, m.servings) } } }).map((r) => ({ ...r, onList: r.side.items.every((i) => haveSet.has(normalizeItemName(i.name))) || added.has(r.meal.day + r.side.name) }))
   async function add(key: string, side: ReturnType<typeof sideFor>) {
     for (const i of side.items) await onAdd(i.name, i.category, i.name, { quantity: i.quantity, unit: i.unit })
     setAdded((s) => new Set(s).add(key))

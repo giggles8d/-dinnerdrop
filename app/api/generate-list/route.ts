@@ -1,7 +1,8 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { mayActFor } from '@/lib/route-auth'
 import { createClient } from '@supabase/supabase-js'
-import type { GroceryCategory, GroceryItem } from '@/types'
+import type { GroceryCategory, GroceryItem, Ingredient } from '@/types'
+import { scaleSideItems } from '@/lib/side-steps'
 
 type GroceryListResponse = Record<GroceryCategory, GroceryItem[]>
 
@@ -39,9 +40,10 @@ export async function POST(request: Request) {
 
     // A side added for someone's health need (lib/member-needs: "Carson: add the rice") or to complete the plate
     // (lib/full-plate: protein + starch + vegetable) is part of the shop.
-    const allIngredients = meals.flatMap((meal: { ingredients: unknown[]; side?: { for?: string[]; onList?: boolean; items?: unknown[] } }) => [
+    // Sides are written for 4 and sized to the dinner's servings here (lib/side-steps).
+    const allIngredients = meals.flatMap((meal: { servings?: number; ingredients: unknown[]; side?: { for?: string[]; onList?: boolean; items?: Ingredient[] } }) => [
       ...(Array.isArray(meal.ingredients) ? meal.ingredients : []),
-      ...((meal.side?.for?.length || meal.side?.onList) && Array.isArray(meal.side.items) ? meal.side.items : []),
+      ...((meal.side?.for?.length || meal.side?.onList) && Array.isArray(meal.side.items) ? scaleSideItems(meal.side, meal.servings) : []),
     ])
 
     if (allIngredients.length === 0) {

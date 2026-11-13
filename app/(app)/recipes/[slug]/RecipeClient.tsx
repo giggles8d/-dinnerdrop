@@ -5,6 +5,7 @@ import PrintButton from '@/components/PrintButton'
 import NutritionPanel from '@/components/NutritionPanel'
 import AllergenNotice from '@/components/AllergenNotice'
 import { sideFor } from '@/lib/sides'
+import SideSteps from '@/components/SideSteps'
 import ServingsStepper from '@/components/ServingsStepper'
 import { withServings } from '@/lib/servings'
 
@@ -202,6 +203,7 @@ export default function RecipeClient({ initial }: { initial: RecipeRow }) {
             ))}
           </ol>
         </section>
+        <SideSteps meal={meal} />
         <div className="mt-8"><NutritionPanel nutrition={meal.nutrition} /></div>
         <nav aria-label="More dinners like this" className="mt-10 print:hidden">
           <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">More like this</h2>

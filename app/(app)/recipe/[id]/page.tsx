@@ -18,6 +18,7 @@ import PrintButton from '@/components/PrintButton'
 import NutritionPanel from '@/components/NutritionPanel'
 import AllergenNotice from '@/components/AllergenNotice'
 import { sideFor } from '@/lib/sides'
+import SideSteps from '@/components/SideSteps'
 import ServingsStepper from '@/components/ServingsStepper'
 import { withServings, saveDinnerServings } from '@/lib/servings'
 import { attachLibraryImages } from '@/lib/library-images'
@@ -431,6 +432,7 @@ function RecipeContent() {
             ))}
           </ol>
         </section>
+        <SideSteps meal={meal} />
 
         <NutritionPanel nutrition={meal.nutrition} />
 
