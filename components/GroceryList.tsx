@@ -98,7 +98,8 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
         const need = rows.filter((r) => !r.have)
         const done = need.filter((r) => r.checked).length
         return (
-          <div key={category}>
+          // A printed list leaves off what they already have (customer idea, Nov 13 2026), so an all-"have it" aisle prints nothing.
+          <div key={category} className={need.length ? undefined : 'print:hidden'}>
             <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-primary/20">
               <div className="flex items-center gap-2">
                 <span className="text-base">{CATEGORY_EMOJI[category]}</span>
@@ -113,7 +114,7 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                 // Which dinners this line is for, shown under the name (Sarah, Nov 1: "so I know which meal each item is for").
                 const forMeals = detailFor && item.source === 'plan' ? detailFor(item).usedIn : []
                 return (
-                  <li key={item.id} className={`rounded-lg transition-colors ${muted ? 'bg-muted/50' : 'hover:bg-muted/30'}`}>
+                  <li key={item.id} className={`rounded-lg transition-colors ${muted ? 'bg-muted/50' : 'hover:bg-muted/30'}${item.have ? ' print:hidden' : ''}`}>
                   <div className="flex items-center gap-3 px-3 py-2.5">
                     <button
                       type="button"

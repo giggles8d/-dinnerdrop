@@ -1,5 +1,8 @@
 'use client'
 
+import { headcountFor } from '@/lib/headcount'
+import { mondayISO } from '@/lib/repeat-plan'
+
 import { budgetOptions, dinnersCovered } from '@/lib/budget-math'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import DeleteAccount from '@/components/DeleteAccount'
@@ -18,6 +21,7 @@ import {
   EQUIPMENT_OPTIONS, DIETARY_OPTIONS, AGE_BANDS, setSundayDinner, type Settings, type Channel,
 } from '@/lib/settings'
 import { MIX_GROUPS, MIX_EVERY, hasMix, type ProteinMix } from '@/lib/protein-mix'
+const addWeek = (iso: string) => new Date(new Date(`${iso}T12:00:00Z`).getTime() + 7 * 86400000).toISOString().slice(0, 10)
 
 /* ------------------------------------------------------------------ */
 /* Types                                                                */
@@ -448,6 +452,22 @@ export default function SettingsPage() {
                   <Field label="People at dinner" hint="Portions and the grocery list scale to this.">
                     <Select value={String(profile.family_size)} onChange={(v) => patchProfile({ family_size: Number(v) })} options={['1', '2', '3', '4', '5', '6', '7', '8'].map((n) => ({ value: n, label: n }))} />
                   </Field>
+                  {/* Shared custody (customer idea, Nov 13 2026): a different number every other week. Shown as this week / next
+                      week; saving re-anchors the schedule on this Monday so the two fields always mean what they say. */}
+                  <div className="sm:col-span-2">
+                    <Toggle checked={settings.plan.headcount.alternate} onChange={(v) => patch((s) => { const a = headcountFor(s, mondayISO(), profile.family_size); const b = headcountFor(s, addWeek(mondayISO()), profile.family_size); s.plan.headcount = { alternate: v, a, b: v && a === b ? Math.max(1, a - 2) : b, anchor: mondayISO() } })} label="The number changes every other week" hint="For shared custody or kids who are away some weeks. Each week's dinners and grocery list are sized for whoever is home that week." />
+                    {settings.plan.headcount.alternate && (
+                      <div className="mt-3 ml-7 grid grid-cols-2 gap-4 max-w-sm">
+                        <Field label="This week">
+                          <Select value={String(headcountFor(settings, mondayISO(), profile.family_size))} onChange={(v) => patch((s) => { s.plan.headcount = { alternate: true, a: Number(v), b: headcountFor(s, addWeek(mondayISO()), profile.family_size), anchor: mondayISO() } })} options={['1', '2', '3', '4', '5', '6', '7', '8'].map((n) => ({ value: n, label: n }))} />
+                        </Field>
+                        <Field label="Next week">
+                          <Select value={String(headcountFor(settings, addWeek(mondayISO()), profile.family_size))} onChange={(v) => patch((s) => { s.plan.headcount = { alternate: true, a: headcountFor(s, mondayISO(), profile.family_size), b: Number(v), anchor: mondayISO() } })} options={['1', '2', '3', '4', '5', '6', '7', '8'].map((n) => ({ value: n, label: n }))} />
+                        </Field>
+                        <p className="col-span-2 text-xs text-muted-foreground">Then it keeps switching every week. For a one-off week, use &quot;Eating this week&quot; on your dashboard.</p>
+                      </div>
+                    )}
+                  </div>
                   <Field label="Time zone" hint="For reminders and automatic plans.">
                     <Select value={profile.timezone ?? 'America/New_York'} onChange={(v) => { patchProfile({ timezone: v }); patch((s) => { s.tzKnown = true; s.tzManual = true }) }} options={TIMEZONES.map((t) => ({ value: t, label: t.replace('America/', '').replace('Pacific/', '').replace('_', ' ') }))} />
                   </Field>

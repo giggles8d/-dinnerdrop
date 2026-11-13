@@ -3,6 +3,7 @@
  * Command Center before they go out Saturday morning. Saturday's auto plan (lib/autoplan) sends the reviewed draft.
  * Edits made on the review page are stored as requests on the draft (edits / status) and applied here.
  */
+import { headcountFor } from '@/lib/headcount'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, tripsConfig, type Settings } from '@/lib/settings'
 import { isClassic } from '@/lib/trips'
@@ -102,7 +103,7 @@ export async function applyDraftEdits(admin: SupabaseClient, draft: { id: string
     if (e.op === 'remove') removeIdx.add(e.index)
     if (e.op === 'swap' && e.recipe_id && meals[e.index]) {
       const { data: r } = await admin.from('recipes').select('*').eq('id', e.recipe_id).single()
-      if (r) meals[e.index] = { ...recipeToMeal(r as RecipeRow, meals[e.index].day, prof.family_size || 4), day: meals[e.index].day }
+      if (r) meals[e.index] = { ...recipeToMeal(r as RecipeRow, meals[e.index].day, headcountFor(mergeSettings(prof.settings), draft.week_start, prof.family_size || 4)), day: meals[e.index].day }
     }
   }
   meals = meals.filter((_, i) => !removeIdx.has(i))
