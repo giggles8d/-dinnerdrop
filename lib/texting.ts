@@ -455,12 +455,26 @@ async function joinByText(admin: SupabaseClient, phone: string, body: string, si
   }
 }
 
+/** Which member row answers for a phone that sits on more than one: planner rows first, then the most recent opt-in. */
+export function pickRowForPhone(rows: MemberRow[]): MemberRow | undefined {
+  if (rows.length <= 1) return rows[0]
+  const optedIn = (r: MemberRow) => (r.phone_opt_in_at && !r.phone_opted_out ? Date.parse(r.phone_opt_in_at) || 0 : -1)
+  return [...rows].sort((a, b) => {
+    const planner = Number(!!b.profile_id) - Number(!!a.profile_id)
+    if (planner) return planner
+    return optedIn(b) - optedIn(a)
+  })[0]
+}
+
 export async function handleInbound(admin: SupabaseClient, from: string, body: string, sid: string | null): Promise<InboundResult> {
   const phone = normalizePhone(from) ?? from
-  // One phone can sit on two rows (the planner's number typed in a family row): prefer the planner's own row.
-  const { data: mrows } = await admin.from('household_members').select('*').eq('phone', phone).order('profile_id', { ascending: true, nullsFirst: false }).limit(5)
+  // One phone can sit on several rows: the planner's number typed in a family row, or the same person signed up
+  // twice (a typo in the second email). Prefer a planner's own row, and among planner rows the one that opted in
+  // most recently — that is the account they are actually using. Before this the lowest profile_id won, which sent
+  // replies to a stale duplicate account.
+  const { data: mrows } = await admin.from('household_members').select('*').eq('phone', phone).limit(5)
   const rowsForPhone = (mrows ?? []) as MemberRow[]
-  const m = rowsForPhone.find((r) => r.profile_id) ?? rowsForPhone[0]
+  const m = pickRowForPhone(rowsForPhone)
   if (!m) return joinByText(admin, phone, body, sid)
 
   let parsed = parseInbound(body)
