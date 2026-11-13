@@ -28,6 +28,7 @@ export interface Settings {
     weekdayCookTimes: Partial<Record<Weekday, number>>  // per-night max minutes (overrides max_cook_time)
     maxLongCookNights: number       // slow-cooker / Instant Pot all-day dinners per week; -1 = no limit
     sundayDinner: { on: boolean; minutes: number; times: number[]; options: number; extraForMonday: boolean }  // one bigger sit-down Sunday dinner (Nov 7 2026); times = the lengths to mix (60 / 120 / 240), minutes = the longest
+    headcount: { alternate: boolean; a: number; b: number; anchor: string | null }  // people at dinner flips every other week (shared custody); anchor = a Monday that is an "a" week (lib/headcount)
   }
   food: {
     style: string | null            // first picked food style (kept for older code); see `styles`
@@ -122,6 +123,7 @@ export const DEFAULT_SETTINGS: Settings = {
     weekdayCookTimes: {},
     maxLongCookNights: 1,
     sundayDinner: { on: false, minutes: 120, times: [120], options: 3, extraForMonday: true },
+    headcount: { alternate: false, a: 4, b: 2, anchor: null },
   },
   food: {
     style: null,

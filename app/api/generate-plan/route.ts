@@ -1,4 +1,5 @@
 import { planningFactor } from '@/lib/budget'
+import { headcountFor } from '@/lib/headcount'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { mayActFor } from '@/lib/route-auth'
 import { selectedStyles } from '@/lib/styles'
@@ -78,7 +79,8 @@ export async function POST(request: Request) {
 
     const profile = {
       userId: body.userId as string,
-      familySize: Number(body.familySize) > 0 ? Number(body.familySize) : (profileRow.family_size || 4),
+      // Shared custody: an every-other-week schedule decides how many are eating the week being planned (lib/headcount).
+      familySize: headcountFor(settings, typeof body.tripKey === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(body.tripKey) ? body.tripKey : typeof body.weekStart === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(body.weekStart) ? body.weekStart : new Date().toISOString().slice(0, 10), Number(body.familySize) > 0 ? Number(body.familySize) : (profileRow.family_size || 4)),
       weeklyBudget: body.weeklyBudget || profileRow.weekly_budget || '$150',
       maxCookTime: Number(body.maxCookTime) > 0 ? Number(body.maxCookTime) : (profileRow.max_cook_time || 30),
       cuisinePreference: body.cuisinePreference || profileRow.cuisine_preference || 'mixed',

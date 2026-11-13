@@ -1,5 +1,6 @@
 'use client'
 
+import WeekHeadcount from '@/components/WeekHeadcount'
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -403,6 +404,7 @@ function DashboardContent() {
             signal: controller.signal,
             body: JSON.stringify({
               familySize: profile.family_size,
+              weekStart: mondayISO(),
               weeklyBudget: profile.weekly_budget,
               maxCookTime: profile.max_cook_time,
               cuisinePreference: profile.cuisine_preference,
@@ -824,6 +826,7 @@ function DashboardContent() {
           </Link>
         )}
         {!isPickingMeals && !showQuickSetup && <DealsCard />}
+        {!isPickingMeals && !showQuickSetup && meals.length > 0 && <WeekHeadcount meals={meals} onChange={setMeals} />}
 
         {/* First-plan auto-generation in progress */}
         {loading && !hasGenerated && !isPickingMeals && (
