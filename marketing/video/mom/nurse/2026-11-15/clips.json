@@ -1,0 +1,11 @@
+{
+ "element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
+ "voice": "Hallie preset 10274bf1-fb93-554f-b59f-d620a920fd36 (voice_change on every clip)",
+ "model": "veo3_1 basic (veo-3-1-fast; credits 361 < 400), 32 credits/clip; veo worked again today",
+ "start_frames": {"c1": "3a4518db-11e5-4b90-8a84-89a30c52d103 (laundry room)", "c2": "3d01866a-e764-4cc7-a75f-26cff62b77a2 (kitchen counter)", "c3": "1d578d31-bd04-4101-8d22-8528766239aa (stove; takes 64a395e2 and 0bf0507c had a patch/stitched text on the fleece)", "c4": "7b1b1762-cc3d-4c51-b480-3f04b51614a0 (table, three plates; take f85fba05 had a fleece patch)"},
+ "video_jobs": {"c1": "a345af79-e8e3-4326-97c4-3a18b2614fb5 (first submit 76e060de sat in_progress ~25 min, finished after the resubmit; unused)", "c2": "b2f9f775-05f1-4bb4-b546-dd7e53f832de", "c3": "aef75bec-f583-45f0-9424-8ff95bf66b4b", "c4": "c25c5275-db62-44b6-b873-c59583f3adf9"},
+ "voice_changed": {"c1": "a906c25e-f737-4f51-9e70-edc8060b7fb5", "c2": "ab6cc482-53d6-4e73-b1a0-cd09ec764660", "c3": "945e5a89-ab23-4b7f-90d5-cb7229250dc5", "c4": "fe78f958-59c8-469f-b6eb-7393928810f0"},
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/45cc2a36-50e5-4871-9c50-2812d9a877a9.mp4",
+ "status": "SCHEDULED 2026-11-15 4:30 PM ET on TikTok, YouTube Shorts, Facebook Reels via Publer (by Claude, 11-14)",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-15"
+}

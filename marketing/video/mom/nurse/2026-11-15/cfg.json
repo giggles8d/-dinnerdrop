@@ -1,0 +1,13 @@
+{
+ "out": "2026-11-15_NurseMom_Ep6_EveryPlateFits.mp4",
+ "ai_banner": false,
+ "end_ai_line": false,
+ "hook_text": ["ER nurse vs. three dinner orders"],
+ "labels": {"c2.mp4": "One dinner. Every plate fits."},
+ "app_over": {"c2.mp4": {"face": 2.6, "segs": [[54, 62, "Planned around each kid"]]}, "c3.mp4": {"face": 1.6, "segs": [[110, 122, "One grocery list"], [136, 152, "To your cart, one tap"]]}},
+ "app_after": 0,
+ "app": [],
+ "cta_y": [1180, 1290],
+ "end_seconds": 1.8,
+ "end": ["Try it free, no card", "Code NURSE = 3 months of Family free", "dinnerdrop.app/go/nurse"]
+}
