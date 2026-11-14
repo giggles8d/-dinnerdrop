@@ -12,6 +12,9 @@ interface SwapMealResponse {
   meal: Meal
 }
 
+/** AI-written swaps are off (Sarah, Nov 14 2026): every swap is a core dinner. */
+const AI_SWAPS = false
+
 export async function POST(request: Request) {
   try {
     const { currentMeal, profile, userId } = await request.json()
@@ -70,8 +73,8 @@ export async function POST(request: Request) {
     const unsafeMeal = (m: Meal | undefined) => !m || breaksHouseRules(m) || allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length > 0
       || [...settings.food.neverIngredients, ...settings.food.avoidProteins].some((w) => w && `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase().includes(w.toLowerCase()))
 
-    // Library first: a proven dinner that fits the family, never the ones already on this week's plan.
-    // AI writes a swap only when the library has nothing left that fits.
+    // Core dinners only (Sarah, Nov 14 2026: "only swap with core"; AI never writes a dinner): a proven dinner that
+    // fits the family, never the ones already on this week's plan.
     try {
       const { data: plans } = await supabase.from('meal_plans').select('meals').eq('user_id', userId).order('created_at', { ascending: false }).limit(2)
       const onPlan = (plans ?? []).flatMap((p) => ((p.meals as Meal[]) ?? []).map((m) => m.name)).filter(Boolean)
@@ -87,9 +90,11 @@ export async function POST(request: Request) {
         allergies: allergyPeople.flatMap((p) => p.allergies),
         excludeNames: [...onPlan, currentMeal?.name ?? ''],
         cuisines: settings.food.cuisines,
+        coreOnly: true,
       }
       let rows = await pickLibraryRecipes(supabase, baseOpts)
       if (!rows.length) rows = await pickLibraryRecipes(supabase, { ...baseOpts, cuisines: [], maxCookTime: maxCook + 20, maxCalories: 0 })
+      if (!rows.length) rows = await pickLibraryRecipes(supabase, { ...baseOpts, cuisines: [], maxCookTime: maxCook + 60, maxCalories: 0, excludeNames: [currentMeal?.name ?? ''] })
       if (rows.length) {
         const target = Number(currentMeal?.estimatedCost) || 0
         const curProtein = String(currentMeal?.protein ?? '').toLowerCase()
@@ -103,15 +108,16 @@ export async function POST(request: Request) {
             + (r.image_url ? 0.4 : 0)
             - (target > 0 ? Math.min(Math.abs((Number(r.estimated_cost) || target) - target) / target, 1) * 0.5 : 0),
         })).sort((a, b) => b.score - a.score)
-        const pick = ranked.find((x) => normalizeName(x.r.name) !== normalizeName(currentMeal?.name ?? ''))?.r
-        if (pick) {
-          const meal = recipeToMeal(pick, currentMeal?.day ?? 'Monday', familySize)
+        for (const { r } of ranked) {
+          if (normalizeName(r.name) === normalizeName(currentMeal?.name ?? '')) continue
+          const meal = recipeToMeal(r, currentMeal?.day ?? 'Monday', familySize)
           if (!unsafeMeal(meal)) return Response.json({ meal, source: 'library' })
         }
       }
     } catch (e) {
-      console.error('[swap-meal] library pick failed, falling back to AI', e)
+      console.error('[swap-meal] library pick failed', e)
     }
+    if (!AI_SWAPS) return Response.json({ error: 'No other dinner on our list fits your family\u2019s settings right now. Try a longer cook time, or pick one from the recipe library.' }, { status: 422 })
 
     const prompt = `You are a meal planning assistant for DinnerDrop. The user wants to swap out a meal from their weekly plan.
 

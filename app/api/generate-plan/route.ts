@@ -26,6 +26,9 @@ import { libraryWeek, weekOptions } from '@/lib/first-plan'
 import { pendingSuggestions, resolveSuggestion, markSuggestionsUsed } from '@/lib/suggestions'
 
 // Extend serverless timeout — AI generation needs up to 55s
+/** Sit-down Sunday dinners in the library: roasts, bakes, braises and other big comforting dinners. */
+const SUNDAY_LIKE = /\b(roast|pot roast|lasagna|ziti|baked|bake|casserole|meatloaf|ham|braised|short ribs|stuffed|shepherd|pot pie|enchiladas|brisket)\b/i
+
 export const maxDuration = 120
 
 interface GeneratePlanResponse {
@@ -76,7 +79,9 @@ export async function POST(request: Request) {
     }
 
     const settings: Settings = mergeSettings(profileRow.settings)
-    const mode: 'fresh' | 'favorites' = body.mode === 'favorites' ? 'favorites' : 'fresh'
+    // Library only (Sarah, Nov 14 2026): every week comes from the recipe library, so "plan from favorites" (an AI
+    // mode) is retired and builds a regular week. body.mode is kept for older clients.
+    const mode = 'fresh' as 'fresh' | 'favorites'
 
     const profile = {
       userId: body.userId as string,
@@ -377,7 +382,38 @@ export async function POST(request: Request) {
         console.error('library picks failed', e)
       }
     }
-    if (mode === 'fresh' && libraryMeals.length >= optionsCount) {
+    // Library only, core first (Sarah, Nov 14 2026: "I don't want the AI to make any dinners not in the lib" and
+    // "core only for now"). Sunday family dinners come from the core too, and a short week is topped up from the
+    // library without the soft preferences (allergies, no-lists and diets still hold). AI never writes a dinner.
+    if (mode === 'fresh') {
+      const taken = () => [...libraryMeals, ...keepMeals].map((m) => m.name)
+      const hardWords = [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allDislikes, ...HOUSE_NEVER_WORDS]
+      const allergyList = allergyPeople.flatMap((p) => p.allergies)
+      if (sundaySlots > 0) {
+        try {
+          const sundayish = (r: { name: string; tags?: string[] | null }) => SUNDAY_LIKE.test(r.name) || (r.tags ?? []).some((t) => t === 'comfort-food' || t === 'slow-cooker')
+          const rows = await pickLibraryRecipes(supabase, {
+            limit: sundaySlots + 12, maxCookTime: Math.max(slowestNight, ...sundayTimes) + 30, maxCalories: settings.food.maxCalories,
+            dietary: profile.dietaryNeeds, excludeWords: hardWords, allergies: allergyList, excludeNames: [...recentNames, ...taken(), ...skippedNames],
+            boost: (r) => (sundayish(r) ? 4 : 0),
+          })
+          const servings = sunday?.extraForMonday ? Math.round(profile.familySize * 1.5) : profile.familySize
+          const sun = [...rows.filter(sundayish), ...rows.filter((r) => !sundayish(r))].slice(0, sundaySlots)
+          libraryMeals.push(...sun.map((r, i) => ({ ...recipeToMeal(r, `S${i + 1}`, servings), suggestedNight: 'Sunday' })))
+        } catch (e) { console.error('[generate-plan] sunday picks failed', e) }
+      }
+      if (libraryMeals.length < optionsCount) {
+        try {
+          const rows = await pickLibraryRecipes(supabase, {
+            limit: optionsCount - libraryMeals.length + 10, maxCookTime: slowestNight + 30, maxCalories: 0,
+            dietary: profile.dietaryNeeds, excludeWords: hardWords, allergies: allergyList, excludeNames: [...taken(), ...skippedNames],
+          })
+          const fill = rows.map((r, i) => recipeToMeal(r, `T${i + 1}`, profile.familySize)).filter((m) => !breaksHouseRules(m))
+          libraryMeals.push(...pickVaried(fill, optionsCount - libraryMeals.length, [...keepMeals, ...libraryMeals], lim))
+          if (libraryMeals.length < optionsCount) libraryMeals.push(...fill.filter((m) => !libraryMeals.some((x) => normalizeName(x.name) === normalizeName(m.name))).slice(0, optionsCount - libraryMeals.length))
+        } catch (e) { console.error('[generate-plan] top-up failed', e) }
+      }
+      if (!libraryMeals.length) return Response.json({ error: "We couldn't find dinners that fit all of your settings. Try a longer cook time or fewer food limits." }, { status: 422 })
       return Response.json({
         meals: plate(fitNeeds(libraryMeals)),
         totalEstimatedCost: libraryMeals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0),
@@ -386,7 +422,8 @@ export async function POST(request: Request) {
         tripKey: trip?.key ?? null,
       })
     }
-    const generateCount = mode === 'fresh' ? Math.max(optionsCount - libraryMeals.length, 2) : Math.max(optionsCount, 3)
+    // Unreachable while weeks are library only (above); kept for a future AI mode.
+    const generateCount = Math.max(optionsCount, 3)
     // What the AI still has to cover of the mix, after the library's picks.
     let mixNeeded: Record<string, number> | null = null
     if (quota) {

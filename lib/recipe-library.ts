@@ -223,6 +223,8 @@ export async function pickLibraryRecipes(
     boost?: (r: { name: string; protein: string | null; cuisine: string | null; tags?: string[] | null }) => number
     /** First week for a new family: past keep counts mostly reflect families who never swapped, so don't let them snowball. */
     ignoreKept?: boolean
+    /** Core dinners only, never the wider library (swaps: Sarah, Nov 14 2026 "only swap with core"). */
+    coreOnly?: boolean
   }
 ): Promise<RecipeRow[]> {
   if (opts.limit <= 0) return []
@@ -259,25 +261,25 @@ export async function pickLibraryRecipes(
     if (allergyList.length && allergyConflicts(r.ingredients ?? [], [{ name: '', allergies: allergyList }], r.name).length) return false
     return true
   })
-  // Core dinners lead. About one pick in five is a "try something new" dinner from outside the core: the best of
-  // those get the same lift, so they come through without crowding the week. Families whose diet the core barely
-  // covers (vegan, halal, keto…) simply get more of the wider library. The core is already everyday food, so inside
-  // it the everyday bonus is dropped and chance counts more — otherwise the same few core dinners go to everyone.
+  // Core only (Sarah, Nov 14 2026: "core only for now" — no "try something new" picks until more families order).
+  // Weeks come from the core dinners alone. Only when the core can't fill the request for this family's filters
+  // (vegan, halal, keto…) does the wider library top it up, and those fill only the shortfall, after every core
+  // dinner. The core is already everyday food, so chance counts more inside it — otherwise the same few core
+  // dinners go to everyone.
   const core = await coreRecipeIds(supabase)
   const isCore = (r: Lite) => core.has(String(r.id))
-  const base = pool.map((r) => {
-    const inCore = isCore(r)
+  const corePool = core.size ? pool.filter(isCore) : pool
+  // Callers ask for spares beyond the week (limit is often the week + 16), so core is enough at 12 (a full
+  // pick-your-week list); below that the wider library joins, ranked after every core dinner.
+  const usePool = opts.coreOnly || !(core.size && corePool.length < Math.min(opts.limit, 12)) ? corePool : pool
+  const base = usePool.map((r) => {
+    const inCore = !core.size || isCore(r)
     return {
       r,
       score: Math.random() * (inCore ? 2.5 : 1) + (opts.ignoreKept ? 0 : Math.min(r.kept_count ?? 0, 5) * 0.3) - Math.min(r.skipped_count ?? 0, 5) * 0.15 + (r.image_url ? 0.4 : 0)
-        + (inCore ? CORE_BONUS : everydayBonus(r, cuisines.length > 0)) + (opts.boost ? opts.boost(r) : 0),
+        + (inCore ? CORE_BONUS * 10 : everydayBonus(r, cuisines.length > 0)) + (opts.boost ? opts.boost(r) : 0),
     }
   })
-  if (core.size) {
-    const newSlots = Math.max(1, Math.floor(opts.limit / 5))
-    const outside = base.filter((x) => !isCore(x.r)).sort((a, b) => b.score - a.score).slice(0, newSlots)
-    for (const x of outside) x.score += CORE_BONUS
-  }
   const scored = base.sort((a, b) => b.score - a.score)
   // One dinner per main protein first; repeat proteins only if the pool runs short.
   const spread: Lite[] = []
@@ -289,6 +291,8 @@ export async function pickLibraryRecipes(
     if (p) usedProteins.add(p)
   }
   for (const { r } of scored) if (!spread.includes(r)) spread.push(r)
+  // Every core dinner before any library top-up (stable sort keeps the order inside each group).
+  if (core.size) spread.sort((a, b) => Number(isCore(b)) - Number(isCore(a)))
   // With a weekly mix, fill each group's count from that order (spares come from groups in the mix).
   const chosen: Lite[] = quota
     ? pickByQuota(spread, opts.limit, quota, (r) => proteinGroup(r.protein, r.name))
