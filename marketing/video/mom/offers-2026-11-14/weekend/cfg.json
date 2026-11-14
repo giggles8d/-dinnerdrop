@@ -1,0 +1,38 @@
+{
+ "out": "2026-11-14_Mom_Weekend-5-Gift-Card.mp4",
+ "ai_banner": false,
+ "end_ai_line": false,
+ "hook_text": [
+  "$5 Amazon gift card",
+  "Weekend only. First 50 families"
+ ],
+ "labels": {
+  "c3.mp4": "Receipt by Mon 11:59 PM ET"
+ },
+ "app_over": {
+  "c2.mp4": {
+   "face": 1.0,
+   "segs": [
+    [
+     54,
+     62,
+     "5 dinners, one list"
+    ],
+    [
+     136,
+     152,
+     "Shop with Instacart, Nov 14-15"
+    ]
+   ]
+  }
+ },
+ "app_after": 0,
+ "app": [],
+ "end_seconds": 2.0,
+ "end": [
+  "$5 Amazon gift card",
+  "Instacart via DinnerDrop, Nov 14-15",
+  "dinnerdrop.app"
+ ],
+ "hook_tag": "Instacart orders through DinnerDrop \u00b7 Nov 14-15"
+}

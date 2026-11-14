@@ -1,0 +1,42 @@
+{
+ "out": "2026-11-14_NurseMom_Thanksgiving-Offer.mp4",
+ "ai_banner": false,
+ "end_ai_line": false,
+ "hook_text": [
+  "ER nurse vs. Thanksgiving week"
+ ],
+ "labels": {
+  "c3.mp4": "1st list to Instacart"
+ },
+ "app_over": {
+  "c2.mp4": {
+   "face": 1.0,
+   "segs": [
+    [
+     88,
+     97,
+     "5 dinners around your family"
+    ],
+    [
+     110,
+     122,
+     "One grocery list"
+    ],
+    [
+     136,
+     152,
+     "One tap to Instacart"
+    ]
+   ]
+  }
+ },
+ "app_after": 0,
+ "app": [],
+ "end_seconds": 2.0,
+ "end": [
+  "3 months of Family free",
+  "By Sun Nov 22, 11:59 PM ET",
+  "dinnerdrop.app"
+ ],
+ "hook_tag": "3 months of Family plan free \u00b7 start free, no card"
+}
