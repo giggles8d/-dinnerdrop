@@ -72,3 +72,5 @@ Credits note 2026-11-12: 2576.55 at start, ~1403 after this run. Veo 3.1 failed 
 
 Mom-video angles: 11-14 angle 7 (rebuild the dinners you loved, grocery store lot). Next DinnerDrop-Mom day (11-16): avoid 3 (until 11-18), 7; 1 opens 11-16; 2, 4, 5, 6 open. Next Nurse Mom day: 11-15.
 Credits note 2026-11-13: 1434.85 at start, 1083.85 after this run (6 frames, 6 seedance 720p clips, recipe VO; 5 veo3_1 submits failed instantly and were refunded). Seedance 720p ≈ half the 1080p cost and looked fine on a phone.
+
+Mom offer ads (Nov 13): Weekend $5 gift card mom posted Nov 13 ~9:45 PM; Thanksgiving Nurse Mom scheduled Nov 16 9:12/9:17/9:22 AM (TikTok/YouTube/Facebook). Reviews: ChatGPT 8/8.2, Gemini 7/8. Credits ~720 after.
