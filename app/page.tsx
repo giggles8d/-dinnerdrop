@@ -9,6 +9,7 @@ import SampleWeek from '@/components/SampleWeek'
 import { Sparkles, ShoppingCart, Heart, PiggyBank, Check, MessageSquareText } from 'lucide-react'
 import CartOfferBanner from '@/components/CartOfferBanner'
 import SocialLinks from '@/components/SocialLinks'
+import AppStoreBadge from '@/components/AppStoreBadge'
 
 export const metadata: Metadata = {
   alternates: { canonical: 'https://www.dinnerdrop.app' },
@@ -63,6 +64,10 @@ export default async function LandingPage() {
                 <a href="#sample-week" className="px-8 py-4 rounded-xl border-2 border-primary/15 bg-white text-foreground font-semibold text-base hover:border-primary/40 transition-colors">
                   See a sample week
                 </a>
+              </div>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <AppStoreBadge campaign="home-hero" />
+                <span className="text-sm font-semibold text-primary">New: the DinnerDrop iPhone app is here</span>
               </div>
               <p className="text-sm text-muted-foreground mt-4 flex items-center gap-2"><InstacartCarrot height={14} /> Family texting free for 14 days, no card &middot; Works with Instacart and Walmart (Kroger cart on Family) &middot; Then $4.99/month, or keep the free plan</p>
             </div>
@@ -304,6 +309,7 @@ export default async function LandingPage() {
           </div>
           <p>&copy; 2026 DinnerDrop</p>
           <SocialLinks />
+          <AppStoreBadge campaign="home-footer" />
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
             <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
