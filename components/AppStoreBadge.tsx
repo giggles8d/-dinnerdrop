@@ -9,6 +9,9 @@ import { Smartphone } from 'lucide-react'
 import { isNativeApp } from '@/lib/native'
 
 export const APP_STORE_URL = 'https://apps.apple.com/app/id6824634810'
+/** Apple provider token (App Store Connect → Analytics → Campaigns). Downloads from links carrying pt + ct show per campaign. */
+export const APP_STORE_PROVIDER = '129641757'
+export const appStoreLink = (campaign: string) => `${APP_STORE_URL}?pt=${APP_STORE_PROVIDER}&ct=${encodeURIComponent(campaign)}&mt=8`
 
 export default function AppStoreBadge({ campaign = 'site', className = '' }: { campaign?: string; className?: string }) {
   const [show, setShow] = useState(true)
@@ -16,7 +19,7 @@ export default function AppStoreBadge({ campaign = 'site', className = '' }: { c
   if (!show) return null
   return (
     <a
-      href={`${APP_STORE_URL}?pt=dinnerdrop&ct=${encodeURIComponent(campaign)}&mt=8`}
+      href={appStoreLink(campaign)}
       target="_blank"
       rel="noopener"
       className={`inline-flex items-center gap-2.5 rounded-xl bg-black px-4 py-2.5 text-white hover:bg-black/85 transition-colors ${className}`}

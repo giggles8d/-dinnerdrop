@@ -19,7 +19,7 @@ export const APP_LAUNCH_PREVIEW = 'Your dinners, your grocery list, and a nudge 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 type Rec = { email: string; userId: string; firstName?: string; unsubscribeUrl: string }
 
-const store = `${APP_STORE_URL}?pt=dinnerdrop&ct=launch-email&mt=8`
+const store = `${APP_STORE_URL}?pt=129641757&ct=launch-email&mt=8` // pt = Apple provider token (App Store Connect campaigns)
 
 export function appLaunchHtml(r: Pick<Rec, 'firstName' | 'unsubscribeUrl'>): string {
   const p = (t: string) => `<p style="margin:0 0 14px;font-size:15px;line-height:1.6">${t}</p>`

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { track, trackOnce } from '@/lib/activation'
+import { isNativeApp, nativePlatform } from '@/lib/native'
 
 /**
  * What happens on the screen between the funnel milestones: did the plan render, how far they scrolled,
@@ -13,6 +14,9 @@ export default function EngagementTracker({ page, ready }: { page: 'dashboard' |
   const maxScroll = useRef(0)
   const hidden = useRef(false)
   const closed = useRef(false)
+
+  // Opened inside the iPhone/Android app (App Store launch Nov 14 2026): tells app users apart from web users.
+  useEffect(() => { if (isNativeApp()) trackOnce('app_open', { platform: nativePlatform(), page }) }, [page])
 
   // The thing they came for is on screen.
   useEffect(() => { if (ready) trackOnce('plan_seen', { page, t: secs(start.current) }) }, [ready, page])
