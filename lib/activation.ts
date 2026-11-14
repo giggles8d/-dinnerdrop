@@ -26,6 +26,7 @@ export const ACTIVATION_STEPS = [
   'page_closed',         // page unloaded (meta.page, meta.t, meta.scroll, meta.hidden: was it backgrounded first)
   'cta_tap',             // tapped a tracked button (meta.id)
   'plan_error',          // plan generation failed in the browser (meta.message)
+  'app_open',            // opened inside the native iPhone/Android app (meta.platform, meta.page), once per session (Nov 14 2026)
 ] as const
 export type ActivationStep = (typeof ACTIVATION_STEPS)[number]
 
