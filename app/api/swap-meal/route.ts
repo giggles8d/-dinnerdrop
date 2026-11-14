@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { mayActFor } from '@/lib/route-auth'
+import { HOUSE_NEVER_WORDS, breaksHouseRules } from '@/lib/house-rules'
 import { allergyConflicts } from '@/lib/allergens'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
     // Household rules: allergies, never-ingredients, dislikes, kid safe foods.
     const settings = mergeSettings(profileRow.settings)
     let memberLines = ''
-    const hardExclusions = [...settings.food.neverIngredients, ...settings.food.avoidProteins]
+    const hardExclusions = [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...HOUSE_NEVER_WORDS]
     const allergyPeople: Array<{ name: string; allergies: string[] }> = []
     const freeDiets = ((profileRow.dietary_needs ?? []) as string[]).filter((d) => /-free$/i.test(d.trim())).map((d) => d.replace(/-free$/i, '').trim())
     if (freeDiets.length) allergyPeople.push({ name: '', allergies: freeDiets })
@@ -66,7 +67,7 @@ export async function POST(request: Request) {
     ].filter(Boolean).join('\n')
 
     // Allergy safety net: never hand back a swap that hits someone's allergy (by allergen, so "dairy" also catches cheese).
-    const unsafeMeal = (m: Meal | undefined) => !m || allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length > 0
+    const unsafeMeal = (m: Meal | undefined) => !m || breaksHouseRules(m) || allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length > 0
       || [...settings.food.neverIngredients, ...settings.food.avoidProteins].some((w) => w && `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase().includes(w.toLowerCase()))
 
     // Library first: a proven dinner that fits the family, never the ones already on this week's plan.

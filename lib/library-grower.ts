@@ -183,6 +183,7 @@ export function check(m: Meal & { dietary?: string[] }, maxMinutes: number): str
   const meatNames = ings.map((i) => i.name).join(' ').replace(/\b(chicken|beef|pork|turkey)\s+(broth|stock|bouillon|base|gravy)\b/gi, ' ')
   if (NEEDS_TEMP.test(meatNames) && !TEMP.test(stepText)) return 'meat with no target temperature'
   if (/swordfish|king mackerel|shark|tilefish/i.test(ingText)) return 'high-mercury fish (FDA advice for kids)'
+  if (/\b(lamb|mutton)\b/i.test(`${m.name} ${ingText}`)) return 'lamb (house rule: no lamb dinners)'
   // The grocery list has to cover everything the steps use, unless the step calls it optional.
   const required = steps.filter((s) => !/optional|if you have|if you like/i.test(s)).join(' ')
   for (const [inStep, inList] of STEP_ITEMS) {
@@ -247,7 +248,7 @@ Rules:
 - 4–8 ingredients with shoppable quantities ("1" "lb", "1" "can", "1" "bunch"), each with a "searchTerm" that matches a grocery product. Per serving at least 6 oz raw boneless meat/fish (5.5 oz ground) when there is meat.
 - 3–5 short steps, one sentence each, for a tired parent. prepTime + cookTime must cover every step, including rests and batches; prepTime is never 0.
 - Every item a step uses or serves (oil, butter, garlic, rice, tortillas, bread, salsa, sauces, spices, broth, lime/lemon) must be in the ingredients; only water, salt and pepper may be left out. A truly optional extra says "(optional)" in the step. If rice or pasta is served, include it and say how to cook it (or use microwave rice pouches when time is short).
-- Food safety: give a target temperature for meat and poultry — chicken/turkey 165°F, ground beef/pork/lamb and sausage 160°F, whole cuts of beef/pork/lamb 145°F then rest 3 minutes. Never use swordfish, king mackerel, shark or tilefish.
+- Food safety: give a target temperature for meat and poultry — chicken/turkey 165°F, ground beef/pork and sausage 160°F, whole cuts of beef/pork 145°F then rest 3 minutes. Never use lamb or mutton. Never use swordfish, king mackerel, shark or tilefish.
 - Portions and step wording must match 4 servings (four plates/bowls, enough buns/tortillas/fillets for 4).
 - If heat (chiles, red pepper flakes, sriracha, curry paste) is mixed in and you tag kid-favorite, include a step that sets aside a plain portion before the heat goes in.
 - "dietary": list EVERY one of these the recipe truly complies with: ${DIETS.join(', ')} (empty list if none). Halal dinners with meat must call for halal meat by name (e.g. "halal chicken thighs") and use halal or vegetable broth; never write "halal" on fish or shellfish. When a label depends on the product, name the compliant product in the ingredient and searchTerm (gluten-free soy sauce/tamari, gluten-free enchilada sauce, vegetarian Worcestershire, vegan curry paste, dairy-free buns).

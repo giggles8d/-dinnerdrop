@@ -1,5 +1,6 @@
 import { planningFactor } from '@/lib/budget'
 import { headcountFor } from '@/lib/headcount'
+import { HOUSE_NEVER_WORDS, breaksHouseRules } from '@/lib/house-rules'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { mayActFor } from '@/lib/route-auth'
 import { selectedStyles } from '@/lib/styles'
@@ -113,7 +114,7 @@ export async function POST(request: Request) {
     const allDislikes = Array.from(new Set(members.flatMap((m) => m.dislikes ?? [])))
     const kidSafeFoods = members.filter((m) => m.role === 'kid').flatMap((m) => m.safe_foods ?? [])
     const hasKids = members.some((m) => m.role === 'kid') || settings.food.kidFriendly
-    const hardExclusions = Array.from(new Set([...allAllergies, ...settings.food.neverIngredients, ...settings.food.avoidProteins]))
+    const hardExclusions = Array.from(new Set([...allAllergies, ...settings.food.neverIngredients, ...settings.food.avoidProteins, ...HOUSE_NEVER_WORDS]))
     // Allergy safety net by allergen, not just the word: each person's allergies plus household "-free" diets (Dairy-free → dairy).
     const freeDiets = profile.dietaryNeeds.filter((d: string) => /-free$/i.test(d.trim())).map((d: string) => d.replace(/-free$/i, '').trim())
     const allergyPeople = [...members.filter((m) => m.allergies?.length).map((m) => ({ name: m.name, allergies: m.allergies })), ...(freeDiets.length ? [{ name: '', allergies: freeDiets }] : [])]
@@ -538,6 +539,7 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
     let generated = (planData.meals ?? []).filter((m) => {
       const hay = `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
       if (excl.some((w) => w && hay.includes(w))) return false
+      if (breaksHouseRules(m)) return false
       if (settings.food.maxCalories && m.nutrition?.calories && m.nutrition.calories > settings.food.maxCalories * 1.1) return false
       return !allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length
     })
