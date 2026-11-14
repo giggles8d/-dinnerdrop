@@ -1,0 +1,6 @@
+{"out":"out_v3m.mp4","music_vol":0.10,"end_len":2.2,"pieces":[
+ {"src":"m0.mp4","a":0,"b":4.9,"ov":[["../ov/hookm.png",0.1]]},
+ {"src":"m1.mp4","a":0,"b":6.7,"cover":[[1.0,3.5,"../seg/mweek.mp4",0],[4.2,6.7,"../seg/mlist.mp4",0]]},
+ {"src":"m2.mp4","a":0,"b":6.7,"cover":[[0.5,3.1,"../seg/mcart.mp4",0]]},
+ {"end":"../kl/k_wok.mp4","from":0.3,"dur":2.2}
+]}
