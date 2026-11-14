@@ -6,6 +6,8 @@ import { SOCIAL } from "@/lib/social";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  // Safari on iPhone shows Apple's "Open in the App Store" banner for the DinnerDrop app (approved Nov 14 2026).
+  itunes: { appId: '6824634810' },
   title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart or Walmart Cart",
   description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart or Walmart cart in one tap. Free, no card needed.",
   openGraph: {
