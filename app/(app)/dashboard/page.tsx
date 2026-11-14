@@ -13,6 +13,8 @@ import FamilyVoteCard from '@/components/FamilyVoteCard'
 import DealsCard from '@/components/DealsCard'
 import { type QuickSetupAnswers } from '@/components/QuickSetup'
 import Walkthrough from '@/components/Walkthrough'
+import GiftCardStart from '@/components/GiftCardStart'
+import { receiptRewardOpen } from '@/lib/receipt-reward'
 import FirstWeekReveal from '@/components/FirstWeekReveal'
 import type { Meal } from '@/types'
 import { assignNights, DEFAULT_SHAPE, type PlanShape } from '@/lib/plan'
@@ -78,6 +80,8 @@ function DashboardContent() {
   const [shouldAutoGen, setShouldAutoGen] = useState(false)
   // First visit, not personalized yet: ask 3 quick questions before building week one.
   const [showQuickSetup, setShowQuickSetup] = useState(false)
+  // $5 gift card ad sign-ups skip setup (Nov 14 2026): they get a ready week and a 3-step checklist.
+  const [giftStart, setGiftStart] = useState(false)
   // Answers from the first-visit setup, shown back once the first week is on screen.
   const [firstAnswers, setFirstAnswers] = useState<QuickSetupAnswers | null>(null)
   const autoGenFired = useRef(false)
@@ -128,6 +132,9 @@ function DashboardContent() {
         // used to vanish.)
         setNeedsPersonalize(!profile.onboarding_complete)
       }
+      const giftFast = !!profile && !profile.onboarding_complete && receiptRewardOpen()
+        && (profile.signup_source as { c?: string } | null)?.c === 'weekend-receipt'
+      if (giftFast) setGiftStart(true)
       const tcfg = tripsConfig(mergeSettings(profile?.settings))
       { const st = mergeSettings(profile?.settings).stores; setPayFactor(listRatio(st) * storeFactor(st)); setInStoreMode(st.mode === 'instore') }
       const trips = !isClassic(tcfg)
@@ -215,7 +222,7 @@ function DashboardContent() {
       // First-ever visit with no plan: kick off generation automatically so the
       // user's first experience is watching their dinners appear.
       if (!plan && (countRes.count ?? 0) === 0 && !owner.isPartner) {
-        if (profile && !profile.onboarding_complete) setShowQuickSetup(true)
+        if (profile && !profile.onboarding_complete && !giftFast) setShowQuickSetup(true)
         else setShouldAutoGen(true)
       }
     } catch (err) {
@@ -669,8 +676,11 @@ function DashboardContent() {
             <span className="font-semibold">Code {promoApplied.code} applied.</span> The Family plan is yours free through {new Date(promoApplied.until + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} — family texting, per-person profiles and reminders included. No card, nothing to cancel.
           </div>
         )}
+        {giftStart && !initialLoading && !showQuickSetup && (
+          <GiftCardStart hasWeek={hasGenerated || isPickingMeals || meals.length > 0} onPersonalize={() => { setGiftStart(false); setShowQuickSetup(true) }} />
+        )}
         {/* Personalization nudge — user is on smart defaults, quiz is optional */}
-        {needsPersonalize && !initialLoading && !showQuickSetup && (
+        {needsPersonalize && !initialLoading && !showQuickSetup && !giftStart && (
           <div className="mb-5 flex items-center justify-between px-4 py-3 rounded-lg bg-primary/5 border border-primary/20">
             <p className="text-sm text-foreground/70">
               {isPickingMeals || hasGenerated || loading
