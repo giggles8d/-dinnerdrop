@@ -54,7 +54,7 @@ export async function POST() {
   // Texts held for the family's texting hours (lib/send-window) that are now due.
   let outbox: unknown = null
   try { outbox = await flushOutbox(admin, 15000) } catch (e) { console.error('[outbox]', e) }
-  // One-off "how did your order go?" email to families who sent a cart (lib/cart-ask-campaign), only once approved.
+  // Standing "how did your order go?" email, 5+ days after a first cart with no second (lib/cart-ask-campaign).
   let cartAsk: unknown = null
   try { cartAsk = await runCartAsk(admin, now, { budgetMs: 15000 }) } catch (e) { console.error('[cart-ask]', e) }
   await admin.from('app_kv').upsert({ key: 'sms_poll', value: { ...report, outbox, cartAsk, starter, signupAlerts, welcome, drop, at: new Date().toISOString() }, updated_at: new Date().toISOString() })
