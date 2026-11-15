@@ -812,6 +812,7 @@ function DashboardContent() {
                       : 'Generate my plan'}
               </button>
               <Link href="/settings" className="text-xs text-muted-foreground hover:text-primary underline-offset-2 hover:underline sm:ml-1">Settings</Link>
+              <Link href="/history" className="text-xs text-muted-foreground hover:text-primary underline-offset-2 hover:underline">Past weeks</Link>
             </div>
           )}
         </div>
