@@ -51,6 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     { url: `${BASE}/vs/emeals`, lastModified: new Date('2026-10-31'), changeFrequency: 'monthly' as const, priority: 0.7 },
     { url: `${BASE}/emeals`, lastModified: new Date('2026-10-31'), changeFrequency: 'monthly' as const, priority: 0.7 },
+    { url: `${BASE}/maple`, lastModified: new Date('2026-11-15'), changeFrequency: 'weekly' as const, priority: 0.9 },
     { url: `${BASE}/ollie`, lastModified: new Date('2026-11-06'), changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${BASE}/ollie-alternatives`, lastModified: new Date('2026-11-06'), changeFrequency: 'weekly' as const, priority: 0.8 },
     { url: `${BASE}/walmart`, lastModified: new Date('2026-11-01'), changeFrequency: 'monthly' as const, priority: 0.8 },

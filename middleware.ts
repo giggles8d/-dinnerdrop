@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
   }
   // The website's marketing/pricing pages aren't part of the app: go straight to the family's
   // dinners (signed-out users land on sign-in from there). Keeps prices out of the app.
-  const marketing = ['/', '/start', '/mealime', '/affiliates', '/beta', '/beta-v2', '/pricing']
+  const marketing = ['/', '/start', '/mealime', '/maple', '/affiliates', '/beta', '/beta-v2', '/pricing']
   if (inApp && marketing.includes(pathname)) {
     const u = request.nextUrl.clone(); u.pathname = '/dashboard'; u.search = ''
     return NextResponse.redirect(u)

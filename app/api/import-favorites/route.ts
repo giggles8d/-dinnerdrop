@@ -2,12 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import type { Meal } from '@/types'
+import { createClient } from '@supabase/supabase-js'
+import { matchToLibrary } from '@/lib/import-match'
 
 /**
  * "Bring your favorites" (2026-10-18): the user types or pastes the names of
  * dinners they already love (from Mealime, a notebook, anywhere). Claude rebuilds
  * each one as a full DinnerDrop recipe for their family size and saves it to
  * favorites, so the planner can rotate them in. Max 15 names per call.
+ * Library first (Sarah, Nov 15 2026): names that match a DinnerDrop recipe (core dinners preferred) come in as
+ * that recipe; only the rest are written by Claude.
  */
 
 export const maxDuration = 60
@@ -42,12 +46,25 @@ export async function POST(req: NextRequest) {
     const todo = names.filter((n) => !have.has(n.toLowerCase()))
     if (todo.length === 0) return NextResponse.json({ imported: 0, skipped: names.length, meals: [] })
 
+    const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+    const lib = await matchToLibrary(admin, todo, familySize).catch((e) => { console.error('[import-favorites] match', e); return { matched: [], unmatched: todo } })
+    const libRows = lib.matched.filter((m) => !have.has(m.meal.name.toLowerCase())).map((m) => ({ user_id: user.id, meal_name: m.meal.name, meal_data: m.meal }))
+    if (libRows.length) {
+      const { error } = await supabase.from('favorites').insert(libRows)
+      if (error) return NextResponse.json({ error: 'Could not save favorites', detail: error.message }, { status: 500 })
+    }
+    const fromLibrary = lib.matched.map((m) => ({ asked: m.asked, name: m.meal.name }))
+    if (lib.unmatched.length === 0) {
+      return NextResponse.json({ imported: libRows.length, skipped: names.length - todo.length, meals: libRows.map((r) => r.meal_name), fromLibrary })
+    }
+    const rebuild = lib.unmatched
+
     const prompt = `You are a recipe writer for DinnerDrop, a weeknight family dinner planner.
 A family wants these dinners in their rotation. Write each one as a complete, practical weeknight recipe for ${familySize} people.
 ${dietary.length ? `STRICT dietary requirements for every recipe: ${dietary.join(', ')}.` : ''}
 
 Dinners to write (keep each name as given, fix only obvious typos):
-${todo.map((n, i) => `${i + 1}. ${n}`).join('\n')}
+${rebuild.map((n, i) => `${i + 1}. ${n}`).join('\n')}
 
 Rules:
 - Realistic prep and cook times for a home kitchen; total under 45 minutes where the dish allows
@@ -86,7 +103,7 @@ Return ONLY valid JSON, no markdown:
       if (error) return NextResponse.json({ error: 'Could not save favorites', detail: error.message }, { status: 500 })
     }
 
-    return NextResponse.json({ imported: rows.length, skipped: names.length - todo.length, meals: meals.map((m) => m.name) })
+    return NextResponse.json({ imported: libRows.length + rows.length, skipped: names.length - todo.length, meals: [...libRows.map((r) => r.meal_name), ...meals.map((m) => m.name)], fromLibrary })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown'
     console.error('[import-favorites]', message)
