@@ -5,6 +5,8 @@
  *
  * Runs from /api/sms/poll only when app_kv `campaign_cartask` is { status: 'approved' }. Sends once per address
  * (campaign_sends), skips internal addresses, @camcomfginc.com and unsubscribed families.
+ * Standing since Nov 15 2026 (Sarah: "yes"): each family gets it once, 5+ days after their first cart, only if they
+ * haven't sent another cart since (3+ days after the first); sent 9 AM–7 PM ET; no longer switches itself off.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
@@ -62,8 +64,14 @@ export async function cartAskRecipients(admin: SupabaseClient): Promise<Rec[]> {
   const { data: me } = await admin.from('profiles').select('household_id').eq('email', 'setzl1979@gmail.com').maybeSingle()
   const { data: hs } = await admin.from('grocery_handoffs').select('user_id, store, created_at').order('created_at', { ascending: true })
   const firstStore = new Map<string, string>()
-  for (const h of hs ?? []) if (!firstStore.has(h.user_id)) firstStore.set(h.user_id, storeName(h.store))
-  const ids = Array.from(firstStore.keys())
+  const firstAt = new Map<string, number>()
+  const repeat = new Set<string>()
+  for (const h of hs ?? []) {
+    const t = Date.parse(h.created_at)
+    if (!firstStore.has(h.user_id)) { firstStore.set(h.user_id, storeName(h.store)); firstAt.set(h.user_id, t) }
+    else if (t - (firstAt.get(h.user_id) ?? t) > 3 * 86400000) repeat.add(h.user_id)
+  }
+  const ids = Array.from(firstStore.keys()).filter((id) => !repeat.has(id) && Date.now() - (firstAt.get(id) ?? Date.now()) >= 5 * 86400000)
   const out: Rec[] = []
   for (let i = 0; i < ids.length; i += 200) {
     const { data: profs } = await admin.from('profiles').select('id, email, full_name, email_unsubscribed, household_id, created_at').in('id', ids.slice(i, i + 200)).gte('created_at', SINCE)
@@ -84,6 +92,8 @@ export async function runCartAsk(admin: SupabaseClient, now = new Date(), opts: 
   const report = { status: v?.status ?? 'not approved', sent: 0, failed: 0, left: 0 }
   if (v?.status !== 'approved') return report
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
+  const hourET = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', hourCycle: 'h23' }).format(now))
+  if (hourET < 9 || hourET >= 19) return { ...report, status: 'outside 9 AM–7 PM ET' }
   const resend = new Resend(process.env.RESEND_API_KEY)
   const recs = await cartAskRecipients(admin)
   const { data: done } = await admin.from('campaign_sends').select('email').eq('campaign', CART_ASK)
@@ -102,6 +112,5 @@ export async function runCartAsk(admin: SupabaseClient, now = new Date(), opts: 
     await new Promise((res) => setTimeout(res, 300))
   }
   report.left = todo.length - report.sent
-  if (report.left === 0 && report.failed === 0) await admin.from('app_kv').upsert({ key: 'campaign_cartask', value: { ...v, status: 'done', doneAt: new Date().toISOString() }, updated_at: new Date().toISOString() })
   return report
 }
