@@ -3,6 +3,7 @@
  * (recipes with real photos) and saved right away — no AI wait, no
  * confirm step. If they leave and come back, their dinners are already there.
  */
+import { DISLIKE_PATTERNS, dislikeWord } from '@/lib/dislikes'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, type Weekday } from '@/lib/settings'
 import { pickLibraryRecipes, recipeToMeal, fitBudget } from '@/lib/recipe-library'
@@ -211,20 +212,4 @@ export async function picksOwn(admin: SupabaseClient, userId: string): Promise<b
   return mergeSettings(data?.settings).plan.pickMyOwn === true
 }
 
-/** Won't-eats that a single word can't catch (Nov 11 2026: a mom who won't eat spicy food got Blackened Cod). */
-const DISLIKE_PATTERNS: Record<string, RegExp> = {
-  'bell pepper': /\b(bell )?peppers?\b(?!oni)/,
-  spicy: /\b(spicy|blackened|cajun|buffalo|chipotle|jalape[nñ]os?|habaneros?|serranos?|sriracha|hot sauce|nashville hot|diablo|arrabbiata|jerk|harissa|gochujang|chili crisp|red pepper flakes|crushed red pepper|cayenne)\b/,
-  seafood: /\b(seafood|fish|salmon|tilapia|cod|shrimp|prawns?|tuna|crab|clams?|scallops?|mussels?|lobster|halibut|mahi|catfish|haddock|oysters?|anchov(y|ies)|sardines?|trout|pollock)\b/,
-}
-
-/** A setup "won't eat" as a word to look for: "Bell peppers" → "bell pepper", "Spicy food" → "spicy". Too-broad ones
- * ("Anything mixed together") are skipped. */
-function dislikeWord(raw: string): string | null {
-  const w = String(raw ?? '').toLowerCase().trim()
-  if (!w || /anything|mixed/.test(w)) return null
-  if (/spicy/.test(w)) return 'spicy'
-  const base = w.replace(/\s+food$/, '').replace(/(es|s)$/, (m) => (w.endsWith('tomatoes') || w.endsWith('potatoes') ? '' : m === 's' ? '' : 'e')).trim()
-  const fixed: Record<string, string> = { 'bell pepper': 'bell pepper', tomato: 'tomato', potato: 'potato', mushroom: 'mushroom', onion: 'onion', bean: 'bean', olive: 'olive', avocado: 'avocado', eggplant: 'eggplant', cilantro: 'cilantro', seafood: 'seafood' }
-  return fixed[base] ?? (base.length >= 3 ? base : null)
-}
+// DISLIKE_PATTERNS / dislikeWord live in lib/dislikes (shared with the library picker since Nov 15 2026).

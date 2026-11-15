@@ -64,10 +64,19 @@ async function householdRules(admin: SupabaseClient, owner: OwnerLite) {
 async function libraryMatches(admin: SupabaseClient, idea: string, maxCookTime: number): Promise<RecipeRow[]> {
   const words = normalizeName(idea).split(' ').filter((w) => w.length > 2 && !/^(night|dinner|some|the|and|with|for|a|an)$/.test(w))
   if (!words.length) return []
+  // Search on the most specific word, not the first one (Nov 15 2026: "one-pit chicken parmesan penne" searched on
+  // "one", matched the "one" in Honey-Soy Salmon, and a family who won't eat seafood got salmon for the dinner they
+  // named). A typo in one word still finds the dinner: every word, else all but one when there are three or more.
+  const stem = (w: string) => w.replace(/s$/, '')
+  const anchor = [...words].sort((a, b) => b.length - a.length)[0]
   const { data } = await admin.from('recipes').select('*').eq('is_public', true).lte('cook_time', Math.max(maxCookTime, 30))
-    .ilike('name', `%${words[0].replace(/s$/, '')}%`).order('kept_count', { ascending: false }).limit(40)
-  const rows = ((data ?? []) as RecipeRow[]).filter((r) => words.every((w) => r.normalized_name.includes(w.replace(/s$/, ''))))
-  return rows.length ? rows : ((data ?? []) as RecipeRow[]).slice(0, 10)
+    .ilike('name', `%${stem(anchor)}%`).order('kept_count', { ascending: false }).limit(60)
+  const rows = (data ?? []) as RecipeRow[]
+  const hits = (r: RecipeRow) => words.filter((w) => r.normalized_name.includes(stem(w))).length
+  const all = rows.filter((r) => hits(r) === words.length)
+  if (all.length) return all
+  if (words.length >= 3) return rows.filter((r) => hits(r) >= words.length - 1).sort((a, b) => hits(b) - hits(a))
+  return []
 }
 
 /**

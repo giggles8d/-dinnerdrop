@@ -99,6 +99,19 @@ export function allergyTargets(allergy: string): { keys: AllergenKey[]; word: st
   return { keys: [], word: a.replace(/(ies)$/, 'y').replace(/(es|s)$/, '') }
 }
 
+/**
+ * Typed allergies / hard no's that aren't one of the 9 allergens but name a whole animal: "Pork" has to catch bacon,
+ * ham and sausage too (Nov 15 2026: a family with Pork on their profile got Bacon Cream Sauce and Italian Sausage Penne
+ * in their vote — only the word "pork" was checked). Conservative on purpose: sausage counts even when it might be
+ * chicken, because an allergy list is where guessing goes wrong.
+ */
+const WORD_FAMILIES: Array<{ test: RegExp; words: RegExp }> = [
+  { test: /^pork$/, words: /\b(pork|bacon|ham|hams|sausages?|kielbasa|pepperoni|prosciutto|pancetta|salami|chorizo|bratwursts?|andouille|hot dogs?|lard|spam|pork ribs?|baby back ribs?|spare ?ribs?|guanciale|capicola|mortadella|soppressata|pork belly|carnitas|pulled pork)\b/ },
+  { test: /^(beef|red meat)$/, words: /\b(beef|steaks?|ground chuck|chuck roast|brisket|sirloin|ribeye|rib-eye|short ribs?|flank steak|skirt steak|roast beef|corned beef|pastrami|veal|hamburgers?|cheeseburgers?|meatloaf|prime rib|tri-tip|oxtail|beef broth|beef stock)\b/ },
+  { test: /^(lamb|mutton)$/, words: /\b(lamb|mutton|gyro)\b/ },
+  { test: /^chicken$/, words: /\b(chicken|chicken broth|chicken stock)\b/ },
+]
+
 export interface AllergyConflict { who: string[]; allergy: string; items: string[] }
 
 /**
@@ -114,8 +127,10 @@ export function allergyConflicts(ingredients: Array<{ name: string }>, people: A
       if (t.keys.length) items = found.filter((f) => t.keys.includes(f.key)).flatMap((f) => f.items)
       else if (t.word && t.word.length > 2) {
         const w = t.word
-        items = (ingredients ?? []).map((i) => i.name).filter((n) => n.toLowerCase().includes(w))
-        if (!items.length && dinnerName.toLowerCase().includes(w)) items = [dinnerName]
+        const fam = WORD_FAMILIES.find((f) => f.test.test(w))
+        const hit = (n: string) => n.toLowerCase().includes(w) || (!!fam && fam.words.test(n.toLowerCase()))
+        items = (ingredients ?? []).map((i) => i.name).filter(hit)
+        if (!items.length && hit(dinnerName)) items = [dinnerName]
       }
       if (!items.length) continue
       const key = raw.toLowerCase().trim()

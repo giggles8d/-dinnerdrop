@@ -970,12 +970,16 @@ export async function smsContext(admin: SupabaseClient, memberId: string): Promi
   const since = new Date(Date.now() - 4 * 86400000).toISOString()
   const { data } = await admin.from('sms_messages').select('direction, body, intent, created_at').eq('member_id', memberId).gte('created_at', since).order('created_at', { ascending: false }).limit(14)
   const rows = (data ?? []) as Array<{ direction: string; body: string | null; intent: string | null; created_at?: string }>
-  const ask = rows.find((r) => r.direction === 'out' && (r.intent === 'again_request' || r.intent === 'vote_request'))
+  // Vote requests are logged as `vote_request:<round id>` (Nov 15 2026: the exact match below missed them, so a
+  // three-day-old "which should come back?" stayed the last question and a planner's "1,2,3,4" after her new week
+  // was read as bring-back picks against that old two-dinner list).
+  const isVoteAsk = (r: { intent: string | null }) => r.intent === 'vote_request' || (r.intent ?? '').startsWith('vote_request:')
+  const ask = rows.find((r) => r.direction === 'out' && (r.intent === 'again_request' || isVoteAsk(r)))
   const note = rows.find((r) => r.direction === 'out' && r.intent === 'owner_message')
   // The most recent numbered list this person saw: our MENU reply ("This week:\n1. Mon — Name") or a vote/again request.
-  const listIdx = rows.findIndex((r) => r.direction === 'out' && (r.intent === 'again_request' || r.intent === 'vote_request' || (r.body ?? '').startsWith('This week:') || (r.body ?? '').includes('. This week:\n')))
+  const listIdx = rows.findIndex((r) => r.direction === 'out' && (r.intent === 'again_request' || isVoteAsk(r) || (r.body ?? '').startsWith('This week:') || (r.body ?? '').includes('. This week:\n')))
   const listRow = listIdx >= 0 ? rows[listIdx] : null
-  const isMenu = !!listRow && !(listRow.intent === 'again_request' || listRow.intent === 'vote_request')
+  const isMenu = !!listRow && !(listRow.intent === 'again_request' || isVoteAsk(listRow))
   const menuShown = isMenu ? (listRow!.body ?? '').split('\n').map((l) => l.match(/^\d+\.\s+(?:[A-Za-z]{3} — )?(.+)$/)?.[1]?.trim()).filter((x): x is string => !!x) : undefined
   const lastOut = rows.find((r) => r.direction === 'out')
   return {
@@ -1043,6 +1047,14 @@ Return ONLY JSON:
 - clarify: if you genuinely can't tell what they mean, a short friendly question (under 140 characters) asking them, else "".`
 }
 
+/** Shorten at a word boundary, never mid-word (Nov 15 2026: a reply went out ending "or NONE if y"). */
+export function cutAtWord(text: string, max: number): string {
+  if (text.length <= max) return text
+  const cut = text.slice(0, max - 1)
+  const at = cut.lastIndexOf(' ')
+  return `${(at > max / 2 ? cut.slice(0, at) : cut).replace(/[\s,;:—-]+$/, '')}…`
+}
+
 export function parseMeant(text: string, listLength: number): Meant {
   const j = parseClaudeJSON<Partial<Meant>>(text)
   const strs = (a: unknown) => (Array.isArray(a) ? a.filter((x): x is string => typeof x === 'string' && x.trim().length > 1 && x.trim().length <= 40).map((x) => x.trim().toLowerCase()).slice(0, 8) : [])
@@ -1063,7 +1075,7 @@ export function parseMeant(text: string, listLength: number): Meant {
     }).slice(0, 4) : [],
     allGood: !!j.allGood, none: !!j.none, correction: !!j.correction, removeLastAdded: !!j.removeLastAdded, question: !!j.question, relay: !!j.relay,
     answer: typeof j.answer === 'string' ? j.answer.trim().slice(0, 700) : '',
-    clarify: typeof j.clarify === 'string' ? j.clarify.trim().slice(0, 160) : '',
+    clarify: typeof j.clarify === 'string' ? cutAtWord(j.clarify.trim(), 300) : '',
   }
 }
 

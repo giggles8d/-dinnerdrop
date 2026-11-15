@@ -11,6 +11,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
 import { mergeDiets } from '@/lib/diets'
+import { excludeWordsHit } from '@/lib/dislikes'
 import type { Meal } from '@/types'
 import { ensurePortions, scaleMeal } from '@/lib/portions'
 import { pickByQuota, proteinGroup } from '@/lib/protein-mix'
@@ -255,7 +256,9 @@ export async function pickLibraryRecipes(
     if (opts.maxCalories && r.nutrition?.calories && r.nutrition.calories > opts.maxCalories) return false
     if (cuisines.length && r.cuisine && !cuisines.includes(r.cuisine.toLowerCase())) return false
     const hay = `${r.name} ${(r.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
-    if (words.some((w) => hay.includes(w))) return false
+    // A won't-eat counts as its category too (Nov 15 2026: "Seafood" let salmon and shrimp through; "Spicy food"
+    // let Jalapeño Popper Chicken through) — lib/dislikes.
+    if (excludeWordsHit(hay, words)) return false
     if (!allowSoyMains && SOY_MAINS.test(hay)) return false
     if (!allowLowCarbSwaps && LOW_CARB_SWAPS.test(hay)) return false
     if (allergyList.length && allergyConflicts(r.ingredients ?? [], [{ name: '', allergies: allergyList }], r.name).length) return false
