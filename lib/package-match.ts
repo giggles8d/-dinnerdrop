@@ -29,7 +29,7 @@ const has = (s: string, re: RegExp) => re.test(s)
 // became 1; "3 × 144 fl oz" Pepsi and "2 × 16 oz" salsa came through right). So several packages of something are
 // sent as count × a typical package size. Single packages don't need one.
 const SIZE_HINTS: Array<[RegExp, string]> = [
-  [/\b(soda|pop|pepsi|coke|cola|dr\.? ?pepper|sprite|ginger ale|seltzer|sparkling water|la ?croix)\b/i, '144 fl oz'],
+  [/\b(soda|pop|pepsi|coke|cola|dr\.? ?pepper|sprite|ginger ale|seltzer|sparkling water|la ?croix)\b/i, '12 pack 144 fl oz'],
   [/\b(gatorade|juice box(es)?|bottled water|water bottles?)\b/i, '192 fl oz'],
   [/\bice cream\b/i, '48 fl oz'],
   [/\b(pierogies|frozen (pizza|meals?|dinners?)|garlic (bread|toast)|texas toast)\b/i, '16 oz'],

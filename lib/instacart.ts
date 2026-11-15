@@ -104,7 +104,10 @@ export function lineItemFor(item: { name: string; quantity?: string | number | n
     const u = m[2].toLowerCase().replace(/\s|\./g, '')
     const unit = u === 'floz' ? 'fl oz' : u === 'oz' ? 'ounce' : u === 'lb' || u === 'lbs' ? 'pound' : 'each'
     const name = plan.search.replace(sizeRe, ' ').replace(/\s+/g, ' ').trim() || plan.search
-    return { name, quantity: Math.round(plan.count * size * 100) / 100, unit, label: plan.label }
+    // Instacart rounds UP to whole products (2 × 16 oz salsa → a 15.5 oz jar → 3 jars, Nov 15 2026 live test), so
+    // several packages go out at 90% of the amount: 2 jars stays 2 whether the store's jar is 15.5 or 16 oz.
+    const amount = plan.count > 1 && unit !== 'each' ? plan.count * size * 0.9 : plan.count * size
+    return { name, quantity: Math.round(amount * 100) / 100, unit, label: plan.label }
   }
   if (plan.count <= 1) return { name: plan.search, quantity: 1, unit: 'package', label: plan.label }
   // Several packages of unknown size: let Instacart size it from the recipe amount.
