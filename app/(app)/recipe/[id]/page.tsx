@@ -5,7 +5,7 @@ import { useParams, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { sizedImage, isUnsplash, isDirect } from '@/lib/image-src'
 import Link from 'next/link'
-import { ArrowLeft, Clock, Heart, RefreshCw, ChefHat, Share2 } from 'lucide-react'
+import { ArrowLeft, Clock, Heart, RefreshCw, ChefHat, Share2, Zap } from 'lucide-react'
 import { nativeShare, tapHaptic } from '@/lib/native'
 import { createClient } from '@/lib/supabase'
 import { useUnsplashPhoto } from '@/lib/use-unsplash-photo'
@@ -26,6 +26,8 @@ import { attachLibraryImages } from '@/lib/library-images'
 import { resolvePlanOwner } from '@/lib/household'
 import type { Meal } from '@/types'
 import { timeLabel } from '@/lib/plan'
+import { mergeSettings } from '@/lib/settings'
+import { shortcutFor, usesShortcut, withShortcut } from '@/lib/shortcuts'
 
 function HeroImage({ mealName, imageUrl }: { mealName: string; imageUrl?: string }) {
   const lookup = useUnsplashPhoto(imageUrl ? '' : mealName)
@@ -94,9 +96,26 @@ function RecipeContent() {
   const [swapping, setSwapping] = useState(false)
   const [swapError, setSwapError] = useState(false)
   const [servingsNote, setServingsNote] = useState<string | null>(null)
+  // Pre-cut shortcuts setting: also turns on store-bought shortcut versions (lib/shortcuts) unless the family switched one back.
+  const [autoQuick, setAutoQuick] = useState(false)
+  const [quickNote, setQuickNote] = useState<string | null>(null)
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const planned = useRef<Meal | null>(null) // the dinner as it sits in the plan, to find it when saving
   const supabase = createClient()
+
+  useEffect(() => {
+    let active = true
+    ;(async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+        const { ownerId } = await resolvePlanOwner(supabase, user.id)
+        const { data } = await supabase.from('profiles').select('settings').eq('id', ownerId).maybeSingle()
+        if (active) setAutoQuick(!!mergeSettings(data?.settings).food.prepped)
+      } catch { /* shortcut stays off */ }
+    })()
+    return () => { active = false }
+  }, [supabase])
 
   const checkFavorite = useCallback(async (mealName: string) => {
     const { data: { user } } = await supabase.auth.getUser()
@@ -289,6 +308,21 @@ function RecipeContent() {
     }, 700)
   }
 
+  /** "Make it faster" / "Make it from scratch": saved on this dinner, so the grocery list follows. */
+  async function toggleQuick() {
+    if (!meal) return
+    const original = meal
+    const updated: Meal = { ...meal, quick: !usesShortcut(meal, autoQuick) }
+    setMeal(updated)
+    try { localStorage.setItem(`meal-${id}`, JSON.stringify(updated)) } catch { /* ignore */ }
+    if (meal.day === 'Saved') return
+    setQuickNote('Saving…')
+    const { data: { user } } = await supabase.auth.getUser()
+    const ok = user ? await saveDinnerServings(supabase, user.id, updated, planned.current ?? original) : false
+    if (ok) planned.current = updated
+    setQuickNote(ok ? 'Grocery list updated' : 'Changed here only — this dinner isn\u2019t in your current week')
+  }
+
   if (mealLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -310,6 +344,9 @@ function RecipeContent() {
     )
   }
 
+  const shortcut = shortcutFor(meal)
+  const quickOn = usesShortcut(meal, autoQuick)
+  const view = withShortcut(meal, autoQuick)
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-3xl">
@@ -322,7 +359,7 @@ function RecipeContent() {
           Back to meal plan
         </Link>
 
-        {cooking && <CookMode meal={meal} onClose={() => setCooking(false)} />}
+        {cooking && <CookMode meal={view} onClose={() => setCooking(false)} />}
 
         {/* Hero image */}
         <HeroImage mealName={meal.name} imageUrl={meal.imageUrl} />
@@ -341,7 +378,7 @@ function RecipeContent() {
           <PrintButton />
           <button
             onClick={async () => {
-              const text = `${meal.name}\n\nIngredients:\n${meal.ingredients.map((i) => `• ${[i.quantity, i.unit, i.name].filter(Boolean).join(' ')}`).join('\n')}\n\nSteps:\n${meal.steps.map((st, n) => `${n + 1}. ${st}`).join('\n')}\n\nPlanned with DinnerDrop — dinnerdrop.app`
+              const text = `${meal.name}\n\nIngredients:\n${view.ingredients.map((i) => `• ${[i.quantity, i.unit, i.name].filter(Boolean).join(' ')}`).join('\n')}\n\nSteps:\n${view.steps.map((st, n) => `${n + 1}. ${st}`).join('\n')}\n\nPlanned with DinnerDrop — dinnerdrop.app`
               if (!(await nativeShare({ title: meal.name, text }))) {
                 try { await navigator.clipboard.writeText(text); alert('Recipe copied') } catch { /* ignore */ }
               }
@@ -372,7 +409,7 @@ function RecipeContent() {
         <div className="flex flex-wrap items-center gap-2 mb-8 pb-6 border-b border-border">
           <div className="flex items-center gap-1.5 bg-muted rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">
             <Clock className="w-3.5 h-3.5" />
-            <span>{timeLabel(meal)}</span>
+            <span>{timeLabel(view)}</span>
           </div>
           <ServingsStepper servings={meal.servings} onChange={changeServings} />
           <div className="flex items-center gap-1.5 bg-secondary text-primary border border-primary/20 rounded-full px-3 py-1.5 text-xs font-semibold">
@@ -390,11 +427,11 @@ function RecipeContent() {
 
         {servingsNote && <p className="-mt-5 mb-6 text-xs text-primary print:hidden" role="status">{servingsNote}{meal.base && servingsNote !== 'Saving…' ? ` · planned for ${meal.base.servings}` : ''}</p>}
         <p className="-mt-4 mb-6 text-sm text-muted-foreground"><span className="font-semibold text-foreground">Goes with:</span> {sideFor(meal).name} <span className="text-xs">({sideFor(meal).minutes} min) · add it from your grocery list</span></p>
-        <AllergenNotice ingredients={meal.ingredients} name={meal.name} />
+        <AllergenNotice ingredients={view.ingredients} name={meal.name} />
 
         <div className="print:hidden">
           <RecipeNotes recipeName={meal.name} />
-          <CookwareList meal={meal} />
+          <CookwareList meal={view} />
         </div>
 
         {/* Ingredients */}
@@ -403,7 +440,7 @@ function RecipeContent() {
             Ingredients
           </h2>
           <ul className="space-y-1">
-            {meal.ingredients.map((ing, i) => (
+            {view.ingredients.map((ing, i) => (
               <li key={i} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-muted/30 transition-colors">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                 <span className="text-sm text-foreground flex-1">{ing.name}</span>
@@ -415,14 +452,27 @@ function RecipeContent() {
           </ul>
         </section>
 
-        <PreppedNote meal={meal} />
+        {shortcut && (
+          <div className="mb-6 flex flex-wrap items-center gap-3 rounded-lg border border-border bg-muted/50 p-3 text-sm text-foreground print:hidden">
+            <Zap className="h-4 w-4 flex-shrink-0 text-primary" aria-hidden />
+            <p className="flex-1 min-w-[12rem]">
+              <span className="font-medium">{quickOn ? 'Fast version: ' : 'Make it faster: '}</span>
+              {quickOn ? `${shortcut.label.toLowerCase()} instead of breading your own. ` : `${shortcut.detail} About ${shortcut.savesMin} minutes saved. `}
+              {quickNote && <span className="text-xs text-primary" role="status">{quickNote}</span>}
+            </p>
+            <button type="button" onClick={toggleQuick} className="rounded-md border border-primary/30 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/10">
+              {quickOn ? 'Make it from scratch' : `Use ${shortcut.label.toLowerCase()}`}
+            </button>
+          </div>
+        )}
+        <PreppedNote meal={view} />
         {/* Steps */}
         <section className="mb-8">
           <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-4">
             Instructions
           </h2>
           <ol className="space-y-4">
-            {meal.steps.map((step, i) => (
+            {view.steps.map((step, i) => (
               <li key={i} className="flex gap-4">
                 <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center mt-0.5">
                   {i + 1}

@@ -4,6 +4,8 @@ import { createClient } from '@supabase/supabase-js'
 import type { GroceryCategory, GroceryItem, Ingredient } from '@/types'
 import { scaleSideItems } from '@/lib/side-steps'
 import { preppedIngredients } from '@/lib/prepped'
+import { withShortcut } from '@/lib/shortcuts'
+import type { Meal } from '@/types'
 
 type GroceryListResponse = Record<GroceryCategory, GroceryItem[]>
 
@@ -44,7 +46,7 @@ export async function POST(request: Request) {
     // Sides are written for 4 and sized to the dinner's servings here (lib/side-steps).
     // Pre-cut shortcuts (settings.food.prepped): "dice the onion" buys diced onion, "shred the chicken" buys a rotisserie chicken.
     const allIngredients = meals.flatMap((meal: { servings?: number; ingredients: Ingredient[]; steps?: string[]; tags?: string[]; name?: string; side?: { for?: string[]; onList?: boolean; items?: Ingredient[] } }) => [
-      ...(Array.isArray(meal.ingredients) ? (prepped ? preppedIngredients(meal).ingredients : meal.ingredients) : []),
+      ...(Array.isArray(meal.ingredients) ? ((m) => (prepped ? preppedIngredients(m).ingredients : m.ingredients))(withShortcut(meal as Meal, !!prepped)) : []),
       ...((meal.side?.for?.length || meal.side?.onList) && Array.isArray(meal.side.items) ? scaleSideItems(meal.side, meal.servings) : []),
     ])
 
