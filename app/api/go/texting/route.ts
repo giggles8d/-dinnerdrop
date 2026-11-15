@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { verifyFollowup } from '@/lib/followup'
-import { setupFamilyTexting, type SetupProfile } from '@/lib/texting-setup'
+import { setupFamilyTexting, sendFirstPlanText, type SetupProfile } from '@/lib/texting-setup'
+import type { Meal } from '@/types'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,5 +24,12 @@ export async function POST(req: NextRequest) {
   const r = await setupFamilyTexting(admin, profile as SetupProfile, { ownerPhone: body.ownerPhone, members })
   if ('error' in r) return NextResponse.json({ error: r.error }, { status: r.status })
   try { await admin.from('activation_events').insert({ user_id: u, step: 'texting_setup', meta: { via: 'email', saved: r.saved, sent: r.sent ?? 0 } }) } catch { /* tracking only */ }
-  return NextResponse.json(r)
+  // "Text me my week" (Nov 15 2026): their own number → this week's dinners right away (once per household).
+  let firstText = false
+  if (body.ownerPhone) {
+    const { data: fresh } = await admin.from('profiles').select('id, household_id, full_name, settings, subscription_status, is_beta_member, family_until').eq('id', u).single()
+    const { data: plan } = await admin.from('meal_plans').select('meals').eq('user_id', u).order('created_at', { ascending: false }).limit(1)
+    if (fresh && plan?.[0]?.meals) firstText = await sendFirstPlanText(admin, fresh as SetupProfile, plan[0].meals as Meal[]).catch(() => false)
+  }
+  return NextResponse.json({ ...r, firstText })
 }

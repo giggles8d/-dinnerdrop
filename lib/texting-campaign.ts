@@ -12,11 +12,13 @@ import { Resend } from 'resend'
 import { isFamilyProfile } from '@/lib/access'
 import { textingUrl } from '@/lib/followup'
 
-export const TEXTING = 'texting-2026-11'
+// v2 (Nov 15 2026): 1 of 358 families added a number after the family-vote pitch; this one sells "your week and
+// your cart by text". New id, so families who got v1 get v2 once.
+export const TEXTING = 'texting-2026-11b'
 const APP = 'https://www.dinnerdrop.app'
 const FROM = 'Sarah from DinnerDrop <sarah@dinnerdrop.app>'
 const INTERNAL = /(@dinnerdrop\.app$|^setzl1979(\+[^@]*)?@gmail\.com$)/i
-export const TEXTING_SUBJECT = 'Let your family pick dinner (by text)'
+export const TEXTING_SUBJECT = 'Want your dinners (and your cart) by text?'
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
@@ -26,12 +28,11 @@ export function textingHtml(firstName: string | undefined, link: string, unsubsc
 <body style="margin:0;background:#ffffff;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#1f2a24">
 <div style="max-width:560px;margin:0 auto;padding:24px 18px">
 ${p(`Hi ${esc(firstName || 'there')},`)}
-${p('It’s Sarah from DinnerDrop. There’s one part of DinnerDrop most families haven’t turned on yet, and it’s my favorite: family texting.')}
-${p('Add your family’s phone numbers and DinnerDrop texts everyone the week’s dinner options. They reply with the numbers they want, and the top picks become your week. Anyone can text <b>ADD milk</b> to put it on the grocery list, and you get a heads-up before you order. Nobody installs an app. It’s just texts.')}
-${p('It’s included with your Family plan, and it takes about 30 seconds:')}
-<p style="margin:6px 0 18px"><a href="${link}" style="display:inline-block;background:#1a5c38;color:#ffffff;font-weight:700;padding:14px 22px;border-radius:12px;text-decoration:none">Add my family’s numbers →</a></p>
-${p('No password needed. Each person gets one text and replies YES to join, and STOP works anytime.')}
-${p('Sarah<br>DinnerDrop')}
+${p('It’s Sarah from DinnerDrop. Quick one: I can text you your week instead of you having to open the app.')}
+${p('Every week you’d get your 5 dinners and a link to your grocery cart, already filled. Tap, check out, done. Reply <b>SWAP 2</b> to change a dinner, or text <b>ADD milk</b> to add something.')}
+<p style="margin:6px 0 18px"><a href="${link}" style="display:inline-block;background:#1a5c38;color:#ffffff;font-weight:700;padding:14px 22px;border-radius:12px;text-decoration:none">Text me my week</a></p>
+${p('One tap, just your number. No password. STOP works anytime.')}
+${p('Sarah')}
 <p style="margin:24px 0 0;font-size:12px;color:#8a8577">You’re getting this because you signed up at dinnerdrop.app. <a href="${unsubscribeUrl}" style="color:#8a8577">Unsubscribe</a></p>
 </div></body></html>`
 }
@@ -39,17 +40,13 @@ ${p('Sarah<br>DinnerDrop')}
 export function textingText(firstName: string | undefined, link: string, unsubscribeUrl: string): string {
   return `Hi ${firstName || 'there'},
 
-It's Sarah from DinnerDrop. There's one part of DinnerDrop most families haven't turned on yet, and it's my favorite: family texting.
+It's Sarah from DinnerDrop. Quick one: I can text you your week instead of you having to open the app.
 
-Add your family's phone numbers and DinnerDrop texts everyone the week's dinner options. They reply with the numbers they want, and the top picks become your week. Anyone can text "ADD milk" to put it on the grocery list, and you get a heads-up before you order. Nobody installs an app. It's just texts.
+Every week you'd get your 5 dinners and a link to your grocery cart, already filled. Tap, check out, done. Reply SWAP 2 to change a dinner, or text ADD milk to add something.
 
-It's included with your Family plan, and it takes about 30 seconds:
-Add my family's numbers: ${link}
-
-No password needed. Each person gets one text and replies YES to join, and STOP works anytime.
+Text me my week (one tap, just your number): ${link}
 
 Sarah
-DinnerDrop
 
 Unsubscribe: ${unsubscribeUrl}`
 }
@@ -68,7 +65,7 @@ export async function textingRecipients(admin: SupabaseClient, now = new Date())
   }
   return cands
     .filter((p) => !p.household_id || !withPhone.has(p.household_id))
-    .map((p) => ({ email: p.email as string, userId: p.id, firstName: p.full_name ? String(p.full_name).split(' ')[0] : undefined, link: textingUrl(p.id, TEXTING), unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}` }))
+    .map((p) => ({ email: p.email as string, userId: p.id, firstName: p.full_name ? String(p.full_name).split(' ')[0] : undefined, link: `${textingUrl(p.id, TEXTING)}&m=me`, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}` }))
 }
 
 export async function runTexting(admin: SupabaseClient, now = new Date(), opts: { budgetMs?: number } = {}) {
