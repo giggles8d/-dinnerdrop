@@ -210,9 +210,19 @@ export default function HistoryPage() {
                       </button>
                     </div>
                     {meals.map((meal, idx) => (
-                      <div key={idx} className="flex items-start justify-between gap-2">
+                      <button
+                        type="button"
+                        key={idx}
+                        onClick={() => {
+                          // Open a past dinner's full recipe (Nov 15: "How do I get to a previous week?").
+                          const key = `past-${plan.id.slice(0, 8)}-${idx}`
+                          try { localStorage.setItem(`meal-${key}`, JSON.stringify(meal)) } catch { /* ignore */ }
+                          router.push(`/recipe/${key}`)
+                        }}
+                        className="w-full text-left flex items-start justify-between gap-2 rounded-lg px-2 py-1.5 -mx-2 hover:bg-muted/60"
+                      >
                         <div>
-                          <p className="text-sm font-medium text-foreground">{meal.name}</p>
+                          <p className="text-sm font-medium text-primary underline-offset-2 hover:underline">{meal.name}</p>
                           <p className="text-xs text-muted-foreground">
                             {meal.day}{meal.cookTime ? ` · ${meal.cookTime} min` : ''}
                           </p>
@@ -222,7 +232,7 @@ export default function HistoryPage() {
                             ~${meal.estimatedCost.toFixed(2)}
                           </span>
                         )}
-                      </div>
+                      </button>
                     ))}
                   </div>
                 )}
