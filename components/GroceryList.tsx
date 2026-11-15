@@ -112,7 +112,7 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                 const muted = item.checked || item.have
                 const info = openInfo === item.id && detailFor ? detailFor(item) : null
                 // Which dinners this line is for, shown under the name (Sarah, Nov 1: "so I know which meal each item is for").
-                const forMeals = detailFor && item.source === 'plan' ? detailFor(item).usedIn : []
+                const forMeals = detailFor ? detailFor(item).usedIn : []
                 return (
                   <li key={item.id} className={`rounded-lg transition-colors ${muted ? 'bg-muted/50' : 'hover:bg-muted/30'}${item.have ? ' print:hidden' : ''}`}>
                   <div className="flex items-center gap-3 px-3 py-2.5">

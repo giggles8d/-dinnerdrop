@@ -33,7 +33,7 @@ import { applyPrefsToRows, cleanPrefs } from '@/lib/product-prefs'
 import { isClassic, tripInstances, weekStartOf } from '@/lib/trips'
 import { resolvePlanOwner } from '@/lib/household'
 import {
-  type ListItem, type Staple, rowsFromPlanList, dueStaples, basicsFor, shoppableItems,
+  type ListItem, type Staple, rowsFromPlanList, dueStaples, basicsFor, shoppableItems, sameListItem, lineCovers,
   listToText, guessCategory, normalizeItemName, parseTypedItem,
 } from '@/lib/list'
 import type { GroceryCategory, GroceryItem, Meal } from '@/types'
@@ -259,7 +259,7 @@ export default function GroceryListPage() {
 
     // 2. Materialize rows for this week if the plan is newer than the rows we have.
     const [{ data: existing }, { data: pantryItems }, { data: stapleRows }] = await Promise.all([
-      supabase.from('list_items').select('id, source, created_at, ordered_at, name, have').eq('user_id', uid).eq('week_start', ws),
+      supabase.from('list_items').select('id, source, created_at, ordered_at, name, have, quantity, unit').eq('user_id', uid).eq('week_start', ws),
       supabase.from('pantry_items').select('name').eq('user_id', uid),
       supabase.from('staples').select('*').eq('user_id', uid).order('created_at'),
     ])
@@ -280,6 +280,13 @@ export default function GroceryListPage() {
       // Keep "have it" ticks the family already made on lines that are still needed.
       const hadIt = new Set(openPlanRows.filter((r) => r.have).map((r) => normalizeItemName(r.name)))
       for (const row of rows) if (hadIt.has(normalizeItemName(row.name))) row.have = true
+      // One line per item: a recipe ingredient the family already put on the list (a dozen eggs, a gallon of milk)
+      // merges into that line instead of showing twice. The line still shows which dinners use it.
+      const openOther = (existing ?? []).filter((r) => r.source !== 'plan' && !r.ordered_at)
+      for (let i = rows.length - 1; i >= 0; i--) {
+        const other = openOther.find((o) => sameListItem(o.name, rows[i].name))
+        if (other && lineCovers(other, rows[i])) rows.splice(i, 1)
+      }
       // Shopping trips: pantry items already on an earlier trip this week are "have it" (bought on that trip).
       if (tripMode && settings.schedule.pantryFirstTrip && earlierKeys.length) {
         const { data: prev } = await supabase.from('list_items').select('name').eq('user_id', uid).in('week_start', earlierKeys).eq('have', false)
@@ -305,9 +312,9 @@ export default function GroceryListPage() {
           ...(settings.plan.includeLunches ? basicsFor('lunch', profile?.family_size || 4) : []),
           ...(settings.plan.includeBreakfasts ? basicsFor('breakfast', profile?.family_size || 4) : []),
         ]
-        const have = new Set(rows.map((r) => normalizeItemName(r.name)))
+        const onList = [...rows.map((r) => r.name), ...(existing ?? []).filter((r) => !r.ordered_at).map((r) => r.name)]
         for (const e of extras) {
-          if (have.has(normalizeItemName(e.name))) continue
+          if (onList.some((n) => sameListItem(n, e.name))) continue
           rows.push({ user_id: uid, household_id: profile?.household_id ?? null, week_start: ws, name: e.name, quantity: e.quantity, unit: e.unit, category: e.category, search_term: e.searchTerm, source: 'extra', added_by: null, have: false, checked: false })
         }
       }
@@ -367,7 +374,7 @@ export default function GroceryListPage() {
   async function addItem(raw: string, category?: GroceryCategory, searchTerm?: string, source: ListItem['source'] = 'manual', qty?: { quantity?: string; unit?: string }) {
     if (!userId || !weekStart) return
     const { name, quantity, unit } = source === 'manual' ? parseTypedItem(raw) : { name: raw, quantity: qty?.quantity ?? '1', unit: qty?.unit ?? '' }
-    const exists = items.find((i) => normalizeItemName(i.name) === normalizeItemName(name))
+    const exists = items.find((i) => !i.ordered_at && (normalizeItemName(i.name) === normalizeItemName(name) || sameListItem(i.name, name)))
     if (exists) {
       if (exists.have) await toggleHave(exists)
       return
@@ -621,7 +628,7 @@ export default function GroceryListPage() {
           onChangeQuantity={changeQuantity}
           onAdd={(name, category) => addItem(name, category)}
           detailFor={(i) => ({
-            usedIn: i.source === 'plan' ? mealsUsing(i.name, planMeals) : [],
+            usedIn: i.source === 'plan' ? mealsUsing(i.name, planMeals) : planMeals.filter((m) => (m.ingredients ?? []).some((g) => sameListItem(g.name, i.name))).map((m) => m.name),
             buy: i.quantity ? toPackages({ name: i.name, quantity: i.quantity, unit: i.unit, searchTerm: i.search_term }).label.replace(/^1 × package$/, '') || null : null,
           })}
         />

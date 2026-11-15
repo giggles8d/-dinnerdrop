@@ -3,6 +3,7 @@
  * Rows live in public.list_items; the plan's grocery_list JSON is the seed.
  */
 import type { GroceryCategory, GroceryItem } from '@/types'
+import { ingredientKey } from '@/lib/overlap'
 
 export type ListSource = 'plan' | 'manual' | 'sms' | 'staples' | 'pantry' | 'extra'
 
@@ -49,6 +50,45 @@ export const CATEGORY_EMOJI: Record<GroceryCategory, string> = {
 
 export function normalizeItemName(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+/** Same thing to buy, strictly ("Eggs" / "eggs" / "egg"), never "milk" / "coconut milk". */
+export function sameListItem(a: string, b: string): boolean {
+  const ka = ingredientKey(a)
+  return !!ka && ka === ingredientKey(b)
+}
+
+function qtyNum(q: string | null | undefined): number | null {
+  if (!q) return null
+  const t = q.trim()
+  const mixed = t.match(/^(\d+)\s+(\d+)\/(\d+)$/)
+  if (mixed) return +mixed[1] + +mixed[2] / +mixed[3]
+  const frac = t.match(/^(\d+)\/(\d+)$/)
+  if (frac) return +frac[1] / +frac[2]
+  const n = parseFloat(t)
+  return Number.isFinite(n) ? n : null
+}
+
+// A whole store package: a recipe's "1/2 cup milk" or "2 tbsp butter" comes out of it.
+const PACKAGE_UNITS = /^(gallon|half-gallon|quart|pint|carton|package|pack|bag|box|loaf|jar|bottle|bunch|container|tub|block|head|stick|sticks)$/i
+const COUNT_UNITS = /^(|count|each|whole|large|egg|eggs)$/i
+
+/**
+ * Does a line the family already has (texted, typed, a basic or a staple) cover a recipe line,
+ * so the list shows one line instead of two (Sarah, Nov 15: "eggs" 1 dozen + "Eggs" 5 count)?
+ */
+export function lineCovers(have: { quantity: string | null; unit: string | null }, need: { quantity: string | null; unit: string | null }): boolean {
+  const hu = (have.unit ?? '').trim().toLowerCase()
+  const nu = (need.unit ?? '').trim().toLowerCase()
+  const hq = qtyNum(have.quantity) ?? 1
+  const nq = qtyNum(need.quantity)
+  if (hu === 'dozen') {
+    if (nu === 'dozen') return nq == null || nq <= hq
+    return COUNT_UNITS.test(nu) && (nq == null || nq <= hq * 12)
+  }
+  if (hu && nu && hu === nu) return nq != null && nq <= hq
+  if (PACKAGE_UNITS.test(hu)) return !PACKAGE_UNITS.test(nu) || (hu === nu && (nq ?? 1) <= hq)
+  return false
 }
 
 /** Guess a store section for a free-typed item name. */
