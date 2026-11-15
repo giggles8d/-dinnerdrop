@@ -170,7 +170,43 @@ async function familyState(admin: SupabaseClient, p: DropProfile, settings: Sett
   return { segment, weekStart, meals, total: meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0), saved: !dryRun }
 }
 
-export interface BuiltDrop { segment: Segment; weekStart: string; subject: string; preview: string; props: DropProps; hero: string | null; asin: string | null }
+export interface BuiltDrop { segment: Segment; weekStart: string; subject: string; preview: string; props: DropProps; hero: string | null; asin: string | null; plain?: PlainWeek }
+/** The plain note from Sarah (Nov 15 2026) that replaces the designed email for families who have sent a cart before. */
+interface PlainWeek { name: string; dinners: Array<{ day: string; name: string }>; cartUrl: string; weekUrl: string; address: string; unsubscribeUrl: string }
+
+const escH = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+export function plainWeekText(w: PlainWeek): string {
+  return `Hi ${w.name || 'there'},
+
+Your dinners for the week are planned:
+${w.dinners.map((d) => `${d.day}: ${d.name}`).join('\n')}
+
+Your Instacart cart is already filled with everything you need. One tap and you're at checkout:
+${w.cartUrl}
+
+Want to change a dinner first? Open your week and swap any of them. The cart updates.
+${w.weekUrl}
+
+Sarah
+P.S. Reply if anything's off. I read every one.
+
+${w.address}
+Unsubscribe: ${w.unsubscribeUrl}`
+}
+export function plainWeekHtml(w: PlainWeek): string {
+  const p = (t: string) => `<p style="margin:0 0 14px;font-size:15px;line-height:1.6">${t}</p>`
+  return `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;background:#ffffff;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#1f2a24">
+<div style="max-width:560px;margin:0 auto;padding:24px 18px">
+${p(`Hi ${escH(w.name || 'there')},`)}
+${p('Your dinners for the week are planned:<br>' + w.dinners.map((d) => `${escH(d.day)}: ${escH(d.name)}`).join('<br>'))}
+${p('Your Instacart cart is already filled with everything you need. One tap and you’re at checkout:')}
+<p style="margin:0 0 18px"><a href="${w.cartUrl}" style="display:inline-block;background:#1a5c38;color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 20px;border-radius:10px">Send this week to Instacart</a></p>
+${p(`Want to change a dinner first? <a href="${w.weekUrl}" style="color:#1a5c38">Open your week</a> and swap any of them. The cart updates.`)}
+${p('Sarah<br>P.S. Reply if anything’s off. I read every one.')}
+<p style="margin:24px 0 0;font-size:12px;color:#8a8577">${escH(w.address)}<br><a href="${w.unsubscribeUrl}" style="color:#8a8577">Unsubscribe</a></p>
+</div></body></html>`
+}
 
 /** Everything for one family's email. dryRun = build only (no saved week); used by previews. */
 export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { now?: Date; dryRun?: boolean; address: string; given?: { weekStart: string; meals: Meal[] }; force?: Segment } = { address: '' }): Promise<BuiltDrop> {
@@ -203,7 +239,7 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
   const firstDinner = n ? short(st.meals[0].name) : ''
   const seg = st.segment
   const subject = {
-    shop: picker ? 'Your dinner choices for the week are ready' : reorder ? 'Your week is ready. Your Instacart cart is one tap away' : `Your ${store} list is ready: ${firstDinner}${n > 1 ? ` + ${n - 1} more` : ''}`,
+    shop: picker ? 'Your dinner choices for the week are ready' : reorder ? 'This week’s dinners (your cart is ready)' : `Your ${store} list is ready: ${firstDinner}${n > 1 ? ` + ${n - 1} more` : ''}`,
     vote: st.vote?.voted && st.vote.leaders[0] ? `${st.vote.voted} ${st.vote.voted === 1 ? 'vote' : 'votes'} in: ${st.vote.leaders[0]} is leading` : "Your family's dinner vote is open",
     picked: `Your ${n || 5} dinners are picked${name ? `, ${name}` : ''}. Want them?`,
     comeback: `I picked ${n || 5} dinners for you this week`,
@@ -267,13 +303,17 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
     address: opts.address,
     weekLabel: new Date(`${st.weekStart}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
   }
-  return { segment: seg, weekStart: st.weekStart, subject, preview, props: { ...props, preview }, hero: hero?.slug ?? null, asin: pick?.asin ?? null }
+  const plain: PlainWeek | undefined = reorder && seg === 'shop' ? {
+    name: name || '', dinners: st.meals.slice(0, 7).map((m, i) => ({ day: dayLabel(m.day, i), name: m.name })),
+    cartUrl: shopUrl(p.id, 'reorder'), weekUrl: link('/dashboard', seg), address: opts.address, unsubscribeUrl,
+  } : undefined
+  return { segment: seg, weekStart: st.weekStart, subject, preview, props: { ...props, preview }, hero: hero?.slug ?? null, asin: pick?.asin ?? null, plain }
 }
 
 async function sendBuilt(to: string, b: BuiltDrop, unsubUid: string | null, subjectPrefix = ''): Promise<{ ok: boolean; error?: string }> {
   if (!process.env.RESEND_API_KEY) return { ok: false, error: 'no RESEND_API_KEY' }
-  const html = await render(React.createElement(SundayDrop, b.props))
-  const text = await render(React.createElement(SundayDrop, b.props), { plainText: true })
+  const html = b.plain ? plainWeekHtml(b.plain) : await render(React.createElement(SundayDrop, b.props))
+  const text = b.plain ? plainWeekText(b.plain) : await render(React.createElement(SundayDrop, b.props), { plainText: true })
   const resend = new Resend(process.env.RESEND_API_KEY)
   const { error } = await resend.emails.send({
     from: FROM,
