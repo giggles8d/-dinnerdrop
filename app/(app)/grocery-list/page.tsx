@@ -19,6 +19,7 @@ import SwapToSave from '@/components/SwapToSave'
 import RestOfShop from '@/components/RestOfShop'
 import StoreCompare from '@/components/StoreCompare'
 import ReceiptUpload from '@/components/ReceiptUpload'
+import CartTextOffer from '@/components/CartTextOffer'
 import LastCallCard from '@/components/LastCallCard'
 import type { StorePref } from '@/lib/compare'
 import { familyUsuals, type UsualItem } from '@/lib/aisle'
@@ -721,6 +722,8 @@ export default function GroceryListPage() {
           )}
           {actualSaved && <p className="text-xs text-primary-foreground/80 mt-2">{actualSaved}</p>}
         </div>
+
+        <CartTextOffer />
 
         <div id="receipt-upload" className="scroll-mt-24">
           <ReceiptRewardBanner />

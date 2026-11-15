@@ -1,7 +1,8 @@
 /**
  * Weekly one-tap reorder (Sarah, Nov 10 2026: "build it"). Families who have sent a cart before get their new week
  * with the cart one tap away:
- * - Text (texting on): the week, "Reply YES and I'll text your Instacart cart link." YES (or CART) → the link.
+ * - Text (texting on): the week with the cart link right in it (Nov 15 2026, Sarah: "why do they have to reply yes").
+ *   YES or CART still texts the link again.
  * - Email (the Sunday Drop): "Your week is ready. Your Instacart cart is one tap away." + one button.
  *
  * Both point to the signed /api/go/shop link (kind 'reorder'), which builds the Instacart cart from the family's
@@ -23,9 +24,9 @@ export async function hasOrdered(admin: SupabaseClient, userId: string): Promise
 }
 
 /** The Saturday text for a family that has ordered before. Numbered so "SWAP 2" means the second dinner. */
-export function reorderText(meals: Meal[]): string {
+export function reorderText(meals: Meal[], ownerId: string): string {
   const lines = meals.map((m, i) => `${i + 1}. ${day(m.day, i)}: ${m.name}`)
-  return `Your DinnerDrop week is ready 🍽️\n${lines.join('\n')}\nReply YES and I'll text your Instacart cart link. Reply SWAP 2 to change a dinner.`
+  return `Your DinnerDrop week is ready 🍽️\n${lines.join('\n')}\nYour Instacart cart is ready, tap to check out:\n${shopUrl(ownerId, 'reorder')}\nReply SWAP 2 to change a dinner first.`
 }
 
 /** Did we send this phone the reorder text in the last 3 days (and not answer it yet)? */

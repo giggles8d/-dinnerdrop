@@ -512,7 +512,7 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     }
   }
 
-  // Weekly one-tap reorder (lib/reorder): YES to "Reply YES and I'll text your Instacart cart link", or CART anytime
+  // Weekly one-tap reorder (lib/reorder): YES after the weekly text (which now carries the link itself), or CART anytime
   // from someone already in the family texts. Checked before opt-in, which YES would otherwise mean.
   if (owner && m.phone_opt_in_at && !m.phone_opted_out) {
     const t = body.trim().replace(/[.!]+$/, '')
