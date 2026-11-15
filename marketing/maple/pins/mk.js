@@ -1,0 +1,18 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright')
+const fs=require('fs'), path=require('path')
+const img=f=>'data:image/jpeg;base64,'+fs.readFileSync(path.join(__dirname,f)).toString('base64')
+const G='#1a5c38', Y='#e8a838'
+const base=`*{box-sizing:border-box}html,body{margin:0;width:1000px;height:1500px;font-family:Poppins;background:#fbf8f1}`
+const pill=t=>`<div style="display:inline-block;background:${Y};color:#fff;font-weight:700;font-size:30px;padding:10px 26px;border-radius:40px;letter-spacing:.02em">${t}</div>`
+const foot=`<div style="position:absolute;left:0;right:0;bottom:48px;text-align:center;font-weight:700;font-size:40px;color:${G}">dinnerdrop.app/maple</div>`
+const photoTop=(f,h=700)=>`<div style="height:${h}px;background:url(${img(f)}) center/cover"></div>`
+const pins={
+m1:`${photoTop('p1.jpg')}<div style="padding:50px 64px">${pill('MAPLE IS SHUTTING DOWN')}<h1 style="font-size:78px;line-height:1.08;color:${G};margin:28px 0 22px;font-weight:800">Save your family’s dinners before Maple closes</h1><p style="font-size:36px;line-height:1.4;color:#3d4a43;margin:0">Maple deletes all data on Dec 31 (some say Nov 30). Copy your meal plans in 5 minutes.</p></div>${foot}`,
+m2:`<div style="padding:70px 64px 0">${pill('BEFORE MAPLE CLOSES')}<h1 style="font-size:74px;line-height:1.08;color:${G};margin:26px 0 30px;font-weight:800">The 5-minute Maple checklist</h1>${['Copy your dinners’ names','Screenshot your grocery lists','Save links to recipes you love','Move calendar events','Check your Maple subscription'].map((t,i)=>`<div style="display:flex;align-items:center;gap:26px;margin:0 0 26px"><div style="flex:none;width:76px;height:76px;border-radius:50%;background:${G};color:#fff;font-weight:800;font-size:40px;display:flex;align-items:center;justify-content:center">${i+1}</div><div style="font-size:44px;font-weight:600;color:#1f2a24">${t}</div></div>`).join('')}</div><div style="position:absolute;left:0;right:0;bottom:130px;height:330px;background:url(${img('p2.jpg')}) center/cover"></div>${foot}`,
+m3:`<div style="height:820px;background:url(${img('app.jpg')}) center 40%/cover"></div><div style="padding:46px 64px">${pill('MAPLE ALTERNATIVE')}<h1 style="font-size:72px;line-height:1.08;color:${G};margin:26px 0 18px;font-weight:800">Paste your dinners. Get the whole week planned.</h1><p style="font-size:34px;line-height:1.4;color:#3d4a43;margin:0">One grocery list, sent to Instacart in one tap.</p></div>${foot}`,
+m4:`${photoTop('p3.jpg',760)}<div style="padding:50px 64px">${pill('FOR MAPLE FAMILIES')}<h1 style="font-size:84px;line-height:1.05;color:${G};margin:28px 0 20px;font-weight:800">30 days of DinnerDrop Family, free</h1><p style="font-size:36px;line-height:1.4;color:#3d4a43;margin:0">No card. Nothing to cancel. Planning stays free.</p></div>${foot}`,
+m5:`${photoTop('p4.jpg',640)}<div style="padding:50px 64px">${pill('MAPLE SHUTDOWN, EXPLAINED')}<h1 style="font-size:70px;line-height:1.1;color:${G};margin:26px 0 22px;font-weight:800">What happens to your Maple data?</h1><p style="font-size:35px;line-height:1.45;color:#3d4a43;margin:0">Maple says accounts close Dec 31, 2026 and everything is deleted with no recovery. Here’s how to keep your meal plans.</p></div>${foot}`,
+}
+;(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1000,height:1500}})
+for(const [k,v] of Object.entries(pins)){await p.setContent(`<meta charset=utf-8><style>${base}</style><div style="position:relative;width:1000px;height:1500px;overflow:hidden">${v}</div>`);await p.waitForTimeout(300);await p.screenshot({path:path.join(__dirname,`2026-11-15_Maple_Pin_${k}.jpg`),type:'jpeg',quality:88})}
+await b.close();console.log('ok')})()
