@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { runDailyReminders } from '@/lib/reminders'
-import { runTextingDay } from '@/lib/texting'
 import { creditReferrals } from '@/lib/referrals'
 import { runOrderFollowups } from '@/lib/order-followup'
 import { runWeeklyReport } from '@/lib/weekly-report'
@@ -11,8 +9,8 @@ export const maxDuration = 300
 
 /**
  * The one daily cron (vercel.json: 0 12 * * * — 8am ET). Fans out to:
- *  - reminders + automatic weekly plans (lib/reminders)
- *  - family texting day jobs: vote day, "bring it back?" day (lib/texting)
+ *  - /api/cron/reminders in its own function: reminders + automatic weekly plans, then family texting day
+ *    (vote day, "bring it back?") — split out Nov 15 2026 after a heavy Saturday timed out the daily function
  *  - the activation email sequence (existing route)
  *  - the Sunday Drop: sent from runDailyReminders (planning day) and the texting poll sweep (lib/sunday-drop)
  *  - Monday: Sarah's weekly checkout report (lib/weekly-report)
@@ -33,10 +31,11 @@ export async function GET(request: NextRequest) {
   // Upkeep (gifts, recipe photos, photo shrinking) runs in its own function with its own 300 s; started first.
   const upkeep = fetch(`${base}/api/cron/upkeep`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
 
+  // Reminders/auto-plans + texting day: their own function and 300 s, started now, awaited at the end.
+  const remindersRun = fetch(`${base}/api/cron/reminders`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
+
   try { out.cartOfferReminder = await sendCartOfferReminders(admin, now) } catch (e) { out.cartOfferReminder = { error: String(e) } }
-  try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
   try { out.orderFollowups = await runOrderFollowups(admin, now) } catch (e) { out.orderFollowups = { error: String(e) } }
-  try { out.texting = await runTextingDay(admin, now) } catch (e) { out.texting = { error: String(e) } }
   try { out.referrals = await creditReferrals(admin) } catch (e) { out.referrals = { error: String(e) } }
   try { out.weeklyReport = await runWeeklyReport(admin, now) } catch (e) { out.weeklyReport = { error: String(e) } }
 
@@ -54,5 +53,6 @@ export async function GET(request: NextRequest) {
   const leftMs = Math.max(1000, 285000 - (Date.now() - now.getTime()))
   out.nutrition = await Promise.race([nutrition, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), leftMs))])
   out.upkeep = await Promise.race([upkeep, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), Math.max(1000, 286000 - (Date.now() - now.getTime()))))])
+  out.remindersAndTexting = await Promise.race([remindersRun, new Promise((res) => setTimeout(() => res({ still: 'running in its own function' }), Math.max(1000, 287000 - (Date.now() - now.getTime()))))])
   return NextResponse.json({ ok: true, at: now.toISOString(), ...out })
 }
