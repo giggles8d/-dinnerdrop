@@ -6,13 +6,15 @@ import { useEffect, useMemo, useState } from 'react'
  * "Already have these?" (Sarah, Nov 10 2026). A family's $225 cart showed the list buys whole bottles and jars of
  * staples a recipe barely uses — about $55 a week on average across families, since few tap "have it". Before the
  * list goes to a store, the staples on it are shown pre-checked; checked ones stay off the cart.
+ * Recipe lines only (Nov 15 2026): something the family added themselves ("3 packs of Dr Pepper Zero Sugar") is never
+ * a staple to keep off — it was pre-checked off Sarah's cart because it matched "pepper" and "sugar".
  */
 export const PANTRY_STAPLE = /\b(olive oil|vegetable oil|canola oil|cooking spray|sesame oil|oil|salt|black pepper|pepper flakes|ground pepper|peppercorns|cumin|paprika|oregano|chili powder|garlic powder|onion powder|cinnamon|thyme|rosemary|dried basil|italian seasoning|taco seasoning|cayenne|curry powder|nutmeg|ginger powder|ground ginger|bay leaves|seasoning|spice|flour|sugar|brown sugar|baking soda|baking powder|vanilla|vinegar|soy sauce|tamari|worcestershire|hot sauce|sriracha|ketchup|mustard|mayonnaise|mayo|honey|maple syrup|cornstarch|rice|bouillon)\b/i
 
-export interface PantryRow { id: string; name: string; have: boolean; checked: boolean; ordered_at?: string | null }
+export interface PantryRow { id: string; name: string; have: boolean; checked: boolean; ordered_at?: string | null; source?: string | null }
 
 export default function PantryCheck({ rows, weekKey, onKeepOff }: { rows: PantryRow[]; weekKey: string; onKeepOff: (ids: string[]) => Promise<void> }) {
-  const staples = useMemo(() => rows.filter((r) => !r.have && !r.checked && !r.ordered_at && PANTRY_STAPLE.test(r.name) && !/\b(fresh|bell pepper|jalape|poblano|serrano|green pepper|red pepper|cauliflower rice|rice noodles?)\b/i.test(r.name)), [rows])
+  const staples = useMemo(() => rows.filter((r) => !r.have && !r.checked && !r.ordered_at && (!r.source || r.source === 'plan') && PANTRY_STAPLE.test(r.name) && !/\b(zero sugar|sugar[- ]free|no sugar|soda|dr\.? ?pepper|cola|fresh|bell pepper|jalape|poblano|serrano|green pepper|red pepper|cauliflower rice|rice noodles?)\b/i.test(r.name)), [rows])
   const key = `dd_pantry_check:${weekKey}`
   const [done, setDone] = useState(true)
   const [picked, setPicked] = useState<Set<string>>(new Set())
