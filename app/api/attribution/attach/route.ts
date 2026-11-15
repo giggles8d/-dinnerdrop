@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { grantMapleOffer } from '@/lib/maple-offer'
 
 /**
  * POST — copy the visitor's dd_src cookie (set by middleware: utm / ad click / referring site) onto
@@ -22,5 +23,7 @@ export async function POST(req: NextRequest) {
   if (!me || me.signup_source || Date.now() - new Date(me.created_at).getTime() > 7 * 86400000) return res
   const clean = Object.fromEntries(Object.entries(src).filter(([k, v]) => ['s', 'm', 'c', 'ct', 'r', 'lp', 't'].includes(k) && typeof v === 'string').map(([k, v]) => [k, v.slice(0, 80)]))
   await admin.from('profiles').update({ signup_source: clean }).eq('id', user.id).is('signup_source', null)
+  // Maple families get 30 days of Family free (lib/maple-offer).
+  if (clean.s === 'maple' || clean.lp === '/maple' || /maple/i.test(clean.c ?? '')) { try { await grantMapleOffer(admin, user.id) } catch (e) { console.error('[attach] maple offer', e) } }
   return res
 }
