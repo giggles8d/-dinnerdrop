@@ -194,10 +194,12 @@ export default function QuickSetup({ onDone, demo = false, initialStep = 0 }: { 
 
       {step === 3 && (
         <div>
-          <h2 className="text-2xl font-heading font-bold text-foreground">Want a text when it&apos;s ready?</h2>
-          <p className="text-sm text-muted-foreground mt-1 mb-5">
-            We&apos;ll text you the week&apos;s dinners the moment they&apos;re built, your family can vote by reply, and anyone can text <span className="font-semibold text-foreground">ADD milk</span> to put it on the list.
-          </p>
+          <h2 className="text-2xl font-heading font-bold text-foreground">Where should we text your week?</h2>
+          <ul className="text-sm text-muted-foreground mt-2 mb-5 space-y-1.5">
+            <li>✓ Your dinners the moment they&apos;re ready, every week</li>
+            <li>✓ Reply <span className="font-semibold text-foreground">YES</span> and your grocery cart comes back, already filled</li>
+            <li>✓ Your family votes by reply, and anyone can text <span className="font-semibold text-foreground">ADD milk</span> to the list</li>
+          </ul>
           <label className="block text-sm font-semibold text-foreground mb-2" htmlFor="qs-phone">Your cell</label>
           <input
             id="qs-phone"
@@ -217,7 +219,7 @@ export default function QuickSetup({ onDone, demo = false, initialStep = 0 }: { 
             placeholder="(555) 555-5678"
             className="w-full px-3 py-2.5 rounded-xl border border-input bg-background text-base mb-4"
           />
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <div>
             <button
               type="button"
               onClick={() => save(false, true)}
@@ -226,13 +228,14 @@ export default function QuickSetup({ onDone, demo = false, initialStep = 0 }: { 
             >
               {saving ? 'Building your dinners…' : 'Text me and build my week →'}
             </button>
-            <button type="button" onClick={() => save(false, false)} disabled={saving} className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-2 disabled:opacity-30">
-              No texts, just build my week
-            </button>
           </div>
           <p className="text-[11px] text-muted-foreground leading-snug mt-4">
             By tapping &ldquo;Text me,&rdquo; you agree to receive automated texts from DinnerDrop about your dinners and grocery list at the number above (a few a week, never ads). Msg &amp; data rates may apply. Reply STOP to stop, HELP for help. Included free for your first 14 days of Family.
           </p>
+          {/* Nov 15 2026: skip moved below the fine print and shortened; 3 in 4 families were skipping texts. */}
+          <button type="button" onClick={() => save(false, false)} disabled={saving} className="mt-3 text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 disabled:opacity-30">
+            Skip texts
+          </button>
         </div>
       )}
     </div>

@@ -27,16 +27,23 @@ export async function GET() {
   if (!c) return NextResponse.json({ show: false })
   const { admin, profile } = c
   const settings = mergeSettings(profile.settings)
-  const [{ count: plans }, { count: phones }] = await Promise.all([
+  const [{ count: plans }, { count: phones }, { count: carts }] = await Promise.all([
     admin.from('meal_plans').select('id', { count: 'exact', head: true }).eq('user_id', profile.id),
     // Family numbers only: the planner's own row (profile_id = them) doesn't count.
     profile.household_id ? admin.from('household_members').select('id', { count: 'exact', head: true }).eq('household_id', profile.household_id).not('phone', 'is', null).or(`profile_id.is.null,profile_id.neq.${profile.id}`) : Promise.resolve({ count: 0 }),
+    admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', profile.id),
   ])
+  // The planner's own number can live on their household row (set at sign-up) as well as in settings.
+  const { count: ownRow } = profile.household_id
+    ? await admin.from('household_members').select('id', { count: 'exact', head: true }).eq('household_id', profile.household_id).eq('profile_id', profile.id).not('phone', 'is', null)
+    : { count: 0 }
   // Nov 7 2026: also shown to planners who gave us their own number but no family yet (most of them) —
   // until then the card only showed when nobody had a number, so they never got asked.
   const show = (plans ?? 0) > 0 && (phones ?? 0) === 0
   return NextResponse.json({
-    show, family: isFamilyProfile(profile), hasOwnerPhone: !!settings.texting.ownerPhone,
+    show, family: isFamilyProfile(profile), hasOwnerPhone: !!settings.texting.ownerPhone || (ownRow ?? 0) > 0,
+    // CartTextOffer (Nov 15 2026): ask for a number right after the first cart.
+    sentCart: (carts ?? 0) > 0,
     // Nov 9 2026: family members join themselves from a shared link instead of the planner typing their numbers.
     joinUrl: profile.referral_code ? `${APP_URL}/go/family/${profile.referral_code}` : null,
   })

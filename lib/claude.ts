@@ -122,7 +122,8 @@ export async function generateWithClaudeImages(prompt: string, images: ClaudeIma
  * Conversation-grade model for reading what a family member meant (the texting bot). Falls back to
  * the fast model if the stronger one errors, so a text never goes unanswered.
  */
-export const SMART_MODEL = process.env.SMS_MODEL || 'claude-sonnet-5-5'
+// Opus since Nov 15 2026 (Sarah): family texts are few, so the stronger model costs little extra.
+export const SMART_MODEL = process.env.SMS_MODEL || 'claude-opus-5-5'
 export async function generateSmart(prompt: string, maxTokens = 600): Promise<string> {
   try { return await generateWithClaude(prompt, maxTokens, SMART_MODEL) }
   catch { return generateWithClaude(prompt, maxTokens) }
