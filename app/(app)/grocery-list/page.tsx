@@ -110,6 +110,15 @@ export default function GroceryListPage() {
     io.observe(el)
     return () => io.disconnect()
   })
+  const heroRef = useRef<HTMLDivElement | null>(null)
+  const [heroInView, setHeroInView] = useState(false)
+  useEffect(() => {
+    const el = heroRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const io = new IntersectionObserver(([e]) => setHeroInView(e.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  })
   const [ordered, setOrdered] = useState<ListItem[]>([])
   const [showOrdered, setShowOrdered] = useState(false)
   const [stapleDraft, setStapleDraft] = useState('')
@@ -509,10 +518,8 @@ export default function GroceryListPage() {
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Grocery list</p>
-            <h1 className="text-4xl font-heading font-bold text-foreground">Your grocery list</h1>
-            <p className="text-muted-foreground mt-2">
-              {isPartner ? 'Shared with your household — anything either of you adds shows up for both. ' : ''}This week&apos;s dinners plus anything else your house needs. Tap <em>have?</em> on what&apos;s already in the kitchen — it stays off the cart.
-            </p>
+            <h1 className="text-4xl font-heading font-bold text-foreground">{shoppableCount > 0 ? 'Your groceries are ready' : 'Your grocery list'}</h1>
+            {isPartner && <p className="text-muted-foreground mt-2">Shared with your household. Anything either of you adds shows up for both.</p>}
           </div>
           <div className="flex gap-1 print:hidden">
             <button onClick={copyList} title="Copy" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted">{copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}</button>
@@ -521,42 +528,9 @@ export default function GroceryListPage() {
           </div>
         </div>
 
-        {/* Just picked their week on the dashboard (?picked=1): the one thing left is sending this list. */}
-        {justPicked && shoppableCount > 0 && !listSentHere && (
-          <div className="mb-6 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5 print:hidden">
-            <p className="font-heading font-bold text-xl text-foreground">✓ Your dinners are set. One step left.</p>
-            <p className="text-sm text-muted-foreground mt-1">Your list has {shoppableCount} items{storeEst > 0 ? ` (about $${Math.round(storeEst)})` : ''}. Send it to your cart, check it over there, and check out when you&apos;re ready.</p>
-            <div className="mt-4">
-              <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={() => { setListSentHere(true); afterSent() }} familyStores={myStores.map((s) => s.name)} />
-            </div>
-            <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-3 text-xs text-muted-foreground underline">Walmart, Kroger or print instead ↓</button>
-          </div>
-        )}
-
         {/* Inside Facebook/Instagram's browser, Instacart sign-in can fail: offer Safari/Chrome first. */}
         <div className="print:hidden"><InAppBrowserNotice /></div>
         <EngagementTracker page="grocery-list" ready={!loading && items.length > 0} />
-
-        {/* Ask the family first — top of the page, no scrolling */}
-        <LastCallCard onItems={load} />
-        <PantryCheck rows={items} weekKey={weekStart ?? 'now'} onKeepOff={keepOff} />
-        <SidesCard meals={planMeals} have={items.map((i) => i.name)} onAdd={(name, category, searchTerm, qty) => addItem(name, category, searchTerm, 'extra', qty)} />
-
-        {/* Budget bar */}
-        {budget > 0 && (
-          <div className="mb-6 rounded-xl border border-border p-4 print:hidden">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Everything on the list{learned ? ' (at your store)' : ' (estimate)'}</span>
-              <span className={`font-semibold ${over ? 'text-destructive' : 'text-primary'}`}>${storeEst.toFixed(0)} of ${budget} budget</span>
-            </div>
-            <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
-              <div className={`h-full ${over ? 'bg-destructive' : 'bg-primary'}`} style={{ width: `${Math.min(100, (storeEst / budget) * 100)}%` }} />
-            </div>
-            <p className="text-[11px] text-muted-foreground mt-2">
-              {over ? 'Over — swap one dinner for a budget pick on your dashboard, or mark pantry items you already have.' : `About $${Math.max(0, budget - storeEst).toFixed(0)} of room for the rest of the week.`}
-            </p>
-          </div>
-        )}
 
         {pendingSend && items.some((i) => !i.have && i.created_at <= pendingSend.at) && (
           <div className="mb-6 rounded-xl border border-accent/50 bg-accent/10 p-4 print:hidden">
@@ -599,6 +573,23 @@ export default function GroceryListPage() {
           </div>
         )}
 
+        {/* Send first: the whole point of this page is getting the list into a cart. */}
+        {shoppableCount > 0 && !listSentHere && (
+          <div ref={heroRef} className="mb-4 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5 print:hidden">
+            {justPicked && <p className="text-xs font-semibold text-primary mb-1">✓ Your dinners are set. One step left.</p>}
+            <p className="font-heading font-bold text-2xl text-foreground">{shoppableCount} items{storeEst > 0 ? ` · about $${Math.round(storeEst)}` : ''}</p>
+            <p className="text-sm text-muted-foreground mt-1">Amounts are matched to store package sizes, so your cart fills in ready to check out.</p>
+            <div className="mt-4">
+              {splitLists && splitStores ? (
+                <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="w-full sm:w-auto px-8 py-3 rounded-full bg-[#003D29] text-[#FAF1E5] font-semibold">Send to your carts ↓</button>
+              ) : (
+                <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={() => { setListSentHere(true); afterSent() }} familyStores={myStores.map((s) => s.name)} />
+              )}
+            </div>
+            <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-3 text-sm text-muted-foreground underline">or Walmart · Kroger ↓</button>
+          </div>
+        )}
+
         {tripTabs.length > 1 && (
           <div role="tablist" aria-label="Shopping trips" className="flex gap-2 mb-4 overflow-x-auto">
             {tripTabs.map((t) => (
@@ -612,11 +603,7 @@ export default function GroceryListPage() {
           </div>
         )}
 
-        {sales.length > 0 && items.length > 0 && <SwapToSave compact onSwapped={() => { setTimeout(() => window.location.reload(), 900) }} />}
-
-        {sales.length > 0 && items.length > 0 && (
-          <DealsBanner sets={sales.filter((x) => !isUpcoming(x))} nextSets={sales.filter((x) => isUpcoming(x))} names={items.filter((i) => !i.have).map((i) => i.name)} />
-        )}
+        {shoppableCount > 0 && <p className="mb-2 text-sm text-muted-foreground print:hidden">Already have something? Tap <em>have?</em> on it and it stays off the cart.</p>}
 
         <GroceryList
           items={items}
@@ -633,6 +620,34 @@ export default function GroceryListPage() {
             buy: i.quantity ? toPackages({ name: i.name, quantity: i.quantity, unit: i.unit, searchTerm: i.search_term }).label.replace(/^1 × package$/, '') || null : null,
           })}
         />
+
+        <div className="mt-6" />
+        {/* Family vote, pantry check and sides sit under the list since Nov 15: send comes first. */}
+        <LastCallCard onItems={load} />
+        <PantryCheck rows={items} weekKey={weekStart ?? 'now'} onKeepOff={keepOff} />
+        <SidesCard meals={planMeals} have={items.map((i) => i.name)} onAdd={(name, category, searchTerm, qty) => addItem(name, category, searchTerm, 'extra', qty)} />
+
+        {/* Budget bar */}
+        {budget > 0 && (
+          <div className="mb-6 rounded-xl border border-border p-4 print:hidden">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Everything on the list{learned ? ' (at your store)' : ' (estimate)'}</span>
+              <span className={`font-semibold ${over ? 'text-destructive' : 'text-primary'}`}>${storeEst.toFixed(0)} of ${budget} budget</span>
+            </div>
+            <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
+              <div className={`h-full ${over ? 'bg-destructive' : 'bg-primary'}`} style={{ width: `${Math.min(100, (storeEst / budget) * 100)}%` }} />
+            </div>
+            <p className="text-[11px] text-muted-foreground mt-2">
+              {over ? 'Over — swap one dinner for a budget pick on your dashboard, or mark pantry items you already have.' : `About $${Math.max(0, budget - storeEst).toFixed(0)} of room for the rest of the week.`}
+            </p>
+          </div>
+        )}
+
+        {sales.length > 0 && items.length > 0 && <SwapToSave compact onSwapped={() => { setTimeout(() => window.location.reload(), 900) }} />}
+
+        {sales.length > 0 && items.length > 0 && (
+          <DealsBanner sets={sales.filter((x) => !isUpcoming(x))} nextSets={sales.filter((x) => isUpcoming(x))} names={items.filter((i) => !i.have).map((i) => i.name)} />
+        )}
 
         {/* Stock up while it's cheap */}
         {stockUpOn && sales.length > 0 && (
@@ -730,7 +745,7 @@ export default function GroceryListPage() {
           <ReceiptUpload onDone={() => { setAskActual(null); load() }} />
         </div>
 
-        {!sendInView && shoppableCount > 0 && (
+        {!sendInView && !heroInView && shoppableCount > 0 && (
           <div className="fixed bottom-2 sm:bottom-4 inset-x-0 z-40 px-3 sm:px-4 print:hidden native-raise">
             <div className="mx-auto max-w-2xl flex items-center justify-between gap-3 sm:gap-4 rounded-2xl border border-border bg-background/95 backdrop-blur shadow-xl px-4 sm:px-5 py-2.5 sm:py-3">
               <div className="min-w-0">
