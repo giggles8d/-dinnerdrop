@@ -193,6 +193,13 @@ export async function weekOptions(admin: SupabaseClient, userId: string, current
 export async function shouldOfferOptions(admin: SupabaseClient, userId: string, latest: Meal[] | null): Promise<boolean> {
   if (!latest?.length) return false
   if (latest.some((m) => (m as Meal & { pickedByFamily?: boolean }).pickedByFamily)) return false
+  // A family vote is open: the family is picking this week by text, so the dashboard shows the vote, not the
+  // pick-your-week options (Nov 15 2026: "I pick my dinners" + texting hid Sarah's family vote card).
+  const { data: prof } = await admin.from('profiles').select('household_id').eq('id', userId).maybeSingle()
+  if (prof?.household_id) {
+    const { count: open } = await admin.from('vote_rounds').select('id', { count: 'exact', head: true }).eq('household_id', prof.household_id).eq('status', 'open')
+    if (open) return false
+  }
   if (await picksOwn(admin, userId)) return true
   const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', userId)
   return !(count ?? 0)
