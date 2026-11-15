@@ -131,7 +131,9 @@ export function parseReceiptJSON(out: string): Partial<ParsedReceipt> {
   try { return parseClaudeJSON<Partial<ParsedReceipt>>(out) } catch { /* salvage below */ }
   const cleaned = out.replace(/```json\n?/g, '').replace(/```\n?/g, '')
   const start = cleaned.indexOf('{')
-  if (start < 0) throw new Error('No JSON in receipt parse')
+  // No JSON at all: the model answered in words (not a receipt, unreadable screenshots). Treat it as "no items found"
+  // so the family gets the friendly "try the order details screen" message instead of a server error (Nov 15 2026).
+  if (start < 0) { console.warn('[receipts] parse returned no JSON:', out.slice(0, 200)); return { store: null, service: 'Other', orderedOn: null, total: null, items: [] } }
   const itemsAt = cleaned.indexOf('"items"', start)
   const head = itemsAt > 0 ? cleaned.slice(start, itemsAt) : ''
   const grab = (key: string): string | null => { const m = head.match(new RegExp(`"${key}"\\s*:\\s*("([^"]*)"|[-0-9.]+|null)`)); return m ? (m[2] ?? m[1]) : null }
