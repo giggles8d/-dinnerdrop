@@ -40,6 +40,7 @@ export interface Meal {
   addedBy?: string      // who added that family recipe (shown as "Rich's recipe")
   heartedBy?: string    // a family member saved this to favorites from a tap-to-vote page ("♥ added by Rich"); the planner can remove it
   original?: string     // the family's own words for it
+  quick?: boolean       // store-bought shortcut version (lib/shortcuts): true = family tapped "Make it faster", false = switched back; unset follows the Pre-cut shortcuts setting
   swaps?: string[]      // easy alternatives for the vague parts ("any veg: green beans, corn, broccoli")
   familyRating?: number // the family's own 1–5 rating of their recipe; higher comes up in the vote more often
   shareOk?: boolean     // the family said DinnerDrop may add their recipe (no names) to the shared library
