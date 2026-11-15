@@ -110,7 +110,9 @@ const RULES: Rule[] = [
 
 /** Turn one grocery-list line into a store purchase. */
 export function toPackages(line: ListLine): PackagePlan {
-  const name = (line.searchTerm || line.name || '').trim()
+  // "soda, dr pepper zero sugar" (a family's typed item) → "dr pepper zero sugar soda": Instacart found nothing for the
+  // comma form once a pack size was added (Nov 15 2026 live test).
+  const name = (line.searchTerm || line.name || '').trim().replace(/^([a-z][a-z ]{1,20}),\s*(.+)$/i, '$2 $1')
   const unit = (line.unit ?? '').trim().toLowerCase()
   const n = parseQuantity(line.quantity ?? null) ?? 1
   const cups = VOL_TO_CUPS[unit] != null ? n * VOL_TO_CUPS[unit] : null
