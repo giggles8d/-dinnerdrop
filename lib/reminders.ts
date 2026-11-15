@@ -127,7 +127,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
               // Ordered before → the one-tap reorder text (lib/reorder): YES gets the Instacart cart link.
               if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
-              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals), REORDER_ASK)
+              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
               else await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned —\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
             }
             // The Sunday Drop v3 is this family's week email now (one email, not two); the plain plan email only
@@ -182,7 +182,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             }
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
               if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
-              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals), REORDER_ASK)
+              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
               else await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned —\n${names.join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
             }
           }

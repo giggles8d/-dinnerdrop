@@ -5,7 +5,7 @@ import { MessageSquareText, X } from 'lucide-react'
 
 /**
  * Asked right after a family's first cart (Sarah, Nov 15 2026): 0 of 23 families who sent a cart came back for a
- * second, and only 4 of them had given a number, so the weekly "reply YES for your cart" text (lib/reorder) could
+ * second, and only 4 of them had given a number, so the weekly text with their cart link (lib/reorder) could
  * not reach them. Shows on the grocery list once they have sent a cart and we have no number for them.
  * Re-checks when the tab comes back into focus (they return from the store's site). Dismissable for 30 days.
  */
@@ -39,7 +39,7 @@ export default function CartTextOffer() {
       const j = await r.json()
       if (!r.ok) { setErr(j.error || 'That didn’t save. Try again.'); return }
       if (j.familyRequired) { setNeedsFamily(true); return }
-      setDone('You’re set. Look for a text from us in a minute. When next week is ready we text you the dinners; reply YES and your cart link comes right back.')
+      setDone('You’re set. Look for a text from us in a minute. Every week we text you the dinners with your cart link, already filled.')
     } catch { setErr('That didn’t save. Try again.') } finally { setBusy(false) }
   }
 
@@ -60,7 +60,7 @@ export default function CartTextOffer() {
               </div>
             ) : (
               <>
-                <p className="text-sm text-muted-foreground mt-1">When your new week is ready, we text you the dinners. Reply <span className="font-semibold text-foreground">YES</span> and we text back your cart, already filled. No app to open.</p>
+                <p className="text-sm text-muted-foreground mt-1">Every week we text you the dinners with your cart link, already filled. Tap and check out. No app to open.</p>
                 <form onSubmit={submit} className="mt-3 flex flex-col sm:flex-row gap-2">
                   <label htmlFor="cart-text-phone" className="sr-only">Your cell</label>
                   <input id="cart-text-phone" value={phone} onChange={(e) => setPhone(e.target.value)} inputMode="tel" autoComplete="tel" placeholder="Your cell (555) 555-1234"

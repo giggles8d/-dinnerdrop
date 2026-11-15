@@ -197,7 +197,7 @@ export default function QuickSetup({ onDone, demo = false, initialStep = 0 }: { 
           <h2 className="text-2xl font-heading font-bold text-foreground">Where should we text your week?</h2>
           <ul className="text-sm text-muted-foreground mt-2 mb-5 space-y-1.5">
             <li>✓ Your dinners the moment they&apos;re ready, every week</li>
-            <li>✓ Reply <span className="font-semibold text-foreground">YES</span> and your grocery cart comes back, already filled</li>
+            <li>✓ Your grocery cart link in the same text, already filled</li>
             <li>✓ Your family votes by reply, and anyone can text <span className="font-semibold text-foreground">ADD milk</span> to the list</li>
           </ul>
           <label className="block text-sm font-semibold text-foreground mb-2" htmlFor="qs-phone">Your cell</label>
