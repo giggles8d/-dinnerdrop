@@ -23,3 +23,8 @@ Reviews of v1: ChatGPT concept 8.5/10, script 7/10 ("approve the concept, revise
 Both: hook too slow; door/light gag breaks the door geometry; Drop sounded like an ad; v1 implied instant delivery; "I feel useful" weak; don't mock Mom; real screens only, lock character designs.
 Split: Gemini thinks a grocery bag reads as a delivery company (suggested an orange sticky-note pad); ChatGPT says keep Drop the bag as the main mascot with stronger branding. Length: Gemini 18-19 s, ChatGPT 23-25 s.
 Next episodes from reviews: Dinner Before Practice, The Chicken Thaw Lie, Three Different Dinners, The List Stayed Home, The Husband Text.
+
+## Built Nov 14 2026 (pending Sarah's approval)
+- Cast ref job dee0d8fa-1a82-4e9e-9046-a4f984b2b6a1 (b/castB.png): Frank = white top-freezer fridge, eyes + brows on the freezer door; Drop = kraft bag, orange D badge. Frames f1-f6 nano_banana_2 (1.5 cr each); clips k1-k6 Kling 2.5 Turbo Unlimited (free); upload start frames to Higgsfield from the scratchpad (outputs/uploads paths are refused).
+- Voices: Frank = Dylan (speech_rate -15, pitch -3); Drop = Evan. Gaps trimmed in b/a_*.wav. App screens: launch pweek/plist/pcart. Overlays b/mk.js, edit b/build.sh. ~20 credits total.
+- Final: 2026-11-14_FrankDrop_Ep01_Mustard.mp4 (24.9 s); transcript checked, no repeats.
