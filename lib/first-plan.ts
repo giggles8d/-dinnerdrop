@@ -10,7 +10,7 @@ import { pickWithOverlap } from '@/lib/overlap'
 import { proteinGroup, scaleMix } from '@/lib/protein-mix'
 import { varietyLimits, varietyOk, recentUsage, overusePenalty } from '@/lib/variety'
 import { completePlates } from '@/lib/full-plate'
-import { DEFAULT_SHAPE, mondayOf, type PlanShape } from '@/lib/plan'
+import { DEFAULT_SHAPE, mondayOf, localNow, type PlanShape } from '@/lib/plan'
 import { savePlan } from '@/lib/autoplan'
 import { trackStep } from '@/lib/activation'
 import { grantNewFamilyTrial } from '@/lib/family-grant'
@@ -36,10 +36,28 @@ export async function buildFirstPlan(admin: SupabaseClient, userId: string, opts
     if (built.reason === 'not enough library recipes') await trackStep(admin, userId, 'first_plan_failed', { found: built.found ?? 0 })
     return { ok: false, reason: built.reason }
   }
-  const saved = await savePlan(admin, userId, mondayOf(new Date()), built.meals, built.shape)
+  const saved = await savePlan(admin, userId, await firstWeekStart(admin, userId), built.meals, built.shape)
   const totalCost = saved.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   await trackStep(admin, userId, 'first_plan_saved', { source: 'library', count: saved.length })
   return { ok: true, meals: saved, totalCost, existing: false }
+}
+
+/**
+ * Which week a brand-new family's first plan is for: this week, or the coming Monday when it's already Saturday or
+ * Sunday where they live (same rule as a weekend vote, lib/texting targetWeekFor).
+ * Nov 15 2026 (a Sunday): every family that joined that day got a "your week is ready" text for a week dated to the
+ * Monday that had just passed; the Sunday Drop then found no week from today on, built a different one for the coming
+ * week and emailed it, so the text, the email and the dashboard disagreed for 15 families. Saturday sign-ups hit the
+ * same thing the next morning when their untouched vote closed.
+ */
+export async function firstWeekStart(admin: SupabaseClient, userId: string, now: Date = new Date()): Promise<string> {
+  const { data: p } = await admin.from('profiles').select('timezone').eq('id', userId).maybeSingle()
+  const { weekday } = localNow(p?.timezone || 'America/New_York', now)
+  if (weekday === 'sat' || weekday === 'sun') {
+    const d = new Date(now); d.setUTCDate(d.getUTCDate() + (weekday === 'sat' ? 2 : 1))
+    return mondayOf(d)
+  }
+  return mondayOf(now)
 }
 
 /**
