@@ -117,24 +117,29 @@ const PROCESSED = /\b(seasoned|marinated|strips?|tips?|thin|milanesa|philly|stir
 /** Rank: every search word present > few extra words > in stock > sized > cheaper. Loose produce for "each" lines. */
 const NOT_FOOD = /\b(seeds?|plants?|seedlings?|live plant|mg\b|supplement|capsules?|candle|scent|toy)\b/i
 const CUT_UP = /\b(diced|chopped|sliced|pre-?cut|florets|chunks|spears|spiral|riced|shredded|mashed)\b/i
-function rank(search: string, items: WalmartProduct[], kind: PackagePlan['kind'], needOz?: number | null): WalmartProduct[] {
+export function rank(search: string, items: WalmartProduct[], kind: PackagePlan['kind'], opts: { needOz?: number | null; whole?: boolean; name?: string } = {}): WalmartProduct[] {
+  const { needOz, whole, name } = opts
   const ws = words(search)
+  // The family's own words count too: "frozen mixed vegetables" shouldn't lose to a 5 lb bag that also says "peas carrots corn".
+  const ns = name ? words(name) : []
   const prices = items.map((p) => p.price).filter((x): x is number => x != null).sort((a, b) => a - b)
-  const median = prices.length ? prices[Math.floor(prices.length / 2)] : null
+  const low = prices.length ? prices[Math.floor((prices.length - 1) / 4)] : null
   const score = (p: WalmartProduct, i: number) => {
     const pw = words(p.name)
     const set = new Set(pw)
-    const hit = ws.filter((w) => set.has(w)).length / Math.max(1, ws.length)
+    const hitOf = (q: string[]) => q.filter((w) => set.has(w)).length / Math.max(1, q.length)
+    const hit = Math.max(hitOf(ws), ns.length ? hitOf(ns) : 0)
     const extra = pw.filter((w) => !ws.includes(w)).length   // "seasoned philly" when we asked for sirloin steak
-    let s = hit * 10 - Math.min(extra, 6) * 0.6 + (p.inStock ? 2 : 0) + (p.sizeOz || p.sizeCt ? 0.5 : 0) - (p.price ?? 20) / 50
+    let s = hit * 10 - Math.min(extra, 6) * 0.6 + (p.inStock ? 4 : 0) + (p.sizeOz || p.sizeCt ? 0.5 : 0) - (p.price ?? 20) / 50
     if (kind === 'each') s += p.sizeCt ? 1.5 : PACK_WORDS.test(p.name) ? -1.5 : 1   // loose or "3 ct" over a 3 lb bag
     if (kind === 'lb' && PROCESSED.test(p.name) && !PROCESSED.test(search)) s -= 3   // plain cut, not "seasoned philly strips"
     // Nov 15 2026 live test: "beefsteak tomato" matched tomato SEEDS, "yellow onions" matched diced onions,
     // "crusty bread" a $35 marketplace loaf, "1.25 lb chicken" a 5 lb tray.
     if (NOT_FOOD.test(p.name) && !NOT_FOOD.test(search)) s -= 8
-    if (kind === 'each' && CUT_UP.test(p.name) && !CUT_UP.test(search)) s -= 3
-    if (median != null && p.price != null && p.price > Math.max(median * 3, median + 8)) s -= 4
-    if (needOz && p.sizeOz && p.sizeOz > needOz * 2.5 && p.sizeOz - needOz > 16) s -= 1.5
+    if ((kind === 'each' || whole) && CUT_UP.test(p.name) && !CUT_UP.test(search)) s -= 3
+    // Marketplace outliers ($35 sourdough, $60 pineapple) next to normal store prices.
+    if (low != null && p.price != null && p.price > Math.max(low * 4, low + 10)) s -= 6
+    if (needOz && p.sizeOz && p.sizeOz > needOz * 1.5 && p.sizeOz - needOz > 8) s -= Math.min(8, (p.sizeOz / needOz - 1.5) * 2.5)
     s -= i * 0.25   // Walmart's own relevance order breaks ties
     return s
   }
@@ -195,10 +200,13 @@ export async function matchList(admin: SupabaseClient, items: GroceryItem[], opt
     while (i < items.length) {
       const idx = i++
       const it = items[idx]
-      const plan = toPackages({ name: it.name, quantity: it.quantity, unit: it.unit, searchTerm: it.searchTerm })
+      // Walmart sells "Italian seasoning"; a search for "dried Italian herbs" surfaces $10 freeze-dried jars first.
+      const searchTerm = (it.searchTerm || it.name).replace(/\bdried italian herbs?\b/i, 'italian seasoning').replace(/^crusty bread$/i, 'french bread loaf')
+      const plan = toPackages({ name: it.name, quantity: it.quantity, unit: it.unit, searchTerm })
       const raw = { n: parseQuantity(it.quantity ?? null) ?? 1, unit: (it.unit ?? '').trim().toLowerCase() }
       const needOz = rawNeedOz(raw) ?? (plan.kind === 'lb' ? plan.count * 16 : null)
-      const ranked = rank(plan.search, await searchWalmart(admin, plan.search), plan.kind, needOz)
+      const whole = /^(count|ct|each|whole|head|heads|)$/.test(raw.unit)
+      const ranked = rank(plan.search, await searchWalmart(admin, plan.search), plan.kind, { needOz, whole, name: it.name })
       const found = opts.storeBrands ? storeBrandFirst('walmart', plan.search, ranked, (p) => p.name) : ranked
       const product = found[0] ?? null
       out[idx] = {
