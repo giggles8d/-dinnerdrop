@@ -115,8 +115,12 @@ function words(s: string): string[] { return s.toLowerCase().replace(/[^a-z0-9 ]
 const PACK_WORDS = /\b(bag|lb|lbs|pound|bunch)\b/i
 const PROCESSED = /\b(seasoned|marinated|strips?|tips?|thin|milanesa|philly|stir[- ]fry|kabob|cubes?|ground|patties|jerky|breaded|frozen)\b/i
 /** Rank: every search word present > few extra words > in stock > sized > cheaper. Loose produce for "each" lines. */
-function rank(search: string, items: WalmartProduct[], kind: PackagePlan['kind']): WalmartProduct[] {
+const NOT_FOOD = /\b(seeds?|plants?|seedlings?|live plant|mg\b|supplement|capsules?|candle|scent|toy)\b/i
+const CUT_UP = /\b(diced|chopped|sliced|pre-?cut|florets|chunks|spears|spiral|riced|shredded|mashed)\b/i
+function rank(search: string, items: WalmartProduct[], kind: PackagePlan['kind'], needOz?: number | null): WalmartProduct[] {
   const ws = words(search)
+  const prices = items.map((p) => p.price).filter((x): x is number => x != null).sort((a, b) => a - b)
+  const median = prices.length ? prices[Math.floor(prices.length / 2)] : null
   const score = (p: WalmartProduct, i: number) => {
     const pw = words(p.name)
     const set = new Set(pw)
@@ -125,6 +129,12 @@ function rank(search: string, items: WalmartProduct[], kind: PackagePlan['kind']
     let s = hit * 10 - Math.min(extra, 6) * 0.6 + (p.inStock ? 2 : 0) + (p.sizeOz || p.sizeCt ? 0.5 : 0) - (p.price ?? 20) / 50
     if (kind === 'each') s += p.sizeCt ? 1.5 : PACK_WORDS.test(p.name) ? -1.5 : 1   // loose or "3 ct" over a 3 lb bag
     if (kind === 'lb' && PROCESSED.test(p.name) && !PROCESSED.test(search)) s -= 3   // plain cut, not "seasoned philly strips"
+    // Nov 15 2026 live test: "beefsteak tomato" matched tomato SEEDS, "yellow onions" matched diced onions,
+    // "crusty bread" a $35 marketplace loaf, "1.25 lb chicken" a 5 lb tray.
+    if (NOT_FOOD.test(p.name) && !NOT_FOOD.test(search)) s -= 8
+    if (kind === 'each' && CUT_UP.test(p.name) && !CUT_UP.test(search)) s -= 3
+    if (median != null && p.price != null && p.price > Math.max(median * 3, median + 8)) s -= 4
+    if (needOz && p.sizeOz && p.sizeOz > needOz * 2.5 && p.sizeOz - needOz > 16) s -= 1.5
     s -= i * 0.25   // Walmart's own relevance order breaks ties
     return s
   }
@@ -133,7 +143,28 @@ function rank(search: string, items: WalmartProduct[], kind: PackagePlan['kind']
 
 const PACKAGE_UNIT = /^(bag|box|pack|package|jar|can|bottle|carton|container|tub|loaf|case|\d+-pack|dozen)s?$/i
 /** How many of this product cover the recipe amount. `raw` is the line as written (for "2 jars", "14 tortillas"). */
+const RAW_OZ: Record<string, number> = { oz: 1, ounce: 1, ounces: 1, lb: 16, lbs: 16, pound: 16, pounds: 16, g: 1 / 28.35, gram: 1 / 28.35, grams: 1 / 28.35, kg: 35.27 }
+const COUNTISH = /^(count|ct|each|whole|head|heads|bunch|bunches|piece|pieces|large|medium|small|)$/i
+/** Rough weight of one, for produce sold in bags: 8 apples is one 3 lb bag, not two. */
+const EACH_OZ: Array<[RegExp, number]> = [
+  [/\bpotato/i, 8], [/\bsweet potato/i, 10], [/\bonion/i, 8], [/\bapple/i, 6], [/\borange/i, 6], [/\bpear/i, 6],
+  [/\blemon|\blime/i, 4], [/\bcarrot/i, 2.5], [/\bavocado/i, 6], [/\bbell pepper|\bpepper/i, 6], [/\btomato/i, 5],
+  [/\bzucchini|\bsquash/i, 8], [/\bcucumber/i, 10], [/\bpeach|\bnectarine|\bplum/i, 5], [/\bbanana/i, 4],
+]
+/** The amount the line actually asks for in ounces, when it was written by weight ("27 oz black beans"). */
+export function rawNeedOz(raw?: { n: number; unit: string }): number | null {
+  return raw && RAW_OZ[raw.unit] != null ? raw.n * RAW_OZ[raw.unit] : null
+}
 export function quantityFor(plan: PackagePlan, product: WalmartProduct, raw?: { n: number; unit: string }): number {
+  // Sold one at a time ("Fresh Butter Lettuce, Each"): buy as many as the line says.
+  if (raw && COUNTISH.test(raw.unit) && raw.n >= 1 && !product.sizeOz && !product.sizeCt && /\beach\b/i.test(product.name)) return Math.min(20, Math.ceil(raw.n - 1e-9))
+  // Written by weight: cover that weight, not the recipe-rounded package plan (40 oz tenders = 2 × 22 oz, not 3).
+  const exact = rawNeedOz(raw)
+  if (exact && product.sizeOz) return Math.max(1, Math.ceil(exact / product.sizeOz - 0.03))
+  if (plan.kind === 'each' && product.sizeOz && product.sizeOz >= 16 && !product.sizeCt) {
+    const per = EACH_OZ.find(([re]) => re.test(plan.search))?.[1] ?? 6
+    return Math.max(1, Math.ceil((plan.count * per) / product.sizeOz - 0.05))
+  }
   const wantOz = parseSize(plan.search).oz
   if (plan.kind === 'lb') {
     const needOz = plan.count * 16
@@ -165,14 +196,16 @@ export async function matchList(admin: SupabaseClient, items: GroceryItem[], opt
       const idx = i++
       const it = items[idx]
       const plan = toPackages({ name: it.name, quantity: it.quantity, unit: it.unit, searchTerm: it.searchTerm })
-      const ranked = rank(plan.search, await searchWalmart(admin, plan.search), plan.kind)
+      const raw = { n: parseQuantity(it.quantity ?? null) ?? 1, unit: (it.unit ?? '').trim().toLowerCase() }
+      const needOz = rawNeedOz(raw) ?? (plan.kind === 'lb' ? plan.count * 16 : null)
+      const ranked = rank(plan.search, await searchWalmart(admin, plan.search), plan.kind, needOz)
       const found = opts.storeBrands ? storeBrandFirst('walmart', plan.search, ranked, (p) => p.name) : ranked
       const product = found[0] ?? null
       out[idx] = {
         line: { name: it.name, quantity: String(it.quantity ?? ''), unit: it.unit ?? '', category: it.category },
         plan: { search: plan.search, count: plan.count, kind: plan.kind, label: plan.label },
         product,
-        qty: product ? quantityFor(plan, product, { n: parseQuantity(it.quantity ?? null) ?? 1, unit: (it.unit ?? '').trim().toLowerCase() }) : 0,
+        qty: product ? quantityFor(plan, product, raw) : 0,
         alternatives: found.slice(1, 5),
       }
     }
