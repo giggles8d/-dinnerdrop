@@ -104,7 +104,7 @@ const RULES: Rule[] = [
   { re: /\b(broccoli|cauliflower|potatoes?|sweet potatoes?|carrots?|green beans|brussels sprouts|apples?|mushrooms?|zucchini|squash)\b/i,
     plan: ({ oz, n }) => (oz != null ? { count: Math.ceil((oz / 16) * 4 - 1e-9) / 4, kind: 'lb', label: `${Math.ceil((oz / 16) * 4 - 1e-9) / 4} lb` } : { count: ceil(n || 1), kind: 'each', label: `${ceil(n || 1)} each` }) },
   // Seasonings last, so "pork tenderloin, garlic pepper" or "no-salt-added tomatoes" isn't bought as a spice jar.
-  { re: /\b(?<!no-)(?<!no )(salt|pepper(corns)?|black pepper|powder|paprika|cumin|oregano|basil|thyme|rosemary|cinnamon|nutmeg|seasoning|flakes|bay leaves?|chili powder|curry|turmeric|ginger powder|allspice|cloves ground|sesame seeds)\b/i,
+  { re: /\b(?<!no-)(?<!no )(?<!dr\.? )(salt|pepper(corns)?|black pepper|powder|paprika|cumin|oregano|basil|thyme|rosemary|cinnamon|nutmeg|seasoning|flakes|bay leaves?|chili powder|curry|turmeric|ginger powder|allspice|cloves ground|sesame seeds)\b/i,
     plan: ({ name, n, unit }) => (/\b(bell|jalape\S*|serrano|poblano|habanero|fresh)\b/i.test(name) ? { count: COUNT_UNITS.has(unit) ? ceil(n) : 1, kind: 'each', label: `${COUNT_UNITS.has(unit) ? ceil(n) : 1} each` } : pkg(1, 'jar')) },
 ]
 
@@ -113,7 +113,8 @@ export function toPackages(line: ListLine): PackagePlan {
   // "soda, dr pepper zero sugar" (a family's typed item) → "dr pepper zero sugar soda": Instacart found nothing for the
   // comma form once a pack size was added (Nov 15 2026 live test).
   const name = (line.searchTerm || line.name || '').trim().replace(/^([a-z][a-z ]{1,20}),\s*(.+)$/i, '$2 $1')
-  const unit = (line.unit ?? '').trim().toLowerCase()
+  // "12 pack", "12pk", "12-pk" all mean a 12-pack.
+  const unit = (line.unit ?? '').trim().toLowerCase().replace(/^(\d+)\s*-?\s*(pack|pk)s?$/, '$1-pack')
   const n = parseQuantity(line.quantity ?? null) ?? 1
   const cups = VOL_TO_CUPS[unit] != null ? n * VOL_TO_CUPS[unit] : null
   const oz = WT_TO_OZ[unit] != null ? n * WT_TO_OZ[unit] : null
@@ -121,7 +122,7 @@ export function toPackages(line: ListLine): PackagePlan {
   // "2 jar salsa". Keep their count; rules only add a package size. (Nov 15 2026 audit: 23 lines lost packages.)
   const packaged = PACKAGE_WORDS.test(unit)
   // Match on the item's own name first; the search term can carry extra words ("pork tenderloin roasted garlic pepper").
-  const own = (line.name || '').trim()
+  const own = (line.name || '').trim().replace(/^([a-z][a-z ]{1,20}),\s*(.+)$/i, '$2 $1')
   const rule = RULES.find((r) => own && has(own, r.re)) ?? RULES.find((r) => has(name, r.re))
   if (packaged) {
     const count = ceil(n)
@@ -132,7 +133,7 @@ export function toPackages(line: ListLine): PackagePlan {
     const ruleSize = size && sameKind(unit, p!.label) ? size : undefined
     const hint = !sized && count > 1 ? SIZE_HINTS.find(([re]) => re.test(own) || re.test(name))?.[1] : undefined
     const use = sized ? undefined : (hint ?? ruleSize)
-    return { search: use ? `${name} ${use}` : name, count, kind: 'package', label: `${count} × ${use ? use + ' ' : ''}${what}` }
+    return { search: use ? `${name} ${use}` : name, count, kind: 'package', label: `${count} × ${use ? (use.startsWith(what.replace('-', ' ')) ? use : `${use} ${what}`) : what}` }
   }
   for (const r of rule ? [rule] : []) {
     const p = r.plan({ n, unit, cups, oz, name })
