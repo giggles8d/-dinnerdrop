@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { X } from 'lucide-react'
-import { openExternal, tapHaptic } from '@/lib/native'
+import { isNativeApp, openExternal, tapHaptic } from '@/lib/native'
 import { track } from '@/lib/activation'
 import type { GroceryCategory, GroceryItem } from '@/types'
 import type { WalmartMatch, WalmartProduct } from '@/lib/walmart'
@@ -30,19 +30,57 @@ export default function WalmartButton({ groceryList, weekStart, onSent }: Props)
 
   const itemCount = Object.values(groceryList).reduce((n, arr) => n + arr.length, 0)
 
+  const [done, setDone] = useState<{ sent: number; total: number; missing: string[] } | null>(null)
+
+  async function fetchMatches(): Promise<WalmartMatch[] | null> {
+    const res = await fetch('/api/walmart', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ groceryList }) })
+    const j = await res.json()
+    if (!res.ok) { setError(j.error || 'Could not reach Walmart. Try again in a minute.'); return null }
+    return j.matches as WalmartMatch[]
+  }
+
+  /** Optional review: match, then show the swap sheet before anything goes to the cart. */
   async function start() {
     tapHaptic(); setLoading(true); setError(null)
-    track('cta_tap', { page: 'grocery-list', id: 'walmart_button' })
+    track('cta_tap', { page: 'grocery-list', id: 'walmart_review' })
     try {
-      const res = await fetch('/api/walmart', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ groceryList }) })
-      const j = await res.json()
-      if (!res.ok) { setError(j.error || 'Could not reach Walmart. Try again in a minute.'); return }
-      const m = j.matches as WalmartMatch[]
+      const m = await fetchMatches()
+      if (!m) return
       setMatches(m)
       const init: Record<number, { product: WalmartProduct | null; qty: number }> = {}
       m.forEach((x, i) => { init[i] = { product: x.product, qty: x.qty } })
       setPicked(init)
     } catch { setError('Could not reach Walmart. Try again in a minute.') } finally { setLoading(false) }
+  }
+
+  /**
+   * One tap (Nov 15 2026): 4 of 4 families who opened the review sheet left without sending.
+   * Match, then go straight to the filled Walmart cart. The tab opens on the tap itself so
+   * phone browsers don't block it while we match (~4 s).
+   */
+  async function oneTap() {
+    tapHaptic(); setLoading(true); setError(null); setDone(null)
+    track('cta_tap', { page: 'grocery-list', id: 'walmart_button' })
+    const win = isNativeApp() ? null : window.open('', '_blank')
+    try { if (win) { win.opener = null; win.document.title = 'Walmart'; win.document.body.innerHTML = '<p style="font:16px -apple-system,sans-serif;padding:24px">Filling your Walmart cart…</p>' } } catch { /* cross-origin later */ }
+    const fail = (msg: string) => { try { win?.close() } catch { /* ignore */ } setError(msg) }
+    try {
+      const m = await fetchMatches()
+      if (!m) { try { win?.close() } catch { /* ignore */ } return }
+      const lines = m.filter((x) => x.product && x.qty > 0).map((x) => ({ product: x.product as WalmartProduct, qty: x.qty }))
+      if (!lines.length) { fail('We couldn\u2019t match your list to Walmart products. Try Instacart instead.'); return }
+      const total = Math.round(lines.reduce((s2, p) => s2 + (p.product.price ?? 0) * p.qty, 0) * 100) / 100
+      const res = await fetch('/api/walmart', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ confirm: true, lines: lines.map((p) => ({ itemId: p.product.itemId, qty: p.qty })), weekStart, estTotal: total, itemCount }),
+      })
+      const j = await res.json()
+      if (!res.ok || !j.link) { fail(j.error || 'Could not build the cart link.'); return }
+      if (win && !win.closed) win.location.href = j.link
+      else await openExternal(j.link)
+      setDone({ sent: lines.length, total, missing: m.filter((x) => !x.product).map((x) => x.line.name) })
+      onSent?.()
+    } catch { fail('Could not reach Walmart. Try again in a minute.') } finally { setLoading(false) }
   }
 
   const chosen = matches ? matches.map((_, i) => picked[i]).filter((p) => p && p.product && p.qty > 0) as Array<{ product: WalmartProduct; qty: number }> : []
@@ -71,16 +109,26 @@ export default function WalmartButton({ groceryList, weekStart, onSent }: Props)
   return (
     <div className="space-y-2">
       <button
-        onClick={start}
+        onClick={oneTap}
         disabled={loading || itemCount === 0}
         className="w-full sm:w-auto px-8 py-3 rounded-lg text-white font-semibold text-base disabled:opacity-50 transition-colors shadow-lg flex items-center justify-center gap-2"
         style={{ backgroundColor: BLUE }}
       >
         <span aria-hidden className="inline-block w-5 h-5 rounded-full" style={{ background: `radial-gradient(circle, ${YELLOW} 35%, transparent 36%), conic-gradient(${YELLOW} 0 20deg, transparent 20deg 60deg, ${YELLOW} 60deg 80deg, transparent 80deg 120deg, ${YELLOW} 120deg 140deg, transparent 140deg 180deg, ${YELLOW} 180deg 200deg, transparent 200deg 240deg, ${YELLOW} 240deg 260deg, transparent 260deg 300deg, ${YELLOW} 300deg 320deg, transparent 320deg 360deg)` }} />
-        {loading ? 'Matching your list to Walmart…' : 'Shop at Walmart'}
+        {loading ? 'Filling your Walmart cart…' : 'Send to Walmart cart'}
       </button>
       {error && <p className="text-sm text-destructive">{error}</p>}
-      {!matches && !error && <p className="text-[11px] text-muted-foreground">We match every item to a Walmart product, you swap anything you like, then one tap fills your Walmart cart. You check out on Walmart.com for pickup or delivery.</p>}
+      {done ? (
+        <p className="text-[12px] text-foreground">
+          ✓ {done.sent} items sent to your Walmart cart{done.total ? ` (about $${Math.round(done.total)})` : ''}. Check out on Walmart.com for pickup or delivery.
+          {done.missing.length > 0 && <span className="block text-amber-800 mt-0.5">Add these yourself (no close match): {done.missing.join(', ')}.</span>}
+        </p>
+      ) : !matches && !error && (
+        <p className="text-[11px] text-muted-foreground">
+          One tap fills your Walmart cart with every item, matched to store sizes. You check out on Walmart.com.{' '}
+          <button type="button" onClick={start} disabled={loading} className="underline underline-offset-2 hover:text-foreground">Review items first</button>
+        </p>
+      )}
 
       {matches && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center p-0 sm:p-4" onClick={() => !sending && setMatches(null)}>
