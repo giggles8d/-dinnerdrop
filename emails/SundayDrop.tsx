@@ -15,6 +15,9 @@ export interface DropProps {
   secondary: Array<{ label: string; href: string }>
   hero: { name: string; image: string; minutes: number; cost: number | null; kept: number; blurb: string; href: string; cta: string; ctaIsButton: boolean } | null
   pick: { product: string; why: string; href: string } | null
+  /** Black Friday kitchen deals (Nov 16–30 2026). */
+  deals?: { product: string; why: string; href: string }[] | null
+  dealsGuide?: string | null
   tip: { text: string; label: string | null; href: string | null } | null
   unsubscribeUrl: string
   settingsUrl: string
@@ -81,6 +84,20 @@ export default function SundayDrop(p: DropProps) {
                 <Text style={{ ...para, fontSize: '14px' }}>{p.pick.why}</Text>
                 <Text style={{ ...para, margin: '0' }}><Link href={p.pick.href} style={textLink}>See it on Amazon →</Link></Text>
                 <Text style={disc}>Paid link. As an Amazon Associate, DinnerDrop earns from qualifying purchases.</Text>
+              </Section>
+            </Section>
+          ) : null}
+
+          {/* 3b. Black Friday kitchen deals (through Cyber Monday 2026) */}
+          {p.deals && p.deals.length ? (
+            <Section style={sec}>
+              <Section style={pickBox}>
+                <Text style={{ ...kicker, margin: '0 0 4px' }}>BLACK FRIDAY KITCHEN DEALS</Text>
+                {p.deals.map((d) => (
+                  <Text key={d.href} style={{ ...para, fontSize: '14px', margin: '0 0 8px' }}><Link href={d.href} style={textLink}>{d.product}</Link>: {d.why}</Text>
+                ))}
+                <Text style={{ ...para, fontSize: '14px', margin: '0' }}>Deals change fast, so tap for today&apos;s price.{p.dealsGuide ? <> <Link href={p.dealsGuide} style={textLink}>More deals worth it →</Link></> : null}</Text>
+                <Text style={disc}>Paid links. As an Amazon Associate, DinnerDrop earns from qualifying purchases.</Text>
               </Section>
             </Section>
           ) : null}

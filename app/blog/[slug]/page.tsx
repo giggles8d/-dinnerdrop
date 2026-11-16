@@ -154,7 +154,8 @@ function inlineFormat(text: string): React.ReactNode {
     const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
     if (linkMatch) {
       return (
-        <a key={i} href={linkMatch[2]} className="text-[#1a5c38] underline hover:opacity-80">
+        <a key={i} href={linkMatch[2]} className="text-[#1a5c38] underline hover:opacity-80"
+          {...(/amazon\.com\//.test(linkMatch[2]) ? { target: '_blank', rel: 'sponsored nofollow noopener noreferrer' } : {})}>
           {linkMatch[1]}
         </a>
       )
