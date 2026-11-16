@@ -17216,6 +17216,338 @@ Fish tacos are one of the best weeknight dinners precisely because they feel lik
 **[Get your weekly dinner plan at DinnerDrop](https://www.dinnerdrop.app/start)**
 `,
   },
+  {
+    slug: 'black-friday-kitchen-deals-for-busy-families',
+    title: "Black Friday Kitchen Deals for Busy Families (2026)",
+    description:
+      "Our short list of Black Friday 2026 kitchen deals that actually make weeknight dinners easier: stand mixers, cookware sets, an Instant Pot and gifts under $25, plus what to skip.",
+    publishDate: '2026-11-16',
+    readingTimeMinutes: 5,
+    primaryKeyword: 'black friday kitchen deals',
+    content: `Black Friday is the one weekend when the kitchen tools families actually use every week go on real sale. It is also the weekend when it is easiest to buy something that ends up in the back of a cabinet.
+
+This is our short list for busy families: tools that make weeknight dinners faster, that are well reviewed by thousands of buyers, and that were marked as Black Friday deals on Amazon when we checked on November 16, 2026.
+
+*Paid links: as an Amazon Associate, DinnerDrop earns from qualifying purchases. It never changes what you pay. We have not tested every product below ourselves; ratings come from Amazon's verified buyers as of November 16, 2026. Deals change by the hour, so tap through for today's price.*
+
+## How to shop Black Friday without regret
+
+- **Buy what you will use every week.** A thermometer you grab three nights a week beats a gadget you use twice a year.
+- **Replace the thing that annoys you.** The warped pan, the dull grater, the pot holder with a hole in it.
+- **Check the real price, not the "list" price.** A big "% off" can be off an inflated list price. If it was the same price last month, it is not a deal.
+- **Read the 3-star reviews.** They tell you the real downsides better than the 5-star ones.
+
+## Worth waiting for a sale
+
+These are the bigger buys that families tend to keep for years.
+
+**Stand mixers.** If you bake with kids, make bread or mash a lot of potatoes, a stand mixer is the classic Black Friday buy. Our three picks:
+
+- [KitchenAid Classic Series 4.5-Qt Stand Mixer](https://www.amazon.com/dp/B003OXNBYC?tag=dinnerdrop-20): the classic tilt-head mixer, 4.7 stars from 12,000+ ratings.
+- [KitchenAid Artisan 5-Qt Stand Mixer](https://www.amazon.com/dp/B0000635XA?tag=dinnerdrop-20): a bigger bowl with a handle and lots of colors, 4.7 stars from 30,000+ ratings.
+- [Cuisinart 5.5-Qt 12-Speed Stand Mixer](https://www.amazon.com/dp/B01H7R1EJY?tag=dinnerdrop-20): the biggest bowl of the three with a splash guard included, 4.7 stars from 10,000+ ratings.
+
+We compare them side by side in [the best stand mixer for families](/blog/best-stand-mixer-for-families).
+
+**Cookware sets.** If your pans are scratched, warped or mismatched, a set is usually cheaper than buying pieces one by one.
+
+- [T-fal Ultimate Hard Anodized Nonstick 12-Piece Set](https://www.amazon.com/dp/B004KSN8XY?tag=dinnerdrop-20): an everyday nonstick set, 4.6 stars from 8,000+ ratings.
+- [Calphalon Classic Stainless Steel 10-Piece Set](https://www.amazon.com/dp/B00HQWONBW?tag=dinnerdrop-20): stainless with measuring marks and straining lids, 4.4 stars from 5,000+ ratings.
+- [Cuisinart Chef's Classic Stainless 7-Piece Set](https://www.amazon.com/dp/B00008CM67?tag=dinnerdrop-20): a smaller stainless starter set, 4.5 stars.
+
+More in [the best cookware set for weeknight cooking](/blog/best-cookware-set-for-weeknight-cooking).
+
+**Time savers.**
+
+- [Instant Pot Duo 6-Qt 7-in-1](https://www.amazon.com/dp/B00FLYWNYQ?tag=dinnerdrop-20): pressure cooker, slow cooker and rice cooker in one. 4.7 stars from 180,000+ ratings.
+- [Cuisinart 8-Cup Food Processor](https://www.amazon.com/dp/B00MVWGFP4?tag=dinnerdrop-20): chops onions, shreds cheese and makes pesto in seconds. 4.6 stars from 9,000+ ratings.
+
+## Small, useful and usually under $25
+
+Great for stocking stuffers, teacher gifts or treating yourself.
+
+- [TempPro TP19H Instant-Read Thermometer](https://www.amazon.com/dp/B07XXSYLL8?tag=dinnerdrop-20): reads in about a second, so chicken comes out done, not dry. 4.7 stars from 56,000+ ratings.
+- [Microplane Classic Zester/Grater](https://www.amazon.com/dp/B00151WA06?tag=dinnerdrop-20): lemon zest, garlic, ginger and fluffy parmesan. 4.8 stars from 49,000+ ratings.
+- [KitchenAid Asteroid Pot Holders (2-Pack)](https://www.amazon.com/dp/B07VYZFQW2?tag=dinnerdrop-20): cotton with silicone grips. 4.6 stars from 9,000+ ratings.
+- [Dash Mini Waffle Maker](https://www.amazon.com/dp/B010TCP3SC?tag=dinnerdrop-20): the tiny waffle maker kids love, 4.6 stars from 150,000+ ratings.
+- [bella Stack & Store Mini Waffle Maker](https://www.amazon.com/dp/B0CYJ5X2FM?tag=dinnerdrop-20): ceramic nonstick, and the makers stack for storage.
+
+The full list is in [kitchen gifts under $25](/blog/kitchen-gifts-under-25).
+
+## What we would skip
+
+- **Huge "everything" gadget bundles.** You will use two pieces.
+- **Single-use appliances you have no counter space for.** Be honest about where it will live.
+- **Cookware with 20+ pieces.** Most of the count is utensils and lids. A good 10 to 12 piece set covers a family.
+
+## The best deal is using what you buy
+
+A new pan only saves time if you know what you are making in it. [DinnerDrop](https://www.dinnerdrop.app/start) plans five weeknight dinners for your family and budget every week, then sends the whole grocery list to your Instacart or Walmart cart in one tap. It's free, no card needed.
+
+You can also see every deal in one place on our [kitchen essentials page](/cookware#black-friday).
+`,
+  },
+  {
+    slug: 'best-stand-mixer-for-families',
+    title: "Best Stand Mixer for Families: KitchenAid vs Cuisinart vs Hamilton Beach",
+    description:
+      "An honest stand mixer buying guide for families: KitchenAid Classic vs Artisan, Cuisinart 5.5-quart, Hamilton Beach and when a hand mixer is enough. Who each fits and the downsides.",
+    publishDate: '2026-11-16',
+    readingTimeMinutes: 6,
+    primaryKeyword: 'best stand mixer for families',
+    content: `A stand mixer is one of the few kitchen buys that families keep for 10 or 20 years. It is also expensive, which is why so many people wait for Black Friday to buy one.
+
+This guide compares the stand mixers we would actually consider for a busy family kitchen, who each one is for, and the honest downsides.
+
+*Paid links: as an Amazon Associate, DinnerDrop earns from qualifying purchases. We have not lab-tested these mixers; we compared their specs and what thousands of verified Amazon buyers say (ratings as of November 16, 2026). Prices change constantly, so tap through for today's price.*
+
+## The short answer
+
+| If you... | Get this |
+|---|---|
+| Want the classic and bake a few times a month | KitchenAid Classic 4.5-Qt |
+| Bake big batches or want color options | KitchenAid Artisan 5-Qt |
+| Want the biggest bowl and extras in the box | Cuisinart 5.5-Qt 12-Speed |
+| Want a starter mixer on a budget | Hamilton Beach 4-Qt 7-Speed |
+| Only bake a couple of times a year | KitchenAid 5-Speed Hand Mixer |
+
+## KitchenAid Classic Series 4.5-Qt (K45SS)
+
+[See the KitchenAid Classic on Amazon](https://www.amazon.com/dp/B003OXNBYC?tag=dinnerdrop-20)
+
+**Who it's for:** families who bake cookies, quick breads and the occasional pizza dough, and want the mixer that works with KitchenAid's attachments.
+
+- 4.5-quart stainless steel bowl. KitchenAid says it mixes up to 8 dozen cookies in one batch.
+- Tilt-head design, so you can reach into the bowl easily.
+- All-metal construction.
+- 4.7 stars from 12,000+ Amazon ratings.
+
+**Downsides:** the Classic's bowl has no handle, and it is the smallest bowl here. It is also heavy, so plan a spot on the counter for it.
+
+## KitchenAid Artisan 5-Qt (KSM150PS)
+
+[See the KitchenAid Artisan on Amazon](https://www.amazon.com/dp/B0000635XA?tag=dinnerdrop-20)
+
+**Who it's for:** families who bake often or in big batches, and anyone who wants their mixer in a color they love.
+
+- 5-quart stainless steel bowl with a handle. KitchenAid says it mixes up to 9 dozen cookies in one batch.
+- Same tilt-head design and metal build as the Classic.
+- Available in dozens of colors.
+- 4.7 stars from 30,000+ Amazon ratings, the most reviewed mixer on this list.
+
+**Downsides:** it usually costs more than the Classic for half a quart more room. If you rarely double recipes, the Classic does the same job.
+
+## Cuisinart 5.5-Qt 12-Speed Stand Mixer
+
+[See the Cuisinart stand mixer on Amazon](https://www.amazon.com/dp/B01H7R1EJY?tag=dinnerdrop-20)
+
+**Who it's for:** families who want the most capacity and everything included in the box.
+
+- 5.5-quart polished stainless steel bowl, the largest here.
+- 12 speeds and a tilt-back head.
+- Comes with a chef's whisk, dough hook, flat paddle and a splash guard with pour spout.
+- 4.7 stars from 10,000+ Amazon ratings.
+
+**Downsides:** fewer add-on attachments than KitchenAid, and fewer color choices.
+
+## Hamilton Beach 4-Qt 7-Speed Stand Mixer
+
+[See the Hamilton Beach mixer on Amazon](https://www.amazon.com/dp/B0758BQPY8?tag=dinnerdrop-20)
+
+**Who it's for:** a first mixer, a college kid's apartment or anyone who bakes now and then and doesn't want to spend much.
+
+- 4-quart stainless steel bowl with planetary mixing action, so the beater covers the whole bowl.
+- 300-watt motor and 7 speeds.
+- A built-in carry handle.
+- 4.5 stars from 10,000+ Amazon ratings.
+
+**Downsides:** lighter build and a smaller motor than the others, so very stiff bread doughs are harder work for it.
+
+## Or skip the stand mixer: KitchenAid 5-Speed Hand Mixer
+
+[See the KitchenAid hand mixer on Amazon](https://www.amazon.com/dp/B0096TXQNE?tag=dinnerdrop-20)
+
+If you mostly whip cream, mix brownie batter or mash potatoes, a hand mixer does it for a fraction of the price and fits in a drawer. It has 5 speeds and a cord that locks to either side. 4.6 stars from 28,000+ ratings.
+
+## How to choose
+
+1. **Count how often you'd use it.** Weekly baking makes a stand mixer worth it. A few times a year, get the hand mixer.
+2. **Measure your counter.** Tilt-head mixers need clearance above them to open.
+3. **Think about batch size.** Families who double cookie recipes will appreciate 5 quarts or more.
+4. **Check today's price.** These mixers go on sale often. Compare against the last few weeks, not the list price.
+
+## What to make with it
+
+Mashed potatoes for a crowd, meatball mix, pizza dough on Friday, banana bread with the brown bananas. If you'd rather not plan the dinners yourself, [DinnerDrop](https://www.dinnerdrop.app/start) plans five weeknight dinners for your family every week and sends the grocery list to your Instacart or Walmart cart in one tap. It's free, no card needed.
+
+See more Black Friday picks in our [Black Friday kitchen deals for busy families](/blog/black-friday-kitchen-deals-for-busy-families).
+`,
+  },
+  {
+    slug: 'best-cookware-set-for-weeknight-cooking',
+    title: "Best Cookware Set for Weeknight Family Cooking (Nonstick vs Stainless)",
+    description:
+      "Which cookware set fits a family that cooks most nights: T-fal nonstick, Calphalon and Cuisinart stainless, and Lodge cast iron. What each is good at, who it fits and the honest downsides.",
+    publishDate: '2026-11-16',
+    readingTimeMinutes: 6,
+    primaryKeyword: 'best cookware set for families',
+    content: `If your pans are scratched, warped or wobble on the burner, weeknight dinners get harder than they need to be. Food sticks, things cook unevenly, and you end up scrubbing instead of sitting down.
+
+This guide covers the cookware sets we'd consider for a family that cooks most nights: what each is good at, who it fits, and the honest downsides.
+
+*Paid links: as an Amazon Associate, DinnerDrop earns from qualifying purchases. We have not lab-tested these sets; we compared what's in each box, the specs, and what thousands of verified Amazon buyers say (ratings as of November 16, 2026). Prices change constantly, so tap through for today's price.*
+
+## The short answer
+
+| If you... | Get this |
+|---|---|
+| Want easy cleanup every night | T-fal Ultimate Nonstick 12-Piece |
+| Want pans that last decades and brown well | Calphalon Classic Stainless 10-Piece |
+| Cook a lot and want a pro-style stainless set | Cuisinart MultiClad Pro 12-Piece |
+| Are starting out or have a small kitchen | Cuisinart Chef's Classic 7-Piece |
+| Love a hard sear and don't mind weight | Lodge Cast Iron 3-Skillet Set |
+
+## Nonstick or stainless?
+
+**Nonstick** is the easiest for eggs, pancakes, quesadillas and fish, and it cleans up in seconds. The coating wears out over the years, so use wooden or silicone tools and skip very high heat.
+
+**Stainless steel** lasts for decades, browns meat beautifully and can go in the oven. Food sticks if you don't preheat the pan and add oil first.
+
+Many families do both: a nonstick skillet for eggs and a stainless set for everything else.
+
+## T-fal Ultimate Hard Anodized Nonstick 12-Piece
+
+[See the T-fal Ultimate set on Amazon](https://www.amazon.com/dp/B004KSN8XY?tag=dinnerdrop-20)
+
+**Who it's for:** busy families who want easy cleanup above all.
+
+- Includes 8-inch and 10-inch fry pans, 1-, 2- and 3-quart saucepans with lids, and more.
+- Hard anodized exterior.
+- A heat indicator in the center turns solid red when the pan is preheated.
+- Oven and broiler safe to 400°F.
+- 4.6 stars from 8,000+ Amazon ratings.
+
+**Downsides:** like all nonstick, the coating won't last forever, and it needs gentler tools.
+
+## Calphalon Classic Stainless Steel 10-Piece
+
+[See the Calphalon Classic set on Amazon](https://www.amazon.com/dp/B00HQWONBW?tag=dinnerdrop-20)
+
+**Who it's for:** families ready for stainless that will last.
+
+- An impact-bonded aluminum base spreads heat evenly for browning and searing.
+- Long stainless handles that stay cool on the stovetop.
+- Measuring marks, pour spouts and straining lids, so you can drain pasta without a colander.
+- 4.4 stars from 5,000+ Amazon ratings.
+
+**Downsides:** there's a learning curve with stainless. Preheat, add oil, then add food, or it will stick.
+
+## Cuisinart MultiClad Pro 12-Piece
+
+[See the Cuisinart MultiClad Pro set on Amazon](https://www.amazon.com/dp/B009JXPS6U?tag=dinnerdrop-20)
+
+**Who it's for:** the family cook who wants pro-style pans.
+
+- Tri-ply construction all the way to the rim, so the sides heat as well as the bottom.
+- Works on induction, gas, electric and glass cooktops.
+- 4.5 stars from 11,000+ Amazon ratings.
+
+**Downsides:** usually the priciest set here, and heavier than nonstick.
+
+## Cuisinart Chef's Classic Stainless 7-Piece
+
+[See the Cuisinart Chef's Classic set on Amazon](https://www.amazon.com/dp/B00008CM67?tag=dinnerdrop-20)
+
+**Who it's for:** a first apartment, a small kitchen or anyone replacing just the basics.
+
+- An aluminum base that heats quickly and evenly.
+- Uncoated stainless that is dishwasher safe and oven safe.
+- 4.5 stars from 2,000+ Amazon ratings.
+
+**Downsides:** 7 pieces means fewer sizes. You may want to add a large skillet.
+
+## Lodge Pre-Seasoned Cast Iron 3-Skillet Set
+
+[See the Lodge 3-skillet set on Amazon](https://www.amazon.com/dp/B0BFXS6KNY?tag=dinnerdrop-20)
+
+**Who it's for:** families who love smash burgers, seared steak, cornbread and skillet dinners.
+
+- 8-, 10.25- and 12-inch skillets, pre-seasoned and ready to use.
+- Holds heat for a great sear, and goes from stovetop to oven.
+- 4.7 stars from 79,000+ Amazon ratings, the most reviewed pick here.
+
+**Downsides:** heavy, and it needs to be dried and lightly oiled after washing.
+
+## What Sarah cooks with
+
+Sarah, who started DinnerDrop, uses a [HexClad 12-inch Hybrid pan](https://www.amazon.com/dp/B07W62FH16?tag=dinnerdrop-20) at home for most weeknight dinners. It's a single pan, not a set, so it's a good add-on to any of the sets above.
+
+## How many pieces do you really need?
+
+For most families: one 10-inch and one 12-inch skillet, a 2- to 3-quart saucepan, a large pot for pasta and soup, and lids. That's why we'd pick a 10 to 12 piece set over a 20-piece one, where much of the count is utensils.
+
+## Now, what's for dinner?
+
+New pans are only half of it. [DinnerDrop](https://www.dinnerdrop.app/start) plans five weeknight dinners for your family and budget and sends the grocery list to your Instacart or Walmart cart in one tap. It's free, no card needed.
+
+See more picks in [Black Friday kitchen deals for busy families](/blog/black-friday-kitchen-deals-for-busy-families) and on our [kitchen essentials page](/cookware).
+`,
+  },
+  {
+    slug: 'kitchen-gifts-under-25',
+    title: "Kitchen Gifts Under $25 People Actually Use",
+    description:
+      "Useful kitchen gifts usually under $25: an instant-read thermometer, a Microplane, OXO spatulas, KitchenAid pot holders and mini waffle makers, all well reviewed by thousands of buyers.",
+    publishDate: '2026-11-16',
+    readingTimeMinutes: 4,
+    primaryKeyword: 'kitchen gifts under 25',
+    content: `The best kitchen gifts are the small things people use every week but never buy for themselves. Every pick below was usually under $25 on Amazon when we checked, and each is well reviewed by thousands of buyers.
+
+*Paid links: as an Amazon Associate, DinnerDrop earns from qualifying purchases. We have not tested every product ourselves; ratings come from verified Amazon buyers as of November 16, 2026. Prices change, especially around Black Friday, so tap through for today's price.*
+
+## For the person who cooks every night
+
+**[TempPro TP19H Instant-Read Thermometer](https://www.amazon.com/dp/B07XXSYLL8?tag=dinnerdrop-20)**
+
+Takes the guessing out of chicken, pork and burgers. It reads in about a second, the screen is backlit and rotates, and it turns on when you open it. 4.7 stars from 56,000+ ratings.
+
+**[Microplane Classic Zester/Grater](https://www.amazon.com/dp/B00151WA06?tag=dinnerdrop-20)**
+
+Zests lemons, grates garlic and ginger into paste, and turns parmesan into fluffy mounds. Once someone has one, they reach for it constantly. 4.8 stars from 49,000+ ratings.
+
+**[OXO Good Grips Silicone Spatula Set (3-Piece)](https://www.amazon.com/dp/B088P4DXBH?tag=dinnerdrop-20)**
+
+A small spatula for saucepans, an everyday spatula and a spoon spatula for scooping. Heat resistant and dishwasher safe. 4.7 stars from 3,000+ ratings.
+
+**[KitchenAid Asteroid Pot Holders (2-Pack)](https://www.amazon.com/dp/B07VYZFQW2?tag=dinnerdrop-20)**
+
+Heat-resistant cotton with silicone grips. Everyone's pot holders have a burn mark somewhere. 4.6 stars from 9,000+ ratings.
+
+## For kids and weekend breakfasts
+
+**[Dash Mini Waffle Maker](https://www.amazon.com/dp/B010TCP3SC?tag=dinnerdrop-20)**
+
+The 4-inch waffle maker that took over the internet. Small enough for a dorm, fun enough for kids to make their own. 4.6 stars from 150,000+ ratings.
+
+**[bella Stack & Store Mini Waffle Maker](https://www.amazon.com/dp/B0CYJ5X2FM?tag=dinnerdrop-20)**
+
+Same idea, with a ceramic nonstick coating and a design that stacks if you buy two. Comes in soft colors. 4.4 stars from 1,600+ ratings.
+
+**Honest note on mini waffle makers:** they make one small waffle at a time. Great for one or two people or for fun; slow for feeding a family of five on a school morning.
+
+## Gift tips
+
+- **Pair it with a recipe.** A thermometer plus a favorite roast chicken recipe card makes a thoughtful gift.
+- **Gift the boring upgrade.** New pot holders or a good grater gets used more than a novelty gadget.
+- **Check the delivery date** before you order for a specific day.
+
+## The gift of not planning dinner
+
+For the busy parent who has everything, the best present might be a break from "what's for dinner?" [DinnerDrop](https://www.dinnerdrop.app/start) plans five weeknight dinners for their family every week and sends the grocery list to their Instacart or Walmart cart in one tap. It's free, and you can also [gift the Family plan](/gift).
+
+More picks: [Black Friday kitchen deals for busy families](/blog/black-friday-kitchen-deals-for-busy-families).
+`,
+  },
 ] as BlogPost[]
 export function getPostBySlug(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p && p.slug === slug)

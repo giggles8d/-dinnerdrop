@@ -28,6 +28,7 @@ import { libraryWeek } from '@/lib/first-plan'
 import { savePlan } from '@/lib/autoplan'
 import { varietyLimits, varietyOk } from '@/lib/variety'
 import { pickForDinner, pickUrl } from '@/lib/kitchen-picks'
+import { BLACK_FRIDAY_POST, blackFridayActive, dealsForEmail, newsletterDealUrl } from '@/lib/black-friday'
 import { shopUrl, textingUrl } from '@/lib/followup'
 import { mondayOf, DEFAULT_SHAPE } from '@/lib/plan'
 import type { Meal } from '@/types'
@@ -297,6 +298,10 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
       ctaIsButton: seg === 'done',
     } : null,
     pick: pick ? { product: pick.product, why: pick.why, href: pickUrl(pick) } : null,
+    deals: blackFridayActive(now.getTime()) && seg !== 'comeback'
+      ? dealsForEmail(hash(p.id) + Math.floor(now.getTime() / 6048e5)).filter((d) => d.asin !== pick?.asin).map((d) => ({ product: d.product, why: d.why, href: newsletterDealUrl(d) }))
+      : null,
+    dealsGuide: blackFridayActive(now.getTime()) ? link(BLACK_FRIDAY_POST, seg) : null,
     tip,
     unsubscribeUrl,
     settingsUrl: link('/settings', seg),

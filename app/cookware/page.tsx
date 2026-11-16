@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import PublicHeader from '@/components/site/PublicHeader'
 import { COOKWARE, cookwareUrl } from '@/lib/cookware'
+import { BLACK_FRIDAY_DEALS, BLACK_FRIDAY_POST, blackFridayActive, dealUrl } from '@/lib/black-friday'
+
+// Re-render hourly so the Black Friday section disappears on its own after Cyber Monday.
+export const revalidate = 3600
 
 const count = COOKWARE.reduce((n, g) => n + g.items.length, 0)
 const title = `Kitchen Essentials for Weeknight Family Dinners (${count} Tools) — DinnerDrop`
@@ -35,6 +39,31 @@ export default function CookwarePage() {
           As an Amazon Associate, DinnerDrop earns from qualifying purchases. Each link goes to one well-reviewed product on Amazon;
           it never changes what you pay. <Link href="/disclosure" className="underline">Disclosure</Link>
         </p>
+
+        {blackFridayActive() && (
+          <section id="black-friday" className="mb-12 rounded-2xl border-2 border-accent/40 bg-accent/5 p-5">
+            <p className="text-xs font-semibold tracking-widest text-accent-foreground uppercase mb-1">Through Cyber Monday</p>
+            <h2 className="text-xl font-heading font-bold text-foreground mb-1">Black Friday kitchen deals</h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              Well-reviewed kitchen tools that were marked as Black Friday deals on Amazon when we checked. Deals change fast, so tap through for today&apos;s price.{' '}
+              <Link href={BLACK_FRIDAY_POST} className="underline">Our guide to what&apos;s worth buying →</Link>
+            </p>
+            <ul className="space-y-3">
+              {BLACK_FRIDAY_DEALS.map((d) => (
+                <li key={d.asin} className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-foreground">{d.product}{d.kind === 'gift' && <span className="ml-2 align-middle rounded-full bg-primary/10 text-primary px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide">Gift idea</span>}</p>
+                    <p className="text-sm text-muted-foreground">{d.why}</p>
+                  </div>
+                  <a href={dealUrl(d)} target="_blank" rel="sponsored nofollow noopener noreferrer"
+                    className="shrink-0 mt-0.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 whitespace-nowrap">
+                    Today&apos;s price
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section className="mb-12 rounded-2xl border border-primary/20 bg-primary/5 p-5">
           <h2 className="text-lg font-heading font-bold text-foreground mb-1">Start here: the {starters.length}-piece weeknight kit</h2>
