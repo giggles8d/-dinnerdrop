@@ -163,7 +163,13 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
           ? mondayOf(new Date(planNow.getTime() + 2 * 86400000 + (planningDay === 'sat' ? 86400000 : 0)))
           : mondayOf(planNow)
         const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', target).limit(1)
-        if (!existing?.length) {
+        // A texting family's vote for that week settles it (lib/texting finalizeRound), so don't plan it here too.
+        // Nov 16 2026: Jenny's Monday plan day ran before her Sunday vote closed in the same run — the family got
+        // "this week's dinners are planned" with one menu and "the week is set" with another in the same minute.
+        const { data: openRound } = p.household_id && !existing?.length
+          ? await admin.from('vote_rounds').select('id').eq('household_id', p.household_id).eq('week_start', target).eq('status', 'open').limit(1)
+          : { data: null }
+        if (!existing?.length && !openRound?.length) {
           const meals = await autoPlan(admin, p, settings, target)
           if (meals) {
             report.autoPlans++
