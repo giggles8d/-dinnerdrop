@@ -207,7 +207,16 @@ export async function matchList(admin: SupabaseClient, items: GroceryItem[], opt
       const needOz = rawNeedOz(raw) ?? (plan.kind === 'lb' ? plan.count * 16 : null)
       const whole = /^(count|ct|each|whole|head|heads|)$/.test(raw.unit)
       const ranked = rank(plan.search, await searchWalmart(admin, plan.search), plan.kind, { needOz, whole, name: it.name })
-      const found = opts.storeBrands ? storeBrandFirst('walmart', plan.search, ranked, (p) => p.name) : ranked
+      let found = ranked
+      if (opts.storeBrands && ranked.length > 1) {
+        // Store brand only when it's the same kind of thing and doesn't cost more for this list
+        // (Marketside pre-cut chunks for a whole pineapple, a $4.28 organic 3 lb bag for 3 onions).
+        const sb = storeBrandFirst('walmart', plan.search, ranked, (p) => p.name)
+        const a = sb[0], b = ranked[0]
+        const cost = (p: WalmartProduct) => (p.price ?? 99) * quantityFor(plan, p, raw)
+        const sameKind = !((plan.kind === 'each' || whole) && CUT_UP.test(a.name) && !CUT_UP.test(b.name))
+        if (a !== b && sameKind && cost(a) <= cost(b) * 1.1) found = sb
+      }
       const product = found[0] ?? null
       out[idx] = {
         line: { name: it.name, quantity: String(it.quantity ?? ''), unit: it.unit ?? '', category: it.category },
