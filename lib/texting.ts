@@ -274,6 +274,9 @@ export function parseInbound(raw: string): Parsed {
   const end = String.raw`[\s.!?]*$`
   if (new RegExp(`^(YES|Y|JOIN|YEP|YEAH|SURE|OK|OKAY)(\\s+(PLEASE|THANKS|THANK YOU))?${end}`).test(u)) return { kind: 'optin' }
   if (/^(STOP|STOPALL|UNSUBSCRIBE|CANCEL|END|QUIT)\b/.test(u)) return { kind: 'stop' }
+  // Plain-English opt-outs (Nov 17 2026: "I'm not interested anymore" / "Take me off on your schedule" were answered, not honored).
+  if (/^(PLEASE\s+)?(TAKE ME OFF|REMOVE ME|UNSUBSCRIBE ME|OPT ME OUT|STOP TEXTING( ME)?|STOP SENDING|DON'?T TEXT ME|DO NOT TEXT|NO MORE TEXTS|LEAVE ME ALONE)\b/.test(u)
+    || /^(I'?M|I AM|IM)\s+(NOT|NO LONGER)\s+INTERESTED\b/.test(u)) return { kind: 'stop' }
   if (/^(START|UNSTOP|RESUME)\b/.test(u)) return { kind: 'start' }
   if (new RegExp(`^(HELP|INFO|\\?)${end}`).test(u)) return { kind: 'help' }
   if (new RegExp(`^(LIST|GROCERY|GROCERIES|GROCERY LIST|THE LIST)${end}`).test(u)) return { kind: 'list' }
@@ -800,7 +803,12 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         if (r.ok) n++
       }
       await admin.from('sms_messages').update({ intent: 'planner_note' }).eq('twilio_sid', sid ?? '')
-      return { reply: n ? `Sent to ${others.filter((x) => x.phone).map((x) => x.name).join(', ')}.` : `Nobody else has joined the texts yet.`, handled: true, member: m }
+      if (!n) {
+        // Nobody else to pass it to: it's a note for the DinnerDrop team (Nov 17 2026: "I understand if it cost" got "Nobody else has joined").
+        await admin.from('help_messages').insert({ user_id: owner.id, email: String((owner as { email?: string }).email ?? 'sms@dinnerdrop.app'), message: `[text from ${m.phone ?? 'unknown'}] ${body.trim().slice(0, 1000)}`, page: 'sms' })
+        return { reply: `Got it — I passed that to the DinnerDrop team and a real person will text you back soon.`, handled: true, member: m }
+      }
+      return { reply: `Sent to ${others.filter((x) => x.phone).map((x) => x.name).join(', ')}.`, handled: true, member: m }
     }
     if (to && to !== m.phone) {
       const r = await sendSms(to, `${sender}: ${body.trim().slice(0, 600)}\n(Reply here to text the family back.)`)
