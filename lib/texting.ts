@@ -298,7 +298,8 @@ export function parseInbound(raw: string): Parsed {
   if (/^(STOP|STOPALL|UNSUBSCRIBE|CANCEL|END|QUIT)\b/.test(u)) return { kind: 'stop' }
   // Plain-English opt-outs (Nov 17 2026: "I'm not interested anymore" / "Take me off on your schedule" were answered, not honored).
   if (/^(PLEASE\s+)?(TAKE ME OFF|REMOVE ME|UNSUBSCRIBE ME|OPT ME OUT|STOP TEXTING( ME)?|STOP SENDING|DON'?T TEXT ME|DO NOT TEXT|NO MORE TEXTS|LEAVE ME ALONE)\b/.test(u)
-    || /^(I'?M|I AM|IM)\s+(NOT|NO LONGER)\s+INTERESTED\b/.test(u)) return { kind: 'stop' }
+    // Whole message only: "I'm not interested in the tacos" is about a dinner, not the texts.
+    || /^(I'?M|I AM|IM)\s+(NOT|NO LONGER)\s+INTERESTED(\s+(ANYMORE|ANY MORE|IN THIS|IN THESE|IN DINNERDROP))?[\s.!?]*$/.test(u)) return { kind: 'stop' }
   // Wider net for the same thing ("wrong number", "cancel my account", "I don't want these texts", "we're not interested"):
   // whole message only, no dinner numbers, so "not interested in the tacos" still goes to the AI step. Tested in scripts/opt-out.test.ts.
   if (OPT_OUT_RE.test(t) && !/\d/.test(t)) return { kind: 'stop' }
