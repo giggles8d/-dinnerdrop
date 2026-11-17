@@ -117,10 +117,12 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       if (tripMode && voteTrip && settings.schedule.autoPlan && Date.now() - started < 200_000) {
         const resolved = resolveTrips(tcfg)[voteTrip.index]
         const familyVotes = family && settings.texting.enabled && resolved?.vote !== false
-        const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', voteTrip.key).limit(1)
+        const { data: existing, error: existingErr } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', voteTrip.key).limit(1)
         const { data: recentPlan } = await admin.from('meal_plans').select('created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
         const active = recentPlan?.[0]?.created_at && now.getTime() - new Date(recentPlan[0].created_at).getTime() <= ACTIVE_DAYS * 86400000
-        if (active && !familyVotes && !existing?.length) {
+        // A failed "plan already?" lookup is not "no plan yet" (Nov 17 2026: a second week for the same dates).
+        if (existingErr) report.errors.push(`${p.email}: plan lookup failed, skipped auto-plan (${existingErr.message})`)
+        else if (active && !familyVotes && !existing?.length) {
           const meals = await autoPlan(admin, p, settings, voteTrip.key)
           if (meals) {
             report.autoPlans++
@@ -162,8 +164,11 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
         const target = (planningDay === 'sat' || planningDay === 'sun')
           ? mondayOf(new Date(planNow.getTime() + 2 * 86400000 + (planningDay === 'sat' ? 86400000 : 0)))
           : mondayOf(planNow)
-        const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', target).limit(1)
-        if (!existing?.length) {
+        const { data: existing, error: existingErr } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', target).limit(1)
+        // A failed lookup is not "no plan yet": Nov 17 2026 (Tuesday, the catch-up day after Jenny's Monday plan
+        // day) this planned her 11/16 week a second time and texted a third menu in two days.
+        if (existingErr) report.errors.push(`${p.email}: plan lookup failed, skipped auto-plan (${existingErr.message})`)
+        else if (!existing?.length) {
           const meals = await autoPlan(admin, p, settings, target)
           if (meals) {
             report.autoPlans++

@@ -67,6 +67,11 @@ export async function buildWeekMeals(admin: SupabaseClient, p: AutoPlanProfile, 
  * Command Center (lib/menu-drafts), the reviewed draft goes out instead (or nothing, if she skipped the family).
  */
 export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<Meal[] | null> {
+  // Never a second plan for a week the family already has (Nov 17 2026: the Tuesday catch-up run planned Jenny's
+  // 11/16 week again — a third menu in two days — after the caller's "no plan yet" check came back empty on an
+  // error). If this check itself fails, we don't know, so we don't plan: the next run tries again.
+  const { data: already, error: alreadyErr } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', weekStart).limit(1)
+  if (alreadyErr || already?.length) return null
   const { data: draft } = await admin.from('menu_drafts').select('id, user_id, week_start, meals, edits, status').eq('user_id', p.id).eq('week_start', weekStart).maybeSingle()
   let chosen: Meal[] | null = null
   if (draft) {
