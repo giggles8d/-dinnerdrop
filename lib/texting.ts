@@ -267,6 +267,28 @@ export type Parsed =
 /** "save this: kielbasa and pierogies", "our recipe - …", "family recipe: …" → the family's own dinner, saved to favorites. */
 export const SAVE_RECIPE_RE = /^(?:save(?: this| that| it| our| my)?(?: recipe| dinner)?|our recipe|my recipe|family recipe|add (?:a |our |my )?recipe|new recipe)\s*[:\-–]?\s+([\s\S]+)$/i
 
+/**
+ * "Take me off your list", "I'm not interested anymore", "please stop texting me", "remove my number", "wrong number",
+ * "unsubscribe me", "I don't want these texts". Whole message; a trailing "thanks"/"please" is fine. Exported for tests.
+ */
+export const OPT_OUT_RE = new RegExp(
+  String.raw`^(?:please\s+|pls\s+|hi\s+|hey\s+|ok\s+|no\s+)*(?:` +
+  [
+    String.raw`(?:i(?:'m| am)\s+|we(?:'re| are)\s+)?(?:not|no longer)\s+interested(?:\s+(?:anymore|any more|in this|in these|in dinnerdrop))?`,
+    String.raw`(?:take|remove|get|leave)\s+(?:me|us|my (?:number|phone)|this number)\s+(?:off|out|out of|from)\b.*`,
+    String.raw`(?:stop|quit|don'?t|do not|please stop|no more)\s+(?:texting|messaging|contacting|sending(?: me| us)?(?: these| texts| messages)?)\b.*`,
+    String.raw`(?:stop|quit|cancel|end)\s+(?:the|these|this|my|all)?\s*(?:texts?|messages?|service|dinnerdrop|texting|notifications?|reminders?|alerts?)\b.*`,
+    String.raw`unsubscribe(?:\s+me|\s+us)?\b.*`,
+    String.raw`opt\s*(?:me\s+)?out\b.*`,
+    String.raw`(?:i|we)\s+(?:don'?t|do not)\s+want\s+(?:these|this|any(?: more)?|the|your)\s+(?:texts?|messages?|dinners?|service|reminders?)\b.*`,
+    String.raw`(?:remove|delete|cancel)\s+(?:my|our)\s+(?:number|phone|account|subscription)\b.*`,
+    String.raw`wrong\s+number\b.*`,
+    String.raw`leave\s+(?:me|us)\s+alone\b.*`,
+  ].join('|') +
+  String.raw`)(?:[\s,.!]*(?:please|pls|thanks|thank you|ty))*[\s.!?]*$`,
+  'i'
+)
+
 export function parseInbound(raw: string): Parsed {
   const t = raw.trim()
   const u = t.toUpperCase()
@@ -277,6 +299,9 @@ export function parseInbound(raw: string): Parsed {
   // Plain-English opt-outs (Nov 17 2026: "I'm not interested anymore" / "Take me off on your schedule" were answered, not honored).
   if (/^(PLEASE\s+)?(TAKE ME OFF|REMOVE ME|UNSUBSCRIBE ME|OPT ME OUT|STOP TEXTING( ME)?|STOP SENDING|DON'?T TEXT ME|DO NOT TEXT|NO MORE TEXTS|LEAVE ME ALONE)\b/.test(u)
     || /^(I'?M|I AM|IM)\s+(NOT|NO LONGER)\s+INTERESTED\b/.test(u)) return { kind: 'stop' }
+  // Wider net for the same thing ("wrong number", "cancel my account", "I don't want these texts", "we're not interested"):
+  // whole message only, no dinner numbers, so "not interested in the tacos" still goes to the AI step. Tested in scripts/opt-out.test.ts.
+  if (OPT_OUT_RE.test(t) && !/\d/.test(t)) return { kind: 'stop' }
   if (/^(START|UNSTOP|RESUME)\b/.test(u)) return { kind: 'start' }
   if (new RegExp(`^(HELP|INFO|\\?)${end}`).test(u)) return { kind: 'help' }
   if (new RegExp(`^(LIST|GROCERY|GROCERIES|GROCERY LIST|THE LIST)${end}`).test(u)) return { kind: 'list' }
@@ -1030,6 +1055,7 @@ Facts you may answer from (the planner is ${facts.family}):
 - The household: ${facts.people?.length ? facts.people.join(' | ') : 'unknown'}
 - ${facts.ownerMessage ? `${facts.family} recently texted the family: "${facts.ownerMessage}"` : `${facts.family} hasn't texted the family recently`}
 - What texting can do: numbers = votes, ADD items, MENU, LIST, TONIGHT, TALLY, RECIPE + number, SUGGEST + a dish, telling the bot what they like / don't like / are allergic to (saved to their own profile, and the planner uses it), USE UP + items, a photo of a product, a store flyer, a dinner (box, plate or recipe card) or a screenshot, SAVE THIS + a dinner the way they make it (saved to the family's own recipes, which come up in future votes — this is how the family gets "our normal dinners"), TEXT ONLY (the vote comes as plain words instead of a picture, for phones that don't show pictures), and any food, cooking or grocery question.
+- DinnerDrop plans the dinners and builds the grocery list; nothing is delivered or cooked for them — they shop (or send the list to a store) and cook at home. If they ask when the food / order / dinner will arrive, say that plainly and kindly in one line. Never state a price, say it's free, or discuss their bill: for price or billing questions point them to https://www.dinnerdrop.app/account.
 - Never offer or promise something texting can't do (e.g. sending dinners one at a time, calling someone, or "rebuilding" / "fixing" the grocery list). Never say you did or are doing something unless it's one of the commands above. The grocery list rebuilds itself from the week's dinners when they open it; if they say it's still wrong after opening it, say the DinnerDrop team will check it today and text them back (someone reviews every text twice a day). If they can't see the pictures, tell them to reply TEXT ONLY.` : ''}
 
 Return ONLY JSON:
