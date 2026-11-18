@@ -299,7 +299,8 @@ export function parseInbound(raw: string): Parsed {
   }
   if (new RegExp(`^(ALL ?GOOD|ALL|GOOD|KEEP ?ALL|LOOKS GOOD|👍|LGTM|FINE|ALL OF THEM)${end}`).test(u)) return { kind: 'allgood' }
   if (new RegExp(`^(NONE|NO|NOPE|NAH|NONE OF THEM)${end}`).test(u)) return { kind: 'none' }
-  if (new RegExp(`^(THANKS|THANK YOU|THANKS!|THX|TY|COOL|GREAT|AWESOME|❤️|🙏)( SO MUCH| YOU)?${end}`).test(u)) return { kind: 'thanks' }
+  // "Thanks 🙂" / "This is perfect" (Janice, Nov 18 2026) are thanks, not questions for the AI step: a trailing smiley is fine.
+  if (new RegExp(`^(THANKS|THANK YOU|THANKS!|THX|TY|COOL|GREAT|AWESOME|PERFECT|THIS IS PERFECT|LOVE IT|LOVE THIS|SOUNDS GOOD|SOUNDS GREAT|❤️|🙏)( SO MUCH| YOU)?[\\s.!?]*(🙂|😊|😀|😁|😃|🥰|❤️|🙏|👍)?${end}`).test(u)) return { kind: 'thanks' }
   // "ORDER 317.97", "total 317.97", "it came to $317.97", "order was $317" — the planner recording the real bill.
   const order = t.match(/^(?:order|total|order total|bill|it came to|came to|cost|spent|paid)\s*(?:was|is|came to|:)?\s*\$?\s*(\d{1,4}(?:[.,]\d{2})?)\s*(?:(?:at|@|from)\s+)?([A-Za-z'&. ]{2,30})?\s*$/i)
   if (order) return { kind: 'order_total', total: Number(order[1].replace(',', '.')), store: order[2]?.trim() || undefined }
@@ -313,7 +314,24 @@ export function parseInbound(raw: string): Parsed {
   if (add && !(add[1].split(/\s+/).length > 7 && !/[,\n]/.test(add[1]))) return { kind: 'add', items: splitItems(add[1]) }
   const skip = u.match(/^(SKIP|NOT|NO|DROP)?\s*[:\-]?\s*((?:\d+|\s|,|&|AND)+)$/)
   if (skip && numbersIn(skip[2]).length) return { kind: 'skip', numbers: numbersIn(skip[2]), explicit: !!skip[1] }
+  // "135" typed without spaces means dinners 1, 3 and 5 (Janice, Nov 18 2026: the bot asked "did you mean to vote?"), never dinner #135.
+  const run = digitRun(t)
+  if (run) return { kind: 'skip', numbers: run, explicit: /^(SKIP|NOT|NO|DROP)\b/.test(u) }
   return { kind: 'unknown' }
+}
+
+/** "135" / "skip 2468" → [1,3,5] / [2,4,6,8]: three to eight distinct digits 1–9 with nothing between them. Two digits ("12") stay a number here; see splitTwoDigits. */
+export function digitRun(raw: string): number[] | null {
+  const m = raw.trim().toUpperCase().match(/^(?:(?:SKIP|NOT|NO|DROP)\s*[:\-]?\s*)?#?(\d{3,8})[\s.!?]*$/)
+  if (!m || !/^[1-9]+$/.test(m[1]) || new Set(m[1]).size !== m[1].length) return null
+  return m[1].split('').map(Number)
+}
+/** A bare two-digit reply ("12", "#24") to a ballot or week shorter than that number means the two single digits, in order. */
+export function splitTwoDigits(raw: string, numbers: number[], count: number): number[] {
+  if (numbers.length !== 1 || numbers[0] <= count || count > 9) return numbers
+  if (!/^(?:(?:SKIP|NOT|NO|DROP)\s*[:\-]?\s*)?#?\d{2}[\s.!?]*$/i.test(raw.trim())) return numbers
+  const d = String(numbers[0]).split('').map(Number)
+  return d[0] !== d[1] && d.every((x) => x >= 1 && x <= count) ? d : numbers
 }
 
 function numbersIn(s: string): number[] {
@@ -472,6 +490,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   const ctx = await smsContext(admin, m.id)
   // Bare numbers answer the question we asked: after "which should come back?" they mean AGAIN, not skip.
   if (parsed.kind === 'skip' && !parsed.explicit && !round && ctx.lastAsk === 'again') parsed = { kind: 'again', numbers: parsed.numbers }
+  // "12" on an 8-dinner ballot is picks 1 and 2, not dinner #12.
+  if (round && parsed.kind === 'skip') parsed = { ...parsed, numbers: splitTwoDigits(body, parsed.numbers, round.candidates.length) }
   if (ctx.askedDinner && (parsed.kind === 'unknown' || parsed.kind === 'suggest') && body.trim().length >= 3 && !/^(no|nope|nothing|skip|leftovers?|out|takeout|take out|pizza delivery|ate out|we went out)\b/i.test(body.trim())) parsed = { kind: 'save_recipe', text: body.trim() }
   const dinnerNo = !!ctx.askedDinner && /^(no|nope|nah|skip|nothing|n\/a|leftovers?|ate out|takeout|take out|we went out)\b/i.test(body.trim())
   const intent = round && parsed.kind === 'skip' ? 'pick' : parsed.kind
@@ -493,8 +513,10 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     if (!round && ctx.lastAsk !== 'again') {
       if (/^(swap|change|replace|switch)$/i.test(t)) return { reply: await swapWhich(admin, owner), handled: true, member: m }
       const nm = t.match(/^(?:(?:swap|change|replace|switch|new)\s*)?#?\s*\d{1,2}(?:\s*(?:,|&|\+|and|\s)\s*#?\s*\d{1,2})*$/i)
-      if (nm) {
-        const nums = (t.match(/\d{1,2}/g) ?? []).map(Number).filter((n) => n >= 1 && n <= 14)
+      // "swap 135" / "135" with no spaces: dinners 1, 3 and 5.
+      const runNums = digitRun(t.replace(/^(?:swap|change|replace|switch|new)\s*/i, ''))
+      if (nm || runNums) {
+        const nums = runNums ?? (t.match(/\d{1,2}/g) ?? []).map(Number).filter((n) => n >= 1 && n <= 14)
         if (nums.length) return { reply: await swapPlanDinners(admin, owner, nums), handled: true, member: m }
       }
     }
@@ -537,10 +559,10 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   }
   switch (parsed.kind) {
     case 'optin':
-      if (!m.phone_opt_in_at || m.phone_opted_out) {
-        await admin.from('household_members').update({ phone_opt_in_at: new Date().toISOString(), phone_opted_out: false }).eq('id', m.id)
-      }
-      return { reply: `You're in${hi ? `, ${hi}` : ''}. You'll get ${family}'s dinners to vote on each week. Text ADD + anything for the grocery list anytime (e.g. "add bananas"). Text MENU for this week, LIST for the list, STOP to opt out.`, handled: true, member: m }
+      // "Okay" from someone already in the texts is an acknowledgment (Janice got "You're in" twice, Nov 18 2026), not a second opt-in.
+      if (m.phone_opt_in_at && !m.phone_opted_out) return { reply: `👍`, handled: true, member: m }
+      await admin.from('household_members').update({ phone_opt_in_at: new Date().toISOString(), phone_opted_out: false }).eq('id', m.id)
+      return { reply: `You're in${hi ? `, ${hi}` : ''}. You'll get ${family}'s dinners to vote on each week. Text ADD + anything for the grocery list anytime (e.g. "add bananas"). Text MENU for this week, LIST for the list, STOP to opt out.`, handled: true, member: m, intent: 'optin' }
     case 'stop':
       // STOP is about the phone, not one row: opt out every member row with this number.
       await admin.from('household_members').update({ phone_opted_out: true }).eq('phone', phone)
@@ -1389,8 +1411,10 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
           await admin.from('sms_messages').insert({ household_id: r.member.household_id, member_id: r.member.id, direction: 'out', to_number: m.from, body: r.reply, intent: r.intent ?? 'reply', twilio_sid: sent.sid ?? null })
           report.replies++
         }
-        // Just opted in while a vote is open? Send them the menu right away. (A YES to the reorder text isn't an opt-in.)
-        if (parseInbound(m.body).kind === 'optin' && r.intent !== 'reorder_cart') {
+        // Just opted in while a vote is open? Send them the menu right away. Only a real opt-in (handleInbound says so):
+        // a YES to the reorder text isn't one, and neither is an "Okay" from someone already in (that started Janice's
+        // first vote on a Wednesday, Nov 18 2026).
+        if (r.intent === 'optin') {
           const round = await openRound(admin, r.member.household_id)
           const owner = await ownerForHousehold(admin, r.member.household_id)
           if (round && owner) await startVoteCycle(admin, owner.id)
