@@ -1,0 +1,28 @@
+{
+ "hook": "MEATLESS IN 30",
+ "hook2": "About $15 for four",
+ "title": "Veggie Burrito Bowls",
+ "ingredients": [
+  "Rice + 2 cans black beans",
+  "Frozen corn + cumin",
+  "Avocado + romaine",
+  "Salsa, cheddar, limes"
+ ],
+ "steps": [
+  "Cook the rice.\nStir in lime juice\n+ cilantro",
+  "Warm beans with cumin.\nChar the corn in a\ndry skillet, 5-6 min",
+  "Set out lettuce,\navocado, cheese + salsa.\nBuild your own bowl"
+ ],
+ "out": "2026-11-19_RecipeShort_VeggieBurritoBowls.mp4",
+ "speed": 1.12,
+ "vo": [
+  "Meatless dinner in thirty minutes.",
+  "Vegetarian burrito bowls, and everybody builds their own.",
+  "You need rice, two cans of black beans, frozen corn, avocados, lettuce, salsa, cheddar and limes.",
+  "Cook the rice, then stir in lime juice and chopped cilantro.",
+  "Warm the black beans with cumin, and char the corn in a dry skillet until it's spotty brown.",
+  "Set out lettuce, avocado, cheese and salsa, and let everyone build their own bowl.",
+  "Want four more dinners like this? DinnerDrop plans your week free, and the whole grocery list lands in your Instacart or Walmart cart in one tap.",
+  "Follow for a new dinner every day."
+ ]
+}
