@@ -811,7 +811,14 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       return { reply: `Sent to ${others.filter((x) => x.phone).map((x) => x.name).join(', ')}.`, handled: true, member: m }
     }
     if (to && to !== m.phone) {
-      const r = await sendSms(to, `${sender}: ${body.trim().slice(0, 600)}\n(Reply here to text the family back.)`)
+      // A planner who opted out can't be reached (Twilio drops the text): the note goes to the team instead, and the
+      // member is never told it was passed on when it wasn't.
+      const reachable = await plannerReachable(admin, m.household_id, to)
+      const r = reachable ? await sendSms(to, `${sender}: ${body.trim().slice(0, 600)}\n(Reply here to text the family back.)`) : { ok: false as const, sid: undefined }
+      if (!r.ok) {
+        await noteForTeam(admin, owner, m, body, sid)
+        return { reply: `Got it — I passed that to the DinnerDrop team and a real person will text you back soon.`, handled: true, member: m }
+      }
       await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: to, body: `${sender}: ${body.trim().slice(0, 600)}`, intent: 'relay', twilio_sid: r.sid ?? null })
       await admin.from('sms_messages').update({ intent: 'for_planner' }).eq('twilio_sid', sid ?? '')
       return { reply: `Passed that on to ${family} 👍`, handled: true, member: m }
@@ -954,7 +961,12 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
     const to = await ownerPhone(admin, owner)
     const isPlanner = m.profile_id === owner.id || (!!to && to === m.phone)
     if (to && !isPlanner) {
-      const r = await sendSms(to, `${sender}: ${body.trim().slice(0, 600)}\n(Reply here to text them back.)`)
+      const reachable = await plannerReachable(admin, m.household_id, to)
+      const r = reachable ? await sendSms(to, `${sender}: ${body.trim().slice(0, 600)}\n(Reply here to text them back.)`) : { ok: false as const, sid: undefined }
+      if (!r.ok) {
+        await noteForTeam(admin, owner, m, body, sid)
+        return { reply: `Got it — I passed that to the DinnerDrop team and a real person will text you back soon.`, handled: true, member: m }
+      }
       await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'out', to_number: to, body: `${sender}: ${body.trim().slice(0, 600)}`, intent: 'relay', twilio_sid: r.sid ?? null })
       await admin.from('sms_messages').update({ intent: 'for_planner' }).eq('twilio_sid', sid ?? '')
       return { reply: `I passed that to ${family} so a person can sort it out. ${helpFor(mode, family)}`, handled: true, member: m }
@@ -1096,6 +1108,23 @@ export async function ownerPhone(admin: SupabaseClient, owner: OwnerRow): Promis
   if (fromSettings) return fromSettings
   const { data } = await admin.from('household_members').select('phone').eq('household_id', owner.household_id).eq('profile_id', owner.id).limit(1)
   return normalizePhone(data?.[0]?.phone ?? null)
+}
+
+/**
+ * Can a relayed text reach the planner at `to`? Not when any member row on that phone has opted out (Nov 19 2026:
+ * Carson's "Leave" was relayed to a planner who had texted "Cancel" four days earlier — Twilio dropped it, and
+ * Carson was told "Passed that on to your family 👍").
+ */
+export async function plannerReachable(admin: SupabaseClient, householdId: string, to: string): Promise<boolean> {
+  const { data } = await admin.from('household_members').select('phone, phone_opted_out').eq('household_id', householdId)
+  const rows = (data ?? []) as Array<{ phone: string | null; phone_opted_out: boolean | null }>
+  return !rows.some((r) => normalizePhone(r.phone) === to && r.phone_opted_out)
+}
+
+/** A member's note that no one in the family can take: logged for the DinnerDrop team (help_messages), like a solo planner's. */
+async function noteForTeam(admin: SupabaseClient, owner: OwnerRow, m: MemberRow, body: string, sid: string | null): Promise<void> {
+  await admin.from('help_messages').insert({ user_id: owner.id, email: String((owner as { email?: string }).email ?? 'sms@dinnerdrop.app'), message: `[text from ${m.name || 'a member'} ${m.phone ?? 'unknown'}] ${body.trim().slice(0, 1000)}`, page: 'sms' })
+  await admin.from('sms_messages').update({ intent: 'for_team' }).eq('twilio_sid', sid ?? '')
 }
 
 /** Week a vote on `weekday` is for: Sat/Sun vote → the coming Monday; mid-week → this week. */
