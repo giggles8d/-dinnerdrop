@@ -30,6 +30,9 @@ import SavingsCard from '@/components/SavingsCard'
 import ShareWeekButton from '@/components/ShareWeekButton'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
 import { varietyLimits, varietyOk } from '@/lib/variety'
+
+/** Most dinners a family can pick for one week: a night each, Monday to Sunday. */
+const MAX_PICKS = 7
 import { repeatPlan, lastWeekPlan, mondayISO } from '@/lib/repeat-plan'
 import { mergeSettings, tripsConfig } from '@/lib/settings'
 import { listRatio, storeFactor } from '@/lib/budget-math'
@@ -530,7 +533,7 @@ function DashboardContent() {
       const next = new Set(prev)
       if (next.has(meal.day)) {
         next.delete(meal.day)
-      } else {
+      } else if (next.size < MAX_PICKS) {
         next.add(meal.day)
       }
       return next
@@ -543,7 +546,9 @@ function DashboardContent() {
     setGenerateError('')
     try {
       // pickedByFamily: they chose these themselves, so the "pick your week" options don't reopen (/api/week-options).
-      const confirmed = assignNights(selectedMeals, planShape).map((m) => ({ ...m, pickedByFamily: true }))
+      // One dinner per night at most: Nov 17–18 2026 two families confirmed 14 and 16 picks from the options
+      // screen, got "Day 8…Day 16" dinners, a $268 list and a text that named only the first 7.
+      const confirmed = assignNights(selectedMeals.slice(0, MAX_PICKS), planShape).map((m) => ({ ...m, pickedByFamily: true }))
       const confirmedCost = confirmed.reduce((sum, m) => sum + m.estimatedCost, 0)
 
       // Library signal: what this family kept vs. passed on (fire and forget).
@@ -734,7 +739,7 @@ function DashboardContent() {
                   ? `Pick ${planShape.dinnersPerWeek} from these ${pendingMeals.length} dinners. We checked ${planShape.dinnersPerWeek} to start; tap to change · ${selectedMeals.length} picked`
                   : planCount === 0
                   ? `We picked ${planShape.dinnersPerWeek} to get you started — tap any to swap · ${selectedMeals.length} selected`
-                  : `Tap the dinners you want this week — pick about ${planShape.dinnersPerWeek} · ${selectedMeals.length} selected`
+                  : `Tap the dinners you want this week — pick about ${planShape.dinnersPerWeek} · ${selectedMeals.length} selected${selectedMeals.length >= MAX_PICKS ? ' (one per night, that is the week)' : ''}`
                 : meals.length > 0
                   ? `${meals.length} dinners planned around your budget and preferences`
                   : 'Planned around your budget and preferences'}
