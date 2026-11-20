@@ -138,7 +138,16 @@ export async function runMenuDraftSweep(admin: SupabaseClient, now = new Date(),
     const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
     const ordered = (count ?? 0) > 0
     if (ordered && aiUsed >= maxAi) { r.left++; continue }
-    try { if (await buildDraft(admin, p, week)) { r.built++; if (ordered) aiUsed++ } } catch (e) { console.error('[menu-drafts] build', p.id, e) }
+    // A family whose week failed to build is retried at most once an hour, not on every 2-minute poll (Nov 20 2026: one
+    // family failed 43 times overnight).
+    const failKey = `draft_fail:${week}:${p.id}`
+    const { data: fail } = await admin.from('app_kv').select('value').eq('key', failKey).maybeSingle()
+    const lastFail = Date.parse(((fail?.value ?? {}) as { at?: string }).at ?? '')
+    if (lastFail && Date.now() - lastFail < 3600000) continue
+    try { if (await buildDraft(admin, p, week)) { r.built++; if (ordered) aiUsed++ } } catch (e) {
+      console.error('[menu-drafts] build', p.id, e)
+      await admin.from('app_kv').upsert({ key: failKey, value: { at: new Date().toISOString(), error: String(e).slice(0, 200) } }, { onConflict: 'key' })
+    }
   }
   return r
 }
