@@ -413,6 +413,21 @@ export async function POST(request: Request) {
           if (libraryMeals.length < optionsCount) libraryMeals.push(...fill.filter((m) => !libraryMeals.some((x) => normalizeName(x.name) === normalizeName(m.name))).slice(0, optionsCount - libraryMeals.length))
         } catch (e) { console.error('[generate-plan] top-up failed', e) }
       }
+      // Still short with a stack of diets (Nov 20 2026: Vegetarian + Nut-free + Dairy-free + Low-carb matched 1 library
+      // dinner, so the family's week never built): keep the hard limits (vegetarian/vegan, allergen-free, halal, gluten-free,
+      // allergies, no-lists) and let go of the eating-style ones (low-carb, keto, paleo) for the top-up only.
+      const SOFT_DIETS = /^(low-carb|keto|paleo)$/i
+      const hardDiets = profile.dietaryNeeds.filter((d: string) => !SOFT_DIETS.test(d))
+      if (libraryMeals.length < optionsCount && hardDiets.length < profile.dietaryNeeds.length) {
+        try {
+          const rows = await pickLibraryRecipes(supabase, {
+            limit: optionsCount - libraryMeals.length + 10, maxCookTime: slowestNight + 30, maxCalories: 0,
+            dietary: hardDiets, excludeWords: hardWords, allergies: allergyList, excludeNames: [...taken(), ...skippedNames],
+          })
+          const fill = rows.map((r, i) => recipeToMeal(r, `R${i + 1}`, profile.familySize)).filter((m) => !breaksHouseRules(m))
+          libraryMeals.push(...pickVaried(fill, optionsCount - libraryMeals.length, [...keepMeals, ...libraryMeals], lim))
+        } catch (e) { console.error('[generate-plan] relaxed top-up failed', e) }
+      }
       if (!libraryMeals.length) return Response.json({ error: "We couldn't find dinners that fit all of your settings. Try a longer cook time or fewer food limits." }, { status: 422 })
       return Response.json({
         meals: plate(fitNeeds(libraryMeals)),
