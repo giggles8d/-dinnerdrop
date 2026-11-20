@@ -28,7 +28,10 @@ export async function POST(req: NextRequest, { params }: { params: { code: strin
     const weekStart = (await latestPlan(admin, tc.ownerId!))?.week_start ?? tc.weekStart!
     await admin.from('meal_votes').delete().eq('member_id', am.id).eq('week_start', weekStart).eq('vote', 'again')
     if (againNames.length) await admin.from('meal_votes').insert(againNames.map((meal_name) => ({ household_id: am.household_id, member_id: am.id, week_start: weekStart, meal_name, vote: 'again' })))
-    await admin.from('sms_messages').insert({ household_id: am.household_id, member_id: am.id, direction: 'in', from_number: null, body: `[tapped on the web] ${againNames.length ? `again ${picks.join(' ')}` : 'none to bring back'}`, intent: 'again', twilio_sid: null })
+    const tapBody = `[tapped on the web] ${againNames.length ? `again ${picks.join(' ')}` : 'none to bring back'}`
+    // Same answer resent within 10 minutes (double taps): the vote is already saved; don't log it again.
+    const { data: dup } = await admin.from('sms_messages').select('id').eq('member_id', am.id).eq('body', tapBody).gt('created_at', new Date(Date.now() - 600000).toISOString()).limit(1)
+    if (!dup?.length) await admin.from('sms_messages').insert({ household_id: am.household_id, member_id: am.id, direction: 'in', from_number: null, body: tapBody, intent: 'again', twilio_sid: null })
     return NextResponse.json({ ok: true, names: againNames })
   }
   const [{ data: round }, { data: m }] = await Promise.all([
@@ -57,6 +60,8 @@ export async function POST(req: NextRequest, { params }: { params: { code: strin
   await admin.from('meal_votes').delete().eq('member_id', m.id).eq('week_start', r.week_start).eq('vote', 'keep')
   await admin.from('meal_votes').insert(names.map((meal_name) => ({ household_id: m.household_id, member_id: m.id, week_start: r.week_start, meal_name, vote: 'keep' })))
   // Logged like a texted answer so the round closes the same way once everyone has voted.
-  await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'in', from_number: null, body: `[tapped on the web] ${picks.join(', ')}${added.length ? ` + favorites: ${added.map((f) => f.meal_name).join(', ')}` : ''}`, intent: 'pick', twilio_sid: null })
+  const tapBody = `[tapped on the web] ${picks.join(', ')}${added.length ? ` + favorites: ${added.map((f) => f.meal_name).join(', ')}` : ''}`
+  const { data: dup } = await admin.from('sms_messages').select('id').eq('member_id', m.id).eq('body', tapBody).gt('created_at', new Date(Date.now() - 600000).toISOString()).limit(1)
+  if (!dup?.length) await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'in', from_number: null, body: tapBody, intent: 'pick', twilio_sid: null })
   return NextResponse.json({ ok: true, names })
 }

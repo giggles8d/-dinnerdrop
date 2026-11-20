@@ -76,13 +76,20 @@ export default function TapVote({ mode, code, name, week, dinners, favorites, he
     } catch { setHeartMsg('That didn’t save. Check your connection and try again.') }
     finally { setHeartBusy(null) }
   }
+  // What was last sent, so "done" stays done until they change something (Nov 20 2026: a family tapped the same
+  // "none to bring back" 4 times in 10 seconds because the button stayed live after it went through).
+  const [sentKey, setSentKey] = useState<string | null>(null)
+  const curKey = JSON.stringify([[...sel].sort(), [...favSel].sort()])
+  const unchanged = state === 'done' && sentKey === curKey
   async function send() {
+    if (state === 'sending' || unchanged) return
     setState('sending')
     try {
       const r = await fetch(`/api/v/${code}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ picks: sel, favorites: favSel }) })
       const j = await r.json().catch(() => ({}))
       if (!r.ok) { setMsg(j.error || 'That didn’t go through. Try again.'); setState('error'); return }
       setMsg(test ? 'This was a test, so nothing changed.' : again ? 'Got it. These will come back in the next few weeks.' : 'Your picks are in. They count just like texting the numbers.')
+      setSentKey(curKey)
       setState('done')
     } catch { setMsg('That didn’t go through. Check your connection and try again.'); setState('error') }
   }
@@ -141,10 +148,11 @@ export default function TapVote({ mode, code, name, week, dinners, favorites, he
       {!closed && (
         <div className="fixed bottom-0 inset-x-0 bg-background/95 border-t border-border px-4 py-3" style={{ paddingBottom: 'max(12px, env(safe-area-inset-bottom))' }}>
           <div className="max-w-xl mx-auto">
-            {state === 'done' || state === 'error' ? <p className={`text-sm mb-2 ${state === 'error' ? 'text-red-700' : 'text-foreground'}`}>{msg}</p> : null}
-            <button type="button" onClick={send} disabled={(!count && !again) || state === 'sending'}
+            {state === 'done' || state === 'error' ? <p className={`mb-2 ${state === 'error' ? 'text-sm text-red-700' : 'text-base font-semibold text-green-800'}`}>{state === 'done' ? '✓ ' : ''}{msg}</p> : null}
+            <button type="button" onClick={send} disabled={(!count && !again) || state === 'sending' || unchanged}
               className="w-full rounded-xl bg-primary text-primary-foreground py-3.5 font-semibold disabled:opacity-40">
               {state === 'sending' ? 'Sending…'
+                : unchanged ? 'Sent ✓'
                 : again ? (state === 'done' ? `Update (${count})` : count ? `Bring back ${count} dinner${count > 1 ? 's' : ''}` : 'None of these')
                 : state === 'done' ? `Update my picks (${count})` : count ? `Send my ${count} pick${count > 1 ? 's' : ''}` : 'Tap the dinners you want'}
             </button>
