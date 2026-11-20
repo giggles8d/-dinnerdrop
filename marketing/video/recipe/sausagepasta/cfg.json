@@ -1,0 +1,28 @@
+{
+ "hook": "30-MINUTE DINNER",
+ "hook2": "About $14 for four",
+ "title": "Italian Sausage Pasta",
+ "ingredients": [
+  "1.25 lb Italian sausage",
+  "12 oz pasta",
+  "2 heads broccoli + garlic",
+  "Mozzarella + 1 lemon"
+ ],
+ "steps": [
+  "Boil the pasta.\nCut the broccoli,\nchop the garlic",
+  "Brown sausage to\n160°F. Add garlic\n+ broccoli, 5 min",
+  "Toss in the pasta,\ntop with mozzarella\n+ a squeeze of lemon"
+ ],
+ "out": "2026-11-20_RecipeShort_ItalianSausagePasta.mp4",
+ "speed": 1.12,
+ "vo": [
+  "One skillet, one pot, dinner in thirty minutes.",
+  "Tonight: Italian sausage pasta with broccoli.",
+  "You need Italian sausage, pasta, two heads of broccoli, garlic, mozzarella and a lemon.",
+  "Boil the pasta, and while it cooks, cut the broccoli and chop the garlic.",
+  "Brown the sausage until it hits one sixty inside, then add the garlic and broccoli for five minutes.",
+  "Toss in the pasta, top with mozzarella, and squeeze lemon over everything.",
+  "Want four more dinners like this? DinnerDrop plans your week free, and the whole grocery list lands in your Instacart or Walmart cart in one tap.",
+  "Follow for a new dinner every day."
+ ]
+}
