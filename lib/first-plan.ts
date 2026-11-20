@@ -17,6 +17,7 @@ import { grantNewFamilyTrial } from '@/lib/family-grant'
 import { dropStarterWeek } from '@/lib/starter-week'
 import { shelfBudget } from '@/lib/budget'
 import type { Meal } from '@/types'
+import { avoidProteinWords } from '@/lib/avoid-proteins'
 
 export type FirstPlanResult =
   | { ok: true; meals: Meal[]; totalCost: number; existing: boolean }
@@ -105,7 +106,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
       limit: dinners + 24,
       maxCookTime: maxCook,
       dietary: step.dietary,
-      excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins],
+      excludeWords: [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins)],
       excludeNames,
       cuisines: step.cuisines,
       ignoreKept: true,
@@ -148,7 +149,7 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
   const budget = shelfBudget(p.weekly_budget, settings) || 150 / 2
   const top = new Set(pool.slice(0, dinners).map((m) => m.name))
   const fitted = fitBudget(pool, dinners, budget, (m, rest) => varietyOk(m, rest, lim)).map((m) => (top.has(m.name) ? m : { ...m, budgetPick: true }))
-  const meals = settings.food.fullPlate ? completePlates(fitted, { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...settings.food.avoidProteins] }) : fitted
+  const meals = settings.food.fullPlate ? completePlates(fitted, { dietaryNeeds: p.dietary_needs ?? [], avoid: [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins)] }) : fitted
   if (meals.length < Math.min(3, dinners)) return { ok: false, reason: 'not enough library recipes', found: meals.length }
   const shape: PlanShape = { dinnersPerWeek: dinners, cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   return { ok: true, meals, shape }

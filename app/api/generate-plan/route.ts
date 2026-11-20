@@ -24,6 +24,7 @@ import { varietyLimits, varietyOk, pickVaried, recentUsage, overusePenalty } fro
 import { completePlates } from '@/lib/full-plate'
 import { libraryWeek, weekOptions } from '@/lib/first-plan'
 import { pendingSuggestions, resolveSuggestion, markSuggestionsUsed } from '@/lib/suggestions'
+import { avoidProteinWords } from '@/lib/avoid-proteins'
 
 // Extend serverless timeout — AI generation needs up to 55s
 /** Sit-down Sunday dinners in the library: roasts, bakes, braises and other big comforting dinners. */
@@ -305,7 +306,7 @@ export async function POST(request: Request) {
           maxCookTime: slowestNight,
           maxCalories: settings.food.maxCalories,
           dietary: profile.dietaryNeeds,
-          excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allDislikes],
+          excludeWords: [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins), ...allDislikes],
           allergies: allergyPeople.flatMap((p) => p.allergies),
           excludeNames: [...recentNames, ...profile.favoriteMeals.map((m) => m.name), ...keepMeals.map((m) => m.name), ...skippedNames],
           cuisines: settings.food.cuisines,
@@ -387,7 +388,7 @@ export async function POST(request: Request) {
     // library without the soft preferences (allergies, no-lists and diets still hold). AI never writes a dinner.
     if (mode === 'fresh') {
       const taken = () => [...libraryMeals, ...keepMeals].map((m) => m.name)
-      const hardWords = [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allDislikes, ...HOUSE_NEVER_WORDS]
+      const hardWords = [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins), ...allDislikes, ...HOUSE_NEVER_WORDS]
       const allergyList = allergyPeople.flatMap((p) => p.allergies)
       if (sundaySlots > 0) {
         try {
@@ -572,7 +573,7 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
     if (!planData) return Response.json({ error: 'AI returned an unexpected format. Please try again.' }, { status: 500 })
 
     // Safety net on hard exclusions (allergies / never list): drop any option that slipped through.
-    const excl = [...settings.food.neverIngredients, ...settings.food.avoidProteins].map((w) => w.toLowerCase()) // allergies: checked by allergen below
+    const excl = [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins)].map((w) => w.toLowerCase()) // allergies: checked by allergen below
     let generated = (planData.meals ?? []).filter((m) => {
       const hay = `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
       if (excl.some((w) => w && hay.includes(w))) return false

@@ -32,6 +32,7 @@ import { BLACK_FRIDAY_POST, blackFridayActive, dealsForEmail, newsletterDealUrl 
 import { shopUrl, textingUrl } from '@/lib/followup'
 import { mondayOf, DEFAULT_SHAPE } from '@/lib/plan'
 import type { Meal } from '@/types'
+import { avoidProteinWords } from '@/lib/avoid-proteins'
 
 export type Segment = 'shop' | 'vote' | 'picked' | 'done' | 'comeback' | 'list'
 
@@ -97,7 +98,7 @@ async function pickHero(admin: SupabaseClient, p: DropProfile | null, settings: 
     maxCookTime: Math.max(20, Math.min(p?.max_cook_time || 45, 60)),
     dietary: p?.dietary_needs ?? [],
     allergies,
-    excludeWords: [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...allergies, ...dislikes],
+    excludeWords: [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins), ...allergies, ...dislikes],
     excludeNames: [...week.map((m) => m.name), ...avoidNames],
     cuisines: settings.food.cuisines,
   })

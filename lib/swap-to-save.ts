@@ -5,6 +5,7 @@ import { matchSale, isUpcoming, type SaleMatch, type WeeklySales } from '@/lib/s
 import { mergeSettings } from '@/lib/settings'
 import { pickLibraryRecipes, recipeToMeal, normalizeName, type RecipeRow } from '@/lib/recipe-library'
 import { allergyConflicts } from '@/lib/allergens'
+import { avoidProteinWords } from '@/lib/avoid-proteins'
 
 /**
  * "Swap a dinner to save": find this week's dinner that uses the fewest sale items and a library
@@ -77,7 +78,7 @@ export async function suggestSwaps(admin: SupabaseClient, ownerId: string, opts:
 
   // Family rules — the same hard limits a normal swap uses.
   const settings = mergeSettings(prof?.settings)
-  const exclude = [...settings.food.neverIngredients, ...settings.food.avoidProteins]
+  const exclude = [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins)]
   const allergies: string[] = ((prof?.dietary_needs ?? []) as string[]).filter((d) => /-free$/i.test(d.trim())).map((d) => d.replace(/-free$/i, '').trim())
   if (prof?.household_id) {
     const { data: members } = await admin.from('household_members').select('allergies').eq('household_id', prof.household_id)

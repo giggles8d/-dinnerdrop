@@ -478,6 +478,12 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
   await admin.from('sms_messages').insert({ household_id: m.household_id, member_id: m.id, direction: 'in', from_number: phone, body, intent, twilio_sid: sid })
 
   if (dinnerNo) return { reply: 'No problem. 👍', handled: true, member: m }
+  // "Yes" / "Okay" right after "which dinners should come back?" from someone already in the texts (Nov 19 2026: read as
+  // an opt-in, so a planner who agreed with the ask got a second "You're in" and no bring-back picks). It's an answer to
+  // our question, not a join: say what to send. A YES to the weekly reorder text still means the cart (checked below).
+  if (parsed.kind === 'optin' && m.phone_opt_in_at && !m.phone_opted_out && !round && ctx.lastAsk === 'again' && !(await reorderAsked(admin, m.household_id, phone))) {
+    return { reply: `Which ones? Reply AGAIN + the numbers from the list (like AGAIN 1 3), or NONE if none should come back.`, handled: true, member: m }
+  }
   const owner = await ownerForHousehold(admin, m.household_id)
   const rawFirst = (owner?.full_name || '').trim().split(' ')[0]
   const family = rawFirst ? rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1) : 'your family'

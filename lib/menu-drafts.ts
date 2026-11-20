@@ -13,6 +13,7 @@ import { proteinGroup } from '@/lib/protein-mix'
 import { recipeToMeal, type RecipeRow } from '@/lib/recipe-library'
 import type { Meal } from '@/types'
 import type { AutoPlanProfile } from '@/lib/autoplan'
+import { avoidProteinWords } from '@/lib/avoid-proteins'
 
 const ACTIVE_DAYS = 45
 const UNUSUAL = /\b(curry|thai|harissa|jerk|gochujang|korean|tikka|masala|risotto|polenta|scallops?|tofu|tempeh|miso|kimchi|ramen|pho|tagine|shakshuka)\b/i
@@ -53,7 +54,7 @@ export async function draftChecks(admin: SupabaseClient, p: DraftProfile, settin
   const out: Array<{ level: 'bad' | 'warn'; text: string }> = []
   const { data: mem } = p.household_id ? await admin.from('household_members').select('name, allergies, dislikes').eq('household_id', p.household_id) : { data: [] }
   const people = ((mem ?? []) as Array<{ name: string; allergies: string[] | null; dislikes: string[] | null }>)
-  const never = [...settings.food.neverIngredients, ...settings.food.avoidProteins].map((w) => w.toLowerCase()).filter(Boolean)
+  const never = [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins)].map((w) => w.toLowerCase()).filter(Boolean)
   const { data: last } = await admin.from('meal_plans').select('meals').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
   const lastNames = new Set(((last?.[0]?.meals ?? []) as Meal[]).map((m) => m.name.toLowerCase()))
   const maxCook = p.max_cook_time || 30

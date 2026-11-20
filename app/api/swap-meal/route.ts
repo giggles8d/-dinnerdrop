@@ -7,6 +7,7 @@ import type { Meal } from '@/types'
 import { ensurePortions } from '@/lib/portions'
 import { mergeSettings } from '@/lib/settings'
 import { upsertRecipes, pickLibraryRecipes, recipeToMeal, normalizeName } from '@/lib/recipe-library'
+import { avoidProteinWords } from '@/lib/avoid-proteins'
 
 interface SwapMealResponse {
   meal: Meal
@@ -71,7 +72,7 @@ export async function POST(request: Request) {
 
     // Allergy safety net: never hand back a swap that hits someone's allergy (by allergen, so "dairy" also catches cheese).
     const unsafeMeal = (m: Meal | undefined) => !m || breaksHouseRules(m) || allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length > 0
-      || [...settings.food.neverIngredients, ...settings.food.avoidProteins].some((w) => w && `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase().includes(w.toLowerCase()))
+      || [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins)].some((w) => w && `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase().includes(w.toLowerCase()))
 
     // Core dinners only (Sarah, Nov 14 2026: "only swap with core"; AI never writes a dinner): a proven dinner that
     // fits the family, never the ones already on this week's plan.

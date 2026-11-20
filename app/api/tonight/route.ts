@@ -8,6 +8,7 @@ import { mergeSettings } from '@/lib/settings'
 import { guessCategory, normalizeItemName } from '@/lib/list'
 import { mondayOf } from '@/lib/plan'
 import type { ClaudeImage } from '@/lib/claude'
+import { avoidProteinWords } from '@/lib/avoid-proteins'
 
 export const maxDuration = 60
 export const dynamic = 'force-dynamic'
@@ -83,7 +84,7 @@ export async function POST(req: Request) {
   const household = {
     familySize: p?.family_size || 4,
     dietary,
-    never: [...settings.food.neverIngredients, ...settings.food.avoidProteins, ...dislikes],
+    never: [...settings.food.neverIngredients, ...avoidProteinWords(settings.food.avoidProteins), ...dislikes],
     allergies: [...allergies, ...freeDiets],
     maxCookTime: p?.max_cook_time || 30,
   }
