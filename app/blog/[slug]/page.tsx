@@ -164,13 +164,47 @@ function inlineFormat(text: string): React.ReactNode {
   })
 }
 
+const STOP = new Set(['dinner', 'dinners', 'ideas', 'family', 'families', 'easy', 'recipes', 'recipe', 'best', 'week', 'with', 'your', 'that', 'what', 'free', 'plan', 'planning', 'meal', 'meals'])
+
+/** Recipe hubs and collections a post is about, picked from its slug and keyword; always ends with the full library. */
+function hubsFor(text: string): Array<{ href: string; label: string }> {
+  const t = text.toLowerCase()
+  const out: Array<{ href: string; label: string }> = []
+  const add = (re: RegExp, href: string, label: string) => { if (re.test(t) && !out.some((o) => o.href === href)) out.push({ href, label }) }
+  add(/chicken/, '/dinners/easy-chicken-dinners', 'Easy chicken dinners')
+  add(/ground.?beef|hamburger/, '/dinners/ground-beef-dinners', 'Ground beef dinners')
+  add(/crock|slow.?cooker/, '/dinners/slow-cooker-family-dinners', 'Slow cooker dinners')
+  add(/instant.?pot|pressure/, '/recipes/collections/instant-pot', 'Instant Pot dinners')
+  add(/30.?minute|quick|fast|busy|weeknight|20.?minute/, '/dinners/dinners-under-30-minutes', '30-minute dinners')
+  add(/kid|picky|toddler|family/, '/dinners/kid-friendly-dinners', 'Kid-friendly dinners')
+  add(/picky/, '/dinners/picky-eater-dinners', 'Picky-eater dinners')
+  add(/cheap|budget|\$|frugal|save|money|grocery/, '/dinners/family-dinners-under-100', 'Cheap family dinners')
+  add(/heart|healthy|low.?sodium/, '/dinners/heart-healthy-dinners', 'Heart-healthy dinners')
+  add(/diabet|low.?carb|blood.?sugar/, '/dinners/diabetic-friendly-dinners', 'Diabetic-friendly dinners')
+  add(/mediterranean/, '/dinners/mediterranean-family-dinners', 'Mediterranean dinners')
+  add(/gluten/, '/dinners/gluten-free-family-dinners', 'Gluten-free dinners')
+  add(/thanksgiving|leftover/, '/recipes/collections/thanksgiving', 'Thanksgiving-week dinners')
+  add(/christmas|holiday/, '/recipes/collections/holiday', 'Holiday dinners')
+  add(/game.?day|super.?bowl|football/, '/recipes/collections/game-day', 'Game-day dinners')
+  add(/soup|stew|casserole|cozy|winter/, '/recipes/collections/cozy', 'Cozy dinners')
+  out.splice(4)
+  out.push({ href: '/recipes', label: 'All 1,400+ recipes' })
+  return out
+}
+
 export default function BlogPostPage({ params }: Props) {
   // Future-dated posts 404 until their publish date (B-04).
   const post = getPublishedPostBySlug(params.slug)
   if (!post) notFound()
 
-  // Internal links to other posts — improves SEO crawl/link equity and dwell time.
-  const related = getPublishedPosts().filter((p) => p.slug !== post!.slug).slice(0, 3)
+  // Internal links to other posts: closest topic first (shared words in the slug), then newest (Nov 21 2026 review:
+  // every post showed the same 3 newest posts).
+  const words = (s: string) => new Set(s.split('-').filter((w) => w.length > 3 && !STOP.has(w)))
+  const mine = words(`${post!.slug}-${post!.primaryKeyword.replace(/\s+/g, '-')}`)
+  const related = getPublishedPosts().filter((p) => p.slug !== post!.slug)
+    .map((p, i) => ({ p, i, score: Array.from(words(`${p.slug}-${p.primaryKeyword.replace(/\s+/g, '-')}`)).filter((w) => mine.has(w)).length }))
+    .sort((a, b) => b.score - a.score || a.i - b.i).slice(0, 3).map((x) => x.p)
+  const hubs = hubsFor(`${post!.slug} ${post!.primaryKeyword}`)
 
   // Every published post was reviewed and updated on 2026-10-18 (offer, pricing,
   // store copy). Posts published after that date carry their own publish date.
@@ -234,6 +268,17 @@ export default function BlogPostPage({ params }: Props) {
             heading="Stock your kitchen for weeknight dinners"
             subheading="The everyday tools that make these recipes faster — shop them on Amazon."
           />
+        </div>
+
+        {/* Make these tonight: the recipe pages this post is about (Nov 21 2026 review: 40 posts linked to 0 recipes). */}
+        <div className="mt-14 rounded-2xl border border-[#1a5c38]/20 bg-[#f3f7f4] p-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-1">Make these tonight</h2>
+          <p className="text-sm text-gray-600 mb-4">Real family recipes with honest cook times, cost per dinner and a one-tap grocery list.</p>
+          <div className="flex flex-wrap gap-2">
+            {hubs.map((h) => (
+              <Link key={h.href} href={h.href} className="inline-flex items-center rounded-full border border-[#1a5c38]/30 bg-white px-4 py-2 text-sm font-semibold text-[#1a5c38] hover:bg-[#1a5c38] hover:text-white transition-colors">{h.label} →</Link>
+            ))}
+          </div>
         </div>
 
         {/* Keep reading — internal links for SEO crawl + dwell time */}

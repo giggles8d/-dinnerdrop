@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 import { retryFetch } from '@/lib/retry-fetch'
 import RecipeClient, { type RecipeRow } from './RecipeClient'
 import { recipeIntro } from '@/lib/recipe-intro'
+import Link from 'next/link'
 
 // Server-rendered recipe page: title, description, photo and Recipe JSON-LD in the first HTML.
 export const revalidate = 600
@@ -15,6 +16,21 @@ async function getRecipe(slug: string): Promise<RecipeRow | null> {
     const { data } = await admin.from('recipes').select('*').eq('slug', slug).maybeSingle()
     return (data as RecipeRow) ?? null
   } catch { return null }
+}
+
+/** Six other recipes like this one (same protein, else same cuisine), most-kept first — so recipe pages aren't dead ends (Nov 21 2026 review). */
+async function getSimilar(r: RecipeRow): Promise<Array<{ slug: string; name: string; image_url: string | null; mins: number }>> {
+  try {
+    const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, { global: { fetch: retryFetch } })
+    const pick = async (col: 'protein' | 'cuisine', val: string | null) => {
+      if (!val) return []
+      const { data } = await admin.from('recipes').select('slug, name, image_url, prep_time, cook_time').eq(col, val).neq('slug', r.slug).not('slug', 'is', null).not('is_public', 'is', false).order('kept_count', { ascending: false, nullsFirst: false }).limit(6)
+      return (data ?? []) as Array<{ slug: string; name: string; image_url: string | null; prep_time: number | null; cook_time: number | null }>
+    }
+    let rows = await pick('protein', r.protein)
+    if (rows.length < 6) rows = [...rows, ...(await pick('cuisine', r.cuisine)).filter((x) => !rows.some((y) => y.slug === x.slug))].slice(0, 6)
+    return rows.map((x) => ({ slug: x.slug, name: x.name, image_url: x.image_url, mins: (x.prep_time ?? 0) + (x.cook_time ?? 0) }))
+  } catch { return [] }
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -38,6 +54,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function LibraryRecipePage({ params }: { params: { slug: string } }) {
   const r = await getRecipe(params.slug)
+  const similar = r ? await getSimilar(r) : []
   if (!r) notFound()
   const mins = (r.cook_time ?? 0) + (r.prep_time ?? 0)
   const jsonLd = {
@@ -81,6 +98,25 @@ export default async function LibraryRecipePage({ params }: { params: { slug: st
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <RecipeClient initial={r} />
+      {similar.length > 0 && (
+        <section aria-label="More recipes like this" className="container mx-auto px-4 pb-12 max-w-3xl print:hidden">
+          <h2 className="text-xs font-bold text-primary uppercase tracking-widest mb-3">You might also like</h2>
+          <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {similar.map((x) => (
+              <li key={x.slug}>
+                <Link href={`/recipes/${x.slug}`} className="block rounded-xl border border-border overflow-hidden hover:border-primary/50 bg-card h-full">
+                  {x.image_url
+                    // eslint-disable-next-line @next/next/no-img-element
+                    ? <img src={x.image_url} alt="" loading="lazy" className="w-full aspect-[4/3] object-cover bg-muted" />
+                    : <div className="w-full aspect-[4/3] bg-muted" />}
+                  <span className="block px-3 py-2 text-sm font-semibold leading-snug text-foreground">{x.name}</span>
+                  {x.mins > 0 && <span className="block px-3 pb-2 -mt-1 text-xs text-muted-foreground">{x.mins} min</span>}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </>
   )
 }

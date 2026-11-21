@@ -48,6 +48,27 @@ interface Topic {
 
 const TOPICS: Topic[] = [
   {
+    // Nov 21 2026 review: "kid friendly dinners" is a big search and only had a redirect to the picky-eater page.
+    slug: 'kid-friendly-dinners',
+    week: 'kid',
+    hub: { heading: 'Kid-friendly dinners from our recipe library', blurb: 'Tacos, pasta, chicken, sliders and more: family favorites kids eat, with honest times and costs.', match: (r) => r.tags.includes('kid-favorite'), limit: 60 },
+    title: 'Kid-Friendly Dinners: 60 Easy Family Recipes Kids Eat',
+    h1: 'Kid-friendly dinners the whole family will eat',
+    intro: 'Easy weeknight dinners kids actually eat: tacos, pasta, sheet-pan chicken, sliders and build-your-own bowls. Pick a few below, or let DinnerDrop plan five a week around your family and send the grocery list to your Instacart or Walmart cart in one tap.',
+    description: 'Kid-friendly dinner recipes for busy families: 60 easy family favorites kids eat, with real cook times and costs, plus a free weekly plan and one-tap grocery list.',
+    bulletsHeading: 'What makes a dinner kid-friendly',
+    bullets: [
+      'Familiar flavors first: mild seasoning, cheese, pasta, tortillas and chicken show up a lot for a reason.',
+      'Build-your-own nights (tacos, bowls, baked potatoes) let kids choose what goes on their plate.',
+      'One safe thing on every plate: rice, bread or fruit on the side, so nobody leaves hungry.',
+      'Short cook times: most dinners here take 45 minutes or less, many 30.',
+    ],
+    faq: [
+      { q: 'How do I get my kids to try new dinners?', a: 'Serve one new dinner a week next to familiar ones, keep the new part optional, and let kids help pick. With DinnerDrop, the family can vote on the week’s dinners by text, so kids have a say.' },
+      { q: 'Can I plan around allergies and picky eaters?', a: 'Yes. Each person in the family can have their own likes, won’t-eats and allergies, and every weekly plan follows them.' },
+    ],
+  },
+  {
     slug: 'gluten-free-family-dinners',
     week: 'glutenfree',
     title: 'Gluten-Free Family Dinners, Planned Weekly — Free',
@@ -68,6 +89,7 @@ const TOPICS: Topic[] = [
   {
     slug: 'picky-eater-dinners',
     week: 'kid',
+    hub: { heading: 'Picky-eater-friendly dinners from our recipe library', blurb: 'Familiar family favorites kids actually eat, each with a one-tap grocery list.', match: (r) => r.tags.includes('kid-favorite') && r.time > 0 && r.time <= 45, limit: 48 },
     title: 'Picky-Eater Dinners the Whole Family Eats — Planned Weekly, Free',
     h1: 'Dinners your picky eater will actually eat, planned every week',
     intro: 'Familiar flavors, one safe thing on every plate, and build-your-own nights so kids feel in control. Five dinners a week around your budget and cook time, with the grocery list already in your cart.',
