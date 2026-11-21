@@ -100,7 +100,7 @@ export default async function LandingPage() {
 
       <p className="container mx-auto px-4 max-w-6xl text-xs text-muted-foreground leading-snug py-5">
         <span className="font-semibold text-foreground">How the cart works:</span> DinnerDrop fills the cart in your own Instacart, Walmart or Kroger account. You review every item and check out there at that store&apos;s prices. We never charge your grocery account and never add to the price. Over 400 families have signed up for DinnerDrop.
-        {' '}<span className="font-semibold text-foreground">On your phone:</span> open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em> — it works like an app, nothing to download.
+        {' '}<span className="font-semibold text-foreground">On your phone:</span> open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em>, or get the iPhone app.
       </p>
 
       {/* Family texting — what makes DinnerDrop different, right after the hero (Sarah, Nov 7 2026) */}
@@ -142,7 +142,7 @@ export default async function LandingPage() {
                 {[
                   { step: '1', title: 'Tell us about your family', description: 'Budget, family size, dietary needs, how much time you have to cook. Takes 2 minutes.' },
                   { step: '2', title: 'Get 5 personalized dinners', description: 'AI builds a full week of budget-friendly meals your family will actually eat.' },
-                  { step: '3', title: 'One tap. It\u2019s in your cart.', description: 'Instacart: your full list opens in your own Instacart account with every item matched — pick any store on it, review, check out. Walmart: every line is matched to a Walmart product, you glance at it, and one tap fills your Walmart cart for pickup or delivery. Family members can push straight to a Kroger cart too.' },
+                  { step: '3', title: 'One tap. It\u2019s in your cart.', description: 'Instacart: your full list opens in your own Instacart account with every item matched — pick any store on it, review, check out. Walmart: every line is matched to a Walmart product, you glance at it, and one tap fills your Walmart cart for pickup or delivery. On the Family plan, it can go straight to your Kroger cart too.' },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-5">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-primary-foreground font-heading font-bold flex items-center justify-center shadow-sm">
@@ -274,7 +274,7 @@ export default async function LandingPage() {
           <div className="space-y-4">
             {[
               { q: 'How does the Instacart integration work?', a: 'DinnerDrop is built on the Instacart Developer Platform. When your week is planned, tap “Shop on Instacart” and your full, deduplicated list opens in your own Instacart account with every item already matched to a product — no retyping, no searching item by item. You pick any Instacart store near you (Wegmans, Aldi, Tops, Price Chopper, Target, Costco and more), swap anything you like, and check out there. Instacart handles delivery or pickup and payment; DinnerDrop never sees your card.' },
-              { q: 'Is it really free?', a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart and Walmart carts are free, with no card. Instacart and Walmart pay us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.' },
+              { q: 'Is it really free?', a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart and Walmart carts are free, with no card. Instacart pays us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.' },
               { q: 'How does the Walmart cart work?', a: 'Tap “Shop at Walmart” and DinnerDrop matches every line on your list to a real Walmart product — size, price and all. You can swap any item for an alternative, then one tap puts everything in your Walmart cart. You pick pickup or delivery and check out on Walmart.com; we never see your payment.' },
               { q: 'How do I cancel Family?', a: 'From your Account page, in one tap. No calls, no hidden steps. Cancel during the 14-day trial and you pay nothing.' },
               { q: 'Will I be charged by surprise?', a: 'No. We email you on day 11 of a Family trial, three days before the first charge, and Account shows your exact billing date. Payments are processed by Stripe; we never see or store your card number.' },

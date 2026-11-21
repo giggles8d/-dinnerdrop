@@ -14,8 +14,8 @@ const description = 'The pots, pans, knives and small appliances that make weekn
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { title, description, url: 'https://www.dinnerdrop.app/cookware', siteName: 'DinnerDrop', type: 'article', images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] },
-  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png'] },
+  openGraph: { title, description, url: 'https://www.dinnerdrop.app/cookware', siteName: 'DinnerDrop', type: 'article', images: [{ url: '/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop' }] },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png?v=4'] },
   alternates: { canonical: 'https://www.dinnerdrop.app/cookware' },
 }
 

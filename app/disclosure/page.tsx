@@ -11,9 +11,9 @@ export const metadata: Metadata = {
     url: 'https://www.dinnerdrop.app/disclosure',
     siteName: 'DinnerDrop',
     type: 'website',
-    images: [{ url: 'https://www.dinnerdrop.app/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }],
+    images: [{ url: 'https://www.dinnerdrop.app/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop' }],
   },
-  twitter: { card: 'summary_large_image', images: ['https://www.dinnerdrop.app/og-image.png'] },
+  twitter: { card: 'summary_large_image', images: ['https://www.dinnerdrop.app/og-image.png?v=4'] },
   alternates: { canonical: 'https://www.dinnerdrop.app/disclosure' },
 }
 

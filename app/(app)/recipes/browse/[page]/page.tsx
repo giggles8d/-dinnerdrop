@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: { page: string } })
   const title = `Family dinner recipes, page ${page} | DinnerDrop`
   const description = `Browse every weeknight dinner in the DinnerDrop library — page ${page}. Real cook times, cost per meal, and a grocery list that lands in your Instacart cart in one tap.`
   const url = `https://www.dinnerdrop.app/recipes/browse/${page}`
-  return { title, description, alternates: { canonical: url }, openGraph: { title, description, url, siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] } }
+  return { title, description, alternates: { canonical: url }, openGraph: { title, description, url, siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop' }] } }
 }
 
 export default async function BrowsePage({ params }: { params: { page: string } }) {

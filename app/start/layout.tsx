@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DinnerDrop — Dinner, handled" }],
+    images: [{ url: "/og-image.png?v=4", width: 1200, height: 630, alt: "DinnerDrop — Dinner, handled" }],
     url: "https://www.dinnerdrop.app/start",
     siteName: "DinnerDrop",
     type: "website",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/og-image.png"],
+    images: ["/og-image.png?v=4"],
   },
 };
 

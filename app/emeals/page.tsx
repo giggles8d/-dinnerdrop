@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: 'https://www.dinnerdrop.app/emeals' },
-  openGraph: { title, description, url: 'https://www.dinnerdrop.app/emeals', siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png?v=3', width: 1200, height: 630, alt: 'DinnerDrop — Dinner, handled' }] },
-  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png?v=3'] },
+  openGraph: { title, description, url: 'https://www.dinnerdrop.app/emeals', siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop — Dinner, handled' }] },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png?v=4'] },
 }
 
 const GREEN = '#1a5c38'

@@ -256,8 +256,8 @@ export function generateMetadata({ params }: { params: { topic: string } }): Met
     title: t.title,
     description: t.description,
     alternates: { canonical: url },
-    openGraph: { title: t.title, description: t.description, url, siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png', width: 1200, height: 630 }] },
-    twitter: { card: 'summary_large_image', title: t.title, description: t.description, images: ['/og-image.png'] },
+    openGraph: { title: t.title, description: t.description, url, siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png?v=4', width: 1200, height: 630 }] },
+    twitter: { card: 'summary_large_image', title: t.title, description: t.description, images: ['/og-image.png?v=4'] },
   }
 }
 
