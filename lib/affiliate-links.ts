@@ -10,8 +10,8 @@ export function getStoreSearchUrl(storeName: string, searchTerm: string): string
       // TODO: Add Walmart affiliate ID once Impact.com approved
       return `https://www.walmart.com/search?q=${encoded}`;
     case 'Amazon Fresh':
-      // TODO: Add Amazon Associates tag once approved
-      return `https://www.amazon.com/s?k=${encoded}&i=amazonfresh`;
+      // No Amazon search links, ever (they earn nothing; Sarah's rule, Nov 8 2026). Nothing calls this today.
+      return '';
     case 'Instacart':
       return withInstacartAffiliate(`https://www.instacart.com/products/search?q=${encoded}`);
     case 'Target':

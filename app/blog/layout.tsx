@@ -3,7 +3,7 @@ import PublicHeader from '@/components/site/PublicHeader'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | DinnerDrop Blog',
+    template: '%s | DinnerDrop',
     default: 'DinnerDrop Blog — Meal Planning Tips for Busy Families',
   },
   description:

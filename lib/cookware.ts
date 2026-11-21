@@ -4,7 +4,7 @@
  * product with our Associates tag (Sarah, Nov 7 2026: direct products, not searches). Short, general guidance on what
  * the tool is for — not claims that we tested a specific product. Client-safe, no AI.
  */
-import { amazonProductUrl, amazonSearchUrl } from '@/lib/amazon-affiliate'
+import { amazonProductUrl } from '@/lib/amazon-affiliate'
 import type { Meal } from '@/types'
 
 export interface CookwareItem {
@@ -85,7 +85,8 @@ export const COOKWARE: CookwareGroup[] = [
 ]
 
 const ALL: CookwareItem[] = COOKWARE.flatMap((g) => g.items)
-export const cookwareUrl = (item: CookwareItem) => (item.asin ? amazonProductUrl(item.asin) : amazonSearchUrl(item.search))
+// Product links only; an item without a checked ASIN goes to our cookware page, never an Amazon search.
+export const cookwareUrl = (item: CookwareItem) => (item.asin ? amazonProductUrl(item.asin) : '/cookware')
 
 // The obvious ones every recipe would match ("chop", "stir", "cup"): shown only when nothing else is.
 const BASIC = new Set(['chef-knife', 'board', 'spatula', 'wooden-spoons', 'measuring', 'bowls', 'can-opener', 'containers'])

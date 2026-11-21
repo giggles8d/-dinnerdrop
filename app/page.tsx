@@ -315,7 +315,10 @@ export default async function LandingPage() {
             <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
             <Link href="/shop" className="hover:text-foreground transition-colors">Shop</Link>
             <Link href="/cookware" className="hover:text-foreground transition-colors">Kitchen essentials</Link>
+            <Link href="/dinners/kid-friendly-dinners" className="hover:text-foreground transition-colors">Kid-friendly dinners</Link>
             <Link href="/dinners/picky-eater-dinners" className="hover:text-foreground transition-colors">Picky-eater dinners</Link>
+            <Link href="/dinners/easy-chicken-dinners" className="hover:text-foreground transition-colors">Easy chicken dinners</Link>
+            <Link href="/dinners/ground-beef-dinners" className="hover:text-foreground transition-colors">Ground beef dinners</Link>
             <Link href="/dinners/dinners-under-30-minutes" className="hover:text-foreground transition-colors">30-minute dinners</Link>
             <Link href="/dinners/family-dinners-under-100" className="hover:text-foreground transition-colors">Dinners under $100</Link>
             <Link href="/dinners/gluten-free-family-dinners" className="hover:text-foreground transition-colors">Gluten-free dinners</Link>
