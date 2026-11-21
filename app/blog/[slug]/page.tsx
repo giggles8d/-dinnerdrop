@@ -164,7 +164,7 @@ function inlineFormat(text: string): React.ReactNode {
   })
 }
 
-const STOP = new Set(['dinner', 'dinners', 'ideas', 'family', 'families', 'easy', 'recipes', 'recipe', 'best', 'week', 'with', 'your', 'that', 'what', 'free', 'plan', 'planning', 'meal', 'meals'])
+const STOP = new Set(['dinner', 'dinners', 'ideas', 'family', 'families', 'easy', 'recipes', 'recipe', 'best', 'week', 'with', 'your', 'that', 'what', 'free', 'plan', 'planning', 'meal', 'meals', 'will', 'actually', 'from', 'this', 'they', 'them', 'more', 'make', 'kids', '2026'])
 
 /** Recipe hubs and collections a post is about, picked from its slug and keyword; always ends with the full library. */
 function hubsFor(text: string): Array<{ href: string; label: string }> {
@@ -199,10 +199,11 @@ export default function BlogPostPage({ params }: Props) {
 
   // Internal links to other posts: closest topic first (shared words in the slug), then newest (Nov 21 2026 review:
   // every post showed the same 3 newest posts).
-  const words = (s: string) => new Set(s.split('-').filter((w) => w.length > 3 && !STOP.has(w)))
-  const mine = words(`${post!.slug}-${post!.primaryKeyword.replace(/\s+/g, '-')}`)
+  const words = (s: string) => new Set(s.toLowerCase().replace(/crock.?pot/g, 'slowcooker').replace(/slow.?cooker/g, 'slowcooker').split(/[^a-z0-9]+/).filter((w) => w.length > 3 && !STOP.has(w)))
+  const textOf = (p: { slug: string; primaryKeyword: string; title: string }) => `${p.slug} ${p.primaryKeyword} ${p.title}`
+  const mine = words(textOf(post!))
   const related = getPublishedPosts().filter((p) => p.slug !== post!.slug)
-    .map((p, i) => ({ p, i, score: Array.from(words(`${p.slug}-${p.primaryKeyword.replace(/\s+/g, '-')}`)).filter((w) => mine.has(w)).length }))
+    .map((p, i) => ({ p, i, score: Array.from(words(textOf(p))).filter((w) => mine.has(w)).length }))
     .sort((a, b) => b.score - a.score || a.i - b.i).slice(0, 3).map((x) => x.p)
   const hubs = hubsFor(`${post!.slug} ${post!.primaryKeyword}`)
 
