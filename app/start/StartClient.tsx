@@ -76,7 +76,7 @@ export default function StartPage() {
         <div className="container mx-auto px-4 max-w-5xl flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: GOLD }} />
-            <span className="font-bold text-xl" style={{ color: GREEN }}>DinnerDrop</span>
+            <span className="font-heading font-bold text-xl" style={{ color: GREEN }}>DinnerDrop</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors">
@@ -299,7 +299,7 @@ export default function StartPage() {
         <div className="container mx-auto px-4 py-6 max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-gray-500">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: GOLD }} />
-            <span className="font-bold text-sm" style={{ color: GREEN }}>DinnerDrop</span>
+            <span className="font-heading font-bold text-sm" style={{ color: GREEN }}>DinnerDrop</span>
           </div>
           <p>&copy; 2026 DinnerDrop</p>
           <SocialLinks />
