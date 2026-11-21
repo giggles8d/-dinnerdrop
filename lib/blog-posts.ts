@@ -10,6 +10,122 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'easy-christmas-dinner-ideas-for-family',
+    title: 'Easy Christmas Dinner Ideas for Families (Without a Whole Day in the Kitchen)',
+    description:
+      'Easy Christmas dinner ideas for families: 10 holiday mains from pot roast to lasagna, which ones you can make ahead, a simple Christmas Eve plan, and how to shop for it in one order.',
+    publishDate: '2026-11-21',
+    readingTimeMinutes: 6,
+    primaryKeyword: 'christmas dinner ideas for family',
+    content: `Christmas dinner doesn't have to mean a 20-pound roast and a day at the stove. Most families remember who was at the table, not how hard the main course was. These are holiday dinners that feel special, feed a crowd, and leave you time to sit down.
+
+Every recipe below is in our library with real cook times and a grocery list that goes to your cart in one tap. Change the servings on any of them and the amounts scale.
+
+## Make-ahead mains (cook the day before)
+
+The easiest Christmas is the one where dinner is already made. These reheat as well as they bake fresh:
+
+- [Classic Lasagna](/recipes/classic-lasagna-qjy1) — assemble on the 23rd or Christmas Eve, bake on the day. Feeds a crowd and kids never complain.
+- [Baked Stuffed Shells](/recipes/baked-stuffed-shells-rm16) — the lighter cousin of lasagna, and easy to double.
+- [Shepherd's Pie](/recipes/shepherd-s-pie-cfbo) — build it the night before, bake it when guests arrive.
+
+## Hands-off mains (the oven or slow cooker does the work)
+
+- [Slow Cooker Pot Roast with Carrots and Potatoes](/recipes/slow-cooker-pot-roast-with-carrots-and-potatoes-rxk0) — about 15 minutes in the morning, dinner and sides done by evening.
+- [Pork Tenderloin with Roasted Vegetables](/recipes/pork-tenderloin-with-roasted-vegetables-rg5q) — 45 minutes, one pan, and it looks like a holiday roast on the platter.
+- [Sheet Pan Lemon Herb Chicken with Roasted Carrots](/recipes/sheet-pan-lemon-herb-chicken-with-roasted-carrots-kach) — 35 minutes. Make two pans for a bigger table.
+
+## A little fancy, still easy
+
+- [Pan-Seared Steak with Garlic Herb Mushrooms and Roasted Asparagus](/recipes/pan-seared-steak-with-garlic-herb-mushrooms-and-roasted-asparagus-hlvd) — 30 minutes. The splurge for a small family Christmas.
+- [Maple Glazed Pork Chops with Roasted Squash Coins](/recipes/maple-glazed-pork-chops-with-roasted-squash-coins-2ua2) — sweet, glossy and done in 35 minutes.
+- [Cheesy Scalloped Potatoes with Ham and Peas](/recipes/cheesy-scalloped-potatoes-with-ham-and-peas) — if you're serving a store-bought spiral ham, this is the side that uses the leftovers on the 26th.
+
+## Christmas Eve: keep it cozy
+
+Christmas Eve is the night for something warm and simple. [Lasagna Soup](/recipes/lasagna-soup-family-2yif) gives you lasagna flavor in 35 minutes, with none of the layering, and serves seven. Add garlic bread and you're done.
+
+## A simple plan for the week
+
+| Day | What to do |
+|---|---|
+| Dec 21–22 | Send one grocery order for the whole week, holiday dinner included |
+| Dec 23 | Assemble the lasagna or shells; refrigerate |
+| Dec 24 | Lasagna soup for Christmas Eve |
+| Dec 25 | Bake the make-ahead main, or start the pot roast in the morning |
+| Dec 26 | Leftovers: scalloped potatoes with ham, or lasagna round two |
+
+## Shop once
+
+The hardest part of holiday cooking is usually the shopping: three trips because something got forgotten. If you plan the week in [DinnerDrop](/start), the Christmas dinner and the ordinary weeknights go on one combined list, so you buy one bag of potatoes instead of three. One tap sends it to your Instacart or Walmart cart. It's free, and the family can vote on which holiday dinner wins.
+
+More ideas: the [Holiday table collection](/recipes/collections/holiday) and [Cozy nights](/recipes/collections/cozy). After the big day, see [Thanksgiving Leftover Recipes](/blog/thanksgiving-leftover-recipes) — most of them work just as well with Christmas ham.`,
+  },
+  {
+    slug: 'maple-app-alternatives',
+    title: 'Maple App Alternatives for Family Meal Planning (2026)',
+    description:
+      'Maple Family Organizer is shutting down. Here are the alternatives for the meal-planning half of Maple: what each app covers, what it costs, and how to move your family dinners before your data is deleted.',
+    publishDate: '2026-11-21',
+    readingTimeMinutes: 6,
+    primaryKeyword: 'maple app alternative',
+    content: `Maple Family Organizer is shutting down. Its website says the app sunsets on December 31, 2026, and that accounts and data are deleted with no way to recover them. Some families report the notice inside the app says November 30, so copy anything you need before then to be safe.
+
+Maple did a lot in one app: a shared calendar, chores, a school-email inbox, and meal planning with a grocery list. Most replacements cover part of that. This guide is about the dinner part: what to use for meal planning and groceries once Maple is gone.
+
+*Full disclosure: we make DinnerDrop, one of the options below. Prices are from each company's own pages and app store listings in late 2026; check them before you buy, since they change.*
+
+## Before you switch: save your dinners
+
+There's no export button for meal plans in Maple, so this takes a few minutes by hand:
+
+1. Open your meal plans and recipes in Maple and **copy the names of the dinners your family actually eats**. Paste them into a note.
+2. Screenshot any recipe you wrote yourself, with the ingredients.
+3. Copy your current grocery list.
+4. Check your subscription: Maple says annual plans won't renew and monthly plans run to the shutdown date.
+
+## The options, by what they replace
+
+### If you want one app for everything: Cozi
+
+Cozi is the closest to Maple's all-in-one idea: a shared family calendar, shopping and to-do lists, and a recipe box with a meal planner. The core app is free with ads. Cozi Gold ($39 a year) removes ads and adds premium features, and Cozi Max ($79 a year) adds an AI meal planner and AI recipe creator. It doesn't plan your week for you on the free plan, and the grocery list is a list, not a store cart.
+
+### If you want calendar and lists with meal planning on top: FamilyWall
+
+FamilyWall is free for the shared calendar, lists and family messaging. Its meal planner is part of FamilyWall Premium, listed at $44.99 a year or $7.99 a month in the US App Store, with a 30-day free trial. You plan the meals yourself and send the ingredients to your shopping list.
+
+### If you mainly cooked from your own recipes: Plan to Eat
+
+Plan to Eat is built around saving recipes from any website and dragging them onto a weekly calendar, with a combined grocery list. It's a paid app (about $55 a year) with a free trial. Good if your family already has a big recipe collection.
+
+### If you want dinner planned for you: DinnerDrop
+
+This is the part we built for. DinnerDrop plans five weeknight dinners for your family every week from your family size, budget and cook time, and builds one combined grocery list that goes to your Instacart or Walmart cart in one tap. The family can vote on the dinners by text, with no app for the kids, and anyone can text "ADD milk" to the list.
+
+Planning and the one-tap carts are free with no card. Family texting is part of the Family plan ($4.99 a month or $39 a year). Families coming from Maple get 30 days of Family free, no card, and can paste their saved dinner names on our [Maple switch page](/maple) to bring them over.
+
+What DinnerDrop doesn't do: it isn't a family calendar or chore chart. If you used Maple for those, pair DinnerDrop with a free shared calendar (Google or Apple) and let each app do one job well.
+
+## Quick comparison
+
+| App | Plans the week for you | Shared calendar | Sends the list to a store cart | Price |
+|---|---|---|---|---|
+| Cozi | AI planner on Max | Yes | No | Free; $39–$79/yr |
+| FamilyWall | No (you plan) | Yes | No | Free; meal planner in Premium |
+| Plan to Eat | No (your recipes) | No | No | About $55/yr |
+| DinnerDrop | Yes | No | Instacart or Walmart | Free; Family $4.99/mo |
+
+## Which one should you pick?
+
+- **You want Maple back, all of it:** Cozi or FamilyWall.
+- **You want "what's for dinner" off your plate:** DinnerDrop, plus a free shared calendar.
+- **You cook from a big personal recipe collection:** Plan to Eat.
+
+Whatever you choose, do the five-minute save before Maple's date passes. After that, the data is gone.
+
+Moving from another app that closed? See our guides for [Mealime families](/blog/mealime-shutting-down-alternative) and [eMeals alternatives](/blog/emeals-alternatives).`,
+  },
+  {
     slug: 'thanksgiving-leftover-recipes',
     title: 'Thanksgiving Leftover Recipes: 12 Family Dinners for the Week After',
     description:
