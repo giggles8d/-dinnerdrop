@@ -54,7 +54,20 @@ function WeekendOfferBanner() {
   )
 }
 
+// Headline that matches the ad that sent them (Nov 21 2026 review): ?angle=vote|512, or an utm_content naming it.
+function adAngle(): 'vote' | '512' | null {
+  try {
+    const q = new URLSearchParams(window.location.search)
+    const a = (q.get('angle') || q.get('utm_content') || '').toLowerCase()
+    if (/vote/.test(a)) return 'vote'
+    if (/512|5-12|5:12/.test(a)) return '512'
+  } catch { /* ignore */ }
+  return null
+}
+
 export default function StartPage() {
+  const [angle, setAngle] = useState<'vote' | '512' | null>(null)
+  useEffect(() => { setAngle(adAngle()) }, [])
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f9fafb' }}>
       <CartOfferBanner />
@@ -88,12 +101,30 @@ export default function StartPage() {
         <Suspense fallback={null}><PromoBanner /></Suspense>
         <WeekendOfferBanner />
         <ReceiptRewardBanner variant="start" />
-        <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: GREEN }}>
-          Less deciding. <span style={{ color: GOLD }}>More dinners.</span>
-        </h1>
-        <p className="text-sm sm:text-base font-semibold text-gray-700 max-w-xl mx-auto leading-relaxed mb-5">
-          Five weeknight dinners your family will eat, planned for you every week &mdash; and the whole grocery list lands in <strong>your Instacart or Walmart cart</strong> in one tap. Free, no card, no app to download.
-        </p>
+        {angle === 'vote' ? (
+          <>
+            <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: GREEN }}>Your family picks dinner by text. You tap once to shop.</h1>
+            <p className="text-sm sm:text-base font-semibold text-gray-700 max-w-xl mx-auto leading-relaxed mb-5">
+              Every week DinnerDrop texts everyone in your house a few dinner ideas. They reply with numbers, the top picks become your week, and the whole grocery list goes to <strong>your Instacart or Walmart cart</strong> in one tap. Free, no card.
+            </p>
+          </>
+        ) : angle === '512' ? (
+          <>
+            <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: GREEN }}>It&apos;s 5:12pm. Dinner&apos;s already decided.</h1>
+            <p className="text-sm sm:text-base font-semibold text-gray-700 max-w-xl mx-auto leading-relaxed mb-5">
+              Five weeknight dinners planned for your family every week, and the grocery list in <strong>your Instacart or Walmart cart</strong> in one tap. Free, no card.
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="text-4xl sm:text-6xl font-bold leading-tight mb-3 sm:mb-4" style={{ color: GREEN }}>
+              Less deciding. <span style={{ color: GREEN }}>More dinners.</span>
+            </h1>
+            <p className="text-sm sm:text-base font-semibold text-gray-700 max-w-xl mx-auto leading-relaxed mb-5">
+              Five weeknight dinners your family will eat, planned for you every week &mdash; and the whole grocery list lands in <strong>your Instacart or Walmart cart</strong> in one tap. Free, no card. No app needed for the kids — they just text.
+            </p>
+          </>
+        )}
 
         {/* Primary CTA — above the fold on mobile */}
         <div className="flex flex-col items-center gap-2 mb-6 sm:mb-8">
@@ -106,14 +137,14 @@ export default function StartPage() {
         </div>
 
         <p className="text-base sm:text-xl text-gray-500 max-w-xl mx-auto leading-relaxed mb-10 sm:mb-12">
-          Tell us your family size, budget, and how long you have to cook. Every week you get five dinners your family will actually eat and one deduplicated list &mdash; ready for your <strong>Instacart</strong>, <strong>Walmart</strong> or <strong>Kroger</strong> cart.
+          Tell us your family size, budget, and how long you have to cook. Every week you get five dinners your family will actually eat and one deduplicated list &mdash; ready for your <strong>Instacart</strong> or <strong>Walmart</strong> cart (or your Kroger cart on Family).
         </p>
 
         {/* Benefits */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 text-left">
           {[
             { icon: '🗓️', title: 'Unlimited weekly plans', desc: 'AI-planned weeknight dinners every week, personalized to your family size, budget, and dietary needs.' },
-            { icon: '🛒', title: 'One tap, in your cart', desc: 'Your full list auto-loads into Instacart (any store on it) or your Walmart cart, every item matched — review, check out. Family members can push straight to a Kroger cart.' },
+            { icon: '🛒', title: 'One tap, in your cart', desc: 'Your full list auto-loads into Instacart (any store on it) or your Walmart cart, every item matched — review, check out. On the Family plan, it can go straight to your Kroger cart.' },
             { icon: '💰', title: 'Built to your budget', desc: 'Set a weekly number. Every plan is built to fit it, with overlapping ingredients so nothing goes to waste.' },
           ].map((benefit) => (
             <div key={benefit.title} className="p-5 rounded-2xl border bg-white" style={{ borderColor: '#e8e8e8' }}>
@@ -235,7 +266,7 @@ export default function StartPage() {
           {[
             {
               q: 'Is it really free?',
-              a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart and Walmart carts are free, with no card. Instacart and Walmart pay us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.',
+              a: 'Yes. Unlimited weekly dinner plans, the grocery list, and the one-tap Instacart and Walmart carts are free, with no card. Instacart pays us a small commission when you shop through DinnerDrop, at no extra cost to you — that is what keeps the free plan free.',
             },
             {
               q: 'What does Family add, and what does it cost?',
@@ -263,7 +294,7 @@ export default function StartPage() {
       </section>
 
       {/* Footer */}
-      <p className="container mx-auto px-4 max-w-3xl text-center text-xs text-gray-500 pb-8">Works on your phone: open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em> — it works like an app.</p>
+      <p className="container mx-auto px-4 max-w-3xl text-center text-xs text-gray-500 pb-8">Works on your phone: open dinnerdrop.app in Safari or Chrome and tap <em>Add to Home Screen</em>, or get the iPhone app.</p>
       <footer className="border-t border-gray-200 bg-white mt-20 pb-20 sm:pb-0">
         <div className="container mx-auto px-4 py-6 max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-xs text-gray-500">
           <div className="flex items-center gap-2">

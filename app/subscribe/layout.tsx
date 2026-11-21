@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'DinnerDrop Family — 14-Day Free Trial',
     description: '$4.99/month or $39/year after a 14-day free trial. $0 today, cancel anytime.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop Family' }],
+    images: [{ url: '/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop Family' }],
     url: 'https://www.dinnerdrop.app/subscribe',
     siteName: 'DinnerDrop',
     type: 'website',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'DinnerDrop Family — 14-Day Free Trial',
     description: '$4.99/month or $39/year after a 14-day free trial. $0 today, cancel anytime.',
-    images: ['/og-image.png'],
+    images: ['/og-image.png?v=4'],
   },
 }
 

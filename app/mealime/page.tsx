@@ -18,9 +18,9 @@ export const metadata: Metadata = {
     url: 'https://www.dinnerdrop.app/mealime',
     siteName: 'DinnerDrop',
     type: 'website',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop — Dinner, handled' }],
+    images: [{ url: '/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop — Dinner, handled' }],
   },
-  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png'] },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png?v=4'] },
 }
 
 const GREEN = '#1a5c38'

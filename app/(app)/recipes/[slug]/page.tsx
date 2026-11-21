@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title: r.name, description, url, siteName: 'DinnerDrop', type: 'article', images: [r.image_url ? { url: r.image_url, alt: r.name } : { url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] },
-    twitter: { card: 'summary_large_image', title: r.name, description, images: [r.image_url || '/og-image.png'] },
+    openGraph: { title: r.name, description, url, siteName: 'DinnerDrop', type: 'article', images: [r.image_url ? { url: r.image_url, alt: r.name } : { url: '/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop' }] },
+    twitter: { card: 'summary_large_image', title: r.name, description, images: [r.image_url || '/og-image.png?v=4'] },
   }
 }
 
@@ -44,7 +44,7 @@ export default async function LibraryRecipePage({ params }: { params: { slug: st
     '@type': 'Recipe',
     name: r.name,
     // Google requires an image for Recipe rich results; recipes still waiting on their nightly photo use the site image.
-    image: [r.image_url || 'https://www.dinnerdrop.app/og-image.png'],
+    image: [r.image_url || 'https://www.dinnerdrop.app/og-image.png?v=4'],
     description: recipeIntro({ name: r.name, ingredients: r.ingredients ?? [], steps: r.steps ?? [], tags: r.tags ?? [], servings: r.servings ?? 4, estimatedCost: Number(r.estimated_cost ?? 0), prepTime: r.prep_time ?? 0, cookTime: r.cook_time ?? 0, cuisine: r.cuisine, protein: r.protein }),
     recipeCategory: 'Dinner',
     datePublished: (r as { created_at?: string }).created_at ?? undefined,

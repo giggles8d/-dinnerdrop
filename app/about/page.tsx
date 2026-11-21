@@ -3,15 +3,15 @@ import Link from 'next/link'
 import PublicHeader from '@/components/site/PublicHeader'
 
 export const metadata: Metadata = {
-  title: 'About DinnerDrop — The AI Weekly Dinner Planner for Busy Families',
-  description: 'DinnerDrop is an AI weekly dinner planner for busy families: 5 personalized dinners, a deduplicated grocery list, and a one-tap handoff to Instacart or Kroger.',
+  title: 'About DinnerDrop — The Weekly Dinner Planner Your Family Votes On',
+  description: 'DinnerDrop is a weekly dinner planner for busy families: your family votes on dinners by text, and one grocery list goes to your Instacart or Walmart cart in one tap.',
   openGraph: {
-    title: 'About DinnerDrop — The AI Weekly Dinner Planner for Busy Families',
-    description: 'DinnerDrop is an AI weekly dinner planner for busy families: 5 personalized dinners, a deduplicated grocery list, and a one-tap handoff to Instacart or Kroger.',
+    title: 'About DinnerDrop — The Weekly Dinner Planner Your Family Votes On',
+    description: 'DinnerDrop is a weekly dinner planner for busy families: your family votes on dinners by text, and one grocery list goes to your Instacart or Walmart cart in one tap.',
     url: 'https://dinnerdrop.app/about',
     siteName: 'DinnerDrop',
     type: 'website',
-    images: [{ url: 'https://dinnerdrop.app/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: 'https://dinnerdrop.app/og-image.png?v=4', width: 1200, height: 630 }],
   },
   alternates: { canonical: 'https://www.dinnerdrop.app/about' },
 }
@@ -26,10 +26,10 @@ export default function AboutPage() {
           About DinnerDrop
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-          DinnerDrop is an AI weekly dinner planner built for busy families. Tell us your family
-          size, budget, cook time, and any dietary needs, and we generate five personalized
-          weeknight dinners, build one deduplicated grocery list, and hand it off to your
-          Instacart or Kroger cart in a single tap.
+          DinnerDrop is a weekly dinner planner for busy families. It texts everyone in your house
+          the week&apos;s dinner ideas, they vote by replying with numbers, and the winning dinners
+          become your week — with one grocery list that goes to your Instacart or Walmart cart in
+          one tap.
         </p>
 
         <div className="space-y-8 text-sm sm:text-base text-foreground leading-relaxed">
@@ -52,11 +52,11 @@ export default function AboutPage() {
               How it works
             </h2>
             <p>
-              Our planner uses AI to build a week of budget-friendly dinners around your
-              preferences, then organizes every ingredient into a clean, categorized grocery
-              list. When you&apos;re ready to shop, one tap sends the whole list to Instacart or,
-              if you&apos;ve linked your account, straight into your Kroger cart — no retyping, no
-              missed items. You can swap any meal you don&apos;t love, and DinnerDrop learns your
+              DinnerDrop builds a week of budget-friendly dinners around your family (with AI and a
+              library of tested family recipes), then organizes every ingredient into one clean,
+              categorized grocery list. When you&apos;re ready to shop, one tap sends the whole list to
+              Instacart or your Walmart cart, or on the Family plan straight into your Kroger cart — no
+              retyping, no missed items. You can swap any meal you don&apos;t love, and DinnerDrop learns your
               family&apos;s tastes over time.
             </p>
           </section>

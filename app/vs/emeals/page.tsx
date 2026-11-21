@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: 'https://www.dinnerdrop.app/vs/emeals' },
-  openGraph: { title, description, url: 'https://www.dinnerdrop.app/vs/emeals', siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png?v=3', width: 1200, height: 630, alt: 'DinnerDrop — Dinner, handled' }] },
-  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png?v=3'] },
+  openGraph: { title, description, url: 'https://www.dinnerdrop.app/vs/emeals', siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop — Dinner, handled' }] },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png?v=4'] },
 }
 
 /** As of Oct 31, 2026 — eMeals' own pages (sources listed on the page). Re-check before changing any number. */

@@ -30,13 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       publishedTime: post.publishDate,
       modifiedTime: post.publishDate < '2026-10-18' ? '2026-10-18' : post.publishDate,
-      images: [{ url: 'https://www.dinnerdrop.app/og-image.png', width: 1200, height: 630 }],
+      images: [{ url: 'https://www.dinnerdrop.app/og-image.png?v=4', width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: ['https://www.dinnerdrop.app/og-image.png'],
+      images: ['https://www.dinnerdrop.app/og-image.png?v=4'],
     },
     alternates: { canonical: `https://www.dinnerdrop.app/blog/${post.slug}` },
   }
@@ -188,9 +188,9 @@ export default function BlogPostPage({ params }: Props) {
     publisher: {
       '@type': 'Organization',
       name: 'DinnerDrop',
-      logo: { '@type': 'ImageObject', url: 'https://www.dinnerdrop.app/og-image.png' },
+      logo: { '@type': 'ImageObject', url: 'https://www.dinnerdrop.app/og-image.png?v=4' },
     },
-    image: 'https://www.dinnerdrop.app/og-image.png',
+    image: 'https://www.dinnerdrop.app/og-image.png?v=4',
     url: `https://www.dinnerdrop.app/blog/${post!.slug}`,
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.dinnerdrop.app/blog/${post!.slug}` },
   }

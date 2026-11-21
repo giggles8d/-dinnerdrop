@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     siteName: 'DinnerDrop',
     locale: 'en_US',
     type: 'website',
-    images: [{ url: 'https://www.dinnerdrop.app/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: 'https://www.dinnerdrop.app/og-image.png?v=4', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@dinnerdropapp',
-    images: ['https://www.dinnerdrop.app/og-image.png'],
+    images: ['https://www.dinnerdrop.app/og-image.png?v=4'],
   },
 }
 

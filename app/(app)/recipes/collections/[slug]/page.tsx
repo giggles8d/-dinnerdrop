@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title, description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'DinnerDrop' }] },
-    twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png'] },
+    openGraph: { title, description, url, siteName: 'DinnerDrop', type: 'website', images: [{ url: '/og-image.png?v=4', width: 1200, height: 630, alt: 'DinnerDrop' }] },
+    twitter: { card: 'summary_large_image', title, description, images: ['/og-image.png?v=4'] },
   }
 }
 

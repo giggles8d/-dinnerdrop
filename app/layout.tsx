@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart or Walmart Cart",
     description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart or Walmart cart in one tap. Free, no card needed.",
-    images: [{ url: "/og-image.png?v=3", width: 1200, height: 630, alt: "DinnerDrop" }],
+    images: [{ url: "/og-image.png?v=4", width: 1200, height: 630, alt: "DinnerDrop" }],
     type: "website",
     url: "https://www.dinnerdrop.app",
   },
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DinnerDrop — Weekly Dinner Plans, Straight Into Your Instacart or Walmart Cart",
     description: "Five weeknight dinners planned around your family and budget, and your grocery list in your Instacart or Walmart cart in one tap. Free, no card needed.",
-    images: ["/og-image.png?v=3"],
+    images: ["/og-image.png?v=4"],
   },
   metadataBase: new URL("https://www.dinnerdrop.app"),
   icons: {
@@ -96,9 +96,10 @@ export default function RootLayout({
                 { "@type": "Offer", "name": "Family", "price": "4.99", "priceCurrency": "USD", "description": "$4.99/month or $39/year after a 14-day free trial. Cancel anytime." }
               ],
               "featureList": [
-                "AI meal planning personalized for your family",
-                "One-tap grocery list generation",
-                "Instacart and Kroger one-tap grocery cart integration",
+                "Weekly dinner plans personalized for your family",
+                "Family dinner voting by text",
+                "One grocery list for the whole week",
+                "One-tap Instacart and Walmart cart (Kroger on Family)",
                 "Picky-eater friendly meal swapping",
                 "Weekly budget tracking"
               ]
