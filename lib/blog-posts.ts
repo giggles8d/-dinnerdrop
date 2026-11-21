@@ -30,22 +30,22 @@ Here are 12 family dinners built around the usual leftovers, with a simple order
 
 Turkey and chicken are interchangeable in almost any cooked-chicken recipe. Use about 3 cups of shredded turkey wherever a recipe calls for cooked or rotisserie chicken.
 
-- **[Cheesy Turkey Potato Soup](/recipes/cheesy-turkey-potato-soup-9wjv)** — 40 minutes. Uses turkey and leftover potatoes in one pot. The best Friday-night dinner on this list.
-- **[Chicken Pot Pie](/recipes/chicken-pot-pie-family-zba0)** — swap the chicken for turkey, and stir any leftover peas, carrots or green beans into the filling.
-- **[Chicken and Stuffing Casserole](/recipes/chicken-and-stuffing-casserole-tbkb)** — made for this week: turkey in place of chicken, and your leftover stuffing in place of the boxed mix.
+- [Cheesy Turkey Potato Soup](/recipes/cheesy-turkey-potato-soup-9wjv) — 40 minutes. Uses turkey and leftover potatoes in one pot. The best Friday-night dinner on this list.
+- [Chicken Pot Pie](/recipes/chicken-pot-pie-family-zba0) — swap the chicken for turkey, and stir any leftover peas, carrots or green beans into the filling.
+- [Chicken and Stuffing Casserole](/recipes/chicken-and-stuffing-casserole-tbkb) — made for this week: turkey in place of chicken, and your leftover stuffing in place of the boxed mix.
 - **Turkey and cranberry quesadillas** — no recipe needed: shredded turkey, a thin layer of cranberry sauce, cheddar, folded in a tortilla and crisped in a pan. Ten minutes.
 
 ## Leftover ham dinners
 
 Ham keeps a little longer than turkey and freezes well diced.
 
-- **[Cheesy Scalloped Potatoes with Ham and Peas](/recipes/cheesy-scalloped-potatoes-with-ham-and-peas)** — the classic. Diced ham, potatoes, peas, a cheesy sauce.
-- **[Creamy Ham, Potato and Pea Soup](/recipes/creamy-ham-potato-and-pea-soup-fwbo)** — 45 minutes, and it reheats well for lunches.
-- **[Ham and Broccoli Cheddar Baked Potatoes](/recipes/ham-and-broccoli-cheddar-baked-potatoes-o4dg)** — 35 minutes. Kids build their own.
-- **[Ham and Broccoli Baked Mac and Cheese](/recipes/ham-and-broccoli-baked-mac-and-cheese-wsjd)** — a full dinner in one dish.
-- **[Baked Ham and Swiss Sliders](/recipes/baked-ham-and-swiss-sliders-pl6p)** — 35 minutes. The easy Sunday dinner.
-- **[Ham and Cheese Quiche](/recipes/ham-and-cheese-quiche-2z36)** — breakfast for dinner, and it uses up the eggs you bought for baking.
-- **[Instant Pot Navy Bean and Ham Soup with Cornbread](/recipes/instant-pot-navy-bean-and-ham-soup-with-cornbread-yvch)** — if you have the ham bone, this is where it goes.
+- [Cheesy Scalloped Potatoes with Ham and Peas](/recipes/cheesy-scalloped-potatoes-with-ham-and-peas) — the classic. Diced ham, potatoes, peas, a cheesy sauce.
+- [Creamy Ham, Potato and Pea Soup](/recipes/creamy-ham-potato-and-pea-soup-fwbo) — 45 minutes, and it reheats well for lunches.
+- [Ham and Broccoli Cheddar Baked Potatoes](/recipes/ham-and-broccoli-cheddar-baked-potatoes-o4dg) — 35 minutes. Kids build their own.
+- [Ham and Broccoli Baked Mac and Cheese](/recipes/ham-and-broccoli-baked-mac-and-cheese-wsjd) — a full dinner in one dish.
+- [Baked Ham and Swiss Sliders](/recipes/baked-ham-and-swiss-sliders-pl6p) — 35 minutes. The easy Sunday dinner.
+- [Ham and Cheese Quiche](/recipes/ham-and-cheese-quiche-2z36) — breakfast for dinner, and it uses up the eggs you bought for baking.
+- [Instant Pot Navy Bean and Ham Soup with Cornbread](/recipes/instant-pot-navy-bean-and-ham-soup-with-cornbread-yvch) — if you have the ham bone, this is where it goes.
 
 ## Leftover sides
 
