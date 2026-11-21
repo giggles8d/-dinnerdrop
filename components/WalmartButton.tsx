@@ -1,5 +1,6 @@
 'use client'
 
+import { fireCartSent } from '@/lib/cart-conversion'
 import { useState } from 'react'
 import { X } from 'lucide-react'
 import { isNativeApp, openExternal, tapHaptic } from '@/lib/native'
@@ -79,6 +80,7 @@ export default function WalmartButton({ groceryList, weekStart, onSent }: Props)
       if (win && !win.closed) win.location.href = j.link
       else await openExternal(j.link)
       setDone({ sent: lines.length, total, missing: m.filter((x) => !x.product).map((x) => x.line.name) })
+      fireCartSent('Walmart', total)
       onSent?.()
     } catch { fail('Could not reach Walmart. Try again in a minute.') } finally { setLoading(false) }
   }
