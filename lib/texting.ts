@@ -1542,10 +1542,18 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const ranked = round.candidates.map((c, i) => ({ c, i, votes: tally[c.name] ?? 0 })).sort((a, b) => b.votes - a.votes || a.i - b.i)
   // The family's weekly protein mix still holds: if fish wins three spots but the mix says one,
   // the next most-voted dinner that fits takes the extra spot.
+  // The mix only chooses among dinners the family actually voted for (Nov 21 2026: Sarah's family voted beef and
+  // chicken, the mix wanted one pork dinner, and a 0-vote jambalaya took a voted dinner's spot). Empty spots after
+  // that are filled in vote order, then by the mix.
   const mix = hasMix(settings.food.mix) ? scaleMix(settings.food.mix, round.picks_needed) : null
-  const chosenR = mix
-    ? pickByQuota(ranked, round.picks_needed, mix, (r) => proteinGroup(r.c.protein, r.c.name))
-    : ranked.slice(0, round.picks_needed)
+  const grp = (r: (typeof ranked)[number]) => proteinGroup(r.c.protein, r.c.name)
+  const votedR = ranked.filter((r) => r.votes > 0)
+  let chosenR = mix ? pickByQuota(votedR, round.picks_needed, mix, grp) : votedR.slice(0, round.picks_needed)
+  if (chosenR.length < round.picks_needed) {
+    const rest = ranked.filter((r) => !chosenR.includes(r))
+    const need = round.picks_needed - chosenR.length
+    chosenR = [...chosenR, ...(mix ? pickByQuota(rest, need, mix, grp) : rest.slice(0, need))]
+  }
   // Sunday family dinner: the top-voted Sunday idea always makes the week (one, not two).
   const chosen = keepOneSunday(chosenR, ranked, (r) => r.c, settings.plan.sundayDinner?.on === true).map((r) => r.c)
   // Shopping trips: a trip's vote fills only that trip's nights.
@@ -1554,7 +1562,12 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const shape: PlanShape = { dinnersPerWeek: round.picks_needed, cookDays: tripNights?.length ? tripNights : settings.plan.cookDays, nightTimes: [], leftoverNight: settings.plan.leftoverNight }
   // The week stays inside the family's budget (lib/budget): the next vote winners stand in first, tagged as budget picks.
   const { data: ob } = await admin.from('profiles').select('weekly_budget').eq('id', owner.id).maybeSingle()
-  const inBudget = await keepInBudget(admin, owner.id, chosen, ob?.weekly_budget as string | null, settings, { prefer: ranked.map((r) => r.c).filter((c) => !chosen.includes(c)) })
+  // Stand-ins come from dinners that got votes first (most votes first); a 0-vote dinner only if none of those fit.
+  const preferVoted = ranked.filter((r) => !chosen.includes(r.c) && r.votes > 0).map((r) => r.c)
+  const preferRest = ranked.filter((r) => !chosen.includes(r.c) && r.votes <= 0).map((r) => r.c)
+  const inBudget = (await keepInBudget(admin, owner.id, chosen, ob?.weekly_budget as string | null, settings, { prefer: [...preferVoted, ...preferRest] }))
+    // Remember who voted for each dinner so the plan can show it (Sarah, Nov 21 2026).
+    .map((m) => (voters[m.name]?.length ? { ...m, votedBy: Array.from(new Set(voters[m.name])) } : m))
   const saved = await savePlan(admin, owner.id, round.week_start, inBudget, shape)
   await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString(), result: { chosen: saved.map((m) => m.name), tally } }).eq('id', round.id)
 
@@ -1562,7 +1575,7 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const answered = Array.from(new Set(((votes ?? []) as Array<{ household_members: { name: string } | { name: string }[] | null }>)
     .map((v) => (Array.isArray(v.household_members) ? v.household_members[0] : v.household_members)?.name).filter((n): n is string => !!n)))
   const who = answered.join(', ')
-  const lines = saved.map((m, i) => `${i + 1}. ${m.day.slice(0, 3)}: ${m.name}${tally[m.name] ? ` (${tally[m.name]} ${tally[m.name] === 1 ? 'vote' : 'votes'}${voters[m.name]?.length ? ` — ${voters[m.name].join(', ')}` : ''})` : ''}`)
+  const lines = saved.map((m, i) => `${i + 1}. ${m.day.slice(0, 3)}: ${m.name}${tally[m.name] ? ` (${tally[m.name]} ${tally[m.name] === 1 ? 'vote' : 'votes'}${voters[m.name]?.length ? ` — ${voters[m.name].join(', ')}` : ''})` : (m as Meal).budgetPick ? ' (swapped in to stay on budget)' : ''}`)
   const head = ctx.everyone ? `DinnerDrop: everyone's voted${who ? ` (${who})` : ''}.`
     : who ? `DinnerDrop: voting closed — heard from ${who}.`
     : `DinnerDrop: no votes came in, so I kept the top picks.`

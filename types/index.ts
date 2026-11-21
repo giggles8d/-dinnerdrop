@@ -36,6 +36,7 @@ export interface Meal {
   usesPantry?: string[] // pantry items this dinner was built to use up
   cookedAt?: string     // ISO time the family marked it cooked (fades it on the plan)
   ideaBy?: string       // a family member suggested this dinner by text ("Rich's idea" on the vote)
+  votedBy?: string[]    // who voted for it in the family vote that set this week (shown on the dinner card)
   familyRecipe?: boolean // the family's own dinner, written up from how they described it (lib/family-recipes)
   addedBy?: string      // who added that family recipe (shown as "Rich's recipe")
   heartedBy?: string    // a family member saved this to favorites from a tap-to-vote page ("♥ added by Rich"); the planner can remove it

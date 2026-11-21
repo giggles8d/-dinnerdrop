@@ -40,7 +40,11 @@ export async function keepInBudget(admin: SupabaseClient, userId: string, meals:
     const more = await libraryWeek(admin, userId, [...meals, ...spares].map((m) => m.name)).catch(() => null)
     if (more && more.ok) spares.push(...more.meals.filter((m) => cost(m) > 0))
   }
-  spares.sort((a, b) => cost(a) - cost(b))
+  // Dinners the family voted for come before library ones, in vote order; cost only breaks ties among the rest
+  // (Nov 21 2026: a 0-vote dinner replaced a voted one because it was a few dollars cheaper).
+  const rank = new Map((opts.prefer ?? []).map((m, i) => [m.name, i]))
+  const pr = (m: Meal) => rank.get(m.name) ?? Number.MAX_SAFE_INTEGER
+  spares.sort((a, b) => pr(a) - pr(b) || cost(a) - cost(b))
   const out: BudgetMeal[] = [...meals]
   // Swaps keep the week varied and the family's proteins (Nov 10 2026: a family of 5 at $75 got four meatless
   // dinners and three taco nights). Prefer a cheaper dinner of the same protein that passes the variety rules, then
@@ -54,7 +58,8 @@ export async function keepInBudget(admin: SupabaseClient, userId: string, meals:
     if (!cheaper.length) break
     const varied = cheaper.filter((s) => varietyOk(s, rest, lim))
     // Never break the variety rules to save money (Nov 11 2026: four soups in one week); a little over budget is better.
-    const swap = varied.find((s) => group(s) === group(out[i])) ?? varied[0]
+    const voted = varied.filter((s) => rank.has(s.name))
+    const swap = voted[0] ?? varied.find((s) => group(s) === group(out[i])) ?? varied[0]
     if (!swap) break
     spares.splice(spares.indexOf(swap), 1)
     total += cost(swap) - cost(out[i])
