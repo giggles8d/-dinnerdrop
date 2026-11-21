@@ -15,12 +15,17 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const [busy, setBusy] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  // A vote waiting for the planner's check (review-first): the family hasn't been texted yet (Nov 21 2026).
+  const [review, setReview] = useState<{ sendAt: string } | null>(null)
+  const [sentNote, setSentNote] = useState<string | null>(null)
 
   const load = useCallback(async () => {
     try {
       const r = await fetch('/api/vote-round', { cache: 'no-store' })
       const j = await r.json()
       setRound(j.round ?? null); setPeople(j.people ?? []); setSuggestions(j.suggestions ?? [])
+      const d = await (await fetch('/api/vote/draft', { cache: 'no-store' })).json().catch(() => ({}))
+      setReview(d?.draft?.sendAt ? { sendAt: d.draft.sendAt } : null)
     } catch { /* ignore */ } finally { setLoaded(true) }
   }, [])
 
@@ -39,6 +44,17 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
   const ranked = [...round.candidates].map((c, i) => ({ ...c, i })).sort((a, b) => b.votes - a.votes || a.i - b.i)
   const cutoff = ranked[round.picks_needed - 1]?.votes ?? 0
 
+  async function sendNow() {
+    setBusy(true)
+    try {
+      const r = await fetch('/api/vote/draft', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'send' }) })
+      const d = await r.json().catch(() => ({}))
+      setSentNote(r.ok ? `Sent to ${d.sent ?? 0} ${d.sent === 1 ? 'person' : 'people'}.` : (d.error ?? 'That didn\'t send. Try again.'))
+      await load()
+    } finally { setBusy(false) }
+  }
+  const sendAtLabel = review ? new Date(review.sendAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : ''
+
   async function closeNow() {
     if (!confirm(`Set the week from the votes so far? ${waiting.length ? `${waiting.map((p) => p.name).join(', ')} haven't answered yet.` : ''}`)) return
     setBusy(true)
@@ -49,11 +65,16 @@ export default function FamilyVoteCard({ onClosed }: { onClosed?: () => void }) 
     <div className="mb-8 rounded-2xl border border-primary/30 bg-primary/5 p-5">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
         <div>
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">Family vote in progress</p>
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">{review ? 'Waiting for your check' : 'Family vote in progress'}</p>
           <h2 className="text-xl font-heading font-bold text-foreground mt-1">Week of {new Date(round.week_start + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} — {answered} of {people.filter((p) => p.status !== 'opted out' && p.status !== 'no vote').length} answered</h2>
-          <p className="text-xs text-muted-foreground mt-1">The top {round.picks_needed} become the week when everyone&apos;s in (or after 24h). You&apos;ll get a text.</p>
+          {review
+            ? <p className="text-xs text-muted-foreground mt-1">The family hasn&apos;t seen this yet. It goes to them at {sendAtLabel} if you don&apos;t send it first. <a href="/vote-review" className="underline text-primary font-semibold">Change the dinners</a></p>
+            : <p className="text-xs text-muted-foreground mt-1">The top {round.picks_needed} become the week when everyone&apos;s in (or after 24h). You&apos;ll get a text.</p>}
+          {sentNote && <p className="text-xs font-semibold text-primary mt-1">{sentNote}</p>}
         </div>
-        <button onClick={closeNow} disabled={busy} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50 whitespace-nowrap">{busy ? 'Setting the week…' : 'Close the vote & set the week'}</button>
+        {review
+          ? <button onClick={sendNow} disabled={busy} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50 whitespace-nowrap">{busy ? 'Sending…' : 'Send to the family now'}</button>
+          : <button onClick={closeNow} disabled={busy} className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold disabled:opacity-50 whitespace-nowrap">{busy ? 'Setting the week…' : 'Close the vote & set the week'}</button>}
       </div>
       <div className="flex flex-wrap gap-2 mb-4">
         {people.map((p) => (
