@@ -363,18 +363,20 @@ Thursday is handled. Now the rest of the week is too.`,
   },
   {
     slug: 'mealime-shutting-down-alternative',
-    title: 'Mealime Is Shutting Down October 21 — How to Move Your Family Dinners (Free)',
+    title: 'Mealime Shut Down on October 21: Where to Move Your Family Dinners (Free)',
     description:
-      'Albertsons is closing Mealime on October 21, 2026, with no export. ' +
-      "Here's what's happening, what you lose, and a free way to rebuild your favorite dinners and keep the one-list, one-cart routine.",
+      'Albertsons closed Mealime on October 21, 2026, with no export. ' +
+      "Here's what happened, what families lost, and a free way to rebuild your favorite dinners and keep the one-list, one-cart routine.",
     publishDate: '2026-10-18',
     readingTimeMinutes: 5,
     primaryKeyword: 'mealime alternative',
-    content: `If you open Mealime this week you will see the notice: the app shuts down on **October 21, 2026**. Albertsons, which bought Mealime, is folding it into "Meals Hub" inside its own grocery apps (Safeway, Albertsons, Vons, Jewel-Osco and the rest of the family). [Mealime's own announcement](https://www.mealime.com/closing) is short; the r/mealplanning thread about it is not.
+    content: `*Updated November 21, 2026: Mealime has closed. This guide is for families still looking for a new home for their weekly dinners. Using Maple too? It closes December 31 — see [Maple app alternatives](/blog/maple-app-alternatives).*
 
-Here is what that means for a family that has leaned on Mealime for years, and what to do before Tuesday.
+Mealime shut down on **October 21, 2026**. Albertsons, which bought Mealime, folded it into "Meals Hub" inside its own grocery apps (Safeway, Albertsons, Vons, Jewel-Osco and the rest of the family). [Mealime's own announcement](https://www.mealime.com/closing) is short; the r/mealplanning thread about it is not.
 
-## What you lose on October 21
+Here is what that means for a family that leaned on Mealime for years, and what to do now.
+
+## What families lost on October 21
 
 - **Your saved favorites and meal plans.** There is no export. Mealime has said plans, favorites and lists will not transfer.
 - **A standalone app.** Meals Hub keeps free recipes, plans and lists, but it lives inside Albertsons' store apps (Safeway, Vons, Jewel-Osco…) and is built around shopping at those stores.
@@ -382,11 +384,11 @@ Here is what that means for a family that has leaned on Mealime for years, and w
 
 If you are an Albertsons-family shopper, Meals Hub may be fine. If you shop anywhere else, you need a new home for the weekly routine.
 
-## Save your favorites first (two minutes)
+## Start from the dinners you remember
 
-Before the app goes dark, open your Mealime favorites and **write down the names**. That is all you need. The names are the part that matters — recipes themselves are easy to rebuild, and most families have a short list of dinners that everyone actually eats.
+The Mealime app is gone, so the saved favorites are too. If you wrote the names down, great. If not, list the five or six dinners your family actually asks for. That is all you need. The names are the part that matters — recipes themselves are easy to rebuild, and most families have a short list of dinners that everyone actually eats.
 
-A note in your phone, a screenshot, an email to yourself. Just capture the names.
+A note in your phone is plenty. Just the names.
 
 ## Rebuild the routine in DinnerDrop (free)
 
@@ -394,7 +396,7 @@ A note in your phone, a screenshot, an email to yourself. Just capture the names
 
 To move over:
 
-1. Go to [dinnerdrop.app/mealime](https://www.dinnerdrop.app/mealime) and paste the dinner names you saved, one per line.
+1. Go to [dinnerdrop.app/mealime](https://www.dinnerdrop.app/mealime) and paste the names of your family's favorite dinners, one per line.
 2. Sign up with your email (no password, no card).
 3. DinnerDrop rebuilds each dinner as a full recipe for your family size — ingredients, steps, cook time — and saves it to your favorites.
 4. Generate your first week. Your favorites rotate in alongside new dinners that fit your budget, cook time and dietary needs.
@@ -402,7 +404,7 @@ To move over:
 
 ## How it compares
 
-| | Mealime (until Oct 21) | DinnerDrop |
+| | Mealime (closed Oct 21) | DinnerDrop |
 |---|---|---|
 | Pick dinners, get one list | Yes | Yes |
 | Recipe library to browse | Yes (500+) | Yes — a smaller, growing library of dinners families kept, free at [dinnerdrop.app/recipes](https://www.dinnerdrop.app/recipes); plus add any dinner by name |
@@ -420,9 +422,9 @@ The honest difference: Mealime gave you a big catalog to browse. DinnerDrop's li
 - **Paprika** ($4.99 one-time per platform) — a recipe manager with a weekly planner and grocery list. No AI, no cart handoff.
 - **Samsung Food** (free; Food+ $6.99/month) — recipe saving with a planner. Delivery partners vary.
 
-## Do it before Tuesday
+## Start this week
 
-The only irreversible part is losing the names of the dinners your family eats. Save those today. The rest takes two minutes whenever you are ready.
+Write down the five or six dinners your family asks for most, paste them in, and your first week is planned in about two minutes.
 
 [Bring your Mealime favorites to DinnerDrop — free, no card →](https://www.dinnerdrop.app/mealime)
 `,
@@ -531,7 +533,7 @@ Either way: stop making the "what's for dinner?" decision at 5:47pm. That versio
     publishDate: '2026-05-14',
     readingTimeMinutes: 11,
     primaryKeyword: 'best meal planning app for families',
-    content: `*Updated November 9, 2026: Mealime closed on October 21 and Ollie on November 6, so both are out of the ranking. eMeals is in.*
+    content: `*Updated November 21, 2026: Mealime closed on October 21 and Ollie on November 6, so both are out of the ranking, and Maple Family Organizer closes December 31 ([Maple alternatives here](/blog/maple-app-alternatives)). eMeals is in.*
 
 You\'ve probably Googled "best meal planning app" at least once, stared at a wall of options, and closed the tab without downloading anything.
 
@@ -759,7 +761,7 @@ The transition takes one weekend. The savings start immediately.
 
 **If you want the planning removed but prefer to shop yourself:**
 - **DinnerDrop** — AI weekly plan + grocery list + one-tap Instacart cart, free; Family $4.99/month
-- **Mealime** — Recipe-library approach, free tier available, manual recipe selection
+- **Cozi** — Shared family calendar with a recipe box and meal planner, free (Gold $39/year)
 - **Plan to Eat** — Great for recipe collectors building their own rotation
 
 ## The Bottom Line
@@ -1527,7 +1529,7 @@ This guide breaks down what "free" actually means for the most popular meal plan
 
 Before we get to recommendations, let's define terms. There are three kinds of "free" in the app world:
 
-**Freemium** — The core app is free, but the features you actually need cost money. This is the most common model. Examples: Mealime, Prepear, Plan to Eat.
+**Freemium** — The core app is free, but the features you actually need cost money. This is the most common model. Examples: Prepear, Cozi, FamilyWall.
 
 **Free trial** — Full access for 7–14 days, then you pay. Examples: Most subscription meal kit services. Fine for evaluation, not a long-term solution.
 
@@ -1537,13 +1539,9 @@ Most meal planning apps are freemium. That's not inherently bad — but you shou
 
 ## The 5 Most Popular Free Meal Planning Apps (Honest Breakdown)
 
-### 1. Mealime
+### 1. Mealime (closed)
 
-**What's free:** Browse recipes, build up to 4 meal plans per month, generate a basic grocery list.
-
-**What's paywalled:** Nutritional info, recipe customization, removing ads, adding more than one person's dietary needs, swapping ingredients.
-
-**Verdict:** Genuinely useful at the free tier if you're a single person with simple needs. For families with picky eaters or specific dietary restrictions, you'll hit the paywall fast. Pro plan: $5.99/month.
+Mealime shut down on October 21, 2026, and its saved plans didn't transfer. If you used it, see [where Mealime families went](/blog/mealime-shutting-down-alternative).
 
 ### 2. Plan to Eat
 
@@ -1618,7 +1616,7 @@ Here's the decision tree:
 
 **You want AI-generated meals and a grocery handoff for free** → DinnerDrop (free, no card)
 
-**You're willing to pay $5–$15/month immediately** → Plan to Eat or Mealime Pro
+**You're willing to pay $5–$15/month immediately** → Plan to Eat or eMeals
 
 [Start free — no card needed →](https://www.dinnerdrop.app/start)
 
@@ -1886,7 +1884,7 @@ DinnerDrop was built specifically around this framework:
 
 ## How DinnerDrop Compares to Other Meal Planning Apps
 
-| Feature | DinnerDrop | Mealime (closing Oct 21, 2026) | Plan to Eat | Samsung Food |
+| Feature | DinnerDrop | Mealime (closed Oct 21, 2026) | Plan to Eat | Samsung Food |
 |---------|-----------|---------|-------------|-------|
 | Generates plans from scratch | AI-generated | Recipe filters | Manual | Recipe saves |
 | Family-specific quantities | Scaled auto | Limited | Manual | No |
