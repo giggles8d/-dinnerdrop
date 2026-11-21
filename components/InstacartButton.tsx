@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { openExternal, tapHaptic } from '@/lib/native'
+import { track } from '@/lib/activation'
 import type { GroceryCategory, GroceryItem } from '@/types'
 
 interface InstacartButtonProps {
@@ -39,6 +40,7 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
 
   async function handleSendToInstacart() {
     tapHaptic()
+    const tappedAt = Date.now()
     setLoading(true)
     setError(null)
 
@@ -60,8 +62,12 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
         if (data.fallback) {
           setError('Instacart had a hiccup — opening a search instead.')
         }
-        await openExternal(data.link)
+        const how = await openExternal(data.link)
+        // Measure how often the browser blocks the Instacart tab (Nov 21 2026): meta.ms = tap-to-open wait.
+        track('cta_tap', { id: how === 'blocked' ? 'instacart_tab_blocked' : 'instacart_tab_opened', how, ms: Date.now() - tappedAt }, { beacon: how === 'blocked' })
         if (!data.fallback) onSent?.()
+        // Blocked: open Instacart in this tab instead, so the tap still gets them there. Only runs when the new tab failed.
+        if (how === 'blocked') window.location.href = data.link
       } else {
         setError('No shopping link returned. Please try again.')
       }

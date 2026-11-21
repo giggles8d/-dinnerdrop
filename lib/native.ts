@@ -59,14 +59,22 @@ export function nativePlatform(): 'ios' | 'android' | 'web' {
 /** Open an external URL (Stripe, Instacart, Kroger). In the native shell this
  *  uses the system browser sheet so checkout and store carts never render
  *  inside the app WebView; on the web it behaves like window.open / href. */
-export async function openExternal(url: string, mode: 'newTab' | 'sameTab' = 'newTab') {
+/**
+ * Returns how the link opened. 'blocked' = the browser refused the new tab (pop-up blocker, e.g. iPhone Safari
+ * when the tap was too long ago). Detecting that needs window.open without the 'noopener' feature (with it the
+ * browser always returns null), so we cut the opener link by hand instead.
+ */
+export async function openExternal(url: string, mode: 'newTab' | 'sameTab' = 'newTab'): Promise<'app' | 'tab' | 'same' | 'blocked'> {
   const browser = cap()?.Plugins?.Browser
   if (isNativeApp() && browser) {
     await browser.open({ url, presentationStyle: 'popover' })
-    return
+    return 'app'
   }
-  if (mode === 'sameTab') window.location.href = url
-  else window.open(url, '_blank', 'noopener,noreferrer')
+  if (mode === 'sameTab') { window.location.href = url; return 'same' }
+  const w = window.open(url, '_blank')
+  if (!w) return 'blocked'
+  try { w.opener = null } catch { /* cross-origin already */ }
+  return 'tab'
 }
 
 export async function tapHaptic() {
