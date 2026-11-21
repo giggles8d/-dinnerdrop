@@ -29,11 +29,17 @@ export function nextWeekStart(now = new Date()): string {
 
 /** Families whose menu goes out this weekend: classic weekly plan, auto plan on, Saturday/Sunday plan day, active. */
 export async function weekendFamilies(admin: SupabaseClient): Promise<DraftProfile[]> {
-  const { data } = await admin.from('profiles')
-    .select('id, email, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs')
-    .neq('email', 'setzl1979@gmail.com')
+  // Paged: Supabase returns at most 1,000 rows per query, and there are ~760 families today.
+  const data: DraftProfile[] = []
+  for (let from = 0; ; from += 1000) {
+    const { data: page } = await admin.from('profiles')
+      .select('id, email, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs')
+      .neq('email', 'setzl1979@gmail.com').order('id').range(from, from + 999)
+    data.push(...((page ?? []) as DraftProfile[]))
+    if (!page || page.length < 1000) break
+  }
   const out: DraftProfile[] = []
-  for (const p of (data ?? []) as DraftProfile[]) {
+  for (const p of data) {
     const s = mergeSettings(p.settings)
     if (!s.schedule.autoPlan || !isClassic(tripsConfig(s))) continue
     if (s.schedule.planDay !== 'sat' && s.schedule.planDay !== 'sun') continue
@@ -81,14 +87,14 @@ export async function draftChecks(admin: SupabaseClient, p: DraftProfile, settin
 }
 
 /** Build (or rebuild) one family's draft for the week. */
-export async function buildDraft(admin: SupabaseClient, p: DraftProfile, weekStart: string): Promise<boolean> {
+export async function buildDraft(admin: SupabaseClient, p: DraftProfile, weekStart: string, opts: { allowAi?: boolean; aiTimeoutMs?: number } = {}): Promise<false | 'library' | 'ai'> {
   const settings = mergeSettings(p.settings)
   const { buildWeekMeals } = await import('@/lib/autoplan')
-  const built = await buildWeekMeals(admin, p, settings, weekStart)
+  const built = await buildWeekMeals(admin, p, settings, weekStart, opts)
   if (!built?.meals.length) return false
   const checks = await draftChecks(admin, p, settings, built.meals)
   await admin.from('menu_drafts').upsert({ user_id: p.id, week_start: weekStart, meals: built.meals, checks, source: built.source, status: 'draft', edits: [], built_at: new Date().toISOString() }, { onConflict: 'user_id,week_start' })
-  return true
+  return built.source
 }
 
 /** Apply edit requests from the review page (remove / swap a dinner) and rebuild requests. */
@@ -135,18 +141,26 @@ export async function runMenuDraftSweep(admin: SupabaseClient, now = new Date(),
   for (const p of fams) {
     if (Date.now() - started > budgetMs) { r.left++; continue }
     if (!(await isActive(admin, p.id))) continue
-    const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
-    const ordered = (count ?? 0) > 0
-    if (ordered && aiUsed >= maxAi) { r.left++; continue }
+    // AI weeks (any family the library can't serve, not just families who ordered) can take a minute: at most
+    // `maxAi` per call, only near the start of the call, and cut off at 30 s so the poll (60 s) can still flush
+    // the text outbox after us (Nov 21 2026 review).
+    const allowAi = aiUsed < maxAi && Date.now() - started < 5000
     // A family whose week failed to build is retried at most once an hour, not on every 2-minute poll (Nov 20 2026: one
     // family failed 43 times overnight).
     const failKey = `draft_fail:${week}:${p.id}`
     const { data: fail } = await admin.from('app_kv').select('value').eq('key', failKey).maybeSingle()
     const lastFail = Date.parse(((fail?.value ?? {}) as { at?: string }).at ?? '')
     if (lastFail && Date.now() - lastFail < 3600000) continue
-    try { if (await buildDraft(admin, p, week)) { r.built++; if (ordered) aiUsed++ } } catch (e) {
+    const markFail = (why: string) => admin.from('app_kv').upsert({ key: failKey, value: { at: new Date().toISOString(), error: why.slice(0, 200) } }, { onConflict: 'key' })
+    try {
+      const got = await buildDraft(admin, p, week, { allowAi, aiTimeoutMs: 30000 })
+      if (got) { r.built++; if (got === 'ai') aiUsed++ }
+      else if (allowAi) { aiUsed++; await markFail('no dinners built') }   // empty result: retry in an hour, not every poll
+      else r.left++                                                          // needs AI; a later call has room for it
+    } catch (e) {
       console.error('[menu-drafts] build', p.id, e)
-      await admin.from('app_kv').upsert({ key: failKey, value: { at: new Date().toISOString(), error: String(e).slice(0, 200) } }, { onConflict: 'key' })
+      if (allowAi) aiUsed++
+      await markFail(String(e))
     }
   }
   return r
