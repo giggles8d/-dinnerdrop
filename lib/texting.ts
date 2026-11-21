@@ -1365,6 +1365,10 @@ export async function pollInbound(admin: SupabaseClient): Promise<PollReport> {
     const seenSet = new Set((seen ?? []).map((r) => r.twilio_sid))
     // oldest first so a YES followed by a vote is processed in order
     for (const m of msgs.filter((x) => !seenSet.has(x.sid)).sort((a, b) => new Date(a.date_sent).getTime() - new Date(b.date_sent).getTime())) {
+      // Claim the message first (Nov 21 2026 review): two polls running at once both saw it as new and could
+      // double a vote or an ADD. The app_kv key is unique, so only one poll gets to handle each message.
+      const { error: claimErr } = await admin.from('app_kv').insert({ key: `sms_in:${m.sid}`, value: { at: new Date().toISOString() }, updated_at: new Date().toISOString() })
+      if (claimErr) continue
       try {
         if (Number(m.num_media) > 0) {
           const pr = await handlePhoto(admin, m)

@@ -22,10 +22,16 @@ export const maxDuration = 60
  */
 export async function POST() {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-  const { data: kv } = await admin.from('app_kv').select('value, updated_at').eq('key', 'sms_poll').maybeSingle()
-  const last = kv?.updated_at ? new Date(kv.updated_at).getTime() : 0
-  if (Date.now() - last < 45_000) return NextResponse.json({ skipped: 'recent' })
-  await admin.from('app_kv').upsert({ key: 'sms_poll', value: { started: new Date().toISOString() }, updated_at: new Date().toISOString() })
+  // Take the 45-second slot in one step (Nov 21 2026 review: read-then-write let two calls both through).
+  const nowIso = new Date().toISOString()
+  const { data: took } = await admin.from('app_kv').update({ value: { started: nowIso }, updated_at: nowIso })
+    .eq('key', 'sms_poll').lt('updated_at', new Date(Date.now() - 45_000).toISOString()).select('key')
+  if (!took?.length) {
+    const { data: kv } = await admin.from('app_kv').select('key').eq('key', 'sms_poll').maybeSingle()
+    if (kv) return NextResponse.json({ skipped: 'recent' })
+    const { error } = await admin.from('app_kv').insert({ key: 'sms_poll', value: { started: nowIso }, updated_at: nowIso })
+    if (error) return NextResponse.json({ skipped: 'recent' })
+  }
   const report = await pollInbound(admin)
   // New sign-up alerts to Sarah's phone (lib/signup-alerts); never let them break the poll.
   let signupAlerts: unknown = null
