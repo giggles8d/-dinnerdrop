@@ -720,6 +720,8 @@ function DashboardContent() {
           </div>
         )}
 
+        {/* First visit: setup is the only thing on the page (Nov 21 2026 review). */}
+        {!showQuickSetup && (<>
         <div className="flex items-start justify-between mb-8 pb-6 border-b border-border">
           <div>
             <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">
@@ -816,6 +818,7 @@ function DashboardContent() {
             </div>
           )}
         </div>
+        </>)}
 
         {showQuickSetup && (
           <Walkthrough

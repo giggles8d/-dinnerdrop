@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { trackOnce } from '@/lib/activation'
 import { FOOD_STYLES } from '@/lib/styles'
@@ -24,6 +24,7 @@ type Role = 'adult' | 'kid'
 interface Person { name: string; role: Role; likes: string[]; dislikes: string[]; allergies: string[]; phone: string }
 
 const STEPS = 8
+const DRAFT_KEY = 'dd_walkthrough'
 const DIETS = ['Gluten-free', 'Dairy-free', 'Nut-free', 'Vegetarian', 'Pescatarian', 'Halal']
 const LIKES = ['Pasta', 'Tacos', 'Pizza', 'Chicken', 'Burgers', 'Steak', 'Soup', 'Rice bowls', 'Mac and cheese', 'Stir-fry', 'Potatoes', 'Broccoli']
 const DISLIKES = ['Mushrooms', 'Onions', 'Beans', 'Seafood', 'Spicy food', 'Olives', 'Cilantro', 'Tomatoes', 'Bell peppers', 'Avocado', 'Eggplant', 'Anything mixed together']
@@ -95,12 +96,53 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   const styleNames = FOOD_STYLES.filter((s) => styles.includes(s.key)).map((s) => `${s.emoji} ${s.name}`)
 
   const setPerson = (i: number, p: Partial<Person>) => setPeople((xs) => xs.map((x, j) => (j === i ? { ...x, ...p } : x)))
-  const next = () => setStep((s) => Math.min(s + 1, STEPS))
-  const back = () => setStep((s) => Math.max(s - 1, 0))
+  // Each screen starts at its top (a long screen used to leave the next one scrolled halfway down).
+  const topRef = useRef<HTMLDivElement>(null)
+  const toTop = () => setTimeout(() => topRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0)
+  const next = () => { setStep((s) => Math.min(s + 1, STEPS)); toTop() }
+  const back = () => { setStep((s) => Math.max(s - 1, 0)); toTop() }
+  const [allergyOpen, setAllergyOpen] = useState(false)
+
+  // Keep answers on this phone as she goes, so an interruption (or Facebook's browser reloading) doesn't wipe
+  // them; cleared when setup is saved (Nov 21 2026 review).
+  const restored = useRef(false)
+  useEffect(() => {
+    if (demo || restored.current) return
+    restored.current = true
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY)
+      if (!raw) return
+      const d = JSON.parse(raw) as Record<string, unknown>
+      if (!d || Date.now() - Number(d.at || 0) > 14 * 86400000) return
+      if (typeof d.step === 'number') setStep(Math.min(Math.max(d.step, 0), STEPS))
+      if (d.goal !== undefined) setGoal(d.goal as Goal | null)
+      if (Array.isArray(d.people) && d.people.length) setPeople(d.people as Person[])
+      if (Array.isArray(d.styles)) setStyles(d.styles as string[])
+      if (Array.isArray(d.diets)) setDiets(d.diets as string[])
+      if (d.mix !== undefined) setMix(d.mix as Partial<Record<MixKey, number>> | null)
+      if (d.every && typeof d.every === 'object') setEvery(d.every as Partial<Record<MixKey, 1 | 2 | 4>>)
+      if (Array.isArray(d.nights) && d.nights.length) setNights(d.nights as Weekday[])
+      if (typeof d.busy === 'number') setBusy(d.busy)
+      if (typeof d.sunday === 'boolean') setSunday(d.sunday)
+      if (Array.isArray(d.sundayTimes) && d.sundayTimes.length) setSundayTimes(d.sundayTimes as number[])
+      if (typeof d.extraMonday === 'boolean') setExtraMonday(d.extraMonday)
+      if (typeof d.sundayIdeas === 'number') setSundayIdeas(d.sundayIdeas)
+      if (typeof d.pickedBudget === 'string') setPickedBudget(d.pickedBudget)
+      if (typeof d.storeBrands === 'boolean') setStoreBrands(d.storeBrands)
+      if (typeof d.voteDay === 'string') setVoteDay(d.voteDay as Weekday)
+    } catch { /* storage blocked or bad data: start fresh */ }
+  }, [demo])
+  useEffect(() => {
+    if (demo || !restored.current) return
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ at: Date.now(), step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay }))
+    } catch { /* ignore */ }
+  }, [demo, step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay])
 
   async function save() {
     setSaving(true)
     clearPickedStyle()
+    try { localStorage.removeItem(DRAFT_KEY) } catch { /* ignore */ }
     const answers: QuickSetupAnswers = { familySize, weeklyBudget: budget, dietaryNeeds: diets, style: styles[0] ?? null, goal, phone: people[0]?.phone || undefined }
     if (!demo) {
       try {
@@ -123,10 +165,11 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
     onDone(answers)
   }
 
+  // Pinned to the bottom of the screen so Next is always reachable on long screens; the way out is a real button.
   const nextBtn = (label = 'Next →') => (
-    <div className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3">
+    <div className="sticky bottom-0 z-10 -mx-5 sm:-mx-7 mt-6 px-5 sm:px-7 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-[#f3f7f4]/95 backdrop-blur border-t border-primary/10 flex flex-col sm:flex-row sm:items-center gap-2">
       <button type="button" onClick={next} className="w-full sm:w-auto px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-sm">{label}</button>
-      <button type="button" onClick={save} disabled={saving} className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 disabled:opacity-40">Skip the rest · plan my week now</button>
+      <button type="button" onClick={save} disabled={saving} className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-primary/30 bg-white text-sm font-semibold text-primary hover:bg-primary/5 disabled:opacity-40">{saving ? 'Building your week…' : 'Show me my dinners now'}</button>
     </div>
   )
   const head = (title: string, sub: string) => (
@@ -137,11 +180,11 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   )
 
   return (
-    <div className="mb-8 p-5 sm:p-7 rounded-2xl border border-primary/20 bg-primary/5">
+    <div ref={topRef} className="mb-8 p-5 sm:p-7 rounded-2xl border border-primary/20 bg-primary/5 scroll-mt-4">
       <div className="flex items-center justify-between mb-4">
-        <button type="button" onClick={back} disabled={step === 0} aria-label="Back" className="p-1.5 -ml-1.5 rounded-full text-muted-foreground hover:bg-muted disabled:opacity-0"><ArrowLeft className="w-4 h-4" /></button>
+        <button type="button" onClick={back} disabled={step === 0} aria-label="Back" className="w-11 h-11 -ml-3 inline-flex items-center justify-center rounded-full text-muted-foreground hover:bg-muted disabled:opacity-0"><ArrowLeft className="w-5 h-5" /></button>
         <div className="flex items-center gap-1.5" aria-label={`Step ${Math.min(step + 1, STEPS)} of ${STEPS}`}>
-          {Array.from({ length: STEPS }).map((_, i) => <span key={i} className={`h-1.5 rounded-full transition-all ${i <= step ? 'bg-primary w-5' : 'bg-muted w-2.5'}`} />)}
+          {Array.from({ length: STEPS }).map((_, i) => <span key={i} className={`h-1.5 rounded-full transition-all ${i <= step ? 'bg-primary w-5' : 'bg-primary/20 w-2.5'}`} />)}
         </div>
         <span className="text-xs text-muted-foreground w-12 text-right">{step < STEPS ? `${step + 1} of ${STEPS}` : 'Done'}</span>
       </div>
@@ -180,10 +223,10 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
             {people.map((p, i) => (
               <div key={i} className="flex flex-wrap items-center gap-2 bg-white border rounded-xl px-3 py-2">
                 <input value={p.name} onChange={(e) => setPerson(i, { name: e.target.value.slice(0, 40) })} placeholder={i === 0 ? 'Your first name' : `Person ${i + 1} (optional)`}
-                  className="flex-1 min-w-[8rem] px-2 py-1.5 text-sm rounded-md border border-input bg-background" />
+                  className="flex-1 min-w-[8rem] px-2.5 py-2.5 text-base rounded-md border border-input bg-background" />
                 <Pick on={p.role === 'adult'} onClick={() => setPerson(i, { role: 'adult' })}>Adult</Pick>
                 <Pick on={p.role === 'kid'} onClick={() => setPerson(i, { role: 'kid' })}>Kid</Pick>
-                {i > 0 && <button type="button" aria-label="Remove" onClick={() => setPeople((xs) => xs.filter((_, j) => j !== i))} className="text-gray-400 hover:text-gray-700 text-lg px-1">×</button>}
+                {i > 0 && <button type="button" aria-label="Remove" onClick={() => setPeople((xs) => xs.filter((_, j) => j !== i))} className="w-11 h-11 -mr-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-700 text-xl">×</button>}
               </div>
             ))}
           </div>
@@ -203,7 +246,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
 
       {step === 2 && (
         <div>
-          {head('Your style', 'Pick up to 3 that matter most, most important first. Health needs like Diabetic-friendly always come first. You can change these anytime in Settings.')}
+          {head('Your style', 'Pick up to 3. Your first pick counts most.')}
           <div className="flex flex-wrap gap-2 mt-5">
             {FOOD_STYLES.map((s) => {
               const rank = styles.indexOf(s.key)
@@ -211,7 +254,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
               return <Pick key={s.key} on={rank >= 0} onClick={() => { if (!full) setStyles((xs) => toggle(xs, s.key)) }}>{rank >= 0 ? `${rank + 1} · ` : ''}{s.emoji} {s.name}</Pick>
             })}
           </div>
-          {styleNames.length ? <p className="text-xs mt-2 text-primary font-medium">✓ In order: {styles.map((k) => { const st = FOOD_STYLES.find((x) => x.key === k); return st ? `${st.emoji} ${st.name}` : k }).join(' → ')}{styles.length >= 3 ? ' (that’s 3: tap one to swap it out)' : ''}</p> : <p className="text-xs mt-2 text-amber-700">Nothing picked yet: you’ll get a mix of family-friendly dinners.</p>}
+          {styleNames.length ? <p className="text-xs mt-2 text-primary font-medium">✓ In order: {styles.map((k) => { const st = FOOD_STYLES.find((x) => x.key === k); return st ? `${st.emoji} ${st.name}` : k }).join(' → ')}{styles.length >= 3 ? ' (that’s 3: tap one to swap it out)' : ''}</p> : <p className="text-xs mt-2 text-muted-foreground">Skip it and you’ll get family favorites.</p>}
           <Label>Any diet for the whole table? <span className="font-normal text-muted-foreground">(skip if not)</span></Label>
           <div className="flex flex-wrap gap-2">{DIETS.map((d) => <Pick key={d} on={diets.includes(d)} onClick={() => setDiets((xs) => toggle(xs, d))}>{d}</Pick>)}</div>
           {nextBtn()}
@@ -236,8 +279,15 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
                 <div className="flex flex-wrap gap-2">{LIKES.map((x) => <Pick key={x} on={p.likes.includes(x)} onClick={() => setPerson(cur.i, { likes: toggle(p.likes, x), dislikes: p.dislikes.filter((y) => y !== x) })}>{x}</Pick>)}</div>
                 <Label>{cur.name} won’t eat</Label>
                 <div className="flex flex-wrap gap-2">{DISLIKES.map((x) => <Pick key={x} on={p.dislikes.includes(x)} onClick={() => setPerson(cur.i, { dislikes: toggle(p.dislikes, x), likes: p.likes.filter((y) => y !== x) })}>{x}</Pick>)}</div>
-                <Label>Allergies</Label>
-                <div className="flex flex-wrap gap-2">{ALLERGIES.map((x) => <Pick key={x} on={p.allergies.includes(x)} onClick={() => setPerson(cur.i, { allergies: toggle(p.allergies, x) })}>{x}</Pick>)}</div>
+                <Label>Any allergies?</Label>
+                {allergyOpen || p.allergies.length ? (
+                  <div className="flex flex-wrap gap-2">{ALLERGIES.map((x) => <Pick key={x} on={p.allergies.includes(x)} onClick={() => setPerson(cur.i, { allergies: toggle(p.allergies, x) })}>{x}</Pick>)}</div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    <Pick on onClick={() => undefined}>No</Pick>
+                    <Pick on={false} onClick={() => setAllergyOpen(true)}>Yes</Pick>
+                  </div>
+                )}
               </>
             )
           })()}
@@ -263,13 +313,13 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
                       <div className="flex items-center justify-between">
                         <span className={`text-sm ${n ? 'font-semibold text-foreground' : 'text-gray-500'}`}>{g.label}</span>
                         <span className="flex items-center gap-1.5">
-                          <button type="button" aria-label={`Fewer ${g.label}`} onClick={() => set(n - 1)} disabled={!n} className="w-7 h-7 rounded-full border border-border disabled:opacity-30">−</button>
+                          <button type="button" aria-label={`Fewer ${g.label}`} onClick={() => set(n - 1)} disabled={!n} className="w-9 h-9 rounded-full border border-border disabled:opacity-30">−</button>
                           <span className="w-4 text-center text-sm font-semibold tabular-nums">{n}</span>
-                          <button type="button" aria-label={`More ${g.label}`} onClick={() => set(n + 1)} className="w-7 h-7 rounded-full border border-border">+</button>
+                          <button type="button" aria-label={`More ${g.label}`} onClick={() => set(n + 1)} className="w-9 h-9 rounded-full border border-border">+</button>
                         </span>
                       </div>
                       {n > 0 && (
-                        <select aria-label={`How often ${g.label}`} value={every[g.key] ?? 1} onChange={(e) => setEvery((x) => ({ ...x, [g.key]: Number(e.target.value) as 1 | 2 | 4 }))} className="mt-1.5 w-full text-xs rounded-md border border-border bg-white px-2 py-1">
+                        <select aria-label={`How often ${g.label}`} value={every[g.key] ?? 1} onChange={(e) => setEvery((x) => ({ ...x, [g.key]: Number(e.target.value) as 1 | 2 | 4 }))} className="mt-1.5 w-full text-base rounded-md border border-border bg-white px-2 py-2">
                           {MIX_EVERY.map((o) => <option key={o.v} value={o.v}>{o.label}</option>)}
                         </select>
                       )}
@@ -351,7 +401,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
       {step === STEPS && (
         <div>
           <div className="text-3xl">🎉</div>
-          {head('Here’s what we’ll plan around', 'Change any of it in Settings. Each section shows what’s set.')}
+          {head('Here’s what we’ll plan around', 'Next: pick your dinners, then one tap sends the list to Instacart or Walmart. Change any of this in Settings.')}
           <ul className="mt-4 space-y-1.5 text-sm">
             {[
               `${familySize} at dinner${named.length ? ` · ${named.map((p) => p.name.trim()).join(', ')}` : ''}`,
@@ -360,11 +410,11 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
               mix ? MIX_GROUPS.filter((g) => Number(mix[g.key]) > 0).map((g) => `${g.label} ${mix[g.key]}${(every[g.key] ?? 1) > 1 ? ` (${MIX_EVERY.find((o) => o.v === every[g.key])?.label.toLowerCase()})` : ''}`).join(' · ') : 'Any mix of proteins',
               `${nights.map((d) => WEEKDAY_LABEL[d].slice(0, 3)).join(', ')} · ${busy} min a night${sunday ? ` · Sunday dinner, ${SUNDAY.filter((o) => sundayTimes.includes(o.m)).map((o) => o.l.toLowerCase()).join(' / ')}${extraMonday ? ' + Monday leftovers' : ''}` : ''}`,
               `${budget} a week${storeBrands ? ' · store brands' : ''}`,
-              people.some((p) => p.phone.replace(/\D/g, '').length >= 10) ? `Family votes by text on ${WEEKDAY_LABEL[voteDay]}s` : 'No texting for now',
+              people.some((p) => p.phone.replace(/\D/g, '').length >= 10) ? `Family votes by text on ${WEEKDAY_LABEL[voteDay]}s` : 'Texting: add numbers anytime in Settings',
             ].filter(Boolean).map((x) => <li key={x} className="bg-white border rounded-lg px-3 py-2">✓ {x}</li>)}
           </ul>
           <button type="button" onClick={save} disabled={saving} className="mt-6 w-full sm:w-auto px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-sm disabled:opacity-60">
-            {saving ? 'Building your week…' : 'Build my week →'}
+            {saving ? 'Building your week…' : 'Show my dinners →'}
           </button>
         </div>
       )}

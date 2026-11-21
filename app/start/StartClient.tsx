@@ -199,7 +199,7 @@ export default function StartPage() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
           {[
-            { step: '1', title: 'Four taps about your family', desc: 'What would make dinner easier, who’s eating, your budget, and your cell if you want the week texted to you. Under a minute — or skip it.' },
+            { step: '1', title: 'A few quick taps about your family', desc: 'Who’s eating, what they like, your nights and your budget. About a minute, and you can skip ahead to your dinners anytime.' },
             { step: '2', title: 'Get your 5-dinner plan', desc: 'Every week, AI builds a personalized dinner plan around what your family actually eats.' },
             { step: '3', title: 'One tap to your cart', desc: 'Your full grocery list opens in your Instacart cart or fills your Walmart cart with every item pre-loaded — review and check out there.' },
           ].map((item) => (

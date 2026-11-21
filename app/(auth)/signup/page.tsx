@@ -160,7 +160,7 @@ function SignupForm() {
           <p className="mt-2 text-muted-foreground">
             {toTrial
               ? 'Step 1 of 2: your email. Step 2: add a card at secure checkout — $0 today, $4.99/month after 14 days unless you cancel.'
-              : 'Just your email. No password, no card. Your first week of dinners is ready in seconds.'}
+              : 'Just your email. No password, no card. Next, a few quick taps (about a minute) so your week fits your family.'}
           </p>
         </div>
 
