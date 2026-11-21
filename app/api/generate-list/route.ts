@@ -1,4 +1,5 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
+import { mergeDuplicateLines } from '@/lib/list'
 import { mayActFor } from '@/lib/route-auth'
 import { createClient } from '@supabase/supabase-js'
 import type { GroceryCategory, GroceryItem, Ingredient } from '@/types'
@@ -77,7 +78,9 @@ Return ONLY valid, compact JSON (no pretty-printing, no comments), no markdown:
 }`
 
     const text = await generateWithClaude(prompt, 6000)
-    const groceryList = parseClaudeJSON<GroceryListResponse>(text)
+    const parsed = parseClaudeJSON<GroceryListResponse>(text)
+    // The model doesn't always combine repeats; merge them in code before the list reaches the cart.
+    const groceryList = mergeDuplicateLines(parsed as unknown as Record<string, GroceryItem[]>)
 
     return Response.json(groceryList)
   } catch (error) {

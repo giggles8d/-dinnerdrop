@@ -1,5 +1,6 @@
 'use client'
 
+import { WEEKEND_OFFER, weekendOfferOpen } from '@/lib/weekend-offer-config'
 import ReceiptRewardBanner from '@/components/ReceiptRewardBanner'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
@@ -76,6 +77,9 @@ export default function GroceryListPage() {
   const [lastWeekExtras, setLastWeekExtras] = useState<UsualItem[]>([])
   const [askActual, setAskActual] = useState<{ id: string; est: number | null } | null>(null)
   // The last send to a store whose lines are still on the list: ask whether the order went through.
+  // Thanksgiving first-list offer (lib/weekend-offer): shown on the send hero to families who haven't sent a list yet.
+  const [neverSent, setNeverSent] = useState(false)
+  const [offerStatus, setOfferStatus] = useState<string | null>(null)
   const [pendingSend, setPendingSend] = useState<{ id: string; at: string; store: string | null } | null>(null)
   const [actualDraft, setActualDraft] = useState('')
   const [actualSaved, setActualSaved] = useState<string | null>(null)
@@ -165,6 +169,7 @@ export default function GroceryListPage() {
     supabase.from('grocery_handoffs').select('id, est_total, actual_total, created_at, store').eq('user_id', uid).order('created_at', { ascending: false }).limit(1)
       .then(({ data: hs }) => {
         const h = hs?.[0]
+        setNeverSent(!h)
         if (h && h.actual_total == null && Date.now() - new Date(h.created_at).getTime() < 5 * 86400000) setAskActual({ id: h.id, est: h.est_total == null ? null : Number(h.est_total) })
         let dismissed = false
         try { dismissed = !!h && localStorage.getItem(`dd.send.${h.id}`) === 'keep' } catch { /* ignore */ }
@@ -174,7 +179,7 @@ export default function GroceryListPage() {
 
     const { data: profile } = await supabase
       .from('profiles')
-      .select('kroger_access_token, kroger_token_expires_at, subscription_status, is_beta_member, family_until, household_id, settings, weekly_budget, family_size')
+      .select('subscription_status, is_beta_member, family_until, household_id, settings, weekly_budget, family_size')
       .eq('id', uid)
       .single()
 
@@ -187,12 +192,13 @@ export default function GroceryListPage() {
     setStockUpOn(settings.deals.stockUp)
     setKrogerLoc({ id: settings.stores.krogerLocationId, name: settings.stores.krogerLocationName })
     if (profile) {
-      const tokenValid = profile.kroger_access_token &&
-        (!profile.kroger_token_expires_at || new Date(profile.kroger_token_expires_at) > new Date())
-      setKrogerConnected(!!tokenValid)
+      // Kroger: ask the server (tokens never come to the page; an expired 30-min token still counts while it can be refreshed).
+      const kroger = await fetch('/api/kroger/status', { cache: 'no-store' }).then((r) => r.json()).catch(() => ({ connected: false })) as { connected?: boolean }
+      setKrogerConnected(!!kroger.connected)
       const status = profile.subscription_status
       const familyUntil = profile.family_until ? new Date(profile.family_until) > new Date() : false
-      setIsFamily(status === 'active' || status === 'trialing' || status === 'past_due' || !!profile.is_beta_member || familyUntil || !!profile.kroger_access_token)
+      setIsFamily(status === 'active' || status === 'trialing' || status === 'past_due' || !!profile.is_beta_member || familyUntil || !!kroger.connected)
+      setOfferStatus(status ?? null)
       setHouseholdId(profile.household_id ?? null)
       setBudget(Number(String(profile.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 0)
     }
@@ -579,6 +585,9 @@ export default function GroceryListPage() {
             {justPicked && <p className="text-xs font-semibold text-primary mb-1">✓ Your dinners are set. One step left.</p>}
             <p className="font-heading font-bold text-2xl text-foreground">{shoppableCount} items{storeEst > 0 ? ` · about $${Math.round(storeEst)}` : ''}</p>
             <p className="text-sm text-muted-foreground mt-1">Amounts are matched to store package sizes, so your cart fills in ready to check out.</p>
+            {neverSent && !isPartner && weekendOfferOpen() && offerStatus !== 'active' && offerStatus !== 'trialing' && (
+              <p className="mt-2 text-sm font-semibold text-foreground">🦃 Send this list to Instacart by Sunday 11:59 PM and get {WEEKEND_OFFER.label}. No card.</p>
+            )}
             <div className="mt-4">
               {splitLists && splitStores ? (
                 <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="w-full sm:w-auto px-8 py-3 rounded-full bg-[#003D29] text-[#FAF1E5] font-semibold">Send to your carts ↓</button>

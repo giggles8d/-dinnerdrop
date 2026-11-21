@@ -58,14 +58,18 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
         return
       }
 
+      // Instacart didn't build the list (after a retry): don't open a one-item search the family would mistake
+      // for their list — keep them here to try again (Nov 21 2026 review).
+      if (data.fallback) {
+        setError("Instacart didn't answer just now, so your list wasn't sent. Tap Shop ingredients again in a moment, or send it to Walmart below.")
+        track('cta_tap', { id: 'instacart_api_failed' })
+        return
+      }
       if (data.link) {
-        if (data.fallback) {
-          setError('Instacart had a hiccup — opening a search instead.')
-        }
         const how = await openExternal(data.link)
         // Measure how often the browser blocks the Instacart tab (Nov 21 2026): meta.ms = tap-to-open wait.
         track('cta_tap', { id: how === 'blocked' ? 'instacart_tab_blocked' : 'instacart_tab_opened', how, ms: Date.now() - tappedAt }, { beacon: how === 'blocked' })
-        if (!data.fallback) onSent?.()
+        onSent?.()
         // Blocked: open Instacart in this tab instead, so the tap still gets them there. Only runs when the new tab failed.
         if (how === 'blocked') window.location.href = data.link
       } else {

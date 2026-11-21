@@ -8,17 +8,8 @@ import { emailShell, sendEmail } from './notify'
  * Thanksgiving week image" and on /start (StartClient ThanksgivingOfferBanner); the Nov 19 reminder email is
  * lib/weekend-campaign.ts. Earlier runs: weekend-2026-10-31 (Oct 31 – Nov 1), Nov 7–8.
  */
-export const WEEKEND_OFFER = {
-  id: 'thanksgiving-2026',
-  signupFrom: '2026-01-01T05:00:00Z',   // anyone who hasn't sent a list yet (the first-list check below does the rest)
-  sendBy: '2026-11-23T04:59:59Z',       // Sun Nov 22 11:59 PM ET
-  days: 90,
-  label: '3 months of Family free',
-}
-
-export function weekendOfferOpen(now = new Date()): boolean {
-  return now.getTime() <= new Date(WEEKEND_OFFER.sendBy).getTime()
-}
+export { WEEKEND_OFFER, weekendOfferOpen } from './weekend-offer-config'
+import { WEEKEND_OFFER, weekendOfferOpen } from './weekend-offer-config'
 
 /** Call right after a real (non-quote) Instacart handoff is logged. Returns true when the reward was just granted. */
 export async function grantWeekendOffer(admin: SupabaseClient, userId: string, now = new Date()): Promise<boolean> {
