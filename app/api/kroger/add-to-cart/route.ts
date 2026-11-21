@@ -8,6 +8,7 @@ import { getClientCredentialsToken, searchProduct, addItemsToCart, refreshKroger
 import type { GroceryItem } from '@/types'
 import { loadProductPrefs, applyPrefsToItems } from '@/lib/product-prefs'
 import { grantCartOffer } from '@/lib/cart-offer'
+import { serviceClient, getKrogerTokens, saveKrogerTokens } from '@/lib/kroger-tokens'
 
 export async function POST(request: Request) {
   try {
@@ -18,30 +19,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('kroger_access_token, kroger_refresh_token, kroger_token_expires_at')
-      .eq('id', user.id)
-      .single()
+    const svc = serviceClient()
+    const tok = await getKrogerTokens(svc, user.id)
 
-    if (!profile?.kroger_access_token) {
+    if (!tok?.access_token) {
       return NextResponse.json({ error: 'Kroger account not connected' }, { status: 403 })
     }
 
     // Check token expiry — attempt silent refresh before failing hard
-    let accessToken = profile.kroger_access_token
-    if (profile.kroger_token_expires_at && new Date(profile.kroger_token_expires_at) < new Date()) {
-      if (!profile.kroger_refresh_token) {
+    let accessToken = tok.access_token
+    if (tok.expires_at && new Date(tok.expires_at) < new Date()) {
+      if (!tok.refresh_token) {
         return NextResponse.json({ error: 'Kroger session expired. Please reconnect.' }, { status: 403 })
       }
       try {
-        const refreshed = await refreshKrogerToken(profile.kroger_refresh_token)
-        const newExpiresAt = new Date(Date.now() + refreshed.expires_in * 1000).toISOString()
-        await supabase.from('profiles').update({
-          kroger_access_token: refreshed.access_token,
-          kroger_refresh_token: refreshed.refresh_token,
-          kroger_token_expires_at: newExpiresAt,
-        }).eq('id', user.id)
+        const refreshed = await refreshKrogerToken(tok.refresh_token)
+        await saveKrogerTokens(svc, user.id, refreshed)
         accessToken = refreshed.access_token
       } catch {
         return NextResponse.json({ error: 'Kroger session expired. Please reconnect.' }, { status: 403 })
