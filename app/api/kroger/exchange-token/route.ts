@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { exchangeCodeForTokens } from '@/lib/kroger'
+import { serviceClient, saveKrogerTokens } from '@/lib/kroger-tokens'
 
 export async function POST(request: Request) {
   try {
@@ -24,17 +25,8 @@ export async function POST(request: Request) {
 
     const tokens = await exchangeCodeForTokens(code)
 
-    const expiresAt = new Date(Date.now() + tokens.expires_in * 1000).toISOString()
-
-    await supabase
-      .from('profiles')
-      .update({
-        kroger_access_token: tokens.access_token,
-        kroger_refresh_token: tokens.refresh_token,
-        kroger_token_expires_at: expiresAt,
-        preferred_store: 'kroger',
-      })
-      .eq('id', user.id)
+    await saveKrogerTokens(serviceClient(), user.id, tokens)
+    await supabase.from('profiles').update({ preferred_store: 'kroger' }).eq('id', user.id)
 
     const res = NextResponse.json({ success: true })
     res.cookies.set('kroger_oauth_state', '', { path: '/', maxAge: 0 })
