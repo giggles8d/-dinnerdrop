@@ -10,6 +10,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { buildFirstPlan } from '@/lib/first-plan'
 import { trackStep } from '@/lib/activation'
+import { attachLibraryImages } from '@/lib/library-images'
+import { planReadyHtml } from '@/lib/plan-ready-email'
+import { sendEmail } from '@/lib/notify'
+import { shopUrl, logFollowup } from '@/lib/followup'
+import type { Meal } from '@/types'
 
 const SARAH_EMAIL = 'setzl1979@gmail.com'
 export const STARTER_AFTER_MIN = 20
@@ -45,10 +50,13 @@ export async function buildStarterWeeks(admin: SupabaseClient, now = new Date(),
       await admin.from('app_kv').update({ value: { at: now.toISOString(), status: r.ok ? 'had a plan' : `failed: ${r.reason}` } }).eq('key', `starter_week:${p.id}`)
       skipped++; continue
     }
-    const { data: plan } = await admin.from('meal_plans').select('id, meals').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
+    const { data: plan } = await admin.from('meal_plans').select('id, meals, week_start').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
     const names = ((plan?.[0]?.meals as Array<{ name: string }> | undefined) ?? []).map((m) => m.name)
     await admin.from('app_kv').update({ value: { at: now.toISOString(), status: 'built', planId: plan?.[0]?.id ?? null, names } }).eq('key', `starter_week:${p.id}`)
     await trackStep(admin, p.id, 'starter_week_built', { count: r.meals.length })
+    // They left before seeing a dinner: send the week right away, with photos and the one-tap cart
+    // (Nov 21 2026 review — the first email used to come 12–36 hours later and never showed the dinners).
+    await sendStarterEmail(admin, p.id, (plan?.[0]?.meals as Meal[] | undefined) ?? [], plan?.[0]?.week_start as string | undefined).catch((e) => console.error('[starter-week] email failed', e))
     built++
   }
   return { built, skipped }
@@ -67,4 +75,28 @@ export async function dropStarterWeek(admin: SupabaseClient, userId: string): Pr
   await admin.from('meal_plans').delete().eq('id', v.planId).eq('user_id', userId)
   await admin.from('app_kv').update({ value: { ...v, status: 'replaced by setup' } }).eq('key', `starter_week:${userId}`)
   return true
+}
+
+const APP = 'https://www.dinnerdrop.app'
+
+async function sendStarterEmail(admin: SupabaseClient, userId: string, meals: Meal[], weekStart?: string): Promise<void> {
+  if (!meals.length) return
+  const { data: p } = await admin.from('profiles').select('email, full_name, email_unsubscribed').eq('id', userId).maybeSingle()
+  if (!p?.email || p.email_unsubscribed) return
+  const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', userId)
+  if ((count ?? 0) > 0) return
+  const withPhotos = await attachLibraryImages(admin, meals)
+  const first = (p.full_name || '').trim().split(' ')[0] || 'there'
+  const subject = withPhotos.length > 1 ? `Your week: ${withPhotos[0].name} and ${withPhotos.length - 1} more` : 'Your dinners for the week are ready'
+  const html = planReadyHtml({
+    firstName: first,
+    meals: withPhotos,
+    weekLabel: weekStart ? new Date(`${weekStart}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) : 'this week',
+    note: 'We finished your week for you. Groceries for every dinner are on one list.',
+    unsubscribeUrl: `${APP}/unsubscribe?uid=${userId}`,
+    shopUrl: shopUrl(userId, 'starter'),
+    why: 'You signed up for DinnerDrop today, so we planned your first week.',
+  })
+  await sendEmail(p.email, subject, html)
+  await logFollowup(admin, userId, 'starter')
 }

@@ -59,13 +59,15 @@ export async function GET(request: NextRequest) {
     // automatically, so "has a plan" no longer means engaged: a family counts as
     // activated once they've opened a recipe or their grocery list, or sent a list to a store.
     const userIds = users.map(u => u.id)
-    const [{ data: seen }, { data: handoffs }] = await Promise.all([
+    const [{ data: seen }, { data: handoffs }, { data: starter }] = await Promise.all([
       supabase.from('activation_events').select('user_id').in('user_id', userIds).in('step', ['recipe_view', 'grocery_list_view']),
       supabase.from('grocery_handoffs').select('user_id').in('user_id', userIds),
+      // Got "Your week: … and 4 more" from lib/starter-week within the hour: the day-1 email would repeat it.
+      emailNumber === 1 ? supabase.from('activation_events').select('user_id').in('user_id', userIds).eq('step', 'followup_sent').eq('meta->>kind', 'starter') : Promise.resolve({ data: [] as Array<{ user_id: string }> }),
     ])
     // Day 1 is the "your list is ready" email, so it goes to everyone who hasn't
     // sent a list to a store yet, even if they looked at a recipe or the list.
-    const activated = new Set([...(emailNumber === 1 ? [] : (seen || [])), ...(handoffs || [])].map(r => r.user_id))
+    const activated = new Set([...(emailNumber === 1 ? [] : (seen || [])), ...(handoffs || []), ...(starter || [])].map(r => r.user_id))
 
     for (const user of users) {
       if (activated.has(user.id)) continue
