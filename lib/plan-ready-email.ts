@@ -14,8 +14,8 @@ export function planReadySubject(meals: Meal[]): string {
   return first ? `Your week is planned — ${first} and ${meals.length - 1} more` : 'Your dinners for the week are planned'
 }
 
-export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabel: string; unsubscribeUrl: string; note?: string; shopUrl?: string }): string {
-  const { firstName, meals, weekLabel, unsubscribeUrl, note, shopUrl } = opts
+export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabel: string; unsubscribeUrl: string; note?: string; shopUrl?: string; why?: string }): string {
+  const { firstName, meals, weekLabel, unsubscribeUrl, note, shopUrl, why } = opts
   const total = meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
   const mins = (m: Meal) => (Number(m.prepTime) || 0) + (Number(m.cookTime) || 0)
   const rows = meals.map((m) => `
@@ -46,7 +46,7 @@ export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabe
     <p style="margin:0;font-size:14px;line-height:1.55;color:#3d4a43"><em>P.S. Want the family to pick? <a href="${link('/dashboard?texting=1', 'texting')}" style="color:#1a5c38">Add their numbers</a> and DinnerDrop texts them the options to vote on — and anyone can text “ADD milk” to put it on the list.</em></p>
   </td></tr>
   <tr><td style="padding:16px 28px 22px;border-top:1px solid #e6e2d8">
-    <p style="margin:0;font-size:12px;line-height:1.5;color:#8a8577">You're getting this because automatic weekly plans are on in your DinnerDrop settings. <a href="${APP}/settings" style="color:#8a8577">Change reminders</a> · <a href="${unsubscribeUrl}" style="color:#8a8577">Unsubscribe</a></p>
+    <p style="margin:0;font-size:12px;line-height:1.5;color:#8a8577">${why ? esc(why) : "You're getting this because automatic weekly plans are on in your DinnerDrop settings."} <a href="${APP}/settings" style="color:#8a8577">Change reminders</a> · <a href="${unsubscribeUrl}" style="color:#8a8577">Unsubscribe</a></p>
   </td></tr>
 </table></td></tr></table></body></html>`
 }
