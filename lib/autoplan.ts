@@ -25,7 +25,7 @@ export interface AutoPlanProfile {
  * first-week rules (familiar kid favorites, no seafood unless asked, none of last week's dinners) from the library.
  * Everyone else, or if the library can't fill it: the AI planner.
  */
-export async function buildWeekMeals(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string): Promise<{ meals: Meal[]; source: 'library' | 'ai' } | null> {
+export async function buildWeekMeals(admin: SupabaseClient, p: AutoPlanProfile, settings: Settings, weekStart: string, opts: { allowAi?: boolean; aiTimeoutMs?: number } = {}): Promise<{ meals: Meal[]; source: 'library' | 'ai' } | null> {
   const { count: sends } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
   if (!(sends ?? 0)) {
     try {
@@ -38,6 +38,8 @@ export async function buildWeekMeals(admin: SupabaseClient, p: AutoPlanProfile, 
       console.error('buildWeekMeals library week', p.id, e)
     }
   }
+  // The Friday draft sweep runs inside the 60 s text poll: it can say no AI this call (Nov 21 2026 review).
+  if (opts.allowAi === false) return null
   const base = process.env.NEXT_PUBLIC_APP_URL || APP
   const { data: favs } = await admin.from('favorites').select('meal_data').eq('user_id', p.id)
   const res = await fetch(`${base}/api/generate-plan`, {
@@ -53,6 +55,7 @@ export async function buildWeekMeals(admin: SupabaseClient, p: AutoPlanProfile, 
       favoriteMeals: (favs ?? []).map((f) => f.meal_data),
       tripKey: weekStart,   // trip mode plans exactly this trip; ignored in the classic setup
     }),
+    ...(opts.aiTimeoutMs ? { signal: AbortSignal.timeout(opts.aiTimeoutMs) } : {}),
   })
   if (!res.ok) throw new Error(`generate-plan ${res.status}`)
   const data = await res.json() as { meals: Meal[]; plan?: PlanShape }
