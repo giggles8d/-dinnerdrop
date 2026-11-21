@@ -31,6 +31,13 @@ const ALLERGIES = ['Peanuts', 'Tree nuts', 'Dairy', 'Eggs', 'Gluten', 'Soy', 'Sh
 const NIGHTS: Weekday[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 const BUSY = [20, 30, 45, 60]
 const SUNDAY = [{ m: 60, l: '1 hour' }, { m: 120, l: '2 hours' }, { m: 240, l: 'All afternoon' }]
+const IMG = 'https://znxuxkqmmulnhkuwlshr.supabase.co/storage/v1/object/public/recipe-images/'
+// Real library dinners shown on the first screen so a new family sees what they're setting up (Nov 21 2026).
+const PREVIEW = [
+  { name: 'Sheet-Pan Crispy Chicken and Roasted Potatoes', img: `${IMG}f94d71aa-4a78-4c61-befb-10736780c5a9.webp` },
+  { name: 'Turkey Meatball Marinara with Pasta', img: `${IMG}f2851b34-0365-4bfe-8949-34d6d6579334.webp` },
+  { name: 'Slow-Cooker Pulled Chicken Sandwiches', img: `${IMG}c7eaac90-2130-4e27-84a0-add7658d3823.webp` },
+]
 const VOTE_DAYS: Weekday[] = ['fri', 'sat', 'sun']
 
 function Pick({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
@@ -59,6 +66,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   const [who, setWho] = useState(0)
   const [styles, setStyles] = useState<string[]>([])
   // A style picked on a landing page before sign-up (lib/picked-style) starts out selected.
+  // Which screen each family reaches, so we can see where the first visit loses people (Nov 21 2026).
+  useEffect(() => { if (!demo) trackOnce('walkthrough_step', { id: String(step) }) }, [demo, step])
   useEffect(() => { if (demo) return; const k = takePickedStyle(); if (k) setStyles((xs) => (xs.length ? xs : [k])) }, [demo])
   const [diets, setDiets] = useState<string[]>([])
   const [mix, setMix] = useState<Partial<Record<MixKey, number>> | null>(null)
@@ -139,6 +148,17 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
 
       {step === 0 && (
         <div>
+          <div className="mb-5">
+            <div className="grid grid-cols-3 gap-2">
+              {PREVIEW.map((d) => (
+                <div key={d.name} className="overflow-hidden rounded-xl bg-muted">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={d.img} alt={d.name} loading="eager" className="block w-full aspect-[4/3] object-cover" />
+                </div>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">Your week will look like this: 5 dinners and one grocery list, ready to send to your store. A few quick taps so it fits your family.</p>
+          </div>
           {head('What would make dinner easier?', 'Pick the one that sounds most like your house.')}
           <div className="grid gap-2 mt-5">
             {GOALS.map((g) => (
