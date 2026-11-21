@@ -7,6 +7,7 @@ interface ActivateDay7Props {
   firstName?: string
   unsubscribeUrl?: string
   shopUrl?: string
+  dinners?: string[]
 }
 
 // Activation email #3 — sent 7 days after signup, last nudge in the sequence.

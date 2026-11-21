@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatQuantity } from '@/lib/format-qty'
 import { notFound } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import { retryFetch } from '@/lib/retry-fetch'
@@ -55,7 +56,7 @@ export default async function LibraryRecipePage({ params }: { params: { slug: st
     totalTime: mins ? `PT${mins}M` : undefined,
     recipeCuisine: r.cuisine ?? undefined,
     keywords: (r.tags ?? []).join(', ') || undefined,
-    recipeIngredient: (r.ingredients ?? []).map((i) => `${i.quantity ?? ''} ${i.unit ?? ''} ${i.name}`.replace(/\s+/g, ' ').trim()),
+    recipeIngredient: (r.ingredients ?? []).map((i) => `${formatQuantity(i.quantity ?? '', i.unit ?? '')} ${i.name}`.replace(/\s+/g, ' ').trim()),
     recipeInstructions: (r.steps ?? []).map((s) => ({ '@type': 'HowToStep', text: s })),
     nutrition: r.nutrition ? {
       '@type': 'NutritionInformation', servingSize: '1 serving', calories: `${r.nutrition.calories} calories`, proteinContent: `${r.nutrition.protein} g`,

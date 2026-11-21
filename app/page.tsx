@@ -141,7 +141,7 @@ export default async function LandingPage() {
               <div className="space-y-8">
                 {[
                   { step: '1', title: 'Tell us about your family', description: 'Budget, family size, dietary needs, how much time you have to cook. Takes 2 minutes.' },
-                  { step: '2', title: 'Get 5 personalized dinners', description: 'AI builds a full week of budget-friendly meals your family will actually eat.' },
+                  { step: '2', title: 'Get 5 personalized dinners', description: 'A full week of budget-friendly dinners your family will actually eat.' },
                   { step: '3', title: 'One tap. It\u2019s in your cart.', description: 'Instacart: your full list opens in your own Instacart account with every item matched — pick any store on it, review, check out. Walmart: every line is matched to a Walmart product, you glance at it, and one tap fills your Walmart cart for pickup or delivery. On the Family plan, it can go straight to your Kroger cart too.' },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-5">
@@ -174,7 +174,7 @@ export default async function LandingPage() {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { Icon: Sparkles, title: 'AI meal planning', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },
+            { Icon: Sparkles, title: 'Planned around your family', description: 'Personalized to your family size, budget, dietary needs, and how much time you have to cook each night.' },
             { Icon: ShoppingCart, title: 'Instacart and Walmart built in', description: 'One tap opens your full list in your Instacart cart (every store near you) or fills your Walmart cart with every item matched — glance, check out. No retyping, no missed items. On Family it can go straight into your Kroger cart too.' },
             { Icon: Heart, title: 'Picky-eater friendly', description: "Swap any meal you don't love in one tap. DinnerDrop learns your family's tastes over time." },
             { Icon: PiggyBank, title: 'Built to your budget', description: 'Set your weekly food budget. Every plan targets it, builds around your store\u2019s weekly sales, and prices the list at each store you shop so you can pick the cheapest.' },

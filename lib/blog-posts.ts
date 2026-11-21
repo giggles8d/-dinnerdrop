@@ -10,6 +10,70 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'thanksgiving-leftover-recipes',
+    title: 'Thanksgiving Leftover Recipes: 12 Family Dinners for the Week After',
+    description:
+      'What to make with leftover turkey, ham, mashed potatoes and stuffing: 12 easy family dinners for the week after Thanksgiving, most in 45 minutes or less, with a plan for which night to make what.',
+    publishDate: '2026-11-21',
+    readingTimeMinutes: 6,
+    primaryKeyword: 'thanksgiving leftover recipes',
+    content: `Friday after Thanksgiving, the fridge is full and nobody wants to cook. That is the best time to plan the rest of the week, because the hardest part is already done: the turkey is cooked, the potatoes are mashed and the ham is sliced. The trick is turning them into dinners that don't taste like Thursday again.
+
+Here are 12 family dinners built around the usual leftovers, with a simple order for the week so the food that spoils first gets used first.
+
+## First, two quick rules
+
+1. **Use leftovers within 3 to 4 days.** That's the USDA guideline for cooked turkey, ham and sides kept in the fridge. If you won't get to it by Monday, freeze it in meal-sized bags on Friday.
+2. **Pull the turkey off the bone now,** not on Sunday. Shredded meat in a flat freezer bag thaws in 20 minutes in a bowl of cold water.
+
+## Leftover turkey dinners
+
+Turkey and chicken are interchangeable in almost any cooked-chicken recipe. Use about 3 cups of shredded turkey wherever a recipe calls for cooked or rotisserie chicken.
+
+- **[Cheesy Turkey Potato Soup](/recipes/cheesy-turkey-potato-soup-9wjv)** — 40 minutes. Uses turkey and leftover potatoes in one pot. The best Friday-night dinner on this list.
+- **[Chicken Pot Pie](/recipes/chicken-pot-pie-family-zba0)** — swap the chicken for turkey, and stir any leftover peas, carrots or green beans into the filling.
+- **[Chicken and Stuffing Casserole](/recipes/chicken-and-stuffing-casserole-tbkb)** — made for this week: turkey in place of chicken, and your leftover stuffing in place of the boxed mix.
+- **Turkey and cranberry quesadillas** — no recipe needed: shredded turkey, a thin layer of cranberry sauce, cheddar, folded in a tortilla and crisped in a pan. Ten minutes.
+
+## Leftover ham dinners
+
+Ham keeps a little longer than turkey and freezes well diced.
+
+- **[Cheesy Scalloped Potatoes with Ham and Peas](/recipes/cheesy-scalloped-potatoes-with-ham-and-peas)** — the classic. Diced ham, potatoes, peas, a cheesy sauce.
+- **[Creamy Ham, Potato and Pea Soup](/recipes/creamy-ham-potato-and-pea-soup-fwbo)** — 45 minutes, and it reheats well for lunches.
+- **[Ham and Broccoli Cheddar Baked Potatoes](/recipes/ham-and-broccoli-cheddar-baked-potatoes-o4dg)** — 35 minutes. Kids build their own.
+- **[Ham and Broccoli Baked Mac and Cheese](/recipes/ham-and-broccoli-baked-mac-and-cheese-wsjd)** — a full dinner in one dish.
+- **[Baked Ham and Swiss Sliders](/recipes/baked-ham-and-swiss-sliders-pl6p)** — 35 minutes. The easy Sunday dinner.
+- **[Ham and Cheese Quiche](/recipes/ham-and-cheese-quiche-2z36)** — breakfast for dinner, and it uses up the eggs you bought for baking.
+- **[Instant Pot Navy Bean and Ham Soup with Cornbread](/recipes/instant-pot-navy-bean-and-ham-soup-with-cornbread-yvch)** — if you have the ham bone, this is where it goes.
+
+## Leftover sides
+
+- **Mashed potatoes** top a pot pie or shepherd's pie, thicken a soup, or become potato cakes: mix with an egg and a little flour, pan-fry until crisp.
+- **Sweet potatoes** go into the [Ground Turkey and Sweet Potato Skillet Pie](/recipes/ground-turkey-and-sweet-potato-skillet-pie-g84v) as the topping.
+- **Cranberry sauce** is a glaze: brush it on pork chops or chicken for the last 5 minutes in the oven.
+- **Rolls** become sliders or garlic bread for soup night.
+
+## A plan for the week after
+
+| Night | Dinner | Uses |
+|---|---|---|
+| Friday | Cheesy turkey potato soup | Turkey, potatoes |
+| Saturday | Turkey and cranberry quesadillas | Turkey, cranberry sauce |
+| Sunday | Ham and Swiss sliders | Ham, rolls |
+| Monday | Turkey pot pie | Turkey, vegetables |
+| Tuesday | Ham and broccoli baked potatoes | Ham |
+| Wednesday | Something new: the leftovers are done | — |
+
+Turkey goes first because it keeps the shortest. Anything you won't reach by Monday goes in the freezer on Friday.
+
+## Let the week plan itself
+
+If you'd rather not think about it, [DinnerDrop](/start) plans five weeknight dinners for your family every week and builds one grocery list for all of them, so you only buy what the leftovers don't cover. One tap sends the list to your Instacart or Walmart cart. It's free, and your family can even vote on the dinners by text.
+
+Browse more in the [Thanksgiving-week collection](/recipes/collections/thanksgiving), or read [Easy Thanksgiving-Week Dinners](/blog/easy-thanksgiving-week-dinners) for the nights before the big one.`,
+  },
+  {
     slug: 'emeals-review',
     title: 'eMeals Review 2026: Honest Pros and Cons (and Who It Fits)',
     description:
