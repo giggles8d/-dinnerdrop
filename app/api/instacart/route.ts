@@ -11,6 +11,9 @@ import { grantCartOffer } from '@/lib/cart-offer'
 import { mergeSettings } from '@/lib/settings'
 import { storeBrandsFor } from '@/lib/store-brands'
 
+// Instacart gets two 12 s tries (lib/instacart), then the recipe email and offers.
+export const maxDuration = 60
+
 export async function POST(request: Request) {
   try {
     const supabase = createServerSupabaseClient()

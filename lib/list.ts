@@ -58,6 +58,36 @@ export function sameListItem(a: string, b: string): boolean {
   return !!ka && ka === ingredientKey(b)
 }
 
+/**
+ * Merge repeated lines in an AI-built grocery list (Nov 21 2026 review: "salmon fillets" ×3, "beef sirloin" ×2
+ * came back from the model). Same item (sameListItem) + same unit → one line with the amounts added; different
+ * units stay separate lines (2 lb vs 1 package can't be added safely). Keeps the first line's category.
+ */
+export function mergeDuplicateLines<T extends { name: string; quantity?: string | null; unit?: string | null; category?: string }>(list: Record<string, T[]>): Record<string, T[]> {
+  const out: Record<string, T[]> = {}
+  const seen: Array<{ item: T; cat: string }> = []
+  for (const [cat, items] of Object.entries(list ?? {})) {
+    out[cat] = out[cat] ?? []
+    for (const it of Array.isArray(items) ? items : []) {
+      if (!it?.name) continue
+      const unit = (it.unit ?? '').trim().toLowerCase().replace(/s$/, '')
+      const prev = seen.find((x) => sameListItem(x.item.name, it.name) && (x.item.unit ?? '').trim().toLowerCase().replace(/s$/, '') === unit)
+      const a = prev ? qtyNum(prev.item.quantity ?? null) : null
+      const b = qtyNum(it.quantity ?? null)
+      if (prev && a != null && b != null) {
+        const sum = Math.round((a + b) * 100) / 100
+        prev.item.quantity = String(sum)
+        continue
+      }
+      if (prev && (it.quantity ?? '') === (prev.item.quantity ?? '')) continue
+      const copy = { ...it }
+      out[cat].push(copy)
+      seen.push({ item: copy, cat })
+    }
+  }
+  return out
+}
+
 function qtyNum(q: string | null | undefined): number | null {
   if (!q) return null
   const t = q.trim()

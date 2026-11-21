@@ -57,9 +57,12 @@ export async function itemsForFamily(admin: SupabaseClient, userId: string): Pro
   const { data: plan } = await admin.from('meal_plans').select('week_start, meals, grocery_list, total_estimated_cost').eq('user_id', userId).order('created_at', { ascending: false }).limit(1).maybeSingle()
   if (!plan) return { items: [], weekStart: null, estTotal: null }
   const est = Number(plan.total_estimated_cost) > 0 ? Number(plan.total_estimated_cost) : null
-  const { data: rows } = await admin.from('list_items').select('name, quantity, unit, category, search_term').eq('user_id', userId).eq('week_start', plan.week_start).is('ordered_at', null).eq('have', false)
-  if (rows?.length) {
-    return { items: rows.map((r) => ({ name: r.name, quantity: r.quantity ?? '1', unit: r.unit ?? 'each', category: (r.category ?? 'Pantry & Dry Goods') as GroceryCategory, searchTerm: r.search_term ?? r.name })), weekStart: plan.week_start, estTotal: est }
+  const { data: all } = await admin.from('list_items').select('name, quantity, unit, category, search_term, ordered_at, have').eq('user_id', userId).eq('week_start', plan.week_start)
+  if (all?.length) {
+    // The family has a list for this week: send only what's still open. Everything ordered or "have it" →
+    // no items, and the link opens the grocery list instead of re-sending the whole week (Nov 21 2026 review).
+    const rows = all.filter((r) => !r.ordered_at && !r.have)
+    return { items: rows.map((r) => ({ name: r.name, quantity: r.quantity ?? '1', unit: r.unit ?? 'each', category: (r.category ?? 'Pantry & Dry Goods') as GroceryCategory, searchTerm: r.search_term ?? r.name })), weekStart: plan.week_start, estTotal: rows.length === all.length ? est : null }
   }
   const list = plan.grocery_list as Record<string, GroceryItem[]> | null
   if (list && Object.keys(list).length) return { items: Object.values(list).flat().filter((i) => i?.name), weekStart: plan.week_start, estTotal: est }

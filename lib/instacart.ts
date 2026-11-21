@@ -163,6 +163,10 @@ export async function createInstacartLink(
 
   const endpoint = `${getInstacartBaseUrl()}/idp/v1/products/products_link`
 
+  // Two tries, 12 s each (Nov 21 2026 review): one Instacart hiccup used to turn the family's whole list into a
+  // search for its first item. On a second failure the caller gets fallback: true and should say "try again".
+  let lastFail: { link: string; fallback: boolean } = { link: fallbackSearch(items[0]?.searchTerm || 'groceries'), fallback: true }
+  for (let attempt = 1; attempt <= 2; attempt++) {
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -172,37 +176,32 @@ export async function createInstacartLink(
         Accept: 'application/json',
       },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(12000),
     })
 
     if (!response.ok) {
       const errBody = await response.text().catch(() => '')
       console.error(
-        `Instacart API error: ${response.status} ${response.statusText} — ${errBody.slice(0, 500)}`
+        `Instacart API error (try ${attempt}): ${response.status} ${response.statusText} — ${errBody.slice(0, 500)}`
       )
-      const firstItem = items[0]?.searchTerm || 'groceries'
-      return {
-        link: fallbackSearch(firstItem),
-        fallback: true,
-      }
+      // 4xx other than 429 won't fix itself on a retry.
+      if (response.status < 500 && response.status !== 429) return lastFail
+      continue
     }
 
     const data = (await response.json()) as { products_link_url?: string }
     if (!data.products_link_url) {
       console.error('Instacart API: missing products_link_url in response')
-      return {
-        link: withInstacartAffiliate('https://www.instacart.com/'),
-        fallback: true,
-      }
+      lastFail = { link: withInstacartAffiliate('https://www.instacart.com/'), fallback: true }
+      continue
     }
     // Instacart appends the affiliate parameters (partner 7359743) to API links itself and
     // warns that adding them by hand duplicates them and breaks order attribution
     // (docs: launch_activities/conversions_and_payments). Verified present 2026-10-21. Leave untouched.
     return { link: data.products_link_url, fallback: false }
   } catch (err) {
-    console.error('Instacart API call threw:', err)
-    return {
-      link: withInstacartAffiliate('https://www.instacart.com/'),
-      fallback: true,
-    }
+    console.error(`Instacart API call threw (try ${attempt}):`, err)
   }
+  }
+  return lastFail
 }
