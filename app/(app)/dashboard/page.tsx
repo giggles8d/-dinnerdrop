@@ -625,7 +625,26 @@ function DashboardContent() {
           </div>
         </div>
       )}
-      <div className={`container mx-auto px-4 py-8 max-w-6xl${showListBar ? ' pb-32' : ''}`}>
+      {/* Picking dinners: the next step stays in reach at the bottom of the screen (Nov 21 2026 review). */}
+      {isPickingMeals && !loading && (
+        <div className="fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur px-4 py-3 print:hidden native-raise">
+          <div className="mx-auto max-w-6xl flex items-center gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-foreground">{selectedMeals.length} of {planShape.dinnersPerWeek} picked</p>
+              <p className="text-xs text-muted-foreground truncate">{selectedMeals.length ? 'Next: your grocery list, one tap to Instacart or Walmart' : 'Tap the dinners you want'}</p>
+            </div>
+            <button
+              onClick={confirmPlan}
+              disabled={selectedMeals.length === 0}
+              data-track="pick_bar_confirm"
+              className="shrink-0 px-5 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
+            >
+              Use these {selectedMeals.length || ''} &rarr;
+            </button>
+          </div>
+        </div>
+      )}
+      <div className={`container mx-auto px-4 py-8 max-w-6xl${showListBar || isPickingMeals ? ' pb-32' : ''}`}>
         {/* After a receipt: did every dinner's ingredients arrive? */}
         {hasGenerated && meals.length > 0 && !loading && <WeekCheckCard />}
         {/* Family texting in one step — shows once a family has a plan and no numbers yet; ?texting=1 (emails) opens it. */}
@@ -851,7 +870,7 @@ function DashboardContent() {
             </h2>
             <p className="text-muted-foreground text-sm max-w-md mx-auto">
               Planning a week of dinners around your budget, cook time, and who&apos;s
-              at the table. Takes about 30 seconds — worth the wait.
+              at the table. Just a few seconds.
             </p>
           </div>
         )}
