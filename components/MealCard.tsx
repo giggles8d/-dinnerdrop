@@ -84,6 +84,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
                 : <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
             </div>
           )}
+          {(meal.votedBy?.length ?? 0) > 0 && (
+            <div className="text-[11px] text-primary font-semibold">🗳️ Voted for by {meal.votedBy!.join(', ')}</div>
+          )}
           {meal.budgetPick && (
             <div className="text-[11px] text-sky-800 font-medium" title="Picked so this week stays inside your weekly budget. Raise your budget in Settings for more choice.">💲 Budget pick: chosen to keep your week inside your budget. <Link href="/settings" className="underline">Change budget</Link></div>
           )}
@@ -167,6 +170,9 @@ export default function MealCard({ meal, isFavorite, onToggleFavorite, selectabl
                 ? <span key={t} title="Your family texted to bring this one back" className="rounded-full bg-rose-100 text-rose-700 px-2 py-0.5 text-[10px] font-semibold">❤️ Family pick</span>
                 : <span key={t} className="rounded-full bg-muted text-muted-foreground px-2 py-0.5 text-[10px]">{t}</span>)}
             </div>
+          )}
+          {(meal.votedBy?.length ?? 0) > 0 && (
+            <div className="text-[11px] text-primary font-semibold">🗳️ Voted for by {meal.votedBy!.join(', ')}</div>
           )}
           {meal.budgetPick && (
             <div className="text-[11px] text-sky-800 font-medium" title="Picked so this week stays inside your weekly budget. Raise your budget in Settings for more choice.">💲 Budget pick: chosen to keep your week inside your budget. <Link href="/settings" className="underline">Change budget</Link></div>
