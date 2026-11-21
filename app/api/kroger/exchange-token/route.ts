@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { exchangeCodeForTokens } from '@/lib/kroger'
 
@@ -11,7 +12,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { code } = await request.json()
+    const { code, state } = await request.json()
+    const want = cookies().get('kroger_oauth_state')?.value
+    if (!want || !state || state !== want) {
+      return NextResponse.json({ error: 'That Kroger sign-in link expired. Please tap Connect Kroger again.' }, { status: 400 })
+    }
 
     if (!code) {
       return NextResponse.json({ error: 'Missing authorization code' }, { status: 400 })
@@ -31,7 +36,9 @@ export async function POST(request: Request) {
       })
       .eq('id', user.id)
 
-    return NextResponse.json({ success: true })
+    const res = NextResponse.json({ success: true })
+    res.cookies.set('kroger_oauth_state', '', { path: '/', maxAge: 0 })
+    return res
   } catch (error) {
     console.error('Kroger token exchange error:', error)
     return NextResponse.json(

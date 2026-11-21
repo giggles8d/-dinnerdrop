@@ -2,6 +2,9 @@ import Anthropic from '@anthropic-ai/sdk'
 
 const client = new Anthropic({
   timeout: 55000, // 55s — just under Vercel's 60s serverless timeout
+  // The SDK retries twice by default, so a slow call could run ~165 s — past every route's limit, ending in an
+  // unfriendly 504. One retry keeps the worst case near the 120 s routes' limit (Nov 21 2026 review).
+  maxRetries: 1,
 })
 
 export async function generateWithClaude(prompt: string, maxTokens: number = 4000, model: string = 'claude-haiku-4-5-20251001'): Promise<string> {

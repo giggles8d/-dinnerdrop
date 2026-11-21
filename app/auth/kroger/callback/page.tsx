@@ -28,7 +28,7 @@ function KrogerCallbackContent() {
         const res = await fetch('/api/kroger/exchange-token', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code }),
+          body: JSON.stringify({ code, state: searchParams.get('state') }),
         })
 
         if (!res.ok) {
