@@ -5,6 +5,7 @@ import { Resend } from 'resend'
 import { render } from '@react-email/render'
 import WelcomeBeta from '@/emails/WelcomeBeta'
 import PaymentFailed from '@/emails/PaymentFailed'
+import { FAMILY_TRIAL_DAYS } from '@/lib/stripe'
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -54,7 +55,8 @@ export async function POST(request: NextRequest) {
 
       if (customerId) {
         const now = new Date()
-        const trialEnds = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
+        // Same length as the checkout's trial (lib/stripe FAMILY_TRIAL_DAYS = 14); was hard-coded 7 (Nov 21 2026 review).
+        const trialEnds = new Date(now.getTime() + FAMILY_TRIAL_DAYS * 24 * 60 * 60 * 1000)
         // Detect BETA100 coupon usage — beta members get 6 months free and should NOT
         // receive the standard Day 6/7 trial-end urgency emails (would alarm them)
         const isBetaMember = session.total_details?.breakdown?.discounts?.some(

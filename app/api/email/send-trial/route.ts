@@ -7,6 +7,7 @@ import ActivateDay1 from '@/emails/ActivateDay1'
 import { shopUrl } from '@/lib/followup'
 import ActivateDay3 from '@/emails/ActivateDay3'
 import ActivateDay7 from '@/emails/ActivateDay7'
+import { createClient } from '@supabase/supabase-js'
 
 function getResend() { return new Resend(process.env.RESEND_API_KEY) }
 
@@ -15,9 +16,9 @@ type EmailNumber = 1 | 2 | 3
 // Activation sequence (2026-07: replaced the trial-conversion sequence — 226/227
 // users are 'free' and never received emails; the goal now is first-plan
 // activation, not trial-end urgency).
-const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: React.FC<{ firstName?: string; unsubscribeUrl: string; nextBillingDate?: string; shopUrl?: string }> }> = {
+const EMAIL_CONFIG: Record<EmailNumber, { subject: string; Template: React.FC<{ firstName?: string; unsubscribeUrl: string; nextBillingDate?: string; shopUrl?: string; dinners?: string[] }> }> = {
   1: { subject: 'Your grocery list is ready, one tap to Instacart or Walmart', Template: ActivateDay1 },
-  2: { subject: 'Let the family pick dinner — by text', Template: ActivateDay3 },
+  2: { subject: 'Want different dinners? Swap any of them in one tap', Template: ActivateDay3 },
   3: { subject: 'Your dinners are still waiting — one tap to Instacart', Template: ActivateDay7 },
 }
 
@@ -49,6 +50,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ skipped: true, reason: 'invalid email address' })
   }
   const config = EMAIL_CONFIG[emailNumber as EmailNumber]
+  // Name their actual dinners in the subject (Nov 21 2026 review: generic subjects; plan-ready emails that name
+  // the dinners get opened more). Falls back to the fixed subject when there's no plan.
+  let subject = config.subject
+  let dinners: string[] = []
+  try {
+    const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+    const { data: plan } = await admin.from('meal_plans').select('meals').eq('user_id', userId).order('created_at', { ascending: false }).limit(1).maybeSingle()
+    dinners = ((plan?.meals as Array<{ name?: string }> | null) ?? []).map((m) => String(m?.name ?? '').trim()).filter(Boolean)
+  } catch { /* fixed subject */ }
+  if (dinners.length >= 2) {
+    if (emailNumber === 1) subject = `${dinners[0]}, ${dinners[1]} and ${dinners.length - 2} more are ready`
+    if (emailNumber === 3) subject = `Still on for ${dinners[0]} this week?`
+  }
   const unsubscribeUrl = `https://www.dinnerdrop.app/unsubscribe?uid=${userId}`
 
   const html = await render(
@@ -57,13 +71,14 @@ export async function POST(request: NextRequest) {
       unsubscribeUrl,
       shopUrl: shopUrl(userId, emailNumber === 1 ? 'day1' : emailNumber === 2 ? 'day3' : 'day7'),
       nextBillingDate: nextBillingDate || 'one week from today',
+      dinners,
     })
   )
 
   const send = () => getResend().emails.send({
     from: fromAddress(),
     to: userEmail,
-    subject: config.subject,
+    subject,
     html,
     headers: {
       'List-Unsubscribe': `<${unsubscribeUrl.replace('/unsubscribe?', '/api/email/unsubscribe?')}>`,

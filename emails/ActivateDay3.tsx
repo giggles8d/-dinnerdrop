@@ -7,19 +7,22 @@ interface ActivateDay3Props {
   firstName?: string
   unsubscribeUrl?: string
   shopUrl?: string
+  dinners?: string[]
 }
 
-// Activation email #2 — sent 3 days after signup to families who haven't opened the list yet.
-// Angle (Oct 31 2026): family texting — the feature almost nobody finds in Settings.
+// Activation email #2 — sent 3 days after signup to families who haven't sent a list yet.
+// Angle (Nov 21 2026 review): swap a dinner, then send — these families haven't shopped yet, so the cart comes
+// first; family texting (Oct 31 angle) moves to a short P.S.
 export default function ActivateDay3({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
   shopUrl,
+  dinners = [],
 }: ActivateDay3Props) {
   return (
     <Html>
       <Head />
-      <Preview>Text the family the week&apos;s dinners — they vote, you shop once</Preview>
+      <Preview>Then the whole list goes to Instacart or Walmart in one tap.</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
@@ -28,27 +31,30 @@ export default function ActivateDay3({
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
-              Here&apos;s the part of DinnerDrop most families don&apos;t find on their own, and it&apos;s the
-              part that ends the &ldquo;what&apos;s for dinner?&rdquo; texts for good.
+              Your dinners for the week are still planned{dinners.length ? ':' : '.'}
             </Text>
-            <Text style={heading}>Let the family pick — by text</Text>
+            {dinners.length > 0 && (
+              <Text style={{ ...paragraph, margin: '0 0 16px 8px' }}>
+                {dinners.slice(0, 7).map((d, i) => <React.Fragment key={i}>• {d}<br /></React.Fragment>)}
+              </Text>
+            )}
             <Text style={paragraph}>
-              Add a couple of phone numbers and DinnerDrop texts everyone the week&apos;s dinner options.
-              They reply with numbers. The top picks become the week. No group chat, no app for them to install.
-            </Text>
-            <Text style={paragraph}>
-              <strong>Anyone can text &ldquo;ADD milk&rdquo;</strong> and it lands on the grocery list.
-              And right before you order, one tap sends everyone a <strong>&ldquo;last call&rdquo;</strong> —
-              &ldquo;ordering in 20 minutes, need anything?&rdquo; Their replies go straight onto the list.
+              Not feeling one of them? Swap it in one tap for something your family will actually eat. Then the whole
+              grocery list goes to your Instacart or Walmart cart, every item matched.
             </Text>
             <Section style={ctaSection}>
-              <Button style={button} href="https://www.dinnerdrop.app/dashboard?texting=1&utm_source=email&utm_medium=activation&utm_campaign=day3-texting">
-                Set up family texting (1 minute) →
+              <Button style={button} href="https://www.dinnerdrop.app/dashboard?utm_source=email&utm_medium=activation&utm_campaign=day3-swap">
+                Swap a dinner →
               </Button>
             </Section>
+            {shopUrl && (
+              <Text style={{ ...paragraph, textAlign: 'center' as const }}>
+                Happy with them? <Link href={shopUrl} style={{ color: '#1a5c38', fontWeight: 700 }}>Send my groceries to Instacart →</Link>
+              </Text>
+            )}
             <Text style={paragraph}>
-              It&apos;s part of the Family plan — 14 days free, cancel in one tap. Your grocery list and this
-              week&apos;s dinners are still waiting either way{shopUrl ? <> — <Link href={shopUrl} style={{ color: '#1a5c38', fontWeight: 700 }}>send them to Instacart in one tap</Link></> : null}.
+              <em>P.S. Want the family to pick? Add their numbers and DinnerDrop texts everyone the dinner ideas to vote on,
+              and anyone can text &ldquo;ADD milk&rdquo; to the list. <Link href="https://www.dinnerdrop.app/dashboard?texting=1&utm_source=email&utm_medium=activation&utm_campaign=day3-texting" style={{ color: '#1a5c38' }}>Set it up in a minute</Link>.</em>
             </Text>
             <Hr style={hr} />
             <Text style={paragraph}>
@@ -75,7 +81,6 @@ const header = { backgroundColor: '#1a5c38', padding: '24px 32px' }
 const logo = { color: '#e8a838', fontSize: '24px', fontWeight: '700', margin: '0' }
 const body = { padding: '32px' }
 const paragraph = { color: '#374151', fontSize: '16px', lineHeight: '1.6', margin: '0 0 16px' }
-const heading = { color: '#1a5c38', fontSize: '18px', fontWeight: '600', lineHeight: '1.4', margin: '24px 0 12px' }
 const ctaSection = { margin: '28px 0', textAlign: 'center' as const }
 const button = { backgroundColor: '#e8a838', borderRadius: '6px', color: '#1a1a1a', display: 'inline-block', fontSize: '16px', fontWeight: '600', padding: '14px 28px', textDecoration: 'none' }
 const hr = { borderColor: '#e5e7eb', margin: '24px 0' }

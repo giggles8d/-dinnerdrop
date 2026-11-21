@@ -143,7 +143,7 @@ export default function StartPage() {
         {/* Benefits */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 text-left">
           {[
-            { icon: '🗓️', title: 'Unlimited weekly plans', desc: 'AI-planned weeknight dinners every week, personalized to your family size, budget, and dietary needs.' },
+            { icon: '🗓️', title: 'Unlimited weekly plans', desc: 'Weeknight dinners planned for you every week, around your family size, budget, and dietary needs.' },
             { icon: '🛒', title: 'One tap, in your cart', desc: 'Your full list auto-loads into Instacart (any store on it) or your Walmart cart, every item matched — review, check out. On the Family plan, it can go straight to your Kroger cart.' },
             { icon: '💰', title: 'Built to your budget', desc: 'Set a weekly number. Every plan is built to fit it, with overlapping ingredients so nothing goes to waste.' },
           ].map((benefit) => (
@@ -231,7 +231,7 @@ export default function StartPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
           {[
             { step: '1', title: 'A few quick taps about your family', desc: 'Who’s eating, what they like, your nights and your budget. About a minute, and you can skip ahead to your dinners anytime.' },
-            { step: '2', title: 'Get your 5-dinner plan', desc: 'Every week, AI builds a personalized dinner plan around what your family actually eats.' },
+            { step: '2', title: 'Get your 5-dinner plan', desc: 'Every week you get a dinner plan built around what your family actually eats.' },
             { step: '3', title: 'One tap to your cart', desc: 'Your full grocery list opens in your Instacart cart or fills your Walmart cart with every item pre-loaded — review and check out there.' },
           ].map((item) => (
             <div key={item.step} className="flex flex-col items-center gap-3">
