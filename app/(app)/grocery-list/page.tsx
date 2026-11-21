@@ -260,11 +260,10 @@ export default function GroceryListPage() {
         const res = await fetch('/api/generate-list', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ meals: plan.meals as Meal[], userId: uid, prepped: settings.food.prepped }),
+          body: JSON.stringify({ meals: plan.meals as Meal[], userId: uid, prepped: settings.food.prepped, planId: plan.id }),
         })
         if (!res.ok) throw new Error(`status ${res.status}`)
-        planList = await res.json()
-        await supabase.from('meal_plans').update({ grocery_list: planList }).eq('id', plan.id)
+        planList = await res.json()   // the route saves it on the plan (works for partners too)
       } catch (error) {
         console.error('Error generating grocery list:', error)
         setGenerateError(true)

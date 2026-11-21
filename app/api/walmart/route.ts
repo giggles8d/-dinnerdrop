@@ -58,7 +58,12 @@ export async function POST(request: Request) {
     // The family's own products ("cream of chicken soup" → their gluten-free store brand) and store-brand preference.
     const mine = await loadProductPrefs(admin, user.id)
     const items = applyPrefsToItems(listed, mine.prefs)
+    // Walmart search is one call per line, so match the first 60; anything past that is listed as "couldn't match"
+    // so the family knows to add it themselves (it used to vanish silently, Nov 21 2026 review).
     const matches = await matchList(admin, items.slice(0, 60), { storeBrands: mine.storeBrands })
+    for (const it of items.slice(60)) {
+      matches.push({ line: { name: it.name, quantity: String(it.quantity ?? ''), unit: String(it.unit ?? ''), category: String(it.category ?? '') }, plan: { search: it.searchTerm || it.name, count: 1, kind: 'each', label: 'not matched (list over 60 lines)' }, product: null, qty: 0, alternatives: [] })
+    }
     const total = matches.reduce((s, m) => s + (m.product?.price ? m.product.price * m.qty : 0), 0)
     return NextResponse.json({ matches, estTotal: Math.round(total * 100) / 100, unmatched: matches.filter((m) => !m.product).length })
   } catch (e) {

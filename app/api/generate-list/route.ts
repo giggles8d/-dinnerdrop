@@ -15,7 +15,7 @@ export const maxDuration = 60
 
 export async function POST(request: Request) {
   try {
-    const { meals, userId, prepped } = await request.json()
+    const { meals, userId, prepped, planId } = await request.json()
 
     // Auth gate — validate userId to prevent unauthorized Claude API credit usage
     if (!userId) {
@@ -81,6 +81,12 @@ Return ONLY valid, compact JSON (no pretty-printing, no comments), no markdown:
     const parsed = parseClaudeJSON<GroceryListResponse>(text)
     // The model doesn't always combine repeats; merge them in code before the list reaches the cart.
     const groceryList = mergeDuplicateLines(parsed as unknown as Record<string, GroceryItem[]>)
+    // Save it on the plan here (service key): a partner's browser can't write the owner's plan, so their save failed
+    // quietly and every visit paid for a fresh AI list (Nov 21 2026 review).
+    if (typeof planId === 'string' && planId) {
+      await supabase.from('meal_plans').update({ grocery_list: groceryList }).eq('id', planId).eq('user_id', String(userId))
+        .then(({ error }) => { if (error) console.error('[generate-list] save failed', error) })
+    }
 
     return Response.json(groceryList)
   } catch (error) {
