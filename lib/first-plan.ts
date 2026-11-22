@@ -16,6 +16,7 @@ import { trackStep } from '@/lib/activation'
 import { grantNewFamilyTrial } from '@/lib/family-grant'
 import { dropStarterWeek } from '@/lib/starter-week'
 import { shelfBudget } from '@/lib/budget'
+import { dislikeWords, dislikeHits } from '@/lib/dislikes'
 import type { Meal } from '@/types'
 
 export type FirstPlanResult =
@@ -81,11 +82,11 @@ export async function libraryWeek(admin: SupabaseClient, userId: string, exclude
       const rows = (mem ?? []) as Array<{ likes: string[] | null; dislikes: string[] | null; allergies: string[] | null }>
       if (opts.firstWeek) likes = Array.from(new Set(rows.flatMap((x) => x.likes ?? []).map((l) => l.toLowerCase().replace(/s$/, '')).filter((l) => l.length >= 3)))
       allergies = Array.from(new Set(rows.flatMap((x) => x.allergies ?? []).filter(Boolean)))
-      dislikes = Array.from(new Set(rows.flatMap((x) => x.dislikes ?? []).map(dislikeWord).filter((w): w is string => !!w)))
+      dislikes = dislikeWords(rows.flatMap((x) => x.dislikes ?? []))
     }
   }
-  // "black pepper" is seasoning, not a pepper (removed before matching, so a list with both still counts the bell pepper).
-  const dislikeHit = (text: string) => { const t = text.replace(/black pepper/g, ''); return dislikes.filter((w) => (DISLIKE_PATTERNS[w] ?? new RegExp(`\\b${w}s?\\b`)).test(t)) }
+  // Won't-eat words in a text (lib/dislikes: "black pepper" is seasoning, "spicy" covers blackened/cajun/…).
+  const dislikeHit = (text: string) => dislikeHits(dislikes, text)
   const dislikePenalty = (r: { name: string; ingredients?: Array<{ name: string }> | null }) =>
     dislikeHit((r.ingredients ?? []).map((i) => i.name.toLowerCase()).join(' | ')).length * 3
   const softCuisine = !!opts.firstWeek && styles.length > 1
@@ -211,20 +212,3 @@ export async function picksOwn(admin: SupabaseClient, userId: string): Promise<b
   return mergeSettings(data?.settings).plan.pickMyOwn === true
 }
 
-/** Won't-eats that a single word can't catch (Nov 11 2026: a mom who won't eat spicy food got Blackened Cod). */
-const DISLIKE_PATTERNS: Record<string, RegExp> = {
-  'bell pepper': /\b(bell )?peppers?\b(?!oni)/,
-  spicy: /\b(spicy|blackened|cajun|buffalo|chipotle|jalape[nñ]os?|habaneros?|serranos?|sriracha|hot sauce|nashville hot|diablo|arrabbiata|jerk|harissa|gochujang|chili crisp|red pepper flakes|crushed red pepper|cayenne)\b/,
-  seafood: /\b(seafood|fish|salmon|tilapia|cod|shrimp|prawns?|tuna|crab|clams?|scallops?|mussels?|lobster|halibut|mahi|catfish|haddock|oysters?|anchov(y|ies)|sardines?|trout|pollock)\b/,
-}
-
-/** A setup "won't eat" as a word to look for: "Bell peppers" → "bell pepper", "Spicy food" → "spicy". Too-broad ones
- * ("Anything mixed together") are skipped. */
-function dislikeWord(raw: string): string | null {
-  const w = String(raw ?? '').toLowerCase().trim()
-  if (!w || /anything|mixed/.test(w)) return null
-  if (/spicy/.test(w)) return 'spicy'
-  const base = w.replace(/\s+food$/, '').replace(/(es|s)$/, (m) => (w.endsWith('tomatoes') || w.endsWith('potatoes') ? '' : m === 's' ? '' : 'e')).trim()
-  const fixed: Record<string, string> = { 'bell pepper': 'bell pepper', tomato: 'tomato', potato: 'potato', mushroom: 'mushroom', onion: 'onion', bean: 'bean', olive: 'olive', avocado: 'avocado', eggplant: 'eggplant', cilantro: 'cilantro', seafood: 'seafood' }
-  return fixed[base] ?? (base.length >= 3 ? base : null)
-}

@@ -6,6 +6,7 @@ import { mayActFor } from '@/lib/route-auth'
 import { selectedStyles } from '@/lib/styles'
 import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
+import { dislikeWords, dislikeHits } from '@/lib/dislikes'
 import { createClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, tripsConfig, type Settings, type Weekday } from '@/lib/settings'
 import { isClassic, resolveTrips, shoppingTrip, tripByKey } from '@/lib/trips'
@@ -595,6 +596,15 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
       if (settings.food.maxCalories && m.nutrition?.calories && m.nutrition.calories > settings.food.maxCalories * 1.1) return false
       return !allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length
     })
+    // A won't-eat in the dinner's name stays off the options, the same as library weeks (lib/first-plan). The model is told
+    // who won't eat what but still writes one in now and then (Nov 22 2026: "Paprika Pork Chops with Sautéed Peppers,
+    // Mango & Onion" on a ballot for a mom who won't eat onions; the budget swap then made it her Monday).
+    // Only when enough options remain for the week — a thin week keeps them rather than coming up short.
+    {
+      const words = dislikeWords(allDislikes)
+      const clear = words.length ? generated.filter((m) => !dislikeHits(words, m.name).length) : generated
+      if (clear.length >= Math.min(dinnersPerWeek, generated.length)) generated = clear
+    }
     // Pin servings to the family (the model drifts); leftover-friendly dinners are sized for two nights.
     generated = generated.map((m) => ({
       ...m,
