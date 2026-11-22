@@ -312,7 +312,15 @@ export function parseInbound(raw: string): Parsed {
   // Whole words only, and not a sentence: "Addressing me by name…" and "Need to know what's for dinner" aren't grocery adds
   // (approved Nov 2 2026). Sentences go to the AI step instead.
   const add = t.match(/^(?:(?:add|need|we need|we'?re out of|out of|get|buy|pick up|grab)\b|\+)(?!\s+(?:to|you|me|us|a way|help|it|that|this|my|your|more time|the (?:vote|votes|menu|recipe|plan|link|pics?|pictures?))\b)\s*[:\-]?\s*(.+)$/i)
-  if (add && !(add[1].split(/\s+/).length > 7 && !/[,\n]/.test(add[1]))) return { kind: 'add', items: splitItems(add[1]) }
+  if (add && !(add[1].split(/\s+/).length > 7 && !/[,\n]/.test(add[1]))) {
+    // "Add more beef options next week" is a dinner idea, not groceries (Nov 22 2026: it went on the list as an item).
+    // Words that describe dinners (options, dinners, meals, recipes, ideas, nights, next week) send it to the idea list.
+    if (/\b(options?|dinners?|meals?|recipes?|ideas?|nights?|dishes|next week|this week)\b/i.test(add[1])) {
+      const what = add[1].replace(/\b(more|some|a few|a couple( of)?|options?|dinners?|meals?|recipes?|ideas?|nights?|dishes|next week|this week|please|for|the)\b/gi, ' ').replace(/[?!.]+$/, '').replace(/\s+/g, ' ').trim()
+      return { kind: 'suggest', items: what ? splitDishes(what) : [] }
+    }
+    return { kind: 'add', items: splitItems(add[1]) }
+  }
   const skip = u.match(/^(SKIP|NOT|NO|DROP)?\s*[:\-]?\s*((?:\d+|\s|,|&|AND)+)$/)
   if (skip && numbersIn(skip[2]).length) return { kind: 'skip', numbers: numbersIn(skip[2]), explicit: !!skip[1] }
   return { kind: 'unknown' }
