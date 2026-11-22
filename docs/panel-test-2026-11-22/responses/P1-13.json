@@ -1,0 +1,48 @@
+{
+ "id": "P1-13",
+ "name": "Sherry Whitfield",
+ "simulated": true,
+ "order": ["HF", "OL", "DD", "PTE", "EM"],
+ "sites": {
+  "HF": {
+   "five_sec": {"what_is_it": "HelloFresh. The company that shipped me a box I didn't order.", "who_for": "New customers they can lock into a weekly subscription.", "trust": "low", "trust_why": "'Open A Box To Reveal Your Offer!' A spin-to-win pop-up is the first thing I see. That's a red flag, not a welcome.", "next_step": "Skip the offer and scroll straight to the fine print.", "delivers_food": "yes", "delivers_food_why": "Three green HelloFresh boxes on the pop-up. They ship meal kits."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The asterisk. The offer needs 'a qualifying auto-renewing subscription,' the 'Free for Life' item ends when you cancel, and shipping is charged after the first box. Prices only after a zip code.", "whats_missing": "A price without a zip code. Plain renewal and cutoff dates on the page.", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 1, "value": 2, "ease": 4, "want_to_sign_up": 1},
+   "quote": "'Free Breakfast for Life' requires a 'qualifying auto-renewing subscription' and is void the day you cancel. I've lived this one already."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "A meal-planning app that suggests dinners.", "who_for": "Parents with the mental load of dinner.", "trust": "medium", "trust_why": "'Trusted by 90,000+ families' with no source. The main button is 'Letter from the CEO,' which is not a next step.", "next_step": "Find the pricing and the cancel terms.", "delivers_food": "unsure", "delivers_food_why": "The phone shows food photos and 'I've picked out meals for you.' Doesn't say whether anything ships."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Two different stories on price. The meal page says a 1-month trial with 'prices available when you download the app.' The pricing page bills per message with $0.30 top-ups.", "whats_missing": "One consistent price. What the trial turns into. Whether a card is needed.", "pay_per_month": 0},
+   "scores": {"clarity": 4, "trust": 3, "value": 2, "ease": 5, "want_to_sign_up": 2},
+   "quote": "The FAQ says 'prices are available when you download the app,' then the pricing page has $0.30 message top-ups. I'd need a spreadsheet just for Ollie."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "A dinner planner that texts the family to vote and fills your Instacart or Walmart cart.", "who_for": "Families with a lot of opinions and no time.", "trust": "medium", "trust_why": "'Start free, no card needed' is on the first screen, and 'We don't deliver food' tells me they've heard the confusion. Still an unknown brand.", "next_step": "Skip the hero, go to pricing and the FAQ.", "delivers_food": "no", "delivers_food_why": "Bold line: 'We don't deliver food. We plan your week and send your grocery list.'"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "Very little. The terms pass. My reservations: 'over 500 families have signed up' is a count, not a review, and the sign-up page adds a weekly email with 'the occasional kitchen pick,' which is marketing.", "whats_missing": "Outside reviews or an App Store rating. Harris Teeter by name (is it the Kroger cart?). A screenshot of the cancel button in Account.", "pay_per_month": 5},
+   "scores": {"clarity": 8, "trust": 8, "value": 8, "ease": 8, "want_to_sign_up": 7},
+   "quote": "'Your free Family days need no card, so there is nothing to cancel.' That's the sentence eMeals and HelloFresh never wrote. Now show me outside reviews."
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "A recipe organizer and meal-planning app.", "who_for": "People who already keep recipes and like to plan.", "trust": "high", "trust_why": "'Free Trial - no card required!' on the first screen, plus real app-store ratings.", "next_step": "Read the pricing page billing questions.", "delivers_food": "no", "delivers_food_why": "App-store buttons and a person writing a list. It's software."},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Excellent terms, but I'd still be the one picking every meal on a volleyball night. And then a countdown clock for 'our only sale of the year.' Pick a lane.", "whats_missing": "A way for the kids to weigh in. Something that plans for me.", "pay_per_month": 4},
+   "scores": {"clarity": 8, "trust": 8, "value": 5, "ease": 5, "want_to_sign_up": 5},
+   "quote": "'We don't auto-bill when your year ends unless you choose to.' That's the sentence I look for. Then a countdown sale clock. Pick a lane."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "eMeals. The one that renewed me without notice.", "who_for": "Families who want weekly meal plans.", "trust": "low", "trust_why": "My own history. And the first screen is a video with no terms in sight.", "next_step": "Look for the price and renewal terms.", "delivers_food": "no", "delivers_food_why": "I know from using it: it's plans and a shopping list, not food."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "No price on the page, no renewal terms, a 'LIMITED TIME' pop-up asking for my email, and 'No commitment. Cancel anytime.' I've heard that before.", "whats_missing": "Price, whether a card is required, what happens on day 15.", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 2, "value": 4, "ease": 5, "want_to_sign_up": 1},
+   "quote": "'No commitment. Cancel anytime.' That's what I read last time, right before eMeals renewed me without a word. Still no price, still no renewal date."
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "It answers my three questions directly: no card for the 14 days, nothing to cancel, you go back to Free. The FAQ 'Will I be charged by surprise?' is the right question to ask.", "expect_day_15": "Family features turn off and I'm on the free plan. No card on file, so no charge. If I had added a card, I'd get an email 3 days before.", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "It's the only one with no card, a free plan underneath, and a written answer to 'what happens on day 15', plus the kids can vote.",
+  "pairwise": {
+   "HF": {"winner": "DD", "reason": "No pop-up game and no auto-renewing box."},
+   "OL": {"winner": "DD", "reason": "One clear price instead of message counts and top-ups."},
+   "PTE": {"winner": "DD", "reason": "Both have honest terms; DinnerDrop also plans for me and lets the family weigh in."},
+   "EM": {"winner": "DD", "reason": "DinnerDrop shows the price and the day-15 rule. eMeals shows neither."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Pricing page (/start), right under the Family card: an App Store rating or link to outside reviews, plus a screenshot of the one-tap cancel in Account. 'Over 500 families have signed up' tells me size, not satisfaction."
+}

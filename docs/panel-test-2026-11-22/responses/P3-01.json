@@ -1,0 +1,47 @@
+{
+ "id": "P3-01",
+ "name": "Keisha Morgan",
+ "simulated": true,
+ "order": ["PTE", "HF", "DD", "EM", "OL"],
+ "sites": {
+  "PTE": {
+   "five_sec": {"what_is_it": "A recipe-saver app with meal plans and a grocery list", "who_for": "Super-organized people who already have a recipe collection", "trust": "medium", "trust_why": "4.8 App Store and 'no card required' right up top, but nothing about kids yet", "next_step": "Scroll to see if I can mark what one person will and won't eat", "delivers_food": "no", "delivers_food_why": "App Store badges and 'Recipes, Meal Plans and Grocery Lists, All in One App'; clearly just an app"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "It's a really nice binder, but I'm still the one doing all the safe-food math every night; nothing on the page plans around Jalen", "whats_missing": "Anything about different people at the table eating different things; which grocery stores the 'Deliver Groceries' button actually works with (is Kroger one?)", "pay_per_month": 0},
+   "scores": {"clarity": 8, "trust": 8, "value": 5, "ease": 7, "want_to_sign_up": 4},
+   "quote": "Cute aisle-by-aisle list, but 'Meal Plans Tailored to Your Life' still means I'm the one tailoring every plan around Jalen's dozen safe foods."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "Meal kit boxes, with a 'pick a box' prize game", "who_for": "People who like cooking new adventurous stuff and have money", "trust": "low", "trust_why": "First thing I see is 'Open A Box To Reveal Your Offer!' which is a carnival game, not information", "next_step": "Tap 'Continue Without Offer' and probably leave", "delivers_food": "yes", "delivers_food_why": "Green HelloFresh boxes in the pop-up and '10 Free Meals' in the bottom bar"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Every dish has a sauce or a mixed texture: gochujang aioli, pickled cabbage, pico, crema. Jalen can't sit next to half of it, and I can't lock his exact nuggets brand into a box", "whats_missing": "Price (it wants a zip first), any way to make one component plain for one kid", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 3, "value": 2, "ease": 5, "want_to_sign_up": 1},
+   "quote": "'Kid-tested recipes' next to Bee Sting Hot Honey Pepperoni Pizzas. My kid runs exactly one test: is it the Perdue dino nugget. Hard pass."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "Plans the week's dinners, texts everyone in the house to vote, then drops the list into Instacart or Walmart", "who_for": "Busy families with kids who argue about dinner", "trust": "medium", "trust_why": "Plain and honest ('We don't deliver food'), but nothing on the first screen says it understands a kid like mine", "next_step": "Tap 'See a sample week' to check whether the food is all casseroles", "delivers_food": "no", "delivers_food_why": "The bold green line literally says 'We don't deliver food. We plan your week and send your grocery list.'"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "'Familiar flavors, one safe thing on every plate' is word-for-word what Jalen's OT told me to do, and the Family profile has 'kid-safe foods'. Then Wednesday is 'Creamy Tomato Pasta with Hidden Veggies', which is the exact thing we don't do. Also the Kroger cart is Family-only, and it never says whether my exact brands stay in the cart or get swapped", "whats_missing": "A screenshot of one person's profile (won't-eats, safe foods); a line saying brands won't be swapped without asking; the words ARFID or sensory anywhere. I did notice Kroger is listed under Instacart stores, so maybe I don't need the paid Kroger push", "pay_per_month": 6},
+   "scores": {"clarity": 8, "trust": 6, "value": 7, "ease": 8, "want_to_sign_up": 7},
+   "quote": "'One safe thing on every plate' — okay, somebody gets it. Then Wednesday is 'Hidden Veggies' pasta and I'm like… which one is it, Sarah?"
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "A weekly meal plan subscription with a video", "who_for": "Moms who want new recipes every week", "trust": "medium", "trust_why": "Looks like it's been around forever, real company, but generic happy-kid stock vibes", "next_step": "Scroll for the plans", "delivers_food": "unsure", "delivers_food_why": "'Less Stress, More Dinners' over a kid laughing in a kitchen; could be a box, could be recipes"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The Kid Friendly plan says 'Easy meals even the pickiest eaters will love'. That sentence is the lie every app tells me. No per-person anything, and a pop-up wanting my email before it'll show a price", "whats_missing": "Per-person won't-eats; price on the page; any acknowledgement that some kids don't 'try a bite'", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 5, "value": 4, "ease": 6, "want_to_sign_up": 3},
+   "quote": "'Even the pickiest eaters will love' — ma'am, my son has ARFID. He is not going to love your Slow Cooker plan."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "An AI app that decides what's for dinner for you", "who_for": "Parents carrying the dinner mental load", "trust": "medium", "trust_why": "'Trusted by 90,000+ families' and the headline is basically my life, but the big button is a 'Letter from the CEO', which is weird", "next_step": "Scroll for reviews and how it works", "delivers_food": "no", "delivers_food_why": "It's a phone mockup of a menu with notification bubbles; reads as an app"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Price is a mess: the FAQ says a free month and 'prices are available when you download the app', the pricing page says $25 a month for 'messages'. And nothing about one kid eating a different plate", "whats_missing": "Per-person safe foods; Kroger (only Instacart, Walmart, Amazon Fresh listed); a straight price", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 6, "value": 4, "ease": 7, "want_to_sign_up": 4},
+   "quote": "'The mental load of dinner, lifted' is exactly my phrase, then it's $25 a month in 'messages' and zero words about kids who eat twelve foods."
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "It says no card over and over, and the pricing box spells out that you just go back to Free after 14 days", "expect_day_15": "I lose the kid-safe profiles, the voting texts and the Kroger push and drop to the free plan unless I put a card in. Nothing gets charged.", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "It's the only one that names kid-safe foods per person and says 'one safe thing on every plate', which is my OT's actual instruction",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "eMeals promises picky kids will 'love' it; DinnerDrop at least gives each person a won't-eat list"},
+   "PTE": {"winner": "DD", "reason": "Plan to Eat organizes recipes but I'd still be doing every safe-food decision myself"},
+   "OL": {"winner": "DD", "reason": "Ollie has the right vibe but a confusing $25 message plan and no per-person profiles"},
+   "HF": {"winner": "DD", "reason": "HelloFresh is sauced, mixed-texture boxes I can't make safe for Jalen"}
+  }},
+ "dd_fix_that_would_move_me": "Home page sample week: replace 'Creamy Tomato Pasta with Hidden Veggies' and right under it show a real per-person profile screen (won't-eats, kid-safe foods) plus one line that exact brands stay in the cart unless you swap them."
+}

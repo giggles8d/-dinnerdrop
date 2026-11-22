@@ -1,0 +1,47 @@
+{
+ "id": "P3-02",
+ "name": "Laura Pettit",
+ "simulated": true,
+ "order": ["PTE", "OL", "EM", "DD", "HF"],
+ "sites": {
+  "PTE": {
+   "five_sec": {"what_is_it": "A recipe box app with a meal planner and grocery list", "who_for": "Folks who keep their own recipes and like to plan", "trust": "medium", "trust_why": "It says 'Free Trial - no card required!' in plain words, which I like, and the ratings look real", "next_step": "Look for the price and the word 'cancel'", "delivers_food": "no", "delivers_food_why": "It's App Store and Google Play buttons and 'Recipes, Meal Plans and Grocery Lists'"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "I'd have to find and check every gluten-free recipe myself, which is the exact work I pay eMeals to do. And a countdown to a '50% OFF' sale makes me want to wait and see", "whats_missing": "Anything gluten-free or celiac; whether 'Deliver Groceries' works with Walmart", "pay_per_month": 4},
+   "scores": {"clarity": 8, "trust": 8, "value": 5, "ease": 6, "want_to_sign_up": 4},
+   "quote": "Bless them for writing 'we don't auto-bill when your year ends.' But it's an empty recipe box, and I'd be reading three labels a night again."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "Some kind of app that picks dinner for you", "who_for": "Busy moms, I suppose", "trust": "low", "trust_why": "Never heard of it, and the big orange button is a 'Letter from the CEO' instead of telling me what it costs", "next_step": "Hunt for a price", "delivers_food": "unsure", "delivers_food_why": "Pictures of finished plates on a phone; I can't tell if they send anything"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The FAQ says a free 1-month trial and 'prices are available when you download the app', then the pricing page says $25 a month for 'messages'. Two stories. And it says the computer writes the recipe itself; I'm not trusting a machine with soy sauce", "whats_missing": "One word about gluten or celiac; a single clear price", "pay_per_month": 0},
+   "scores": {"clarity": 4, "trust": 3, "value": 2, "ease": 4, "want_to_sign_up": 1},
+   "quote": "One page says a free month, the other says $25 a month for 'messages.' Which is it? And a robot writing Ava's recipes, no ma'am."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "eMeals, the meal plan app I already use", "who_for": "Families like mine", "trust": "medium", "trust_why": "It works, but I had that renewal fight with them and I haven't forgotten", "next_step": "Check what it costs this year", "delivers_food": "no", "delivers_food_why": "I know it's recipes and a list, not a box"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Still no price on the front page, a pop-up to 'Unlock This Special Offer', and right there in the help center: 'Why you might see a pending charge before your billing date.' The Gluten Free plan says 'gluten allergy or sensitivity', not celiac", "whats_missing": "Price and renewal date up front; celiac-level wording", "pay_per_month": 5},
+   "scores": {"clarity": 6, "trust": 6, "value": 6, "ease": 7, "want_to_sign_up": 6},
+   "quote": "Same as ever: 'Gluten Free… allergy or sensitivity,' no price on the front, and a help article about pending charges before billing. I know that one, y'all."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "It plans dinners, texts the family to vote, and sends the list to a Walmart or Instacart cart", "who_for": "Families with kids", "trust": "medium", "trust_why": "It says 'no card needed' and 'We don't deliver food' right up front; I'd still want to read the fine print", "next_step": "Find the price and how you cancel", "delivers_food": "no", "delivers_food_why": "The green line under the paragraph says they don't deliver food"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Billing looks honest: 'Your free Family days need no card, so nothing can be charged.' And the Walmart cart is free, which fits my Walmart+. But gluten-free is a little tag on the sample week and one line, 'Dietary needs (gluten-free…) are respected on every plan'. Nobody says celiac, nobody says they checked broth or soy sauce, and the sample is sized 'serves 4', which won't feed Cole", "whats_missing": "A real gluten-free sample week with the ingredients shown; the word celiac; bigger portions for a teenager", "pay_per_month": 4},
+   "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 7, "want_to_sign_up": 6},
+   "quote": "'Your free Family days need no card, so nothing can be charged.' I read that twice. But 'gluten-free' as a little tag — did anybody check the broth?"
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "Meal kit boxes, with a pick-a-box prize pop-up", "who_for": "Folks who want food shipped", "trust": "low", "trust_why": "A game to 'reveal your offer' before it tells me anything", "next_step": "Tap 'Continue Without Offer' and leave", "delivers_food": "yes", "delivers_food_why": "The boxes and '10 Free Meals' at the bottom"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The fine print says 'auto-renewing subscription' and there's no gluten-free plan in that long list of plans. Shared kitchens are a no for celiac", "whats_missing": "A gluten-free plan; a price without a zip code", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 2, "value": 2, "ease": 4, "want_to_sign_up": 1},
+   "quote": "A box to 'reveal your offer' and fine print that says 'auto-renewing subscription.' I've been burned once. And not one gluten-free plan on that list."
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "It says no card in three places and the pricing box says you just go back to the free plan", "expect_day_15": "It goes back to the free plan, and since they never had my card they can't charge it. I'd still check my bank statement, bless it.", "expectation_correct": true},
+ "head_to_head": {"winner": "EM", "reason": "Three years on a real gluten-free plan beats a gluten-free tag I can't check yet; I'd only switch for something clearly safer",
+  "pairwise": {
+   "EM": {"winner": "EM", "reason": "eMeals has a whole Gluten Free plan; DinnerDrop's billing is kinder but it hasn't shown me the gluten-free is checked"},
+   "PTE": {"winner": "DD", "reason": "Plan to Eat makes me find every gluten-free recipe myself; DinnerDrop at least plans gluten-free and fills my Walmart cart"},
+   "OL": {"winner": "DD", "reason": "DinnerDrop tells me plainly what it costs; Ollie tells me two different things"},
+   "HF": {"winner": "DD", "reason": "No auto-renewing box and no shared kitchen; it's my own groceries"}
+  }},
+ "dd_fix_that_would_move_me": "On the home page sample week, make the 'Gluten-free' tab show a full celiac-safe week with ingredients listed, plus one sentence on how gluten-free is checked (soy sauce, broth, seasoning packets) and the reminder to read labels."
+}

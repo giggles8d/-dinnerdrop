@@ -1,0 +1,120 @@
+{
+  "id": "P1-07",
+  "name": "Linda Pruitt",
+  "simulated": true,
+  "order": ["EM", "DD", "OL", "PTE", "HF"],
+  "sites": {
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Something about dinners. There's a mama and a little girl and a button that says Watch Video.",
+        "who_for": "Young mothers, I suppose.",
+        "trust": "low",
+        "trust_why": "It doesn't say who they are or what it costs, and I don't press video buttons, I'm afraid of what it'll start.",
+        "next_step": "Read down a little and probably close it.",
+        "delivers_food": "unsure",
+        "delivers_food_why": "It says 'More Dinners' but not where the dinners come from."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "A box popped up wanting my email, and it says Try Free for 14 Days. My daughter told me that's how they get your card.",
+        "whats_missing": "A price, a phone number, and plain words about what happens after the 14 days.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 4, "trust": 3, "value": 3, "ease": 3, "want_to_sign_up": 2},
+      "quote": "Now what does 'send your shopping list directly to grocers' mean? Does the store call me? I'd just as soon write it on the back of an envelope."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "It sends dinner ideas to everybody in the house by text and makes a grocery list.",
+        "who_for": "Families. Maybe grandkids with phones, Kenzie has one.",
+        "trust": "medium",
+        "trust_why": "It says 'no card needed' on the big button, and further down a lady named Sarah says she made it. I like a name. But 'Instacart' and 'cart' I don't understand.",
+        "next_step": "Call my daughter and ask what an Instacart is.",
+        "delivers_food": "unsure",
+        "delivers_food_why": "It says plain 'We don't deliver food', but then it says it puts the list in your Walmart cart. So does Walmart bring it? I'm not sure."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "So many words I don't know: Instacart, cart, pantry scan, deduplicated. And there's no telephone number. Only an email for Sarah on one page.",
+        "whats_missing": "Whether I can print the list and take it to the Kroger in Somerset myself, and somebody to call.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 6, "value": 6, "ease": 4, "want_to_sign_up": 4},
+      "quote": "'Free forever' and 'no card' I understand. 'Deduplicated grocery list' I do not. Sarah, honey, write it like you're talking to your mama."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "Something with AI that plans meals.",
+        "who_for": "Younger folks who like gadgets.",
+        "trust": "low",
+        "trust_why": "It says AI. And the button is a letter from somebody called the CEO.",
+        "next_step": "Close it.",
+        "delivers_food": "unsure",
+        "delivers_food_why": "There's a phone with food pictures on it. I couldn't say."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Twenty-five dollars a month and you pay by the message. That's worse than the phone company.",
+        "whats_missing": "Anything plain.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 3, "trust": 2, "value": 1, "ease": 3, "want_to_sign_up": 1},
+      "quote": "'Ollie's state-of-the-art intelligence' writes the recipe. Well, I've been writing my own since 1978."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "Recipes and grocery lists on the phone instead of paper.",
+        "who_for": "People who keep recipes, like me with my card box.",
+        "trust": "medium",
+        "trust_why": "Five stars showing, and it says 'no card required'. But it also says Free Trial.",
+        "next_step": "Read about what it costs.",
+        "delivers_food": "no",
+        "delivers_food_why": "It says 'Better than pen and paper', so it's a list, not food."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "After 14 days it's $5.95 a month, and I'd have to type all my recipes in. My granddaughter would have to do it.",
+        "whats_missing": "A free version. Though I did like that they say real people answer weekdays 9 to 5.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 3, "want_to_sign_up": 2},
+      "quote": "They say they're 'here weekdays from 9-5 Mountain time.' That's the first one that sounds like somebody would answer."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "A game where you open a box to get an offer.",
+        "who_for": "Not anybody sensible.",
+        "trust": "low",
+        "trust_why": "'Open A Box To Reveal Your Offer' is exactly what the scam calls sound like.",
+        "next_step": "Close it right now.",
+        "delivers_food": "yes",
+        "delivers_food_why": "Those are boxes with food pictures behind them; I believe they mail the food."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "It wants my zip code before it'll even tell me a price, and the small print at the bottom is longer than my church bulletin.",
+        "whats_missing": "A price and plain words.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 4, "trust": 2, "value": 1, "ease": 2, "want_to_sign_up": 1},
+      "quote": "'Free Breakfast for Life'? Nothing is free for life, sugar. Not even breakfast."
+    }
+  },
+  "dd_offer": {
+    "clear": "unclear",
+    "why": "It says Family free for 14 days, and I thought my family was free. Then it says $4.99. Which family do they mean?",
+    "expect_day_15": "I reckon they'll start taking $4.99 a month from somewhere. That's what happens after a free trial.",
+    "expectation_correct": false
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It's the only one that says free forever and no card, and a real lady put her name on it.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "DinnerDrop says free and no card; eMeals just says free trial."},
+      "PTE": {"winner": "DD", "reason": "Plan to Eat costs money after two weeks, though they have people to talk to."},
+      "OL": {"winner": "DD", "reason": "No AI and no paying by the message."},
+      "HF": {"winner": "DD", "reason": "No box game and no zip code."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page first screen: say in plain words that you can print the list or read it in your own store, call the paid plan something other than 'Family' so it isn't confused with my family, and give a phone number or a person to reach."
+}

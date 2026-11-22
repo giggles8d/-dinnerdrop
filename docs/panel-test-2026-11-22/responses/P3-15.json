@@ -1,0 +1,120 @@
+{
+ "id": "P3-15",
+ "name": "Greg Navarro",
+ "simulated": true,
+ "order": ["PTE", "DD", "OL", "HF", "EM"],
+ "sites": {
+  "PTE": {
+   "five_sec": {
+    "what_is_it": "Recipe app with meal plans and grocery lists. Kind of like Mealime maybe.",
+    "who_for": "People who cook a lot and save recipes.",
+    "trust": "medium",
+    "trust_why": "Good ratings, no card for the trial. But 'trial' means it's not free.",
+    "next_step": "Look for the price.",
+    "delivers_food": "no",
+    "delivers_food_why": "Lists and recipes, person writing in a notebook."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "$5.95 a month after 14 days, and they even have a question 'Why isn't there a free plan?' Mealime gave me recipes. This wants me to bring my own. I don't have recipes, that's the problem.",
+    "whats_missing": "A free version. Recipes it gives me. An allergy setting.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 7, "trust": 7, "value": 3, "ease": 5, "want_to_sign_up": 2},
+   "quote": "Nice app but I gotta bring my own recipes. If I had recipes I wouldn't be eating frozen pizza."
+  },
+  "DD": {
+   "five_sec": {
+    "what_is_it": "Plans the week's dinners, the family votes by text, list goes to Walmart or Instacart.",
+    "who_for": "Parents who hate the 'what's for dinner' question. 👍",
+    "trust": "medium",
+    "trust_why": "'Start free, no card needed' right in the big button. Never heard of it though.",
+    "next_step": "Check if free is really free and if there's an allergy setting.",
+    "delivers_food": "no",
+    "delivers_food_why": "Says 'We don't deliver food' right under the paragraph."
+   },
+   "full_page": {
+    "would_sign_up": "yes",
+    "what_stopped_me": "Bit confused on the allergy thing. The home page lists allergies under the $4.99 Family plan, then the pricing page says nut allergies are respected on every plan. Which is it? Not trying to be the dad who slipped up on peanuts.",
+    "whats_missing": "Clear answer that the peanut setting is on the free plan. Whether I can skip the weeks the kids are at their mom's.",
+    "pay_per_month": 2
+   },
+   "scores": {"clarity": 7, "trust": 7, "value": 9, "ease": 8, "want_to_sign_up": 8},
+   "quote": "'$0 forever,' Walmart cart, dinners under 20 minutes. That's basically Mealime. Just tell me straight the peanut thing is free too."
+  },
+  "OL": {
+   "five_sec": {
+    "what_is_it": "An app that picks dinners for you.",
+    "who_for": "Busy families.",
+    "trust": "medium",
+    "trust_why": "90,000 families sounds big. 'Letter from the CEO' button is weird, I just want to try it.",
+    "next_step": "Look for free.",
+    "delivers_food": "no",
+    "delivers_food_why": "Menu on a phone, no delivery box."
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "There's a free plan, but it's 50 messages a month. I don't want to count texts. Paid is $25 a month, which is a couple fast food runs. And it's AI writing the recipes; not sure I trust it with peanuts.",
+    "whats_missing": "Allergy setting. What 50 messages gets me in actual dinners.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 5, "value": 4, "ease": 6, "want_to_sign_up": 3},
+   "quote": "Free, but you get 50 messages a month? Feels like a flip phone plan."
+  },
+  "HF": {
+   "five_sec": {
+    "what_is_it": "HelloFresh meal boxes.",
+    "who_for": "People who can afford them.",
+    "trust": "medium",
+    "trust_why": "Big name, but the mystery box pop-up is a sales gimmick.",
+    "next_step": "Close the pop-up.",
+    "delivers_food": "yes",
+    "delivers_food_why": "Boxes with the logo and food."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "Need a zip code just to see prices, auto-renewing in the fine print, and half the menu has peanuts on it: candied peanuts, Thai salad with peanuts. Not with my youngest.",
+    "whats_missing": "A price. A peanut-free filter I could see.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 4, "value": 1, "ease": 5, "want_to_sign_up": 1},
+   "quote": "Candied peanuts, peanuts on the curry, peanuts on the bowls. Hard pass with a peanut kid."
+  },
+  "EM": {
+   "five_sec": {
+    "what_is_it": "Meal plans, I think. There's a video.",
+    "who_for": "Families.",
+    "trust": "medium",
+    "trust_why": "Looks legit, doesn't say much.",
+    "next_step": "Look for free.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "Phone with food pictures, could be an order app."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "14-day trial, then paid, and no price on the page. A pop-up wants my email. Kid Friendly plan looks good but I'm not paying for what used to be free.",
+    "whats_missing": "Free plan. Price. Allergy setting.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 5, "value": 3, "ease": 5, "want_to_sign_up": 2},
+   "quote": "Kid Friendly plan sounds good. But it's a trial with no price. Mealime never made me guess."
+  }
+ },
+ "dd_offer": {
+  "clear": "clear",
+  "why": "Free plan forever, the Family stuff is free 14 days, no card. Pretty easy.",
+  "expect_day_15": "The family texting goes away and I'm on the free plan. Didn't give a card, so nothing gets charged.",
+  "expectation_correct": true
+ },
+ "head_to_head": {
+  "winner": "DD",
+  "reason": "It's the only one that's free like Mealime was, gives me the dinners and the Walmart list.",
+  "pairwise": {
+   "PTE": {"winner": "DD", "reason": "Plan to Eat costs money and I have to bring my own recipes."},
+   "OL": {"winner": "DD", "reason": "Ollie's free plan counts messages; DinnerDrop's free plan is unlimited plans."},
+   "HF": {"winner": "DD", "reason": "HelloFresh is expensive boxes with peanuts all over the menu."},
+   "EM": {"winner": "DD", "reason": "eMeals is a trial that turns paid; DinnerDrop is $0 forever."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Pricing page (/start) Free column: add a line like 'Allergy settings (peanut, dairy, gluten) included' so it's not only listed under the $4.99 Family plan. Right now the home page makes it look like allergies cost money."
+}

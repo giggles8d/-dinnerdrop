@@ -1,0 +1,120 @@
+{
+  "id": "P2-10",
+  "name": "Amber Kowalski",
+  "simulated": true,
+  "order": ["DD", "OL", "EM", "PTE", "HF"],
+  "sites": {
+    "DD": {
+      "five_sec": {
+        "what_is_it": "A dinner planner that texts the family a vote and then dumps the list into Instacart or Walmart.",
+        "who_for": "Families who order groceries online. Not exactly me.",
+        "trust": "low",
+        "trust_why": "First thing on the screen is a 'Powered by Instacart' badge, and the paragraph ends with 'one tap puts the whole list in your Instacart or Walmart cart'. That's a funnel.",
+        "next_step": "Scroll for Aldi and for how they make money.",
+        "delivers_food": "no",
+        "delivers_food_why": "It says 'We don't deliver food' in green. Fine. Instacart does, and that's where they're steering me."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Every button leads to an Instacart or Walmart cart. Nowhere does it say I can just take the list into Aldi myself. The Aldi '$68 cheapest' is Instacart's Aldi price, which I already know is marked up. And the sign-up page says they'll email me 'the occasional kitchen pick', and there's a Shop and Affiliates link in the footer.",
+        "whats_missing": "A line that says the list works in the store without Instacart, a printable list, and whether anything in the list is sponsored.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 7, "trust": 5, "value": 6, "ease": 6, "want_to_sign_up": 5},
+      "quote": "'Instacart pays us a small commission.' Well, at least they said it. The whole thing is built to get me into Instacart, where my Aldi costs about 10% more."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "An app that picks your meals. Lots of 'trusted by' and a CEO letter.",
+        "who_for": "Busier, richer moms than me.",
+        "trust": "low",
+        "trust_why": "'Trusted by 90,000+ families' and a big 'Letter from the CEO' button. Nothing about what it costs.",
+        "next_step": "Find the price.",
+        "delivers_food": "no",
+        "delivers_food_why": "Phone shows a menu and 'I've picked out meals for you'. It's a planner."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "$25 a month for the 'Everyday' plan and the free plan is rationed to 50 messages. The meal page FAQ says a 1-month trial and prices in the app; the pricing page says something else. And the recipes are written by AI.",
+        "whats_missing": "Aldi, in-store use, a straight answer on price.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 4, "trust": 3, "value": 1, "ease": 5, "want_to_sign_up": 1},
+      "quote": "$25 a month, and 'a message is one reply from Ollie.' They're metering texts like it's 2004. Nice try."
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Weekly meal plans with a shopping list.",
+        "who_for": "Moms who want new recipes.",
+        "trust": "medium",
+        "trust_why": "Normal-looking company, been around a while by the look of it. No price though.",
+        "next_step": "Look for the Aldi logo and the price.",
+        "delivers_food": "no",
+        "delivers_food_why": "'Choose Your Meals' and a phone with a list. It's a plan."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "The price is hidden in a collapsed FAQ ('How much does eMeals cost?'), a pop-up wants my email for a 'special offer', and it's a 14-day trial that turns into something. The FAQ also says 'Try it once, and you may never go back to the grocery store again!' That's a delivery pitch.",
+        "whats_missing": "The price, on the page, in plain numbers.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 4, "value": 3, "ease": 5, "want_to_sign_up": 2},
+      "quote": "They put the ALDI logo up front and say I can shop myself. I'll give them that. But the price is a closed box I have to tap open."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "Recipe keeper, meal planner, grocery list app.",
+        "who_for": "People who already cook from their own recipes. Kind of me.",
+        "trust": "medium",
+        "trust_why": "'Free Trial - no card required!' right on the first screen and real app ratings.",
+        "next_step": "Check the price and what happens after the trial.",
+        "delivers_food": "no",
+        "delivers_food_why": "Woman writing in a notebook, 'grocery lists'. Nothing delivered."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "It's $5.95 a month after 14 days. That's $71 a year I'd rather spend at Aldi. I already have a menu on the fridge.",
+        "whats_missing": "A free plan. They even have a FAQ 'Why isn't there a free plan?'",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 7, "trust": 8, "value": 4, "ease": 6, "want_to_sign_up": 4},
+      "quote": "'We're customer-funded. We never sell your data or show ads.' That's the most honest sentence I read today. Still $5.95 a month I don't have."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "Meal kit boxes with a pop-up game.",
+        "who_for": "People with money to burn.",
+        "trust": "low",
+        "trust_why": "'Open A Box To Reveal Your Offer!' It's a scratch-off ticket.",
+        "next_step": "Leave.",
+        "delivers_food": "yes",
+        "delivers_food_why": "Green HelloFresh boxes in the pop-up and plates of food behind it."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Auto-renewing subscription in the fine print, shipping after the first box, and no price until I give a zip code.",
+        "whats_missing": "A price.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 3, "trust": 2, "value": 1, "ease": 3, "want_to_sign_up": 1},
+      "quote": "'Open a box to reveal your offer.' A scratch-off for meal kits, then they want my zip before they'll tell me a price."
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "It says it three ways: no card, and if you don't add one you go back to the free plan. I read the fine print, it's consistent.",
+    "expect_day_15": "The texting stuff shuts off and I'm on the free plan. They don't have a card, so they can't charge me.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "Least bad: it's the only one that stays free after two weeks, and it admits how it makes money. If the list works for me in the store, I'd use it. If it only works through Instacart, I'm out.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "DinnerDrop puts $0 on the page; eMeals hides the price."},
+      "PTE": {"winner": "DD", "reason": "Plan to Eat is more honest about its business, but it costs $5.95 after 14 days and DinnerDrop doesn't."},
+      "OL": {"winner": "DD", "reason": "No $25 a month, no rationed messages, no AI recipes."},
+      "HF": {"winner": "DD", "reason": "Not a box, not a scratch-off game."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page 'How the cart works' box: say plainly that the free list works for shopping in person (show it on your phone or print it at Aldi) with no Instacart needed, and that nothing on the list is sponsored."
+}

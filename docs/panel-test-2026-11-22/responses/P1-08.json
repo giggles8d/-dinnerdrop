@@ -1,0 +1,120 @@
+{
+  "id": "P1-08",
+  "name": "Priya Raman",
+  "simulated": true,
+  "order": ["EM", "OL", "DD", "HF", "PTE"],
+  "sites": {
+    "EM": {
+      "five_sec": {
+        "what_is_it": "eMeals, which I already use. The home page is a video and a slogan.",
+        "who_for": "Families who want a weekly plan chosen for them.",
+        "trust": "medium",
+        "trust_why": "The service works for me, but the page shows nothing concrete: no price, no diets, no renewal terms.",
+        "next_step": "Check the plan list for vegetarian and the cost question.",
+        "delivers_food": "no",
+        "delivers_food_why": "I know it sends a list to Walmart; the first screen itself does not say either way."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "15 plans and none called Vegetarian, only Plant Based, which drops the eggs my children eat. Price is still hidden in the FAQ; I know it is $59.99 a year and it renewed without warning once.",
+        "whats_missing": "A vegetarian plan, a way to share the plan with my mother-in-law, and renewal terms on the page.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 5, "trust": 6, "value": 5, "ease": 7, "want_to_sign_up": 5},
+      "quote": "Fifteen meal plans, Keto and Paleo included, and still no Vegetarian. 'Plant Based' is not the same thing in my house."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "An AI meal planner for families.",
+        "who_for": "Families who want planning done automatically.",
+        "trust": "medium",
+        "trust_why": "Polished, 90,000+ families, but no diet options or price visible, and the main button is a CEO letter.",
+        "next_step": "Look for diet settings and pricing.",
+        "delivers_food": "no",
+        "delivers_food_why": "Menu screens on a phone; it is an app."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "$25 a month is $300 a year, five times eMeals. Messages are metered. The page never says vegetarian.",
+        "whats_missing": "Diet filters and a yearly price.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 5, "value": 2, "ease": 6, "want_to_sign_up": 3},
+      "quote": "The family group chat is exactly what my mother-in-law needs, but not at $25 a month plus $0.30 per extra message."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "A dinner planner that texts the whole household the options, then fills a Walmart or Instacart cart.",
+        "who_for": "Households where more than one adult needs to see the plan. That is my situation.",
+        "trust": "medium",
+        "trust_why": "Honest statements up front ('We don't deliver food', 'no card'), but no ratings or reviews, and I do not see diet options on the first screen.",
+        "next_step": "Check vegetarian and the renewal terms.",
+        "delivers_food": "no",
+        "delivers_food_why": "The bold line under the description: 'We don't deliver food.'"
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "The sample week has chicken tenders and meatballs, and the diet tabs are kid-friendly, under 20 minutes, under $75 and gluten-free. Vegetarian appears only in an FAQ list on the pricing page. It looks like an afterthought.",
+        "whats_missing": "A vegetarian sample week, and confirmation that profiles handle 'no meat, eggs OK'.",
+        "pay_per_month": 3.25
+      },
+      "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 8, "want_to_sign_up": 7},
+      "quote": "$39 a year, no card for the trial, an email three days before billing, and my mother-in-law gets the plan by text. If only the sample week weren't chicken."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "Meal-kit delivery behind a 'reveal your offer' pop-up.",
+        "who_for": "New customers chasing discounts.",
+        "trust": "low",
+        "trust_why": "A gamified offer before any information.",
+        "next_step": "Close the pop-up and leave.",
+        "delivers_food": "yes",
+        "delivers_food_why": "Boxes of ingredients are the product."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "There is a Veggie plan, but prices sit behind a zip code and the fine print confirms auto-renewal and shipping on every later box.",
+        "whats_missing": "A price, and any honesty about renewal outside the fine print.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 3, "value": 2, "ease": 5, "want_to_sign_up": 2},
+      "quote": "'Offer only valid for new customers with qualifying auto-renewing subscription purchase.' I have been surprised by one renewal already."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "Recipe organizer, planner and grocery list.",
+        "who_for": "People who cook from their own recipes.",
+        "trust": "high",
+        "trust_why": "Ratings on both stores and 'no card required' on the first screen.",
+        "next_step": "Read the pricing page and renewal terms.",
+        "delivers_food": "no",
+        "delivers_food_why": "It is clearly an app for recipes and lists."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "I would be doing all the planning myself on a pharmacy break, and the Walmart connection is only a vague 'grocery delivery' line.",
+        "whats_missing": "Suggested meals and a named Walmart one-tap cart.",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 8, "trust": 9, "value": 6, "ease": 5, "want_to_sign_up": 6},
+      "quote": "'No surprise renewals: we don't auto-bill when your year ends unless you choose to.' Best line I read today. My own dal recipes would fit, too."
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "The pricing card, the note under it and the FAQ all agree: 14 days of Family, no card, add a card to keep it, email three days before.",
+    "expect_day_15": "Family texting stops and I am on the free plan. I am charged nothing unless I chose to add a card.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It does what eMeals does for less, shares the plan with my mother-in-law, and the renewal terms are honest. Vegetarian is the open question.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "$39 versus $59.99 a year, household texting, and renewal stated plainly."},
+      "PTE": {"winner": "DD", "reason": "Narrowly: DinnerDrop plans the week and fills Walmart; Plan to Eat has better renewal terms but leaves the planning to me."},
+      "OL": {"winner": "DD", "reason": "Same household-sharing idea at a fraction of the price."},
+      "HF": {"winner": "DD", "reason": "Groceries I choose versus an auto-renewing box."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page 'See a week' section: add a Vegetarian tab with a real vegetarian week (eggs allowed), and list the diets DinnerDrop supports near the top."
+}

@@ -1,0 +1,120 @@
+{
+  "id": "P2-14",
+  "name": "Carol Haney",
+  "simulated": true,
+  "order": ["EM", "PTE", "OL", "HF", "DD"],
+  "sites": {
+    "EM": {
+      "five_sec": {
+        "what_is_it": "That's eMeals. That's the one that charged me.",
+        "who_for": "Young mothers, from the picture.",
+        "trust": "low",
+        "trust_why": "I cancelled it in the app and they charged me anyhow, and I never got a person on the phone.",
+        "next_step": "I'd close it. My daughter can look if she wants.",
+        "delivers_food": "no",
+        "delivers_food_why": "It's the menu thing with the grocery list. I know, I had it."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "'Try Free for 14 Days.' 'No commitment. Cancel anytime.' I've heard that before. There's no telephone number, just 'Need Help?'",
+        "whats_missing": "A phone number. A person.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 1, "value": 3, "ease": 4, "want_to_sign_up": 1},
+      "quote": "'No commitment. Cancel anytime.' That's what they told me the first time, and I cancelled and they charged me anyhow."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "A recipe app. Recipes and grocery lists.",
+        "who_for": "Younger folks who are organized on their phones.",
+        "trust": "medium",
+        "trust_why": "Right there in big letters it says 'no card required'. I like that.",
+        "next_step": "Call my daughter to read the rest.",
+        "delivers_food": "no",
+        "delivers_food_why": "Lady writing in a notebook. No boxes."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "I'd have to put all my own recipes in it. That's too much fooling with the phone. And after two weeks it's $5.95.",
+        "whats_missing": "Somebody to call. Suppers already picked out for me.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 4, "ease": 3, "want_to_sign_up": 3},
+      "quote": "It does say 'no card required' right up top, and I appreciate that. But I'd have to type in all my own recipes. I'm not doing that."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "I'm not sure. Something on a phone that picks food.",
+        "who_for": "Young people.",
+        "trust": "low",
+        "trust_why": "The big orange button says 'Letter from the CEO'. I don't know why I'd want that.",
+        "next_step": "Go back.",
+        "delivers_food": "unsure",
+        "delivers_food_why": "Pictures of a rice dish and pancakes on a phone, and messages saying 'I've picked out meals for you'. Might bring it, might not."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Too much going on. The computer makes up the recipes, it says. And $25 a month.",
+        "whats_missing": "Plain words. A phone number.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 3, "trust": 3, "value": 2, "ease": 2, "want_to_sign_up": 1},
+      "quote": "I pushed the big orange button and it's a letter from somebody. I just wanted to know what to fix for supper."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "Food in a box. HelloFresh.",
+        "who_for": "City people.",
+        "trust": "low",
+        "trust_why": "Little green boxes wanting me to pick one for a prize. That's how they get you.",
+        "next_step": "Get off it.",
+        "delivers_food": "yes",
+        "delivers_food_why": "The boxes say HelloFresh on them."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "The tiny print at the bottom says 'auto-renewing'. And it won't say a price till you give your zip code.",
+        "whats_missing": "A price and a phone number.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 3, "trust": 2, "value": 1, "ease": 2, "want_to_sign_up": 1},
+      "quote": "Open a box? Little green boxes jumping at me, and the small print says auto-renewing. No ma'am."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "It plans supper for the week and puts the list in your Walmart. I think.",
+        "who_for": "Families. It says it texts everybody in the house.",
+        "trust": "medium",
+        "trust_why": "It says 'no card needed' on the green button. But 'Start free' always makes me nervous.",
+        "next_step": "Send it to my daughter to read the small print.",
+        "delivers_food": "no",
+        "delivers_food_why": "It says in green, 'We don't deliver food.' Good. I just want the list in my Walmart pickup."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "It says free forever and free for 14 days, both. I don't understand what the 14 days is. And there's no phone number, just an email for Sarah on one page.",
+        "whats_missing": "A phone number. Heart-healthy suppers up front (I only saw it as a little link at the very bottom).",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 5, "value": 7, "ease": 5, "want_to_sign_up": 5},
+      "quote": "It says 'nothing can be charged' because there's no card. I read it twice. I'd still want a phone number to call somebody."
+    }
+  },
+  "dd_offer": {
+    "clear": "unclear",
+    "why": "Free forever, then Family free for 14 days, then $4.99. That's three things. I don't know which one I'd be on.",
+    "expect_day_15": "I reckon on day 15 they want the $4.99 or it quits working.",
+    "expectation_correct": false
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It's the only one that says plain they don't take a card and can't charge me, and it works with my Walmart pickup.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "eMeals charged me after I cancelled. DinnerDrop doesn't ask for a card."},
+      "PTE": {"winner": "DD", "reason": "Both say no card, but DinnerDrop picks the suppers so I don't have to type recipes in."},
+      "OL": {"winner": "DD", "reason": "I could at least understand what DinnerDrop does."},
+      "HF": {"winner": "DD", "reason": "No boxes, no auto-renewing."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page, right under the green 'Start free, no card needed' button: one plain sentence, 'On day 15 you simply go back to the free plan. We don't have your card, so we can't charge you,' plus a phone number or 'reply to any email and Sarah answers'."
+}

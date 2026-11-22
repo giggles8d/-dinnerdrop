@@ -1,0 +1,50 @@
+{
+  "id": "P2-03",
+  "name": "Marcus Reed",
+  "simulated": true,
+  "order": ["HF", "EM", "PTE", "DD", "OL"],
+  "sites": {
+    "HF": {
+      "five_sec": {"what_is_it": "Food boxes they mail you", "who_for": "People with more money than me", "trust": "low", "trust_why": "A pop-up game first thing. Feels like a sales pitch", "next_step": "Tap 'Continue Without Offer'", "delivers_food": "yes", "delivers_food_why": "HelloFresh boxes in the pop-up and 'Free Meals' at the bottom"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Can't see a price without giving my zip. Tiny print says auto-renewing subscription. Recipes have sumac pickles and harissa aioli", "whats_missing": "Price, normal food", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 4, "value": 2, "ease": 6, "want_to_sign_up": 2},
+      "quote": "Kofta-style tacos with sumac pickles. My kids want nuggets. And I can't see a price without giving my zip."
+    },
+    "EM": {
+      "five_sec": {"what_is_it": "Meal planning app", "who_for": "Moms, looks like. Mom and little girl in the picture", "trust": "medium", "trust_why": "Looks legit, but no price", "next_step": "Scroll to see what it costs", "delivers_food": "no", "delivers_food_why": "A phone with a list and 'Choose Your Meals'"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "No price anywhere. 'Try Free for 14 Days' means I pay later. There's a Kid Friendly plan but the food shown is keto and pork chops with rosemary-mustard sauce", "whats_missing": "Price, a sample kid week", "pay_per_month": 0},
+      "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 6, "want_to_sign_up": 3},
+      "quote": "'Kid Friendly' plan sounds right, but the pictures are keto and rosemary-mustard pork chops. And what's it cost? Doesn't say."
+    },
+    "PTE": {
+      "five_sec": {"what_is_it": "An app to keep your recipes in", "who_for": "People who already cook a lot", "trust": "medium", "trust_why": "4.8 stars", "next_step": "Probably leave", "delivers_food": "no", "delivers_food_why": "It's an app for recipes and lists"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "You bring your own recipes. I don't have recipes. Then it's $5.95 a month", "whats_missing": "Actual dinner ideas", "pay_per_month": 0},
+      "scores": {"clarity": 7, "trust": 7, "value": 2, "ease": 5, "want_to_sign_up": 2},
+      "quote": "'Save recipes while you scroll.' I don't have recipes. That's the whole problem."
+    },
+    "DD": {
+      "five_sec": {"what_is_it": "Plans the week's dinners and the family votes by text", "who_for": "Families where somebody runs the house. Doesn't say mom, which is good", "trust": "medium", "trust_why": "Says no card needed. Don't know the name", "next_step": "Tap 'See a sample week'", "delivers_food": "no", "delivers_food_why": "Green line says 'We don't deliver food'"},
+      "full_page": {"would_sign_up": "maybe", "what_stopped_me": "It's all about the Instacart or Walmart cart and I shop in the store on Saturday. Doesn't say I can just take the list with me. Long page, a lot of reading. The $4.99 Family stuff I don't need", "whats_missing": "A line saying you can use the list in the store; one recipe's steps so I know a beginner can do it", "pay_per_month": 0},
+      "scores": {"clarity": 7, "trust": 6, "value": 8, "ease": 6, "want_to_sign_up": 6},
+      "quote": "Sheet pan chicken tenders, taco night, pasta with hidden veggies. That's food my kids eat and I could cook. $64 for the week, plan's free. I'd try it."
+    },
+    "OL": {
+      "five_sec": {"what_is_it": "AI that picks your meals", "who_for": "Busy families", "trust": "medium", "trust_why": "90,000 families and Forbes, FOX logos", "next_step": "Confused. The button says 'Letter from the CEO'", "delivers_food": "unsure", "delivers_food_why": "Phone says 'Tonight's dinner is a good one' like it's on the way"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Pricing page says $25 a month", "whats_missing": "A free option that actually plans dinner", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 5, "value": 1, "ease": 5, "want_to_sign_up": 1},
+      "quote": "Button says 'Letter from the CEO.' I don't want a letter, I want dinner. Then it's $25 a month."
+    }
+  },
+  "dd_offer": {"clear": "partly", "why": "Says 'free forever' and also '14 days free'. Two different frees. Had to read it twice", "expect_day_15": "The texting thing goes away and it stays free.", "expectation_correct": true},
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "Free, and the sample week is kid food I can actually cook",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "Free and shows the dinners; eMeals hides the price"},
+      "PTE": {"winner": "DD", "reason": "DinnerDrop gives me the meals; Plan to Eat wants my recipes"},
+      "OL": {"winner": "DD", "reason": "Free vs $25 a month"},
+      "HF": {"winner": "DD", "reason": "Normal food at Walmart prices, no box"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page, under the sample week: 'Shop in the store? Take the list on your phone or print it', plus one recipe's steps shown, so a dad who shops Walmart on Saturday sees it's for him too."
+}

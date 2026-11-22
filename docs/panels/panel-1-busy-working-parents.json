@@ -1,0 +1,1337 @@
+{
+  "panel": 1,
+  "panel_name": "Busy working parents who decide dinner at the last minute",
+  "panel_spec": "Busy working parents who decide dinner at the last minute (often 4-6pm) and mostly use a phone. Two-job households, shift workers, commuters, single parents, sports-practice evenings; they open things on a phone in a car line or at work.",
+  "created": "2026-11-22",
+  "simulated": true,
+  "note": "Simulated people, not real customers. Grounding quotes are real public posts/reviews that inspired each persona; the people quoted are not these personas.",
+  "coverage": {
+    "sceptics": [
+      "P1-03",
+      "P1-07",
+      "P1-11",
+      "P1-13",
+      "P1-14",
+      "P1-15"
+    ],
+    "pays_now": [
+      "P1-04",
+      "P1-08",
+      "P1-09",
+      "P1-14"
+    ],
+    "never_used": [
+      "P1-03",
+      "P1-05",
+      "P1-07",
+      "P1-11",
+      "P1-12",
+      "P1-15",
+      "P1-16"
+    ]
+  },
+  "personas": [
+    {
+      "id": "P1-01",
+      "name": "Danielle Ortiz",
+      "age": 34,
+      "gender": "female",
+      "location": "Chandler, AZ (Phoenix metro)",
+      "area": "suburban",
+      "household": "Married to Luis (HVAC tech, home ~6:30pm); kids Mateo 5 and Sofia 17 months",
+      "household_size": 4,
+      "income_band": "$75k-$100k",
+      "job": "Dental hygienist, 7:30-4:00, does both daycare pickups",
+      "tech_comfort": "medium",
+      "phone_habits": "iPhone, always in hand. Scrolls Instagram and Facebook in the daycare pickup line around 4:45. Never opens a laptop at home.",
+      "meal_service_status": "used_before: HelloFresh (one discounted box, 2024; cancelled because cooking still took 40 minutes)",
+      "sceptic": false,
+      "grocery_habit": "Fry's (Kroger) pickup on Sunday, plus a Walmart run midweek when something runs out",
+      "weekly_grocery_budget": "$220",
+      "situation": "Gets home with two starving kids at 5:15. Dinner has to be on the table by 5:45 or the toddler melts down. She decides what to cook in the car on the way home, usually from whatever is in the fridge.",
+      "complication": "Toddler eats a few safe foods; 5-year-old refuses the same dinner twice in a row",
+      "pain_points": [
+        "Deciding dinner at 4:45 in the car with nothing planned",
+        "Kids are starving the second they walk in",
+        "The whole family hates crockpot meals, so 'just slow-cook it' advice does not help",
+        "Meal kit recipes took 40 minutes she does not have"
+      ],
+      "buying_trigger": "Another week where they had cereal for dinner twice; a friend's Facebook post about a dinner app",
+      "decision_criteria_ranked": [
+        "Dinners that are really 20 minutes or less",
+        "Works from her phone in 2 minutes",
+        "Kid-friendly meals a 5-year-old will eat",
+        "Grocery pickup at Fry's or Walmart without retyping a list",
+        "Price under $10/month"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium: will try free things, cancels fast if it adds work",
+        "key_objections": [
+          "Will this be another thing I have to manage?",
+          "Are the meals actually fast or 'fast' like HelloFresh?",
+          "Will my kids eat any of it?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "What am I making tonight, and can I do it before they lose it?",
+        "red_flag_words": [
+          "chef-inspired",
+          "gourmet",
+          "meal prep Sunday"
+        ],
+        "trust_signals": [
+          "Prep time on every dinner",
+          "Photos of normal kid food",
+          "Other moms in the comments"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Taps an Instagram/Facebook ad in the pickup line, reads the headline, scrolls once looking for prep times and a price",
+        "deep_evaluation": "Rarely; if it looks easy she signs up on the spot and judges it on the first Tuesday",
+        "deal_breakers": [
+          "Recipes over 30 minutes",
+          "Needs a laptop to set up",
+          "Card required before seeing a single dinner"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5-$10",
+      "voice": "Fast, warm, a little frazzled; emoji and 'lol'; short sentences typed one-handed; gives up after one confusing screen",
+      "grounding": [
+        {
+          "text": "I get home with both kids (5yo and 17mo) around 5/5:30 and they are starving.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1w3w11y/dinner/"
+        },
+        {
+          "text": "we all hate crockpot meals.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1w3w11y/dinner/"
+        },
+        {
+          "text": "We've tried so many services and meal plans, but it doesn't fix the time issue.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1678ihm/comment/jyok4l7/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-02",
+      "name": "Marcus Bell",
+      "age": 41,
+      "gender": "male",
+      "location": "Westerville, OH (Columbus metro)",
+      "area": "suburban",
+      "household": "Married to Angela (ER nurse, three 12-hour shifts incl. evenings); kids Jaylen 14, Maya 11, Eli 8",
+      "household_size": 5,
+      "income_band": "$100k-$150k",
+      "job": "IT project manager, hybrid (3 days in office)",
+      "tech_comfort": "high",
+      "phone_habits": "Android (Pixel). Reads email and Slack on the phone between meetings; plans things at 3pm at his desk; Google Calendar runs the family",
+      "meal_service_status": "used_before: Blue Apron and HelloFresh (2022-23), dropped both",
+      "sceptic": false,
+      "grocery_habit": "Kroger ClickList pickup weekly; Costco monthly",
+      "weekly_grocery_budget": "$300",
+      "situation": "Cooks every night Angela works. Jaylen has comp baseball 7-9pm twice a week 30 minutes away, Maya has volleyball. Dinner is either at 4:45 before driving or after 9pm. Feels guilty about the 'beige' food rotation.",
+      "complication": "Cooks for 5 with two very different schedules; a hungry teenager",
+      "pain_points": [
+        "Practice nights break any plan",
+        "Same beige carbs every week; vegetable battles with the 8-year-old",
+        "Meal kits took 35-40 minutes and cost too much for 5",
+        "He is the one who has to remember what is in the fridge"
+      ],
+      "buying_trigger": "Spring baseball schedule lands in the family calendar",
+      "decision_criteria_ranked": [
+        "Plans around a calendar (fast meals on practice nights)",
+        "Feeds 5 including a teenage appetite",
+        "One list, sent to Kroger",
+        "Clear pricing, no sales gimmicks",
+        "Family can see the plan without him texting everyone"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium-high: technical, likes tools, but checks claims",
+        "key_objections": [
+          "Does it really scale to 5 servings without me doing math?",
+          "Is the Kroger integration real or a deep link?",
+          "What does the paid tier actually add?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need a system for practice nights, not more recipes",
+        "red_flag_words": [
+          "revolutionary",
+          "AI-powered",
+          "effortless"
+        ],
+        "trust_signals": [
+          "Screenshots of the actual app",
+          "Kroger named explicitly",
+          "Pricing table with yearly option"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Reads headline, jumps to pricing, then looks for how the cart handoff works",
+        "deep_evaluation": "Reads FAQ, compares with eMeals and Plan to Eat in another tab, reads App Store reviews",
+        "deal_breakers": [
+          "No Kroger",
+          "Can't set servings to 5+",
+          "Vague about what is free"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5-$8, or $40-$50/year",
+      "voice": "Calm, organised, dry humour; talks in systems and 'workflows'; patient with setup if the payoff is clear",
+      "grounding": [
+        {
+          "text": "I've also tried Blue Apron, Hello Fresh, Plated, etc. but the quickest recipes still end up taking me 35-40 minutes",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/daddit/comments/9p4ps9/tips_and_tricks_the_daily_grind_of_cooking/"
+        },
+        {
+          "text": "I'm so tired of the endless rotation of beige carbs and the battle to consume vegetables.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/daddit/comments/1wf2pgz/cooks_of_daddit_what_are_we_all_making_for/"
+        },
+        {
+          "text": "waiting until we get home around 9:30 PM or later feels way too late",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/SportsParenting/comments/1w5o51p/comp_sports_parents_how_do_you_handle_dinner_with/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-03",
+      "name": "Keisha Thomas",
+      "age": 29,
+      "gender": "female",
+      "location": "Memphis, TN",
+      "area": "urban",
+      "household": "Single mom; son Jordan 6",
+      "household_size": 2,
+      "income_band": "under $35k",
+      "job": "Certified nursing assistant, overnight shifts (7p-7a) at a nursing home, picks up extra shifts",
+      "tech_comfort": "medium",
+      "phone_habits": "Older Android with a cracked screen, prepaid plan; Facebook and TikTok on breaks at 2am; Cash App for everything",
+      "meal_service_status": "never",
+      "sceptic": true,
+      "grocery_habit": "Walmart pickup when she has the $35 minimum, otherwise Family Dollar and Aldi; SNAP some months",
+      "weekly_grocery_budget": "$90",
+      "situation": "Her mom watches Jordan on work nights. Dinner is decided around 4pm right after she wakes up, before dropping him off. Overdrafted once from a 'free trial' that renewed; now cancels everything the same day.",
+      "complication": "Tight budget; picky 6-year-old",
+      "pain_points": [
+        "Waking up at 3:30 and having to feed a kid before a 12-hour shift",
+        "Every dollar is spoken for; surprise charges cause overdraft fees",
+        "Leftovers have to stretch to her mom's house"
+      ],
+      "buying_trigger": "Sees a free dinner app ad on Facebook during a break; only tries it if no card is asked for",
+      "decision_criteria_ranked": [
+        "Truly free, no card",
+        "Cheap meals that stretch (feeds 2 plus leftovers)",
+        "Works with Walmart and SNAP-eligible items",
+        "Simple on an old phone",
+        "Kid will eat it"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low: burned by a trial that charged her bank",
+        "key_objections": [
+          "What's the catch?",
+          "Why does it need my phone number?",
+          "Will it charge me after 14 days?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I gotta feed him something before I leave and I'm broke till Friday",
+        "red_flag_words": [
+          "free trial",
+          "upgrade",
+          "premium",
+          "subscription"
+        ],
+        "trust_signals": [
+          "'No card needed' in big letters",
+          "Prices shown per meal",
+          "Real moms like her in the ads"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Looks for the price and the word 'card' first; leaves if she has to hunt",
+        "deep_evaluation": "Asks her cousin who uses Walmart pickup; reads Facebook comments under the ad",
+        "deal_breakers": [
+          "Asks for a card",
+          "Grocery list costs more than $90",
+          "Confusing on a small screen"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0 (maybe $2-3 once she trusts it)",
+      "voice": "Blunt, funny, tired; texting shorthand ('fr', 'ion know'); zero patience for fine print",
+      "grounding": [
+        {
+          "text": "Lately I’ve been picking up extra shifts because I hate being short on money",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/SingleParents/comments/wxcdeb/am_i_horrible_mom/"
+        },
+        {
+          "text": "free trials keep getting me",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/budgetingforbeginners/comments/1xwwulq/anyone_else_forget_to_cancel_free_trials/"
+        },
+        {
+          "text": "when you are trying to save money, even $10 or $15 matters.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/budgetingforbeginners/comments/1xwwulq/anyone_else_forget_to_cancel_free_trials/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-04",
+      "name": "Rachel Kim-Hoffman",
+      "age": 38,
+      "gender": "female",
+      "location": "Seattle, WA (Ballard)",
+      "area": "urban",
+      "household": "Married to Nate (attorney, works late); daughters Ivy 7 and June 3",
+      "household_size": 4,
+      "income_band": "over $150k",
+      "job": "Senior product manager at a tech company, hybrid, back-to-back meetings until 5",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone, Apple Watch; orders everything from the phone; reads in short bursts between meetings",
+      "meal_service_status": "pays_now: HelloFresh (3 meals x 4 servings, about $100/week)",
+      "sceptic": false,
+      "grocery_habit": "Instacart from PCC and QFC twice a week; Amazon Fresh for staples",
+      "weekly_grocery_budget": "$350 plus HelloFresh",
+      "situation": "Pays for HelloFresh because nobody has time to choose recipes and shop. Price keeps creeping up and the 3-year-old won't eat half of it. Still ends up ordering Instacart for the other 4 nights.",
+      "complication": "Picky 3-year-old; two grocery systems running in parallel",
+      "pain_points": [
+        "HelloFresh price went up without warning; now around $100 a week for 3 dinners",
+        "Kit covers only 3 nights; the rest is still improvised",
+        "Too much packaging, boxes piling up"
+      ],
+      "buying_trigger": "HelloFresh price notice; looking for something that keeps the 'decided for me' part without the box",
+      "decision_criteria_ranked": [
+        "Decides the week for her",
+        "Puts the list in her existing Instacart cart",
+        "Covers 5 nights, not 3",
+        "Kid-friendly options",
+        "Clean, trustworthy product feel"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium: experienced buyer of subscriptions, judges polish",
+        "key_objections": [
+          "Is this an actual product or a side project?",
+          "Does it really put items in my Instacart cart?",
+          "Will it handle QFC specifically?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I want the decisions made for me without paying meal-kit prices",
+        "red_flag_words": [
+          "hack",
+          "life-changing",
+          "AI chef"
+        ],
+        "trust_signals": [
+          "Clear product screenshots",
+          "Named grocery partners",
+          "Founder story that feels real",
+          "Privacy policy"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Skims hero and pricing in under 30 seconds; judges design quality",
+        "deep_evaluation": "Will sign up for a free tier to test the Instacart handoff that night",
+        "deal_breakers": [
+          "Feels amateur",
+          "No Instacart",
+          "Paywall before seeing a plan"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$10-$20 (compares to $400/month HelloFresh)",
+      "voice": "Crisp, efficient, product-manager vocabulary ('friction', 'flow'); impatient with vagueness",
+      "grounding": [
+        {
+          "text": "We pay almost $100 a week for 3 meals when we used to pay between $70-80.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/mealkits/comments/1wmhe9l/meal_kit_for_2_cancelling_hellofresh/"
+        },
+        {
+          "text": "the price has gone up (without warning)",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/mealkits/comments/1wmhe9l/meal_kit_for_2_cancelling_hellofresh/"
+        },
+        {
+          "text": "I'm busy and need to outsource the mental labor of meal planning and the physical labor of shopping.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/mealkits/comments/stxyyw/i_tried_hellofresh_everplate_and_dinnerly_for_3/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-05",
+      "name": "Brittany Haynes",
+      "age": 36,
+      "gender": "female",
+      "location": "Near Sedalia, MO",
+      "area": "rural",
+      "household": "Married to Cody (roofer, 10-hour days); kids Kaden 12, Brynlee 9, Hudson 5, Rylee 2",
+      "household_size": 6,
+      "income_band": "$50k-$75k",
+      "job": "Hospital registration clerk; works 2pm-10:30pm three days a week",
+      "tech_comfort": "medium",
+      "phone_habits": "iPhone; Facebook groups and Messenger all day; plans in the break room on her phone",
+      "meal_service_status": "never",
+      "sceptic": false,
+      "grocery_habit": "Walmart Supercenter 25 minutes away, mostly pickup; Aldi when in town",
+      "weekly_grocery_budget": "$250",
+      "situation": "On her work nights Cody is in charge of dinner and orders pizza. Two boys have overlapping baseball practices. She wants to leave a plan and a stocked fridge so he will cook something simple.",
+      "complication": "Cooks for 6; picky 2- and 5-year-olds; husband who won't plan",
+      "pain_points": [
+        "Pizza three nights a week on her work nights",
+        "Overlapping baseball practices for two kids",
+        "Picky little ones",
+        "Planning from a phone in a 15-minute break"
+      ],
+      "buying_trigger": "Pizza bill on the card; wants a plan her husband can follow by text",
+      "decision_criteria_ranked": [
+        "Feeds 6 cheaply",
+        "Simple enough for her husband to cook",
+        "Walmart pickup",
+        "Can text the plan to her husband",
+        "Picky-kid friendly"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium",
+        "key_objections": [
+          "Will Cody actually look at it?",
+          "Is the list going to cost more than I spend now?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "When I'm at work nobody cooks, they just order pizza",
+        "red_flag_words": [
+          "clean eating",
+          "macros",
+          "gourmet"
+        ],
+        "trust_signals": [
+          "Walmart logo",
+          "Family-size portions",
+          "Texts to the whole family"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Reads the top of the page on break; looks for Walmart and 'family'",
+        "deep_evaluation": "Asks in her local moms Facebook group if anyone uses it",
+        "deal_breakers": [
+          "Recipes with fancy ingredients her Walmart won't have",
+          "Too many steps for Cody"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5 if it stops the pizza",
+      "voice": "Friendly, chatty, Midwestern; long run-on sentences; says 'y'all' and 'honestly'",
+      "grounding": [
+        {
+          "text": "he doesn’t want to cook usually after working on roofs for 10 hours a day. So he orders pizza.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1jxx725/dinners_when_your_gone/"
+        },
+        {
+          "text": "often times we have overlapping baseball practices for 2 out of 4 of our kids. Some of the kids are picky",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1jxx725/dinners_when_your_gone/"
+        },
+        {
+          "text": "I have other kids. I have dinner in the oven.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/Parenting/comments/1w5srxc/sports_practices/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-06",
+      "name": "Jamal Wright",
+      "age": 33,
+      "gender": "male",
+      "location": "Smyrna, GA (Atlanta metro)",
+      "area": "suburban",
+      "household": "Single father, full custody; daughter Amara 5, son Isaiah 15 months",
+      "household_size": 3,
+      "income_band": "$50k-$75k",
+      "job": "Logistics shift supervisor at a distribution center, 7-4",
+      "tech_comfort": "high",
+      "phone_habits": "Android; podcasts on the commute; plans everything on the phone in the daycare parking lot",
+      "meal_service_status": "used_before: Mealime (free tier, until it shut down in Oct 2026)",
+      "sceptic": false,
+      "grocery_habit": "Kroger pickup Sundays; Publix when on sale",
+      "weekly_grocery_budget": "$160",
+      "situation": "Picks both kids up and is home 5:15-5:30. Cares a lot about not falling back on boxed processed food. Mealime closing left him without a planner and annoyed that small apps disappear.",
+      "complication": "Toddler plus preschooler; healthy-food rule he holds himself to",
+      "pain_points": [
+        "45 minutes between getting home and the toddler's meltdown",
+        "Lost his planner when Mealime shut down",
+        "Hard to cook healthy fast for small kids"
+      ],
+      "buying_trigger": "Mealime closing email pointed him to an Albertsons app he does not shop at",
+      "decision_criteria_ranked": [
+        "Healthy, not processed",
+        "Under 30 minutes",
+        "Kroger cart support",
+        "Company looks like it will be around",
+        "Free or cheap"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium: wary of small apps vanishing",
+        "key_objections": [
+          "Will this shut down like Mealime?",
+          "Can I export my list if it does?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need real food on the table fast for two little ones",
+        "red_flag_words": [
+          "kid food",
+          "nuggets",
+          "processed"
+        ],
+        "trust_signals": [
+          "Founder who is a parent",
+          "How long they've been running",
+          "Real sign-up numbers"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Reads headline and checks whether Kroger is supported",
+        "deep_evaluation": "Looks up the company, checks App Store rating and last update date",
+        "deal_breakers": [
+          "Kroger only on a paid tier without saying so",
+          "Kid meals that are just nuggets"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$3-$6",
+      "voice": "Earnest, polite, a planner; asks practical questions; says 'my kids' a lot",
+      "grounding": [
+        {
+          "text": "getting home between 515 and 530",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/SingleParents/comments/1q8ctk2/how_do_you_handle_healthy_eating/"
+        },
+        {
+          "text": "I don't fall into the trap of serving processed meals",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/SingleParents/comments/1q8ctk2/how_do_you_handle_healthy_eating/"
+        },
+        {
+          "text": "Paraphrase: two working parents say daycare pickup plus a hungry kid leaves almost no time to cook anything fancy.",
+          "kind": "paraphrase",
+          "source_url": "https://www.reddit.com/r/daddit/comments/s1f9cp/what_are_your_go_to_meals_for_dinner_on_weeknights/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-07",
+      "name": "Linda Pruitt",
+      "age": 66,
+      "gender": "female",
+      "location": "Outside Somerset, KY",
+      "area": "rural",
+      "household": "Grandmother raising grandkids Tyler 9 and Kenzie 12 with husband Ron (68, retired)",
+      "household_size": 4,
+      "income_band": "$35k-$50k",
+      "job": "Part-time school cafeteria worker (6am-1pm); Social Security",
+      "tech_comfort": "low",
+      "phone_habits": "Android with large text; Facebook and texting only; granddaughter set up her apps; afraid of tapping the wrong thing",
+      "meal_service_status": "never",
+      "sceptic": true,
+      "grocery_habit": "Kroger in Somerset once a week, Save-A-Lot, Dollar General between; has never done online grocery",
+      "weekly_grocery_budget": "$150",
+      "situation": "Cooks a hot supper most nights at 5 but the kids have church and 4-H activities and are bored of her rotation. Daughter suggested an app. She doesn't trust anything that wants a card online.",
+      "complication": "Cooks for 4 on a fixed income; picky 9-year-old",
+      "pain_points": [
+        "Tired by 5pm after an early cafeteria shift",
+        "Kids complain about the same meals",
+        "Doesn't know how online grocery works"
+      ],
+      "buying_trigger": "Her daughter sends her a link by text",
+      "decision_criteria_ranked": [
+        "No card, no surprises",
+        "Big, simple screens",
+        "Normal, affordable meals",
+        "Can print the list or read it in the store",
+        "Someone to call if confused"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Very low: assumes online offers are scams",
+        "key_objections": [
+          "Is this going to charge my card?",
+          "Who are these people?",
+          "Why does it need my email?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I'm tired of deciding what to cook every night",
+        "red_flag_words": [
+          "free trial",
+          "AI",
+          "sign up now",
+          "cart"
+        ],
+        "trust_signals": [
+          "A phone number or real person",
+          "Plain words",
+          "No card"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Reads slowly, may not scroll; looks for 'free' and a person's name",
+        "deep_evaluation": "Asks her daughter to set it up",
+        "deal_breakers": [
+          "Asks for card",
+          "Small text",
+          "Words she does not understand (cart, sync)"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0",
+      "voice": "Kind, slow, Southern; reads every word; asks 'now what does that mean?'",
+      "grounding": [
+        {
+          "text": "It's only 8.30pm..but I'm sooo tired",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/Aging/comments/1jb07h9/im_just_so_tiredim_minding_my_grandchildren_aged/"
+        },
+        {
+          "text": "Paraphrase: a grandmother in her 60s minding her grandchildren while their mum works describes being exhausted by evening.",
+          "kind": "paraphrase",
+          "source_url": "https://www.reddit.com/r/Aging/comments/1jb07h9/im_just_so_tiredim_minding_my_grandchildren_aged/"
+        }
+      ],
+      "grounding_status": "partly assumed"
+    },
+    {
+      "id": "P1-08",
+      "name": "Priya Raman",
+      "age": 40,
+      "gender": "female",
+      "location": "Edison, NJ",
+      "area": "suburban",
+      "household": "Married to Vikram (management consultant, travels Mon-Thu); kids Anika 10, Rohan 7 (travel soccer)",
+      "household_size": 4,
+      "income_band": "over $150k",
+      "job": "Retail pharmacist, 11am-9pm two days, 9-5 three days",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone; plans in 5-minute gaps behind the pharmacy counter; uses Notes and WhatsApp family group",
+      "meal_service_status": "pays_now: eMeals (Quick & Healthy plan) with Walmart+ pickup",
+      "sceptic": false,
+      "grocery_habit": "Walmart+ delivery via eMeals; Indian grocery (Patel Brothers) on weekends",
+      "weekly_grocery_budget": "$275",
+      "situation": "Husband is home only on weekends, so every dinner is on her. eMeals plus Walmart pickup is the one thing that works. Frustrated that it isn't vegetarian-first and that her mother-in-law (who helps on late nights) can't see the plan.",
+      "complication": "Vegetarian household (no meat, eggs OK); soccer travel",
+      "pain_points": [
+        "Solo-parenting dinners four nights a week",
+        "eMeals vegetarian plan is repetitive",
+        "Helper (mother-in-law) can't see what's planned",
+        "eMeals auto-renewal surprised her once"
+      ],
+      "buying_trigger": "eMeals annual renewal coming up",
+      "decision_criteria_ranked": [
+        "Vegetarian dinners the kids eat",
+        "Shares the plan with another adult",
+        "Walmart cart in one tap",
+        "Honest renewal terms",
+        "Under $60/year"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium",
+        "key_objections": [
+          "Is the vegetarian side real or an afterthought?",
+          "Will switching from eMeals be a hassle?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "Everything is on me Monday to Thursday",
+        "red_flag_words": [
+          "protein-packed",
+          "meat lovers",
+          "keto"
+        ],
+        "trust_signals": [
+          "Diet filters up front",
+          "Clear yearly price",
+          "Family sharing"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Checks diet options and price; compares line-by-line with eMeals",
+        "deep_evaluation": "Reads the pricing page and FAQ; looks for how renewal is handled",
+        "deal_breakers": [
+          "No vegetarian plan",
+          "No Walmart",
+          "Hidden renewal"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5 (about $60/year, what eMeals costs her)",
+      "voice": "Quick, precise, slightly formal; compares prices exactly; polite but decisive",
+      "grounding": [
+        {
+          "text": "My husband is only home a couple days a month. Everything is on me.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1wfl2cd/i_just_need_help_with_dinners/"
+        },
+        {
+          "text": "My \"hack\" is using emeals and then the corresponding grocery pickup.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1k6s5b3/comment/mosdkzk/"
+        },
+        {
+          "text": "It’s made meal-planning and grocery shopping a thousand times less stressful.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/adhdwomen/comments/1qh0ojm/whats_the_most_useful_thing_youve_bought_that/o0itxig/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-09",
+      "name": "Kevin O'Brien",
+      "age": 52,
+      "gender": "male",
+      "location": "Bethel Park, PA (Pittsburgh metro)",
+      "area": "suburban",
+      "household": "Married to Colleen (retail store manager, closes until 9pm); sons Liam 17, Connor 16, daughter Nora 14",
+      "household_size": 5,
+      "income_band": "$75k-$100k",
+      "job": "Union electrician, 6:00-2:30",
+      "tech_comfort": "medium",
+      "phone_habits": "Android; texts and ESPN; does not like apps that need lots of setup; reads on the couch after work",
+      "meal_service_status": "pays_now: Home Chef (switched from HelloFresh; 4 meals x 4 servings plus extra protein)",
+      "sceptic": false,
+      "grocery_habit": "Giant Eagle on the way home; Costco Saturdays",
+      "weekly_grocery_budget": "$320 plus Home Chef",
+      "situation": "Home first, so he cooks. Two teenage boys eat like adults and kits run short. Spends a lot on Home Chef and still stops at Giant Eagle three times a week.",
+      "complication": "Cooks for 5 with two teenage boys; big portions",
+      "pain_points": [
+        "Kit portions too small for teen boys",
+        "Meal kit plus groceries is expensive",
+        "Wife can't help plan because she closes"
+      ],
+      "buying_trigger": "Looking at the monthly card statement",
+      "decision_criteria_ranked": [
+        "Big portions / scales to 6+ servings",
+        "Cheaper than Home Chef",
+        "Simple, no fuss setup",
+        "Giant Eagle or Instacart",
+        "Teen-approved food"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium",
+        "key_objections": [
+          "Will portions actually feed my boys?",
+          "Is this just another subscription?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "These boxes don't feed my boys",
+        "red_flag_words": [
+          "light",
+          "portion-controlled",
+          "balanced bowls"
+        ],
+        "trust_signals": [
+          "Servings selector up to 6-8",
+          "Cost per serving",
+          "Plain-spoken copy"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Looks for servings and price; skims",
+        "deep_evaluation": "Has a son check it out on his phone",
+        "deal_breakers": [
+          "Max 4 servings",
+          "Lots of setup questions"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5-$10 if it cuts the Home Chef bill",
+      "voice": "Plain-spoken Pittsburgh dad; short answers; jokes about 'the boys'; no patience for buzzwords",
+      "grounding": [
+        {
+          "text": "I have two teenage boys, so the meal portions are often too small.",
+          "kind": "quote",
+          "source_url": "https://www.trustpilot.com/review/hellofresh.com"
+        },
+        {
+          "text": "My husband and I did either Hello Fresh or Dinnerly for ~7 years.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1678ihm/comment/jyoh13e/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-10",
+      "name": "Amanda Sorensen",
+      "age": 31,
+      "gender": "female",
+      "location": "Minneapolis, MN",
+      "area": "urban",
+      "household": "Married to Erik (high school teacher, coaches); son Leo 3, daughter Greta 6 months",
+      "household_size": 4,
+      "income_band": "$100k-$150k",
+      "job": "Insurance claims adjuster, in office; 1.5-hour commute each way by light rail and bus",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone on the train for 3 hours a day; this is where she plans everything",
+      "meal_service_status": "used_before: Plan to Eat (14-day trial, did not continue: too much setup)",
+      "sceptic": false,
+      "grocery_habit": "Target Drive Up and Cub (Instacart) delivery",
+      "weekly_grocery_budget": "$230",
+      "situation": "Back at work full time after maternity leave. Long commute means she isn't home until 6:15. Breastfeeding baby has a cow's milk sensitivity, so she avoids dairy; 3-year-old is picky.",
+      "complication": "Dairy-free for her (breastfeeding baby with milk sensitivity); picky 3-year-old",
+      "pain_points": [
+        "No time to cook, and nothing everyone will eat",
+        "Dairy-free restriction for herself",
+        "Tired of takeout",
+        "Recipe-saver apps were too much work to set up"
+      ],
+      "buying_trigger": "Sees an ad on the train after another takeout night",
+      "decision_criteria_ranked": [
+        "Handles a dairy-free person in the household",
+        "Fast to set up on a phone",
+        "Kid-friendly",
+        "Sends to Instacart/Target",
+        "Reasonable price"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium",
+        "key_objections": [
+          "Will it remember my dairy rule every week?",
+          "Is this Plan to Eat again with more setup?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "No time to cook and nothing everyone will eat",
+        "red_flag_words": [
+          "import your recipes",
+          "build your library"
+        ],
+        "trust_signals": [
+          "Per-person food rules",
+          "Done-for-you plans",
+          "Screenshots of the phone flow"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Reads the whole page on the train; checks diet options",
+        "deep_evaluation": "Signs up on the train if no card required",
+        "deal_breakers": [
+          "Allergies/food rules only on paid plan without saying so",
+          "Desktop-only setup"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5-$12",
+      "voice": "Detail-oriented, upbeat, Minnesota-nice; thorough reader; asks 'but does it…' questions",
+      "grounding": [
+        {
+          "text": "There is just no time to cook, and nothing that everyone will eat.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/pvfdyg/but_seriously_what_is_for_dinner/"
+        },
+        {
+          "text": "a breast feeding 6 month old with a cow milk sensitivity, and a 1.5 hr commute each way",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/pvfdyg/but_seriously_what_is_for_dinner/"
+        },
+        {
+          "text": "it becomes too much work, too rigid, too cluttered",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/mealprep/comments/1rsgprn/why_do_meal_planning_recipe_apps_lose_me_so_fast/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-11",
+      "name": "Carlos Mendoza",
+      "age": 44,
+      "gender": "male",
+      "location": "Converse, TX (San Antonio metro)",
+      "area": "suburban",
+      "household": "Wife Marisol (4th-grade teacher); kids Diego 15, Valeria 12, Mateo 9, Lucía 6; mother-in-law Rosa lives with them",
+      "household_size": 7,
+      "income_band": "$50k-$75k",
+      "job": "Warehouse shift lead, 2nd shift (2:00-10:30pm)",
+      "tech_comfort": "medium",
+      "phone_habits": "Android; WhatsApp family group in Spanish and English; YouTube; reads ads but rarely clicks",
+      "meal_service_status": "never",
+      "sceptic": true,
+      "grocery_habit": "H-E-B curbside pickup weekly; Sam's Club monthly",
+      "weekly_grocery_budget": "$300",
+      "situation": "Works through dinner. Marisol gets home from school exhausted and lately picks up pizza or subs. Carlos tries to plan by WhatsApp at noon before his shift. Distrusts apps that 'want your data' and AI-generated anything.",
+      "complication": "Cooks for 7; abuela likes traditional food; tight budget",
+      "pain_points": [
+        "Not home at dinner, so planning happens at noon",
+        "Takeout for 7 is expensive",
+        "Apps that sell your data",
+        "Recipes that don't fit how they eat"
+      ],
+      "buying_trigger": "Marisol says the pizza nights have to stop",
+      "decision_criteria_ranked": [
+        "Cheap for 7 people",
+        "H-E-B or Walmart",
+        "Family can see the plan in a group text",
+        "Mexican-American food options",
+        "Not 'AI'"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low: suspicious of data collection and AI",
+        "key_objections": [
+          "Who sees my family's info?",
+          "Is a computer making up these recipes?",
+          "Why do they need everyone's phone numbers?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "We're spending too much on takeout because nobody has time",
+        "red_flag_words": [
+          "AI-generated",
+          "personalized algorithm",
+          "share your contacts"
+        ],
+        "trust_signals": [
+          "Real person behind it",
+          "Clear privacy promise",
+          "Spanish-friendly"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Skims and looks for privacy and price",
+        "deep_evaluation": "Sends link to Marisol in WhatsApp; she decides",
+        "deal_breakers": [
+          "Asks for family phone numbers without explaining why",
+          "AI-heavy pitch",
+          "No H-E-B or Walmart"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0-$5",
+      "voice": "Practical, warm, code-switches; cautious; asks 'what's the catch'",
+      "grounding": [
+        {
+          "text": "I find myself picking up a pizza or subs more and more each week.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1fgiwf9/easy_dinner_help/"
+        },
+        {
+          "text": "Paraphrase (Walnut, reader comment): you can't decide what to cook after you get home that night.",
+          "kind": "paraphrase",
+          "source_url": "https://www.thefrugalgirl.com/ask-the-readers-how-do-i-get-dinner-on-the-table-if-i-work-full-time/"
+        }
+      ],
+      "grounding_status": "partly assumed"
+    },
+    {
+      "id": "P1-12",
+      "name": "Jess Nguyen",
+      "age": 27,
+      "gender": "female",
+      "location": "Denver, CO",
+      "area": "urban",
+      "household": "Married to Andrew (9-5 accountant); daughter Lily 2",
+      "household_size": 3,
+      "income_band": "$50k-$75k",
+      "job": "Restaurant server, dinner shifts 4pm-11pm five nights",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone; TikTok and Instagram saves; everything planned on the phone at 3pm before her shift",
+      "meal_service_status": "never",
+      "sceptic": false,
+      "grocery_habit": "King Soopers (Kroger) app pickup; Trader Joe's",
+      "weekly_grocery_budget": "$140",
+      "situation": "She is at work during dinner, so Andrew cooks after daycare pickup, but she is the one who has to decide and leave instructions. Saves recipes on TikTok and never makes them.",
+      "complication": "Tag-team parenting; she's never home for dinner",
+      "pain_points": [
+        "Hates thinking about dinner at all",
+        "Saved recipes never get used",
+        "Has to text Andrew a plan every day"
+      ],
+      "buying_trigger": "TikTok ad at 3pm right when she's deciding",
+      "decision_criteria_ranked": [
+        "Decides for her",
+        "Andrew gets the plan by text",
+        "Kroger/King Soopers pickup",
+        "Feels modern, not dorky",
+        "Free"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium-high: tries apps easily, drops them easily",
+        "key_objections": [
+          "Will I actually use it after week 1?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I hate thinking about dinner",
+        "red_flag_words": [
+          "meal prep",
+          "macro"
+        ],
+        "trust_signals": [
+          "Looks good on a phone",
+          "Fast sign-up",
+          "Text-based, no new app"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Two-second hero check; scrolls fast",
+        "deep_evaluation": "Signs up immediately if free",
+        "deal_breakers": [
+          "Long sign-up form",
+          "Ugly mobile page"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$3-$5",
+      "voice": "Gen-Z/millennial casual; lowercase; 'literally', 'ngl'; bored easily",
+      "grounding": [
+        {
+          "text": "I save recipes on Instagram like crazy and never actually make any of them",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/Mommit/comments/1tipwet/anyone_else_hate_the_question_what_are_we_having/"
+        },
+        {
+          "text": "I hate thinking about dinner. I hate planning dinner. I hate dinner.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1u1ivmm/small_vent_i_hate_making_dinner/"
+        },
+        {
+          "text": "literally anything except making dinner everyday",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1xgahi4/dinner/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-13",
+      "name": "Sherry Whitfield",
+      "age": 49,
+      "gender": "female",
+      "location": "Matthews, NC (Charlotte metro)",
+      "area": "suburban",
+      "household": "Married to Doug (sales, travels); kids Avery 17, Cole 15, Paige 13 (travel volleyball)",
+      "household_size": 5,
+      "income_band": "$100k-$150k",
+      "job": "HR director, in office 8-5:30",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone; reads fine print; screenshots charges; manages family subscriptions in a spreadsheet",
+      "meal_service_status": "used_before: HelloFresh (auto-shipped a box she didn't order) and eMeals (renewed without notice)",
+      "sceptic": true,
+      "grocery_habit": "Harris Teeter Express Lane pickup; Costco",
+      "weekly_grocery_budget": "$325",
+      "situation": "Volleyball three nights a week means dinner in the car or at 8:30pm. Has been burned twice by food subscriptions. Now checks cancellation terms before anything else.",
+      "complication": "Cooks for 5; sports nights",
+      "pain_points": [
+        "Sports schedule wrecks dinner",
+        "Burned by auto-renewals and surprise boxes",
+        "Hates marketing gimmicks"
+      ],
+      "buying_trigger": "Volleyball season starts; teenager asks for 'real dinner'",
+      "decision_criteria_ranked": [
+        "Transparent trial and renewal terms",
+        "Easy cancel",
+        "Fast meals on sports nights",
+        "Family can weigh in",
+        "Harris Teeter/Instacart"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low: has been charged by HelloFresh and eMeals",
+        "key_objections": [
+          "What happens on day 15?",
+          "Can I cancel in the app myself?",
+          "Is this 'free' really free?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I'm not getting burned by another food subscription",
+        "red_flag_words": [
+          "free trial",
+          "limited-time offer",
+          "spin to reveal",
+          "Free for life"
+        ],
+        "trust_signals": [
+          "Plain-language renewal terms",
+          "'No card' clearly stated",
+          "Cancel anytime with steps shown"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Scrolls to pricing and terms before reading the hero",
+        "deep_evaluation": "Reads terms of service and FAQ; searches '[brand] reviews' and 'cancel'",
+        "deal_breakers": [
+          "Card required for trial",
+          "Vague renewal",
+          "Pop-up offers"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5 if terms are honest",
+      "voice": "Measured, skeptical, HR-precise; asks pointed questions; polite but unforgiving",
+      "grounding": [
+        {
+          "text": "as soon as you sign up they automatically place an order for you without you actually signing off on it?",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/mealkits/comments/1389l8h/boy_did_i_make_a_big_mistakes_signing_up_for/"
+        },
+        {
+          "text": "I have been unknowingly billed for 3 years.",
+          "kind": "quote",
+          "source_url": "https://www.trustpilot.com/review/emeals.com"
+        },
+        {
+          "text": "I see almost all of what they do as false/overinflated advertising.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/mealkits/comments/18ycv17/why_does_it_seem_the_internet_sings_hellofreshs/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-14",
+      "name": "Ben Adler",
+      "age": 37,
+      "gender": "male",
+      "location": "Newton, MA (Boston metro)",
+      "area": "suburban",
+      "household": "Married to Dana (litigation attorney, home 7:30pm); kids Noah 8 (tree-nut allergy) and Zoe 5 (egg and dairy allergy)",
+      "household_size": 4,
+      "income_band": "over $150k",
+      "job": "Software engineer, fully remote",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone and laptop; reads Hacker News; tests apps critically; quick to uninstall",
+      "meal_service_status": "pays_now: Plan to Eat ($49/year; stores the family's allergy-safe recipes)",
+      "sceptic": true,
+      "grocery_habit": "Instacart from Wegmans; Whole Foods walk-in",
+      "weekly_grocery_budget": "$300",
+      "situation": "Cooks every weeknight. Two kids with different allergies means he has a short list of safe recipes he trusts. Distrusts AI-generated meal plans because a mistake on an allergen is dangerous.",
+      "complication": "Food allergies: tree nuts (one child), egg and dairy (other child)",
+      "pain_points": [
+        "Making separate meals for different allergies",
+        "Can't trust auto-generated recipes with allergens",
+        "Same 10 safe meals"
+      ],
+      "buying_trigger": "Kids complaining about the rotation; sees a planner that claims allergy filtering",
+      "decision_criteria_ranked": [
+        "Allergy filtering per person that is provably correct",
+        "Who writes the recipes (human-tested?)",
+        "Instacart Wegmans",
+        "Data/privacy",
+        "Price"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low for AI claims, high for verifiable tools",
+        "key_objections": [
+          "Are these recipes AI-generated?",
+          "How do you verify allergens?",
+          "Is the allergy filter on free or paid?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need allergy-safe dinners I don't have to double-check",
+        "red_flag_words": [
+          "AI-generated",
+          "smart",
+          "personalized by AI"
+        ],
+        "trust_signals": [
+          "Recipe sources named",
+          "Allergy handling explained",
+          "Privacy policy"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Searches the page for 'allergy' and 'AI'",
+        "deep_evaluation": "Reads FAQ and terms; tries free tier with a test profile",
+        "deal_breakers": [
+          "Allergy handling vague",
+          "Recipes clearly machine-generated"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5-$10 if allergy-safe",
+      "voice": "Analytical, terse, slightly sardonic; asks for specifics",
+      "grounding": [
+        {
+          "text": "One kid has nut allergies, and another one has egg and dairy.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/Mommit/comments/oxegjn/cooking_dinner_every_night_is_the_worst_part_of/"
+        },
+        {
+          "text": "I'm basically making separate meals for everyone in the family every night.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/Mommit/comments/oxegjn/cooking_dinner_every_night_is_the_worst_part_of/"
+        },
+        {
+          "text": "A.I. Generated recipes with wrong ingredients, macros and even allergens",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/apps/comments/1wwkdkq/ai_slop_meal_planning_apps_are_flooding_the/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-15",
+      "name": "Tasha Monroe",
+      "age": 42,
+      "gender": "female",
+      "location": "Detroit, MI (east side)",
+      "area": "urban",
+      "household": "Single mom; kids DeAndre 16, Kayla 11, Josiah 8",
+      "household_size": 4,
+      "income_band": "$35k-$50k",
+      "job": "City bus driver, split shift (5:30-10am and 2-6:30pm)",
+      "tech_comfort": "low",
+      "phone_habits": "Android; Facebook, YouTube, and phone calls; reads on her lunch break between shifts",
+      "meal_service_status": "never",
+      "sceptic": true,
+      "grocery_habit": "No car of her own; rides the bus to Meijer and Aldi, sometimes Instacart when desperate and furious at fees",
+      "weekly_grocery_budget": "$170",
+      "situation": "Gets home at 7pm; her 16-year-old starts dinner from whatever is there. Instacart fees make her angry. Distrusts anything 'free'.",
+      "complication": "Cooks for 4 on a budget; teen does some cooking",
+      "pain_points": [
+        "Home at 7pm",
+        "No car for shopping",
+        "Delivery fees",
+        "Teen needs simple instructions"
+      ],
+      "buying_trigger": "A neighbor says she uses something free with Walmart pickup",
+      "decision_criteria_ranked": [
+        "Actually free",
+        "Cheap meals",
+        "Simple for her teen to cook",
+        "Shows delivery cost before cart",
+        "Plain language"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low: fees and trials have burned her",
+        "key_objections": [
+          "What fees will Instacart add?",
+          "Why is it free?",
+          "Is this going to sell my number?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "By the time I get home it's 7 and nobody ate",
+        "red_flag_words": [
+          "free trial",
+          "premium",
+          "upgrade",
+          "membership"
+        ],
+        "trust_signals": [
+          "Says $0 clearly",
+          "Real moms",
+          "Walmart"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Reads the headline and price; leaves if confused",
+        "deep_evaluation": "Asks her neighbor",
+        "deal_breakers": [
+          "Fees hidden",
+          "Card required"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0",
+      "voice": "Direct, no-nonsense, Detroit; short sentences; says 'I'm not paying for that'",
+      "grounding": [
+        {
+          "text": "the regular IC service itself is already too expensive.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/instacart/comments/1qcs4io/instacart_the_paid_membership_is_not_worth_it/"
+        },
+        {
+          "text": "I use them because I'm literally poverty level and don't have a car.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/instacart/comments/tp0wfi/wtf_is_with_these_service_fees/"
+        }
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P1-16",
+      "name": "Kayla Brooks",
+      "age": 24,
+      "gender": "female",
+      "location": "Near Dothan, AL",
+      "area": "rural",
+      "household": "Married to Tyler (oil-change shop tech); sons Bentley 4 and Waylon 2",
+      "household_size": 4,
+      "income_band": "under $35k",
+      "job": "Dollar General assistant manager, often closes until 9pm",
+      "tech_comfort": "medium",
+      "phone_habits": "Phone-only household (no laptop); TikTok, Facebook Marketplace, Walmart app",
+      "meal_service_status": "never",
+      "sceptic": false,
+      "grocery_habit": "Walmart pickup 20 minutes away; Dollar General in a pinch",
+      "weekly_grocery_budget": "$120",
+      "situation": "Closes 3 nights a week, so Tyler handles dinner after daycare; on her early nights she's wiped out. Tried planning ahead and grocery pickup but evenings still fall apart.",
+      "complication": "Tight budget; two toddlers",
+      "pain_points": [
+        "Evenings feel impossible even with a plan",
+        "Late-afternoon panic about what to cook",
+        "Money tight every week"
+      ],
+      "buying_trigger": "TikTok ad at 4pm on a break",
+      "decision_criteria_ranked": [
+        "Free",
+        "Walmart pickup",
+        "Cheap meals with ingredients her Walmart has",
+        "Works on a phone",
+        "Husband can follow it"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium",
+        "key_objections": [
+          "Is the grocery list going to cost more than I have?",
+          "Will my husband use it?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I can't think of what to cook and nothing sounds good",
+        "red_flag_words": [
+          "organic",
+          "gourmet",
+          "premium"
+        ],
+        "trust_signals": [
+          "Walmart",
+          "Price per week",
+          "Moms like her"
+        ]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Fast scroll on TikTok in-app browser; looks for 'free' and Walmart",
+        "deep_evaluation": "Signs up immediately if free, decides in the first week",
+        "deal_breakers": [
+          "Card required",
+          "Expensive ingredients"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0-$3",
+      "voice": "Young, sweet, Southern; uses 'y'all' and emojis; impulsive tryer",
+      "grounding": [
+        {
+          "text": "I’ve tried meal kits but find them way too time consuming and overwhelming.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1k6s5b3/dinner_hacks/"
+        },
+        {
+          "text": "Even if I try to plan ahead and do grocery pickup, our evenings just feel so intense",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/workingmoms/comments/1k6s5b3/dinner_hacks/"
+        },
+        {
+          "text": "I. CANNOT. THINK. of what to cook and NOTHING sounds good.",
+          "kind": "quote",
+          "source_url": "https://www.reddit.com/r/Mommit/comments/1bq3dg0/if_dinner_is_not_the_bane_of_your_existence_rn/"
+        }
+      ],
+      "grounding_status": "sourced"
+    }
+  ]
+}

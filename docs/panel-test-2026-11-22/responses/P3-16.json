@@ -1,0 +1,120 @@
+{
+ "id": "P3-16",
+ "name": "Dolores 'Lola' Fitzgerald",
+ "simulated": true,
+ "order": ["HF", "PTE", "DD", "EM", "OL"],
+ "sites": {
+  "HF": {
+   "five_sec": {
+    "what_is_it": "HelloFresh. The food boxes my sister sent me. With some kind of prize game on top.",
+    "who_for": "People who want boxes of food shipped.",
+    "trust": "low",
+    "trust_why": "'Open A Box To Reveal Your Offer.' That's how they get you. My sister got charged after she cancelled one of these.",
+    "next_step": "Find the little 'Continue Without Offer' and go.",
+    "delivers_food": "yes",
+    "delivers_food_why": "Green boxes with the name on them. I've had one on my porch."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "It's a food box, and the small print says auto-renewing. I can't read that tiny gray writing without my glasses anyway. Cheese, cream, butter in near every supper on there.",
+    "whats_missing": "A price I can see. Anything plain the little one would eat. Dairy-free.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 2, "value": 1, "ease": 3, "want_to_sign_up": 1},
+   "quote": "Pick a box for a prize, then a paragraph of tiny print. Ayuh, I know how this ends. With a charge."
+  },
+  "PTE": {
+   "five_sec": {
+    "what_is_it": "A recipe app. Recipes and grocery lists on your phone.",
+    "who_for": "Younger folks who are organized.",
+    "trust": "medium",
+    "trust_why": "It says no card, and has stars. But it says 'Free Trial,' and a trial is a trial.",
+    "next_step": "Ask my daughter.",
+    "delivers_food": "no",
+    "delivers_food_why": "Picture of a lady writing a list."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "It's $5.95 a month after two weeks, and I'd have to find all the recipes myself. That's the part I can't do. A big '50% OFF' clock counting down at the bottom made me nervous.",
+    "whats_missing": "Suppers picked for me. Anything about milk allergies.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 6, "value": 2, "ease": 3, "want_to_sign_up": 2},
+   "quote": "It says nothing to cancel, which is kind. But I'd still have to find the suppers myself, and that's my whole trouble."
+  },
+  "DD": {
+   "five_sec": {
+    "what_is_it": "Something that texts the family supper ideas and makes the grocery list.",
+    "who_for": "Families with kids that have phones.",
+    "trust": "medium",
+    "trust_why": "It says plain as day 'We don't deliver food' and 'no card needed.' Those are my two questions answered.",
+    "next_step": "Show my daughter on Sunday.",
+    "delivers_food": "no",
+    "delivers_food_why": "The dark green words, 'We don't deliver food. We plan your week and send your grocery list.'"
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "There's a free one and a $4.99 one, and the free 14 days. That sounds like a subscription even if it says no card. The setting for each child's allergies is on the $4.99 plan. And the sample week has 'Creamy Tomato Pasta,' which is just what Lily can't have. I don't see Hannaford named.",
+    "whats_missing": "Something showing I can mark Lily dairy-free for nothing. A phone number or some way to reach a person on the front page; I only saw an email on the other page. Bigger writing.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 6, "value": 6, "ease": 5, "want_to_sign_up": 5},
+   "quote": "Sarah says she's a parent and it's free with no card. That's kind. But the sample's got 'Creamy Tomato Pasta,' and that's Lily sick."
+  },
+  "EM": {
+   "five_sec": {
+    "what_is_it": "Meal plans of some sort. 'Less Stress, More Dinners.'",
+    "who_for": "Young mothers with little girls.",
+    "trust": "low",
+    "trust_why": "It doesn't say what it is or what it costs. Just a video.",
+    "next_step": "Scroll a bit, slow.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "A phone with food all around it. Might be a box, might not."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "A box popped up for my email, 'Try Free for 14 Days' everywhere, no price. That's a trial and they'll want a card.",
+    "whats_missing": "A dairy-free plan. They've got fifteen and none says dairy-free. A price.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 4, "trust": 3, "value": 2, "ease": 3, "want_to_sign_up": 1},
+   "quote": "Fifteen plans, keto and paleo and all that, and not one says dairy-free. And no price. No thank you."
+  },
+  "OL": {
+   "five_sec": {
+    "what_is_it": "A phone app. Something about dinner and a 'mental load.'",
+    "who_for": "Young working mothers.",
+    "trust": "low",
+    "trust_why": "The big orange button is a letter from somebody's CEO. I don't know what I'd be signing up for.",
+    "next_step": "Leave.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "Pictures of food on a phone. Could be anything."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "It says AI writes the recipes. I don't trust a computer with Lily's milk allergy. And the price is in the app, or $25 a month on another page.",
+    "whats_missing": "Anything about allergies. A plain price.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 3, "trust": 2, "value": 1, "ease": 2, "want_to_sign_up": 1},
+   "quote": "A computer writing the recipe for a child with a milk allergy? I don't think so."
+  }
+ },
+ "dd_offer": {
+  "clear": "partly",
+  "why": "It says no card, and nothing to cancel. But then there's $4.99 and $39 a year right beside it, and 'Add a card now.' I'd want my daughter to read it with me.",
+  "expect_day_15": "I think the texting part stops and the rest stays free, since they never had my card. But I'd still be watching my bank.",
+  "expectation_correct": true
+ },
+ "head_to_head": {
+  "winner": "DD",
+  "reason": "It's the only one that told me straight off it isn't a box of food and won't take my card.",
+  "pairwise": {
+   "HF": {"winner": "DD", "reason": "HelloFresh is a food box that renews itself."},
+   "PTE": {"winner": "DD", "reason": "Plan to Eat costs after two weeks and doesn't pick suppers for you."},
+   "EM": {"winner": "DD", "reason": "eMeals is a trial with no price and no dairy-free plan."},
+   "OL": {"winner": "DD", "reason": "Ollie has a computer writing recipes; DinnerDrop has a real mother behind it."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Home page, Sarah's 'Why I built DinnerDrop' letter: put a way to reach her right there (the email that's only on the pricing page, or a number to text), and say in plain words whether I can keep a whole week dairy-free on the free plan. A real person I could ask is what would get me past the worry."
+}

@@ -1,0 +1,120 @@
+{
+  "id": "P2-12",
+  "name": "Derek Olsen",
+  "simulated": true,
+  "order": ["EM", "HF", "DD", "OL", "PTE"],
+  "sites": {
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Subscription meal plans with a shopping list.",
+        "who_for": "Families who want someone else to pick recipes.",
+        "trust": "medium",
+        "trust_why": "Stock video hero, no claims I can check yet. Neutral.",
+        "next_step": "Scroll for where recipes come from and the price.",
+        "delivers_food": "no",
+        "delivers_food_why": "'Choose Your Meals' with a phone showing a checklist. A plan, not a box."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Price is behind a collapsed FAQ item and an email-capture pop-up for a 'special offer'. The trial terms (card or not, what it renews into) aren't on the page.",
+        "whats_missing": "Price, trial terms, a privacy statement I can read without hunting.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 6, "ease": 6, "want_to_sign_up": 5},
+      "quote": "'Registered dietitians' and a Gluten Free plan are the right answers. Hiding the price behind an FAQ accordion and an email pop-up is not."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "Meal kit delivery with a gamified offer pop-up.",
+        "who_for": "People who don't read terms.",
+        "trust": "low",
+        "trust_why": "'Open A Box To Reveal Your Offer' and the full page shows it wants email and phone to unlock it.",
+        "next_step": "Continue Without Offer, then read the footnote.",
+        "delivers_food": "yes",
+        "delivers_food_why": "HelloFresh boxes in the pop-up. It's their whole business."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Auto-renewing subscription, shipping after the first box, price only after a zip code. Gluten-free isn't a plan option, and a shared kit kitchen isn't a celiac kitchen.",
+        "whats_missing": "Pricing without a zip, a gluten-free plan.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 4, "trust": 3, "value": 2, "ease": 4, "want_to_sign_up": 1},
+      "quote": "A loot box that wants my phone number before it shows me a menu. Pass."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "Weekly dinner planner that texts your household a vote and pushes the list to Instacart or Walmart.",
+        "who_for": "Families with phones, apparently all of them.",
+        "trust": "medium",
+        "trust_why": "No 'AI' anywhere on the first screen, which is a point in its favor. 'Texts everyone in your house' means it wants my kids' numbers.",
+        "next_step": "Scroll to the FAQ and footer for privacy.",
+        "delivers_food": "no",
+        "delivers_food_why": "Explicit: 'We don't deliver food. We plan your week and send your grocery list.'"
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Nothing on the page says what happens to my family's phone numbers, or how to STOP the texts. It never says where the recipes come from. Kroger cart (Fred Meyer) is Family-only. Sign-up adds a weekly email with 'the occasional kitchen pick', which is marketing.",
+        "whats_missing": "Recipe source, a plain-English data paragraph next to the texting feature, STOP/opt-out.",
+        "pay_per_month": 3
+      },
+      "scores": {"clarity": 8, "trust": 6, "value": 7, "ease": 7, "want_to_sign_up": 6},
+      "quote": "Disclosing the Instacart commission earns a point. Asking for my kids' phone numbers with zero words on what happens to them loses two."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "AI meal planning app.",
+        "who_for": "People who trust AI with dinner.",
+        "trust": "low",
+        "trust_why": "The page title literally says 'AI Meal Planning'. The CTA is a letter from the CEO.",
+        "next_step": "Read the 'Where does Ollie get its recipes?' FAQ.",
+        "delivers_food": "no",
+        "delivers_food_why": "A phone menu with notification bubbles. It's a planner."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "The FAQ answer: Ollie's intelligence writes 'a recipe just for you'. That's generated, not tested. Plus $25 a month on the pricing page versus 'prices are available when you download the app' on the meal page.",
+        "whats_missing": "Tested recipes. Consistent pricing.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 3, "value": 2, "ease": 5, "want_to_sign_up": 1},
+      "quote": "'Ollie's state-of-the-art intelligence ... write a recipe just for you.' That's the problem statement, not the feature. My wife has celiac."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "Recipe manager, planner and grocery list.",
+        "who_for": "People who already have recipes they trust.",
+        "trust": "high",
+        "trust_why": "Specific ratings for both stores, and 'no card required' in the hero.",
+        "next_step": "Pricing page.",
+        "delivers_food": "no",
+        "delivers_food_why": "'Recipes, Meal Plans and Grocery Lists, All in One App.' Nothing about delivery of food."
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "Minor: the grocery delivery feature doesn't name Kroger or Fred Meyer, and there's no gluten-free filter mentioned because the recipes are mine.",
+        "whats_missing": "Which stores 'grocery delivery' connects to.",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 7, "trust": 9, "value": 7, "ease": 6, "want_to_sign_up": 7},
+      "quote": "'We're customer-funded. We never sell your data or show ads.' One sentence, and it answered my first three questions."
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "No card, reverts to Free if I don't add one, email 3 days before if I do. The pricing FAQ states the fallback explicitly.",
+    "expect_day_15": "Family features turn off and the account drops back to Free. No card on file, so nothing is billed.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "PTE",
+    "reason": "Customer-funded, no ads, no data sales, and the recipes are ones my wife and I already know are gluten-free. Boring and reliable is the point.",
+    "pairwise": {
+      "EM": {"winner": "EM", "reason": "eMeals says recipes come from a food team and registered dietitians and has a Gluten Free plan; DinnerDrop never says where its recipes come from."},
+      "PTE": {"winner": "PTE", "reason": "Plan to Eat explains its business model and data policy in one line; DinnerDrop wants family phone numbers without a word on privacy."},
+      "OL": {"winner": "DD", "reason": "DinnerDrop doesn't lead with AI-written recipes."},
+      "HF": {"winner": "DD", "reason": "Free with no card versus an auto-renewing box behind a zip code."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page Family plan section, right under 'Everyone gets the ideas by text': one plain paragraph on what you do with family phone numbers (only for dinner texts, never sold or shared, reply STOP to quit), plus one line on where the recipes come from."
+}

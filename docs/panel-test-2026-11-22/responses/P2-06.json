@@ -1,0 +1,50 @@
+{
+  "id": "P2-06",
+  "name": "Kevin Nguyen",
+  "simulated": true,
+  "order": ["OL", "DD", "PTE", "EM", "HF"],
+  "sites": {
+    "OL": {
+      "five_sec": {"what_is_it": "AI meal planning that runs over text", "who_for": "Parents who want the decision made for them", "trust": "medium", "trust_why": "'Trusted by 90,000+ families' is a claim with no source; the primary CTA is a 'Letter from the CEO', which tells me the meal product is no longer the focus", "next_step": "Go to pricing", "delivers_food": "no", "delivers_food_why": "The phone mockup is a menu app with 'Replace' and 'Modify' buttons"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Message-metered pricing ($25/month for 150 replies, $0.30 per top-up) for meal planning, and the meals FAQ contradicts it ('prices are available when you download the app'). Recipes are AI-written, not my 200 family recipes", "whats_missing": "Recipe import, export, Kroger, consistent pricing", "pay_per_month": 0},
+      "scores": {"clarity": 4, "trust": 5, "value": 2, "ease": 5, "want_to_sign_up": 2},
+      "quote": "Message-metered meal planning: $25 a month for 150 replies, 30 cents per top-up. And the meals FAQ says prices are only in the app. Inconsistent."
+    },
+    "DD": {
+      "five_sec": {"what_is_it": "A weekly dinner planner that pushes the list to Instacart or Walmart, with household voting by SMS", "who_for": "Families that shop online", "trust": "medium", "trust_why": "The 'Powered by Instacart' badge suggests a real API integration; 'no card needed' is stated plainly", "next_step": "Check pricing and the Free vs Family split", "delivers_food": "no", "delivers_food_why": "'We don't deliver food. We plan your week and send your grocery list.'"},
+      "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Nothing says I can import my own recipes, which is my deal breaker. No export or data statement on the page. Per-person diets (my wife is pescatarian) and the Kroger cart are Family-only. The store comparison is one data point from the founder's family in upstate New York; the footnote is honest about that, but it isn't evidence for me. The Instacart commission disclosure answers my incentive question, and also tells me the free plan depends on my shopping through Instacart", "whats_missing": "Recipe import, data export, App Store rating count, a short privacy summary", "pay_per_month": 4},
+      "scores": {"clarity": 8, "trust": 6, "value": 7, "ease": 7, "want_to_sign_up": 5},
+      "quote": "Credit where due: 'Instacart pays us a small commission' answers my first question, and the store-comparison footnote is honest. But can I bring my 200 recipes? Not a word."
+    },
+    "PTE": {
+      "five_sec": {"what_is_it": "Plan to Eat, the recipe manager I pay for", "who_for": "People with their own recipe library", "trust": "high", "trust_why": "I've used it; 4.8 App Store and 4.7 Google Play", "next_step": "None; I'm a customer", "delivers_food": "no", "delivers_food_why": "It's a planner and list app"},
+      "full_page": {"would_sign_up": "yes", "what_stopped_me": "Nothing new. The manual copy into Instacart is still my pain, and 'with grocery delivery' on the pricing page doesn't say which stores", "whats_missing": "Named Instacart/Kroger push", "pay_per_month": 4},
+      "scores": {"clarity": 8, "trust": 9, "value": 7, "ease": 6, "want_to_sign_up": 8},
+      "quote": "'We're customer-funded. We never sell your data or show ads.' That's why I'm still here at $49 a year, even with the manual Instacart step."
+    },
+    "EM": {
+      "five_sec": {"what_is_it": "Curated meal plans with grocery-service integration", "who_for": "Families who want recipes chosen for them", "trust": "medium", "trust_why": "Established brand, no price on the first screen", "next_step": "Look for pricing", "delivers_food": "no", "delivers_food_why": "How It Works shows a phone and a list"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Price only in a collapsed FAQ; plans are per diet, not per person; I'd lose my own recipes", "whats_missing": "Price on the page, per-person diets, recipe import", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 6, "value": 4, "ease": 6, "want_to_sign_up": 2},
+      "quote": "Fifteen plan types but one household plan. My wife is pescatarian and my four-year-old eats beige. And no price without digging into the FAQ."
+    },
+    "HF": {
+      "five_sec": {"what_is_it": "Meal kit delivery with a gamified popup", "who_for": "Higher-budget households who want no planning", "trust": "low", "trust_why": "Loot-box popup instead of a price", "next_step": "Dismiss and look for pricing", "delivers_food": "yes", "delivers_food_why": "HelloFresh boxes; it's a meal kit"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Zip-code wall before any price; auto-renewing subscription and shipping after the first box in the fine print", "whats_missing": "Price per serving on the page", "pay_per_month": 0},
+      "scores": {"clarity": 4, "trust": 5, "value": 1, "ease": 7, "want_to_sign_up": 1},
+      "quote": "A loot-box popup and a zip-code wall before any price. My YNAB grocery category would not survive this."
+    }
+  },
+  "dd_offer": {"clear": "clear", "why": "Family free for 14 days, no card, then you revert to Free unless you add a card; stated in three places", "expect_day_15": "Family features turn off and the account drops to Free. No billing event, since there's no payment method on file.", "expectation_correct": true},
+  "head_to_head": {
+    "winner": "PTE",
+    "reason": "It keeps my recipe library and is customer-funded; DinnerDrop would need recipe import before it could replace it",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "Visible pricing, a real free tier and a disclosed business model"},
+      "PTE": {"winner": "PTE", "reason": "My 200 recipes live there; DinnerDrop doesn't say I can bring them"},
+      "OL": {"winner": "DD", "reason": "Flat, consistent pricing vs metered messages"},
+      "HF": {"winner": "DD", "reason": "I control store and price; no subscription box"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Pricing page (/start): one line saying whether I can import my own recipes and export my data, next to the Free vs Family list. That's the gate for any Plan to Eat user."
+}

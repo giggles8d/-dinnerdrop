@@ -1,0 +1,120 @@
+{
+  "id": "P2-16",
+  "name": "Priya Shah",
+  "simulated": true,
+  "order": ["PTE", "DD", "HF", "EM", "OL"],
+  "sites": {
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "A recipe organizer with a meal planning calendar and an automatic grocery list.",
+        "who_for": "Home cooks who already have their own recipes.",
+        "trust": "high",
+        "trust_why": "Both store ratings shown, and 'no card required' is stated without qualification.",
+        "next_step": "Look for allergy or dietary settings.",
+        "delivers_food": "no",
+        "delivers_food_why": "'Recipes, Meal Plans and Grocery Lists, All in One App.' Software, not food."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Nothing about allergens or per-person settings. It's my recipes, so the filtering is still my job every Sunday. No way for the kids to weigh in.",
+        "whats_missing": "Allergy handling, a way for the family to choose, named grocery stores.",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 7, "trust": 8, "value": 6, "ease": 5, "want_to_sign_up": 5},
+      "quote": "Clean, honest pricing and a 60-day refund. But nothing on this page about allergens or letting my kids weigh in; it's my recipes, my problem."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "A weekly dinner planner where the whole household votes by text, then the list goes to Instacart or Walmart.",
+        "who_for": "Families where everyone has opinions about dinner. Mine.",
+        "trust": "medium",
+        "trust_why": "'Your family votes on dinner by text' is precisely my problem. Small company, though, and I need to see how allergies are handled before I trust it.",
+        "next_step": "Scroll for per-person settings and allergy language.",
+        "delivers_food": "no",
+        "delivers_food_why": "'We don't deliver food. We plan your week and send your grocery list.'"
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "No vegetarian sample week; the examples are chicken tenders and meatballs. 'Nut allergies ... are respected on every plan' is a strong claim with no detail on peanut versus tree nut or how ingredients are checked. And my 6-year-old has no phone, so how does he vote?",
+        "whats_missing": "How the allergy filter works, a vegetarian sample week, how a child without a phone votes, Fry's named under the Kroger cart.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 7, "want_to_sign_up": 8},
+      "quote": "A profile per person with allergies, plus 'Always check ingredient labels' is the right level of caution. My 6-year-old has no phone, though."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "Meal kit delivery with a prize pop-up.",
+        "who_for": "People who don't mind a weekly box and a weekly bill.",
+        "trust": "low",
+        "trust_why": "'Open A Box To Reveal Your Offer.' After Home Chef, gamified offers make me more careful, not less.",
+        "next_step": "Continue Without Offer, check the veggie plan.",
+        "delivers_food": "yes",
+        "delivers_food_why": "HelloFresh boxes front and center."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Auto-renewing, price only after a zip, and I counted several recipes with peanuts in a shared-ingredient box. No per-person allergy settings.",
+        "whats_missing": "Allergen handling, a price.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 4, "trust": 3, "value": 2, "ease": 4, "want_to_sign_up": 1},
+      "quote": "Peanuts in the Thai grain salad and the ginger bowls, and a mystery-box pop-up. Home Chef already taught me this lesson."
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Weekly meal plans with a shopping list.",
+        "who_for": "Families wanting new recipes each week.",
+        "trust": "medium",
+        "trust_why": "Professional, but no information above the fold.",
+        "next_step": "Check meal plan types.",
+        "delivers_food": "no",
+        "delivers_food_why": "A phone with a checklist and 'Choose Your Meals'."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "One plan for the whole family, no per-person allergy settings, no kids' input. The price and the cancel steps aren't on the page.",
+        "whats_missing": "Allergy settings, price, cancel steps.",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 5, "ease": 6, "want_to_sign_up": 4},
+      "quote": "A Plant Based plan and 'registered dietitians' are reassuring. No per-person allergy settings, and I'd want the cancel steps before any trial."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "AI meal planning app.",
+        "who_for": "Families comfortable letting software choose.",
+        "trust": "low",
+        "trust_why": "The page is titled 'AI Meal Planning' and the main button is a CEO letter, not information.",
+        "next_step": "Read the recipe FAQ.",
+        "delivers_food": "no",
+        "delivers_food_why": "Menu screens on a phone."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Recipes are written by Ollie's AI for you. With a peanut allergy in the house that's a hard no. Then $25 a month on the pricing page.",
+        "whats_missing": "Tested recipes, allergy policy, a price that matches across pages.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 2, "value": 2, "ease": 6, "want_to_sign_up": 1},
+      "quote": "An AI that writes 'a recipe just for you' around my son's peanut allergy is contraindicated. Also, $25 a month."
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "No card, Family features free for 14 days, and the FAQ states that without a card you go back to the free plan. Cancel in one tap is stated too.",
+    "expect_day_15": "Family features (texting, profiles, Kroger cart) end and the account reverts to Free. Nothing is billed without a card.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It's the only one with per-person allergy and won't-eat profiles and a way for my kids to choose the menu, with a Kroger cart.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "Per-person allergy profiles and family voting versus one plan for everyone."},
+      "PTE": {"winner": "DD", "reason": "Plan to Eat is more polished, but DinnerDrop handles allergies and lets the kids vote."},
+      "OL": {"winner": "DD", "reason": "No AI-written recipes near a peanut allergy."},
+      "HF": {"winner": "DD", "reason": "No box with peanut recipes, no auto-renew."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page FAQ: add 'How do allergies work?' explaining what the per-person allergy setting removes (peanut vs tree nut, hidden ingredients) and its limits, and add a vegetarian tab to 'See a week'."
+}

@@ -1,0 +1,50 @@
+{
+  "id": "P2-07",
+  "name": "Tasha Williams",
+  "simulated": true,
+  "order": ["OL", "HF", "DD", "EM", "PTE"],
+  "sites": {
+    "OL": {
+      "five_sec": {"what_is_it": "An app that plans dinner and texts you about it", "who_for": "Busy families", "trust": "medium", "trust_why": "90,000 families sounds like a lot, but the button is a CEO letter", "next_step": "Scroll to see if Kroger is on there", "delivers_food": "unsure", "delivers_food_why": "'Tonight's dinner is a good one' sounds like it's showing up at my door"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "List goes to Instacart, Walmart or Amazon Fresh, no Kroger. The family group chat is on the $25 a month plan", "whats_missing": "Kroger, a price I can live with", "pay_per_month": 0},
+      "scores": {"clarity": 6, "trust": 6, "value": 2, "ease": 6, "want_to_sign_up": 3},
+      "quote": "Honestly the group chat idea is what I need on night shift, but it's $25 a month for that, and no Kroger."
+    },
+    "HF": {
+      "five_sec": {"what_is_it": "Meal kit", "who_for": "Couples, small families", "trust": "low", "trust_why": "Box game before they tell you anything", "next_step": "Continue Without Offer", "delivers_food": "yes", "delivers_food_why": "HelloFresh boxes in the pop-up"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Did this with EveryPlate. 'Shipping fee applies on all deliveries after the first box,' price hidden behind a zip code, and the '10 free meals' is based on a 4-person plan", "whats_missing": "Price for 5", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 4, "value": 2, "ease": 6, "want_to_sign_up": 1},
+      "quote": "'Shipping fee applies on all deliveries after the first box.' Been there with EveryPlate. Box for 4, five of us, everybody hungry."
+    },
+    "DD": {
+      "five_sec": {"what_is_it": "It texts the whole house the dinner ideas and puts the list in your cart", "who_for": "Families like mine where not everybody's home", "trust": "medium", "trust_why": "Says no card and that they don't deliver food; I need to see Kroger", "next_step": "Look for Kroger", "delivers_food": "no", "delivers_food_why": "'We don't deliver food' right under the paragraph"},
+      "full_page": {"would_sign_up": "yes", "what_stopped_me": "Kroger cart is only on Family. At least it says so up front, and $4.99 is fine if the whole house uses it. Sample week serves 4, we're 5. Mama's low-sodium isn't named; profiles say allergies and won't-eats", "whats_missing": "Low-sodium setting, a week for 5, what my husband sees on a cook night", "pay_per_month": 4.99},
+      "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 8, "want_to_sign_up": 8},
+      "quote": "'Text reminders on your cook nights' and everybody gets the dinners by text? At the end of the day, that's my husband knowing what's for dinner when I'm on nights."
+    },
+    "EM": {
+      "five_sec": {"what_is_it": "Meal plans app", "who_for": "Moms who plan", "trust": "medium", "trust_why": "Looks established", "next_step": "Look for Kroger and price", "delivers_food": "no", "delivers_food_why": "Phone with a list"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "No price on the page, and nobody else in the house sees the plan unless they open the app", "whats_missing": "Price, family sharing", "pay_per_month": 0},
+      "scores": {"clarity": 6, "trust": 6, "value": 5, "ease": 6, "want_to_sign_up": 4},
+      "quote": "eMeals names Kroger, I'll give it that. But it's one more app only I look at, and I'm not home."
+    },
+    "PTE": {
+      "five_sec": {"what_is_it": "Recipe and meal plan app", "who_for": "Organized people", "trust": "high", "trust_why": "4.8 stars and no card for the trial", "next_step": "See if the family can share it", "delivers_food": "no", "delivers_food_why": "It's an app for recipes and lists"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "I'd have to put all the recipes in myself, then $5.95 a month", "whats_missing": "Dinner ideas and a way to reach my husband by text", "pay_per_month": 0},
+      "scores": {"clarity": 7, "trust": 8, "value": 4, "ease": 5, "want_to_sign_up": 4},
+      "quote": "'One account for the family' is nice, but my husband is not opening an app to read a calendar. He reads texts."
+    }
+  },
+  "dd_offer": {"clear": "clear", "why": "14 days, no card, then $4.99 if I want to keep it", "expect_day_15": "The texting and the Kroger cart stop unless I put a card in, and I'm on the free version.", "expectation_correct": true},
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "The only one where the whole house gets the plan by text, and Kroger is there for $4.99",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "Everybody sees the plan, not just me"},
+      "PTE": {"winner": "DD", "reason": "Texts my husband can't ignore vs an app he won't open"},
+      "OL": {"winner": "DD", "reason": "$4.99 with Kroger vs $25 without"},
+      "HF": {"winner": "DD", "reason": "Feeds 5 from my own Kroger, no shipping"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page Family section: show a week for 5 and say whether a person's profile can be set low-sodium, plus a screenshot of the cook-night text my husband would get."
+}

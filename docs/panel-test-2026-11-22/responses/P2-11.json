@@ -1,0 +1,120 @@
+{
+  "id": "P2-11",
+  "name": "Paula Jennings",
+  "simulated": true,
+  "order": ["PTE", "DD", "EM", "OL", "HF"],
+  "sites": {
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "An app to keep your recipes, plan meals and make a grocery list.",
+        "who_for": "Organized home cooks. The lady with the notebook.",
+        "trust": "high",
+        "trust_why": "4.8 on the App Store, and it says 'no card required' right there under the headline.",
+        "next_step": "Scroll down to see if they give you recipes or you bring your own.",
+        "delivers_food": "no",
+        "delivers_food_why": "It's a notebook-and-phone picture and 'Grocery Lists'. Not a box in sight, thank the Lord."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "It's 'your recipes, your schedule, your plan'. I'd have to go find all the recipes myself, and the whole reason I liked HelloFresh was somebody else picking.",
+        "whats_missing": "Ready-made weekly menus, and whether it works with Harris Teeter. The grocery delivery part doesn't name a single store.",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 7, "trust": 8, "value": 6, "ease": 5, "want_to_sign_up": 5},
+      "quote": "'No surprise renewals: we don't auto-bill when your year ends.' Honey, put that on a billboard. But I'd have to dig up every recipe myself."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "Something that plans the week's dinners, lets everybody in the house vote by text, and fills your grocery cart.",
+        "who_for": "Families. My son would actually answer a text faster than he answers me.",
+        "trust": "medium",
+        "trust_why": "Plain and honest-sounding: 'We don't deliver food' and 'no card needed'. Never heard of them though.",
+        "next_step": "'See a sample week', I want to know if the food is boring.",
+        "delivers_food": "no",
+        "delivers_food_why": "It says so in green, 'We don't deliver food. We plan your week and send your grocery list.' So I'm still cooking and shopping, which, fine."
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "Nothing stops me signing up since it's free, but the sample week is chicken tenders, English muffin pizzas and pasta. That's little-kid food, and I'm cutting carbs. And Harris Teeter isn't named; it just says 'Kroger cart on Family'.",
+        "whats_missing": "A grown-up or lower-carb sample week, and Harris Teeter by name.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 7, "want_to_sign_up": 7},
+      "quote": "'Will I be charged by surprise? No.' That's my whole HelloFresh life right there. Now just show me something besides English muffin pizzas."
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Meal plans, I think, with a video of a mama and her little girl.",
+        "who_for": "Young families.",
+        "trust": "medium",
+        "trust_why": "Pretty and normal. I'd have to read more.",
+        "next_step": "Look at the meal plans.",
+        "delivers_food": "no",
+        "delivers_food_why": "'Choose Your Meals' and a phone with a list on it. Doesn't look like a box."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "I could not find a price without opening the FAQ, and the trial is the kind that turns into a subscription. I've been burned on that with HelloFresh.",
+        "whats_missing": "The price on the page, and Harris Teeter (I did see the Kroger logo).",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 6, "ease": 6, "want_to_sign_up": 5},
+      "quote": "A Low Carb plan and Greek chicken thighs with olives, now that's HelloFresh variety. But I scrolled all over and never saw a price."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "An app that decides dinner for you.",
+        "who_for": "Busy moms who like apps.",
+        "trust": "medium",
+        "trust_why": "90,000 families sounds big, but I don't know what the CEO letter has to do with dinner.",
+        "next_step": "Scroll to the FAQ for price.",
+        "delivers_food": "no",
+        "delivers_food_why": "It's a menu on a phone with little message bubbles."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "$25 a month and you count messages. And the FAQ says the AI writes the recipe for you. I'd rather have a recipe somebody's actually cooked.",
+        "whats_missing": "Harris Teeter or Kroger, and a normal price.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 5, "value": 3, "ease": 5, "want_to_sign_up": 3},
+      "quote": "Counting messages like my old flip phone plan. $25 a month is half a HelloFresh box, and I'd still be cooking all of it."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "HelloFresh. I know it too well.",
+        "who_for": "Folks who want dinner in a box. Me, for now.",
+        "trust": "medium",
+        "trust_why": "The food really is good. But 'Open a box to reveal your offer' is a gimmick and they know it.",
+        "next_step": "Hit 'Continue Without Offer'.",
+        "delivers_food": "yes",
+        "delivers_food_why": "Boxes in the pop-up and bowls of food behind it."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "I'm already a customer trying to get out. The fine print says auto-renewing, shipping after the first box, and the price hides behind a zip code.",
+        "whats_missing": "An honest 'skip means skip'.",
+        "pay_per_month": 75
+      },
+      "scores": {"clarity": 5, "trust": 4, "value": 4, "ease": 6, "want_to_sign_up": 2},
+      "quote": "'Pause or cancel anytime.' Well, I paused, and a box still showed up on my porch. Now there's a mystery-box game before I can see the menu."
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "Free stays free, the family texting part is free two weeks, no card, and the FAQ says I go back to the free plan.",
+    "expect_day_15": "The texting and the Kroger cart stop and I'm back on the free one. Nobody charges me since they don't have my card. I think they'd email me first.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It plans the week and sends it to my cart without a box showing up when I didn't ask for one, and it's free to try for real.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "eMeals has better grown-up variety, but DinnerDrop shows the price and can't surprise-charge me."},
+      "PTE": {"winner": "DD", "reason": "DinnerDrop hands me the dinners; Plan to Eat makes me find them."},
+      "OL": {"winner": "DD", "reason": "Free versus $25 a month for counted messages."},
+      "HF": {"winner": "DD", "reason": "No skip calendar to fight and no boxes I didn't want."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page 'See a week' tabs: add a grown-up / lower-carb sample week (not just kid food), and name Harris Teeter next to 'Kroger cart on Family'."
+}

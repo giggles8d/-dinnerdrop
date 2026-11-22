@@ -1,0 +1,47 @@
+{
+ "id": "P3-03",
+ "name": "Daniel Okafor",
+ "simulated": true,
+ "order": ["OL", "PTE", "EM", "HF", "DD"],
+ "sites": {
+  "OL": {
+   "five_sec": {"what_is_it": "An AI meal-planning app (the page title says 'AI Meal Planning')", "who_for": "Families who want to hand dinner decisions to software", "trust": "low", "trust_why": "AI-first, testimonials from usernames, and the primary CTA is a CEO letter, not a spec", "next_step": "Search the page for 'allergy'", "delivers_food": "no", "delivers_food_why": "Phone mockup of a menu with notifications; it's an app"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The FAQ says the AI combines 'gastronomy with your particular needs' to 'write a recipe just for you'. Generated recipes are exactly how a tahini dish got past a sesame setting. The word 'allergy' does not appear on the page", "whats_missing": "Any allergy statement, any limit of liability, any human review of recipes", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 2, "value": 2, "ease": 6, "want_to_sign_up": 1},
+   "quote": "'Write a recipe just for you' with AI, and the word 'allergy' appears zero times on the page. Closed."
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "Recipe manager, planner and grocery list", "who_for": "People who already have recipes they trust", "trust": "medium", "trust_why": "Ratings, 'no card required', and no claims about safety or AI", "next_step": "Check how the grocery delivery part works", "delivers_food": "no", "delivers_food_why": "App badges and 'Recipes, Meal Plans and Grocery Lists'"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "Nothing blocking. It makes no allergy promise at all, which is the honest position; I'd load my own vetted recipes. Minor: the grocery delivery services aren't named, so I don't know if Instacart works", "whats_missing": "Named grocery services; a way to lock ingredients so edits don't drift", "pay_per_month": 5},
+   "scores": {"clarity": 8, "trust": 8, "value": 6, "ease": 6, "want_to_sign_up": 7},
+   "quote": "No filter to fail: I clip recipes I've already vetted and it builds the list. It promises nothing about allergies, which is the correct answer."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Meal plan subscription", "who_for": "General families", "trust": "medium", "trust_why": "Established brand, but nothing specific", "next_step": "Look for allergy handling", "delivers_food": "unsure", "delivers_food_why": "Headline plus a kitchen video; could be a kit until I read 'How It Works'"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Fifteen diet plans and the only allergen acknowledged is gluten. 'Crafted by registered dietitians' says nothing about sesame, egg or dairy. Email-capture pop-up before any price", "whats_missing": "Per-person allergens; any allergen filter; a price", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 5, "value": 3, "ease": 5, "want_to_sign_up": 2},
+   "quote": "Fifteen plans from Keto to Mediterranean, and not one says what it does with sesame or egg. Gluten Free is the only allergen they acknowledge."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "Meal kit delivery with a pick-a-box promo", "who_for": "People who want ingredients shipped", "trust": "low", "trust_why": "Gamified offer modal; I've also used them and left", "next_step": "Close it", "delivers_food": "yes", "delivers_food_why": "Branded boxes and 'Free Meals'"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The menu is sesame seeds, peanuts, tzatziki and feta. Packed in shared facilities. The 'special diets' FAQ is collapsed, which tells me how prominent it is", "whats_missing": "Allergen-free packing, any allergy filter", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 2, "value": 1, "ease": 4, "want_to_sign_up": 1},
+   "quote": "Sesame seeds, peanuts, tzatziki, feta, shared packing. I already left once over cross-contact. A scratch-off box doesn't change that."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "Weekly dinner planner; family votes by text; list goes to an Instacart or Walmart cart", "who_for": "Families with kids", "trust": "medium", "trust_why": "'We don't deliver food' is precise scoping. No AI language on the first screen", "next_step": "Search for 'allergy'", "delivers_food": "no", "delivers_food_why": "It states it directly under the paragraph"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Good: 'Always check ingredient labels before cooking or checkout' on the pricing page, and I review every item before checkout. Bad: 'Dietary needs (…nut allergies, and more) are respected on every plan' is a strong claim with no detail. Sesame and egg aren't named. No word on derivatives (whey, casein, tahini, ghee). Allergy profiles sit in the paid Family plan after day 14. 'Swap anything you like' in Instacart doesn't tell me whether the shopper can substitute", "whats_missing": "Exactly which allergens and derivatives the filter checks; whether Instacart substitutions can be turned off; allergy profiles on the free plan", "pay_per_month": 5},
+   "scores": {"clarity": 7, "trust": 6, "value": 7, "ease": 8, "want_to_sign_up": 6},
+   "quote": "'Always check ingredient labels' — good, honest. But 'respected on every plan' for nut allergies, nothing on sesame, tahini or whey. What exactly does the filter match?"
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "Stated consistently on home, pricing and sign-up: no card, Family for 14 days, then Free", "expect_day_15": "It reverts to Free. No card on file, so nothing bills. The per-person allergy profiles presumably go with Family, which is the part I'd need.", "expectation_correct": true},
+ "head_to_head": {"winner": "PTE", "reason": "It runs on recipes I've already vetted and makes no allergy claims I'd have to audit",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "DinnerDrop has per-person allergies and a label disclaimer; eMeals only handles gluten"},
+   "PTE": {"winner": "PTE", "reason": "My own vetted recipes beat a filter I can't inspect"},
+   "OL": {"winner": "DD", "reason": "DinnerDrop doesn't generate recipes with AI and tells me to read labels"},
+   "HF": {"winner": "DD", "reason": "I buy my own 40 safe products instead of a shared-facility box"}
+  }},
+ "dd_fix_that_would_move_me": "On /start (pricing) add an allergy FAQ: the exact allergens covered (top 9 incl. sesame), whether derivatives like whey, casein, tahini and ghee are matched, whether I can lock ingredients and turn off cart substitutions, and keep allergy profiles on the free plan."
+}

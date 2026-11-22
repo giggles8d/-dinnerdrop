@@ -1,0 +1,120 @@
+{
+ "id": "P3-12",
+ "name": "Jenna Kowalski",
+ "simulated": true,
+ "order": ["OL", "HF", "PTE", "DD", "EM"],
+ "sites": {
+  "OL": {
+   "five_sec": {
+    "what_is_it": "AI app that picks your dinners. 'The mental load of dinner, lifted.'",
+    "who_for": "Moms who are the default dinner person. Hi.",
+    "trust": "medium",
+    "trust_why": "90,000 families and the cute notification bubbles are very TikTok. But the button is 'Letter from the CEO'?? I want the price, not a letter.",
+    "next_step": "Hunt for the trial terms.",
+    "delivers_food": "no",
+    "delivers_food_why": "It's a phone menu screen, no box anywhere."
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "'Free, 1-month trial... prices are available when you download the app.' Screenshotted that, then found the pricing page: Everyday is $25 a month. Love that for me. Also, free tier is counted in messages, so I'd be rationing texts about tacos.",
+    "whats_missing": "What happens when the trial ends, in plain words. Whether my husband gets the plan without downloading anything (the pricing page hints at a family group chat, but only on paid plans).",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 5, "value": 3, "ease": 6, "want_to_sign_up": 4},
+   "quote": "'Prices are available when you download the app.' Babe, that's how they get you. Then it's $25 a month."
+  },
+  "HF": {
+   "five_sec": {
+    "what_is_it": "HelloFresh boxes, plus a slot-machine pop-up.",
+    "who_for": "People with money and a big fridge.",
+    "trust": "low",
+    "trust_why": "'Open A Box To Reveal Your Offer' is giving casino.",
+    "next_step": "Continue Without Offer, read the fine print.",
+    "delivers_food": "yes",
+    "delivers_food_why": "Green branded boxes, bowls of food behind the pop-up."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "The asterisk paragraph: 'qualifying auto-renewing subscription,' shipping after the first box, offer void if you cancel. And no prices without a zip code.",
+    "whats_missing": "A price. Anything the 4-year-old would eat that isn't 'hot honey' or 'gochujang.'",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 2, "value": 2, "ease": 5, "want_to_sign_up": 1},
+   "quote": "'Free Breakfast for Life' with a paragraph of fine print saying auto-renewing. Screenshotted, closed, done."
+  },
+  "PTE": {
+   "five_sec": {
+    "what_is_it": "Recipe saver and meal planner app.",
+    "who_for": "Pinterest people who actually follow their boards. Not me.",
+    "trust": "high",
+    "trust_why": "'Free Trial - no card required!' right on the first screen, and good app ratings.",
+    "next_step": "Check what happens after 14 days.",
+    "delivers_food": "no",
+    "delivers_food_why": "It's lists and recipes. Someone writing in a notebook."
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "'No payment information required, so there's nothing to cancel' is chef's kiss. But I'd be planning everything myself again, and the husband has to download an app and log in to see it. Plus a 50% OFF countdown clock at the bottom, the classic.",
+    "whats_missing": "Planning done for me. A way for my husband to just get a text on my work nights.",
+    "pay_per_month": 3
+   },
+   "scores": {"clarity": 8, "trust": 8, "value": 5, "ease": 6, "want_to_sign_up": 5},
+   "quote": "'Nothing to cancel' is the nicest thing a trial has ever said to me. Still just a fancier Pinterest board though."
+  },
+  "DD": {
+   "five_sec": {
+    "what_is_it": "Texts everyone the week's dinner ideas, they vote by number, list goes to the Instacart or Walmart cart.",
+    "who_for": "Default dinner moms whose families never know the plan.",
+    "trust": "medium",
+    "trust_why": "'Start free, no card needed' is in big letters, which is my whole thing. New brand though, and I've been burned.",
+    "next_step": "Scroll for day 15 and how to cancel before I believe anything.",
+    "delivers_food": "no",
+    "delivers_food_why": "'We don't deliver food. We plan your week and send your grocery list.' Can't miss it."
+   },
+   "full_page": {
+    "would_sign_up": "yes",
+    "what_stopped_me": "Honestly not much. My kids are 6, 4 and a baby, so 'texts everyone in your house' and 'no app for the kids' is really just me and my husband. And it doesn't solve the 4-year-old's separate dinner, just 'one safe thing on every plate.'",
+    "whats_missing": "Whether my husband gets the actual recipe by text on my work nights, or just a reminder. Who the cook-night reminders go to.",
+    "pay_per_month": 4
+   },
+   "scores": {"clarity": 8, "trust": 8, "value": 8, "ease": 8, "want_to_sign_up": 8},
+   "quote": "'Cancel in one tap from Account, no calls.' Screenshotted. eMeals could never. Also Walmart cart, so we're in business."
+  },
+  "EM": {
+   "five_sec": {
+    "what_is_it": "eMeals. I know exactly what it is.",
+    "who_for": "People who enjoy calling a phone line to cancel.",
+    "trust": "low",
+    "trust_why": "Personal history. I signed up online and had to phone them to cancel.",
+    "next_step": "Look at the trial terms out of spite.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "From the first screen alone you can't tell; a video and a phone surrounded by food. I know it doesn't, from using it."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "'Try Free for 14 Days,' an email pop-up that says 'LIMITED TIME' and 'Unlock This Special Offer,' no price, and nothing about how to cancel. Literally my red-flag bingo card.",
+    "whats_missing": "Price, day-15 terms, a cancel button that isn't a phone number. The recipes were good, I'll give them that.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 2, "value": 4, "ease": 5, "want_to_sign_up": 1},
+   "quote": "'No commitment. Cancel anytime.' Sure, Jan. Last time 'anytime' meant on the phone, on hold, with a newborn."
+  }
+ },
+ "dd_offer": {
+  "clear": "clear",
+  "why": "It says no card, nothing to cancel, you go back to the free plan, and they email 3 days before. Most spelled-out trial I saw. The 'Add a card now. $0 today.' link made me squint, but I just won't click it.",
+  "expect_day_15": "The texting stuff turns off and I'm on the free planner. They never had my card, so nothing gets charged.",
+  "expectation_correct": true
+ },
+ "head_to_head": {
+  "winner": "DD",
+  "reason": "No card, day 15 explained, cancel in one tap, and my husband gets the plan by text without downloading anything.",
+  "pairwise": {
+   "OL": {"winner": "DD", "reason": "Both text the family, but Ollie hides prices behind an app download and then it's $25 a month."},
+   "HF": {"winner": "DD", "reason": "HelloFresh is an auto-renewing box with a casino pop-up."},
+   "PTE": {"winner": "DD", "reason": "Plan to Eat is honest about the trial too, but DinnerDrop actually plans the week and texts it."},
+   "EM": {"winner": "DD", "reason": "eMeals is the call-to-cancel company. DinnerDrop says no calls in writing."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Home page, Family plan section ('Reminders when they help'): say who gets the cook-night text and show one where the person cooking gets tonight's recipe and steps. That's the 'what am I supposed to make' fix for my husband, and right now I'm guessing."
+}

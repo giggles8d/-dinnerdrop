@@ -1,0 +1,120 @@
+{
+  "id": "P1-03",
+  "name": "Keisha Thomas",
+  "simulated": true,
+  "order": ["OL", "PTE", "DD", "HF", "EM"],
+  "sites": {
+    "OL": {
+      "five_sec": {
+        "what_is_it": "some AI app that picks dinner",
+        "who_for": "moms w money tbh, it looks bougie",
+        "trust": "low",
+        "trust_why": "no price, no 'no card', and the button is a letter from the CEO. ion want a letter i want a price",
+        "next_step": "hunt for the price, prob leave",
+        "delivers_food": "no",
+        "delivers_food_why": "phone screen w a menu on it, its an app"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "$25 a month. and $100?? also you pay per message like a prepaid phone. free one is 50 messages then what",
+        "whats_missing": "anything cheap, anything about walmart pickup minimums or SNAP",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 3, "value": 1, "ease": 5, "want_to_sign_up": 2},
+      "quote": "'top up to keep going' at 30 cent a message. nah fr thats my cash app balance on a tuesday"
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "recipe + grocery list app",
+        "who_for": "ppl who plan stuff on sundays w a notebook",
+        "trust": "medium",
+        "trust_why": "it says 'no card required' which ok, but it also says FREE TRIAL and i been got before",
+        "next_step": "see what it costs after",
+        "delivers_food": "no",
+        "delivers_food_why": "says recipes meal plans grocery lists"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "after 14 days its $5.95 or $49. no free version at all, they even have a question 'why isnt there a free plan'",
+        "whats_missing": "a free plan. cheap meals. i dont have recipes saved i have a $90 budget",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 7, "trust": 6, "value": 3, "ease": 5, "want_to_sign_up": 2},
+      "quote": "'Free Trial - no card required!' ok respect for no card. but its still a trial and then its $5.95. pass"
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "it plans dinner and sends the list to walmart or instacart",
+        "who_for": "families, kinda bigger ones w everybody texting",
+        "trust": "medium",
+        "trust_why": "'Start free, no card needed' on the big green button is what i look for. but i dont know these ppl",
+        "next_step": "scroll for the catch",
+        "delivers_food": "no",
+        "delivers_food_why": "it says 'We don't deliver food' in green right there"
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "the catch is the 'Family' thing turns into $4.99. and texting everybody in the house, its me and a 6 yr old, who am i texting. iphone app only, my phone is android",
+        "whats_missing": "cheap week for 2 ppl not 4, the $35 walmart pickup minimum, SNAP, price per meal",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 7, "trust": 6, "value": 7, "ease": 7, "want_to_sign_up": 6},
+      "quote": "'Your free Family days need no card, so nothing can be charged.' ok THAT i like. still checking my bank tho"
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "hellofresh box game popup",
+        "who_for": "not me",
+        "trust": "low",
+        "trust_why": "'open a box to reveal your offer' and it wants my email AND my phone number. scam energy",
+        "next_step": "leave",
+        "delivers_food": "yes",
+        "delivers_food_why": "its hellofresh, boxes of food come to your door"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "auto-renewing subscription in the fine print. shipping after the first box. no price unless i give my zip",
+        "whats_missing": "a price",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 2, "value": 1, "ease": 3, "want_to_sign_up": 1},
+      "quote": "'qualifying auto-renewing subscription purchase.' there it is. thats the overdraft right there"
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "meal plans, a video of a mom",
+        "who_for": "moms w time to watch videos",
+        "trust": "low",
+        "trust_why": "no price, no 'no card', just watch video",
+        "next_step": "look for price, leave",
+        "delivers_food": "unsure",
+        "delivers_food_why": "it just says less stress more dinners, could be a box could be recipes"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "'Try Free for 14 Days' and an email popup, and i cant find what it costs. thats how they get you",
+        "whats_missing": "the price and whether it wants my card",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 4, "trust": 3, "value": 2, "ease": 4, "want_to_sign_up": 1},
+      "quote": "'LIMITED TIME: get Dessert + Occasion Plans added to your 14-day trial!' girl i cant afford dinner"
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "it says no card like 5 times and the FAQ says nothing can be charged. i still dont love the word 'free days' bc thats trial talk",
+    "expect_day_15": "the texting family stuff stops and they ask me to pay $4.99. they cant charge me bc they never got my card",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "only one thats free forever and never asks for a card",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "eMeals hides the price, DinnerDrop says $0"},
+      "PTE": {"winner": "DD", "reason": "Plan to Eat has no free plan"},
+      "OL": {"winner": "DD", "reason": "$0 vs $25 a month"},
+      "HF": {"winner": "DD", "reason": "i buy my own walmart food, no box subscription to forget"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page: show a cheap 2-person week with the price per meal and say it works with Walmart pickup (and the $35 minimum), and say in one line on the first screen that the free plan never asks for a card, ever."
+}

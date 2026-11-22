@@ -1,0 +1,50 @@
+{
+  "id": "P2-02",
+  "name": "Denise Carter",
+  "simulated": true,
+  "order": ["OL", "PTE", "DD", "EM", "HF"],
+  "sites": {
+    "OL": {
+      "five_sec": {"what_is_it": "An AI app that plans dinner for you", "who_for": "Busy parents who like apps", "trust": "low", "trust_why": "'Trusted by 90,000+ families' with nothing behind it, and the main button is 'Letter from the CEO', not a price", "next_step": "Look for the price and the word 'cancel'", "delivers_food": "unsure", "delivers_food_why": "'I've picked out meals for you' and 'How was it?' reads like a delivery service"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Two stories on price: the meals FAQ says a free 1-month trial and 'prices are available when you download the app'; the pricing page says $25 or $100 a month plus $0.30 per message top-ups", "whats_missing": "One price, Kroger, a cancel policy I can screenshot", "pay_per_month": 0},
+      "scores": {"clarity": 4, "trust": 3, "value": 1, "ease": 4, "want_to_sign_up": 1},
+      "quote": "The meals page says prices are 'available when you download the app.' The pricing page says $25 a month plus 30 cents a message. Which is it?"
+    },
+    "PTE": {
+      "five_sec": {"what_is_it": "Recipe, meal plan and grocery list app", "who_for": "People who already cook from their own recipes", "trust": "medium", "trust_why": "'Free Trial - no card required!' on the first screen is the right answer", "next_step": "Find the price", "delivers_food": "no", "delivers_food_why": "App store badges and 'Grocery Lists'"},
+      "full_page": {"would_sign_up": "maybe", "what_stopped_me": "It's $5.95/mo or $49/yr after 14 days, and it doesn't know what's on sale at my Kroger. The '$24.50 our only sale of the year' countdown is a pressure tactic", "whats_missing": "Kroger weekly ad or digital coupons", "pay_per_month": 0},
+      "scores": {"clarity": 8, "trust": 7, "value": 4, "ease": 6, "want_to_sign_up": 4},
+      "quote": "'We don't auto-bill when your year ends unless you choose to.' First honest billing sentence I've read today. Still $49 a year I don't have to spend."
+    },
+    "DD": {
+      "five_sec": {"what_is_it": "Plans five dinners and sends the list to Instacart or Walmart", "who_for": "Families who order groceries online", "trust": "medium", "trust_why": "'No card needed' in plain words and 'We don't deliver food', but Kroger isn't on this screen", "next_step": "Scroll for the price and the word Kroger", "delivers_food": "no", "delivers_food_why": "It says 'We don't deliver food' in bold green"},
+      "full_page": {"would_sign_up": "maybe", "what_stopped_me": "The Kroger cart is on the paid Family plan, and I shop Kroger in person off the weekly ad with digital coupons. The store comparison is Instacart prices at upstate New York stores, not my Kroger with coupons and fuel points. Sample week serves 4; I feed 6 including two teenage boys", "whats_missing": "Kroger digital coupons / weekly ad, a list I can print for the store, portions for 6 big eaters", "pay_per_month": 0},
+      "scores": {"clarity": 8, "trust": 7, "value": 6, "ease": 7, "want_to_sign_up": 5},
+      "quote": "'Your free Family days need no card, so nothing can be charged.' Good. I screenshotted it. But Kroger is behind the $4.99 and it doesn't know my digital coupons."
+    },
+    "EM": {
+      "five_sec": {"what_is_it": "A meal plan app", "who_for": "Moms with young kids", "trust": "medium", "trust_why": "Looks established, but no price anywhere on the first screen", "next_step": "Hunt for the price", "delivers_food": "no", "delivers_food_why": "Phone with a checklist under 'How It Works'"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "'How much does eMeals cost?' is a collapsed question with no answer on the page. 'Try Free for 14 Days' plus 'No commitment. Cancel anytime.' means a subscription is coming. The help center lists 'Why you might see a pending charge before your billing date'", "whats_missing": "Price in dollars, whether a card is needed for the trial", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 4, "value": 3, "ease": 6, "want_to_sign_up": 2},
+      "quote": "Their own help center has an article called 'Why you might see a pending charge before your billing date.' That's all I need to know."
+    },
+    "HF": {
+      "five_sec": {"what_is_it": "HelloFresh meal kits", "who_for": "People with money to burn", "trust": "low", "trust_why": "Same company that charged me for a week I skipped, now with an 'Open a box' game", "next_step": "Close the tab", "delivers_food": "yes", "delivers_food_why": "It's HelloFresh; boxes in the pop-up"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Price hidden behind a zip code; 'qualifying auto-renewing subscription' and 'Shipping fee applies on all deliveries after the first box' in the fine print", "whats_missing": "Price, honesty", "pay_per_month": 0},
+      "scores": {"clarity": 3, "trust": 1, "value": 1, "ease": 4, "want_to_sign_up": 1},
+      "quote": "'Pause or cancel anytime.' I paused. They charged me anyway. Now I have to open a box to see a price. No."
+    }
+  },
+  "dd_offer": {"clear": "clear", "why": "The FAQ answers my exact day-15 question: no card, so you go back to the free plan", "expect_day_15": "The Family features stop and I'm on the free plan. Nothing charged, because they never had my card.", "expectation_correct": true},
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "The only one that's $0, needs no card, and puts in writing what happens on day 15",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "DinnerDrop shows its price; eMeals hides it"},
+      "PTE": {"winner": "DD", "reason": "Plan to Eat's billing is honest too, but DinnerDrop's free plan costs nothing"},
+      "OL": {"winner": "DD", "reason": "One clear price vs two contradictory ones"},
+      "HF": {"winner": "DD", "reason": "No subscription trap"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Pricing page (/start): say plainly how a Kroger shopper uses the free plan (Kroger via Instacart is free, direct Kroger cart is Family) and let me print the list for an in-store trip; show a sample week sized for 6."
+}

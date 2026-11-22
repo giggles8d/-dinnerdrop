@@ -1,0 +1,47 @@
+{
+ "id": "P3-06",
+ "name": "Shawn Pruitt",
+ "simulated": true,
+ "order": ["PTE", "EM", "DD", "HF", "OL"],
+ "sites": {
+  "PTE": {
+   "five_sec": {"what_is_it": "A recipe app", "who_for": "Folks who collect recipes", "trust": "medium", "trust_why": "Says no card. That's a start", "next_step": "Find the price", "delivers_food": "no", "delivers_food_why": "App store buttons. It's an app"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "I don't have recipes to save. I have frozen pizza. Then it's $5.95 a month", "whats_missing": "Somebody actually picking the dinners", "pay_per_month": 0},
+   "scores": {"clarity": 7, "trust": 7, "value": 3, "ease": 5, "want_to_sign_up": 2},
+   "quote": "'Save recipes while you scroll.' I scroll ESPN. I ain't got recipes to save."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Some dinner outfit with a video", "who_for": "Moms", "trust": "medium", "trust_why": "Looks normal enough", "next_step": "Look for what it costs", "delivers_food": "unsure", "delivers_food_why": "Could be a box. Can't tell from the top"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "'Try Free for 14 Days' and no price anywhere. Then a pop-up with 'No commitment. Cancel anytime.' Heard that before", "whats_missing": "The price", "pay_per_month": 0},
+   "scores": {"clarity": 4, "trust": 4, "value": 3, "ease": 5, "want_to_sign_up": 2},
+   "quote": "'Try Free for 14 Days.' Then what? No price anywhere. Heard 'cancel anytime' from the last outfit too."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "Plans dinner, texts the family to pick, puts the list in Walmart", "who_for": "Families", "trust": "medium", "trust_why": "Says flat out they don't deliver food. Good", "next_step": "Find the price", "delivers_food": "no", "delivers_food_why": "'We don't deliver food.' Right there"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "Not much. $0, no card, Walmart cart. Kids vote by text so I'm not the bad guy. But the voting is the Family part, $4.99 after two weeks. And it texts every kid 8 ideas; I don't want five kids getting spam. Doesn't say how it handles 4 people Monday and 7 Thursday", "whats_missing": "How often it texts the kids and how to stop it; a head count that changes by night", "pay_per_month": 5},
+   "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 8, "want_to_sign_up": 8},
+   "quote": "'We don't deliver food.' Good. Free, no card, Walmart, and the kids vote by text so they can't blame me. I'll give it a week."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "The box people", "who_for": "People who like getting charged", "trust": "low", "trust_why": "Been there. Now they want me to open a box for a prize", "next_step": "Leave", "delivers_food": "yes", "delivers_food_why": "It's HelloFresh. Boxes"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Skipped a week, got charged anyway. Fine print still says 'auto-renewing'", "whats_missing": "Nothing they could add", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 1, "value": 1, "ease": 4, "want_to_sign_up": 1},
+   "quote": "'Pause or cancel anytime.' Skipped a week, got charged anyway. Not opening their little box."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "AI app that picks dinner", "who_for": "Folks who want a robot for dinner", "trust": "low", "trust_why": "Big button is a letter from the CEO. Just tell me what it costs", "next_step": "Find pricing", "delivers_food": "no", "delivers_food_why": "Phone app picture"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "$25 a month and they count your messages. Free is 50 a month", "whats_missing": "A price that makes sense for seven people", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 4, "value": 2, "ease": 5, "want_to_sign_up": 2},
+   "quote": "Twenty-five bucks a month and they count your texts. With seven people? That's gone by Tuesday."
+  }
+ },
+ "dd_offer": {"clear": "partly", "why": "'Free forever' and 'Family free 14 days' on the same page. Had to read twice to see which part stays free", "expect_day_15": "Kids' texting quits, I'm back on the free one. They don't have my card, so they can't pull a HelloFresh on me.", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "Free with no card, Walmart, no box, and the kids can vote",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "DinnerDrop shows the price; eMeals hides it"},
+   "PTE": {"winner": "DD", "reason": "It picks the dinners for me"},
+   "OL": {"winner": "DD", "reason": "Free beats $25 a month"},
+   "HF": {"winner": "DD", "reason": "Not a box, can't charge me"}
+  }},
+ "dd_fix_that_would_move_me": "Home page Family section: say exactly how many texts a week the kids get and that they can reply STOP, and show it can plan for 4 on some nights and 7 on others."
+}

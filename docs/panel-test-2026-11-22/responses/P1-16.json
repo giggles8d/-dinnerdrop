@@ -1,0 +1,48 @@
+{
+ "id": "P1-16",
+ "name": "Kayla Brooks",
+ "simulated": true,
+ "order": ["DD", "PTE", "HF", "EM", "OL"],
+ "sites": {
+  "DD": {
+   "five_sec": {"what_is_it": "It plans your dinners and puts the groceries in your Walmart cart 🛒", "who_for": "Moms who can't figure out supper", "trust": "medium", "trust_why": "It says Walmart and no card right there. Never heard of it but it looks clean", "next_step": "See a sample week 👀", "delivers_food": "no", "delivers_food_why": "It says 'We don't deliver food.' It just fills your cart"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "Nothin really. I wasn't sure if Tyler gets the plan on his phone on the free one or if that's the $4.99 part", "whats_missing": "Cheap stuff with what's actually at my Walmart. How my husband sees the plan without paying", "pay_per_month": 0},
+   "scores": {"clarity": 8, "trust": 7, "value": 9, "ease": 9, "want_to_sign_up": 9},
+   "quote": "Y'all it said Walmart AND free AND no card 😭 and that sample week was $64 for all five dinners. I can do that."
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "A recipe app", "who_for": "People who are real organized", "trust": "medium", "trust_why": "Good stars and no card", "next_step": "Scroll some", "delivers_food": "no", "delivers_food_why": "It's just an app with a notebook picture"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "I have to save my own recipes and plan it all myself. And it's $5.95 after", "whats_missing": "Something that just tells me what to cook", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 7, "value": 3, "ease": 4, "want_to_sign_up": 2},
+   "quote": "Save, organize, plan, shop... that's a lotta app 😅 I can't even think of what to cook, I sure don't have recipes to save"
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "HelloFresh, the food in a box", "who_for": "People with more money than us", "trust": "medium", "trust_why": "Open a box game is kinda fun ngl but it's a trick to get you", "next_step": "I'd almost tap a box", "delivers_food": "yes", "delivers_food_why": "The green boxes. They send you the food"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The tiny print says the 10 free meals is for the big 5-recipe family plan and then it charges every week. Price is behind a zip code", "whats_missing": "A price. Something I could afford on $120 a week", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 4, "value": 2, "ease": 5, "want_to_sign_up": 2},
+   "quote": "I almost tapped a box 🎁 but the '10 free meals' is only on the big 4-person plan and then it renews every week. Our grocery money is $120."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Meal plans I think? Mama and a little girl in a video", "who_for": "Families", "trust": "medium", "trust_why": "Looks like it's been around a while", "next_step": "Scroll", "delivers_food": "unsure", "delivers_food_why": "Cartoon of a phone with food around it"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Never found the price, and a pop-up wanted my email first. Some of the food is fancy", "whats_missing": "The price. Whether they want my card", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 5, "value": 4, "ease": 6, "want_to_sign_up": 4},
+   "quote": "Walmart's the first logo and there's a Budget Friendly plan 🙌 but Shrimp Po' Boys and steak with bok choy?? And I never found the price"
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "An app that picks out meals for you", "who_for": "Busy mamas", "trust": "medium", "trust_why": "90,000 families and it looks real cute. But the button's a letter from the CEO?", "next_step": "Look for the price", "delivers_food": "unsure", "delivers_food_why": "Pictures of food on the phone, can't tell if they send it"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "$25 a month! The free one is only 50 messages a month", "whats_missing": "A price I can do", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 5, "value": 2, "ease": 6, "want_to_sign_up": 3},
+   "quote": "It looks so cute and it does Walmart, but $25 a month?! The free one gives you 50 messages a month, I'd run outta those quick"
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "It says free, no card, and after 14 days it's $4.99 if you want to keep it or you just keep the free one", "expect_day_15": "The texting the family part stops unless I pay, but I still get my free dinners and my Walmart cart. They can't charge me, they don't have my card", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "Free, no card, and it goes right in my Walmart cart for pickup",
+  "pairwise": {
+   "PTE": {"winner": "DD", "reason": "It tells me what to cook instead of me doing it"},
+   "HF": {"winner": "DD", "reason": "I can't afford boxes, I can afford Walmart"},
+   "EM": {"winner": "DD", "reason": "It's free and shows the price; eMeals never did"},
+   "OL": {"winner": "DD", "reason": "Free versus $25 a month"}
+  }
+ },
+ "dd_fix_that_would_move_me": "Home page, near 'Start free': say how my husband sees the week on the free plan (like a link I can text him), not only in the Family plan, and show a cheap Walmart week for a family with toddlers"
+}

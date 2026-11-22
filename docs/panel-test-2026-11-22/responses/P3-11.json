@@ -1,0 +1,120 @@
+{
+ "id": "P3-11",
+ "name": "Miriam Katz",
+ "simulated": true,
+ "order": ["OL", "PTE", "DD", "EM", "HF"],
+ "sites": {
+  "OL": {
+   "five_sec": {
+    "what_is_it": "An app that decides what's for dinner for you.",
+    "who_for": "Families who want someone else to pick dinner.",
+    "trust": "medium",
+    "trust_why": "90,000 families is a real number. 'Letter from the CEO' as the main button tells me nothing.",
+    "next_step": "Find the diet options. If kosher isn't there, I'm done.",
+    "delivers_food": "no",
+    "delivers_food_why": "It's an app screen with a menu on it, not a box."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "The word kosher does not appear. 'Ollie uses AI... to write a recipe just for you.' An AI writing recipes for a kosher kitchen is how you end up with chicken in cream sauce.",
+    "whats_missing": "Kosher. Meat versus dairy. Household size. A straight price on this page; the meals page says 'prices when you download the app' and another page says $25 a month.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 5, "value": 3, "ease": 5, "want_to_sign_up": 2},
+   "quote": "An AI that writes my recipes and never once says kosher. No."
+  },
+  "PTE": {
+   "five_sec": {
+    "what_is_it": "A recipe organizer with a planning calendar and grocery list.",
+    "who_for": "People who cook from their own recipes.",
+    "trust": "high",
+    "trust_why": "Real ratings on both app stores, no card for the trial, and it looks like it's been around.",
+    "next_step": "See if it can import from the kosher sites I already use.",
+    "delivers_food": "no",
+    "delivers_food_why": "Recipes and lists. The picture is someone writing in a notebook."
+   },
+   "full_page": {
+    "would_sign_up": "yes",
+    "what_stopped_me": "Nothing serious. It doesn't know kosher either, but it doesn't have to: I clip my own recipes, so nothing mixes meat and dairy unless I put it there. Price is fine.",
+    "whats_missing": "Suggestions. I'd still do the deciding. A way to tag nights as meat or dairy would be nice; I assume I can use notes on the calendar.",
+    "pay_per_month": 6
+   },
+   "scores": {"clarity": 8, "trust": 8, "value": 7, "ease": 7, "want_to_sign_up": 7},
+   "quote": "Recipe clipper, calendar, shared with the household, no card. It doesn't understand kosher, but it doesn't pretend to. I can work with that."
+  },
+  "DD": {
+   "five_sec": {
+    "what_is_it": "Texts the family dinner ideas, they vote, and it builds the grocery list for Instacart.",
+    "who_for": "Families with kids who'd answer a text. My teens would.",
+    "trust": "medium",
+    "trust_why": "'No card needed' and 'We don't deliver food' are direct. I like direct. I don't know the company.",
+    "next_step": "Look for the diet options.",
+    "delivers_food": "no",
+    "delivers_food_why": "'We don't deliver food. We plan your week and send your grocery list.' Bold, right there."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "No kosher. The diet talk is 'dietary needs,' and the footer has gluten-free, diabetic, Mediterranean, but nothing about meat and dairy. The sample week has taco night and meatballs; in most houses taco night means beef and cheese together. I can't tell.",
+    "whats_missing": "Kosher as a real setting, meat or dairy marked on each dinner, and whether it plans for seven. The sample is a family of four.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 8, "trust": 6, "value": 5, "ease": 7, "want_to_sign_up": 3},
+   "quote": "Clear page, I'll say that. But 'dietary needs' isn't kosher. Will it put cheese on the taco night with ground beef? Nobody says."
+  },
+  "EM": {
+   "five_sec": {
+    "what_is_it": "Weekly meal plans. A video.",
+    "who_for": "Families with little kids.",
+    "trust": "medium",
+    "trust_why": "Big company look, no information.",
+    "next_step": "Go straight to the list of plans.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "A phone surrounded by food drawings."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "Fifteen plans, no kosher. The home page shows Pork Chops, Shrimp Po' Boys and Cheesy Bacon-Wrapped Chicken. Three treif dinners in one scroll.",
+    "whats_missing": "Kosher. A price on the home page.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 5, "value": 3, "ease": 5, "want_to_sign_up": 1},
+   "quote": "Shrimp po' boys and bacon-wrapped chicken on the front page. That answers my question."
+  },
+  "HF": {
+   "five_sec": {
+    "what_is_it": "Meal kit boxes, with a pop-up game.",
+    "who_for": "People who want food shipped to them.",
+    "trust": "low",
+    "trust_why": "'Open A Box To Reveal Your Offer.' I'm not playing a game to find a price.",
+    "next_step": "Close it.",
+    "delivers_food": "yes",
+    "delivers_food_why": "HelloFresh boxes and plates of food."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "The meat isn't kosher and the menu is pork sausage, bacon, steak with garlic herb butter. For seven people it would cost a fortune anyway.",
+    "whats_missing": "Anything kosher. A price before my zip code.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 3, "value": 1, "ease": 5, "want_to_sign_up": 1},
+   "quote": "Steak with herb butter, bacon soup, a mystery box. Not for a kosher house of seven."
+  }
+ },
+ "dd_offer": {
+  "clear": "clear",
+  "why": "No card, back to the free plan, email three days before. Very plain.",
+  "expect_day_15": "The texting and family features stop and I'm on the free version. Nothing charged because they never had my card.",
+  "expectation_correct": true
+ },
+ "head_to_head": {
+  "winner": "PTE",
+  "reason": "It's my own kosher recipes, so it can't suggest something I'd never serve.",
+  "pairwise": {
+   "OL": {"winner": "DD", "reason": "DinnerDrop is clearer and cheaper, and Ollie's AI is even less likely to get meat and dairy right."},
+   "PTE": {"winner": "PTE", "reason": "Plan to Eat lets me control every recipe; DinnerDrop picks for me without knowing kosher."},
+   "EM": {"winner": "DD", "reason": "eMeals shows treif on the front page; DinnerDrop at least doesn't."},
+   "HF": {"winner": "DD", "reason": "HelloFresh ships non-kosher meat; DinnerDrop lets me buy meat at the kosher store."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Pricing page (/start) diet FAQ and the sample week on the home page: if DinnerDrop can do it, name kosher as a setting, label each dinner meat, dairy or pareve, and say it plans for 7+. Without the word kosher I leave at the diet list."
+}

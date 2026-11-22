@@ -1,0 +1,1024 @@
+{
+  "panel": 3,
+  "panel_name": "Households with a complication (picky eaters, food rules, one cook feeding 4+)",
+  "created": "2026-11-22",
+  "simulated": true,
+  "note": "Simulated people, not real customers. Names, ages, incomes and stories are invented. Only the items under 'grounding' are real public wording, each with its source URL. Grounding quotes are short excerpts from search-index snippets of the named pages (Reddit, App Store, Trustpilot, Facebook groups, review sites); they show the kind of language real people use, not statements by these personas.",
+  "coverage": {
+    "sceptics": ["P3-02", "P3-03", "P3-06", "P3-09", "P3-12", "P3-14", "P3-16"],
+    "pays_now": ["P3-02", "P3-05", "P3-08", "P3-13"],
+    "never_used": ["P3-01", "P3-04", "P3-07", "P3-09", "P3-11", "P3-14"],
+    "complication_mix": {
+      "picky_eater": ["P3-01", "P3-05", "P3-07", "P3-12", "P3-16"],
+      "food_rule": ["P3-02", "P3-03", "P3-04", "P3-05", "P3-09", "P3-10", "P3-11", "P3-13", "P3-14", "P3-15", "P3-16"],
+      "cooks_for_4_plus": ["P3-04", "P3-06", "P3-08", "P3-10", "P3-11", "P3-12"],
+      "two_or_more_complications": ["P3-04", "P3-05", "P3-08", "P3-09", "P3-10", "P3-11", "P3-12", "P3-16"]
+    },
+    "grounding_counts": {"sourced": 13, "partly_assumed": 3, "assumed": 0}
+  },
+  "personas": [
+    {
+      "id": "P3-01",
+      "name": "Keisha Morgan",
+      "age": 34,
+      "gender": "female",
+      "location": "Westerville, Ohio (Columbus suburbs)",
+      "area": "suburban",
+      "household": "Married; son Jalen (8, autistic, ARFID diagnosis, about a dozen safe foods) and daughter Nia (5, eats most things)",
+      "household_size": 4,
+      "income_band": "$75k-$100k",
+      "job": "Dental hygienist, 4 days a week",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone always in hand; Instagram and TikTok autism-parent accounts; uses the Kroger app for pickup; reads Reddit at night in bed",
+      "meal_service_status": "never",
+      "sceptic": false,
+      "grocery_habit": "Kroger pickup every Sunday from the app, plus a Target run for Jalen's specific brands (Perdue dino nuggets, one brand of mac and cheese). Brand switches are a crisis.",
+      "weekly_grocery_budget": "$220",
+      "situation": "Keisha cooks two dinners most nights: one for Jalen built from his safe foods, one for everyone else. The OT says to put one safe food on the family plate and keep exposure low-pressure, which means every family dinner has to be planned around what Jalen will tolerate sitting next to. She is tired of the mental load more than the cooking.",
+      "complication": "Picky eater: 8-year-old with ARFID and sensory aversions (no mixed textures, no sauces touching, specific brands only). Family dinner must include at least one safe side.",
+      "pain_points": [
+        "Cooking two dinners most nights",
+        "Recipe sites assume kids will 'try a bite'; her son will not",
+        "A brand or packaging change at the store can wipe out a safe food",
+        "Feels judged by generic 'just make them eat it' advice"
+      ],
+      "buying_trigger": "Jalen's feeding therapist asked her to plan family dinners where one component is always a safe food; she needs a way to do that without a spreadsheet",
+      "decision_criteria_ranked": [
+        "Can she mark one person's safe foods / won't-eats and still get a dinner the rest of the family likes",
+        "Lets her keep specific brands on the grocery list (not swapped for store brand)",
+        "Works with her Kroger pickup",
+        "No judgment language about picky eating",
+        "Price under $10 a month"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium. Open to tools, allergic to fake empathy.",
+        "key_objections": [
+          "Every app says 'picky eater friendly' and then serves casseroles",
+          "Will it swap his exact nuggets for a store brand in the cart?",
+          "Is per-person profile only on the paid plan?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I'm basically running a restaurant with two menus every night",
+        "red_flag_words": ["hidden veggies", "picky eaters will love it", "sneak in", "kid-approved"],
+        "trust_signals": ["mentions ARFID or sensory eating by name", "per-person won't-eat list visible before sign-up", "founder is a parent"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Scans for whether it handles different people eating different things; looks for the word 'picky' and how it is treated",
+        "deep_evaluation": "Looks for a sample week and whether sides can be fixed per person; checks whether Kroger cart is free or paid",
+        "deal_breakers": [
+          "No way to keep a person's safe foods fixed",
+          "Cart substitutes brands without asking",
+          "Shame-y copy about picky kids"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5-$8 if it truly handles a safe-food kid; $0 if it is just recipes",
+      "voice": "Warm, fast, a bit wry. Uses therapy vocabulary (safe foods, exposure, regulation) naturally. Long run-on texts. Low patience for anything that sounds like it was written by someone without a kid like hers.",
+      "grounding": [
+        {"text": "the only nuggets he will eat are chicken and vegetable.. They're made by perdue and are Dino shaped.", "kind": "quote", "source_url": "https://www.reddit.com/r/AutisticParents/comments/1fiawfj/easy_food_ideas_for_super_picky_kid/"},
+        {"text": "My 7 year old is autistic (level 1) with severe ARFID, so most family meals are a big no no for her.", "kind": "quote", "source_url": "https://www.reddit.com/r/UKParenting/comments/1paed4e/struggling_with_family_meals/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-02",
+      "name": "Laura Pettit",
+      "age": 41,
+      "gender": "female",
+      "location": "Franklin, Tennessee",
+      "area": "suburban",
+      "household": "Married; daughter Ava (10, celiac, diagnosed age 6) and son Cole (13, eats everything, eats a lot)",
+      "household_size": 4,
+      "income_band": "$100k-$150k",
+      "job": "Part-time bookkeeper for her husband's HVAC business",
+      "tech_comfort": "medium",
+      "phone_habits": "iPhone; Facebook groups (celiac moms, local moms); uses the eMeals app and Walmart+ app weekly; does not like downloading new apps",
+      "meal_service_status": "pays_now: eMeals Gluten-Free plan (annual, about 3 years)",
+      "sceptic": true,
+      "grocery_habit": "eMeals list synced to Walmart+ delivery; separate trip to Publix for certified gluten-free bread and pasta",
+      "weekly_grocery_budget": "$250",
+      "situation": "The whole house eats gluten-free at dinner so Ava is never the odd one out and there is no cross-contact in the kitchen. eMeals' gluten-free plan works well enough, but she had a billing fight with them once and now watches every renewal date. Her son complains the portions are small.",
+      "complication": "Food rule: celiac daughter; whole household eats gluten-free at dinner; strict about cross-contact. Teen son needs bigger portions.",
+      "pain_points": [
+        "Has to double-check every recipe for hidden gluten (soy sauce, broth, seasoning packets)",
+        "Recipes sized for 4 do not feed a 13-year-old boy",
+        "Distrusts subscription billing after an eMeals renewal she did not expect"
+      ],
+      "buying_trigger": "eMeals annual renewal coming up in January; would switch only if something is clearly safer and cheaper",
+      "decision_criteria_ranked": [
+        "Gluten-free is a true filter, not a 'GF-friendly' label",
+        "Clear, easy cancel and clear renewal date",
+        "Sends list to Walmart (she already has Walmart+)",
+        "Portion sizing for a teenage boy",
+        "Cheaper than eMeals"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low on billing, medium on food.",
+        "key_objections": [
+          "What happens on day 15, will it charge me?",
+          "Does 'gluten-free' mean they checked the broth and soy sauce?",
+          "Why switch when eMeals already works?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need dinners I don't have to read three labels for",
+        "red_flag_words": ["gluten-friendly", "low gluten", "auto-renews", "free trial"],
+        "trust_signals": ["says 'no card' plainly", "shows the ingredient brands", "mentions celiac (not just gluten-free lifestyle)"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Looks for the price and the word 'cancel' before anything else; then checks for gluten-free",
+        "deep_evaluation": "Wants to see a sample gluten-free week and how the list handles certified GF items",
+        "deal_breakers": [
+          "Card required to try",
+          "Gluten-free only as a tag, with recipes that use regular soy sauce",
+          "No Walmart cart"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "About what she pays eMeals now (roughly $5-$10/mo on annual); more only if it saves the Publix trip",
+      "voice": "Polite Southern, careful, says 'bless' and 'y'all'. Reads fine print slowly. Asks the same question two ways to be sure. Will tell a friend in her Facebook group if she gets burned.",
+      "grounding": [
+        {"text": "They will continue to charge your card even if you ask them not to. We are doing the gluten-free family plan", "kind": "quote", "source_url": "https://www.facebook.com/groups/709976529142628/posts/2687366274736967/"},
+        {"text": "I'm able to make adjustments to the recipes to fit the needs of my family.", "kind": "quote", "source_url": "https://apps.apple.com/us/app/emeals-healthy-meal-plans/id575756462?platform=ipad"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-03",
+      "name": "Daniel Okafor",
+      "age": 38,
+      "gender": "male",
+      "location": "Silver Spring, Maryland",
+      "area": "suburban",
+      "household": "Married; daughter Ada (7) and son Tobi (3, anaphylactic to peanut, tree nuts, sesame, egg, dairy; carries two EpiPens)",
+      "household_size": 4,
+      "income_band": "over $150k",
+      "job": "Software engineer at a federal contractor (hybrid)",
+      "tech_comfort": "high",
+      "phone_habits": "Pixel; reads release notes; uses Instacart and the Giant app; turns off notifications for most apps",
+      "meal_service_status": "used_before: HelloFresh (cancelled over allergen cross-contact) and a free recipe app whose allergy filter let a sesame recipe through",
+      "sceptic": true,
+      "grocery_habit": "Instacart from Giant and Wegmans; reads every label on arrival; same 40 safe products on repeat",
+      "weekly_grocery_budget": "$275",
+      "situation": "Daniel does most weeknight cooking. After an earlier recipe app suggested a dish with tahini despite sesame being in his son's allergy settings (assumed detail), he stopped trusting any app's allergy filter. He wants planning help but treats every tool as untrusted input he has to verify.",
+      "complication": "Food rule: multiple anaphylactic allergies in a toddler (peanut, tree nut, sesame, egg, dairy). The whole family eats to Tobi's restrictions at dinner.",
+      "pain_points": [
+        "One missed ingredient is an ER visit, so every recipe is a review job",
+        "Allergy filters in apps are keyword matches and miss things like tahini or ghee",
+        "Meal kits are packed in shared facilities"
+      ],
+      "buying_trigger": "His wife is starting a new job with a longer commute; he will own all five weeknight dinners from January",
+      "decision_criteria_ranked": [
+        "Clear statement of how allergies are handled and what the tool will NOT guarantee",
+        "Allergy settings per person that apply to every suggestion",
+        "Full ingredient list visible before anything goes in a cart",
+        "Instacart cart support",
+        "Free to try without a card"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Very low. Has been burned by an app that ignored an allergy.",
+        "key_objections": [
+          "Who checked that the allergy filter catches derivatives (whey, casein, tahini)?",
+          "Is this AI-generated? If so I won't trust it",
+          "Will the cart substitute a product with a may-contain warning?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need a planner that respects a hard constraint, not a preference",
+        "red_flag_words": ["allergy-friendly", "AI-powered", "smart substitutions", "guaranteed safe"],
+        "trust_signals": ["honest disclaimer to always read labels", "lets him edit/lock ingredients", "no-card free tier"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Searches the page for 'allergy' and reads exactly what is promised",
+        "deep_evaluation": "Would test with a fake profile in his head: sesame + dairy + egg, and look for examples on the page",
+        "deal_breakers": [
+          "Any claim that the app makes food 'safe'",
+          "Allergy settings only on the paid plan with no detail",
+          "Automatic product substitutions in the cart"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5-$15 if the allergy handling is transparent; nothing if it is vague",
+      "voice": "Precise, calm, engineer-ish. Short sentences. Asks 'what exactly happens when...'. Not rude, but will close the tab the moment something overclaims.",
+      "grounding": [
+        {"text": "My toddler has anaphylactic allergies to peanuts, tree nuts, dairy, egg, sesame, and sunflower", "kind": "quote", "source_url": "https://www.reddit.com/r/FoodAllergies/comments/1o24ef6/give_me_your_best_dairy_egg_and_nut_free_meal/"},
+        {"text": "cross-contact with allergens cannot be entirely ruled out.", "kind": "quote", "source_url": "https://foodboxhq.com/reviews/hellofresh/"}
+      ],
+      "grounding_status": "partly assumed"
+    },
+    {
+      "id": "P3-04",
+      "name": "Rosa Delgado",
+      "age": 46,
+      "gender": "female",
+      "location": "San Antonio, Texas (South Side)",
+      "area": "urban",
+      "household": "Married; four kids (17, 14, 10, 6); mother-in-law Lupe (71, heart failure, low-sodium diet) lives with them",
+      "household_size": 7,
+      "income_band": "$50k-$75k",
+      "job": "School cafeteria manager",
+      "tech_comfort": "medium",
+      "phone_habits": "Samsung Android; Facebook and WhatsApp family group; H-E-B app for curbside; texts more than she uses apps",
+      "meal_service_status": "never",
+      "sceptic": false,
+      "grocery_habit": "H-E-B curbside once a week, Walmart for bulk (rice, beans, tortillas), Sam's Club once a month",
+      "weekly_grocery_budget": "$300",
+      "situation": "Rosa cooks for seven every weeknight and since Lupe's hospital stay last spring she has to keep sodium down without the family revolting. She cooks one pot and pulls Lupe's portion before seasoning, which half works. Meal kits never made sense at seven people.",
+      "complication": "Two: cooks for 7 on weeknights (multigenerational) AND low-sodium rule for a grandparent with heart failure.",
+      "pain_points": [
+        "Low-sodium versions taste flat to the teens",
+        "Feeding seven on about $300 a week keeps getting harder",
+        "Canned and packaged staples are sodium bombs"
+      ],
+      "buying_trigger": "Lupe's cardiologist gave a sodium target and a printed handout; Rosa wants a weekly plan she can actually follow",
+      "decision_criteria_ranked": [
+        "Feeds 7 within budget",
+        "Low-sodium option that still tastes good to teens",
+        "Familiar food (Mexican-American staples), not fancy",
+        "Simple to use on her phone",
+        "Free or almost free"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium. Practical, not cynical.",
+        "key_objections": [
+          "Does it do seven people or only four?",
+          "Is the 'low-sodium' just leaving out salt?",
+          "Is it in English only? (Lupe reads Spanish)"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need meals that work for my suegra and the kids at the same time",
+        "red_flag_words": ["gourmet", "chef-crafted", "superfood", "portion for 2"],
+        "trust_signals": ["shows a big family", "dollar budget per week", "H-E-B or Walmart named"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Looks for 'family of 7' or a family-size picker and a price",
+        "deep_evaluation": "Wants to see real meal names and whether they sound like food her family eats",
+        "deal_breakers": [
+          "Max family size under 7",
+          "No low-sodium or health setting",
+          "Expensive ingredients"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0-$5",
+      "voice": "Friendly, practical, mixes Spanish words in (suegra, mija). Talks in lists. Patient with tech but stops if it feels like it is not for families like hers.",
+      "grounding": [
+        {"text": "going on a low sodium diet is incredibly difficult. I was cooking for my grandma for the last 5 years", "kind": "quote", "source_url": "https://www.reddit.com/r/Cooking/comments/1jze878/amateur_cooks_do_not_use_enough_salt/"},
+        {"text": "It's getting more and more expensive to feed this crew.", "kind": "quote", "source_url": "https://www.reddit.com/r/Frugal/comments/wsskzl/best_cheap_meals_for_big_families/"},
+        {"text": "feeding my family is a reality show style challenge designed to test sanity", "kind": "quote", "source_url": "https://www.reddit.com/r/WhatShouldICook/comments/1mj3v68/is_there_a_single_meal_to_cook_for_everyone_in_my/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-05",
+      "name": "Priya Raman",
+      "age": 37,
+      "gender": "female",
+      "location": "Seattle, Washington (Ballard)",
+      "area": "urban",
+      "household": "Married; son Arjun (6, picky, mostly plain carbs and fruit)",
+      "household_size": 3,
+      "income_band": "over $150k",
+      "job": "UX researcher at a large tech company",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone; Instacart, Notion for family lists, Green Chef app; reads App Store reviews before installing anything",
+      "meal_service_status": "pays_now: Green Chef (vegetarian, 3 meals a week)",
+      "sceptic": false,
+      "grocery_habit": "Green Chef box plus Instacart from PCC and Trader Joe's; Indian grocery run monthly",
+      "weekly_grocery_budget": "$200 plus about $100/week on Green Chef",
+      "situation": "Household is lacto-vegetarian (no meat, fish or eggs) for religious and family reasons. Green Chef covers three adult dinners a week but Arjun rarely eats them, so she still cooks him something separate. She is wondering if she is paying $400 a month for dinners her son won't touch.",
+      "complication": "Two: vegetarian food rule (no meat, fish or eggs) AND a picky 6-year-old.",
+      "pain_points": [
+        "Green Chef is pricey and portions are 'adult' meals Arjun refuses",
+        "Vegetarian plans in apps often include eggs",
+        "Still cooking a second kid dinner"
+      ],
+      "buying_trigger": "Green Chef price change email; reconsidering the spend",
+      "decision_criteria_ranked": [
+        "True vegetarian filter with eggs excluded",
+        "Kid component she can make plain",
+        "Saves money vs Green Chef",
+        "Instacart integration",
+        "Clean, trustworthy UX"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium. Evaluates as a professional; notices dark patterns.",
+        "key_objections": [
+          "Is 'vegetarian' egg-free or do I have to filter by hand?",
+          "Without the box, will I actually cook?",
+          "Does the trial quietly turn into a charge?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I'm paying for a box that only feeds two of the three of us",
+        "red_flag_words": ["flexitarian", "protein-packed (with eggs)", "limited time offer", "spin to win"],
+        "trust_signals": ["clear plan comparison", "no pop-ups", "honest about what it does not do (no delivery)"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Notices pop-ups, countdowns and forced sign-ups immediately; judges the product by the honesty of the page",
+        "deep_evaluation": "Compares feature tables; checks whether diet options are listed before sign-up",
+        "deal_breakers": [
+          "Eggs in 'vegetarian' meals",
+          "Manipulative offer pop-ups",
+          "Card required up front"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$10-$15 for planning alone; already pays about $400/month for the kit",
+      "voice": "Articulate, analytical, measured. Uses product words (friction, onboarding, dark pattern). Patient if the page respects her; dismissive if it shouts.",
+      "grounding": [
+        {"text": "We think it is best for people who want organic and who are vegetarian.", "kind": "quote", "source_url": "https://uk.trustpilot.com/review/greenchef.com?page=7"},
+        {"text": "between my vegetarian wife, me who isn't a fan of just cooked vegetables and our toddler", "kind": "quote", "source_url": "https://www.reddit.com/r/daddit/comments/1mms9qw/daddit_what_is_for_dinner/"},
+        {"text": "Paraphrase: Green Chef lists about $12.49 per serving for 3 meals a week for 4 people ($149.98) plus $10.99 shipping.", "kind": "paraphrase", "source_url": "https://www.retirementliving.com/reviews/green-chef"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-06",
+      "name": "Shawn Pruitt",
+      "age": 44,
+      "gender": "male",
+      "location": "Maryville, Tennessee (outside Knoxville)",
+      "area": "suburban",
+      "household": "Remarried; his two kids (12, 9) full-time, wife Carla's three kids (15, 11, 7) half the week. Seven at the table four nights a week.",
+      "household_size": 7,
+      "income_band": "$75k-$100k",
+      "job": "Electrical lineman (shift work, home by 5:30 most weeks)",
+      "tech_comfort": "medium",
+      "phone_habits": "iPhone; ESPN, Facebook Marketplace, Walmart app; ignores app notifications; prefers texts",
+      "meal_service_status": "used_before: HelloFresh (cancelled after being charged for a week he thought he skipped)",
+      "sceptic": true,
+      "grocery_habit": "Walmart pickup Sunday, Aldi run midweek for milk and bread; buys meat in bulk at Sam's",
+      "weekly_grocery_budget": "$280",
+      "situation": "Shawn is the weeknight cook in a blended family. Five kids, two households' worth of food opinions, and a custody schedule that changes the head count. He tried HelloFresh when it was just his two kids; it got expensive and then charged him for a skipped week. He is done with boxes.",
+      "complication": "Cooks for 4+ (4 to 7 depending on custody days), blended family with different food habits from two households; 7-year-old stepdaughter very picky.",
+      "pain_points": [
+        "Head count changes by day of the week",
+        "Stepkids are used to different dinners at their dad's",
+        "The rotation is all beige carbs and he knows it",
+        "Burned by meal-kit billing"
+      ],
+      "buying_trigger": "Carla asked him to stop doing frozen pizza three nights a week; he wants a plan that doesn't need a box",
+      "decision_criteria_ranked": [
+        "No charge surprises; free means free",
+        "Handles 7 people and varying counts",
+        "Cheap ingredients from Walmart",
+        "Kids can weigh in so he isn't the bad guy",
+        "Fast to use"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low on anything with a subscription.",
+        "key_objections": [
+          "Is this another box?",
+          "What's the catch with free?",
+          "Will it text my kids spam?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "Seven people, five opinions, one cook",
+        "red_flag_words": ["free trial", "unlock", "offer", "skip anytime"],
+        "trust_signals": ["$0 with no card", "Walmart cart", "plain-spoken copy"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Checks whether it delivers food (if yes, he is out) and what it costs",
+        "deep_evaluation": "Barely does one; will try the free thing for one week if it takes under five minutes",
+        "deal_breakers": [
+          "Card required",
+          "It turns out to be a meal kit",
+          "Fancy recipes his kids won't eat"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0 to start; maybe $5 if the kids voting actually stops the arguments",
+      "voice": "Blunt, dry humour, East Tennessee. Short sentences, no patience for marketing talk. 'Just tell me what it costs.'",
+      "grounding": [
+        {"text": "Chose skip week and was still charged.", "kind": "quote", "source_url": "https://bestcompany.com/meal-delivery-services/hellofresh?page=3"},
+        {"text": "I'm so tired of the endless rotation of beige carbs and the battle to consume vegetables.", "kind": "quote", "source_url": "https://www.reddit.com/r/daddit/comments/1wf2pgz/cooks_of_daddit_what_are_we_all_making_for/"},
+        {"text": "We're getting my step daughters for the summer in a few weeks and I'm looking for a few large family meal ideas.", "kind": "quote", "source_url": "https://www.reddit.com/r/EatCheapAndHealthy/comments/u3gr02/large_family_sized_meal_ideas/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-07",
+      "name": "Tamika Johnson",
+      "age": 29,
+      "gender": "female",
+      "location": "Jackson, Mississippi",
+      "area": "urban",
+      "household": "Single mom; kids 9, 6 (picky, will only eat chicken, rice and noodles) and 3",
+      "household_size": 4,
+      "income_band": "under $35k",
+      "job": "Certified nursing assistant, rotating shifts",
+      "tech_comfort": "medium",
+      "phone_habits": "Older Android on a prepaid plan; data runs low at month-end; Facebook, TikTok, Walmart app; does everything on the phone, no laptop",
+      "meal_service_status": "never",
+      "sceptic": false,
+      "grocery_habit": "Walmart pickup paid partly with SNAP/EBT; Dollar General for fill-ins; WIC for the 3-year-old",
+      "weekly_grocery_budget": "$120 (mostly SNAP)",
+      "situation": "Tamika plans around shift days and the EBT reload date. The 6-year-old's narrow menu means a lot of the same three dinners. She would like a plan but assumes meal apps are for people with money.",
+      "complication": "Picky eater (6-year-old, very narrow menu) on a tight SNAP budget; one adult cooking for three kids after 12-hour shifts.",
+      "pain_points": [
+        "Money is gone by the last week of the month",
+        "Picky kid limits cheap options",
+        "No time or energy after a 12-hour shift",
+        "Phone data and storage are limited"
+      ],
+      "buying_trigger": "A coworker showed her a Walmart cart that filled itself; she wants that if it's free and takes EBT",
+      "decision_criteria_ranked": [
+        "Truly free, no card",
+        "Works with Walmart pickup and EBT payment",
+        "Cheap meals her picky kid eats",
+        "Light on data and simple",
+        "Doesn't make her feel poor"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium. Cautious about anything that asks for a card.",
+        "key_objections": [
+          "Can I pay with EBT if it goes in my Walmart cart?",
+          "Free for how long?",
+          "Are the meals cheap or Pinterest-cheap?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I just need to know what to cook that they'll eat and that won't run me out of food stamps",
+        "red_flag_words": ["organic", "premium", "chef", "per serving $11"],
+        "trust_signals": ["Walmart logo", "$0", "budget setting in dollars"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Looks for the price and whether it asks for a card; leaves if the page is slow on her phone",
+        "deep_evaluation": "Rarely goes deep; asks a friend instead",
+        "deal_breakers": [
+          "Card required",
+          "Expensive-looking food photos",
+          "Can't use EBT at checkout"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0",
+      "voice": "Direct, tired, funny when she has energy. Short messages, voice-to-text typos, no punctuation. Says 'fr' and 'lowkey'.",
+      "grounding": [
+        {"text": "I receive wic and ebt and besides a couple Dr peppers I shop mainly for my son.", "kind": "quote", "source_url": "https://www.reddit.com/r/poor/comments/1eljs4r/what_do_you_do_as_a_parent_to_make_sure_your_kids/"},
+        {"text": "Kid friendly meals for a family of 7 w/ a budget of 65 dollars a week", "kind": "quote", "source_url": "https://www.reddit.com/r/povertykitchen/comments/1hnzxim/kid_friendly_meals_for_a_family_of_7_w_a_budget/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-08",
+      "name": "Megan Holloway",
+      "age": 39,
+      "gender": "female",
+      "location": "Meridian, Idaho (Boise area)",
+      "area": "suburban",
+      "household": "Married; seven kids aged 2 to 16, homeschooled; one (age 9) dairy-free",
+      "household_size": 9,
+      "income_band": "$75k-$100k",
+      "job": "Stay-at-home, homeschool teacher; sells sourdough at a farmers market in summer",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone and iPad; Plan to Eat daily; Instagram large-family accounts; Walmart and WinCo",
+      "meal_service_status": "pays_now: Plan to Eat (annual, 4 years)",
+      "sceptic": false,
+      "grocery_habit": "Big WinCo bulk trip every two weeks, Walmart pickup in between, Costco monthly; cooks double batches",
+      "weekly_grocery_budget": "$400",
+      "situation": "Megan is organised: she has 300 recipes in Plan to Eat and plans two weeks at a time. Her issue is not ideas, it is scale and the 9-year-old's dairy-free needs. She is loyal to Plan to Eat and sceptical anyone could replace it, but curious about a cart that fills itself.",
+      "complication": "Two: cooks for 9 every weeknight AND one child is dairy-free.",
+      "pain_points": [
+        "Scaling recipes to 9 by hand",
+        "Grocery list still has to be typed into Walmart manually",
+        "Dairy-free swaps for one child"
+      ],
+      "buying_trigger": "Saw a reel of someone's Walmart cart filled from a plan in one tap; wondering if it beats retyping her Plan to Eat list",
+      "decision_criteria_ranked": [
+        "Handles 9 people without breaking",
+        "Can use her own recipes (or close to them)",
+        "Saves the manual cart step",
+        "Per-person dairy-free note",
+        "Annual price comparable to Plan to Eat ($49/yr)"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium-high; trusts tools but loyal to what works.",
+        "key_objections": [
+          "I already have 300 recipes, can I bring them?",
+          "Does family size go to 9?",
+          "Is it cheaper than Plan to Eat?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "My recipes are sorted, the shopping is what eats my Sunday",
+        "red_flag_words": ["for busy couples", "2-4 servings", "single-serve", "meal kit"],
+        "trust_signals": ["big-family example", "annual price", "export/import"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Checks family-size limit and whether it's a recipe importer or a fixed menu",
+        "deep_evaluation": "Compares feature by feature with Plan to Eat; reads FAQs fully",
+        "deal_breakers": [
+          "Max household under 9",
+          "Can't add or edit meals",
+          "More expensive than Plan to Eat with less control"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "About $4/month (she thinks annually: up to $50/yr)",
+      "voice": "Upbeat, organised, uses exclamation points and homeschool-mom phrases ('we're a big family!'). Detailed questions. Patient, thorough, but loyal.",
+      "grounding": [
+        {"text": "I'm completely dependent on Plan To Eat now. It's so incredible having all of my recipes in one place", "kind": "quote", "source_url": "https://apps.apple.com/it/app/1215348056?l=en-GB&see-all=reviews&platform=iphone"},
+        {"text": "We are a family of 8 right now and I feed us all on a tight budget.", "kind": "quote", "source_url": "https://www.reddit.com/r/povertykitchen/comments/1hnzxim/kid_friendly_meals_for_a_family_of_7_w_a_budget/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-09",
+      "name": "Earl Whitaker",
+      "age": 66,
+      "gender": "male",
+      "location": "Logan County, West Virginia",
+      "area": "rural",
+      "household": "Grandfather raising grandsons (11 and 8) with wife Brenda (63, type 2 diabetic)",
+      "household_size": 4,
+      "income_band": "under $35k",
+      "job": "Retired coal mine electrician; part-time at a hardware store",
+      "tech_comfort": "low",
+      "phone_habits": "Basic Android a grandson set up; uses texts and Facebook; does not download apps; gets stuck on passwords",
+      "meal_service_status": "never",
+      "sceptic": true,
+      "grocery_habit": "Walmart Supercenter 35 minutes away every two weeks, in person, with a paper list; Save-A-Lot in between",
+      "weekly_grocery_budget": "$140",
+      "situation": "Earl and Brenda took in their grandsons two years ago. Brenda's blood sugar has been high and the doctor wants fewer starches, but the boys want what they had before. Earl does more of the cooking now. He has never paid for anything on the internet except a utility bill and doesn't plan to.",
+      "complication": "Two: grandparent raising grandkids on a fixed income AND diabetic (low-carb) rule for his wife.",
+      "pain_points": [
+        "Fixed income vs growing boys",
+        "Diabetic cooking vs kid food",
+        "Long drive to a real grocery store",
+        "Does not trust online sign-ups"
+      ],
+      "buying_trigger": "Brenda's A1C result; a church friend mentioned something that 'texts you supper ideas'",
+      "decision_criteria_ranked": [
+        "Free, nothing to pay, no card",
+        "Works by text, not an app",
+        "Diabetic-friendly dinners the boys will eat",
+        "Cheap Walmart ingredients",
+        "A real person behind it"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Very low. 'Nothing on the internet is free.'",
+        "key_objections": [
+          "What do they want my information for?",
+          "Is this going to charge me later?",
+          "I don't do apps"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "Trying to feed two growing boys and keep Brenda's sugar down",
+        "red_flag_words": ["AI", "subscription", "trial", "download the app", "sync"],
+        "trust_signals": ["a real name and town", "no card", "phone number to text"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Reads slowly from the top; gets lost if asked to choose between plans",
+        "deep_evaluation": "Would only go further if Brenda or a grandson helps",
+        "deal_breakers": [
+          "Asks for a card",
+          "Needs an app download",
+          "Words he doesn't understand (cart sync, AI)"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0",
+      "voice": "Slow, courteous, Appalachian. 'Yes ma'am.' Plain words, suspicious of jargon, takes his time and will re-read. Types with one finger.",
+      "grounding": [
+        {"text": "Im a senior citizen raising my grandchildren.", "kind": "quote", "source_url": "https://www.facebook.com/groups/491558714521412/posts/3106204716390119/"},
+        {"text": "Cooking for a family of 4-6? ALL the types of diabetics", "kind": "quote", "source_url": "https://www.reddit.com/r/EatCheapAndHealthy/comments/o13w31/hello_cooking_for_a_family_of_46_all_the_types_of/"}
+      ],
+      "grounding_status": "partly assumed"
+    },
+    {
+      "id": "P3-10",
+      "name": "Aisha Rahman",
+      "age": 33,
+      "gender": "female",
+      "location": "Dearborn, Michigan",
+      "area": "suburban",
+      "household": "Married; kids 8, 5 and 2; father-in-law (68) lives with them",
+      "household_size": 6,
+      "income_band": "$50k-$75k",
+      "job": "Pharmacy technician, part-time",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone; Instagram halal-recipe accounts, WhatsApp family groups; Instacart; comfortable with apps",
+      "meal_service_status": "used_before: HelloFresh (two-week trial; meat not halal so only cooked the veggie meals, then cancelled)",
+      "sceptic": false,
+      "grocery_habit": "Halal butcher on Warren Ave weekly for meat; Kroger via Instacart for everything else; Costco monthly",
+      "weekly_grocery_budget": "$260",
+      "situation": "Aisha keeps a halal kitchen and buys meat only from a halal butcher, so any plan that sends meat to a Kroger cart is half-useful. She cooks for six with a father-in-law who likes traditional food and kids who want tacos and pasta.",
+      "complication": "Two: halal food rule (no pork, no alcohol in cooking, halal meat from a specific butcher) AND cooks for 6 across three generations.",
+      "pain_points": [
+        "Meal plans assume pork, bacon, wine in sauces",
+        "Meat has to come from the butcher, not the cart",
+        "Pleasing grandpa and the kids in one dinner"
+      ],
+      "buying_trigger": "Ramadan planning burned her out last spring; wants a system before the next one",
+      "decision_criteria_ranked": [
+        "Can exclude pork and alcohol reliably",
+        "Can keep meat off the cart list (she buys it elsewhere)",
+        "Handles 6 people",
+        "Family can vote so grandpa and the kids both get a night",
+        "Low or no cost"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium; hopeful but used to being an afterthought.",
+        "key_objections": [
+          "Is there a halal setting or do I have to remove pork every week?",
+          "Can I take the meat off the Instacart list?",
+          "Will the recipes all be American?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need a plan that knows we're halal without me fixing it every week",
+        "red_flag_words": ["bacon-wrapped", "wine reduction", "pork-free option coming soon"],
+        "trust_signals": ["'halal' named in diet options", "editable list", "multigenerational family shown"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Looks for diet options and whether halal is named",
+        "deep_evaluation": "Checks if she can edit the list before it goes to Instacart",
+        "deal_breakers": [
+          "No way to exclude pork/alcohol",
+          "List can't be edited before cart",
+          "Max household under 6"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5 if halal is built in",
+      "voice": "Friendly, organised, quick texter, uses 'inshallah' and emojis. Patient but will say plainly if something isn't for her.",
+      "grounding": [
+        {"text": "I'm looking for a halal meal kit service. Any suggestions? Thanks", "kind": "quote", "source_url": "https://www.reddit.com/r/mealkits/comments/ysrmc8/im_looking_for_a_halal_meal_kit_service_any/"},
+        {"text": "halal, please—no pork or alcohol", "kind": "quote", "source_url": "https://www.reddit.com/r/Frugal/comments/1kj9wj6/need_help_with_super_cheap_easy_halal_meals_vegan/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-11",
+      "name": "Miriam Katz",
+      "age": 52,
+      "gender": "female",
+      "location": "Teaneck, New Jersey",
+      "area": "suburban",
+      "household": "Married; five kids at home (19 home from college, 17, 14, 12, 9)",
+      "household_size": 7,
+      "income_band": "over $150k",
+      "job": "Office manager at a dental practice",
+      "tech_comfort": "medium",
+      "phone_habits": "iPhone; WhatsApp community groups; uses the ShopRite app and Instacart; prefers email to texts from businesses",
+      "meal_service_status": "never",
+      "sceptic": false,
+      "grocery_habit": "Kosher supermarket for meat and chicken twice a week; ShopRite via Instacart for produce and staples; big Thursday shop for Shabbat",
+      "weekly_grocery_budget": "$450",
+      "situation": "Miriam keeps a kosher home: meat and dairy are never mixed, there are separate dishes, and meat comes from certified kosher sources. Weeknights are mostly meat or pareve dinners for seven. She has never found a meal plan that understands that 'chicken with cream sauce' is not an option.",
+      "complication": "Two: kosher food rule (no mixing meat and dairy, no shellfish/pork, certified meat) AND cooks for 7.",
+      "pain_points": [
+        "Recipes mix meat and dairy constantly",
+        "Meat must be bought at the kosher store, not via cart",
+        "Feeding seven with teen appetites"
+      ],
+      "buying_trigger": "Oldest is home for winter break and the youngest started after-school activities; weeknights got chaotic",
+      "decision_criteria_ranked": [
+        "Never suggests meat with dairy",
+        "Can mark dinners as meat or dairy night",
+        "Feeds 7",
+        "Lets her buy meat elsewhere",
+        "Price not a big issue"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium; assumes apps won't understand kosher until shown otherwise.",
+        "key_objections": [
+          "Does 'kosher' mean anything here or is it just no pork?",
+          "Will it put chicken parm on my plan?",
+          "Does it handle seven?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need dinners that are kosher, quick, and enough for seven",
+        "red_flag_words": ["kosher-style", "cheeseburger", "surf and turf"],
+        "trust_signals": ["kosher listed as a real option", "meat/dairy distinction explained", "family-size picker to 7+"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Looks at diet options list; if kosher is missing, she leaves",
+        "deep_evaluation": "Checks sample dinners for meat-dairy mixing",
+        "deal_breakers": [
+          "No kosher option",
+          "Sample menu mixes meat and dairy",
+          "Household max under 7"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$10-$20 if it truly handles kosher",
+      "voice": "Brisk, efficient, New Jersey. No-nonsense, polite, a little impatient. Asks direct questions and expects direct answers.",
+      "grounding": [
+        {"text": "our new addition to the household adheres to kosher rules, which means no shellfish, no dairy mixed", "kind": "quote", "source_url": "https://www.reddit.com/r/Cooking/comments/1d5xfwk/your_favorite_onepot_easy_kosher_meals/"},
+        {"text": "two different sets of new utensils, pots and pans, and dishes (one for dairy and one for meat)", "kind": "quote", "source_url": "https://www.reddit.com/r/kosher/comments/1s2n3e1/kosher_basics/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-12",
+      "name": "Jenna Kowalski",
+      "age": 31,
+      "gender": "female",
+      "location": "De Pere, Wisconsin (Green Bay area)",
+      "area": "suburban",
+      "household": "Married; kids 6, 4 (picky, eats 'separate dinner') and 18 months",
+      "household_size": 5,
+      "income_band": "$50k-$75k",
+      "job": "Hair stylist, three evenings a week",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone; TikTok, Instagram, Pinterest; Walmart and Festival Foods apps; screenshots everything",
+      "meal_service_status": "used_before: eMeals (signed up online for the trial; had to phone to cancel)",
+      "sceptic": true,
+      "grocery_habit": "Walmart pickup weekly, Aldi for snacks; meal plans on Pinterest boards she rarely follows",
+      "weekly_grocery_budget": "$200",
+      "situation": "Jenna tried eMeals during her third pregnancy, liked the recipes, and then found out she had to call to cancel. That stuck with her: she now screenshots every 'free trial' screen. She cooks for five with a 4-year-old who eats a separate dinner most nights.",
+      "complication": "Two: cooks for 5 with a toddler and a baby AND a picky 4-year-old who gets a separate dinner.",
+      "pain_points": [
+        "Separate dinner for the 4-year-old",
+        "Plans fall apart on her work nights when her husband cooks",
+        "Burned by eMeals' call-to-cancel"
+      ],
+      "buying_trigger": "Husband asked 'what am I supposed to make' one too many times on her work nights; wants something he gets by text",
+      "decision_criteria_ranked": [
+        "Cancel in one tap, or nothing to cancel",
+        "Husband can see the plan without downloading anything",
+        "One dinner the 4-year-old will partly eat",
+        "Walmart cart",
+        "Cheap"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low on trials and billing; fine with tech.",
+        "key_objections": [
+          "Do I have to call someone to cancel?",
+          "What happens after 14 days?",
+          "Is this just eMeals again?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I'm the default dinner person and I'm done being the only one who knows the plan",
+        "red_flag_words": ["14-day free trial", "call to cancel", "auto-renew", "limited offer"],
+        "trust_signals": ["'no card' in big letters", "what happens on day 15 explained", "texts for the whole family"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Hunts for the trial terms and the word 'card'",
+        "deep_evaluation": "Screenshots pricing; reads the FAQ about cancelling",
+        "deal_breakers": [
+          "Card at sign-up",
+          "Vague day-15 terms",
+          "Cancel not explained"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$3-$5 once she trusts it",
+      "voice": "Chatty, Midwestern-nice, sarcastic when burned ('love that for me'). Talks in memes. Fast reader, skims, but slows down on anything about money.",
+      "grounding": [
+        {"text": "They allow you to sign up online but require you to call to cancel subscriptions.", "kind": "quote", "source_url": "https://www.reddit.com/r/mealkits/comments/esp2cb/this_subs_sidebar_should_have_a_warning_about/"},
+        {"text": "I thought \"eat what we eat\" would happen by the time my LO hit 3, but it hasn't.", "kind": "quote", "source_url": "https://www.reddit.com/r/toddlers/comments/1b6krjv/anyone_else_always_making_their_toddlers_a/"},
+        {"text": "It's on me to plan/prepare all meals and pack lunches, and honestly I struggle.", "kind": "quote", "source_url": "https://www.reddit.com/r/lowspooncooking/comments/1ntlyfa/im_struggling_to_prepare_meals_for_my_big_family/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-13",
+      "name": "Marcus Bell",
+      "age": 49,
+      "gender": "male",
+      "location": "Decatur, Georgia (Atlanta)",
+      "area": "suburban",
+      "household": "Married; three teens (18, 16, 14)",
+      "household_size": 5,
+      "income_band": "$100k-$150k",
+      "job": "Regional operations manager for a logistics company",
+      "tech_comfort": "high",
+      "phone_habits": "Samsung Galaxy; Samsung Food+, a glucose monitor app, Kroger app; Apple-vs-Android jokes with his kids",
+      "meal_service_status": "pays_now: Samsung Food+ (monthly, about 8 months)",
+      "sceptic": false,
+      "grocery_habit": "Kroger pickup weekly; Costco monthly; teens raid the pantry",
+      "weekly_grocery_budget": "$260",
+      "situation": "Marcus was diagnosed with type 2 diabetes last year and took over weeknight cooking to control his carbs. He uses Samsung Food+ for recipes and nutrition but it plans for him, not for three teenagers who want rice and pasta. He ends up adding carb sides by hand.",
+      "complication": "Food rule: type 2 diabetes (low-carb for him) in a house of teens who are not low-carb.",
+      "pain_points": [
+        "Plans built for one diet don't fit the family",
+        "Adding starch sides for the teens by hand",
+        "Not sure Food+ is worth $6.99 a month"
+      ],
+      "buying_trigger": "His A1C improved; he wants to keep it up without cooking two meals",
+      "decision_criteria_ranked": [
+        "One dinner with a low-carb plate for him and sides for the teens",
+        "Kroger cart",
+        "Teens can pick some nights",
+        "Cheaper than or replaces Food+",
+        "Nutrition info he can trust"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium-high; a tools person.",
+        "key_objections": [
+          "Can it do low-carb for one person and normal for the rest?",
+          "Is Kroger only on the paid plan?",
+          "Why pay for this and Food+?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need my plate low-carb and theirs normal, same pan",
+        "red_flag_words": ["keto for the whole family", "diabetic menu", "sugar-free desserts"],
+        "trust_signals": ["per-person settings", "Kroger cart", "clear yearly price"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Checks diet options and Kroger",
+        "deep_evaluation": "Compares feature list with Samsung Food+; reads the pricing page",
+        "deal_breakers": [
+          "Whole-family diet only, no per-person",
+          "No Kroger",
+          "More expensive than Food+ without nutrition"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$5-$7 (would drop Food+ if one tool did both)",
+      "voice": "Confident, friendly, manager voice. Says 'bottom line' and 'what's the ROI'. Reads quickly, decides quickly.",
+      "grounding": [
+        {"text": "I'm still trying to figure out what I should be cooking for my kids as I have 3 older teens", "kind": "quote", "source_url": "https://www.reddit.com/r/diabetes_t2/comments/1ai30vy/how_has_your_diagnoses_changed_how_you_cook_for/"},
+        {"text": "My husband is on a low carb diet to control his blood sugar. The rest of the family is not.", "kind": "quote", "source_url": "https://www.reddit.com/r/lowcarb/comments/18nny74/blending_low_carb_with_family_that_is_not/"},
+        {"text": "Paraphrase: a review cited Android Authority saying there is no good reason to splurge on Food+ because the free tier covers most use.", "kind": "paraphrase", "source_url": "https://mealthinker.com/blog/samsung-food-alternative"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-14",
+      "name": "Kayla Brooks",
+      "age": 24,
+      "gender": "female",
+      "location": "near West Plains, Missouri (Ozarks)",
+      "area": "rural",
+      "household": "Lives with boyfriend Tyler; her daughter (2) and his son (6, every other week). Kayla has celiac disease.",
+      "household_size": 4,
+      "income_band": "$35k-$50k",
+      "job": "Bank teller",
+      "tech_comfort": "high",
+      "phone_habits": "iPhone; TikTok all day, celiac creators; Walmart app; distrusts anything that says 'AI'",
+      "meal_service_status": "never",
+      "sceptic": true,
+      "grocery_habit": "Walmart pickup weekly; Aldi for GF bread (liveGfree); drives 40 min to a bigger store monthly",
+      "weekly_grocery_budget": "$150",
+      "situation": "Kayla was diagnosed with celiac at 21. She reads Reddit threads about meal kits 'made in a factory with wheat' and has decided boxes aren't for her. Gluten-free groceries are expensive in a small town and the rest of the house eats regular bread. She has never paid for a meal app and doesn't trust AI recipes to know what's safe.",
+      "complication": "Food rule: celiac (strict, cross-contact matters) in a blended household where others eat gluten.",
+      "pain_points": [
+        "GF food is expensive and hard to find locally",
+        "Has been 'glutened' by 'gluten-free' restaurant food",
+        "Doesn't trust AI or labels like 'GF-friendly'",
+        "Boyfriend's son wants regular pasta"
+      ],
+      "buying_trigger": "A TikTok creator showed a GF weekly plan sent straight to a Walmart cart",
+      "decision_criteria_ranked": [
+        "Gluten-free that means celiac-safe ingredients",
+        "Free",
+        "Walmart pickup",
+        "Doesn't feel AI-generated",
+        "Works for a mixed GF / non-GF table"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low; celiac community wariness plus AI distrust.",
+        "key_objections": [
+          "Who decided this is gluten-free, a person or an AI?",
+          "Will the cart pick regular soy sauce?",
+          "Is this an ad?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need gluten-free dinners that don't cost a fortune and don't make me sick",
+        "red_flag_words": ["AI-generated", "gluten-friendly", "made in a facility", "may contain"],
+        "trust_signals": ["mentions celiac specifically", "real founder", "label-check reminder"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Scans fast on phone; looks for gluten-free and whether it's AI",
+        "deep_evaluation": "Checks comments/reviews on TikTok, not the website",
+        "deal_breakers": [
+          "'AI-powered' front and centre",
+          "GF as a vague preference",
+          "Any cost up front"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0 now; maybe $3-$5 later",
+      "voice": "Young, quick, internet-native. Lowercase texting, 'ngl', 'it's giving'. Sharp radar for marketing. Short patience.",
+      "grounding": [
+        {"text": "green chef (our gf and vegan line) are all made in a factory with wheat.", "kind": "quote", "source_url": "https://www.reddit.com/r/ReadyMeals/comments/11sejfg/celiac_friendly_options/"},
+        {"text": "Anyone know of any meal delivery programs that are similar to Hello Fresh but offer gluten free food?", "kind": "quote", "source_url": "https://www.reddit.com/r/Celiac/comments/1nh1rqr/hello_freshlike/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-15",
+      "name": "Greg Navarro",
+      "age": 42,
+      "gender": "male",
+      "location": "Albuquerque, New Mexico",
+      "area": "urban",
+      "household": "Divorced single dad; kids 13, 11 and 7 (7-year-old has a peanut allergy) on alternating weeks",
+      "household_size": 4,
+      "income_band": "$50k-$75k",
+      "job": "HVAC technician",
+      "tech_comfort": "medium",
+      "phone_habits": "Android; YouTube, Facebook; used Mealime until it shut down in October; Walmart app",
+      "meal_service_status": "used_before: Mealime (free tier, until it closed Oct 2026)",
+      "sceptic": false,
+      "grocery_habit": "Walmart pickup on the Sunday his week starts; Smith's (Kroger) near work for top-ups",
+      "weekly_grocery_budget": "$170 on his weeks",
+      "situation": "Greg liked Mealime because it was free and gave him a list. Since it closed he's back to frozen pizza and fast food on his weeks. His ex is strict about the peanut allergy and he does not want to be the parent who slipped up.",
+      "complication": "Food rule: 7-year-old with peanut allergy; single parent cooking for 4 on alternating weeks.",
+      "pain_points": [
+        "Lost his free planner when Mealime shut down",
+        "Spending too much on fast food on busy nights",
+        "Peanut allergy checking on every new recipe"
+      ],
+      "buying_trigger": "Mealime closure; looking for a free replacement",
+      "decision_criteria_ranked": [
+        "Free like Mealime",
+        "Peanut allergy setting",
+        "Simple, quick recipes",
+        "Walmart cart",
+        "Only plans for his weeks"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Medium; wants a replacement, not a sales pitch.",
+        "key_objections": [
+          "Is free really free or a trial?",
+          "Is the allergy thing on the free plan?",
+          "Can I skip the weeks the kids are at their mom's?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I need what Mealime did: tell me what to make and give me the list",
+        "red_flag_words": ["premium", "unlock", "upgrade to remove ads"],
+        "trust_signals": ["'free forever' plan", "allergy setting visible", "Walmart"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Looks for 'free' and compares to Mealime in his head",
+        "deep_evaluation": "Will try it right away if it's free and no card",
+        "deal_breakers": [
+          "Allergy settings paywalled",
+          "Card needed",
+          "Complicated recipes"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0; maybe $3 a month",
+      "voice": "Easygoing, practical, a bit self-deprecating about his cooking. Plain English, short texts, thumbs-up emoji.",
+      "grounding": [
+        {"text": "we have \"easy dinner night\" some nights which usually consists of frozen pizza, ordering pizza, or spending $30 at fast food.", "kind": "quote", "source_url": "https://www.reddit.com/r/daddit/comments/1lwrnnk/easy_dinner_night_ideas_for_noncooking_dad/"},
+        {"text": "It's like the never ending question is \"what's for dinner\"", "kind": "quote", "source_url": "https://www.reddit.com/r/Parenting/comments/103xw8k/do_you_cook_dinner_for_your_familykids_every_night/"}
+      ],
+      "grounding_status": "sourced"
+    },
+    {
+      "id": "P3-16",
+      "name": "Dolores 'Lola' Fitzgerald",
+      "age": 58,
+      "gender": "female",
+      "location": "Rutland County, Vermont",
+      "area": "rural",
+      "household": "Grandmother raising three grandchildren (12, 9, 5); the 9-year-old is dairy-allergic, the 5-year-old is very picky",
+      "household_size": 4,
+      "income_band": "$35k-$50k",
+      "job": "Home health aide",
+      "tech_comfort": "low",
+      "phone_habits": "iPhone her daughter gave her; Facebook and texting; uses the Hannaford app with help from the 12-year-old",
+      "meal_service_status": "used_before: HelloFresh (a gift box from her sister; did not continue)",
+      "sceptic": true,
+      "grocery_habit": "Hannaford and Walmart in Rutland, in person; Price Chopper sales flyer",
+      "weekly_grocery_budget": "$160",
+      "situation": "Lola got custody of her grandchildren last year. Between the dairy allergy and the 5-year-old's short list of foods she ends up making the same few dinners on repeat. She remembers her sister getting charged by a meal service after cancelling and won't give any website her card.",
+      "complication": "Two: picky 5-year-old AND dairy allergy (9-year-old); grandparent raising grandkids.",
+      "pain_points": [
+        "Same few dinners on repeat",
+        "Reading labels for milk on everything",
+        "Distrust of online subscriptions",
+        "Tired after work"
+      ],
+      "buying_trigger": "The school nurse handed her a list of dairy-free dinner ideas; she wants a plan, not a list",
+      "decision_criteria_ranked": [
+        "No card, nothing to cancel",
+        "Dairy-free setting per child",
+        "Easy, familiar meals",
+        "Works with Walmart or Hannaford",
+        "A real person she could contact"
+      ],
+      "skepticism_profile": {
+        "trust_level": "Low; 'they always get you on the cancelling'.",
+        "key_objections": [
+          "Will they charge me after the free part?",
+          "Is it a box of food?",
+          "Who's going to help me if I get stuck?"
+        ]
+      },
+      "language": {
+        "describes_problem_as": "I just want a week of suppers the kids will eat and that won't make Lily sick",
+        "red_flag_words": ["subscription", "auto-renew", "free trial", "AI"],
+        "trust_signals": ["$0 no card", "a real founder who is a parent", "simple words"]
+      },
+      "evaluation_behavior": {
+        "first_visit": "Reads the top and looks for price and whether it's a delivery box",
+        "deep_evaluation": "Would ask her daughter to look at it with her",
+        "deal_breakers": [
+          "Card asked for",
+          "Small print she can't read",
+          "Food delivery box"
+        ]
+      },
+      "what_they_would_pay_per_month_for_dinner_help": "$0",
+      "voice": "Kind, tired, New England plain-spoken. 'Ayuh.' Calls dinner 'supper'. Slow and careful on the phone; increases text size.",
+      "grounding": [
+        {"text": "I find myself repeating spaghetti, grilled chicken and salmon, and plain veggies on a regular basis.", "kind": "quote", "source_url": "https://www.reddit.com/r/FoodAllergies/comments/b3v4to/recipe_ideas_for_my_allergic_family_and_a_picky/"},
+        {"text": "I have now cancelled my account six separate times, yet I am still being charged for food I do not want.", "kind": "quote", "source_url": "https://www.trustpilot.com/review/factormeals.ca"}
+      ],
+      "grounding_status": "partly assumed"
+    }
+  ]
+}

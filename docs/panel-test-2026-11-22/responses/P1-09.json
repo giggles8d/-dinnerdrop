@@ -1,0 +1,48 @@
+{
+ "id": "P1-09",
+ "name": "Kevin O'Brien",
+ "simulated": true,
+ "order": ["PTE", "EM", "OL", "DD", "HF"],
+ "sites": {
+  "PTE": {
+   "five_sec": {"what_is_it": "Some app for recipes and grocery lists.", "who_for": "People who like to organize. Pen and paper types.", "trust": "medium", "trust_why": "4.8 stars on the App Store right up top, so somebody likes it.", "next_step": "Scroll a little, probably leave.", "delivers_food": "no", "delivers_food_why": "Says 'Recipes, Meal Plans and Grocery Lists, All in One App.' It's an app, no box."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "I have to bring the recipes. Save, organize, plan, shop. That's four jobs. I wanted fewer jobs.", "whats_missing": "Nothing about how many it feeds or what it costs per plate. Nothing that picks dinner for me.", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 7, "value": 4, "ease": 3, "want_to_sign_up": 2},
+   "quote": "'Save recipes while you scroll.' I don't scroll for recipes, I scroll for Steelers scores. This is homework."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Meal plan thing? Mom and a kid laughing, 'Less Stress, More Dinners.'", "who_for": "Moms with little kids.", "trust": "medium", "trust_why": "Looks like a real company but it's a stock-photo video, tells me nothing.", "next_step": "Scroll to How It Works.", "delivers_food": "unsure", "delivers_food_why": "Picture of a phone with food bubbles around it. Could be a box, could be an app."},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "A pop-up wanted my email before I saw a price, and I never did see a price.", "whats_missing": "Servings. Does it feed 5 with two teenage boys? Low Carb, Keto, Clean Eating... not one word about portion size. Giant Eagle isn't in the store logos either.", "pay_per_month": 5},
+   "scores": {"clarity": 6, "trust": 5, "value": 5, "ease": 5, "want_to_sign_up": 4},
+   "quote": "Fifteen meal plans and not one says how many it feeds. Low Carb, Keto, Clean Eating. My boys want a pan of something."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "An app that picks dinner for you.", "who_for": "Busy moms, by the reviews.", "trust": "medium", "trust_why": "'Trusted by 90,000+ families' is a big number, but the main button is 'Letter from the CEO.' Why do I want a letter?", "next_step": "Scroll for a price.", "delivers_food": "unsure", "delivers_food_why": "Phone shows a rice bowl and 'I've picked out meals for you.' Didn't say if they ship it."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The pricing page. Twenty-five bucks a month and you count messages. A computer writes the recipe.", "whats_missing": "Servings, real recipes from a real person, a straight price on the meal page instead of 'prices are available when you download the app.'", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 4, "value": 2, "ease": 5, "want_to_sign_up": 2},
+   "quote": "Twenty-five bucks a month for 150 messages from a robot? That's half a Home Chef box and nobody's cooking anything."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "Plans the week's dinners, texts the family to vote, puts the grocery list in Instacart or Walmart.", "who_for": "Families. Houses where nobody can agree.", "trust": "medium", "trust_why": "'Powered by Instacart' helps. Never heard of DinnerDrop though.", "next_step": "Hit 'See a sample week' to see what the food is.", "delivers_food": "no", "delivers_food_why": "It says it right there in bold: 'We don't deliver food. We plan your week and send your grocery list.'"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "Almost did stop: every sample dinner says 'serves 4.' There's five of us and the boys eat like grown men. It says it's planned to your family size, so I'd try it since it's free.", "whats_missing": "Proof it goes up to 6 or 8 servings. Giant Eagle by name. A line about big appetites.", "pay_per_month": 5},
+   "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 7, "want_to_sign_up": 7},
+   "quote": "Every dinner in that sample says 'serves 4.' There's five of us and two of 'em are teenage boys. Show me it goes to 8 and I'm in."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "HelloFresh. Meal kits. Been there.", "who_for": "Couples with small appetites.", "trust": "low", "trust_why": "'Open a Box to Reveal Your Offer.' It's a carnival game.", "next_step": "Close the pop-up.", "delivers_food": "yes", "delivers_food_why": "Green boxes with their name on them. That's the box that shows up on my porch."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "I left HelloFresh because the portions don't feed my boys. Price is hidden behind a zip code.", "whats_missing": "A price. Servings for 5 big eaters.", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 4, "value": 3, "ease": 5, "want_to_sign_up": 1},
+   "quote": "Open a box to reveal my offer? Buddy, I know the offer. Four servings that feed two of my boys."
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "'Family texting free for 14 days, no card... then $4.99/month, or keep the free plan.' Plain enough. No card means they can't bill me.", "expect_day_15": "The texting to the kids stops unless I pay the five bucks. The planning and the cart stay free.", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "Cheapest way off the Home Chef bill: free plan, I still shop Giant Eagle through Instacart, and Colleen can vote by text from the store.",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "Free versus a price I never found, and the family votes by text."},
+   "PTE": {"winner": "DD", "reason": "DinnerDrop picks the dinners. Plan to Eat makes me find them."},
+   "OL": {"winner": "DD", "reason": "Zero dollars versus twenty-five a month."},
+   "HF": {"winner": "DD", "reason": "I buy the full amount at store prices instead of kit portions that run short."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Home page, 'See a week' section: add a servings switch (4 / 6 / 8) on the sample week, or at least a line like 'Big eaters? Set 6 or 8 servings,' so the 'serves 4' cards don't look like the limit."
+}

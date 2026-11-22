@@ -1,0 +1,120 @@
+{
+  "id": "P1-01",
+  "name": "Danielle Ortiz",
+  "simulated": true,
+  "order": ["DD", "EM", "HF", "OL", "PTE"],
+  "sites": {
+    "DD": {
+      "five_sec": {
+        "what_is_it": "dinner planner app, it texts the fam dinner ideas and puts the list in instacart or walmart",
+        "who_for": "families w/ older kids who have phones lol",
+        "trust": "medium",
+        "trust_why": "says no card + powered by instacart badge, but never heard of it and no reviews up top",
+        "next_step": "tap 'see a sample week' to see if the dinners are actually fast",
+        "delivers_food": "no",
+        "delivers_food_why": "the green line literally says 'We don't deliver food' right above the button"
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "almost nothing, but the whole top part is about kids voting by text and mine are 5 and 17 months, they can't text. Thursday meatballs are 35 min, too long for us",
+        "whats_missing": "a 'under 20 min' week that's the default, real food photos, and does Fry's work? It says Kroger only on the paid one",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 7, "trust": 6, "value": 8, "ease": 8, "want_to_sign_up": 7},
+      "quote": "ok the sample week has chicken tenders, taco night and english muffin pizzas with times on every one. my 5yo would eat 4 of those 5 lol"
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "meal plan thing, there's a video of a mom and kid cooking",
+        "who_for": "moms who want less stress? kinda vague",
+        "trust": "medium",
+        "trust_why": "looks like a real company but I can't tell what it costs and I'm not watching a video in the pickup line",
+        "next_step": "scroll for prices and prep times",
+        "delivers_food": "unsure",
+        "delivers_food_why": "'Less Stress, More Dinners' and a cooking video, nothing says if they send food or recipes"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "a pop-up asking for my email, no price anywhere, and the dinners shown are Pork Chops with Rosemary-Mustard Sauce and Plum-Watercress Salad. my kids would riot",
+        "whats_missing": "the price and how long each dinner takes",
+        "pay_per_month": 3
+      },
+      "scores": {"clarity": 5, "trust": 6, "value": 4, "ease": 5, "want_to_sign_up": 3},
+      "quote": "plum-watercress salad?? on a tuesday with a toddler screaming? and I scrolled the whole thing and still don't know what it costs"
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "hellofresh, the box people, with a 'pick a mystery box' game in my face",
+        "who_for": "people w/ time to cook 40 min dinners",
+        "trust": "medium",
+        "trust_why": "I know them, I used them, but 'open a box to reveal your offer' feels like a casino",
+        "next_step": "close the pop-up, honestly probably close the tab",
+        "delivers_food": "yes",
+        "delivers_food_why": "it's hellofresh, the boxes on screen, I literally got one in 2024"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "already did it, 'ready in 20 minutes' was 40 for me. prices hidden behind a zip code and a wall of fine print",
+        "whats_missing": "actual prices without typing my zip",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 4, "value": 2, "ease": 4, "want_to_sign_up": 2},
+      "quote": "'30 minutes or less' lol. the cooking took me 40 and that's why I cancelled. not falling for the mystery box"
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "an AI app that picks dinner for you",
+        "who_for": "busy families, 90,000 of them apparently",
+        "trust": "medium",
+        "trust_why": "90,000 families sounds legit and the app pic is cute, but the big orange button is a 'Letter from the CEO'?? why",
+        "next_step": "scroll to see reviews and price",
+        "delivers_food": "no",
+        "delivers_food_why": "the phone pic shows a menu and recipes, looks like an app not a box"
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "the FAQ says prices are in the app and the pricing page is $25 a month. way over my $10. counting 'messages' is weird",
+        "whats_missing": "prep times on the dinners and a normal price",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 6, "want_to_sign_up": 4},
+      "quote": "love the 'working mom of a toddler' review but $25 a month to text a robot? and the button is a CEO letter lol who reads that"
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "recipe saver + grocery list app",
+        "who_for": "people who already have a pile of recipes saved",
+        "trust": "high",
+        "trust_why": "4.8 on the app store and 'no card required' right there",
+        "next_step": "probably leave, I don't save recipes",
+        "delivers_food": "no",
+        "delivers_food_why": "says recipes, meal plans and grocery lists, all in one app"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "I have to bring my own recipes and do the planning. that's the part I can't do at 4:45",
+        "whats_missing": "someone picking dinners FOR me",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 7, "trust": 8, "value": 4, "ease": 4, "want_to_sign_up": 3},
+      "quote": "it literally says 'an app for do-ers'. babe I am not a do-er at 4:45 in the car line"
+    }
+  },
+  "dd_offer": {
+    "clear": "partly",
+    "why": "I saw 'no card' and 'Family free 14 days' but I skimmed and didn't get that Family is the paid version, I thought family = my family",
+    "expect_day_15": "probably starts charging $4.99 unless I cancel, that's how these work lol",
+    "expectation_correct": false
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "only one that showed me real kid dinners with times and a price, free, no card",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "DD shows the week and the price, eMeals shows a video and fancy pork chops"},
+      "PTE": {"winner": "DD", "reason": "DD picks the dinners, Plan to Eat makes me do it"},
+      "OL": {"winner": "DD", "reason": "free vs $25 a month for basically the same idea"},
+      "HF": {"winner": "DD", "reason": "my own walmart groceries for $64 beats a 40-minute box"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page, first screen: lead with 'five dinners under 30 minutes your kids will eat' and the sample week photos with prep times, instead of the kids-vote-by-text pitch (my kids can't text); and say whether Fry's works on the free plan."
+}

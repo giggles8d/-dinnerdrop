@@ -1,0 +1,120 @@
+{
+  "id": "P2-15",
+  "name": "Megan Fischer",
+  "simulated": true,
+  "order": ["DD", "OL", "PTE", "HF", "EM"],
+  "sites": {
+    "DD": {
+      "five_sec": {
+        "what_is_it": "Something that picks dinners and puts the groceries in your Instacart or Walmart cart, and texts your family to vote, which is cute.",
+        "who_for": "Families with older kids who can text back. Mine are 2 and 4 months, so, my husband votes I guess.",
+        "trust": "medium",
+        "trust_why": "'Dinner, handled.' is exactly what I want to hear, but there's no picture of any food or any family on the first screen, just a lot of words.",
+        "next_step": "Tap 'See a sample week'.",
+        "delivers_food": "no",
+        "delivers_food_why": "It literally says 'We don't deliver food.' So wait, I still have to cook and get the groceries? Okay but the cart part means Instacart brings it."
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "Not much. The Kroger cart is only on the paid Family plan and Kroger pickup is what I actually use. And it's not a box, so I still have to cook every night.",
+        "whats_missing": "Cost per serving (I had to do the math: about $3.20). Kroger cart on the free plan.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 8, "want_to_sign_up": 8},
+      "quote": "$64 for five dinners for four and nothing over 35 minutes, that's like $3 a serving, way under my EveryPlate math, and it goes in my Kroger cart?"
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "An app that just tells you what's for dinner before you ask.",
+        "who_for": "Exhausted moms. Me at 3 a.m.",
+        "trust": "medium",
+        "trust_why": "90,000 families and the phone picture looks really polished.",
+        "next_step": "Scroll the reviews.",
+        "delivers_food": "no",
+        "delivers_food_why": "It's a menu in an app with little notifications, no box."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Went to pricing and it's $25 a month for the normal one and they count your messages. The meal page said a 1-month free trial, so I'm confused which is true. Also no Kroger, just Instacart, Walmart, Amazon Fresh.",
+        "whats_missing": "A cost per meal, Kroger, one clear price.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 5, "trust": 6, "value": 4, "ease": 7, "want_to_sign_up": 5},
+      "quote": "'The mental load of dinner, lifted' got me at 3 a.m., then the pricing page said $25 a month and they count messages."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "An app for saving recipes and making meal plans and lists.",
+        "who_for": "Planner people. Pinterest girls with time.",
+        "trust": "high",
+        "trust_why": "4.8 App Store, 'no card required'.",
+        "next_step": "Probably leave, it says 'plan'.",
+        "delivers_food": "no",
+        "delivers_food_why": "Lady with a notebook. Lists."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Saving recipes from Pinterest is fun, but I'd still have to make the plan. 'Your recipes, your schedule, your plan' is the opposite of what I need right now.",
+        "whats_missing": "Someone choosing the dinners for me.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 7, "trust": 7, "value": 5, "ease": 4, "want_to_sign_up": 3},
+      "quote": "Saving Pinterest recipes is cute, but 'your recipes, your schedule, your plan' is the exact thing I can't do with a newborn."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "HelloFresh, meal kits, basically fancier EveryPlate.",
+        "who_for": "People with more money than us on maternity leave pay.",
+        "trust": "medium",
+        "trust_why": "I know the brand. The mystery box game is fun for a second, then it's obviously a sales thing.",
+        "next_step": "Peek at a box, honestly.",
+        "delivers_food": "yes",
+        "delivers_food_why": "Boxes, food bowls, it's a meal kit."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "No price unless I type my zip, and I already know it's more than EveryPlate. Fine print says the free meals count is based on a 4-person 5-recipe plan.",
+        "whats_missing": "A price per meal on the page.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 5, "value": 3, "ease": 6, "want_to_sign_up": 3},
+      "quote": "Okay the open-a-box thing got me for a sec, but I'd have to type my zip to see a price and I know it's more than EveryPlate."
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Meal plans app, mom and little girl in the video.",
+        "who_for": "Moms with little kids, like me.",
+        "trust": "medium",
+        "trust_why": "Looks normal and family-ish.",
+        "next_step": "Scroll for kid stuff and the price.",
+        "delivers_food": "no",
+        "delivers_food_why": "'Choose Your Meals', phone with a checklist."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "I scrolled the whole page and couldn't find what it costs. There's a pop-up for my email though.",
+        "whats_missing": "Price and cost per meal.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 5, "ease": 6, "want_to_sign_up": 4},
+      "quote": "Kid Friendly plan and it sends to Kroger, nice, but I scrolled the whole thing at 3 a.m. and never found what it costs."
+    }
+  },
+  "dd_offer": {
+    "clear": "partly",
+    "why": "I get no card, but the Kroger cart is in the Family part, so I wasn't sure if Kroger stops working after two weeks.",
+    "expect_day_15": "After two weeks the texting and the Kroger cart go away unless I pay $4.99, and I keep the free planner with Instacart and Walmart.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It picks the dinners, shows what the week costs, and it's cheaper per serving than EveryPlate.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "DinnerDrop shows a price and a weekly grocery total; eMeals shows neither."},
+      "PTE": {"winner": "DD", "reason": "DinnerDrop plans for me; Plan to Eat makes me plan."},
+      "OL": {"winner": "DD", "reason": "Ollie feels nicer but $25 a month with counted messages is a lot; DinnerDrop is free or $4.99."},
+      "HF": {"winner": "DD", "reason": "Way cheaper, even if I have to cook from the store."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page sample week: put the cost per serving next to the $64 total (about $3.20 a serving), so I can compare it to EveryPlate's $4.99 without doing math at 3 a.m."
+}

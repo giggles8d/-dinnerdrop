@@ -1,0 +1,50 @@
+{
+  "id": "P2-04",
+  "name": "Gloria Pruitt",
+  "simulated": true,
+  "order": ["EM", "PTE", "OL", "HF", "DD"],
+  "sites": {
+    "EM": {
+      "five_sec": {"what_is_it": "Some kind of supper-planning thing, 'Less Stress, More Dinners'", "who_for": "Young mamas with little ones, from the picture", "trust": "low", "trust_why": "It don't say what it costs or who's behind it up top", "next_step": "Have my granddaughter keep scrolling", "delivers_food": "unsure", "delivers_food_why": "Pictures of food in circles around a phone; I reckon they might send it"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "'Try Free for 14 Days' - those are the exact words that got my daughter charged a whole year. No price on it neither. I did like that it says you can shop yourself at the store of your choice, and there's a Diabetic plan", "whats_missing": "A price, 'no card' said plain, a phone number", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 3, "value": 3, "ease": 4, "want_to_sign_up": 2},
+      "quote": "That young'un read me 'Try Free for 14 Days' and I said stop right there, honey. That's how your aunt got charged a whole year."
+    },
+    "PTE": {
+      "five_sec": {"what_is_it": "A recipe and list program for the phone", "who_for": "Folks who like gadgets", "trust": "low", "trust_why": "'Free Trial' right there in the middle, even if it says no card", "next_step": "Stop", "delivers_food": "no", "delivers_food_why": "Says recipes and grocery lists, all in one app"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "After the trial it's $5.95 a month or $49 a year. I write my list on paper for nothing", "whats_missing": "Anything free for good", "pay_per_month": 0},
+      "scores": {"clarity": 6, "trust": 4, "value": 2, "ease": 4, "want_to_sign_up": 1},
+      "quote": "'Free Trial, no card required.' Then what? Then it's $5.95 a month, that's what. I write my list on the back of an envelope for free."
+    },
+    "OL": {
+      "five_sec": {"what_is_it": "A phone thing that tells you what's for supper", "who_for": "Busy young families", "trust": "low", "trust_why": "My granddaughter says it's AI. I don't trust a computer to feed Earl", "next_step": "Leave it", "delivers_food": "unsure", "delivers_food_why": "Little messages on the phone saying 'Tonight's dinner is a good one'"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Twenty-five dollars a month, and one that's a hundred", "whats_missing": "Plain food, plain price", "pay_per_month": 0},
+      "scores": {"clarity": 3, "trust": 2, "value": 1, "ease": 2, "want_to_sign_up": 1},
+      "quote": "A hundred dollars a month for the 'Always-On' one. I reckon Earl's disability check would laugh at that."
+    },
+    "HF": {
+      "five_sec": {"what_is_it": "Boxes of food they mail to you", "who_for": "City folks", "trust": "low", "trust_why": "Pick-a-box, like a carnival game", "next_step": "Close it", "delivers_food": "yes", "delivers_food_why": "HelloFresh boxes right in the middle of the screen"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Mail-order food 35 minutes from a Walmart, with a subscription in the fine print", "whats_missing": "Anything for us", "pay_per_month": 0},
+      "scores": {"clarity": 3, "trust": 2, "value": 1, "ease": 2, "want_to_sign_up": 1},
+      "quote": "Open a box to reveal your offer. Honey, I've been to the county fair. I know how that game works."
+    },
+    "DD": {
+      "five_sec": {"what_is_it": "Something that plans the week's suppers and texts the family", "who_for": "Families where everybody's got a phone", "trust": "low", "trust_why": "Says 'no card needed' plain as day, which I like, but I don't know what Instacart is", "next_step": "Ask my daughter if it's safe", "delivers_food": "no", "delivers_food_why": "My granddaughter read it: 'We don't deliver food'"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "It's all about putting groceries in a cart on the phone. I go to Walmart once a month with cash and a paper list, and it don't say what I do instead. Then there's '14 days free', which sounds like a trial to me. Long page, lots of little grey writing, no phone number", "whats_missing": "A way to just print the list, a phone number, big-pot plain suppers, diabetic choices up top (my granddaughter found 'Diabetic-friendly dinners' way down at the bottom)", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 5, "value": 4, "ease": 3, "want_to_sign_up": 3},
+      "quote": "It says plain 'no card needed' and a lady named Sarah made it. That's something. But I don't buy groceries on the phone, and it don't say what I do instead."
+    }
+  },
+  "dd_offer": {"clear": "partly", "why": "'Free forever' and then '14 days free' - which is it? Sounds like one of them trials", "expect_day_15": "I reckon on day 15 they'll start wanting money, or ask for a card.", "expectation_correct": false},
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "Only one that says free forever and no card, with a real lady's name on it. I'd still have my daughter look first",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "eMeals won't say what it costs and says 'free trial'"},
+      "PTE": {"winner": "DD", "reason": "Plan to Eat costs money after two weeks"},
+      "OL": {"winner": "DD", "reason": "No AI and no $25"},
+      "HF": {"winner": "DD", "reason": "Not mail-order boxes"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page, top of the screen in big type: 'No card. No charge. Shop online or print the list for your Walmart trip', with Sarah's picture and a way to call or write her."
+}

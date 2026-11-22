@@ -1,0 +1,120 @@
+{
+ "id": "P3-10",
+ "name": "Aisha Rahman",
+ "simulated": true,
+ "order": ["PTE", "DD", "OL", "EM", "HF"],
+ "sites": {
+  "PTE": {
+   "five_sec": {
+    "what_is_it": "A recipe keeper plus meal planner plus grocery list app.",
+    "who_for": "People who already collect recipes and want them organised.",
+    "trust": "medium",
+    "trust_why": "4.8 App Store / 4.7 Google Play right on top, and 'no card required.' Feels established.",
+    "next_step": "Scroll to see if it can pull recipes from Instagram, because that's where all my halal recipes live.",
+    "delivers_food": "no",
+    "delivers_food_why": "It says recipes, meal plans and grocery lists, and the photo is someone writing a list."
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "It's a box for my own recipes, which is actually safe for halal because nothing gets in that I didn't put there. But it doesn't plan anything for me. I'd still be the one deciding seven nights for six people, and that's exactly what burned me out during Ramadan.",
+    "whats_missing": "Any suggestions or planning done for me. Any way for grandpa and the kids to pick. A word about halal or excluding pork.",
+    "pay_per_month": 4
+   },
+   "scores": {"clarity": 8, "trust": 7, "value": 6, "ease": 6, "want_to_sign_up": 5},
+   "quote": "Saving from Instagram and TikTok is nice, my halal accounts are all there. But it's still me doing the planning. That's the part I'm tired of."
+  },
+  "DD": {
+   "five_sec": {
+    "what_is_it": "It texts the whole family dinner ideas, they vote, and the list goes to Instacart.",
+    "who_for": "Families who argue about dinner. So, mine.",
+    "trust": "medium",
+    "trust_why": "'Powered by Instacart' and 'no card needed' help. I don't know the brand at all though.",
+    "next_step": "Look for diet options and whether halal is named.",
+    "delivers_food": "no",
+    "delivers_food_why": "It literally says 'We don't deliver food. We plan your week and send your grocery list.'"
+   },
+   "full_page": {
+    "would_sign_up": "yes",
+    "what_stopped_me": "Halal is not named anywhere. 'Dietary needs' is vague and the sample week just says 'Honey Garlic Meatballs,' which meatballs? I'd have to test whether pork or wine shows up. Also not sure it handles six; the sample is a family of four.",
+    "whats_missing": "A halal / no pork / no alcohol setting. A way to keep meat off the cart because I buy it at the butcher. The page says I review every item in Instacart, so I can delete it there, but that's me fixing it every week.",
+    "pay_per_month": 3
+   },
+   "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 8, "want_to_sign_up": 7},
+   "quote": "Texting 8 ideas and everyone replies with numbers? Baba would actually do that 😂 Just tell me there's a halal setting, inshallah."
+  },
+  "OL": {
+   "five_sec": {
+    "what_is_it": "An AI app that plans dinner for you.",
+    "who_for": "Busy families, 90,000 of them apparently.",
+    "trust": "medium",
+    "trust_why": "The number and the press logos look solid, but the main button is 'Letter from the CEO,' which is a weird thing to lead with.",
+    "next_step": "Scroll for diet options and price.",
+    "delivers_food": "no",
+    "delivers_food_why": "The phone shows a menu and grocery-list style screens, not a box."
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "The meals page says a free 1-month trial and 'prices when you download the app,' and the pricing page says $25 a month for the family plan. $25 a month to plan dinners is a no for us.",
+    "whats_missing": "Halal. Does the AI know no wine in the sauce? It 'writes a recipe just for you' which could go either way.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 6, "value": 3, "ease": 6, "want_to_sign_up": 4},
+   "quote": "The reviews say it's clutch for picky houses, love that. But $25 a month and it never says halal. Hard pass for now."
+  },
+  "EM": {
+   "five_sec": {
+    "what_is_it": "Weekly meal plans with a video.",
+    "who_for": "Moms with small kids.",
+    "trust": "medium",
+    "trust_why": "Big company feel, but no price and no detail up top.",
+    "next_step": "Look at the meal plans list.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "A phone surrounded by food icons. Could be an ordering app."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "The sample dinners are Pork Chops with Rosemary-Mustard Sauce, Cheesy Bacon-Wrapped Chicken Tenders, Shrimp Po' Boys and a 'White Wine and Olive Oil' side. That's every red flag in one carousel.",
+    "whats_missing": "15 plans and none is halal. No price unless you dig into support.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 5, "value": 3, "ease": 5, "want_to_sign_up": 2},
+   "quote": "Bacon-wrapped chicken tenders on the home page. Yeah, this was not built with us in mind."
+  },
+  "HF": {
+   "five_sec": {
+    "what_is_it": "HelloFresh. Meal kit boxes. With a mystery box game now, apparently.",
+    "who_for": "People who don't mind non-halal meat.",
+    "trust": "medium",
+    "trust_why": "I know the brand, I tried it. The 'open a box' pop-up is gimmicky.",
+    "next_step": "Close it.",
+    "delivers_food": "yes",
+    "delivers_food_why": "Green HelloFresh boxes and plates of food. And I've had the boxes."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "Same as last time: the meat isn't halal, so I'd only cook the veggie meals. Pork sausage, bacon, pork chops all over the menu.",
+    "whats_missing": "Halal meat. A price without typing my zip code.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 5, "value": 2, "ease": 6, "want_to_sign_up": 1},
+   "quote": "Been there. Paid for boxes and only cooked the veggie ones. Not doing that again."
+  }
+ },
+ "dd_offer": {
+  "clear": "clear",
+  "why": "It says no card, nothing to cancel, you go back to free, and they email 3 days before. That's very spelled out.",
+  "expect_day_15": "The group texting and the per-person profiles stop and I'm back on the free planner, unless I added a card myself.",
+  "expectation_correct": true
+ },
+ "head_to_head": {
+  "winner": "DD",
+  "reason": "The family voting by text is exactly how I'd get grandpa and the kids each a night, and it's free to test whether it respects halal.",
+  "pairwise": {
+   "PTE": {"winner": "DD", "reason": "Plan to Eat is safer for halal because it's my own recipes, but it doesn't plan for me or let the family vote."},
+   "OL": {"winner": "DD", "reason": "Same idea of texting, but Ollie is $25 a month and DinnerDrop's family plan is $4.99."},
+   "EM": {"winner": "DD", "reason": "eMeals opens with pork chops and bacon. DinnerDrop's sample week at least has nothing obviously haram."},
+   "HF": {"winner": "DD", "reason": "HelloFresh meat isn't halal; DinnerDrop lets me buy the meat at my butcher."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Pricing page (/start), in the FAQ 'What if my family is picky?': name halal in the diet list (no pork, no alcohol in cooking) and say you can keep meat off the cart list because you buy it elsewhere. Also state the biggest household size it plans for."
+}

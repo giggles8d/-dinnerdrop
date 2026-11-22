@@ -1,0 +1,50 @@
+{
+  "id": "P2-08",
+  "name": "Rachel Bauer",
+  "simulated": true,
+  "order": ["OL", "PTE", "EM", "DD", "HF"],
+  "sites": {
+    "OL": {
+      "five_sec": {"what_is_it": "AI meal planning app", "who_for": "Overloaded parents", "trust": "medium", "trust_why": "90,000 families and a 4.8, but the main button is a CEO letter", "next_step": "Look for allergy settings and Kroger", "delivers_food": "no", "delivers_food_why": "Menu screen with 'Replace' and 'Modify'; it's a planner"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "'Ollie writes a recipe just for you' - with a tree-nut allergy I want tested recipes, not improvised ones. No Kroger/King Soopers. $25/month on the pricing page vs 'prices in the app' on the meals page", "whats_missing": "Allergy filter shown, Kroger, one price", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 4, "value": 2, "ease": 6, "want_to_sign_up": 2},
+      "quote": "'A recipe just for you,' written by AI. With a tree-nut allergy I want a tested recipe. Also $25 a month vs my $6.99."
+    },
+    "PTE": {
+      "five_sec": {"what_is_it": "Recipe manager, planner and list", "who_for": "People who curate their own recipes", "trust": "high", "trust_why": "4.8 App Store / 4.7 Google Play right at the top", "next_step": "Check what happens to recipes from blogs", "delivers_food": "no", "delivers_food_why": "It's an app"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Bring-your-own recipes; Mealime gave me recipes. The clipper pulls from websites, which is the Samsung Food problem I'm trying to escape. No per-person allergy settings mentioned", "whats_missing": "Built-in recipes, per-person allergy filter, named Kroger delivery", "pay_per_month": 4},
+      "scores": {"clarity": 8, "trust": 8, "value": 5, "ease": 5, "want_to_sign_up": 4},
+      "quote": "Since 2008 and 4.8 stars, so it won't vanish like Mealime. But 'save recipes while you scroll' is Samsung Food's blog-hopping in a nicer coat."
+    },
+    "EM": {
+      "five_sec": {"what_is_it": "Meal plan subscription", "who_for": "Families who want plans picked for them", "trust": "medium", "trust_why": "Established, but no price", "next_step": "Check plan types for allergies", "delivers_food": "no", "delivers_food_why": "Phone with a list"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Plans are by diet for the whole house (Plant Based, Gluten Free), not one vegetarian teen plus a nut-allergic 10-year-old. No nut filter shown. Price not on the page", "whats_missing": "Per-person diets, nut filter, price", "pay_per_month": 5},
+      "scores": {"clarity": 6, "trust": 6, "value": 5, "ease": 6, "want_to_sign_up": 4},
+      "quote": "Kroger and 15 plans, fine. But it's one 'Plant Based' plan for the whole house, not one vegetarian teen and one nut-allergic 10-year-old."
+    },
+    "DD": {
+      "five_sec": {"what_is_it": "Weekly planner with family voting by text and a one-tap Instacart/Walmart cart", "who_for": "Families with several eaters", "trust": "medium", "trust_why": "Founder named lower down, 'no card' clear; no App Store rating, and nothing on how long it's been around", "next_step": "Find allergies and Kroger", "delivers_food": "no", "delivers_food_why": "'We don't deliver food'"},
+      "full_page": {"would_sign_up": "yes", "what_stopped_me": "'Over 500 families' is small; Mealime had far more and still closed. King Soopers isn't named, only 'Kroger cart on Family'. I can't see a recipe's steps, only titles. Unclear whether the free plan's nut-allergy handling is per person or for the whole household", "whats_missing": "King Soopers named, launch date, a recipe screen, export of favorites", "pay_per_month": 3.25},
+      "scores": {"clarity": 8, "trust": 6, "value": 8, "ease": 7, "want_to_sign_up": 7},
+      "quote": "Per-person profiles with allergies and a Kroger cart for $39 a year beats Samsung Food+. Now tell me King Soopers counts, and that you'll still be here next year."
+    },
+    "HF": {
+      "five_sec": {"what_is_it": "Meal kit delivery", "who_for": "People who don't want to shop", "trust": "low", "trust_why": "Box-game popup", "next_step": "Close it", "delivers_food": "yes", "delivers_food_why": "HelloFresh boxes"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Pecans, walnuts and candied peanuts across this week's menu; no allergy controls shown; price behind a zip code", "whats_missing": "Allergy information, price", "pay_per_month": 0},
+      "scores": {"clarity": 4, "trust": 4, "value": 2, "ease": 6, "want_to_sign_up": 1},
+      "quote": "Pecans, walnuts, candied peanuts all over this week's menu, and I can't see a price without a zip code. Pass."
+    }
+  },
+  "dd_offer": {"clear": "clear", "why": "Stated on the home page and pricing page: 14 days, no card, then add a card or go back to Free", "expect_day_15": "Per-person profiles and the Kroger cart switch off and I'm on Free; no charge because I never gave a card.", "expectation_correct": true},
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "Per-person allergy profiles and a Kroger cart at $39 a year, under what I pay Samsung Food+",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "Per-person profiles beat one diet plan for the whole house"},
+      "PTE": {"winner": "DD", "reason": "Plan to Eat will outlast anyone, but it makes me bring the recipes"},
+      "OL": {"winner": "DD", "reason": "Tested dinners and $39/yr vs AI-written recipes at $25/mo"},
+      "HF": {"winner": "DD", "reason": "I control the ingredients; HelloFresh's menu is full of nuts"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Pricing page (/start): name the Kroger family stores that work (King Soopers etc.), say when DinnerDrop launched, and say you can export favorites if you leave."
+}

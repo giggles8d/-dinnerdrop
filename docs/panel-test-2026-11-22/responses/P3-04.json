@@ -1,0 +1,47 @@
+{
+ "id": "P3-04",
+ "name": "Rosa Delgado",
+ "simulated": true,
+ "order": ["DD", "EM", "HF", "OL", "PTE"],
+ "sites": {
+  "DD": {
+   "five_sec": {"what_is_it": "It texts the whole family the dinner ideas, they pick, and the list goes in Walmart or Instacart", "who_for": "Families with kids, busy moms", "trust": "medium", "trust_why": "Simple words, says no card, says they don't deliver. But no big family in the picture", "next_step": "Tap 'See a sample week' to see if it's real food", "delivers_food": "no", "delivers_food_why": "The green part says 'We don't deliver food'"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Good things: 1) everybody votes by text, and we already live on texts, 2) it shows dollars, $64 for the week and a 'Budget $100/week' button, 3) Walmart. But the sample is 'serves 4' and 'Family of 4'. I'm seven. Low-sodium only shows up as a tiny 'Heart-healthy dinners' link at the very bottom. No Spanish for Lupe, no H-E-B", "whats_missing": "A family of 7 example; a low-sodium setting I can see; Spanish; H-E-B", "pay_per_month": 3},
+   "scores": {"clarity": 7, "trust": 6, "value": 7, "ease": 7, "want_to_sign_up": 6},
+   "quote": "I like that it texts everybody and shows $64 for the week. But 'family of 4', mija? Show me seven, and something for my suegra's salt."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Meal plans in an app, with a video", "who_for": "Moms who want healthy dinners", "trust": "medium", "trust_why": "Happy mom and little girl, looks like a real company", "next_step": "Watch the video", "delivers_food": "unsure", "delivers_food_why": "'Less Stress, More Dinners' and a kitchen; I'm not sure if they send food"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "They have a 'Heart Healthy' plan, which is what Lupe needs, and 'Budget Friendly' and Walmart. But no price that I can see, it doesn't say how many people, and 'Pork Chops with Rosemary-Mustard Sauce' and 'Shrimp Po' Boys' are not what my kids eat", "whats_missing": "Price; family size; familiar food", "pay_per_month": 3},
+   "scores": {"clarity": 5, "trust": 6, "value": 5, "ease": 5, "want_to_sign_up": 5},
+   "quote": "Oye, a Heart Healthy plan, that's what Lupe needs. But how much? It doesn't say, and Rosemary-Mustard pork chops is not my kitchen."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "Food boxes they send to your house", "who_for": "Couples, people with money", "trust": "low", "trust_why": "'Open a box to reveal your offer', like a game at the fair", "next_step": "Close it", "delivers_food": "yes", "delivers_food_why": "Boxes with their name and 'Free Meals'"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Boxes never made sense for seven. 'Chef-crafted' recipes, and the price is hidden until I put in a zip", "whats_missing": "A price; anything low-sodium for a heart patient", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 3, "value": 1, "ease": 4, "want_to_sign_up": 1},
+   "quote": "'Bold, chef-crafted recipes' and a box to open for a prize. For seven people that's a car payment. No, gracias."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "An app on the phone that picks dinner", "who_for": "Families", "trust": "medium", "trust_why": "'Trusted by 90,000+ families' sounds good", "next_step": "Scroll down", "delivers_food": "unsure", "delivers_food_why": "Pictures of food on a phone, maybe they bring it?"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "$25 a month for 'messages'. The reviews say 'family of 4'. Nothing about low salt or Spanish", "whats_missing": "Low-sodium; big family; a cheap price", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 5, "value": 2, "ease": 5, "want_to_sign_up": 2},
+   "quote": "Twenty-five dollars a month for 'messages'? I text my sister for free. And nothing about low salt."
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "An app for recipes and grocery lists", "who_for": "Organized people", "trust": "medium", "trust_why": "Stars and 'no card required'", "next_step": "Look for price", "delivers_food": "no", "delivers_food_why": "It's app store buttons and lists"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "It's an empty recipe book. I know how to make arroz and fideo; I need someone to tell me how to make it low-salt for seven", "whats_missing": "Ideas; low-sodium; big family", "pay_per_month": 0},
+   "scores": {"clarity": 7, "trust": 7, "value": 4, "ease": 5, "want_to_sign_up": 3},
+   "quote": "Nice that it says no card. But it's an empty recipe book; I already know my recipes, I need them low-salt."
+  }
+ },
+ "dd_offer": {"clear": "partly", "why": "Free forever, Family free 14 days, then $4.99: I had to read it twice to see which part is free for always", "expect_day_15": "The texting part stops and I keep the free plan. Nobody charges me because I never gave a card.", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "It's free, it goes to Walmart, it shows the week in dollars, and the whole family can vote by text",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "eMeals has the heart plan, but no price and no family size; DinnerDrop is free and shows dollars"},
+   "PTE": {"winner": "DD", "reason": "Plan to Eat is an empty book; DinnerDrop gives me the dinners"},
+   "OL": {"winner": "DD", "reason": "DinnerDrop is free; Ollie is $25 for messages"},
+   "HF": {"winner": "DD", "reason": "Boxes for seven people is crazy money"}
+  }},
+ "dd_fix_that_would_move_me": "Home page sample week: add a 'Family of 7' and a 'Low-sodium / heart-healthy' tab next to Kid-friendly and Gluten-free, and say how many people it can plan for."
+}

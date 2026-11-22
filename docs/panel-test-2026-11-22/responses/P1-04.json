@@ -1,0 +1,120 @@
+{
+  "id": "P1-04",
+  "name": "Rachel Kim-Hoffman",
+  "simulated": true,
+  "order": ["EM", "PTE", "OL", "DD", "HF"],
+  "sites": {
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Meal-plan subscription. Video hero, generic tagline.",
+        "who_for": "Mainstream families who want recipes picked.",
+        "trust": "medium",
+        "trust_why": "Feels like an established brand, but the design is dated and the hero communicates nothing except 'stress bad'.",
+        "next_step": "Skip the video, scroll for pricing and Instacart.",
+        "delivers_food": "no",
+        "delivers_food_why": "How-it-works illustration is a phone with a checklist; step 2 sends a list to grocers."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Email-capture pop-up on load, no visible price, and the sample recipes skew adult (rosemary-mustard pork chops, bok choy). My 3-year-old eats none of that.",
+        "whats_missing": "Price on the page, product screenshots, how many nights the plan covers.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 5, "trust": 6, "value": 5, "ease": 5, "want_to_sign_up": 4},
+      "quote": "Instacart logo, Kid Friendly plan, then a collapsed accordion for price. That's friction by design."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "Recipe organizer, planner and grocery list.",
+        "who_for": "Planners who enjoy planning.",
+        "trust": "high",
+        "trust_why": "Ratings on both stores up top, no card required.",
+        "next_step": "Check whether it plans for me. It doesn't look like it.",
+        "delivers_food": "no",
+        "delivers_food_why": "Tagline: recipes, meal plans and grocery lists in one app."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "It's a tool for doing the work, and the work is what I'm paying to outsource.",
+        "whats_missing": "Any decision-making on my behalf.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 8, "trust": 8, "value": 4, "ease": 5, "want_to_sign_up": 2},
+      "quote": "'You're in control. Add your recipes, move meals around anytime.' That's the opposite of my brief."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "AI that decides dinner for the family.",
+        "who_for": "Overloaded parents who want the decision gone. Me.",
+        "trust": "high",
+        "trust_why": "Polished app mockup, 90,000+ families, press logos further down. Looks like a funded product, not a side project. The CEO-letter CTA is odd though.",
+        "next_step": "Scroll for Instacart and pricing.",
+        "delivers_food": "no",
+        "delivers_food_why": "Menu app screens with 'Replace' and 'Modify' on each dinner."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Pricing is message-metered and the meal page says 'prices are available when you download the app' while the pricing page says $25/month. Inconsistent. Also 'AI writes a recipe just for you' makes me wonder about quality.",
+        "whats_missing": "A clear plan price for meals only; kid-specific handling.",
+        "pay_per_month": 15
+      },
+      "scores": {"clarity": 6, "trust": 7, "value": 6, "ease": 7, "want_to_sign_up": 6},
+      "quote": "'Ollie takes over the decision itself.' Yes. That's the job. I'd pay for it, I just want one price, not message top-ups."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "Dinner planner: family votes by text, list goes into your Instacart or Walmart cart.",
+        "who_for": "Families with kids old enough to text.",
+        "trust": "medium",
+        "trust_why": "Clean enough, Instacart badge helps, explicit 'we don't deliver food'. But it's a wall of text with no product screenshot on the first screen.",
+        "next_step": "Check the Instacart flow and pricing.",
+        "delivers_food": "no",
+        "delivers_food_why": "Bold line: 'We don't deliver food. We plan your week and send your grocery list.'"
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "The headline feature is a vote by text; my kids are 7 and 3, so the hero pitch isn't for me. 'Over 500 families' and a store-price chart of upstate New York stores reads like a founder's side project. Footer full of 'Shop' and 'Kitchen essentials' links doesn't help.",
+        "whats_missing": "Real app screenshots on the home page, and 'we decide the week for you' as the default promise.",
+        "pay_per_month": 10
+      },
+      "scores": {"clarity": 7, "trust": 6, "value": 8, "ease": 7, "want_to_sign_up": 6},
+      "quote": "Built on the Instacart Developer Platform, five nights, free. Good. But a Wegmans vs. Tops price chart means nothing in Ballard."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "HelloFresh, with a 'mystery box' offer gate.",
+        "who_for": "New customers they're trying to hook.",
+        "trust": "medium",
+        "trust_why": "I'm a current customer, so I know the product. The gamified pop-up is cheap.",
+        "next_step": "Close it. I'm here to compare, not to buy more.",
+        "delivers_food": "yes",
+        "delivers_food_why": "Meal-kit boxes; it's literally the product."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Already paying ~$100 a week for 3 dinners after unannounced price creep. Prices hidden behind a zip box.",
+        "whats_missing": "Transparent pricing.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 4, "value": 3, "ease": 6, "want_to_sign_up": 2},
+      "quote": "Still no price without a zip code. Which is how I ended up paying $100 a week without noticing."
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "Pricing card states it: Family free 14 days, no card, $4.99 or $39 after if you add a card, email 3 days before.",
+    "expect_day_15": "Texting features lapse, I stay on Free. No charge since I never added a card.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "OL",
+    "reason": "It's the only one that reads as a finished product promising to make the decisions for me; the price is noise next to my HelloFresh bill.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "DinnerDrop shows its price and an actual week; eMeals hides both."},
+      "PTE": {"winner": "DD", "reason": "DinnerDrop plans for me; Plan to Eat hands me a toolkit."},
+      "OL": {"winner": "OL", "reason": "Ollie looks like a real, polished product that decides for me; DinnerDrop's hero is a kids' vote and an upstate store chart."},
+      "HF": {"winner": "DD", "reason": "Five nights in my existing Instacart for free versus $400 a month for three."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page first screen: replace the text-heavy voting pitch with real app screenshots and a 'we pick your five dinners' promise (voting as an option), and move the upstate NY store chart off the home page."
+}

@@ -1,0 +1,47 @@
+{
+ "id": "P3-08",
+ "name": "Megan Holloway",
+ "simulated": true,
+ "order": ["HF", "PTE", "EM", "OL", "DD"],
+ "sites": {
+  "HF": {
+   "five_sec": {"what_is_it": "Meal kit boxes, with a pick-a-box prize pop-up", "who_for": "Couples and small families who want ingredients shipped", "trust": "medium", "trust_why": "Big real brand, but the box game is pure gimmick", "next_step": "Continue Without Offer and look at plans", "delivers_food": "yes", "delivers_food_why": "Green boxes and '10 Free Meals'"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "A meal kit for nine people? Half the menu is Parmesan, cheddar and crema, so it's no good for my dairy-free girl, and the price hides behind a zip code", "whats_missing": "Big-family sizes; dairy-free; price", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 4, "value": 1, "ease": 4, "want_to_sign_up": 1},
+   "quote": "A box to open for a prize! Cute, but for nine of us 'Cheesy Smashed Burgers' is a second mortgage, and half the menu is dairy!"
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "Plan to Eat, my app!", "who_for": "Planners like me with a big recipe collection", "trust": "high", "trust_why": "Four years of using it, and the 4.8 rating matches my experience", "next_step": "Check whether the Black Friday sale is on", "delivers_food": "no", "delivers_food_why": "It's the recipe-and-list app I know"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "Nothing! The 'Nov 27-30, $24.50/year' sale means I'm renewing. My only wish: the 'Deliver Groceries' button still doesn't name Walmart, so I'm retyping my list", "whats_missing": "A real one-tap Walmart cart; auto-scaling for 9 that I don't have to fuss with", "pay_per_month": 4},
+   "scores": {"clarity": 9, "trust": 9, "value": 9, "ease": 7, "want_to_sign_up": 9},
+   "quote": "Nov 27-30, $24.50 a year! I'm stocking up. Still wish 'Deliver Groceries' said Walmart by name."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Meal plans, somebody else's recipes", "who_for": "Families who want to be told what to cook", "trust": "medium", "trust_why": "Well-known, just not for me", "next_step": "Check if I can bring my own recipes", "delivers_food": "no", "delivers_food_why": "'How It Works' shows a phone and a list"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Fixed menus: fifteen plans of their recipes, and 'Can I use the eMeals app to shop and cook other recipes?' is a collapsed FAQ with no answer showing. I had to dig for the price too", "whats_missing": "Importing my 300 recipes; family size; visible price", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 6, "value": 4, "ease": 6, "want_to_sign_up": 3},
+   "quote": "Fifteen plans of somebody else's recipes. I have 300 of my own! And I had to dig for 'How much does eMeals cost?'"
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "An AI dinner planner", "who_for": "Parents who want dinner decided for them", "trust": "medium", "trust_why": "Nice design and '90,000+ families'", "next_step": "Scroll to see if it uses my recipes", "delivers_food": "no", "delivers_food_why": "Phone app mockup"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The AI writes 'a recipe just for you'. I want MY recipes. And $25 a month is half a year of Plan to Eat in one month", "whats_missing": "Recipe import; big-family proof; reasonable price", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 5, "value": 2, "ease": 6, "want_to_sign_up": 2},
+   "quote": "'Writes a recipe just for you': sweet, but my sourdough-mom heart wants MY recipes. And $25 a month is half my year of Plan to Eat!"
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "Plans the week, the family votes by text, then one tap fills an Instacart or Walmart cart", "who_for": "Busy families", "trust": "medium", "trust_why": "Clear and honest ('We don't deliver food'), but no big family anywhere", "next_step": "See a sample week and look for a family size limit", "delivers_food": "no", "delivers_food_why": "It says 'We don't deliver food' in bold"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "The free one-tap Walmart cart is exactly the reel I saw! Dairy-free is listed, a per-person profile could cover my 9-year-old, and $39/yr beats $49. But there's no way to bring my 300 recipes, the sample is 'Family of 4' with no size limit stated, and it's five weeknight dinners when I plan two weeks at a time", "whats_missing": "Recipe import; 'up to 9+' family size; planning more than one week", "pay_per_month": 3},
+   "scores": {"clarity": 7, "trust": 7, "value": 7, "ease": 8, "want_to_sign_up": 6},
+   "quote": "The free Walmart cart is what I came for! But where do my 300 recipes go, and does 'family size' go to nine? The sample is four."
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "It's spelled out in the pricing box and FAQ: no card, 14 days, then the free plan", "expect_day_15": "Back to the free plan, I keep the Walmart cart, no charge since there's no card.", "expectation_correct": true},
+ "head_to_head": {"winner": "PTE", "reason": "My 300 recipes live there and the $24.50 sale makes it a no-brainer",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "A free Walmart cart beats paying for someone else's fixed menu"},
+   "PTE": {"winner": "PTE", "reason": "My own recipes and two-week planning; DinnerDrop can't import them"},
+   "OL": {"winner": "DD", "reason": "Free and honest versus $25 a month of AI recipes"},
+   "HF": {"winner": "DD", "reason": "Nine people and a dairy-free kid rule out boxes"}
+  }},
+ "dd_fix_that_would_move_me": "Home page 'What you get': say plainly whether I can add or import my own recipes, and state the family size it plans for (show a family of 9 example)."
+}

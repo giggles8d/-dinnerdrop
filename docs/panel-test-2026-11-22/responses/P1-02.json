@@ -1,0 +1,120 @@
+{
+  "id": "P1-02",
+  "name": "Marcus Bell",
+  "simulated": true,
+  "order": ["OL", "DD", "PTE", "HF", "EM"],
+  "sites": {
+    "OL": {
+      "five_sec": {
+        "what_is_it": "An AI meal-planning app that picks dinners and nudges you with notifications.",
+        "who_for": "Families who want the decision taken away entirely.",
+        "trust": "medium",
+        "trust_why": "90,000+ families is a real-sounding number, but the primary call to action is a CEO letter, not a product action. That's a strange workflow.",
+        "next_step": "Find the pricing page and check whether Kroger is supported.",
+        "delivers_food": "no",
+        "delivers_food_why": "The mockup is a menu app with 'Replace' and 'Modify' buttons on a recipe card."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Pricing is metered by 'messages': $25/month for 150. For a meal planner. And the grocery handoff is Instacart, Walmart or Amazon Fresh, no Kroger.",
+        "whats_missing": "Kroger, a servings setting, and anything about schedules beyond a date picker.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 5, "value": 2, "ease": 6, "want_to_sign_up": 3},
+      "quote": "Top-ups at $0.30 a message. I'm not budgeting text messages to find out what's for dinner on a baseball night."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "A weekly dinner planner where the family votes by text and the list goes to Instacart or Walmart.",
+        "who_for": "Households where more than one person has opinions about dinner. Mine.",
+        "trust": "medium",
+        "trust_why": "Plain statement that they don't deliver food and 'no card needed' up front. No App Store rating shown, and it's a company I've never heard of.",
+        "next_step": "Jump to pricing and find where Kroger fits.",
+        "delivers_food": "no",
+        "delivers_food_why": "It says so in bold under the paragraph: 'We don't deliver food. We plan your week and send your grocery list.'"
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "Kroger cart is on the paid Family plan, and nothing explains whether that's a real cart push or a deep link. The iPhone app is iPhone only; I'm on a Pixel, so it's 'Add to Home Screen'.",
+        "whats_missing": "How it handles practice nights (it mentions 'cook nights' and time to cook, not a calendar), and a sample for 5 people instead of 4.",
+        "pay_per_month": 3.25
+      },
+      "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 7, "want_to_sign_up": 8},
+      "quote": "Kids reply with numbers, top five become the week, Kroger cart on Family at $39 a year. That's an actual workflow, not more recipes."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "Recipe organizer with a meal calendar and grocery list.",
+        "who_for": "People who already collect recipes and like to plan.",
+        "trust": "high",
+        "trust_why": "4.8 App Store, 4.7 Google Play, both shown. That's the kind of proof I check anyway.",
+        "next_step": "Look at how the grocery list gets to a store.",
+        "delivers_food": "no",
+        "delivers_food_why": "'Recipes, Meal Plans and Grocery Lists, All in One App'."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "It's a toolbox. I still pick every recipe. And the store handoff is a vague 'grocery delivery' line, no Kroger named.",
+        "whats_missing": "Suggested meals; a clear Kroger integration.",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 8, "trust": 8, "value": 6, "ease": 5, "want_to_sign_up": 5},
+      "quote": "Pricing page is the most honest of the bunch: $49 a year, no surprise renewals. But 'an app for do-ers' means I'm still doing it."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "Meal-kit delivery, with a 'pick a mystery box' offer pop-up.",
+        "who_for": "Couples with time and budget.",
+        "trust": "low",
+        "trust_why": "A gamified offer pop-up is exactly the sales gimmick I avoid.",
+        "next_step": "Dismiss and look for a price. There isn't one.",
+        "delivers_food": "yes",
+        "delivers_food_why": "Meal boxes on screen; I've had them."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Prices behind a zip code; fine print says shipping on every box after the first. For five people with a teenager it was never sustainable.",
+        "whats_missing": "Price for 5.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 4, "value": 2, "ease": 5, "want_to_sign_up": 2},
+      "quote": "'10 Free Meals' is 'based on total discount given on first box for a 4-person, 5-recipe plan.' I've read enough fine print for one evening."
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Meal plan subscription with a video hero.",
+        "who_for": "Families, generally.",
+        "trust": "medium",
+        "trust_why": "Established brand, but the first screen is a video and a generic slogan.",
+        "next_step": "Look for Kroger and price.",
+        "delivers_food": "no",
+        "delivers_food_why": "The how-it-works graphic is a phone with a checklist; step 2 sends a list to grocers."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Price is buried in a collapsed FAQ; trial renews into paid. Kroger is listed though, and there's a 30 Minute plan.",
+        "whats_missing": "Price on the page, servings, and how practice nights would work.",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 5, "trust": 6, "value": 5, "ease": 6, "want_to_sign_up": 5},
+      "quote": "Kroger logo, 30 Minute plan, two million customers. Then 'How much does eMeals cost?' is a closed accordion. Classic."
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "The pricing block and FAQ spell it out: Family free 14 days, no card, add a card from Account to keep it, otherwise you drop to Free.",
+    "expect_day_15": "Family features switch off and I'm on the free plan unless I've added a card. Nothing gets charged.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It's the only one built around the household deciding together, and the Kroger cart is $39 a year.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "Both reach Kroger, but DinnerDrop shows its price and lets the family vote instead of me texting everyone."},
+      "PTE": {"winner": "DD", "reason": "Plan to Eat organizes recipes I don't have; DinnerDrop picks the dinners."},
+      "OL": {"winner": "DD", "reason": "$3.25 a month with Kroger beats $25 a month in metered messages without it."},
+      "HF": {"winner": "DD", "reason": "Kits for five cost too much and took 40 minutes; DinnerDrop sends groceries I already buy."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Pricing page (/start): explain how the Kroger cart push actually works with a screenshot, and show a 5-person, practice-night example week, plus say plainly how Android users install it."
+}

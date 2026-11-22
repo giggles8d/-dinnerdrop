@@ -1,0 +1,48 @@
+{
+ "id": "P1-10",
+ "name": "Amanda Sorensen",
+ "simulated": true,
+ "order": ["PTE", "EM", "HF", "OL", "DD"],
+ "sites": {
+  "PTE": {
+   "five_sec": {"what_is_it": "Plan to Eat. The recipe organizer I already trialed.", "who_for": "People who have a recipe collection and like building plans.", "trust": "high", "trust_why": "4.8 App Store and 4.7 Google Play right on the hero, and 'no card required' is honest. It's a real product, just not for me.", "next_step": "Honestly, back out.", "delivers_food": "no", "delivers_food_why": "Hero says 'Recipes, Meal Plans and Grocery Lists, All in One App.' It's an app."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Same reason as last time. 'Save, Organize, Plan, Shop' means I do the saving, organizing and planning. That's the part I don't have time for.", "whats_missing": "Done-for-you plans. Per-person food rules, like dairy-free for me only.", "pay_per_month": 0},
+   "scores": {"clarity": 8, "trust": 8, "value": 5, "ease": 3, "want_to_sign_up": 2},
+   "quote": "I already did the 14 days. 'Keep all your recipes in one place' assumes I have recipes. I have a 3-year-old who eats four foods."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Weekly meal plans, I think. The headline is just 'Less Stress, More Dinners.'", "who_for": "Families with young kids, going by the video.", "trust": "medium", "trust_why": "Feels like an established brand, but the first screen is a video and a cartoon, no specifics.", "next_step": "Scroll for diet options.", "delivers_food": "unsure", "delivers_food_why": "The 'How It Works' drawing is a phone surrounded by food. Not sure if it's a box or a list until step 2."},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "A pop-up asking for my email before anything else, and no price on the page. Also no way to say 'dairy-free for mom, regular for the toddler.'", "whats_missing": "A dairy-free option that doesn't change the whole family's menu. A price. Whether the trial needs a card.", "pay_per_month": 5},
+   "scores": {"clarity": 6, "trust": 6, "value": 5, "ease": 6, "want_to_sign_up": 4},
+   "quote": "Fifteen plans and one is Plant Based, but there's no 'dairy-free for mom, regular for the 3-year-old.' I'd be picking the whole family's diet around me."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "HelloFresh meal kit, with a pop-up game.", "who_for": "People who want boxes of food shipped.", "trust": "low", "trust_why": "'Open A Box To Reveal Your Offer!' is a slot machine. And the button behind it is greyed out.", "next_step": "Tap 'Continue Without Offer.'", "delivers_food": "yes", "delivers_food_why": "The pop-up is literally green HelloFresh boxes, and food bowls behind it."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Price is behind a zip code, the fine print ties '10 Free Meals' to the 4-person, 5-recipe plan, and I'd still have to cook at 6:15 with a baby.", "whats_missing": "A price per week. Dairy-free filtering for one person.", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 3, "value": 3, "ease": 5, "want_to_sign_up": 2},
+   "quote": "Open a box to reveal my offer, then the fine print says '10 Free Meals' needs the 4-person, 5-recipe plan. Hard pass, respectfully."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "An app that decides dinner for you.", "who_for": "Tired parents. That's me.", "trust": "medium", "trust_why": "'Trusted by 90,000+ families' and a polished phone mock-up. But the button is 'Letter from the CEO,' which is odd.", "next_step": "Read the reviews and FAQ.", "delivers_food": "no", "delivers_food_why": "It's an app screen called 'Your Menu.' Looks like planning, not shipping."},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "The meal page says 'prices are available when you download the app.' Then the pricing page: $25 a month for 150 messages. Also AI writes the recipes, so does it remember dairy-free every single time?", "whats_missing": "How dietary rules work, per person or per household. A straight price on the meals page.", "pay_per_month": 5},
+   "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 7, "want_to_sign_up": 5},
+   "quote": "'IT TAKES THE THINKING OUT' is literally my life, but $25 a month for 150 messages? For dinner? Oof."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "Plans five dinners, texts the family to vote, and fills my Instacart or Walmart cart.", "who_for": "Families with kids, people who order groceries online.", "trust": "medium", "trust_why": "'Powered by Instacart' and the plain 'We don't deliver food' line. Small company though.", "next_step": "'See a sample week,' then check diet options.", "delivers_food": "no", "delivers_food_why": "Bold line under the hero: 'We don't deliver food. We plan your week and send your grocery list.'"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "Nothing big. I had to dig: dairy-free for the whole family is on Free ('dietary needs... respected on every plan'), but a profile per person with allergies is a Family feature. At least it says so.", "whats_missing": "A screenshot of the per-person profile on the home page. Target and Cub named alongside Wegmans and Aldi (Target is in the Instacart list, Cub isn't).", "pay_per_month": 5},
+   "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 9, "want_to_sign_up": 8},
+   "quote": "'Just your email. No password, no card.' I can do that between stops. But does my dairy rule stay just mine after day 14? That's Family, so, $4.99."
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "Says it several times: 14 days of Family, no card, then add a card from Account to keep it or go back to Free. The 3-day email warning is a nice touch.", "expect_day_15": "I'm back on the free plan. Plans and the cart still work, but the per-person profiles, texting and reminders stop unless I add a card. Nothing gets charged.", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "Done-for-you plans I can set up on the train with just an email, and it tells me outright that per-person food rules are on Family.",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "Per-person rules instead of picking one diet plan for the whole house."},
+   "PTE": {"winner": "DD", "reason": "No recipe library to build. That's why I quit Plan to Eat."},
+   "OL": {"winner": "DD", "reason": "$4.99 versus $25, and DinnerDrop doesn't hide the price until I download."},
+   "HF": {"winner": "DD", "reason": "No gamified pop-up, and it fills the Instacart cart I already use."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Home page, 'What you get' section: add a phone screenshot of one person's profile with 'Dairy-free (just Mom)' and one sentence saying which diet settings are on Free and which need Family."
+}

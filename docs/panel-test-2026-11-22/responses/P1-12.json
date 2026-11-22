@@ -1,0 +1,48 @@
+{
+ "id": "P1-12",
+ "name": "Jess Nguyen",
+ "simulated": true,
+ "order": ["PTE", "DD", "EM", "HF", "OL"],
+ "sites": {
+  "PTE": {
+   "five_sec": {"what_is_it": "recipe + grocery list app", "who_for": "people who meal plan on sundays with a planner and a latte", "trust": "medium", "trust_why": "4.8 stars is real, but 'better than pen and paper' and 'modernize your meal plan' is kinda dorky", "next_step": "scroll fast", "delivers_food": "no", "delivers_food_why": "it's literally app store buttons and a girl writing in a notebook"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "it organizes recipes. my problem isn't organizing, it's deciding. i still have to pick everything", "whats_missing": "something that just picks for me and sends andrew the plan", "pay_per_month": 0},
+   "scores": {"clarity": 7, "trust": 7, "value": 4, "ease": 4, "want_to_sign_up": 2},
+   "quote": "ngl 'save recipes while you scroll' is kinda smart but i already have like 400 saved tiktoks i never make. this is just a nicer folder for them"
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "plans dinner, texts the fam to vote, sends the list to instacart or walmart", "who_for": "families who can't decide. so me", "trust": "medium", "trust_why": "'powered by instacart' + clean page. never heard of it tho", "next_step": "tap start free", "delivers_food": "no", "delivers_food_why": "it straight up says 'we don't deliver food' in bold under the headline"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "nothing really. only thing: the kroger cart and the texting (the parts i actually want, andrew getting the plan) are family, so free for 14 days then $4.99", "whats_missing": "king soopers by name. i'm guessing 'kroger cart' means king soopers but say it. and a screenshot of what andrew's text looks like", "pay_per_month": 4},
+   "scores": {"clarity": 9, "trust": 7, "value": 8, "ease": 9, "want_to_sign_up": 8},
+   "quote": "'just your email. no password, no card.' ok literally signing up on my break. kroger cart being family-only is the part i'd actually pay for tho"
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "meal plans i think? video of a mom and a kid", "who_for": "moms on facebook", "trust": "medium", "trust_why": "looks legit but kinda 2015", "next_step": "close the pop-up, scroll", "delivers_food": "unsure", "delivers_food_why": "drawing of a phone with food around it, could be a box"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "a pop-up for my email before i saw anything, then no price on the whole page", "whats_missing": "a price. a way for andrew to get the plan", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 5, "value": 4, "ease": 5, "want_to_sign_up": 3},
+   "quote": "a pop-up for my email before i've seen anything, then 15 diet plans like keto and clean eating. this is giving my mom's facebook"
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "hellofresh meal kits", "who_for": "couples with money and time to cook", "trust": "low", "trust_why": "'open a box to reveal your offer' lmao it's a mobile game ad", "next_step": "continue without offer", "delivers_food": "yes", "delivers_food_why": "the green hellofresh boxes. it's the box company"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "price is behind a zip code. we spend like $140 a week total and i'm not even home to cook", "whats_missing": "a price on the page", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 4, "value": 2, "ease": 6, "want_to_sign_up": 2},
+   "quote": "open a box to reveal your offer lmao. and the real price is behind a zip code. pass"
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "ai app that plans dinner", "who_for": "moms who hate the dinner question", "trust": "medium", "trust_why": "looks the most modern of all of them, 90,000 families. but the button is a 'letter from the ceo'?? who asked", "next_step": "scroll to pricing", "delivers_food": "no", "delivers_food_why": "it's an app menu, 'your menu', not a box"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "the family group chat is on the $25/month plan. free is 50 messages. no kroger/king soopers, just instacart, walmart, amazon fresh", "whats_missing": "a price that makes sense for one task. king soopers", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 7, "want_to_sign_up": 4},
+   "quote": "ollie looks like an app i'd actually keep, but 'covers your whole family group chat' is on the $25/month plan. for dinner?? no"
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "it says it like 4 times. 14 days of family, no card, then $4.99 or just stay on free", "expect_day_15": "andrew stops getting the texts and the kroger cart goes away unless i add a card. free plans + instacart/walmart cart keep working. no charge", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "andrew gets the plan by text for $4.99 instead of $25, and sign-up is just an email",
+  "pairwise": {
+   "PTE": {"winner": "DD", "reason": "it decides for me. plan to eat makes me decide"},
+   "EM": {"winner": "DD", "reason": "no pop-up wall, price is right there"},
+   "HF": {"winner": "DD", "reason": "i'm not home to cook a kit and we can't afford one"},
+   "OL": {"winner": "DD", "reason": "same texting idea, a fifth of the price, and it has a kroger cart"}
+  }
+ },
+ "dd_fix_that_would_move_me": "home page, next to 'Kroger cart on Family': name the stores ('King Soopers, Ralphs, Fred Meyer and other Kroger stores') and show the actual text your partner gets with the week's plan"
+}

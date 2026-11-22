@@ -1,0 +1,120 @@
+{
+  "id": "P1-06",
+  "name": "Jamal Wright",
+  "simulated": true,
+  "order": ["DD", "EM", "HF", "PTE", "OL"],
+  "sites": {
+    "DD": {
+      "five_sec": {
+        "what_is_it": "A weekly dinner planner that texts your family dinner ideas and sends the list to Instacart or Walmart.",
+        "who_for": "Families with kids old enough to reply to a text. Mine are 5 and 15 months.",
+        "trust": "medium",
+        "trust_why": "It's upfront: 'We don't deliver food' and 'no card needed'. But I don't see Kroger on the free side or how long this company has been around.",
+        "next_step": "Look for Kroger and a sample week to see if the food is real food.",
+        "delivers_food": "no",
+        "delivers_food_why": "It says 'We don't deliver food. We plan your week and send your grocery list.'"
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Kroger cart is on the paid Family plan. They do say it, but Kroger is my store. Then the sample week is chicken tenders and English muffin pizzas, which is the kid food I'm trying to avoid. And 'over 500 families' tells me this is small, like Mealime was before it closed.",
+        "whats_missing": "A healthy sample week, how long they've been running, and whether I can export my list and favorites if they shut down. Also an Android app.",
+        "pay_per_month": 3
+      },
+      "scores": {"clarity": 7, "trust": 5, "value": 7, "ease": 7, "want_to_sign_up": 5},
+      "quote": "I appreciate Sarah being a parent and the honest numbers. But 'Sheet Pan Chicken Tenders' on Monday is exactly the rut I'm trying to get my kids out of."
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "A meal-planning subscription, with a video of a parent and child.",
+        "who_for": "Families who want weekly plans.",
+        "trust": "medium",
+        "trust_why": "Looks established, but the first screen doesn't tell me much beyond 'Less Stress, More Dinners'.",
+        "next_step": "Scroll for meal plan types and Kroger.",
+        "delivers_food": "no",
+        "delivers_food_why": "The how-it-works picture is a phone with a checklist and recipes around it."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Price is hidden in a collapsed FAQ, and the 14-day trial sounds like it turns into a paid plan. I'd want that spelled out.",
+        "whats_missing": "Price on the page and prep times on each meal.",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 6, "trust": 7, "value": 6, "ease": 6, "want_to_sign_up": 6},
+      "quote": "Copyright 2002, two million customers, Kroger right in the logo list, and a Quick and Healthy plan. This company isn't going anywhere."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "Meal-kit delivery with an 'open a box' offer game.",
+        "who_for": "People who can spend $12 a serving.",
+        "trust": "medium",
+        "trust_why": "Big, known company, but the mystery box pop-up feels like a gimmick.",
+        "next_step": "Close the pop-up and look for prices.",
+        "delivers_food": "yes",
+        "delivers_food_why": "It's HelloFresh; ingredients come to your door in a box."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "No prices without my zip code, and a long fine-print block about auto-renewing and shipping fees after the first box.",
+        "whats_missing": "Prices up front.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 5, "value": 2, "ease": 5, "want_to_sign_up": 2},
+      "quote": "Some of the meals look healthy, but I'm not putting in my zip code just to learn if I can afford it for my kids."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "A recipe keeper with a meal calendar and grocery list.",
+        "who_for": "People who already have their recipes and like planning.",
+        "trust": "high",
+        "trust_why": "4.8 App Store and 4.7 Google Play ratings, and an Android app.",
+        "next_step": "Check how long they've been around and what it costs.",
+        "delivers_food": "no",
+        "delivers_food_why": "'Recipes, Meal Plans and Grocery Lists, All in One App'."
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "Running since 2008 and customer-funded, which is what I want to hear after Mealime. But I'd have to bring my own recipes; Mealime gave me the recipes.",
+        "whats_missing": "Built-in healthy recipes for small kids; Kroger by name.",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 8, "trust": 8, "value": 5, "ease": 5, "want_to_sign_up": 5},
+      "quote": "'We're customer-funded. We never sell your data.' Since 2008. That's the answer to my Mealime question. I just wish it picked meals for me."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "An AI meal planner that picks dinners for you.",
+        "who_for": "Families who want hands-off planning.",
+        "trust": "medium",
+        "trust_why": "90,000 families, but the button is a CEO letter instead of trying the product.",
+        "next_step": "Check where the recipes come from and the price.",
+        "delivers_food": "no",
+        "delivers_food_why": "App screens with a menu; nothing about boxes."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "The recipes are written by AI on the spot, so I can't tell if they're healthy. $25 a month. And the main site has turned into a general assistant for everything, which tells me the meal part might not be the focus for long.",
+        "whats_missing": "Kroger, and a real recipe source.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 4, "value": 2, "ease": 6, "want_to_sign_up": 2},
+      "quote": "'Ollie writes a recipe just for you' with AI. For my 15-month-old? I want a recipe a person tested."
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "The pricing section and FAQ both say no card for the 14 Family days and that you go back to Free.",
+    "expect_day_15": "The Family texting stops and I'm on the free plan. No charge because I never gave a card.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "EM",
+    "reason": "Healthy plans, Kroger without a paid tier, and a company that has been around since 2002, so it won't vanish like Mealime.",
+    "pairwise": {
+      "EM": {"winner": "EM", "reason": "Kroger on every plan and long track record; DinnerDrop's sample week is kid food and the company is small."},
+      "PTE": {"winner": "DD", "reason": "DinnerDrop actually gives me dinners; Plan to Eat needs my own recipes."},
+      "OL": {"winner": "DD", "reason": "Cheaper, and real recipes instead of AI-written ones."},
+      "HF": {"winner": "DD", "reason": "My own Kroger groceries cost far less than a box."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page sample week: add a 'healthy, under 30 minutes' tab with real meals (no tenders or muffin pizzas), plus one line on how long DinnerDrop has run and that you can export your list and favorites."
+}

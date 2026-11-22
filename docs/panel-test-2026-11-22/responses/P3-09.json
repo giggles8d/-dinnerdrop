@@ -1,0 +1,120 @@
+{
+ "id": "P3-09",
+ "name": "Earl Whitaker",
+ "simulated": true,
+ "order": ["DD", "OL", "EM", "HF", "PTE"],
+ "sites": {
+  "DD": {
+   "five_sec": {
+    "what_is_it": "Something that texts the family supper ideas and makes a grocery list. Like what the lady at church talked about.",
+    "who_for": "Families with young folks who order groceries on the phone.",
+    "trust": "medium",
+    "trust_why": "It says no card, and it says right out 'We don't deliver food.' But 'Powered by Instacart' and 'cart' is store-ordering talk I don't use.",
+    "next_step": "Read on down slow before I touch that green button. Probably show Brenda.",
+    "delivers_food": "no",
+    "delivers_food_why": "The dark green line 'We don't deliver food. We plan your week and send your grocery list.'"
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "Two plans, a free one and a $4.99 one with '14 days' on it. Every time somebody says free for 14 days, they want money on day 15. And it's all about putting things in a Walmart or Instacart cart on the phone. I drive to the Walmart and push a real cart.",
+    "whats_missing": "Whether I can just get the list on paper or a text and take it to the store myself. Something up top about sugar, not just a little 'Diabetic-friendly dinners' link way down at the bottom. Whether the boys will eat what it picks for Brenda.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 5, "value": 6, "ease": 4, "want_to_sign_up": 4},
+   "quote": "It says 'no card' three or four times and has a lady's name, Sarah. That's more than most. But what's a Walmart cart in my phone?"
+  },
+  "OL": {
+   "five_sec": {
+    "what_is_it": "A phone app with pictures of food. Not sure what it does.",
+    "who_for": "Young people with fancy phones.",
+    "trust": "low",
+    "trust_why": "The big orange button is 'Letter from the CEO.' Why would I want a letter from a CEO? And it's a picture of an app, which I don't do.",
+    "next_step": "Go back.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "The phone shows a rice bowl and pancakes on a 'Your Menu' screen. Could be a restaurant ordering thing for all I know."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "'Ollie uses AI' right there in the questions, and 'prices are available when you download the app.' That's two of my no's in one line. The price page says $25 a month.",
+    "whats_missing": "Anything about diabetes. A plain price. A way to use it without an app.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 3, "trust": 3, "value": 2, "ease": 2, "want_to_sign_up": 1},
+   "quote": "They won't even tell you the price till you download their app. No sir."
+  },
+  "EM": {
+   "five_sec": {
+    "what_is_it": "Something about dinners. 'Less Stress, More Dinners' and a video.",
+    "who_for": "Mothers with little girls, from the picture.",
+    "trust": "medium",
+    "trust_why": "Looks like a real company, been around a while, but it doesn't say what it costs.",
+    "next_step": "Scroll a little. I'm not watching a video.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "There's a picture of a phone with food all round it. Could be either way."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "A box popped up asking for my email to 'Unlock This Special Offer,' and 'Try Free for 14 Days' everywhere with no price. That's a trial. Trials charge you.",
+    "whats_missing": "The price. I did see 'Low Carb' and there's a Diabetic plan on the other page, which is more than the others said about sugar.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 4, "value": 3, "ease": 3, "want_to_sign_up": 2},
+   "quote": "They got a diabetic plan, I'll give 'em that. But 'Try Free for 14 Days' and no price anywhere. I know how that goes."
+  },
+  "HF": {
+   "five_sec": {
+    "what_is_it": "A game of some kind. 'Open A Box To Reveal Your Offer.' Then it's food boxes.",
+    "who_for": "Folks with money to spend on boxes of food.",
+    "trust": "low",
+    "trust_why": "Pick-a-box is how the fair takes your money.",
+    "next_step": "Hit 'Continue Without Offer' and probably leave.",
+    "delivers_food": "yes",
+    "delivers_food_why": "The boxes with HelloFresh on them and plates of food behind."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "It wants my zip code before it'll say a price, and the little print at the bottom says 'auto-renewing subscription.' Bacon, pork, cheese on everything. Not on our money.",
+    "whats_missing": "A price I can see. Anything for a sugar diet my wife can trust.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 2, "value": 1, "ease": 3, "want_to_sign_up": 1},
+   "quote": "Pick a box to see your offer. That's a carnival game, not supper."
+  },
+  "PTE": {
+   "five_sec": {
+    "what_is_it": "A recipe app. 'Recipes, Meal Plans and Grocery Lists, All in One App.'",
+    "who_for": "Folks who keep a lot of recipes on their phone.",
+    "trust": "medium",
+    "trust_why": "Says no card. But the first thing on the screen is two app store buttons.",
+    "next_step": "Probably stop. It's an app.",
+    "delivers_food": "no",
+    "delivers_food_why": "Picture's of somebody writing in a notebook. It's about lists."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "It's an app, and after 14 days it's $5.95 a month. And it saves recipes you find online. I don't find recipes online, I get 'em from Brenda's box. There's a '50% OFF' clock counting down at the bottom too.",
+    "whats_missing": "It doesn't pick the suppers for you. Nothing about diabetes I could see.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 5, "value": 2, "ease": 3, "want_to_sign_up": 2},
+   "quote": "It's for people who already got recipes saved on the phone. I need somebody to tell me what to cook."
+  }
+ },
+ "dd_offer": {
+  "clear": "partly",
+  "why": "It says no card plenty, but there's a free plan and also 'Family free for 14 days' and '$4.99/mo.' Two plans and a countdown confuse me. I'd need Brenda or one of the boys to tell me which one I'm on.",
+  "expect_day_15": "I figure they'll start charging me $4.99 a month, or keep pestering me till I give them a card.",
+  "expectation_correct": false
+ },
+ "head_to_head": {
+  "winner": "DD",
+  "reason": "It's the only one that said plain it don't bring food, don't want a card, and has a real woman's name on it.",
+  "pairwise": {
+   "OL": {"winner": "DD", "reason": "Ollie says AI and wants an app. DinnerDrop works from the website and texts."},
+   "EM": {"winner": "DD", "reason": "eMeals has a diabetic plan, but it's a trial with no price. DinnerDrop says $0."},
+   "HF": {"winner": "DD", "reason": "HelloFresh sends boxes we can't afford and hides the price behind a zip code."},
+   "PTE": {"winner": "DD", "reason": "Plan to Eat makes you find your own recipes and is an app that costs after two weeks."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Home page, right under 'Start free, no card needed': one plain line that I can just print or text myself the grocery list and take it to Walmart in person, plus that the free plan never turns into a bill. All the cart talk makes it sound like it's only for people who order on the phone."
+}

@@ -1,0 +1,120 @@
+{
+ "id": "P3-14",
+ "name": "Kayla Brooks",
+ "simulated": true,
+ "order": ["DD", "OL", "PTE", "HF", "EM"],
+ "sites": {
+  "DD": {
+   "five_sec": {
+    "what_is_it": "dinner planner that texts ur family and dumps the list in instacart or walmart",
+    "who_for": "moms w kids who can text",
+    "trust": "medium",
+    "trust_why": "no card + it doesn't say AI anywhere up top, which ngl is rare. but 'Powered by Instacart' badge feels kinda like an ad",
+    "next_step": "scroll for gluten-free and see if it's AI",
+    "delivers_food": "no",
+    "delivers_food_why": "'We don't deliver food. We plan your week and send your grocery list.' pretty hard to miss"
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "gluten-free is a little chip on the sample week and a footer link. it never says celiac. 'dietary needs respected' doesn't tell me if the walmart match is gonna grab regular soy sauce. also 'Instacart pays us a small commission' so yeah it's kinda an ad lol. at least they said it",
+    "whats_missing": "the word celiac. how the cart picks gf products. whether i can be gf and tyler's son gets regular pasta (per-person stuff is only on the paid plan)",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 8, "trust": 6, "value": 7, "ease": 8, "want_to_sign_up": 6},
+   "quote": "free, walmart, an actual founder named sarah, and 'always check ingredient labels' on the pricing page. ok that last one is lowkey the most trustworthy line here"
+  },
+  "OL": {
+   "five_sec": {
+    "what_is_it": "AI meal planning app",
+    "who_for": "ppl who trust AI with their food. not me",
+    "trust": "low",
+    "trust_why": "the page title is literally 'AI Meal Planning for Families.' instant ick for a celiac",
+    "next_step": "check one thing then leave",
+    "delivers_food": "no",
+    "delivers_food_why": "it's an app menu not a box"
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "'Ollie's state-of-the-art intelligence... write a recipe just for you.' an AI writing my recipes is how i get glutened. also $25/mo on the pricing page?? for dinner ideas??",
+    "whats_missing": "a single word about gluten-free or allergies. a human checking anything",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 2, "value": 2, "ease": 6, "want_to_sign_up": 1},
+   "quote": "'state-of-the-art intelligence' writing my recipes. it's giving glutened by a chatbot"
+  },
+  "PTE": {
+   "five_sec": {
+    "what_is_it": "recipe saver + planner app",
+    "who_for": "ppl who save a million recipes. ok kinda me",
+    "trust": "medium",
+    "trust_why": "real app ratings and no card. countdown sale at the bottom is a lil much",
+    "next_step": "see if it saves from tiktok",
+    "delivers_food": "no",
+    "delivers_food_why": "notebook picture, it's lists"
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "it saves recipes from TikTok and instagram, which means i could save my celiac creators' stuff and know it's safe. but no free plan after 14 days, $5.95/mo. they even have a FAQ 'why isn't there a free plan' lol",
+    "whats_missing": "a free tier. any planning for me. walmart named for the grocery thing",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 8, "trust": 7, "value": 5, "ease": 6, "want_to_sign_up": 4},
+   "quote": "saving my gf tiktok creators' recipes is actually smart. but $5.95 after two weeks and i'm still doing all the planning"
+  },
+  "HF": {
+   "five_sec": {
+    "what_is_it": "hellofresh boxes + a mystery box popup",
+    "who_for": "not celiacs",
+    "trust": "low",
+    "trust_why": "'Open A Box To Reveal Your Offer' is a scratch-off ticket",
+    "next_step": "leave",
+    "delivers_food": "yes",
+    "delivers_food_why": "the boxes, the food photos. it's a meal kit"
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "boxes packed in a facility with wheat, reddit already told me. menu is ciabatta, panko, pita, ramen. auto-renewing fine print",
+    "whats_missing": "anything gf. a price without my zip",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 2, "value": 1, "ease": 5, "want_to_sign_up": 1},
+   "quote": "panko, ciabatta, pita, ramen. and a mystery box game. no thx"
+  },
+  "EM": {
+   "five_sec": {
+    "what_is_it": "meal plan thing with a video",
+    "who_for": "suburban moms",
+    "trust": "medium",
+    "trust_why": "looks legit but tells u nothing on screen one",
+    "next_step": "find gluten-free",
+    "delivers_food": "unsure",
+    "delivers_food_why": "phone w food icons around it, could be an ordering app"
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "there IS a gluten free plan, 'for those with a gluten allergy or sensitivity,' and dietitians. but it's a 14 day trial with no price and an email popup 'LIMITED TIME.' that's an auto-renew waiting to happen",
+    "whats_missing": "the price. whether gf means celiac-safe or just 'we left out the bread'",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 4, "value": 3, "ease": 5, "want_to_sign_up": 3},
+   "quote": "a real gluten free plan, ok. but no price and a 'limited time' popup. i know how trials work"
+  }
+ },
+ "dd_offer": {
+  "clear": "clear",
+  "why": "says no card like 5 times and 'you go back to the free plan.' they even email 3 days before",
+  "expect_day_15": "the texting stuff turns off and it's just the free planner. they don't have my card so nothing gets charged",
+  "expectation_correct": true
+ },
+ "head_to_head": {
+  "winner": "DD",
+  "reason": "only one that's actually free, does walmart, isn't screaming AI, and has a real person behind it",
+  "pairwise": {
+   "OL": {"winner": "DD", "reason": "ollie is AI writing recipes. hard no for celiac"},
+   "PTE": {"winner": "DD", "reason": "plan to eat is safer recipes-wise but costs money and doesn't plan anything"},
+   "HF": {"winner": "DD", "reason": "boxes from a wheat facility vs a list i shop myself. easy"},
+   "EM": {"winner": "DD", "reason": "emeals has a gf plan but it's a paid trial w hidden price. DD is free"}
+  }
+ },
+ "dd_fix_that_would_move_me": "pricing page (/start) diet FAQ + the home page sample week: say celiac by name, and say how the walmart/instacart match handles gluten-free (like flagging soy sauce, broth, oats to double-check) instead of just 'gluten-free' as a chip. move the 'always check ingredient labels' line up next to it"
+}

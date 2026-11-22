@@ -1,0 +1,48 @@
+{
+ "id": "P1-14",
+ "name": "Ben Adler",
+ "simulated": true,
+ "order": ["PTE", "OL", "EM", "DD", "HF"],
+ "sites": {
+  "PTE": {
+   "five_sec": {"what_is_it": "Plan to Eat. Recipe database, planner, grocery list. I pay for it.", "who_for": "People who curate their own recipes.", "trust": "high", "trust_why": "Real app-store ratings, no card for the trial, and I've used it for a year.", "next_step": "Nothing. I already have it.", "delivers_food": "no", "delivers_food_why": "'Recipes, Meal Plans and Grocery Lists, All in One App.' Software."},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "Nothing; I'm already a subscriber. The weakness is that it never suggests anything new, so the kids get the same 10 meals.", "whats_missing": "Any discovery of new safe recipes. Named grocery partners for 'Deliver Groceries.'", "pay_per_month": 4},
+   "scores": {"clarity": 8, "trust": 9, "value": 8, "ease": 6, "want_to_sign_up": 8},
+   "quote": "It's a database for recipes I've already vetted for nuts, eggs and dairy. Boring. That's the point. Nothing on this page claims to know my kids' allergies."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "AI meal planner. The page title literally says 'AI Meal Planning for Families.'", "who_for": "Parents who want dinner decided for them.", "trust": "low", "trust_why": "'Trusted by 90,000+ families' with no source, and the hero mock-up says 'I've picked out meals for you.' Picked by what?", "next_step": "Find the FAQ on where the recipes come from.", "delivers_food": "no", "delivers_food_why": "It's an app menu screen. No box."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "FAQ: the recipe is written by Ollie's 'intelligence' for you. That's a generated recipe. For a kid with an egg allergy, that's disqualifying.", "whats_missing": "Any allergy handling at all. Any human review of recipes.", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 1, "value": 2, "ease": 6, "want_to_sign_up": 1},
+   "quote": "'Write a recipe just for you' with 'a deep understanding of gastronomy.' So a language model decides whether there's egg in it. Closed tab."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Weekly meal plans with a shopping list. Hero is just a stock video.", "who_for": "Families with young kids.", "trust": "medium", "trust_why": "Established brand, but the first screen tells me nothing concrete.", "next_step": "Search the page for 'allergy.'", "delivers_food": "no", "delivers_food_why": "Step 2 is 'Get Your Groceries,' shop yourself or send the list. Not a kit."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "There's a Gluten Free plan and nothing for nut-free, egg-free or dairy-free, let alone per person. One plan for the whole house doesn't work with two different allergies.", "whats_missing": "Per-person allergen exclusion. A price.", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 6, "value": 4, "ease": 5, "want_to_sign_up": 3},
+   "quote": "Credit where due: 'professional food team and registered dietitians' is the only recipe source named on any of these pages. But no plan without nuts, eggs and dairy."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "Plans five dinners, family votes by text, list goes to Instacart or Walmart.", "who_for": "Families who argue about dinner.", "trust": "medium", "trust_why": "'Built on the Instacart Developer Platform' is a real, checkable claim. No 'AI' in the hero, which I notice.", "next_step": "Search for 'allergy' and see who writes the recipes.", "delivers_food": "no", "delivers_food_why": "Explicit: 'We don't deliver food.'"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Allergy handling is one sentence: dietary needs incl. 'nut allergies' are 'respected on every plan,' then 'Always check ingredient labels.' Egg isn't named. Per-person allergy profiles are a Family feature. And nothing says who writes the recipes.", "whats_missing": "Who writes and tests the recipes. How exclusion works (ingredient-level? cross-contact?). Whether per-person allergies survive day 15 on Free.", "pay_per_month": 0},
+   "scores": {"clarity": 7, "trust": 5, "value": 6, "ease": 7, "want_to_sign_up": 4},
+   "quote": "'Dietary needs... nut allergies... are respected on every plan,' then 'Always check ingredient labels.' Which is it? And nowhere does it say who writes these recipes."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "HelloFresh meal kits, behind a gamified pop-up.", "who_for": "People without allergies who want a box.", "trust": "low", "trust_why": "'Open A Box To Reveal Your Offer' is dark-pattern territory.", "next_step": "Dismiss and leave.", "delivers_food": "yes", "delivers_food_why": "The pop-up is three HelloFresh boxes. Kits ship to you."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Recipe after recipe has feta, Parmesan, peanuts or pecans. Shared kits, no per-person allergen control, price hidden behind a zip code.", "whats_missing": "Allergen filtering. A price.", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 3, "value": 2, "ease": 5, "want_to_sign_up": 1},
+   "quote": "A hundred-plus recipes, loads of them with feta, Parmesan or peanuts, behind a pop-up casino game. Not built for a two-allergy house."
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "Mechanically clear: no card, Family for 14 days, revert to Free unless you add a card. The consequence isn't: per-person allergy profiles are a Family feature.", "expect_day_15": "I revert to Free and nothing is charged. Which also means the per-person allergy profiles stop applying, so plans after day 15 may not account for each kid's allergy. That's a safety problem, not a pricing one.", "expectation_correct": true},
+ "head_to_head": {"winner": "PTE", "reason": "My own vetted recipes. No system deciding what's allergen-safe for me.",
+  "pairwise": {
+   "PTE": {"winner": "PTE", "reason": "Verified-by-me beats 'respected on every plan' with no explanation."},
+   "OL": {"winner": "DD", "reason": "DinnerDrop at least doesn't claim a model writes the recipes."},
+   "EM": {"winner": "DD", "reason": "Per-person allergy profiles (if they work) beat one Gluten Free plan for the whole house."},
+   "HF": {"winner": "DD", "reason": "I control the groceries; no shared kit ingredients."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Pricing page (/start) FAQ: add 'How do allergies work?' saying who writes and tests the recipes, which allergens are excluded at the ingredient level and per person (name egg and tree nuts), and exactly what happens to per-person allergies on the free plan after day 14."
+}

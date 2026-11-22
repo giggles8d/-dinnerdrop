@@ -1,0 +1,120 @@
+{
+  "id": "P2-13",
+  "name": "Keisha Brown",
+  "simulated": true,
+  "order": ["HF", "OL", "EM", "DD", "PTE"],
+  "sites": {
+    "HF": {
+      "five_sec": {
+        "what_is_it": "HelloFresh, the meal box. I did the promo one time.",
+        "who_for": "People who can pay full price after the promo. Not me.",
+        "trust": "medium",
+        "trust_why": "Food was good for real. But 'Open a box to reveal your offer' is them playing games again.",
+        "next_step": "Close it.",
+        "delivers_food": "yes",
+        "delivers_food_why": "The green boxes. That's the box that came to my door."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "The price after the promo, plus shipping. And it won't even tell you the price till you put your zip in. No EBT.",
+        "whats_missing": "A price. EBT.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 4, "value": 1, "ease": 5, "want_to_sign_up": 1},
+      "quote": "Girl, I did the promo box. Good food, then the price was crazy. 'Shipping fee applies on all deliveries after the first box.' Yep."
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "An app that tells you what's for dinner.",
+        "who_for": "Moms who are tired. So, me, but with more money.",
+        "trust": "medium",
+        "trust_why": "90,000 families. But the button is a CEO letter, what?",
+        "next_step": "Look for the price.",
+        "delivers_food": "no",
+        "delivers_food_why": "It's a menu on a phone, 'I've picked out meals for you'."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Pricing page: $25 a month. Free one only gives you 50 messages. Nothing about SNAP or what the groceries cost.",
+        "whats_missing": "EBT, cost of the groceries, Aldi or Meijer.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 5, "trust": 5, "value": 2, "ease": 6, "want_to_sign_up": 2},
+      "quote": "'Since using this app my grocery bills have gone down.' Cool, so why's the plan $25 a month?"
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Meal plans app.",
+        "who_for": "Families who cook.",
+        "trust": "medium",
+        "trust_why": "Regular looking site. Nothing about money on the first screen though.",
+        "next_step": "Scroll for free and Instacart.",
+        "delivers_food": "no",
+        "delivers_food_why": "Says 'Choose Your Meals' and shows a phone list."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "'Try Free for 14 Days' means it costs after, and they don't say how much unless you open the question at the bottom. Pop-up wants my email for a 'special offer'.",
+        "whats_missing": "The price and EBT.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 5, "value": 3, "ease": 6, "want_to_sign_up": 2},
+      "quote": "I see Aldi and Meijer on there, okay. But 'Try Free for 14 Days' means it's gonna cost after, and they won't say how much."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "Plans dinners, texts the family, puts the list in my Instacart.",
+        "who_for": "Families that use Instacart. That's me.",
+        "trust": "medium",
+        "trust_why": "'Start free, no card needed' in a big button. 'Powered by Instacart' at the top.",
+        "next_step": "See a sample week, see what it costs.",
+        "delivers_food": "no",
+        "delivers_food_why": "Says it right there, 'We don't deliver food.' Instacart brings it, like now."
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "Nothing stops me trying the free part. But nowhere on the page does it say EBT or SNAP, and that's how I pay.",
+        "whats_missing": "Does the cart work with my EBT card on Instacart? And will it make my order bigger?",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 8, "want_to_sign_up": 8},
+      "quote": "Five dinners for $64 and Aldi coming up cheapest? That's what I'm talking about. But it never says EBT. Does my SNAP card work in that cart?"
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "Recipe and grocery list app.",
+        "who_for": "People who save a lot of recipes.",
+        "trust": "medium",
+        "trust_why": "Good stars, 'no card required'.",
+        "next_step": "Check price.",
+        "delivers_food": "no",
+        "delivers_food_why": "Lady writing a list. No food boxes."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "$5.95 a month after the 14 days. And I gotta bring my own recipes.",
+        "whats_missing": "A free plan, EBT, cost of the groceries for a week.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 7, "value": 3, "ease": 5, "want_to_sign_up": 2},
+      "quote": "Nice app, but 'Only $5.95/mo' ain't 'only' when SNAP's gone by week three."
+    }
+  },
+  "dd_offer": {
+    "clear": "partly",
+    "why": "'Free forever' and 'free for 14 days' on the same screen made me stop. Had to read the FAQ to get that the 14 days is just the texting part.",
+    "expect_day_15": "The family texting thing goes away and I keep the free planner. They don't have my card so they can't charge me.",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It's free for real and it shows what the week's groceries cost, with Aldi cheapest.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "DinnerDrop is $0 and shows it; eMeals is a trial that hides the price."},
+      "PTE": {"winner": "DD", "reason": "Free versus $5.95 a month."},
+      "OL": {"winner": "DD", "reason": "Free versus $25 a month."},
+      "HF": {"winner": "DD", "reason": "A box I can't afford versus a list I can pay for with what I've got."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page FAQ 'Questions parents ask': add 'Can I pay with EBT/SNAP?' with a straight answer about the Instacart and Walmart carts."
+}

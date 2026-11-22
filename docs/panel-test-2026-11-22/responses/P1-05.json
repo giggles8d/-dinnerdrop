@@ -1,0 +1,120 @@
+{
+  "id": "P1-05",
+  "name": "Brittany Haynes",
+  "simulated": true,
+  "order": ["EM", "HF", "OL", "PTE", "DD"],
+  "sites": {
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Some kind of meal planning thing with a video of a mom and her little girl laughing in the kitchen",
+        "who_for": "Moms, I guess, families",
+        "trust": "medium",
+        "trust_why": "Honestly it looks like a real company and all, but the top just says Less Stress More Dinners and a video, so I don't know what I'm getting",
+        "next_step": "Scroll down and look for Walmart and something that says family size",
+        "delivers_food": "unsure",
+        "delivers_food_why": "Nothing on that first screen says if they mail you food or just give you recipes"
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "I did see the big Walmart logo and a Kid Friendly and Budget Friendly plan, which, yes, but then the pictures are like shrimp po'boys and plum watercress salad and Cody is not making that, and I never found a price",
+        "whats_missing": "A price, portions for 6, and some way to send the plan to my husband",
+        "pay_per_month": 4
+      },
+      "scores": {"clarity": 5, "trust": 6, "value": 5, "ease": 5, "want_to_sign_up": 5},
+      "quote": "Walmart logo, great, Kid Friendly plan, great, but y'all show me Plum-Watercress Salad and Cody's gonna order a pizza before he finds a plum"
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "HelloFresh, the boxes, and a little game where you pick a box",
+        "who_for": "People with a lot more money than a family of six on one-and-a-half paychecks",
+        "trust": "medium",
+        "trust_why": "Everybody's heard of them but the pick-a-box thing feels like a carnival game",
+        "next_step": "Look for how much it'd be for six of us",
+        "delivers_food": "yes",
+        "delivers_food_why": "It's HelloFresh, they ship you the food in those green boxes right on the screen"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "Couldn't get a price without putting in my zip, and the fine print is a whole paragraph. For six people that's gonna be more than our whole grocery budget",
+        "whats_missing": "Prices for a big family",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 5, "value": 2, "ease": 5, "want_to_sign_up": 2},
+      "quote": "Their smallest box is meals for two people and I've got six mouths, honestly I didn't even need the zip code to know that's not happening"
+    },
+    "OL": {
+      "five_sec": {
+        "what_is_it": "An app that figures out dinner for you, with little notifications popping up on the phone",
+        "who_for": "Busy families",
+        "trust": "medium",
+        "trust_why": "90,000 families is a lot, but the only button is a letter from the CEO and I don't know who that is",
+        "next_step": "Scroll for Walmart and texting",
+        "delivers_food": "no",
+        "delivers_food_why": "It's a phone with a menu on it, looks like recipes"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "It does Walmart and the paid one covers the whole family group chat, which is kinda what I want for Cody, but it's $25 a month and you count messages, no ma'am",
+        "whats_missing": "A normal price and dinners you can actually see before you start",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 6, "want_to_sign_up": 4},
+      "quote": "'One subscription covers your whole family group chat' got me excited until I saw $25 a month, that's two pizzas, honestly"
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "A recipe and grocery list app, people writing in planners",
+        "who_for": "Organized ladies who save recipes off Pinterest",
+        "trust": "high",
+        "trust_why": "4.8 stars and it says no card right on it",
+        "next_step": "See if it'll just give me a plan",
+        "delivers_food": "no",
+        "delivers_food_why": "It says recipes and grocery lists"
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "I'd have to find all the recipes myself and plan it on my 15-minute break, which is the whole problem",
+        "whats_missing": "Somebody picking supper for us, and something Cody can follow",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 7, "trust": 8, "value": 4, "ease": 4, "want_to_sign_up": 3},
+      "quote": "It's nice it says no card and 4.8 stars, but 'Save Recipes While You Scroll' means I'm still the one doing all of it"
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "It texts everybody in the house the dinner ideas and then puts the grocery list in your Walmart cart",
+        "who_for": "Families like mine where somebody else has to cook some nights",
+        "trust": "medium",
+        "trust_why": "No card needed and it plainly says they don't deliver food, I like plain. Never heard of them though",
+        "next_step": "See a sample week and see if it's normal food",
+        "delivers_food": "no",
+        "delivers_food_why": "It says right there in green, 'We don't deliver food'"
+      },
+      "full_page": {
+        "would_sign_up": "yes",
+        "what_stopped_me": "The sample week is for a family of four at $64, so I'm doing math for six in my head, and the texting part is the Family plan you pay for after 14 days",
+        "whats_missing": "A big-family sample and a look at the text Cody would get on a cook night",
+        "pay_per_month": 5
+      },
+      "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 8, "want_to_sign_up": 8},
+      "quote": "Texts reminders on cook nights and tacos, meatballs, English muffin pizzas from Walmart? Honestly Cody could do that, and $4.99 is less than one pizza night"
+    }
+  },
+  "dd_offer": {
+    "clear": "clear",
+    "why": "It says it a bunch of times, Family free for 14 days, no card, and if you don't add a card you go back to the free one",
+    "expect_day_15": "The texting stuff stops unless I pay the $4.99, and the regular planning and Walmart part stays free",
+    "expectation_correct": true
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It's the only one that texts the plan to Cody and fills my Walmart cart without costing more than a pizza",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "Both do Walmart, but DinnerDrop texts the whole house and I can see the price"},
+      "PTE": {"winner": "DD", "reason": "DinnerDrop picks supper, Plan to Eat makes me do it"},
+      "OL": {"winner": "DD", "reason": "Same texting idea for $4.99 instead of $25"},
+      "HF": {"winner": "DD", "reason": "Six people on Walmart groceries beats six people on meal kits"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page sample week: add a family-of-6 tab with its Walmart total, and show the actual cook-night text the other parent gets."
+}

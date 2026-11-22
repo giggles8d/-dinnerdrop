@@ -1,0 +1,47 @@
+{
+ "id": "P3-05",
+ "name": "Priya Raman",
+ "simulated": true,
+ "order": ["OL", "DD", "PTE", "HF", "EM"],
+ "sites": {
+  "OL": {
+   "five_sec": {"what_is_it": "An AI meal-planning app for families", "who_for": "Parents who want dinner decisions automated", "trust": "medium", "trust_why": "Polished, '90,000+ families' social proof, but the primary CTA is 'Letter from the CEO', which is an odd first action", "next_step": "Scroll to see how it works", "delivers_food": "no", "delivers_food_why": "It's an app mockup; nothing suggests shipping"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Pricing is incoherent: the meal page FAQ says a free 1-month trial and prices in the app; the pricing page meters 'messages' at $25 or $100 a month. The hero mockup shows sesame ground beef and pancakes; nothing about vegetarian or eggs", "whats_missing": "A diet filter statement (vegetarian, egg-free); one consistent price", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 5, "value": 3, "ease": 6, "want_to_sign_up": 3},
+   "quote": "The primary CTA is 'Letter from the CEO,' and pricing is metered by messages. That's a usage-anxiety model for something I'd use daily."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "A weekly dinner planner where the family votes by text and the list goes to Instacart or Walmart", "who_for": "Households with kids", "trust": "high", "trust_why": "No pop-up, no countdown, and it states what it doesn't do ('We don't deliver food') above the fold", "next_step": "Open the sample week", "delivers_food": "no", "delivers_food_why": "The explicit 'We don't deliver food' line"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "The page respects me: clear Free vs Family table, honest footnote on the store comparison. But the sample week is chicken tenders, tacos, meatballs; nothing vegetarian shown, and 'vegetarian' is just a word in a FAQ with no answer on eggs. Also the sign-up consent bundles a weekly marketing email ('the occasional kitchen pick') with the Terms", "whats_missing": "A lacto-vegetarian (egg-free) setting stated before sign-up; a vegetarian sample week; how the kid profile makes one component plain", "pay_per_month": 10},
+   "scores": {"clarity": 8, "trust": 7, "value": 8, "ease": 8, "want_to_sign_up": 7},
+   "quote": "No pop-ups, and 'We don't deliver food' above the fold. Refreshing. But the sample week is chicken, tacos, meatballs; show me an egg-free vegetarian week."
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "Recipe manager with planning and grocery lists", "who_for": "Home cooks with their own recipe collections", "trust": "medium", "trust_why": "Ratings and 'no card required' up front", "next_step": "Check pricing", "delivers_food": "no", "delivers_food_why": "Store badges and the tagline describe an app"},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "The pricing page is genuinely clear ('No surprise renewals'), then a countdown timer to '50% OFF'. And it's bring-your-own-recipes, which doesn't solve 'will I actually cook without the box'", "whats_missing": "Planning help, not just storage; a kid-plain option", "pay_per_month": 5},
+   "scores": {"clarity": 8, "trust": 7, "value": 6, "ease": 6, "want_to_sign_up": 5},
+   "quote": "The pricing page is a model of clarity, then a countdown timer to '50% OFF.' Pick a lane."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "Meal kit delivery behind a gamified offer modal", "who_for": "New subscribers chasing a discount", "trust": "low", "trust_why": "'Open A Box To Reveal Your Offer!' is a spin-to-win pattern", "next_step": "Continue Without Offer, then scan the plans", "delivers_food": "yes", "delivers_food_why": "Branded boxes and '10 Free Meals'"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Same problem as Green Chef with a louder page: the vegetarian dishes include 'Honey Miso Broccoli Donburi… & Fried Eggs' and shakshuka. Price only after a zip code", "whats_missing": "Egg-free vegetarian; a visible price", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 2, "value": 2, "ease": 5, "want_to_sign_up": 1},
+   "quote": "'Open a box to reveal your offer' is spin-to-win with a lime logo. And the veggie menu has fried eggs on the donburi."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Weekly meal plan subscription", "who_for": "Families wanting recipe variety", "trust": "medium", "trust_why": "Established but dated-feeling", "next_step": "Look at the plans", "delivers_food": "unsure", "delivers_food_why": "Lifestyle video hero doesn't say kit or recipes until 'How It Works'"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "Fifteen plans, but I need two at once (vegetarian and kid). 'Plant Based' would be vegan, not lacto. And 'LIMITED TIME' with an email gate before I've seen a price", "whats_missing": "Combined filters; price on the page", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 5, "value": 4, "ease": 5, "want_to_sign_up": 3},
+   "quote": "Fifteen plans but I need two at once, vegetarian and kid. And 'LIMITED TIME' plus an email gate before I've seen a price."
+  }
+ },
+ "dd_offer": {"clear": "clear", "why": "Free vs Family is laid out in a table, and it says they email 3 days before Family ends", "expect_day_15": "It downgrades to Free. No card on file, so no charge.", "expectation_correct": true},
+ "head_to_head": {"winner": "DD", "reason": "The most honest page of the five, Instacart built in, and a per-person profile that could finally cover Arjun's plain plate",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "No email gate, visible price, per-person profiles"},
+   "PTE": {"winner": "DD", "reason": "DinnerDrop actually plans; Plan to Eat only stores what I already have"},
+   "OL": {"winner": "DD", "reason": "One clear price versus metered messages"},
+   "HF": {"winner": "DD", "reason": "No dark-pattern pop-up and no eggs forced on me"}
+  }},
+ "dd_fix_that_would_move_me": "On /start (pricing) FAQ, say that vegetarian can be set to exclude eggs and show a vegetarian sample week; on /signup, make the weekly marketing email a separate opt-in instead of part of the Terms line."
+}

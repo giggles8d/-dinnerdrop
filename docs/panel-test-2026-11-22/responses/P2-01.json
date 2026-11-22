@@ -1,0 +1,50 @@
+{
+  "id": "P2-01",
+  "name": "Brittany Hollis",
+  "simulated": true,
+  "order": ["PTE", "DD", "EM", "OL", "HF"],
+  "sites": {
+    "PTE": {
+      "five_sec": {"what_is_it": "A recipe app with meal plans and grocery lists", "who_for": "People who save a lot of recipes and like to plan", "trust": "medium", "trust_why": "4.8 on the App Store and 4.7 on Google Play right at the top, but I've never heard of it", "next_step": "Scroll looking for 'Walmart' and a price", "delivers_food": "no", "delivers_food_why": "App Store and Google Play buttons and 'Grocery Lists'; it's just an app"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Walmart isn't named anywhere on the home page; I'd have to save my own recipes off Pinterest, and it's $5.95/mo after the trial on top of what I pay eMeals", "whats_missing": "Walmart pickup cart, sample kid dinners", "pay_per_month": 0},
+      "scores": {"clarity": 7, "trust": 8, "value": 4, "ease": 5, "want_to_sign_up": 3},
+      "quote": "4.8 stars is cute but y'all, where's Walmart? I don't have time to clip recipes while I scroll with a baby on my hip."
+    },
+    "DD": {
+      "five_sec": {"what_is_it": "Plans dinner and puts the grocery list in your Walmart or Instacart cart", "who_for": "Families who want dinner figured out", "trust": "medium", "trust_why": "'Powered by Instacart' helps and 'no card needed' is right there, but no App Store rating and I've never heard the name", "next_step": "Tap 'See a sample week' to see if it's normal kid food", "delivers_food": "no", "delivers_food_why": "The green line under the paragraph literally says 'We don't deliver food'"},
+      "full_page": {"would_sign_up": "maybe", "what_stopped_me": "I already paid eMeals for the year and it works with my Walmart+ pickup. Not sure DinnerDrop's Walmart cart works the exact same way with Walmart+. 'Over 500 families' feels small next to eMeals. The text-voting thing is useless with a 6, 4 and 1-year-old", "whats_missing": "A screenshot of the filled Walmart cart with a pickup slot; App Store rating; how swapping a meal changes the list", "pay_per_month": 0},
+      "scores": {"clarity": 8, "trust": 6, "value": 9, "ease": 8, "want_to_sign_up": 7},
+      "quote": "Chicken tenders, taco night, English muffin pizzas for $64? That's literally my kids' menu. Free with a Walmart cart beats my $60 eMeals... if the cart actually works."
+    },
+    "EM": {
+      "five_sec": {"what_is_it": "eMeals, the meal plan app I already use", "who_for": "Moms planning the week", "trust": "high", "trust_why": "I've used it for a year and it sends my list to Walmart", "next_step": "Nothing, I'm already a member", "delivers_food": "no", "delivers_food_why": "'How It Works' with a phone and a checklist; 'Choose Your Meals'"},
+      "full_page": {"would_sign_up": "yes", "what_stopped_me": "Nothing really; I renew every year. Price isn't on the page though, and the food pictures are fancy (bok choy, rosemary-mustard pork chops)", "whats_missing": "Price on the page, kid food in the photos", "pay_per_month": 5},
+      "scores": {"clarity": 7, "trust": 8, "value": 7, "ease": 8, "want_to_sign_up": 8},
+      "quote": "Big Walmart logo, Kroger, Aldi... that's why I stay. But Shrimp Po' Boys as 'Budget Friendly'? My 6-year-old would cry."
+    },
+    "OL": {
+      "five_sec": {"what_is_it": "An AI app that picks meals for you", "who_for": "Busy families", "trust": "medium", "trust_why": "'Trusted by 90,000+ families' but the big orange button is a 'Letter from the CEO', which is weird", "next_step": "Scroll for a price", "delivers_food": "unsure", "delivers_food_why": "Phone says 'I've picked out meals for you' and 'How was it?' like a food delivery app"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "Meals page says a 1-month trial and prices in the app; pricing page says $25 a month for Everyday, counted in messages", "whats_missing": "A straight price and a Walmart pickup example", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 5, "value": 2, "ease": 5, "want_to_sign_up": 2},
+      "quote": "$25 a month to text a robot about dinner? Girl, eMeals is $60 a year."
+    },
+    "HF": {
+      "five_sec": {"what_is_it": "HelloFresh meal kit boxes", "who_for": "People who want food shipped to them", "trust": "low", "trust_why": "'Open a box to reveal your offer' is a game, not a price", "next_step": "Tap 'Continue Without Offer' and probably leave", "delivers_food": "yes", "delivers_food_why": "HelloFresh boxes in the pop-up and 'Free Meals'"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "No price until you type a zip; fine print says auto-renewing and shipping after the first box; feeding 5 with a box is crazy money", "whats_missing": "Any price", "pay_per_month": 0},
+      "scores": {"clarity": 4, "trust": 5, "value": 2, "ease": 6, "want_to_sign_up": 1},
+      "quote": "I'm not playing open-a-box to find out what dinner costs. Shipping fee after the first box? Nope."
+    }
+  },
+  "dd_offer": {"clear": "clear", "why": "It says no card like four times and the FAQ says you go back to the free plan", "expect_day_15": "The family texting stuff turns off and I'm back on the free plan. Nothing charged.", "expectation_correct": true},
+  "head_to_head": {
+    "winner": "EM",
+    "reason": "eMeals already sends my list to my Walmart+ pickup and I trust it; DinnerDrop is the one I'd try free before my January renewal",
+    "pairwise": {
+      "EM": {"winner": "EM", "reason": "Proven with my Walmart+ account and 'two million customers' vs 'over 500 families'; switching isn't worth it until I've tested DinnerDrop's Walmart cart"},
+      "PTE": {"winner": "DD", "reason": "DinnerDrop is free and names Walmart; Plan to Eat never mentions it"},
+      "OL": {"winner": "DD", "reason": "$0 with a Walmart cart vs $25 a month"},
+      "HF": {"winner": "DD", "reason": "I can see what a week costs ($64) without a zip code or a box game"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page, next to 'One tap -> Instacart or Walmart': a real screenshot of the filled Walmart cart with a pickup time and the words 'works with Walmart+ pickup', plus the App Store rating."
+}

@@ -1,0 +1,120 @@
+{
+  "id": "P2-09",
+  "name": "Jose Ramirez",
+  "simulated": true,
+  "order": ["OL", "HF", "PTE", "EM", "DD"],
+  "sites": {
+    "OL": {
+      "five_sec": {
+        "what_is_it": "A phone app that picks meals for you. Pues, I think.",
+        "who_for": "Families, it says 90,000. The food in the picture looks like for a small family.",
+        "trust": "medium",
+        "trust_why": "90,000 families is a lot of people. But the big orange button says 'Letter from the CEO'. Why do I want a letter?",
+        "next_step": "Show my oldest daughter, she knows apps.",
+        "delivers_food": "unsure",
+        "delivers_food_why": "The phone shows a plate of rice bowl and pancakes with 'I've picked out meals for you'. Maybe they bring the food, maybe not."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "It says the AI writes the recipe. And the pricing is $25 a month, and you count messages. That's a lot for us.",
+        "whats_missing": "Nothing about big families, nothing about cost of the groceries, no Spanish.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 4, "trust": 5, "value": 2, "ease": 4, "want_to_sign_up": 2},
+      "quote": "'Letter from the CEO'? I don't want a letter, I want to know what to cook for seven. And $25 a month, no, pues."
+    },
+    "HF": {
+      "five_sec": {
+        "what_is_it": "The meal box company. HelloFresh. Box game on the screen.",
+        "who_for": "People with more money. Couples.",
+        "trust": "low",
+        "trust_why": "It wants me to open a box to 'reveal my offer'. That's like the casino.",
+        "next_step": "Close it.",
+        "delivers_food": "yes",
+        "delivers_food_why": "Three green HelloFresh boxes right in the middle. That's a delivery box."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "It's boxes delivered every week, and it hides the price until I give my zip. The small print talks about a 4-person plan. We are seven.",
+        "whats_missing": "A price. Anything for seven people.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 4, "trust": 3, "value": 1, "ease": 3, "want_to_sign_up": 1},
+      "quote": "Boxes. Right away, boxes. 'Free Breakfast for Life' for seven people is not free, that's a car payment."
+    },
+    "PTE": {
+      "five_sec": {
+        "what_is_it": "An app for recipes and the grocery list.",
+        "who_for": "People who like to write things down, organized people.",
+        "trust": "medium",
+        "trust_why": "It has Google Play and 4.7 stars. I have Android, that's good.",
+        "next_step": "Scroll a little, then probably leave.",
+        "delivers_food": "no",
+        "delivers_food_why": "It says 'Recipes, Meal Plans and Grocery Lists' and shows a woman writing in a notebook. No boxes."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "You have to save your own recipes. My wife has the recipes in her head. And after 14 days it's $5.95 a month.",
+        "whats_missing": "It doesn't give you the dinners. Nothing about family size or cheap food for a big family.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 4, "want_to_sign_up": 2},
+      "quote": "It's a notebook for your own recipes. My wife keeps those in her head, not in a phone. And after 14 days, $5.95."
+    },
+    "EM": {
+      "five_sec": {
+        "what_is_it": "Meal plans. A mom and a little girl laughing, and a phone with food around it.",
+        "who_for": "Families, regular families.",
+        "trust": "medium",
+        "trust_why": "Looks like a real company, nothing crazy on the first screen.",
+        "next_step": "Watch the video maybe, or scroll.",
+        "delivers_food": "unsure",
+        "delivers_food_why": "Pictures of burrito, salad, tacos around a phone. Could be they send the food."
+      },
+      "full_page": {
+        "would_sign_up": "no",
+        "what_stopped_me": "I never see the price. Only 'Try Free for 14 Days', and a pop-up wants my email for a special offer. Then the 'budget' dinner is Shrimp Po' Boys.",
+        "whats_missing": "The price. Food 4 Less. Something for seven people.",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 6, "trust": 5, "value": 3, "ease": 5, "want_to_sign_up": 3},
+      "quote": "The Walmart logo is good. But Shrimp Po' Boys is 'budget friendly'? And it never says the price, only 'try free 14 days'."
+    },
+    "DD": {
+      "five_sec": {
+        "what_is_it": "It plans dinners and sends the text to everybody in the house, then puts the list in Walmart or Instacart.",
+        "who_for": "Families with kids who have phones. My 16 and 13 have phones, the little ones no.",
+        "trust": "medium",
+        "trust_why": "It says straight 'We don't deliver food' and 'no card needed'. But only words, no pictures, no family.",
+        "next_step": "Tap 'See a sample week'.",
+        "delivers_food": "no",
+        "delivers_food_why": "In green it says 'We don't deliver food. We plan your week and send your grocery list.'"
+      },
+      "full_page": {
+        "would_sign_up": "maybe",
+        "what_stopped_me": "The sample week is for a family of 4. It says 'family size' but never says it does seven. And it's all in English.",
+        "whats_missing": "Big family example, Food 4 Less named, Spanish. Also I shop in the store, not online; does the list work in the store?",
+        "pay_per_month": 0
+      },
+      "scores": {"clarity": 7, "trust": 6, "value": 7, "ease": 6, "want_to_sign_up": 6},
+      "quote": "Taco night, chicken tenders, pasta, $64 for the week. That's food my kids eat. But it says 'family of 4'. Seven? It doesn't say."
+    }
+  },
+  "dd_offer": {
+    "clear": "partly",
+    "why": "'Free' and 'no card' I understand. The 'Family' 14 days and then $4.99 I have to read two times, I don't know what is Family and what is free.",
+    "expect_day_15": "I think they ask me for the $4.99. If I don't pay, maybe it stops working.",
+    "expectation_correct": false
+  },
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "It's free, it says clear no delivery, and the dinners are normal food my kids eat.",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "DinnerDrop shows the price, $0. eMeals hides it."},
+      "PTE": {"winner": "DD", "reason": "DinnerDrop gives me the dinners; Plan to Eat wants my own recipes."},
+      "OL": {"winner": "DD", "reason": "Free, and no $25 a month for messages."},
+      "HF": {"winner": "DD", "reason": "No boxes. We can't afford boxes for seven."}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page sample week: add a big-family option (a family of 7 week with its total), so I see it works for seven, not only four."
+}

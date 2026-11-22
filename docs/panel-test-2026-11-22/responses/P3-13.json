@@ -1,0 +1,120 @@
+{
+ "id": "P3-13",
+ "name": "Marcus Bell",
+ "simulated": true,
+ "order": ["OL", "PTE", "HF", "EM", "DD"],
+ "sites": {
+  "OL": {
+   "five_sec": {
+    "what_is_it": "AI meal planner for families.",
+    "who_for": "Families who want dinner decided for them.",
+    "trust": "medium",
+    "trust_why": "90,000 families plus Washington Post, Fox, Forbes, CNET logos further down. The main CTA being a CEO letter is odd.",
+    "next_step": "Check diet settings, store integrations, price.",
+    "delivers_food": "no",
+    "delivers_food_why": "App menu screen with notifications. No box."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "Stores listed are Instacart, Walmart and Amazon Fresh, no Kroger. And the pricing page is $25 a month for the family plan. That's more than three times Food+. ROI isn't there.",
+    "whats_missing": "Per-person diet settings, nutrition numbers, Kroger, and a price on the meals page instead of 'download the app.'",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 5, "trust": 6, "value": 2, "ease": 6, "want_to_sign_up": 2},
+   "quote": "Twenty-five dollars a month and no Kroger. Bottom line, I'm paying Food+ less to do more."
+  },
+  "PTE": {
+   "five_sec": {
+    "what_is_it": "Recipe manager with a planner and grocery list.",
+    "who_for": "People who already have their recipes and want a system.",
+    "trust": "high",
+    "trust_why": "Solid ratings on both stores, no card for the trial.",
+    "next_step": "Compare features against Food+.",
+    "delivers_food": "no",
+    "delivers_food_why": "It's about lists and recipes."
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "It has 'Nutrition & macros' with daily totals, which I actually use, and $49 a year beats Food+. But it's the same problem: it plans what I put in, not a low-carb plate for me and rice for three teenagers. No Kroger named, just 'grocery delivery.'",
+    "whats_missing": "Per-person portions or sides. A named Kroger integration. Any way for the kids to weigh in.",
+    "pay_per_month": 4
+   },
+   "scores": {"clarity": 8, "trust": 8, "value": 6, "ease": 6, "want_to_sign_up": 5},
+   "quote": "Nutrition and macros for $49 a year is a real Food+ competitor. Still one diet for one table though."
+  },
+  "HF": {
+   "five_sec": {
+    "what_is_it": "HelloFresh meal kits with a gamified offer pop-up.",
+    "who_for": "Couples and small households who want food shipped.",
+    "trust": "medium",
+    "trust_why": "Known brand; the 'open a box' gimmick cheapens it.",
+    "next_step": "Look for Carb Smart and price.",
+    "delivers_food": "yes",
+    "delivers_food_why": "Branded boxes and food photos. It's a meal kit."
+   },
+   "full_page": {
+    "would_sign_up": "no",
+    "what_stopped_me": "There is a 'Carb Smart' plan, credit where due. But five people, five nights, priced per serving and hidden behind a zip code. Three teenagers would eat through that box by Tuesday.",
+    "whats_missing": "A price. A way to do low-carb for one plate and regular for the rest without ordering two plans.",
+    "pay_per_month": 0
+   },
+   "scores": {"clarity": 6, "trust": 5, "value": 2, "ease": 6, "want_to_sign_up": 2},
+   "quote": "Carb Smart plan is nice. But I'm not feeding three teenagers out of a box at per-serving prices."
+  },
+  "EM": {
+   "five_sec": {
+    "what_is_it": "Meal plan subscription. Video hero, not much else on screen one.",
+    "who_for": "Families, from the photo.",
+    "trust": "medium",
+    "trust_why": "Feels like a legit long-running company, says nothing concrete up top.",
+    "next_step": "Look at the plan list.",
+    "delivers_food": "unsure",
+    "delivers_food_why": "Phone surrounded by food icons. Ambiguous until 'Get Your Groceries' further down."
+   },
+   "full_page": {
+    "would_sign_up": "maybe",
+    "what_stopped_me": "On paper it checks boxes: Diabetic plan, Low Carb plan, registered dietitians, Kroger in the logo wall. But the specialty plans say 'say goodbye to separate meals,' meaning everybody eats diabetic. My kids would revolt. And no price on the home page.",
+    "whats_missing": "Price. Per-person flexibility. I'd have to dig into support to find it's about $60 a year.",
+    "pay_per_month": 4
+   },
+   "scores": {"clarity": 6, "trust": 6, "value": 5, "ease": 5, "want_to_sign_up": 4},
+   "quote": "Diabetic plan, dietitians, Kroger. Good specs. But it's a diabetic menu for the whole family, and that's exactly what I don't want."
+  },
+  "DD": {
+   "five_sec": {
+    "what_is_it": "Family dinner planner that texts the household, they vote, then one tap to Instacart or Walmart.",
+    "who_for": "Families with kids old enough to text. Mine are teens, so yes.",
+    "trust": "medium",
+    "trust_why": "'Powered by Instacart' and 'no card' are good. Unknown brand.",
+    "next_step": "Find Kroger and per-person settings.",
+    "delivers_food": "no",
+    "delivers_food_why": "'We don't deliver food' in bold under the hero."
+   },
+   "full_page": {
+    "would_sign_up": "yes",
+    "what_stopped_me": "Kroger cart is Family-only, which I expected. 'A profile for each person: likes, won't-eats, allergies' is the closest thing I saw anywhere to my plate low-carb, theirs normal, but it never actually says it does that. No nutrition info, so I'd probably keep Food+ for tracking.",
+    "whats_missing": "Carbs or nutrition per dinner. A line saying one person can be low-carb while the rest get the starch side. The diabetic link is buried in the footer.",
+    "pay_per_month": 3
+   },
+   "scores": {"clarity": 8, "trust": 7, "value": 7, "ease": 8, "want_to_sign_up": 6},
+   "quote": "$39 a year with Kroger, per-person profiles and the teens voting by text. That's the ROI. Show me carbs per plate and I drop Food+."
+  }
+ },
+ "dd_offer": {
+  "clear": "clear",
+  "why": "Free for 14 days, no card, falls back to free, $4.99 or $39 if you add a card. Clean.",
+  "expect_day_15": "Kroger push, texting and profiles shut off; I keep the free planner with Instacart and Walmart. No charge unless I added a card.",
+  "expectation_correct": true
+ },
+ "head_to_head": {
+  "winner": "DD",
+  "reason": "Only one with per-person profiles, Kroger and teen voting, at $39 a year.",
+  "pairwise": {
+   "OL": {"winner": "DD", "reason": "DinnerDrop has Kroger and costs a fifth of Ollie."},
+   "PTE": {"winner": "DD", "reason": "Plan to Eat has better nutrition, but DinnerDrop plans for different people at one table."},
+   "HF": {"winner": "DD", "reason": "Planning for five beats paying per serving for a box."},
+   "EM": {"winner": "DD", "reason": "eMeals makes the whole family eat diabetic; DinnerDrop's per-person profiles at least point the right way."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Pricing page (/start), Family column: change 'A profile for each person' to say it outright, e.g. one person low-carb, the rest get the rice or pasta side, same dinner, and show carbs per dinner on the sample week. That's my number-one criterion and it's implied, not stated."
+}

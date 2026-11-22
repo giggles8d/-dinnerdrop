@@ -1,0 +1,48 @@
+{
+ "id": "P1-15",
+ "name": "Tasha Monroe",
+ "simulated": true,
+ "order": ["EM", "PTE", "HF", "OL", "DD"],
+ "sites": {
+  "EM": {
+   "five_sec": {"what_is_it": "I don't know. A lady and a little girl laughing. 'Less Stress, More Dinners.'", "who_for": "Moms with money.", "trust": "low", "trust_why": "It's a video. Doesn't say what it is or what it costs.", "next_step": "Scroll a little. Probably leave.", "delivers_food": "unsure", "delivers_food_why": "Pictures of food all around a phone. Could be they send it."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "'Try Free for 14 Days.' Then what? No price on the whole page. And a pop-up asking for my email.", "whats_missing": "The price. I did see Aldi, Meijer and Walmart in the logos, that part's good.", "pay_per_month": 0},
+   "scores": {"clarity": 4, "trust": 3, "value": 3, "ease": 4, "want_to_sign_up": 2},
+   "quote": "'Try Free for 14 Days.' Then what? I scrolled the whole thing, no price. I'm not paying for that."
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "An app for recipes and grocery lists.", "who_for": "People who like to plan. Not me.", "trust": "medium", "trust_why": "It says no card. The stars look OK.", "next_step": "See what it costs.", "delivers_food": "no", "delivers_food_why": "It's app store buttons and somebody writing in a notebook."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "$5.95 a month after two weeks. And I gotta bring my own recipes.", "whats_missing": "Something free. Something simple enough for my son to cook from.", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 3, "want_to_sign_up": 1},
+   "quote": "No card is nice. But it's $5.95 after two weeks and I gotta bring my own recipes. My son needs simple directions, not a recipe book."
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "HelloFresh. Food boxes.", "who_for": "People with money.", "trust": "low", "trust_why": "Open a box to see my offer, like a scratch-off.", "next_step": "Leave.", "delivers_food": "yes", "delivers_food_why": "The HelloFresh boxes. They mail you food."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "No price unless I give my zip code. Small print at the bottom.", "whats_missing": "A price.", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 2, "value": 1, "ease": 3, "want_to_sign_up": 1},
+   "quote": "Open a box for my offer like it's a scratch-off. 'Free Breakfast for Life.' Nothing's free for life. Not paying for that."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "Some app that picks dinner.", "who_for": "Moms with iPhones.", "trust": "low", "trust_why": "The big orange button says 'Letter from the CEO.' I don't want a letter.", "next_step": "Look for the price.", "delivers_food": "unsure", "delivers_food_why": "Picture of a bowl of food on a phone. Can't tell."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "$25 a month. $100 a month. And they count your messages.", "whats_missing": "Something I can afford.", "pay_per_month": 0},
+   "scores": {"clarity": 4, "trust": 3, "value": 1, "ease": 3, "want_to_sign_up": 1},
+   "quote": "$25 a month and they count my messages? $100 for 'Always-On'? That's my light bill."
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "It plans dinner and puts the grocery list in Instacart or Walmart. Texts the family.", "who_for": "Families.", "trust": "medium", "trust_why": "It says no card. It says Walmart. But 'Powered by Instacart' up top, and Instacart fees are why I'm mad.", "next_step": "Look for the price.", "delivers_food": "no", "delivers_food_why": "It says 'We don't deliver food.' Plain as day."},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Two prices. '$0 forever' and then '14 days free' and '$4.99/mo' right next to it. Which one am I on? And it's long, I read it on my lunch.", "whats_missing": "Meijer. What Walmart charges me for delivery since I don't have a car. I liked that it says why it's free: Instacart pays them.", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 5, "value": 7, "ease": 5, "want_to_sign_up": 5},
+   "quote": "It says $0 forever, OK. Then right under it, 14 days free and $4.99. Which one am I getting? And Instacart still gets their fees off me."
+  }
+ },
+ "dd_offer": {"clear": "partly", "why": "I see 'no card.' But I see 'free for 14 days' and that's what they all say before they charge you.", "expect_day_15": "It wants $4.99 or it stops working. Maybe the free part keeps going, I don't know. I'd ask my neighbor.", "expectation_correct": false},
+ "head_to_head": {"winner": "DD", "reason": "Only one that says $0 and Walmart, and tells me why it's free.",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "DinnerDrop shows a price. eMeals doesn't."},
+   "PTE": {"winner": "DD", "reason": "Free, and it picks the dinners."},
+   "HF": {"winner": "DD", "reason": "A list for Walmart instead of a box I can't afford."},
+   "OL": {"winner": "DD", "reason": "Free versus $25 a month."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Home page first screen: say 'Free. $0. No card. Works with Walmart.' first and on its own, and move the '14 days of Family / $4.99' line lower down with 'you stay on the free plan after day 14, nothing is charged' in the same sentence."
+}

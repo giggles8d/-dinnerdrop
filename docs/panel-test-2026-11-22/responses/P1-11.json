@@ -1,0 +1,48 @@
+{
+ "id": "P1-11",
+ "name": "Carlos Mendoza",
+ "simulated": true,
+ "order": ["DD", "OL", "PTE", "EM", "HF"],
+ "sites": {
+  "DD": {
+   "five_sec": {"what_is_it": "It plans dinners and texts the family to vote, then puts the list in Instacart or Walmart.", "who_for": "Families. Busy parents.", "trust": "medium", "trust_why": "Walmart is right there and it says no card. But first thing it says is 'texts everyone in your house.' Why do they need everybody's number?", "next_step": "Look for the price and the privacy part.", "delivers_food": "no", "delivers_food_why": "It says it in green: 'We don't deliver food.' OK, good, at least they say it."},
+   "full_page": {"would_sign_up": "maybe", "what_stopped_me": "Nothing on the page tells me what they do with my family's phone numbers. Only a 'Privacy' link at the very bottom. And every sample is 'family of 4'. We're seven, my suegra included.", "whats_missing": "A plain privacy promise next to the texting part. H-E-B (I'd use Walmart instead). Spanish. Food like what Rosa cooks, more than a taco night.", "pay_per_month": 0},
+   "scores": {"clarity": 7, "trust": 5, "value": 7, "ease": 6, "want_to_sign_up": 5},
+   "quote": "It wants to text everybody in my house, my suegra too. Where does it say what they do with our numbers? Just 'Privacy' at the bottom."
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "An app that picks dinner for you.", "who_for": "Moms with time to play with apps.", "trust": "low", "trust_why": "'Trusted by 90,000+ families,' says who? And the big button is a letter from the CEO. I don't know this CEO.", "next_step": "Scroll a little.", "delivers_food": "unsure", "delivers_food_why": "A phone with a bowl of rice and 'I've picked out meals for you.' Could be they send it, could be not."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The FAQ says their 'intelligence' writes the recipe. A computer making up food. And $25 a month on the pricing page.", "whats_missing": "Real recipes from real people. A price I can afford for seven.", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 2, "value": 2, "ease": 4, "want_to_sign_up": 1},
+   "quote": "'Ollie's state-of-the-art intelligence... writes a recipe just for you.' So a computer is making up the food. Rosa would laugh at me."
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "App for saving recipes and grocery lists.", "who_for": "People who cook from the internet a lot.", "trust": "medium", "trust_why": "The stars look good, 4.8. Says no card for the trial.", "next_step": "Check price.", "delivers_food": "no", "delivers_food_why": "It's an app, the picture is a lady writing in a notebook."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "I have to put my own recipes in. Marisol and Rosa cook from memory, not websites. And it's $5.95 a month after.", "whats_missing": "Something that plans for us. H-E-B or Walmart by name.", "pay_per_month": 0},
+   "scores": {"clarity": 7, "trust": 7, "value": 4, "ease": 4, "want_to_sign_up": 2},
+   "quote": "I like that they say 'We never sell your data.' But I gotta bring my own recipes and type them in? Nobody in my house has time for that."
+  },
+  "EM": {
+   "five_sec": {"what_is_it": "Meal plans? A video with a mom and a little girl.", "who_for": "Families with small kids.", "trust": "medium", "trust_why": "Looks like an old company. But a video tells me nothing.", "next_step": "Scroll.", "delivers_food": "unsure", "delivers_food_why": "Cartoon of a phone with food around it. Doesn't say yet."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "A pop-up wanted my email for a 'special offer' and I scrolled to the end and never found a price.", "whats_missing": "The price. Whether they want a card for the 14 days.", "pay_per_month": 0},
+   "scores": {"clarity": 6, "trust": 5, "value": 4, "ease": 5, "want_to_sign_up": 3},
+   "quote": "'More than two million customers,' OK. But no price anywhere, and a pop-up wants my email before I even know what it costs. What's the catch?"
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "HelloFresh, the food box.", "who_for": "People with money.", "trust": "low", "trust_why": "'Open a box to reveal your offer.' Like a casino.", "next_step": "Close it and leave.", "delivers_food": "yes", "delivers_food_why": "The green HelloFresh boxes on the screen. Everybody knows they send the box."},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "The pop-up asks for my email and my phone number to unlock the offer. And for seven people this would cost more than takeout.", "whats_missing": "A price without giving my zip code.", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 2, "value": 1, "ease": 4, "want_to_sign_up": 1},
+   "quote": "Open a box to win, then it wants my email and my phone number. For seven people? That's a car payment, mijo."
+  }
+ },
+ "dd_offer": {"clear": "partly", "why": "'14 days free, no card' I understand. But I still don't know: if I don't pay, do the texts to my kids keep coming, and does the free part really keep working?", "expect_day_15": "They ask me for the card. If I don't give it, I think the texting stops, but maybe the free part stops working too, or they keep messaging my family to get me to pay.", "expectation_correct": false},
+ "head_to_head": {"winner": "DD", "reason": "It's free, it works with Walmart, there's a real mom who built it, and it doesn't push 'AI' at me.",
+  "pairwise": {
+   "OL": {"winner": "DD", "reason": "No computer writing recipes, and free instead of $25."},
+   "PTE": {"winner": "DD", "reason": "It plans for us; Plan to Eat wants us to bring the recipes and pay $5.95."},
+   "EM": {"winner": "DD", "reason": "DinnerDrop shows the price ($0) and explains why it's free: Instacart pays them."},
+   "HF": {"winner": "DD", "reason": "A grocery list for seven at Walmart prices, not boxes they won't even price without my zip code."}
+  }
+ },
+ "dd_fix_that_would_move_me": "Home page hero and the Family section: right next to 'texts everyone in your house,' one plain line: 'We only use their numbers to send the dinner vote. We never sell or share them. Anyone can reply STOP.' And offer the texts in Spanish."
+}

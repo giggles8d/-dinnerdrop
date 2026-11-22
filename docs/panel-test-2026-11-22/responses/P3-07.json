@@ -1,0 +1,47 @@
+{
+ "id": "P3-07",
+ "name": "Tamika Johnson",
+ "simulated": true,
+ "order": ["EM", "PTE", "OL", "DD", "HF"],
+ "sites": {
+  "EM": {
+   "five_sec": {"what_is_it": "a meal plan app i think", "who_for": "moms that got time to cook new stuff", "trust": "medium", "trust_why": "looks legit but it took a sec to load the video", "next_step": "look for how much", "delivers_food": "unsure", "delivers_food_why": "just says less stress more dinners with a lady and a kid, idk if they send food"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "free 14 days then it never say how much. a pop up want my email to unlock a offer. food is shrimp po boys and pork chops with sauce my 6 yr old not touching", "whats_missing": "the price, cheap meals, ebt", "pay_per_month": 0},
+   "scores": {"clarity": 4, "trust": 5, "value": 2, "ease": 4, "want_to_sign_up": 2},
+   "quote": "it say try free 14 days but never say how much after that fr and the food look like restaurant food"
+  },
+  "PTE": {
+   "five_sec": {"what_is_it": "recipe app", "who_for": "ppl who save recipes off pinterest", "trust": "medium", "trust_why": "says no card on top, ok", "next_step": "scroll for price", "delivers_food": "no", "delivers_food_why": "its app store buttons"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "5.95 a month after the trial. i dont got recipes saved i cook the same 3 things", "whats_missing": "something that tells me what to cook for cheap", "pay_per_month": 0},
+   "scores": {"clarity": 7, "trust": 6, "value": 2, "ease": 5, "want_to_sign_up": 2},
+   "quote": "no card is nice but its still 5.95 after and i dont got a extra 5.95 lol"
+  },
+  "OL": {
+   "five_sec": {"what_is_it": "app that picks dinner for u", "who_for": "families", "trust": "medium", "trust_why": "90,000 families sounds real", "next_step": "scroll", "delivers_food": "no", "delivers_food_why": "its a phone pic with a menu"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "free is only 50 messages then its 25 a month. top picture is sesame beef bowl my kids aint eating that", "whats_missing": "cheap kid food, ebt", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 5, "value": 3, "ease": 5, "want_to_sign_up": 3},
+   "quote": "free is 50 messages a month then 25 dollars?? for texting a app? nah"
+  },
+  "DD": {
+   "five_sec": {"what_is_it": "it make the dinner plan and put it in ur walmart cart", "who_for": "families with kids", "trust": "medium", "trust_why": "says no card and says they dont deliver food so they not hiding stuff", "next_step": "start free, this the cart thing my coworker had", "delivers_food": "no", "delivers_food_why": "it say we dont deliver food right under the words"},
+   "full_page": {"would_sign_up": "yes", "what_stopped_me": "$0 forever no card and walmart cart free. budget in dollars, chicken tenders and taco night and english muffin pizza my kids would eat. $64 for 5 dinners is doable. but nowhere does it say if i can pay with ebt in the walmart cart, and the app is iphone only i got android. page long af on my data", "whats_missing": "ebt answer; meals under like $50 a week", "pay_per_month": 0},
+   "scores": {"clarity": 7, "trust": 7, "value": 8, "ease": 7, "want_to_sign_up": 8},
+   "quote": "free forever no card and it go in my walmart cart thats what i wanted lowkey. just tell me if ebt work at checkout"
+  },
+  "HF": {
+   "five_sec": {"what_is_it": "food box with a prize game", "who_for": "ppl with money", "trust": "low", "trust_why": "open a box for a prize thats a scam vibe", "next_step": "leave", "delivers_food": "yes", "delivers_food_why": "boxes and free meals"},
+   "full_page": {"would_sign_up": "no", "what_stopped_me": "it want my zip before it tell me a price. thats how u know its expensive. i bet i cant use ebt on that", "whats_missing": "a price", "pay_per_month": 0},
+   "scores": {"clarity": 5, "trust": 3, "value": 1, "ease": 4, "want_to_sign_up": 1},
+   "quote": "open a box for a prize then it want my zip before it tell me a price. thats how u know its expensive"
+  }
+ },
+ "dd_offer": {"clear": "partly", "why": "i see free 14 days then 4.99 a month or keep the free one but idk what the free one can still do", "expect_day_15": "probly the texting stuff stop and they gonna make me put a card in to keep using it", "expectation_correct": false},
+ "head_to_head": {"winner": "DD", "reason": "only one thats really free with no card and goes in my walmart cart",
+  "pairwise": {
+   "EM": {"winner": "DD", "reason": "dd tell me its $0, emeals dont tell me nothing"},
+   "PTE": {"winner": "DD", "reason": "plan to eat cost after 14 days and i got no recipes"},
+   "OL": {"winner": "DD", "reason": "ollie 25 a month"},
+   "HF": {"winner": "DD", "reason": "hellofresh way too expensive"}
+  }},
+ "dd_fix_that_would_move_me": "Home page FAQ: add 'Can I pay with EBT/SNAP?' that explains whether EBT works at Walmart checkout for the cart DinnerDrop fills, and say plainly that the free plan keeps working after day 14 with no card."
+}

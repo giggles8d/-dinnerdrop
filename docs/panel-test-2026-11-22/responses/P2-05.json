@@ -1,0 +1,50 @@
+{
+  "id": "P2-05",
+  "name": "Jasmine Ortiz",
+  "simulated": true,
+  "order": ["DD", "HF", "EM", "PTE", "OL"],
+  "sites": {
+    "DD": {
+      "five_sec": {"what_is_it": "an app that picks dinners and puts the groceries in ur walmart cart", "who_for": "families", "trust": "medium", "trust_why": "free no card + powered by instacart, seems legit", "next_step": "tap 'Start free, no card needed'", "delivers_food": "no", "delivers_food_why": "it literally says 'We don't deliver food' lol"},
+      "full_page": {"would_sign_up": "yes", "what_stopped_me": "nothing really. but it never says if i can pay w EBT when it puts stuff in my walmart cart, and nothing about baby/toddler food. the sample week is $64 which is like most of my week", "whats_missing": "EBT/SNAP answer, toddler-friendly dinners, using WIC stuff i already have", "pay_per_month": 0},
+      "scores": {"clarity": 8, "trust": 6, "value": 8, "ease": 9, "want_to_sign_up": 8},
+      "quote": "ok 'start free, no card needed' i'm tapping. but does the walmart cart work w my EBT?? it doesn't say anywhere"
+    },
+    "HF": {
+      "five_sec": {"what_is_it": "meal kit boxes", "who_for": "people w money", "trust": "medium", "trust_why": "free meals sounds good ngl but the box game is sus", "next_step": "open a box lol", "delivers_food": "yes", "delivers_food_why": "the green hellofresh boxes, it's food shipped to u"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "have to put my zip just to see prices, tiny print says auto-renewing subscription and shipping after the first box. can't use EBT on that", "whats_missing": "a price", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 4, "value": 2, "ease": 6, "want_to_sign_up": 3},
+      "quote": "10 free meals had me for a sec then the tiny print said auto-renewing and shipping after the first box. nope"
+    },
+    "EM": {
+      "five_sec": {"what_is_it": "meal plan app", "who_for": "moms w little kids, cute pic", "trust": "medium", "trust_why": "looks normal", "next_step": "scroll", "delivers_food": "no", "delivers_food_why": "it's a phone w a list"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "it's 'Try Free for 14 Days' and they don't say what it costs after. FREE grocery pickup and the walmart logo are nice tho", "whats_missing": "the price, EBT", "pay_per_month": 0},
+      "scores": {"clarity": 6, "trust": 6, "value": 3, "ease": 6, "want_to_sign_up": 3},
+      "quote": "free grocery pickup and big walmart logo is cute but it's a 14 day trial and they don't even say the price after"
+    },
+    "PTE": {
+      "five_sec": {"what_is_it": "recipe organizer app", "who_for": "people who already cook", "trust": "high", "trust_why": "4.8 stars", "next_step": "scroll a lil", "delivers_food": "no", "delivers_food_why": "app store buttons, recipes and lists"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "u save the recipes urself and then pay $5.95 a month", "whats_missing": "actual dinner ideas for me", "pay_per_month": 0},
+      "scores": {"clarity": 6, "trust": 7, "value": 2, "ease": 5, "want_to_sign_up": 2},
+      "quote": "i'd have to find the recipes myself on tiktok and then pay $5.95?? i already do the tiktok part for free lol"
+    },
+    "OL": {
+      "five_sec": {"what_is_it": "AI dinner app", "who_for": "busy moms", "trust": "medium", "trust_why": "90,000 families", "next_step": "read the reviews", "delivers_food": "unsure", "delivers_food_why": "the phone says 'Tonight's dinner is a good one' like it's coming to me"},
+      "full_page": {"would_sign_up": "no", "what_stopped_me": "pricing page says $25 a month", "whats_missing": "a real free plan for meals", "pay_per_month": 0},
+      "scores": {"clarity": 5, "trust": 5, "value": 1, "ease": 6, "want_to_sign_up": 2},
+      "quote": "one review says 'working mom of a toddler' which is me but $25 a month?? that's like 3 days of groceries"
+    }
+  },
+  "dd_offer": {"clear": "partly", "why": "i saw 'free' and tapped, didn't really read the 14 days part", "expect_day_15": "idk it'll probably ask me to pay and i'll just stop using it", "expectation_correct": false},
+  "head_to_head": {
+    "winner": "DD",
+    "reason": "only one that's actually $0 and works w walmart",
+    "pairwise": {
+      "EM": {"winner": "DD", "reason": "free forever vs a trial w no price"},
+      "PTE": {"winner": "DD", "reason": "it gives me the dinners, i don't have to find them"},
+      "OL": {"winner": "DD", "reason": "$0 vs $25"},
+      "HF": {"winner": "DD", "reason": "i shop at walmart w my EBT, no boxes"}
+    }
+  },
+  "dd_fix_that_would_move_me": "Home page FAQ ('Questions parents ask'): add 'Can I use EBT/SNAP?' with a straight answer about paying at Walmart checkout, plus a toddler-friendly sample week."
+}
