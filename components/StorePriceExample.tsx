@@ -24,7 +24,7 @@ export default function StorePriceExample({ ctaHref = '/signup', tone = 'default
       <div className="container mx-auto px-4 py-20 max-w-6xl">
         <p className="text-xs font-bold text-primary uppercase tracking-widest mb-4">Compare your stores</p>
         <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-4 max-w-2xl leading-tight">
-          Same list. Every store you shop. Pick the cheapest — or split it.
+          Same list. Every store you shop. Pick the cheapest, or split it.
         </h2>
         <p className="text-muted-foreground mb-10 max-w-2xl leading-relaxed">
           DinnerDrop prices your whole list at each store you shop, using this week&apos;s sales and what your own orders have shown about each store&apos;s prices. Then it shows you which store wins, and can split the list so each item goes to the store that&apos;s cheaper for it. Estimates get sharper with every order you place.
@@ -45,7 +45,7 @@ export default function StorePriceExample({ ctaHref = '/signup', tone = 'default
               ))}
             </div>
             <p className="text-xs text-muted-foreground mb-8 max-w-3xl">
-              A real family of five in upstate New York — their {ex?.itemCount ?? ''}-item list for the week, read from Instacart on {readOn}.
+              Our founder&apos;s own family of five in upstate New York: their {ex?.itemCount ?? ''}-item list for the week, read from Instacart on {readOn}.
               {saves > 0 ? ` Cheapest store saved $${saves.toFixed(0)} against the priciest, before fees.` : ''} Prices are Instacart&apos;s for each store and change weekly. &ldquo;Store-brand swaps&rdquo; are items that store didn&apos;t match exactly; they aren&apos;t in that store&apos;s total here, and inside the app they&apos;re counted at a typical price so no store wins by missing a match. Your own comparison is an estimate until your orders confirm each store&apos;s prices.
             </p>
           </>
@@ -56,7 +56,7 @@ export default function StorePriceExample({ ctaHref = '/signup', tone = 'default
 
         <div className="flex flex-wrap items-center gap-4">
           <Link href={ctaHref} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 shadow-sm">
-            <Store className="w-4 h-4" /> Compare my stores — free
+            <Store className="w-4 h-4" /> Compare my stores free
           </Link>
           <span className="text-sm text-muted-foreground">Works with any store on Instacart. Included in the free plan.</span>
         </div>

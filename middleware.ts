@@ -106,20 +106,28 @@ export async function middleware(request: NextRequest) {
  * visit never overwrites a known source. Saved onto the profile at signup (/api/attribution/attach).
  */
 function visitSource(request: NextRequest): string | null {
+  // Link prefetches (next/link) are not visits; recording them would tag people who never clicked.
+  if (request.headers.get('next-router-prefetch') || request.headers.get('purpose') === 'prefetch') return null
   const q = request.nextUrl.searchParams
-  // A tagged link clicked on our own pages (the mobile "Start free" bar, the exit-intent popup) must not
-  // replace the ad or site the family actually came from. Nov 6 2026: 85 of 169 sign-ups showed "mobile_sticky".
-  const fromOwnSite = (() => {
-    const r = request.headers.get('referer')
-    if (!r) return false
-    try { return /(^|\.)dinnerdrop\.app$/.test(new URL(r).hostname) } catch { return false }
-  })()
-  if (fromOwnSite && request.cookies.get('dd_src')?.value) return null
-  const ext = (() => {
+  const refHost = (() => {
     const r = request.headers.get('referer')
     if (!r) return ''
-    try { const h = new URL(r).hostname.replace(/^www\./, ''); return /dinnerdrop\.app$/.test(h) ? '' : h } catch { return '' }
+    try { return new URL(r).hostname.replace(/^www\./, '') } catch { return '' }
   })()
+  // A tagged link clicked on our own pages (the mobile "Start free" bar, the exit-intent popup) must not
+  // replace the ad or site the family actually came from. Nov 6 2026: 85 of 169 sign-ups showed "mobile_sticky".
+  const fromOwnSite = /(^|\.)dinnerdrop\.app$/.test(refHost)
+  const ext = fromOwnSite ? '' : refHost
+  const prev = (() => {
+    const raw = request.cookies.get('dd_src')?.value
+    if (!raw) return null
+    try { const o = JSON.parse(decodeURIComponent(raw)); return o && typeof o === 'object' ? o as Record<string, string> : null } catch { return null }
+  })()
+  // Nov 22 2026 review (Sarah approved): the button on our own site (?cta=mobile_sticky, or the utm_source an
+  // internal link carries) is kept in its own "cta" field. The ad source in "s" stays as it was.
+  const cta = (q.get('cta') || (fromOwnSite ? q.get('utm_source') ?? '' : '')).replace(/[^\w-]/g, '').slice(0, 40)
+  const withCta = (base: Record<string, string>) => (cta && base.cta !== cta ? encodeURIComponent(JSON.stringify({ ...base, cta })) : null)
+  if (fromOwnSite && prev) return withCta(prev)
   let source = q.get('utm_source') ?? ''
   let medium = q.get('utm_medium') ?? ''
   if (!source) {
@@ -129,12 +137,19 @@ function visitSource(request: NextRequest): string | null {
     else if (q.get('rdt_cid')) { source = 'reddit'; medium = 'cpc' }
     else if (ext) { source = ext.replace(/^(m|l|lm)\./, ''); medium = 'referral' }
   }
-  if (!source) return null
-  const v = {
+  const lp = request.nextUrl.pathname.slice(0, 60)
+  const t = new Date().toISOString().slice(0, 10)
+  if (!source) {
+    // No new source, but a button of ours was used (e.g. the referrer was stripped): record just the button.
+    if (!cta) return null
+    return withCta(prev ?? { s: '', m: '', c: '', ct: '', r: '', lp, t })
+  }
+  const v: Record<string, string> = {
     s: source.slice(0, 40), m: medium.slice(0, 40),
     c: (q.get('utm_campaign') ?? '').slice(0, 60), ct: (q.get('utm_content') ?? '').slice(0, 60),
-    r: ext.slice(0, 60), lp: request.nextUrl.pathname.slice(0, 60), t: new Date().toISOString().slice(0, 10),
+    r: ext.slice(0, 60), lp, t,
   }
+  if (cta) v.cta = cta
   return encodeURIComponent(JSON.stringify(v))
 }
 

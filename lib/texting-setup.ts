@@ -6,6 +6,7 @@ import { normalizePhone, smsConfigured } from '@/lib/notify'
 import { sendOptIn, textMember, type MemberRow } from '@/lib/texting'
 import { isFamilyProfile } from '@/lib/access'
 import { mergeSettings } from '@/lib/settings'
+import { cartLink, listUrl, shopsInStore } from '@/lib/list-link'
 import type { Meal } from '@/types'
 
 export interface SetupProfile {
@@ -108,7 +109,9 @@ export async function sendFirstPlanText(admin: SupabaseClient, profile: SetupPro
   if (await sentBefore(admin, profile.household_id, 'first_plan')) return false
   // Nov 9 2026: most families never replied to the old first text (a list + a link). Lead with one easy reply.
   const lines = meals.slice(0, 7).map((m, i) => `${i + 1}. ${m.day ? `${m.day.slice(0, 3)}: ` : ''}${m.name}`).join('\n')
-  const body = `DinnerDrop: your week is ready 🍽️\n${lines}\n\nDon't love one? Reply SWAP + its number (like SWAP 2) and I'll change it.\nNeed something? Text ADD milk and it goes on your list.\nList: ${APP_URL}/grocery-list · STOP to opt out`
+  // The list link opens with no sign-in (Nov 22 2026 review, Sarah approved): /grocery-list asked web families,
+  // who have no password, to sign in again from the text.
+  const body = `DinnerDrop: your week is ready 🍽️\n${lines}\n\nDon't love one? Reply SWAP + its number (like SWAP 2) and I'll change it.\nNeed something? Text ADD milk and it goes on your list.\nYour list, no sign-in: ${listUrl(profile.id)} · STOP to opt out`
   return textMember(admin, me, body, 'first_plan')
 }
 
@@ -123,7 +126,15 @@ export async function sendListWaitingText(admin: SupabaseClient, profile: SetupP
   const me = await ownerMember(admin, profile)
   if (!me) return false
   if (await sentBefore(admin, profile.household_id, 'list_waiting')) return false
-  const body = `DinnerDrop: ${firstName ? `${firstName}, your` : 'your'} grocery list for the week is still waiting. One tap sends it to your Instacart or Walmart cart: ${APP_URL}/grocery-list — you check out there. Already shopped? Text "spent $120" and we'll mark it done.`
+  // Nov 22 2026 review (Sarah approved): the old text said "one tap" but linked /grocery-list, a sign-in screen on
+  // most phones. Now the link works with no sign-in: the Instacart cart, or the list itself for in-store shoppers.
+  const { data: plan } = await admin.from('meal_plans').select('meals').eq('user_id', profile.id).order('created_at', { ascending: false }).limit(1).maybeSingle()
+  const n = Array.isArray(plan?.meals) ? (plan!.meals as unknown[]).length : 0
+  const dinners = n ? `${n} dinner${n === 1 ? '' : 's'}` : 'the week'
+  const you = firstName ? `${firstName}, your` : 'your'
+  const body = shopsInStore(settings)
+    ? `DinnerDrop: ${you} list for ${dinners} is ready for the store. It opens on your phone, no sign-in: ${listUrl(profile.id)} Already shopped? Text spent 120.`
+    : `DinnerDrop: ${you} list for ${dinners} is still waiting. Tap to put it in your Instacart cart, no sign-in: ${cartLink(profile.id, 'list_waiting')} You check out there. Already shopped? Text spent 120.`
   return textMember(admin, me, body, 'list_waiting')
 }
 

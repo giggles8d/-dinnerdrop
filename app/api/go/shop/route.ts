@@ -5,6 +5,7 @@ import { itemsForFamily, verifyFollowup } from '@/lib/followup'
 import { grantCartOffer } from '@/lib/cart-offer'
 import { mergeSettings } from '@/lib/settings'
 import { storeBrandsFor } from '@/lib/store-brands'
+import { listUrl } from '@/lib/list-link'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 30
@@ -15,14 +16,17 @@ const APP = 'https://www.dinnerdrop.app'
  * GET /api/go/shop?u=<user id>&k=<follow-up kind>&s=<signature>
  * The one-tap button in follow-up emails: logs the tap, builds the family's Instacart shopping list and
  * redirects there — no sign-in needed (email apps open a browser that usually isn't signed in).
- * A bad or missing signature, or no list, falls back to the grocery list page.
+ * A bad or missing signature falls back to the grocery list page; a good one with no cart opens /list (no sign-in).
  */
 export async function GET(req: NextRequest) {
   const u = req.nextUrl.searchParams.get('u') ?? ''
   const k = (req.nextUrl.searchParams.get('k') ?? '').slice(0, 20)
   const s = req.nextUrl.searchParams.get('s') ?? ''
-  const fallback = NextResponse.redirect(`${APP}/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=${encodeURIComponent(k || 'shop')}`, 302)
-  if (!/^[0-9a-f-]{36}$/i.test(u) || !verifyFollowup(u, k, s)) return fallback
+  const signInList = NextResponse.redirect(`${APP}/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=${encodeURIComponent(k || 'shop')}`, 302)
+  if (!/^[0-9a-f-]{36}$/i.test(u) || !verifyFollowup(u, k, s)) return signInList
+  // A good link whose cart can't be built (nothing left to buy, or Instacart didn't answer) opens the family's list
+  // with no sign-in instead of the sign-in screen (Nov 22 2026 review, Sarah approved).
+  const fallback = NextResponse.redirect(listUrl(u), 302)
 
   // Email security scanners open links before the family does. The first hit returns a tiny page whose
   // script continues (scanners rarely run it); only the second hit logs the tap and builds the cart.

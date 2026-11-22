@@ -15,7 +15,8 @@ export const dynamic = 'force-dynamic'
 /**
  * POST — the first-time walkthrough's answers (components/Walkthrough.tsx), saved in one go before the first week:
  * goal, people [{ name, role, likes, dislikes, allergies, phone }] (people[0] is the planner), styles, diets,
- * weekly mix + how often, cook nights + busy-night minutes, Sunday family dinner, budget, store brands, vote day.
+ * weekly mix + how often, cook nights + busy-night minutes, Sunday family dinner, budget, store brands, vote day,
+ * and (when they reached that screen) shop: { how: 'online' | 'store', day: 'sun'…'sat' | 'varies' }.
  */
 type PersonIn = { name?: string; role?: string; likes?: string[]; dislikes?: string[]; allergies?: string[]; phone?: string }
 
@@ -58,6 +59,18 @@ export async function POST(request: Request) {
   if (sun.on) settings.plan.sundayDinner.options = Math.min(Math.max(Number(sun.options) || 3, 2), 5)
   settings.food.storeBrands = b.storeBrands === true
   settings.texting.voteDay = voteDay
+  // How and when they shop (Nov 22 2026 review, Sarah approved). Stored in the fields that already mean this:
+  // stores.mode ('instore' = shops in person) and the shop-by day; `shopping.askedAt` marks that the family answered,
+  // so the shop-day morning nudge (lib/shop-day) only goes to families who told us their day. No migration.
+  const shop = (b.shop && typeof b.shop === 'object' ? b.shop : null) as { how?: string; day?: string } | null
+  if (shop) {
+    const varies = shop.day === 'varies'
+    const day = (WEEKDAYS as string[]).includes(String(shop.day)) ? (String(shop.day) as Weekday) : null
+    if (shop.how === 'store') settings.stores.mode = 'instore'
+    else if (shop.how === 'online' && settings.stores.mode === 'instore') settings.stores.mode = 'instacart'
+    if (day) settings.schedule.reminders.shopBy.day = day
+    ;(settings as unknown as Record<string, unknown>).shopping = { askedAt: new Date().toISOString(), varies: varies || !day, how: shop.how === 'store' ? 'store' : 'online' }
+  }
   if (people.some((x) => x.role === 'kid')) settings.food.kidFriendly = true
   // Never below the lowest choice for this family and number of dinners (an old copy of the page could still send $75).
   const weeklyBudget = floorBudget(b.weeklyBudget, familySize, settings.plan.dinnersPerWeek + (settings.plan.sundayDinner?.on ? 1 : 0))
@@ -105,7 +118,7 @@ export async function POST(request: Request) {
       if (!('error' in r)) texting = r
     }
   }
-  await trackStep(admin, user.id, 'quick_setup_done', { walkthrough: true, goal, people: people.length, styles: styles.length, mix: !!mixIn, sunday: !!sun.on, phone: !!ownerPhone })
+  await trackStep(admin, user.id, 'quick_setup_done', { walkthrough: true, goal, people: people.length, styles: styles.length, mix: !!mixIn, sunday: !!sun.on, phone: !!ownerPhone, shopHow: shop?.how ?? null, shopDay: shop?.day ?? null })
   return NextResponse.json({ ok: true, texting })
 }
 

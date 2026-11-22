@@ -3,15 +3,22 @@
  *  - Existing families without Family access: 6 months, granted once by the admin route, with an email.
  *  - New sign-ups: 14 days of Family automatically, no card (granted on their first dashboard load).
  * Both set profiles.family_until and a marker in settings.promos so nothing is granted twice.
+ *
+ * Nov 22 2026 review, Sarah approved: "14 days of Family free for everyone, then ask for a card." The 14-day grant
+ * below is the rule and stays. The 6-month grant (admin route /api/admin/family-grant) is OFF: it can still report
+ * how many accounts it would reach, but it no longer grants or emails. 6-month grants already given stay.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { isFamilyProfile } from '@/lib/access'
+import { FREE_FAMILY_DAYS } from '@/lib/offer-policy'
 import { emailShell, sendEmail } from '@/lib/notify'
 
 const APP = 'https://www.dinnerdrop.app'
 export const FAMILY_6MO = 'family-6mo-2026-10-31'
 export const AUTO_TRIAL = 'family-14d-auto'
 const INTERNAL = /^setzl/i
+/** The 6-month grant to every account without Family. Off (Nov 22 2026 review); a code change, not data, turns it on. */
+const SIX_MONTH_GRANT_ON: boolean = false
 
 type Prof = { id: string; email: string | null; full_name: string | null; created_at: string; subscription_status: string | null; is_beta_member: boolean | null; family_until: string | null; settings: unknown; email_unsubscribed: boolean | null }
 
@@ -35,8 +42,8 @@ export async function grantNewFamilyTrial(admin: SupabaseClient, userId: string)
   if (promosOf(p)[AUTO_TRIAL] || promosOf(p)[FAMILY_6MO]) return false
   // Only brand-new accounts (the first-plan path runs for them); older accounts are handled by the 6-month grant.
   if (Date.now() - new Date(p.created_at).getTime() > 3 * 86400000) return false
-  const until = new Date(new Date(p.created_at).getTime() + 14 * 86400000)
-  await setFamily(admin, p, until, AUTO_TRIAL, 14)
+  const until = new Date(new Date(p.created_at).getTime() + FREE_FAMILY_DAYS * 86400000)
+  await setFamily(admin, p, until, AUTO_TRIAL, FREE_FAMILY_DAYS)
   return true
 }
 
@@ -67,7 +74,7 @@ export async function grantFamilySixMonths(admin: SupabaseClient, opts: { apply:
   const budget = opts.budgetMs ?? 240000
   const people = await familiesWithoutFamily(admin)
   const report = { eligible: people.length, granted: 0, emailed: 0, failed: 0, sample: people.slice(0, 5).map((p) => `${p.email} (${p.created_at.slice(0, 10)})`) }
-  if (!opts.apply) return report
+  if (!opts.apply || !SIX_MONTH_GRANT_ON) return report
   const until = new Date(); until.setMonth(until.getMonth() + 6)
   const untilLabel = until.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
   const { data: done } = await admin.from('campaign_sends').select('email').eq('campaign', FAMILY_6MO)

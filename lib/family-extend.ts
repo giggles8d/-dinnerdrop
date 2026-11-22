@@ -7,6 +7,12 @@
  * Runs from /api/cron/campaigns only while app_kv `campaign_family_extend` is { status: 'approved', through: 'YYYY-MM-DD' }:
  * only plans ending on or before `through` are extended. Skips paying/trialing families, unsubscribed addresses
  * (they still get the months, just no email) and internal accounts. One extension per end date (campaign_sends).
+ *
+ * HARD OFF IN CODE (Nov 22 2026 review, Sarah approved: the 92-day extension stays OFF; 14 days of Family for
+ * everyone, then ask for a card). On Nov 22 app_kv `campaign_family_extend` still read { status: 'approved',
+ * through: '2026-11-30' } and the daily cron had extended 83 families. FAMILY_EXTEND_ON below wins over app_kv, so
+ * an old or accidental approval can't turn it back on. Extensions already given stay. Families whose free days end
+ * now get the 3-days-before email instead (lib/trial-ending.ts) and an ask to add a card.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
@@ -14,6 +20,8 @@ import { textingUrl } from '@/lib/followup'
 
 export const FAMILY_EXTEND = 'family-extend'
 export const EXTEND_DAYS = 92
+/** Must stay false unless Sarah decides otherwise in code review. app_kv approval alone does nothing. */
+const FAMILY_EXTEND_ON: boolean = false
 const APP = 'https://www.dinnerdrop.app'
 const FROM = 'Sarah from DinnerDrop <sarah@dinnerdrop.app>'
 const INTERNAL = /(@dinnerdrop\.app$|^setzl1979(\+[^@]*)?@gmail\.com$|@camcomfginc\.com$)/i
@@ -124,6 +132,7 @@ export async function extendCandidates(admin: SupabaseClient, now: Date, through
 
 export async function runFamilyExtend(admin: SupabaseClient, now = new Date(), opts: { budgetMs?: number } = {}) {
   const started = Date.now()
+  if (!FAMILY_EXTEND_ON) return { status: 'off in code (Nov 22 2026 review)', through: null, extended: 0, thanks: 0, try: 0, failed: 0 }
   const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'campaign_family_extend').maybeSingle()
   const cfg = (kv?.value as { status?: string; through?: string } | null) ?? {}
   const report = { status: cfg.status ?? 'not approved', through: cfg.through ?? null, extended: 0, thanks: 0, try: 0, failed: 0 }

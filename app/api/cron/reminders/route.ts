@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { runDailyReminders } from '@/lib/reminders'
 import { runTextingDay } from '@/lib/texting'
+import { runShopDayNudges } from '@/lib/shop-day'
 
 export const maxDuration = 300
 export const dynamic = 'force-dynamic'
@@ -19,6 +20,9 @@ export async function GET(request: NextRequest) {
   const now = new Date()
   const out: Record<string, unknown> = {}
   try { out.reminders = await runDailyReminders(admin, now) } catch (e) { out.reminders = { error: String(e) } }
+  // Shop-day morning nudge (Nov 22 2026 review, Sarah approved): after this morning's plans exist, families whose
+  // shop day is today and who haven't sent this week's list get the no-sign-in cart or list link (STOP/unsubscribe respected).
+  try { out.shopDay = await runShopDayNudges(admin, now) } catch (e) { out.shopDay = { error: String(e) } }
   try { out.texting = await runTextingDay(admin, now) } catch (e) { out.texting = { error: String(e) } }
   return NextResponse.json({ ok: true, ms: Date.now() - now.getTime(), ...out })
 }

@@ -12,6 +12,7 @@ import { buildFirstPlan } from '@/lib/first-plan'
 import { trackStep } from '@/lib/activation'
 import { attachLibraryImages } from '@/lib/library-images'
 import { planReadyHtml } from '@/lib/plan-ready-email'
+import { listUrl } from '@/lib/list-link'
 import { sendEmail } from '@/lib/notify'
 import { shopUrl, logFollowup } from '@/lib/followup'
 import type { Meal } from '@/types'
@@ -95,6 +96,7 @@ async function sendStarterEmail(admin: SupabaseClient, userId: string, meals: Me
     note: 'We finished your week for you. Groceries for every dinner are on one list.',
     unsubscribeUrl: `${APP}/unsubscribe?uid=${userId}`,
     shopUrl: shopUrl(userId, 'starter'),
+    listLink: listUrl(userId),
     why: 'You signed up for DinnerDrop today, so we planned your first week.',
   })
   await sendEmail(p.email, subject, html)

@@ -6,6 +6,8 @@ import { render } from '@react-email/render'
 import WelcomeBeta from '@/emails/WelcomeBeta'
 import PaymentFailed from '@/emails/PaymentFailed'
 import { FAMILY_TRIAL_DAYS } from '@/lib/stripe'
+// Meta Conversions API sends (Nov 22 2026 review, Sarah approved). Both never throw and skip without META_CAPI_TOKEN.
+import { metaPurchaseFromInvoice, metaStartTrialFromCheckout } from '@/lib/meta-stripe'
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -55,8 +57,21 @@ export async function POST(request: NextRequest) {
 
       if (customerId) {
         const now = new Date()
-        // Same length as the checkout's trial (lib/stripe FAMILY_TRIAL_DAYS = 14); was hard-coded 7 (Nov 21 2026 review).
-        const trialEnds = new Date(now.getTime() + FAMILY_TRIAL_DAYS * 24 * 60 * 60 * 1000)
+        // The trial now ends when the family's free Family days end, or there is none if they're over (Nov 22 2026
+        // review, Sarah approved; lib/trial-date). Read the real status and trial end from the subscription instead
+        // of assuming 14 days. Falls back to the old 14-day assumption only if Stripe can't be read.
+        let status: string = 'trialing'
+        let trialEnds: Date | null = new Date(now.getTime() + FAMILY_TRIAL_DAYS * 24 * 60 * 60 * 1000)
+        const subId = typeof session.subscription === 'string' ? session.subscription : session.subscription?.id
+        if (subId) {
+          try {
+            const sub = await stripe.subscriptions.retrieve(subId)
+            status = sub.status === 'trialing' ? 'trialing' : sub.status === 'active' ? 'active' : sub.status
+            trialEnds = sub.trial_end ? new Date(sub.trial_end * 1000) : null
+          } catch (e) {
+            console.error('[webhook] could not read the new subscription, assuming a 14-day trial:', e instanceof Error ? e.message : e)
+          }
+        }
         // Detect BETA100 coupon usage — beta members get 6 months free and should NOT
         // receive the standard Day 6/7 trial-end urgency emails (would alarm them)
         const isBetaMember = session.total_details?.breakdown?.discounts?.some(
@@ -65,9 +80,9 @@ export async function POST(request: NextRequest) {
         await supabase
           .from('profiles')
           .update({
-            subscription_status: 'trialing',
-            trial_starts_at: now.toISOString(),
-            trial_ends_at: trialEnds.toISOString(),
+            subscription_status: status,
+            trial_starts_at: trialEnds ? now.toISOString() : null,
+            trial_ends_at: trialEnds ? trialEnds.toISOString() : null,
             is_beta_member: isBetaMember,
           })
           .eq('stripe_customer_id', customerId)
@@ -79,7 +94,7 @@ export async function POST(request: NextRequest) {
           try {
             const resend = new Resend(process.env.RESEND_API_KEY)
             const firstName = customerName.split(' ')[0] || 'there'
-            const trialEndFormatted = trialEnds.toLocaleDateString('en-US', {
+            const trialEndFormatted = (trialEnds ?? now).toLocaleDateString('en-US', {
               month: 'long', day: 'numeric', year: 'numeric',
             })
             if (customerEmail) {
@@ -165,6 +180,14 @@ export async function POST(request: NextRequest) {
           console.log('RESEND_API_KEY not set — skipping emails')
         }
       }
+      // Meta StartTrial, event_id trial_<session id> shared with the browser on /dashboard?subscribed=true.
+      await metaStartTrialFromCheckout(stripe, supabase, session, event.created)
+      break
+    }
+
+    case 'invoice.paid': {
+      // Meta Purchase (every real payment) and Subscribe (first paid invoice of a subscription), event_id = invoice id.
+      await metaPurchaseFromInvoice(stripe, supabase, event.data.object as Stripe.Invoice, event.created)
       break
     }
 

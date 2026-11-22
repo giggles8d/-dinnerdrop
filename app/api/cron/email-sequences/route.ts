@@ -1,15 +1,17 @@
 import { createClient } from '@supabase/supabase-js'
 import { logFollowup } from '@/lib/followup'
+import { sendActivationEmail, type ActivationNumber } from '@/lib/activation-email'
 import { NextRequest, NextResponse } from 'next/server'
 
-// Called by Vercel Cron daily at 10:00 AM EST (14:00 UTC)
-// Schedule defined in vercel.json: "0 14 * * *"
+// Called from the daily cron (/api/cron/daily).
 //
-// ACTIVATION SEQUENCE (2026-07 rewrite): the old version targeted
-// subscription_status='trialing', but 226/227 users are 'free' — it never sent
-// anything. This version nudges free users who haven't generated a meal plan
-// yet, at Day 1 / 3 / 7 after signup. Users who have opened their plan are
-// activated and are skipped; the newsletter takes over from there.
+// ACTIVATION SEQUENCE (2026-07 rewrite): nudges free users at Day 1 / 3 / 7 after signup.
+// Nov 22 2026 review (Sarah approved):
+//  - Only a real send (a grocery_handoffs row: an online cart, or the list texted/emailed for the store) ends the
+//    sequence. Before, opening one recipe or the grocery list also counted as "activated", which skipped exactly the
+//    families who stalled at the send button.
+//  - Emails go out from lib/activation-email (not /api/email/send-trial): Reply-To Sarah, the family's first name,
+//    the one-tap send as day 3's main button, and the no-sign-in list for in-store families.
 export async function GET(request: NextRequest) {
   // Auth check FIRST — do not reveal RESEND_API_KEY config status to unauthenticated callers
   const authHeader = request.headers.get('authorization')
@@ -31,7 +33,7 @@ export async function GET(request: NextRequest) {
   const errors: Array<{ userId: string; emailNumber: number; error: string }> = []
 
   // [days since signup, email sequence number]
-  const emailDays: [number, number][] = [[1, 1], [3, 2], [7, 3]]
+  const emailDays: [number, ActivationNumber][] = [[1, 1], [3, 2], [7, 3]]
 
   for (const [daysAgo, emailNumber] of emailDays) {
     // Rolling window (not a UTC calendar day): signed up between daysAgo-0.5 and daysAgo+0.5 days ago, so an
@@ -42,7 +44,7 @@ export async function GET(request: NextRequest) {
 
     const { data: users, error: queryError } = await supabase
       .from('profiles')
-      .select('id, email, email_sequence_sent')
+      .select('id, email, full_name, email_sequence_sent')
       .eq('subscription_status', 'free')
       .not('email_unsubscribed', 'eq', true)
       .not('email', 'is', null)
@@ -55,19 +57,14 @@ export async function GET(request: NextRequest) {
     }
     if (!users || users.length === 0) continue
 
-    // Skip activated users. Every new account now gets a saved first plan
-    // automatically, so "has a plan" no longer means engaged: a family counts as
-    // activated once they've opened a recipe or their grocery list, or sent a list to a store.
+    // Skip only families who sent a list (Nov 22 2026). Day 1 also skips anyone who got the starter-week email
+    // (lib/starter-week): it's the same "your week is ready, one tap" message.
     const userIds = users.map(u => u.id)
-    const [{ data: seen }, { data: handoffs }, { data: starter }] = await Promise.all([
-      supabase.from('activation_events').select('user_id').in('user_id', userIds).in('step', ['recipe_view', 'grocery_list_view']),
+    const [{ data: handoffs }, { data: starter }] = await Promise.all([
       supabase.from('grocery_handoffs').select('user_id').in('user_id', userIds),
-      // Got "Your week: … and 4 more" from lib/starter-week within the hour: the day-1 email would repeat it.
       emailNumber === 1 ? supabase.from('activation_events').select('user_id').in('user_id', userIds).eq('step', 'followup_sent').eq('meta->>kind', 'starter') : Promise.resolve({ data: [] as Array<{ user_id: string }> }),
     ])
-    // Day 1 is the "your list is ready" email, so it goes to everyone who hasn't
-    // sent a list to a store yet, even if they looked at a recipe or the list.
-    const activated = new Set([...(emailNumber === 1 ? [] : (seen || [])), ...(handoffs || []), ...(starter || [])].map(r => r.user_id))
+    const activated = new Set([...(handoffs || []), ...(starter || [])].map(r => r.user_id))
 
     for (const user of users) {
       if (activated.has(user.id)) continue
@@ -77,24 +74,17 @@ export async function GET(request: NextRequest) {
       // Space sends out (Resend's limit is 10/second, shared with other jobs).
       await new Promise((r) => setTimeout(r, 300))
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_APP_URL ?? process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dinnerdrop.app'}/api/email/send-trial`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-cron-secret': process.env.CRON_SECRET! },
-            body: JSON.stringify({ userId: user.id, userEmail: user.email, emailNumber }),
-          }
-        )
-
-        if (res.ok) {
+        const r = await sendActivationEmail(supabase, { userId: user.id, email: user.email, firstName: user.full_name, number: emailNumber })
+        if (r.ok) {
           await supabase.from('profiles')
             .update({ email_sequence_sent: [...sentEmails, emailNumber] })
             .eq('id', user.id)
           await logFollowup(supabase, user.id, emailNumber === 1 ? 'day1' : emailNumber === 2 ? 'day3' : 'day7')
           results.push({ userId: user.id, emailNumber, status: 'sent' })
+        } else if (r.skipped) {
+          results.push({ userId: user.id, emailNumber, status: `skipped: ${r.skipped}` })
         } else {
-          const errBody = await res.json().catch(() => ({}))
-          errors.push({ userId: user.id, emailNumber, error: JSON.stringify(errBody) })
+          errors.push({ userId: user.id, emailNumber, error: r.error ?? 'send failed' })
         }
       } catch (err) {
         errors.push({ userId: user.id, emailNumber, error: String(err) })
@@ -102,5 +92,5 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return NextResponse.json({ success: true, sent: results.length, failed: errors.length, results, errors: errors.length > 0 ? errors : undefined })
+  return NextResponse.json({ success: true, sent: results.filter((r) => r.status === 'sent').length, failed: errors.length, results, errors: errors.length > 0 ? errors : undefined })
 }

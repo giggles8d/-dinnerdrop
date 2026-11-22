@@ -2,15 +2,19 @@
  * Weekend offer (Sarah, Nov 7 2026): send your FIRST grocery cart (Instacart, Walmart or Kroger)
  * by Sunday Nov 8, 11:59 PM ET and get 3 months of Family free (profiles.family_until, no card).
  * Called right after a grocery_handoffs row is written. Once per account; paying members are skipped.
+ *
+ * Ended Nov 8 2026 and retired (Nov 22 2026 review, Sarah approved: no new stacking offers). cartOfferLive() is
+ * also tied to lib/offer-policy.ts, so moving CART_OFFER_ENDS forward can't restart it. Grants already given stay.
  */
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { sendEmail } from '@/lib/notify'
+import { stackingOfferAllowed } from '@/lib/offer-policy'
 
 export const CART_OFFER_ENDS = new Date('2026-11-09T05:00:00Z') // Sun Nov 8, 11:59 PM ET
 export const CART_OFFER_DAYS = 90
 
 export function cartOfferLive(now = new Date()): boolean {
-  return now < CART_OFFER_ENDS
+  return now < CART_OFFER_ENDS && stackingOfferAllowed(now)
 }
 
 export async function grantCartOffer(userId: string | null | undefined): Promise<boolean> {

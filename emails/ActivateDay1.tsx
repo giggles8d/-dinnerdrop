@@ -7,20 +7,32 @@ interface ActivateDay1Props {
   firstName?: string
   unsubscribeUrl?: string
   shopUrl?: string
+  /** The no-sign-in list (/list): the main button for in-store families, "see my list first" for the rest. */
+  listUrl?: string
+  inStore?: boolean
+  dinners?: string[]
 }
 
 // Activation email #1 — sent the morning after signup to families who haven't
 // sent a list to a store yet. One job: get them from "I have a plan" to the
 // grocery list, where one tap loads the whole list into Instacart.
+// Nov 22 2026 review (Sarah approved): the real number of dinners (it always said 5), the no-sign-in list link,
+// an in-store version, and a reply line that's true now that replies go to Sarah (lib/activation-email).
 export default function ActivateDay1({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
   shopUrl,
+  listUrl,
+  inStore = false,
+  dinners = [],
 }: ActivateDay1Props) {
+  const n = dinners.length
+  const what = n ? `${n} dinner${n === 1 ? ' is' : 's are'}` : 'dinners are'
+  const listHref = listUrl ?? 'https://www.dinnerdrop.app/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day1'
   return (
     <Html>
       <Head />
-      <Preview>Your 5 dinners are planned. One tap puts the groceries in your Instacart or Walmart cart.</Preview>
+      <Preview>{inStore ? `Your ${what} planned. Your list is ready to take to the store, no sign-in.` : `Your ${what} planned. One tap puts the groceries in your Instacart cart.`}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
@@ -29,20 +41,28 @@ export default function ActivateDay1({
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
-              Your <strong>5 weeknight dinners</strong> are planned, and everything they need is
+              Your <strong>{what}</strong> planned, and everything they need is
               already on one grocery list, combined and sorted by aisle.
             </Text>
-            <Text style={paragraph}>
-              Tap the button and the whole list lands in your Instacart cart, ready for delivery or pickup —
-              no sign-in needed. Already have some of it? Remove it in Instacart, or open your list first and check it off.
-            </Text>
-            <Section style={ctaSection}>
-              <Button style={button} href={shopUrl ?? 'https://www.dinnerdrop.app/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day1'}>
-                Send my groceries to Instacart →
-              </Button>
-              <Text style={{ ...paragraph, textAlign: 'center', marginTop: '10px' }}>
-                <Link href="https://www.dinnerdrop.app/grocery-list?utm_source=email&utm_medium=lifecycle&utm_campaign=activate_day1" style={inlineLink}>See my grocery list first</Link>
+            {inStore ? (
+              <Text style={paragraph}>
+                Open it on your phone in the store and check items off as you go. No sign-in needed.
               </Text>
+            ) : (
+              <Text style={paragraph}>
+                Tap the button and the whole list lands in your Instacart cart, ready for delivery or pickup.
+                No sign-in needed. Already have some of it? Remove it in Instacart, or open your list first and check it off.
+              </Text>
+            )}
+            <Section style={ctaSection}>
+              <Button style={button} href={inStore ? listHref : (shopUrl ?? listHref)}>
+                {inStore ? 'Open my grocery list →' : 'Send my groceries to Instacart →'}
+              </Button>
+              {!inStore && (
+                <Text style={{ ...paragraph, textAlign: 'center', marginTop: '10px' }}>
+                  <Link href={listHref} style={inlineLink}>See my grocery list first</Link>
+                </Text>
+              )}
             </Section>
             <Text style={paragraph}>
               Want different dinners? Swap any of them on your{' '}
@@ -51,7 +71,7 @@ export default function ActivateDay1({
             </Text>
             <Hr style={hr} />
             <Text style={paragraph}>
-              Stuck on anything? Just reply to this email — it comes straight to me.
+              Stuck on anything? Reply here. It goes to my inbox and I answer myself.
             </Text>
             <Text style={paragraph}>— Sarah, founder of DinnerDrop</Text>
           </Section>

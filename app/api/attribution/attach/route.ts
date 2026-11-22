@@ -21,9 +21,14 @@ export async function POST(req: NextRequest) {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const { data: me } = await admin.from('profiles').select('created_at, signup_source').eq('id', user.id).single()
   if (!me || me.signup_source || Date.now() - new Date(me.created_at).getTime() > 7 * 86400000) return res
-  const clean = Object.fromEntries(Object.entries(src).filter(([k, v]) => ['s', 'm', 'c', 'ct', 'r', 'lp', 't'].includes(k) && typeof v === 'string').map(([k, v]) => [k, v.slice(0, 80)]))
-  await admin.from('profiles').update({ signup_source: clean }).eq('id', user.id).is('signup_source', null)
+  // cta = the button on our own site that led to sign-up (e.g. mobile_sticky), kept apart from the ad source in s
+  // (Nov 22 2026 review, Sarah approved).
+  const clean = Object.fromEntries(Object.entries(src).filter(([k, v]) => ['s', 'm', 'c', 'ct', 'r', 'lp', 't', 'cta'].includes(k) && typeof v === 'string').map(([k, v]) => [k, v.slice(0, 80)]))
+  // Several first pages now call this (ConversionTracker and the dashboard), so only the call that actually
+  // wrote the row goes on to the Maple grant.
+  const { data: wrote } = await admin.from('profiles').update({ signup_source: clean }).eq('id', user.id).is('signup_source', null).select('id')
+  if (!wrote?.length) return res
   // Maple families get 30 days of Family free (lib/maple-offer).
-  if (clean.s === 'maple' || clean.lp === '/maple' || /maple/i.test(clean.c ?? '')) { try { await grantMapleOffer(admin, user.id) } catch (e) { console.error('[attach] maple offer', e) } }
+  if (clean.s === 'maple' || clean.cta === 'maple' || clean.lp === '/maple' || /maple/i.test(clean.c ?? '')) { try { await grantMapleOffer(admin, user.id) } catch (e) { console.error('[attach] maple offer', e) } }
   return res
 }

@@ -20,7 +20,8 @@ export const FAMILY_PRICING = {
   yearly: { lookupKey: 'family_yearly', unitAmount: 3900, interval: 'year' as const, label: '$39/year' },
 }
 
-export const FAMILY_TRIAL_DAYS = 14
+// One place for the trial rule (Nov 22 2026 review): lib/trial-date is client-safe, so /subscribe can use it too.
+export { FAMILY_TRIAL_DAYS } from './trial-date'
 
 /** Founding families get Family free for their first year (Sarah, 2026-10-18): through midnight ET on Oct 18, 2027. */
 export const FOUNDING_FAMILY_YEAR_END = '2027-10-18T04:00:00.000Z'

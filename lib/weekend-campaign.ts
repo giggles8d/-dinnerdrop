@@ -8,6 +8,7 @@
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import { weekendOfferOpen } from '@/lib/weekend-offer-config'
 
 export const WEEKEND = 'thanksgiving-offer-2026-11-19'
 const APP = 'https://www.dinnerdrop.app'
@@ -101,6 +102,8 @@ export async function runWeekend(admin: SupabaseClient, now = new Date(), opts: 
   if (v?.status !== 'approved' || !v.sendOn) return report
   const todayET = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
   if (todayET < v.sendOn) return { ...report, status: `waiting for ${v.sendOn}` }
+  // Nov 22 2026 review: never remind anyone about the Thanksgiving offer after it closes (Sun Nov 22, 11:59 PM ET).
+  if (!weekendOfferOpen(now)) return { ...report, status: 'offer closed' }
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
   const resend = new Resend(process.env.RESEND_API_KEY)
   const { data: done } = await admin.from('campaign_sends').select('email').eq('campaign', WEEKEND)

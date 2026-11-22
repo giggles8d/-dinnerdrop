@@ -9,7 +9,7 @@ import HeroClip from '@/components/HeroClip'
 export default function FamilyTextingSection({ ctaHref }: { ctaHref: string }) {
   const points = [
     { icon: MessageSquareText, title: 'Everyone gets the ideas by text', body: 'On the day you choose, DinnerDrop texts 8 dinner ideas to each person in your house. They reply with the numbers they want.' },
-    { icon: Users, title: 'The top picks become the week', body: 'When everyone has answered — or after 24 hours, whoever has replied — the most-voted five are your week — assigned to your cook nights, grocery list built. You get a text that it\u2019s done.' },
+    { icon: Users, title: 'The top picks become the week', body: 'When everyone has answered (or after 24 hours, counting whoever replied), the five most-voted dinners become your week, set on your cook nights with the grocery list built. You get a text that it\u2019s done.' },
     { icon: ListPlus, title: 'Anyone can add to the list', body: 'Text "ADD oat milk, bananas" or a photo of the box and it lands on the grocery list with a quantity.' },
     { icon: BellRing, title: 'Reminders when they help', body: 'A text when the plan is ready, when it\u2019s time to shop, and on cook nights.' },
   ]
@@ -24,7 +24,7 @@ export default function FamilyTextingSection({ ctaHref }: { ctaHref: string }) {
         <div className="order-1 lg:order-2">
           <p className="text-xs font-bold text-primary uppercase tracking-widest mb-4">Family plan</p>
           <h2 className="text-4xl font-heading font-bold text-foreground mb-4 leading-tight">The whole family picks. You just approve the cart.</h2>
-          <p className="text-muted-foreground mb-8 leading-relaxed">No app for the kids to install, no group chat to manage. DinnerDrop texts the ideas, counts the votes, and sets the week — this is the actual thread it sends.</p>
+          <p className="text-muted-foreground mb-8 leading-relaxed">The kids don&apos;t install anything. DinnerDrop texts the ideas, counts the votes, and sets the week. The clip shows the exact messages it sends.</p>
           <div className="space-y-6">
             {points.map((p) => (
               <div key={p.title} className="flex gap-4">
@@ -38,7 +38,8 @@ export default function FamilyTextingSection({ ctaHref }: { ctaHref: string }) {
           </div>
           <div className="mt-9 flex flex-col sm:flex-row sm:items-center gap-4">
             <Link href={ctaHref} className="px-7 py-3.5 rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-colors shadow-md">Try Family free for 14 days &rarr;</Link>
-            <p className="text-sm text-muted-foreground">$4.99/mo or $39/yr after. Cancel anytime.</p>
+            {/* Nov 22 2026 review, Sarah approved: ctaHref must be a free sign-up link, never the card path. */}
+            <p className="text-sm text-muted-foreground">Included free when you sign up. No card. After 14 days, $4.99/mo or $39/yr if you keep it.</p>
           </div>
         </div>
       </div>

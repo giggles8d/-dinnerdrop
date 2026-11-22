@@ -37,9 +37,9 @@ export default function WalmartPage() {
           Five weeknight dinners built around your family and budget, every ingredient matched to a real Walmart product, and one tap puts the whole list in your Walmart cart. You pick pickup or delivery and check out on Walmart.com.
         </p>
         <Link href={FREE_HREF} className="inline-block px-10 py-4 rounded-xl text-white font-bold text-lg shadow-sm hover:opacity-90 w-full sm:w-auto" style={{ backgroundColor: GREEN }}>
-          Start free &mdash; no card needed &rarr;
+          Start free, no card needed &rarr;
         </Link>
-        <p className="text-sm text-gray-600 mt-3">Free forever &middot; also works with Instacart and Kroger &middot; no app to download</p>
+        <p className="text-sm text-gray-600 mt-3">Free forever &middot; also works with Instacart (Kroger cart on Family) &middot; iPhone app or any browser</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 my-14 text-left">
           {[
@@ -65,8 +65,8 @@ export default function WalmartPage() {
           {[
             { q: 'Do I need a Walmart+ membership?', a: 'No. Pickup is free on orders over Walmart’s minimum; delivery fees follow Walmart’s normal rules. Walmart+ just waives those if you have it.' },
             { q: 'What if Walmart doesn’t have something?', a: 'Items with no close match stay on your DinnerDrop list, marked so you can grab them elsewhere. Everything else goes in the cart.' },
-            { q: 'Can I still use Instacart?', a: 'Yes. Both buttons sit side by side on your list — Instacart for any store on it, Walmart for pickup or delivery from Walmart. Family members can push to a Kroger cart too.' },
-            { q: 'What does it cost?', a: 'Planning, the list and the Walmart cart are free with no card. The Family plan ($4.99/month or $39/year, 14 days free) adds family texting, per-person profiles and reminders.' },
+            { q: 'Can I still use Instacart?', a: 'Yes. Both buttons sit side by side on your list — Instacart for any store on it, Walmart for pickup or delivery from Walmart. On the Family plan you can push to a Kroger cart too.' },
+            { q: 'What does it cost?', a: 'Planning, the list and the Walmart cart are free with no card. The Family plan is free for your first 14 days with no card, then $4.99/month or $39/year if you keep it. It adds family texting, per-person profiles and reminders.' },
           ].map((f) => (
             <div key={f.q} className="p-6 rounded-2xl border bg-white" style={{ borderColor: '#e8e8e8' }}>
               <h3 className="font-bold text-base mb-2" style={{ color: GREEN }}>{f.q}</h3>
@@ -76,7 +76,7 @@ export default function WalmartPage() {
         </section>
 
         <Link href={FREE_HREF} className="inline-block px-8 py-3 rounded-xl text-white font-bold shadow-sm hover:opacity-90" style={{ backgroundColor: GREEN }}>
-          Plan my week free &rarr;
+          Start free, no card needed &rarr;
         </Link>
         <p className="text-xs text-gray-500 mt-8">Walmart is a trademark of Walmart Inc. DinnerDrop is an independent service and is not affiliated with or endorsed by Walmart.</p>
       </main>

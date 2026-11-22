@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { openExternal } from '@/lib/native'
 import ConversionTracker from '@/components/ConversionTracker'
+import { createClient } from '@/lib/supabase'
+import { trialPlan } from '@/lib/trial-date'
 import { ArrowLeft, Check, MessageSquareText, ShoppingCart, Users, CalendarClock } from 'lucide-react'
 
 type Interval = 'monthly' | 'yearly'
@@ -17,6 +19,19 @@ function SubscribeContent() {
   const searchParams = useSearchParams()
 
   const autoCheckout = searchParams.get('auto') === '1'
+
+  // The first-charge date uses the same rule as checkout (lib/trial-date, Nov 22 2026 review): the trial ends when
+  // this family's free Family days end, no trial if they're over, 14 days if they never had any.
+  // undefined = not loaded or signed out (shows the standard 14 days).
+  const [familyUntil, setFamilyUntil] = useState<string | null | undefined>(undefined)
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (!user) return
+      const { data } = await supabase.from('profiles').select('family_until').eq('id', user.id).maybeSingle()
+      setFamilyUntil((data?.family_until as string | null | undefined) ?? null)
+    }).catch(() => {})
+  }, [])
 
   useEffect(() => {
     const coupon = searchParams.get('coupon')
@@ -63,7 +78,10 @@ function SubscribeContent() {
     }
   }
 
-  const firstCharge = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  const plan = trialPlan(familyUntil)
+  const firstCharge = plan.firstCharge.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  const chargeNow = plan.trialEnd === null
+  const price = interval === 'monthly' ? '$4.99' : '$39'
 
   return (
     <div className="min-h-screen bg-background">
@@ -97,7 +115,7 @@ function SubscribeContent() {
               Get the whole<br />household in on it.
             </h1>
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-              Planning and your Instacart cart stay free. Family adds everything that makes dinner a shared job instead of yours alone. Try it free for 14 days.
+              Planning and your Instacart or Walmart cart stay free. Family makes dinner a shared job instead of yours alone. Every new account gets Family free for 14 days with no card. Add a card here only to keep it after that.
             </p>
 
             <div className="space-y-5">
@@ -134,7 +152,7 @@ function SubscribeContent() {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground text-sm">Cancel in one tap</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">From your Account page. No calls, no hoops. We email you three days before any charge.</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">From your Account page. No calls, no hoops. We email you 3 days before your free Family days end.</p>
                 </div>
               </div>
             </div>
@@ -176,7 +194,7 @@ function SubscribeContent() {
                   )}
                 </div>
                 <div className="inline-block bg-secondary text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 mt-2">
-                  14-day free trial &mdash; $0 today
+                  {chargeNow ? 'Your free days are over' : plan.basis === 'standard_14' ? 'First 14 days free' : `Free until ${firstCharge}`} &middot; {chargeNow ? `${price} today` : '$0 today'}
                 </div>
               </div>
 
@@ -204,7 +222,7 @@ function SubscribeContent() {
                 disabled={loading}
                 className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
               >
-                {loading ? 'Opening secure checkout...' : 'Start my 14-day free trial →'}
+                {loading ? 'Opening secure checkout...' : 'Add a card to keep Family →'}
               </button>
 
               {error && (
@@ -212,7 +230,9 @@ function SubscribeContent() {
               )}
 
               <p className="text-sm text-muted-foreground text-center mt-4 leading-snug">
-                Card required. $0 today. First charge of {interval === 'monthly' ? '$4.99' : '$39'} on {firstCharge} unless you cancel. We email you three days before.
+                {chargeNow
+                  ? <>Your free Family days are over, so the first charge of {price} is today. Cancel any time from Account.</>
+                  : <>A card is needed only to keep Family after your free days. $0 today. First charge of {price} on {firstCharge}{plan.basis === 'free_days' ? ', the day your free Family days end,' : ''} unless you cancel.{plan.basis === 'free_days_min_48h' ? '' : ' We email you 3 days before.'}</>}
               </p>
 
               <p className="text-xs text-muted-foreground text-center mt-4">

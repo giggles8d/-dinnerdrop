@@ -81,6 +81,9 @@ export async function thanksgivingRecipients(admin: SupabaseClient): Promise<Rec
 
 const etDate = (d: Date) => d.toLocaleDateString('en-CA', { timeZone: 'America/New_York' }) // YYYY-MM-DD
 
+/** Sarah's decision 7 (Nov 22 2026): the Thanksgiving email campaign stays off. */
+const THANKSGIVING_EMAIL_ON: boolean = false
+
 /** Daily: send once, on/after sendOn (ET), after approval. */
 export async function runThanksgiving(admin: SupabaseClient, now = new Date(), opts: { budgetMs?: number } = {}) {
   const started = Date.now()
@@ -88,6 +91,8 @@ export async function runThanksgiving(admin: SupabaseClient, now = new Date(), o
   const { data: kv } = await admin.from('app_kv').select('value').eq('key', 'campaign_thanksgiving').maybeSingle()
   const v = (kv?.value as { status?: string; sendOn?: string } | null) ?? {}
   const report = { status: v.status ?? 'not approved', sendOn: v.sendOn ?? null, sent: 0, failed: 0, skipped: 0 }
+  // OFF in code (Nov 22 2026 review, Sarah's decision 7): the Thanksgiving email stays off even though app_kv says approved.
+  if (!THANKSGIVING_EMAIL_ON) return { ...report, status: 'off in code (Nov 22 2026 review)' }
   if (v.status !== 'approved') return report
   if (v.sendOn && etDate(now) < v.sendOn) return { ...report, status: `waiting for ${v.sendOn}` }
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }

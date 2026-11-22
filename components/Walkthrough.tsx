@@ -15,15 +15,29 @@ import { budgetOptions, defaultBudget } from '@/lib/budget-math'
  * First-time walkthrough (Sarah, Nov 7 2026): eight short screens after sign-up so a new family's first week fits
  * them and they find the settings that make DinnerDrop theirs. Replaces the 4-step QuickSetup (kept for rollback).
  *   1 goal · 2 who's at the table · 3 styles + diets · 4 likes / no-thanks per person · 5 weekly mix + how often
- *   6 cook nights + Sunday family dinner · 7 budget + store brands · 8 family texting · then a summary.
+ *   6 cook nights + Sunday family dinner · 7 budget + store brands · 8 how and when you shop · 9 family texting
+ *   · then a summary.
  * Every screen has "Skip the rest · plan my week now", which saves what's set so far. One POST to
  * /api/onboarding/walkthrough. `demo` renders without saving (/preview/onboarding).
+ *
+ * Screen 8 (Nov 22 2026 review, Sarah approved): setup never asked how or when a family shops, so the only send was
+ * "fill an online cart right now". The answer picks the main action on the grocery list (cart vs "Text me this
+ * list") and the shop-day morning nudge (lib/shop-day). Both answers start filled in; nothing is required.
  */
 
 type Role = 'adult' | 'kid'
 interface Person { name: string; role: Role; likes: string[]; dislikes: string[]; allergies: string[]; phone: string }
+type ShopHow = 'online' | 'store'
+type ShopDay = Weekday | 'varies'
 
-const STEPS = 8
+const STEPS = 9
+const SHOP_STEP = 7
+// Sunday first: the order families think about the week in.
+const SHOP_DAYS: Weekday[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+const SHOP_HOW: Array<{ key: ShopHow; label: string; blurb: string }> = [
+  { key: 'online', label: 'I order online', blurb: 'Instacart or Walmart, delivery or pickup. One tap fills your cart.' },
+  { key: 'store', label: 'I go to the store', blurb: 'We text or email you the list. Check items off on your phone as you shop.' },
+]
 const DRAFT_KEY = 'dd_walkthrough'
 const DIETS = ['Gluten-free', 'Dairy-free', 'Nut-free', 'Vegetarian', 'Pescatarian', 'Halal']
 const LIKES = ['Pasta', 'Tacos', 'Pizza', 'Chicken', 'Burgers', 'Steak', 'Soup', 'Rice bowls', 'Mac and cheese', 'Stir-fry', 'Potatoes', 'Broccoli']
@@ -44,7 +58,7 @@ const VOTE_DAYS: Weekday[] = ['fri', 'sat', 'sun']
 function Pick({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
     <button type="button" aria-pressed={on} onClick={onClick}
-      className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-full border-2 text-sm transition-colors ${on ? 'bg-primary text-primary-foreground border-primary font-semibold shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:border-primary/60 hover:text-foreground'}`}>
+      className={`inline-flex min-h-[44px] items-center gap-1.5 px-3 py-2 rounded-full touch-manipulation border-2 text-sm transition-colors ${on ? 'bg-primary text-primary-foreground border-primary font-semibold shadow-sm' : 'bg-white text-gray-600 border-gray-200 hover:border-primary/60 hover:text-foreground'}`}>
       <span aria-hidden="true" className={`inline-flex items-center justify-center w-4 h-4 rounded-full text-[11px] leading-none ${on ? 'bg-white text-primary font-bold' : 'border border-gray-300 text-gray-400'}`}>{on ? '✓' : '+'}</span>
       {children}
     </button>
@@ -83,6 +97,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   const [pickedBudget, setPickedBudget] = useState<string | null>(null)
   const [storeBrands, setStoreBrands] = useState(false)
   const [voteDay, setVoteDay] = useState<Weekday>('sat')
+  const [shopHow, setShopHow] = useState<ShopHow>('online')
+  const [shopDay, setShopDay] = useState<ShopDay>('sun')
   const [saving, setSaving] = useState(false)
 
   const named = people.map((p, i) => ({ ...p, i })).filter((p) => p.name.trim())
@@ -130,14 +146,16 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
       if (typeof d.pickedBudget === 'string') setPickedBudget(d.pickedBudget)
       if (typeof d.storeBrands === 'boolean') setStoreBrands(d.storeBrands)
       if (typeof d.voteDay === 'string') setVoteDay(d.voteDay as Weekday)
+      if (d.shopHow === 'online' || d.shopHow === 'store') setShopHow(d.shopHow)
+      if (typeof d.shopDay === 'string' && (d.shopDay === 'varies' || (SHOP_DAYS as string[]).includes(d.shopDay))) setShopDay(d.shopDay as ShopDay)
     } catch { /* storage blocked or bad data: start fresh */ }
   }, [demo])
   useEffect(() => {
     if (demo || !restored.current) return
     try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify({ at: Date.now(), step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay }))
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ at: Date.now(), step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay, shopHow, shopDay }))
     } catch { /* ignore */ }
-  }, [demo, step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay])
+  }, [demo, step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay, shopHow, shopDay])
 
   async function save() {
     setSaving(true)
@@ -155,6 +173,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
             mix, mixEvery: every, cookDays: nights, busyMinutes: busy,
             sunday: { on: sunday, times: sundayTimes, options: sundayIdeas, extraForMonday: extraMonday },
             storeBrands, voteDay,
+            // Only once they've seen the shop screen: a family who left earlier never answered it.
+            ...(step >= SHOP_STEP ? { shop: { how: shopHow, day: shopDay } } : {}),
           }),
         })
       } catch {
@@ -380,7 +400,33 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === 7 && (
+      {step === SHOP_STEP && (
+        <div>
+          {head('How do you shop?', 'So your list reaches you the right way, on the right day.')}
+          <div role="radiogroup" aria-label="How you get groceries" className="grid gap-2 mt-5">
+            {SHOP_HOW.map((o) => (
+              <button key={o.key} type="button" role="radio" aria-checked={shopHow === o.key} onClick={() => setShopHow(o.key)}
+                className={`w-full min-h-[44px] text-left px-4 py-3.5 rounded-2xl border-2 text-sm transition-colors touch-manipulation ${shopHow === o.key ? 'bg-primary text-primary-foreground border-primary' : 'bg-white border-gray-200 hover:border-primary/60'}`}>
+                <span className="font-semibold">{shopHow === o.key ? '✓ ' : ''}{o.label}</span>
+                <span className={`block text-xs mt-0.5 ${shopHow === o.key ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{o.blurb}</span>
+              </button>
+            ))}
+          </div>
+          <Label>Usually on</Label>
+          <div role="group" aria-label="Day you usually shop" className="flex flex-wrap gap-2">
+            {SHOP_DAYS.map((d) => <Pick key={d} on={shopDay === d} onClick={() => setShopDay(d)}>{WEEKDAY_LABEL[d].slice(0, 3)}</Pick>)}
+            <Pick on={shopDay === 'varies'} onClick={() => setShopDay('varies')}>It varies</Pick>
+          </div>
+          <p className="text-xs mt-2 text-primary font-medium">
+            {shopDay === 'varies'
+              ? '✓ No set day. Your list is on your phone whenever you need it.'
+              : `✓ ${WEEKDAY_LABEL[shopDay]} morning, if your list hasn’t gone out yet, we send it${shopHow === 'store' ? ' for the store' : ' with a one-tap cart link'}.`}
+          </p>
+          {nextBtn()}
+        </div>
+      )}
+
+      {step === 8 && (
         <div>
           {head('Let the family vote', 'Everyone gets the dinner ideas by text, replies with numbers, and anyone can text ADD milk to put it on the list. All optional. After setup you can also send them a link to join themselves.')}
           <div className="mt-5 space-y-2">
@@ -401,7 +447,9 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
       {step === STEPS && (
         <div>
           <div className="text-3xl">🎉</div>
-          {head('Here’s what we’ll plan around', 'Next: pick your dinners, then one tap sends the list to Instacart or Walmart. Change any of this in Settings.')}
+          {head('Here’s what we’ll plan around', shopHow === 'store'
+            ? 'Next: pick your dinners, then we text or email you the list for the store. Change any of this in Settings.'
+            : 'Next: pick your dinners, then one tap sends the list to Instacart or Walmart. Change any of this in Settings.')}
           <ul className="mt-4 space-y-1.5 text-sm">
             {[
               `${familySize} at dinner${named.length ? ` · ${named.map((p) => p.name.trim()).join(', ')}` : ''}`,
@@ -410,6 +458,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
               mix ? MIX_GROUPS.filter((g) => Number(mix[g.key]) > 0).map((g) => `${g.label} ${mix[g.key]}${(every[g.key] ?? 1) > 1 ? ` (${MIX_EVERY.find((o) => o.v === every[g.key])?.label.toLowerCase()})` : ''}`).join(' · ') : 'Any mix of proteins',
               `${nights.map((d) => WEEKDAY_LABEL[d].slice(0, 3)).join(', ')} · ${busy} min a night${sunday ? ` · Sunday dinner, ${SUNDAY.filter((o) => sundayTimes.includes(o.m)).map((o) => o.l.toLowerCase()).join(' / ')}${extraMonday ? ' + Monday leftovers' : ''}` : ''}`,
               `${budget} a week${storeBrands ? ' · store brands' : ''}`,
+              `${shopHow === 'store' ? 'Shopping in the store' : 'Ordering online'}${shopDay === 'varies' ? '' : `, usually ${WEEKDAY_LABEL[shopDay]}`}`,
               people.some((p) => p.phone.replace(/\D/g, '').length >= 10) ? `Family votes by text on ${WEEKDAY_LABEL[voteDay]}s` : 'Texting: add numbers anytime in Settings',
             ].filter(Boolean).map((x) => <li key={x} className="bg-white border rounded-lg px-3 py-2">✓ {x}</li>)}
           </ul>

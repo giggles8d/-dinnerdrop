@@ -96,13 +96,13 @@ FamilyWall is free for the shared calendar, lists and family messaging. Its meal
 
 ### If you mainly cooked from your own recipes: Plan to Eat
 
-Plan to Eat is built around saving recipes from any website and dragging them onto a weekly calendar, with a combined grocery list. It's a paid app (about $55 a year) with a free trial. Good if your family already has a big recipe collection.
+Plan to Eat is built around saving recipes from any website and dragging them onto a weekly calendar, with a combined grocery list. It costs $5.95 a month or $49 a year after a 14-day free trial with no card, and it can send your list to a grocery service, where you pick the brands and quantities. Good if your family already has a big recipe collection.
 
 ### If you want dinner planned for you: DinnerDrop
 
 This is the part we built for. DinnerDrop plans five weeknight dinners for your family every week from your family size, budget and cook time, and builds one combined grocery list that goes to your Instacart or Walmart cart in one tap. The family can vote on the dinners by text, with no app for the kids, and anyone can text "ADD milk" to the list.
 
-Planning and the one-tap carts are free with no card. Family texting is part of the Family plan ($4.99 a month or $39 a year). Families coming from Maple get 30 days of Family free, no card, and can paste their saved dinner names on our [Maple switch page](/maple) to bring them over.
+Planning and the one-tap carts are free with no card. Family texting is part of the Family plan ($4.99 a month or $39 a year). Every new family gets the first 14 days of Family free, no card, and Maple families can paste their saved dinner names on our [Maple switch page](/maple) to bring them over.
 
 What DinnerDrop doesn't do: it isn't a family calendar or chore chart. If you used Maple for those, pair DinnerDrop with a free shared calendar (Google or Apple) and let each app do one job well.
 
@@ -112,7 +112,7 @@ What DinnerDrop doesn't do: it isn't a family calendar or chore chart. If you us
 |---|---|---|---|---|
 | Cozi | AI planner on Max | Yes | No | Free; $39–$79/yr |
 | FamilyWall | No (you plan) | Yes | No | Free; meal planner in Premium |
-| Plan to Eat | No (your recipes) | No | No | About $55/yr |
+| Plan to Eat | No (your recipes) | No | Sends the list to a grocery service; you pick products there | $5.95/mo or $49/yr |
 | DinnerDrop | Yes | No | Instacart or Walmart | Free; Family $4.99/mo |
 
 ## Which one should you pick?
@@ -197,13 +197,13 @@ Browse more in the [Thanksgiving-week collection](/recipes/collections/thanksgiv
     publishDate: '2026-10-31',
     readingTimeMinutes: 6,
     primaryKeyword: 'emeals review',
-    content: `eMeals has been planning dinners for families since 2003, which makes it one of the oldest meal planning services around. We went through its signup, its 15 meal plans, its help center and its pricing page in October 2026. Here is what we found, including where it is genuinely good.
+    content: `eMeals has been planning dinners for families since the early 2000s, which makes it one of the oldest meal planning services around. We went through its signup, its 15 meal plans, its help center and its pricing page in October 2026. Here is what we found, including where it is genuinely good.
 
 *Full disclosure: we make DinnerDrop, another dinner planner. We have tried to keep this fair; every eMeals price and feature below comes from eMeals' own site as of October 31, 2026.*
 
 ## What eMeals is
 
-You pick one of 15 meal plans (Classic, Kid-Friendly, Keto, Diabetic, Heart Healthy, Mediterranean, Quick & Healthy and others). Each week the plan gives you seven dinner recipes with sides, written by eMeals' food team. You choose which ones to make, and the app builds a grocery list you can send to a store for pickup or delivery.
+You pick one of 15 meal plans (Kid-Friendly, Keto, Diabetic, Heart Healthy, Mediterranean, Quick & Healthy and others). Each week the plan gives you seven dinner recipes with sides, written by eMeals' food team. You choose which ones to make, and the app builds a grocery list you can send to a store for pickup or delivery.
 
 ## What it costs
 
@@ -237,7 +237,7 @@ eMeals is a good fit if you shop at Walmart, want a big catalog and native apps,
 
 If you want to try a planner for real without a card, need one menu that works for a picky eater *and* a fish-hater in the same house, or would rather pay month to month, look at the [best eMeals alternatives](/blog/emeals-alternatives) first.
 
-DinnerDrop is one of them: a free weekly dinner planner that builds five dinners around your family, makes one grocery list and opens it in your Instacart cart in one tap. The whole family can vote on the week's dinners by text. See the [side-by-side comparison](/vs/emeals), or if you're switching, [start free with code EMEALS](/emeals) for 3 months of the Family plan.
+DinnerDrop is one of them: a free weekly dinner planner that builds five dinners around your family, makes one grocery list and opens it in your Instacart cart in one tap. The whole family can vote on the week's dinners by text. See the [side-by-side comparison](/vs/emeals), or if you're switching, [bring your eMeals dinners and start free](/emeals). Every new family gets 14 days of the Family plan free, no card.
 
 *eMeals is a trademark of eMeals, Inc. DinnerDrop is not affiliated with or endorsed by eMeals.*
 `,
@@ -259,8 +259,8 @@ DinnerDrop is one of them: a free weekly dinner planner that builds five dinners
 | | Price | Card to start | Who picks the dinners | Grocery handoff |
 |---|---|---|---|---|
 | **eMeals** | $59.99/yr or $37.50/quarter | Yes | eMeals' plan menu (7 a week) | Walmart, Kroger, Instacart and more |
-| **DinnerDrop** | Free; Family $4.99/mo or $39/yr | No | Built for your family; everyone can vote by text | Instacart (any store on it), Kroger cart |
-| **Plan to Eat** | $5.95/mo or $49/yr | Free trial | You | List only |
+| **DinnerDrop** | Free; Family $4.99/mo or $39/yr | No | Built for your family; everyone can vote by text | Walmart or Instacart cart (any store on Instacart); Kroger cart on Family |
+| **Plan to Eat** | $5.95/mo or $49/yr | Free trial, no card | You | Sends the list; you pick products |
 | **Paprika** | One-time purchase per platform | No | You | List only |
 | **Samsung Food** | Free; Food+ $6.99/mo | No | You, or its suggestions | Varies by partner |
 | **Meal kits** | Per serving, usually much more | Yes | Kit menu | Delivered box |
@@ -271,13 +271,13 @@ DinnerDrop is one of them: a free weekly dinner planner that builds five dinners
 
 What's different from eMeals: it's free with no card; the optional Family plan is $4.99 month to month; everyone in the house can vote on the week's dinners by text; a fridge photo turns into dinners you can make tonight; and it compares your list's cost across stores.
 
-Trade-offs: a smaller library (1,100+ recipes, growing every night), no Walmart yet, and no native Android app yet.
+Trade-offs: a smaller library (1,100+ recipes, growing every night) and no Android app yet. There is an iPhone app, and it works in any phone browser.
 
-**Switching from eMeals?** Type the dinners your family loved at [dinnerdrop.app/emeals](/emeals). DinnerDrop writes its own version of each one, sized for your family. Code EMEALS adds 3 months of Family free.
+**Switching from eMeals?** Type the dinners your family loved at [dinnerdrop.app/emeals](/emeals). DinnerDrop writes its own version of each one, sized for your family.
 
 ## 2. Plan to Eat: for recipe collectors
 
-Best if you already have recipes you love on blogs and want to drag them onto a calendar yourself. It imports from almost any recipe site and builds a list. No AI planning and no cart handoff.
+Best if you already have recipes you love on blogs and want to drag them onto a calendar yourself. It imports from almost any recipe site and builds a list, which it can send to a grocery service; you then pick brands and quantities there. It doesn't plan the week for you.
 
 ## 3. Paprika: pay once
 
@@ -285,7 +285,7 @@ A recipe manager with a planner and grocery list, bought once per platform. Grea
 
 ## 4. Samsung Food: free recipe saving
 
-Free recipe saving and planning, with a paid Food+ tier for personalized plans. Shopping partners vary by region.
+Free recipe saving and planning, and you can order groceries online in select countries. Food+ ($6.99/month or $59.99/year) adds tailored 7-day plans; free users can try a tailored week twice.
 
 ## 5. Meal kits
 
@@ -418,7 +418,7 @@ The honest difference: Mealime gave you a big catalog to browse. DinnerDrop's li
 
 ## Other options worth knowing
 
-- **Plan to Eat** ($5.95/month or $49/year) — the best choice if you want to import recipes from websites and drag them onto a calendar yourself. No cart handoff.
+- **Plan to Eat** ($5.95/month or $49/year) — the best choice if you want to import recipes from websites and drag them onto a calendar yourself. It can send the list to a grocery service, where you pick the products.
 - **Paprika** ($4.99 one-time per platform) — a recipe manager with a weekly planner and grocery list. No AI, no cart handoff.
 - **Samsung Food** (free; Food+ $6.99/month) — recipe saving with a planner. Delivery partners vary.
 
@@ -549,7 +549,7 @@ Our ranking criteria: AI vs. manual, grocery integration, dietary filter support
 |-----|-----|----------------|-------|
 | DinnerDrop | Yes (full) | Yes (one-tap Instacart or Walmart cart; Kroger cart on Family) | Free / Family $4.99/mo or $39/yr |
 | eMeals | No (curated menus) | One-tap Walmart (iPhone app) | $59.99/yr dinner plan, card for trial |
-| Plan to Eat | No | Shopping list only | $5.95/mo or $49/yr |
+| Plan to Eat | No | Sends the list to a grocery service; you pick products | $5.95/mo or $49/yr |
 | Paprika | No | Shopping list only | $4.99 one-time |
 | Samsung Food (formerly Whisk) | In paid Food+ | Some stores | Free / Food+ $6.99/mo |
 | Prepear | No | Shopping list only | Free / $8/mo |
@@ -581,7 +581,7 @@ You enter your family size, weekly grocery budget, dietary restrictions, and pre
 
 **Price:** Dinner plan $59.99/year after a 14-day trial (card required to start). Breakfast and lunch plans cost extra.
 
-eMeals has been around since 2003 and has a big library (20,000+ recipes) organized into menu plans like Clean Eating, Keto and Kid-Friendly. Each week you get that plan\'s set of dinners and a shopping list.
+eMeals has been around since the early 2000s and has a big library (25,000+ recipes) organized into menu plans like Clean Eating, Keto and Kid-Friendly. Each week you get that plan\'s set of dinners and a shopping list.
 
 **What works:** Easy, kid-approved recipes, lots of plan styles, and a well-loved one-tap Walmart transfer on the iPhone app.
 **What doesn\'t:** It\'s a curated menu, not a plan built around each person in your family. Planning happens in the app (little on the web), the trial needs a card, and cancellation and auto-renewal are the most common complaints in its reviews. Switching? [Bring your eMeals favorites to DinnerDrop](https://www.dinnerdrop.app/emeals).
@@ -593,7 +593,7 @@ eMeals has been around since 2003 and has a big library (20,000+ recipes) organi
 Plan to Eat is a recipe management system with meal planning on top. Import recipes from any website, organize in your personal library, drag them onto a weekly calendar, generate a shopping list.
 
 **What works:** Excellent recipe import, family sharing, solid calendar drag-and-drop UI.
-**What doesn\'t:** You must bring your own recipes — no discovery or AI. No grocery cart integration.
+**What doesn\'t:** You must bring your own recipes, with no discovery or AI. It can send your list to a grocery service, but you pick the brands and quantities there.
 
 ## 4. Paprika — Best One-Time Purchase
 
@@ -608,10 +608,10 @@ Paprika has been around since 2010 with a one-time fee instead of a subscription
 
 **Price:** Free (Food+ $6.99/month or $59.99/year)
 
-Samsung Food — the app that used to be Whisk — is a recipe-saving and meal planning app with basic grocery integration. Save recipes from the web, schedule on a weekly planner, generate a shopping list. The paid Food+ tier adds AI personalization and weekly planning.
+Samsung Food — the app that used to be Whisk — is a recipe-saving and meal planning app with basic grocery integration. Save recipes from the web, schedule on a weekly planner, generate a shopping list. The paid Food+ tier adds tailored 7-day plans and AI personalization; free users can try a tailored week twice.
 
 **What works:** A strong free tier, good recipe import, Instacart integration in some markets.
-**What doesn\'t:** AI is paywalled, grocery integration varies by region, and imported recipes send you back to the original website for the instructions.
+**What doesn\'t:** most of the AI features are in Food+, and online grocery ordering depends on your country.
 
 ## 6. Prepear — Best for Visual Planners
 
@@ -1563,9 +1563,9 @@ Mealime shut down on October 21, 2026, and its saved plans didn't transfer. If y
 
 **What's free:** Recipe saving from any website, basic grocery list, meal calendar.
 
-**What's paywalled:** AI personalization and weekly planning sit in the paid Food+ tier; the recipe box and manual planner are free.
+**What's paywalled:** Tailored 7-day plans and AI personalization sit in the paid Food+ tier (free users can try a tailored week twice); the recipe box and manual planner are free.
 
-**Verdict:** Best genuinely free option for recipe collectors. No AI meal generation. The grocery list is manual — you add recipes, it compiles ingredients. No store integration or cart handoff. Works well as a digital recipe box.
+**Verdict:** Best genuinely free option for recipe collectors. You add recipes and it compiles the grocery list, and you can order groceries online in select countries (its App Store page lists 23 retailers in 4 regions). Works well as a digital recipe box.
 
 ### 5. Cozi Family Organizer
 
@@ -1580,11 +1580,11 @@ Mealime shut down on October 21, 2026, and its saved plans didn't transfer. If y
 Here's the honest gap in the free meal planning market in 2026:
 
 - **AI-generated meal plans** — No free app generates a personalized weekly dinner plan from scratch. This is uniformly a paid feature.
-- **One-tap grocery cart handoff** — Sending your list directly to Instacart or Kroger requires a paid tier on nearly every app that offers it.
+- **One-tap grocery cart handoff** — Few free apps build the week for you and then fill a store cart with it.
 - **Picky-eater meal swapping** — The ability to reject a meal and get an instant replacement that respects your family's preferences is paywalled everywhere.
-- **Budget optimization** — Building a plan around a specific weekly grocery budget requires premium on Mealime and others.
+- **Budget optimization** — Building a plan around a specific weekly grocery budget is rare in free tiers.
 
-If you want all four of these features, you're looking at $6–$15/month on any existing app.
+If you want all four of these features, you'll usually be looking at a paid plan.
 
 ## The Exception: DinnerDrop's Free Plan
 
@@ -1600,23 +1600,23 @@ What you get for free:
 
 **Budget optimization** — Set a weekly grocery budget. Every plan is built to hit your number.
 
-This is the feature set that costs $6–$15/month on premium tiers of other apps.
+This is the feature set that usually sits in the paid tiers of other apps.
 
 ## Is DinnerDrop Actually Free?
 
-Yes. Planning, the grocery list, swaps, the pantry scan, favorites, and the one-tap Instacart cart are free, with no card on file. The Family plan — $4.99/month or $39/year after a 14-day free trial — adds the Kroger cart push, priority support, and new family features first (the week's dinners texted to everyone, a shared list anyone can add to, per-person preferences). You add a card only if you start a Family trial, and you get an email three days before any charge.
+Yes. Planning, the grocery list, swaps, the pantry scan, favorites, and the one-tap Instacart cart are free, with no card on file. The Family plan — $4.99/month or $39/year after a 14-day free trial — adds the Kroger cart push, priority support, and new family features first (the week's dinners texted to everyone, a shared list anyone can add to, per-person preferences). You add a card only to keep Family after your free 14 days, and we email you 3 days before your free Family days end.
 
 ## Which Free Meal Planning App Should You Use?
 
 Here's the decision tree:
 
-**You want to organize recipes you already have** → Samsung Food (free tier; AI is in paid Food+)
+**You want to organize recipes you already have** → Samsung Food (free tier; tailored plans are mostly in Food+)
 
 **You want a shared family calendar with light meal planning** → Cozi free tier
 
 **You want AI-generated meals and a grocery handoff for free** → DinnerDrop (free, no card)
 
-**You're willing to pay $5–$15/month immediately** → Plan to Eat or eMeals
+**You're happy to pay for a recipe organizer or a set menu** → Plan to Eat (14-day trial, no card) or eMeals (14-day trial, card required)
 
 [Start free — no card needed →](https://www.dinnerdrop.app/start)
 
@@ -1889,7 +1889,7 @@ DinnerDrop was built specifically around this framework:
 | Generates plans from scratch | AI-generated | Recipe filters | Manual | Recipe saves |
 | Family-specific quantities | Scaled auto | Limited | Manual | No |
 | Weekly budget optimization | Built in | No | No | No |
-| One-tap grocery store handoff | Instacart (any Instacart store); Kroger on Family | Delivery partners | No | Limited |
+| One-tap grocery store handoff | Instacart (any Instacart store) or Walmart; Kroger on Family | Delivery partners | Sends the list; you pick products | Limited |
 | Learns from feedback | Yes | No | No | No |
 | Price | Free / $4.99 Family | Free / paid Pro | $5.95/mo | Free / Food+ $6.99 |
 

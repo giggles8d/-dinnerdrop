@@ -7,6 +7,10 @@ import { emailShell, sendEmail } from './notify'
  * Instacart by Sun Nov 22 11:59 PM ET gets 90 days of Family, no card. Advertised in the Meta ad "J -
  * Thanksgiving week image" and on /start (StartClient ThanksgivingOfferBanner); the Nov 19 reminder email is
  * lib/weekend-campaign.ts. Earlier runs: weekend-2026-10-31 (Oct 31 – Nov 1), Nov 7–8.
+ *
+ * Retired after tonight (Nov 22 2026 review, Sarah approved: 14 days of Family for everyone, no new stacking
+ * offers). weekendOfferOpen() returns false after Sun Nov 22 11:59 PM ET for good (lib/offer-policy.ts), so this
+ * grants nothing from then on. Grants already given stay.
  */
 export { WEEKEND_OFFER, weekendOfferOpen } from './weekend-offer-config'
 import { WEEKEND_OFFER, weekendOfferOpen } from './weekend-offer-config'

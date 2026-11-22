@@ -18,6 +18,7 @@ import { attachLibraryImages } from '@/lib/library-images'
 import { planReadySubject, planReadyHtml } from '@/lib/plan-ready-email'
 import { dropConfig, sendDrop, type DropProfile } from '@/lib/sunday-drop'
 import { shopUrl, logFollowup } from '@/lib/followup'
+import { cartLink, listUrl } from '@/lib/list-link'
 import { sendListWaitingText, type SetupProfile } from '@/lib/texting-setup'
 import { isFamilyProfile } from '@/lib/access'
 import { textMember, type MemberRow } from '@/lib/texting'
@@ -53,6 +54,26 @@ export interface DailyReport {
   cookReminders: number
   listNudges: number
   errors: string[]
+}
+
+/**
+ * The link a reminder carries, by how the family shops (Nov 22 2026 review, Sarah approved): texts and the shop
+ * reminder used to link /grocery-list or /dashboard, a sign-in screen on most phones (web families have no password).
+ *   in store  → the list on their phone, no sign-in (/list)
+ *   Kroger    → the list page (the Kroger push needs their account), and the copy says so
+ *   otherwise → the one-tap Instacart cart, no sign-in
+ */
+function shopLink(p: ProfileRow, settings: Settings, kind: string): { url: string; cta: string; how: string; signIn: boolean } {
+  if (settings.stores.mode === 'instore') return { url: listUrl(p.id), cta: 'Open my list', how: 'Open it on your phone in the store and check items off as you go. No sign-in needed.', signIn: false }
+  if (settings.stores.mode === 'kroger') return { url: `${APP}/grocery-list`, cta: 'Open my list to send it to Kroger', how: 'Open your list to send it to your Kroger cart.', signIn: true }
+  return { url: cartLink(p.id, kind), cta: 'Send my list to Instacart', how: 'One tap puts it in your Instacart cart, no sign-in. You check out there.', signIn: false }
+}
+
+/** The last lines of a "this week's dinners are planned" text: shop with no sign-in first, swapping second. */
+function planTextLinks(p: ProfileRow, settings: Settings): string {
+  const link = shopLink(p, settings, 'plan_ready')
+  const shop = settings.stores.mode === 'instore' ? `Your list, no sign-in: ${link.url}` : link.signIn ? `Send it to Kroger: ${link.url}` : `Fill your Instacart cart, no sign-in: ${link.url}`
+  return `${shop}\nSwap a dinner: ${APP}/dashboard`
 }
 
 function wantsEmail(c: Channel) { return c === 'email' || c === 'both' }
@@ -128,7 +149,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
               // Ordered before → the one-tap reorder text (lib/reorder): YES gets the Instacart cart link.
               if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
               else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
-              else await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned —\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
+              else await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned:\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\n${planTextLinks(p, settings)}`, 'plan_ready')
             }
             // The Sunday Drop v3 is this family's week email now (one email, not two); the plain plan email only
             // when the Drop isn't live or already went out in the last 5 days (a second shopping trip that week).
@@ -141,7 +162,7 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             if (wantsEmail(settings.schedule.reminders.planReady) && canEmail && !dropSent) {
               const withPhotos = await attachLibraryImages(admin, meals)
               const weekLabel = new Date(`${voteTrip.shopDate}T12:00:00Z`).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
-              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready') }))
+              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready'), listLink: listUrl(p.id) }))
               await logFollowup(admin, p.id, 'plan_ready')
             }
           }
@@ -177,13 +198,13 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
             if (wantsEmail(settings.schedule.reminders.planReady) && canEmail && !dropSent) {
               const withPhotos = await attachLibraryImages(admin, meals)
               const weekLabel = new Date(`${target}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
-              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready') }))
+              await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready'), listLink: listUrl(p.id) }))
               await logFollowup(admin, p.id, 'plan_ready')
             }
             if (wantsSms(settings.schedule.reminders.planReady) && family) {
               if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
               else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
-              else await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned —\n${names.join('\n')}\nSwap or shop: ${APP}/dashboard`, 'plan_ready')
+              else await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned:\n${names.join('\n')}\n${planTextLinks(p, settings)}`, 'plan_ready')
             }
           }
         }
@@ -226,16 +247,22 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
           const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id).gte('created_at', since)
           if (!count) {
             const n = ((plan.meals as Meal[]) ?? []).length
+            const link = shopLink(p, settings, 'shop_reminder')
             if (wantsEmail(shop.channel) && canEmail) {
-              await sendEmail(p.email!, `Your grocery list is ready to send`, emailShell(
-                `Time to shop, ${firstName(p)}`,
-                `<p>Your ${n} dinners are planned and the list is built. One tap sends it to your Instacart or Kroger cart — nothing to type.</p>`,
-                { label: 'Send my list to the cart', href: `${APP}/grocery-list` }
+              await sendEmail(p.email!, settings.stores.mode === 'instore' ? 'Your grocery list for the store' : 'Your grocery list is ready to send', emailShell(
+                firstName(p) === 'there' ? 'Time to shop' : `Time to shop, ${firstName(p)}`,
+                `<p>Your ${n} dinners are planned and the list is built. ${link.how}</p>`,
+                { label: link.cta, href: link.url }
               ))
               report.shopReminders++
             }
             if (wantsSms(shop.channel) && family) {
-              await textAdults(admin, p, settings, `DinnerDrop: your grocery list for ${n} dinners is ready. One tap to your cart: ${APP}/grocery-list`, 'shop_reminder', { at: shop.time, sameDayOnly: true })
+              const line = settings.stores.mode === 'instore'
+                ? `DinnerDrop: your grocery list for ${n} dinners is ready for the store. It opens on your phone, no sign-in: ${link.url}`
+                : link.signIn
+                  ? `DinnerDrop: your grocery list for ${n} dinners is ready. Open it to send it to Kroger: ${link.url}`
+                  : `DinnerDrop: your grocery list for ${n} dinners is ready. Tap to put it in your Instacart cart, no sign-in: ${link.url} You check out there.`
+              await textAdults(admin, p, settings, line, 'shop_reminder', { at: shop.time, sameDayOnly: true })
               report.shopReminders++
             }
           }

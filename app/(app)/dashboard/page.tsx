@@ -9,6 +9,7 @@ import { recordMealSignal } from '@/lib/taste-profile'
 import { createClient } from '@/lib/supabase'
 import MealGrid from '@/components/MealGrid'
 import ConversionTracker from '@/components/ConversionTracker'
+import FamilyEndedBanner, { familyEndedBannerMode } from '@/components/FamilyEndedBanner'
 import FamilyVoteCard from '@/components/FamilyVoteCard'
 import DealsCard from '@/components/DealsCard'
 import { type QuickSetupAnswers } from '@/components/QuickSetup'
@@ -91,6 +92,8 @@ function DashboardContent() {
 
   const [isFoundingMember, setIsFoundingMember] = useState(false)
   const [familyCredit, setFamilyCredit] = useState(false)
+  // When free Family days end (FamilyEndedBanner, Nov 22 2026 review, Sarah approved).
+  const [familyUntil, setFamilyUntil] = useState<string | null>(null)
   const [promoApplied, setPromoApplied] = useState<{ code: string; until: string; days: number } | null>(null)
   // Founding families have Family free for their first year (through 2027-10-18).
   const isSubscribed = subscriptionStatus === 'active' || subscriptionStatus === 'trialing' || isFoundingMember || familyCredit
@@ -127,6 +130,7 @@ function DashboardContent() {
         setSubscriptionStatus(profile.subscription_status || 'free')
         setIsFoundingMember(profile.is_beta_member === true)
         setFamilyCredit(!!profile.family_until && new Date(profile.family_until) > new Date())
+        setFamilyUntil(profile.family_until ?? null)
         // Don't gate the dashboard behind the quiz anymore — show the product
         // first, offer personalization after. (This was where 95% of signups
         // used to vanish.)
@@ -309,6 +313,7 @@ function DashboardContent() {
           setSubscriptionStatus(profile.subscription_status || 'free')
           setIsFoundingMember(profile.is_beta_member === true)
           setFamilyCredit(!!profile.family_until && new Date(profile.family_until) > new Date())
+          setFamilyUntil(profile.family_until ?? null)
         }
       }
       refresh()
@@ -362,10 +367,7 @@ function DashboardContent() {
   /** `keep`: dinners already picked this week — they stay, and new options fill the rest. */
   async function generatePlan(keep?: Meal[] | unknown) {
     const keepMeals: Meal[] = Array.isArray(keep) ? keep : []
-    if (subscriptionStatus === 'past_due') {
-      await handleUpdatePayment()
-      return
-    }
+    // past_due no longer blocks planning (Nov 22 2026 review, Sarah approved): planning is free; only Family pauses.
     if (!canGenerate) {
       router.push('/subscribe')
       return
@@ -613,14 +615,15 @@ function DashboardContent() {
           <div className="mx-auto max-w-6xl flex items-center gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-foreground">Your grocery list is ready</p>
-              <p className="text-xs text-muted-foreground truncate">{meals.length} dinners, one list, one tap to Instacart</p>
+              {/* Nov 22 2026 review (Sarah approved): the bar promised only an online cart; many families shop in person. */}
+              <p className="text-xs text-muted-foreground truncate">{inStoreMode ? `${meals.length} dinners, one list for the store` : `${meals.length} dinners, one list. Order online or take it to the store.`}</p>
             </div>
             <Link
               href="/grocery-list"
               data-track="shop_my_list_bar"
-              className="shrink-0 px-5 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm"
+              className="shrink-0 inline-flex min-h-[44px] items-center px-5 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm"
             >
-              Shop my list &rarr;
+              Get my list &rarr;
             </Link>
           </div>
         </div>
@@ -631,7 +634,7 @@ function DashboardContent() {
           <div className="mx-auto max-w-6xl flex items-center gap-3">
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-foreground">{selectedMeals.length} of {planShape.dinnersPerWeek} picked</p>
-              <p className="text-xs text-muted-foreground truncate">{selectedMeals.length ? 'Next: your grocery list, one tap to Instacart or Walmart' : 'Tap the dinners you want'}</p>
+              <p className="text-xs text-muted-foreground truncate">{selectedMeals.length ? (inStoreMode ? 'Next: your grocery list for the store' : 'Next: your grocery list, one tap to Instacart or Walmart') : 'Tap the dinners you want'}</p>
             </div>
             <button
               onClick={confirmPlan}
@@ -658,21 +661,24 @@ function DashboardContent() {
             <div className="flex items-center gap-3">
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-red-800">Payment issue — your plan is paused</p>
-                <p className="text-xs text-red-600 mt-0.5">Update your payment method to restore access</p>
+                <p className="text-sm font-semibold text-red-800">Your Family payment didn&apos;t go through</p>
+                <p className="text-xs text-red-600 mt-0.5">Family texting, profiles and reminders are paused until you update your card. Planning and your grocery list still work.</p>
               </div>
             </div>
             <button
               onClick={handleUpdatePayment}
-              className="text-xs font-semibold text-red-700 hover:text-red-900 flex-shrink-0 underline"
+              className="min-h-[44px] text-xs font-semibold text-red-700 hover:text-red-900 flex-shrink-0 underline"
             >
-              Update payment &rarr;
+              Update card &rarr;
             </button>
           </div>
         )}
 
+        {/* Free Family days ending / ended: the card ask (replaces the generic banner while it shows). */}
+        <FamilyEndedBanner familyUntil={familyUntil} subscriptionStatus={subscriptionStatus} isFoundingMember={isFoundingMember} />
+
         {/* Subscription upgrade banner */}
-        {!isSubscribed && subscriptionStatus !== 'past_due' && planCount > 0 && (
+        {!isSubscribed && subscriptionStatus !== 'past_due' && planCount > 0 && !familyEndedBannerMode({ familyUntil, subscriptionStatus, isFoundingMember }) && (
           <Link
             href="/subscribe"
             className="web-only flex items-center justify-between mb-6 px-5 py-4 rounded-xl bg-foreground text-primary-foreground hover:bg-foreground/90 transition-colors"

@@ -24,7 +24,7 @@ export default function OllieImportForm() {
 
   function handleContinue() {
     try { localStorage.setItem('dd_import_names', names) } catch { /* storage unavailable */ }
-    window.location.href = '/signup?redirect=%2Ffavorites&utm_source=ollie&utm_medium=import&code=OLLIE'
+    window.location.href = '/signup?redirect=%2Ffavorites&utm_source=ollie&utm_medium=import'
   }
 
   return (
