@@ -46,6 +46,10 @@ export default function ConversionTracker({ value = 54, currency = 'USD', onceKe
 
     const params = new URLSearchParams(window.location.search)
     const trial = params.get('subscribed') === 'true'
+    // trial=0: the family's free days were already over, so checkout charged right away (no trial). That is a
+    // purchase, not a trial: the Stripe webhook sends Purchase/Subscribe from invoice.paid, so fire nothing here
+    // (Nov 22 2026 review: trial ends when free Family days end).
+    if (trial && params.get('trial') === '0') return
     const key = trial ? 'dd_trial_conv' : onceKey
     if (trial ? window.__ddTrialFired : window.__ddConversionFired) return
     // Fire at most once per browser (these pages can be reloaded).
