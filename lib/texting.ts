@@ -1098,13 +1098,17 @@ export async function ownerPhone(admin: SupabaseClient, owner: OwnerRow): Promis
   return normalizePhone(data?.[0]?.phone ?? null)
 }
 
-/** Week a vote on `weekday` is for: Sat/Sun vote → the coming Monday; mid-week → this week. */
+/**
+ * Week a vote on `weekday` is for: Fri/Sat/Sun vote → the coming Monday; mid-week → this week.
+ * Nov 13 + Nov 20 2026: Friday votes were dated to the week already under way ("dinners for the
+ * week of 11/16" texted on Fri 11/20), and closing them on Saturday replaced the family's current
+ * week and list (7 families on 11/21).
+ */
 export function targetWeekFor(now: Date, weekday: string): string {
-  if (weekday === 'sat' || weekday === 'sun') {
-    const d = new Date(now); d.setUTCDate(d.getUTCDate() + (weekday === 'sat' ? 2 : 1))
-    return mondayOf(d)
-  }
-  return mondayOf(now)
+  const ahead = weekday === 'fri' ? 3 : weekday === 'sat' ? 2 : weekday === 'sun' ? 1 : 0
+  if (!ahead) return mondayOf(now)
+  const d = new Date(now); d.setUTCDate(d.getUTCDate() + ahead)
+  return mondayOf(d)
 }
 
 export interface VoteRound {
@@ -1568,7 +1572,12 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const inBudget = (await keepInBudget(admin, owner.id, chosen, ob?.weekly_budget as string | null, settings, { prefer: [...preferVoted, ...preferRest] }))
     // Remember who voted for each dinner so the plan can show it (Sarah, Nov 21 2026).
     .map((m) => (voters[m.name]?.length ? { ...m, votedBy: Array.from(new Set(voters[m.name])) } : m))
-  const saved = await savePlan(admin, owner.id, round.week_start, inBudget, shape)
+  // A classic round opened Fri–Sun fills the coming week even if it was dated to the week under way
+  // (rounds opened before the targetWeekFor fix above): the current week and its list stay as they are.
+  const opened = new Date(round.created_at)
+  const dueWeek = isClassic(tcfg) ? targetWeekFor(opened, localNow(owner.timezone || 'America/New_York', opened).weekday) : round.week_start
+  const planWeek = round.week_start < dueWeek ? dueWeek : round.week_start
+  const saved = await savePlan(admin, owner.id, planWeek, inBudget, shape)
   await admin.from('vote_rounds').update({ status: 'closed', closed_at: new Date().toISOString(), result: { chosen: saved.map((m) => m.name), tally } }).eq('id', round.id)
 
   // Name only the people who actually answered (Nov 9 2026: a family that never replied was told "heard from Me").
@@ -1777,7 +1786,7 @@ export async function startFirstVote(admin: SupabaseClient, ownerId: string, hou
   if (!isClassic(tripsConfig(mergeSettings(o.settings)))) return null
   const { weekday } = localNow(o.timezone || 'America/New_York', now)
   const weekStart = ['fri', 'sat', 'sun'].includes(weekday)
-    ? (weekday === 'fri' ? mondayOf(new Date(now.getTime() + 3 * 86400000)) : targetWeekFor(now, weekday))
+    ? targetWeekFor(now, weekday)
     : mondayOf(new Date(now.getTime() + 7 * 86400000))
   try { return await startVoteCycle(admin, ownerId, { now, weekStart }) } catch (e) { console.error('[first-vote]', e); return null }
 }
