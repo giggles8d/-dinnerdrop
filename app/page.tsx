@@ -226,7 +226,7 @@ export default async function LandingPage() {
               $0<span className="text-sm font-sans font-normal text-muted-foreground"> forever</span>
             </p>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
-              {['Unlimited weekly dinner plans', 'Deduplicated grocery list', 'One-tap Instacart or Walmart cart', 'Swap any dinner', 'Pantry scan', 'Favorites and meal history'].map((li) => (
+              {['Unlimited weekly dinner plans', 'Diets and allergies checked on every dinner', 'Deduplicated grocery list', 'One-tap Instacart or Walmart cart', 'Swap any dinner', 'Pantry scan', 'Favorites and meal history'].map((li) => (
                 <li key={li} className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />{li}
                 </li>
@@ -250,7 +250,7 @@ export default async function LandingPage() {
               </p>
             </div>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
-              {['Everything in Free', 'Family texting: the week’s dinner ideas go to everyone by text, they reply with the numbers they want, the top picks become the week', 'A profile for each person — likes, won’t-eats, allergies, kid-safe foods', 'Anyone can text an item (or a photo of one) onto the grocery list', 'Text reminders on your cook nights', 'Push straight to your Kroger cart', 'Priority support, answered by the founder'].map((li) => (
+              {['Everything in Free', 'Family texting: the week’s dinner ideas go to everyone by text, they reply with the numbers they want, the top picks become the week', 'A profile for each person — likes, won’t-eats, kid-safe foods', 'Anyone can text an item (or a photo of one) onto the grocery list', 'Text reminders on your cook nights', 'Push straight to your Kroger cart', 'Priority support, answered by the founder'].map((li) => (
                 <li key={li} className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />{li}
                 </li>
