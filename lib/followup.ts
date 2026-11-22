@@ -1,7 +1,8 @@
 import { createHmac, timingSafeEqual } from 'crypto'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { GroceryCategory, GroceryItem, Meal } from '@/types'
-import { normalizeItemName, guessCategory } from '@/lib/list'
+import { normalizeItemName, guessCategory, dueStaples, basicsFor, sameListItem, type Staple } from '@/lib/list'
+import { mergeSettings } from '@/lib/settings'
 
 /**
  * Follow-up tracking for new families.
@@ -50,32 +51,66 @@ export async function logFollowup(admin: SupabaseClient, userId: string, kind: F
 }
 
 /**
- * What to put in the family's cart: open lines on this week's list if they've opened it,
- * else the plan's built list, else the dinners' ingredients combined by name.
+ * What to put in the family's cart.
+ *  - The family has opened this week's list (it has the plan's lines): the open lines on it.
+ *  - Not opened yet: the plan's groceries plus what the list page would add on first open — things they texted or
+ *    typed (this week, or left over from the last 3 weeks), staples that are due, and breakfast/lunch basics if they
+ *    asked for them. Before Nov 22 2026 a texted "ADD milk" before opening the list sent a cart with only the milk,
+ *    and staples never reached a one-tap cart (week-two cart check, Sarah approved the fix).
+ * Read-only: nothing on the list changes here; the list page still saves these lines when it first opens.
  */
 export async function itemsForFamily(admin: SupabaseClient, userId: string): Promise<{ items: GroceryItem[]; weekStart: string | null; estTotal: number | null }> {
   const { data: plan } = await admin.from('meal_plans').select('week_start, meals, grocery_list, total_estimated_cost').eq('user_id', userId).order('created_at', { ascending: false }).limit(1).maybeSingle()
   if (!plan) return { items: [], weekStart: null, estTotal: null }
   const est = Number(plan.total_estimated_cost) > 0 ? Number(plan.total_estimated_cost) : null
-  const { data: all } = await admin.from('list_items').select('name, quantity, unit, category, search_term, ordered_at, have').eq('user_id', userId).eq('week_start', plan.week_start)
-  if (all?.length) {
+  const { data: all } = await admin.from('list_items').select('name, quantity, unit, category, search_term, ordered_at, have, checked, source').eq('user_id', userId).eq('week_start', plan.week_start)
+  const toItem = (r: { name: string; quantity: string | null; unit: string | null; category: string | null; search_term: string | null }): GroceryItem =>
+    ({ name: r.name, quantity: r.quantity ?? '1', unit: r.unit ?? 'each', category: (r.category ?? 'Pantry & Dry Goods') as GroceryCategory, searchTerm: r.search_term ?? r.name })
+  if (all?.some((r) => r.source === 'plan')) {
     // The family has a list for this week: send only what's still open. Everything ordered or "have it" →
     // no items, and the link opens the grocery list instead of re-sending the whole week (Nov 21 2026 review).
     const rows = all.filter((r) => !r.ordered_at && !r.have)
-    return { items: rows.map((r) => ({ name: r.name, quantity: r.quantity ?? '1', unit: r.unit ?? 'each', category: (r.category ?? 'Pantry & Dry Goods') as GroceryCategory, searchTerm: r.search_term ?? r.name })), weekStart: plan.week_start, estTotal: rows.length === all.length ? est : null }
+    return { items: rows.map(toItem), weekStart: plan.week_start, estTotal: rows.length === all.length ? est : null }
   }
+
+  // The plan's groceries.
+  let base: GroceryItem[] = []
   const list = plan.grocery_list as Record<string, GroceryItem[]> | null
-  if (list && Object.keys(list).length) return { items: Object.values(list).flat().filter((i) => i?.name), weekStart: plan.week_start, estTotal: est }
-  const byName = new Map<string, GroceryItem>()
-  for (const m of ((plan.meals as Meal[]) ?? [])) {
-    for (const ing of m.ingredients ?? []) {
-      const key = normalizeItemName(ing.name)
-      if (!key) continue
-      const prev = byName.get(key)
-      const q = Number(ing.quantity)
-      if (prev && prev.unit === ing.unit && !isNaN(Number(prev.quantity)) && !isNaN(q)) prev.quantity = String(Number(prev.quantity) + q)
-      else if (!prev) byName.set(key, { name: ing.name, quantity: String(ing.quantity ?? '1'), unit: ing.unit ?? 'each', category: (ing.category as GroceryCategory) ?? guessCategory(ing.name), searchTerm: ing.searchTerm ?? ing.name })
+  if (list && Object.keys(list).length) base = Object.values(list).flat().filter((i) => i?.name)
+  else {
+    const byName = new Map<string, GroceryItem>()
+    for (const m of ((plan.meals as Meal[]) ?? [])) {
+      for (const ing of m.ingredients ?? []) {
+        const key = normalizeItemName(ing.name)
+        if (!key) continue
+        const prev = byName.get(key)
+        const q = Number(ing.quantity)
+        if (prev && prev.unit === ing.unit && !isNaN(Number(prev.quantity)) && !isNaN(q)) prev.quantity = String(Number(prev.quantity) + q)
+        else if (!prev) byName.set(key, { name: ing.name, quantity: String(ing.quantity ?? '1'), unit: ing.unit ?? 'each', category: (ing.category as GroceryCategory) ?? guessCategory(ing.name), searchTerm: ing.searchTerm ?? ing.name })
+      }
     }
+    base = Array.from(byName.values())
   }
-  return { items: Array.from(byName.values()), weekStart: plan.week_start, estTotal: est }
+
+  // What the list page adds on first open.
+  const extras: GroceryItem[] = (all ?? []).filter((r) => !r.ordered_at && !r.have).map(toItem)
+  const firstOpen = !(all ?? []).some((r) => r.source === 'staples' || r.source === 'extra')
+  if (firstOpen) {
+    const [{ data: carried }, { data: staples }, { data: prof }] = await Promise.all([
+      admin.from('list_items').select('name, quantity, unit, category, search_term').eq('user_id', userId).neq('week_start', plan.week_start)
+        .is('ordered_at', null).eq('have', false).eq('checked', false).in('source', ['sms', 'manual']).gte('created_at', new Date(Date.now() - 21 * 86400000).toISOString()),
+      admin.from('staples').select('*').eq('user_id', userId),
+      admin.from('profiles').select('settings, family_size').eq('id', userId).maybeSingle(),
+    ])
+    extras.push(...(carried ?? []).map(toItem))
+    extras.push(...dueStaples((staples as Staple[]) ?? [], plan.week_start).map((st) => toItem({ name: st.name, quantity: st.quantity, unit: st.unit, category: st.category, search_term: st.name })))
+    const settings = mergeSettings(prof?.settings)
+    const size = Number(prof?.family_size) || 4
+    if (settings.plan.includeLunches) extras.push(...basicsFor('lunch', size))
+    if (settings.plan.includeBreakfasts) extras.push(...basicsFor('breakfast', size))
+  }
+  // One line per item: what the family added wins over the recipe's line for the same thing.
+  const items: GroceryItem[] = []
+  for (const it of [...extras, ...base]) if (!items.some((x) => sameListItem(x.name, it.name))) items.push(it)
+  return { items, weekStart: plan.week_start, estTotal: extras.length ? null : est }
 }

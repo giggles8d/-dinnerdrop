@@ -14,6 +14,7 @@
  * Call runShopDayNudges(admin, now) once a day from the daily cron, after runDailyReminders (so a Saturday plan
  * day's new week and its plan-ready email exist first).
  */
+import { isQuiet } from '@/lib/engagement'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, WEEKDAY_LABEL, type Settings, type Weekday } from '@/lib/settings'
 import { localNow } from '@/lib/plan'
@@ -68,7 +69,7 @@ export async function runShopDayNudges(admin: SupabaseClient, now: Date = new Da
   // Only families who answered the shop question (settings.shopping.askedAt), a few hundred at most.
   const { data: rows, error } = await admin
     .from('profiles')
-    .select('id, email, full_name, timezone, settings, household_id, subscription_status, is_beta_member, family_until, email_unsubscribed')
+    .select('id, email, full_name, timezone, settings, household_id, subscription_status, is_beta_member, family_until, email_unsubscribed, created_at')
     .not('settings->shopping->>askedAt', 'is', null)
     .limit(5000)
   if (error) { report.errors.push(error.message); return report }
@@ -98,6 +99,7 @@ export async function runShopDayNudges(admin: SupabaseClient, now: Date = new Da
         admin.from('activation_events').select('id', { count: 'exact', head: true }).eq('user_id', p.id).eq('step', 'followup_sent').eq('meta->>kind', KIND).gte('created_at', since),
       ])
       if (sent) { skip('already_sent'); continue }
+      if (await isQuiet(admin, p, now)) { skip('quiet'); continue }   // no cart, visit or text in 14 days (Nov 22 2026)
       if (nudged) { skip('already_nudged'); continue }
 
       const list = await loadSharedList(admin, p.id)
@@ -137,6 +139,17 @@ export async function runShopDayNudges(admin: SupabaseClient, now: Date = new Da
         // A plan-ready email this morning already carried the one-tap link.
         const { count: planMail } = await admin.from('activation_events').select('id', { count: 'exact', head: true }).eq('user_id', p.id).eq('step', 'followup_sent').eq('meta->>kind', 'plan_ready').gte('created_at', new Date(now.getTime() - 12 * 3600000).toISOString())
         if (planMail) { skip('plan_email_today'); continue }
+        // A family that has never sent a cart gets one email that week, not a pile (Sarah approved Nov 22 2026): no
+        // shop-day email within 3 days of their plan email or Sunday Drop.
+        const { count: everSent } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
+        if (!everSent) {
+          const since3 = new Date(now.getTime() - 3 * 86400000).toISOString()
+          const [{ count: recentPlan }, { data: dropRow }] = await Promise.all([
+            admin.from('activation_events').select('id', { count: 'exact', head: true }).eq('user_id', p.id).eq('step', 'followup_sent').eq('meta->>kind', 'plan_ready').gte('created_at', since3),
+            admin.from('app_kv').select('key').like('key', `drop:${p.id}:%`).gte('updated_at', since3).limit(1),
+          ])
+          if (recentPlan || dropRow?.length) { skip('first_send_one_email'); continue }
+        }
         const today = WEEKDAY_LABEL[day]
         const subject = inStore ? `Your grocery list for ${today}` : `${today} is shop day: your list for ${list.dinners[0] ?? 'the week'}${n > 1 ? ` and ${n - 1} more` : ''}`
         const html = inStore

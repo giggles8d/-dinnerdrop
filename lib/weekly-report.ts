@@ -46,7 +46,38 @@ export async function weeklyCheckoutNumbers(db: SupabaseClient, now = new Date()
   const sources: Record<string, { signups: number; sent: number }> = {}
   for (const p of recent) { const k = label(p); sources[k] = sources[k] ?? { signups: 0, sent: 0 }; sources[k].signups++ }
   families.forEach((u) => { const p = byId.get(u); if (!p) return; const k = label(p); sources[k] = sources[k] ?? { signups: 0, sent: 0 }; sources[k].sent++ })
+  // Week two (Sarah approved Nov 22 2026, week-two cart check): of families whose first-ever send was 8–14 days ago,
+  // how many sent again 4+ days later (a new week, not a re-send the same trip)? Plus the same for the last 4 weeks,
+  // which is steadier at this size. Online carts and lists taken to the store counted separately.
+  const { data: allH } = await db.from('grocery_handoffs').select('user_id, store, created_at').order('created_at', { ascending: true })
+  const firstAt = new Map<string, number>()
+  const later = new Map<string, { cart: boolean; store: boolean }>()
+  for (const h of allH ?? []) {
+    if (internal.has(h.user_id)) continue
+    const t = Date.parse(h.created_at)
+    const f = firstAt.get(h.user_id)
+    if (f == null) { firstAt.set(h.user_id, t); continue }
+    if (t - f < 4 * 86400000) continue
+    const l = later.get(h.user_id) ?? { cart: false, store: false }
+    if (h.store === 'In store') l.store = true; else l.cart = true
+    later.set(h.user_id, l)
+  }
+  const repeat = (fromDays: number, toDays: number) => {
+    const lo = now.getTime() - toDays * 86400000, hi = now.getTime() - fromDays * 86400000
+    let families = 0, cart = 0, store = 0, any = 0
+    firstAt.forEach((t, u) => {
+      if (t < lo || t > hi) return
+      families++
+      const l = later.get(u)
+      if (l) { any++; if (l.cart) cart++; if (l.store) store++ }
+    })
+    return { families, any, cart, store }
+  }
+  const { count: listOpens } = await db.from('activation_events').select('id', { count: 'exact', head: true }).eq('step', 'list_link_open').gte('created_at', since)
   return {
+    weekTwo: repeat(8, 14),
+    weekTwo4w: repeat(8, 35),
+    listOpens: listOpens ?? 0,
     sources,
     signups: signups ?? 0,
     sends: handoffs.length,
@@ -69,6 +100,9 @@ export async function runWeeklyReport(db: SupabaseClient, now = new Date()) {
   const row = (k: string, v: string | number) => `<tr><td style="padding:4px 12px 4px 0;color:#5b6660">${k}</td><td style="padding:4px 0;font-weight:600">${v}</td></tr>`
   const body = `<table style="border-collapse:collapse;font-size:15px">
 ${row('New signups', n.signups)}
+${row('Came back for week two', `${n.weekTwo.any} of ${n.weekTwo.families} families whose first send was 8–14 days ago (cart ${n.weekTwo.cart} · store list ${n.weekTwo.store})`)}
+${row('Week two, last 4 weeks', `${n.weekTwo4w.any} of ${n.weekTwo4w.families} families`)}
+${row('No-sign-in list opened', `${n.listOpens} times (not counted as sends)`)}
 ${row('Lists sent to a store', `${n.sends} (from ${n.families} families)`)}
 ${row('Confirmed checked out', `${n.confirmed} of ${n.families} families (${pct}%)`)}
 ${row('Said "not yet"', n.notYet)}

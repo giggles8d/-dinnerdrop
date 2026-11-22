@@ -311,7 +311,9 @@ export default function GroceryListPage() {
       }
 
       // Staples due this week + lunch/breakfast basics (only on first materialization for the week).
-      const firstTime = !(existing ?? []).length
+      // First time the plan's lines go on this week's list. A texted "ADD milk" before opening used to count as "not
+      // first", so staples, carried items and basics were never added that week (Nov 22 2026 fix, Sarah approved).
+      const firstTime = !planRows.length && !(existing ?? []).some((r) => r.source === 'staples' || r.source === 'extra')
       if (firstTime) {
         // Carry over what the family added after the last order (texted or typed) into the new week.
         // Trip mode: only from earlier trips whose shop day has passed (never pull lines off a trip still to shop).

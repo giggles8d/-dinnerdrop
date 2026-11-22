@@ -26,12 +26,17 @@ function storeName(store: string | null | undefined): string {
   return s || 'the store'
 }
 
+// A list taken to the store isn't an order (Nov 22 2026, Sarah approved): "In store" families get their own wording.
+const inStore = (store: string) => store === 'In store'
+const sentLine = (store: string) => (inStore(store) ? 'You took your DinnerDrop list to the store' : `You sent your DinnerDrop grocery list to ${store}`)
+const q1 = (store: string) => (inStore(store) ? 'Did the list work in the store? If not, what got in the way?' : 'After you tapped the button, did you finish the order? If not, what got in the way?')
+
 export function cartAskText(firstName: string | undefined, store: string, unsubscribeUrl: string): string {
   return `Hi ${firstName || 'there'},
 
-I'm Sarah, I built DinnerDrop. You sent your DinnerDrop grocery list to ${store} a little while ago, and I'd love to know how it went. Two quick questions — a one-line reply is perfect:
+I'm Sarah, I built DinnerDrop. ${sentLine(store)} a little while ago, and I'd love to know how it went. Two quick questions — a one-line reply is perfect:
 
-1. After you tapped the button, did you finish the order? If not, what got in the way?
+1. ${q1(store)}
 2. What would make you use DinnerDrop again this week?
 
 I read every reply myself.
@@ -49,8 +54,8 @@ export function cartAskHtml(firstName: string | undefined, store: string, unsubs
 <body style="margin:0;background:#ffffff;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#1f2a24">
 <div style="max-width:560px;margin:0 auto;padding:24px 18px">
 ${p(`Hi ${esc(firstName || 'there')},`)}
-${p(`I’m Sarah, I built DinnerDrop. You sent your DinnerDrop grocery list to ${esc(store)} a little while ago, and I’d love to know how it went. Two quick questions — a one-line reply is perfect:`)}
-${p('1. After you tapped the button, did you finish the order? If not, what got in the way?<br>2. What would make you use DinnerDrop again this week?')}
+${p(`I’m Sarah, I built DinnerDrop. ${esc(sentLine(store))} a little while ago, and I’d love to know how it went. Two quick questions — a one-line reply is perfect:`)}
+${p(`1. ${esc(q1(store))}<br>2. What would make you use DinnerDrop again this week?`)}
 ${p('I read every reply myself.')}
 ${p('Thank you,<br>Sarah<br>Founder, DinnerDrop')}
 <p style="margin:24px 0 0;font-size:12px;color:#8a8577">You’re getting this because you signed up at dinnerdrop.app. <a href="${unsubscribeUrl}" style="color:#8a8577">Unsubscribe</a></p>

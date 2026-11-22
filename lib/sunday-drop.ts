@@ -30,6 +30,8 @@ import { varietyLimits, varietyOk } from '@/lib/variety'
 import { pickForDinner, pickUrl } from '@/lib/kitchen-picks'
 import { BLACK_FRIDAY_POST, blackFridayActive, dealsForEmail, newsletterDealUrl } from '@/lib/black-friday'
 import { shopUrl, textingUrl } from '@/lib/followup'
+import { isQuiet } from '@/lib/engagement'
+import { shopsInStore } from '@/lib/list-link'
 import { mondayOf, DEFAULT_SHAPE } from '@/lib/plan'
 import type { Meal } from '@/types'
 
@@ -234,9 +236,11 @@ export async function buildDrop(admin: SupabaseClient, p: DropProfile, opts: { n
   const n = st.meals.length
   // Weekly one-tap reorder (lib/reorder, Nov 10 2026): a family that has sent a cart before gets the cart, not a list.
   // The one-tap link always builds an Instacart cart, so it says Instacart.
-  const { count: cartsEver } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id)
+  // In-store families (a texted list, or shopping in person in Settings) get list wording, not "your Instacart cart is
+  // filled" (Nov 22 2026, Sarah approved).
+  const { count: cartsEver } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', p.id).neq('store', 'In store')
   const picker = st.segment === 'shop' && settings.plan.pickMyOwn
-  const reorder = !picker && st.segment === 'shop' && (cartsEver ?? 0) > 0 && settings.stores.mode !== 'kroger'
+  const reorder = !picker && st.segment === 'shop' && (cartsEver ?? 0) > 0 && settings.stores.mode !== 'kroger' && !shopsInStore(settings)
   const firstDinner = n ? short(st.meals[0].name) : ''
   const seg = st.segment
   const subject = {
@@ -338,6 +342,12 @@ export async function sendDrop(admin: SupabaseClient, p: DropProfile, cfg: DropC
   // At most one Drop in 5 days (families with two shopping trips a week get the plain plan email for the second).
   const { data: lately } = await admin.from('app_kv').select('key').like('key', `drop:${p.id}:%`).gte('updated_at', new Date((opts.now ?? new Date()).getTime() - 5 * DAY).toISOString()).limit(1)
   if (lately?.length) return { sent: false, recent: true }
+  // A quiet family (no cart, visit or text in 14 days) gets the Drop every 4 weeks, not every week (Sarah approved
+  // Nov 22 2026, from the week-two cart check). Returning to the app or sending a cart puts them back on weekly.
+  if (await isQuiet(admin, p, opts.now ?? new Date())) {
+    const { data: month } = await admin.from('app_kv').select('key').like('key', `drop:${p.id}:%`).gte('updated_at', new Date((opts.now ?? new Date()).getTime() - 28 * DAY).toISOString()).limit(1)
+    if (month?.length) return { sent: false, recent: true }
+  }
   const b = await buildDrop(admin, p, { now: opts.now, address: cfg.address, given: opts.given })
   const key = `drop:${p.id}:${b.weekStart}`
   const { error: claimErr } = await admin.from('app_kv').insert({ key, value: { at: new Date().toISOString(), segment: b.segment, hero: b.hero, asin: b.asin }, updated_at: new Date().toISOString() })

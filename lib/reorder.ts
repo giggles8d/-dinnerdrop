@@ -17,9 +17,10 @@ export const REORDER_ASK = 'reorder_ask'
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 const day = (d: string | undefined, i: number) => (/^(mon|tue|wed|thu|fri|sat|sun)/i.test(d ?? '') ? String(d).slice(0, 3) : DAYS[i % 7])
 
-/** Has this family ever sent a list to a store? */
+/** Has this family ever sent a cart to an online store? A list texted for the store ('In store') isn't a cart, so
+ *  those families don't get "your Instacart cart is ready" wording (Nov 22 2026, Sarah approved). */
 export async function hasOrdered(admin: SupabaseClient, userId: string): Promise<boolean> {
-  const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', userId)
+  const { count } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true }).eq('user_id', userId).neq('store', 'In store')
   return (count ?? 0) > 0
 }
 
