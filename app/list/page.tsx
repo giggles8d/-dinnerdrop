@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { createClient } from '@supabase/supabase-js'
 import InStoreList from '@/components/InStoreList'
 import { listCartUrl, loadSharedList, verifyListLink } from '@/lib/list-link'
@@ -17,6 +18,17 @@ export default async function SharedList({ searchParams }: { searchParams: { u?:
   const valid = verifyListLink(u, s)
   const admin = valid ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!) : null
   const list = admin ? await loadSharedList(admin, u) : null
+  // Record the open as its own event, not a send (Sarah approved Nov 22 2026). Link previews in Messages and chat apps
+  // fetch the page too, so skip bots, and log at most once per 6 hours.
+  if (admin && list) {
+    const ua = headers().get('user-agent') ?? ''
+    if (!/bot|preview|facebookexternalhit|whatsapp|slack|telegram|discord|crawler|spider/i.test(ua)) {
+      try {
+        const { count } = await admin.from('activation_events').select('id', { count: 'exact', head: true }).eq('user_id', u).eq('step', 'list_link_open').gte('created_at', new Date(Date.now() - 6 * 3600000).toISOString())
+        if (!count) await admin.from('activation_events').insert({ user_id: u, step: 'list_link_open', meta: { lines: list.lines.length } })
+      } catch { /* tracking only */ }
+    }
+  }
 
   return (
     <main className="min-h-[100svh] bg-background">

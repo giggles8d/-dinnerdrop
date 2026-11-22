@@ -65,9 +65,20 @@ export async function GET(request: NextRequest) {
       emailNumber === 1 ? supabase.from('activation_events').select('user_id').in('user_id', userIds).eq('step', 'followup_sent').eq('meta->>kind', 'starter') : Promise.resolve({ data: [] as Array<{ user_id: string }> }),
     ])
     const activated = new Set([...(handoffs || []), ...(starter || [])].map(r => r.user_id))
+    // Day 7 lands right after the weekly plan email or Sunday Drop. One email that week, not two
+    // (Sarah approved Nov 22 2026, week-two cart check): skip day 7 if either went out in the last 3 days.
+    const weekly = new Set<string>()
+    if (emailNumber === 3) {
+      const since3 = new Date(now.getTime() - 3 * 86400000).toISOString()
+      const { data: pr } = await supabase.from('activation_events').select('user_id').in('user_id', userIds).eq('step', 'followup_sent').eq('meta->>kind', 'plan_ready').gte('created_at', since3)
+      for (const r of pr ?? []) weekly.add(r.user_id)
+      const { data: drops } = await supabase.from('app_kv').select('key').like('key', 'drop:%').gte('updated_at', since3)
+      for (const d of drops ?? []) { const id = String(d.key).split(':')[1]; if (userIds.includes(id)) weekly.add(id) }
+    }
 
     for (const user of users) {
       if (activated.has(user.id)) continue
+      if (weekly.has(user.id)) { results.push({ userId: user.id, emailNumber, status: 'skipped: weekly email went out' }); continue }
       const sentEmails: number[] = user.email_sequence_sent || []
       if (sentEmails.includes(emailNumber)) continue
 

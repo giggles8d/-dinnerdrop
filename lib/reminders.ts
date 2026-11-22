@@ -16,9 +16,10 @@ import { autoPlan } from '@/lib/autoplan'
 import { sendEmail, emailShell, smsConfigured } from '@/lib/notify'
 import { attachLibraryImages } from '@/lib/library-images'
 import { planReadySubject, planReadyHtml } from '@/lib/plan-ready-email'
+import { isQuiet } from '@/lib/engagement'
 import { dropConfig, sendDrop, type DropProfile } from '@/lib/sunday-drop'
 import { shopUrl, logFollowup } from '@/lib/followup'
-import { cartLink, listUrl } from '@/lib/list-link'
+import { cartLink, listUrl, shopsInStore } from '@/lib/list-link'
 import { sendListWaitingText, type SetupProfile } from '@/lib/texting-setup'
 import { isFamilyProfile } from '@/lib/access'
 import { textMember, type MemberRow } from '@/lib/texting'
@@ -80,6 +81,15 @@ function wantsEmail(c: Channel) { return c === 'email' || c === 'both' }
 function wantsSms(c: Channel) { return c === 'sms' || c === 'both' }
 function firstName(p: ProfileRow) { return (p.full_name || '').trim().split(' ')[0] || 'there' }
 
+/**
+ * Saturday reorder text for a family that turned texting on and has sent a cart (Sarah approved Nov 22 2026). The
+ * "plan ready" channel defaults to email, so these families never got the one message that matters most by the
+ * channel they chose. Not for pick-my-own, in-store or Kroger families (the text's link fills an Instacart cart).
+ */
+async function reorderByText(admin: SupabaseClient, p: ProfileRow, settings: Settings, family: boolean): Promise<boolean> {
+  if (!family || !settings.texting.enabled || settings.plan.pickMyOwn || shopsInStore(settings) || settings.stores.mode === 'kroger') return false
+  return hasOrdered(admin, p.id)
+}
 async function optedInPhones(admin: SupabaseClient, householdId: string | null): Promise<MemberPhone[]> {
   if (!householdId) return []
   const { data } = await admin
@@ -115,8 +125,6 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
     .from('profiles')
     .select('id, email, full_name, timezone, settings, household_id, family_size, weekly_budget, max_cook_time, cuisine_preference, dietary_needs, subscription_status, is_beta_member, family_until, email_unsubscribed, created_at')
   const started = Date.now()
-  // Families with no plan in this long have drifted away; don't keep planning for them.
-  const ACTIVE_DAYS = 45
 
   for (const p of (profiles ?? []) as ProfileRow[]) {
     report.checked++
@@ -139,13 +147,15 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
         const resolved = resolveTrips(tcfg)[voteTrip.index]
         const familyVotes = family && settings.texting.enabled && resolved?.vote !== false
         const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', voteTrip.key).limit(1)
-        const { data: recentPlan } = await admin.from('meal_plans').select('created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
-        const active = recentPlan?.[0]?.created_at && now.getTime() - new Date(recentPlan[0].created_at).getTime() <= ACTIVE_DAYS * 86400000
+        // Quiet families (no cart, visit or text in 14 days) get no new week (Nov 22 2026, lib/engagement).
+        const active = !(await isQuiet(admin, p, now))
         if (active && !familyVotes && !existing?.length) {
           const meals = await autoPlan(admin, p, settings, voteTrip.key)
           if (meals) {
             report.autoPlans++
-            if (wantsSms(settings.schedule.reminders.planReady) && family) {
+            if (!wantsSms(settings.schedule.reminders.planReady) && settings.schedule.reminders.planReady !== 'off' && await reorderByText(admin, p, settings, family)) {
+              await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
+            } else if (wantsSms(settings.schedule.reminders.planReady) && family) {
               // Ordered before → the one-tap reorder text (lib/reorder): YES gets the Instacart cart link.
               if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
               else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
@@ -173,9 +183,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
       // Plan day, or the day after if the run ran out of time before reaching this family.
       const dayAfterPlanDay = WEEKDAYS[(WEEKDAYS.indexOf(settings.schedule.planDay) + 1) % 7]
       if (!tripMode && settings.schedule.autoPlan && (settings.schedule.planDay === weekday || dayAfterPlanDay === weekday) && Date.now() - started < 200_000) {
-        const { data: recent } = await admin.from('meal_plans').select('created_at').eq('user_id', p.id).order('created_at', { ascending: false }).limit(1)
-        const lastPlan = recent?.[0]?.created_at ? new Date(recent[0].created_at).getTime() : 0
-        if (now.getTime() - lastPlan <= ACTIVE_DAYS * 86400000) {
+        // The newest-plan test never closed (each Saturday's plan reset it), so plan emails ran forever. Now: no new week
+        // and no plan-ready email for a family with no cart, visit or text in 14 days (Sarah approved Nov 22 2026).
+        if (!(await isQuiet(admin, p, now))) {
         const planningDay = settings.schedule.planDay === weekday ? weekday : settings.schedule.planDay
         // Planning on Sat/Sun targets the coming Monday; mid-week targets this week.
         const catchUp = planningDay !== weekday ? 1 : 0
@@ -201,7 +211,9 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
               await sendEmail(p.email!, planReadySubject(withPhotos), planReadyHtml({ firstName: firstName(p), meals: withPhotos, weekLabel, unsubscribeUrl: `${APP}/unsubscribe?uid=${p.id}`, shopUrl: shopUrl(p.id, 'plan_ready'), listLink: listUrl(p.id) }))
               await logFollowup(admin, p.id, 'plan_ready')
             }
-            if (wantsSms(settings.schedule.reminders.planReady) && family) {
+            if (!wantsSms(settings.schedule.reminders.planReady) && settings.schedule.reminders.planReady !== 'off' && await reorderByText(admin, p, settings, family)) {
+              await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
+            } else if (wantsSms(settings.schedule.reminders.planReady) && family) {
               if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
               else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
               else await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned:\n${names.join('\n')}\n${planTextLinks(p, settings)}`, 'plan_ready')

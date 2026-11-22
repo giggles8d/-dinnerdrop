@@ -28,6 +28,8 @@ export const ACTIVATION_STEPS = [
   'plan_error',          // plan generation failed in the browser (meta.message)
   'walkthrough_step',    // reached a first-visit setup screen (meta.id = screen number, 0-based) — shows where families quit (Nov 21 2026)
   'app_open',            // opened inside the native iPhone/Android app (meta.platform, meta.page), once per session (Nov 14 2026)
+  'list_link_open',      // opened the no-sign-in /list link (app/list), not a send; deduped per 6 hours (Nov 22 2026, Sarah approved)
+  'list_item_checked',   // ticked a line off on the /list page while shopping; once per 12 hours (Nov 22 2026)
 ] as const
 export type ActivationStep = (typeof ACTIVATION_STEPS)[number]
 

@@ -11,7 +11,7 @@ const link = (path: string, c: string) => `${APP}${path}${path.includes('?') ? '
 
 export function planReadySubject(meals: Meal[]): string {
   const first = meals[0]?.name
-  return first ? `Your week is planned — ${first} and ${meals.length - 1} more` : 'Your dinners for the week are planned'
+  return first ? `Your week is planned: ${first} and ${meals.length - 1} more` : 'Your dinners for the week are planned'
 }
 
 export function planReadyHtml(opts: { firstName: string; meals: Meal[]; weekLabel: string; unsubscribeUrl: string; note?: string; shopUrl?: string; listLink?: string; why?: string }): string {

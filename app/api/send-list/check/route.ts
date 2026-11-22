@@ -18,5 +18,12 @@ export async function POST(request: Request) {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const { error } = await admin.from('list_items').update({ checked: b.checked === true }).eq('id', id).eq('user_id', u).is('ordered_at', null)
   if (error) return NextResponse.json({ error: 'Could not save' }, { status: 500 })
+  // Shopping from the list: its own event, not a send (Sarah approved Nov 22 2026). Once per 12 hours.
+  if (b.checked === true) {
+    try {
+      const { count } = await admin.from('activation_events').select('id', { count: 'exact', head: true }).eq('user_id', u).eq('step', 'list_item_checked').gte('created_at', new Date(Date.now() - 12 * 3600000).toISOString())
+      if (!count) await admin.from('activation_events').insert({ user_id: u, step: 'list_item_checked', meta: {} })
+    } catch { /* tracking only */ }
+  }
   return NextResponse.json({ ok: true })
 }
