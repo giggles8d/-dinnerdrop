@@ -116,7 +116,7 @@ export default function StartPage() {
           {/* 519 accounts were created Oct 23 - Nov 21 2026 alone (read-only count, Nov 22 review), so "over 500" is a true floor. */}
           <span className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD, color: GREEN }}>
             <span className="w-1.5 h-1.5 rounded-full inline-block flex-shrink-0" style={{ backgroundColor: GOLD }} />
-            Over 500 families have signed up for DinnerDrop
+            Over 700 families have signed up for DinnerDrop
           </span>
         </div>
         <Suspense fallback={null}><PromoBanner /></Suspense>
@@ -203,7 +203,7 @@ export default function StartPage() {
               <h3 className="font-bold" style={{ color: GREEN }}>Free</h3>
               <p className="text-4xl font-bold text-gray-900">$0<span className="text-sm font-normal text-gray-500"> forever</span></p>
               <ul className="space-y-2 text-sm text-gray-600">
-                {['Unlimited weekly dinner plans', 'Deduplicated grocery list', 'One-tap Instacart or Walmart cart', 'Swap any dinner', 'Pantry scan', 'Favorites and meal history'].map((li) => (
+                {['Unlimited weekly dinner plans', 'Diets and allergies checked on every dinner', 'Deduplicated grocery list', 'One-tap Instacart or Walmart cart', 'Swap any dinner', 'Pantry scan', 'Favorites and meal history'].map((li) => (
                   <li key={li} className="flex items-start gap-2"><span style={{ color: GREEN }}>✓</span>{li}</li>
                 ))}
               </ul>
@@ -219,7 +219,7 @@ export default function StartPage() {
                 <p className="text-sm text-gray-600 mt-1">or $39/year &middot; first 14 days free, no card &middot; cancel anytime</p>
               </div>
               <ul className="space-y-2 text-sm text-gray-600">
-                {['Everything in Free', 'Family texting: the week’s dinner ideas go to everyone by text, they reply with the numbers they want, the top picks become the week', 'A profile for each person: likes, won’t-eats, allergies, kid-safe foods', 'Anyone can text an item (or a photo of one) onto the grocery list', 'Text reminders on your cook nights', 'Push straight to your Kroger cart', 'Priority support, answered by the founder'].map((li) => (
+                {['Everything in Free', 'Family texting: the week’s dinner ideas go to everyone by text, they reply with the numbers they want, the top picks become the week', 'A profile for each person: likes, won’t-eats, kid-safe foods', 'Anyone can text an item (or a photo of one) onto the grocery list', 'Text reminders on your cook nights', 'Push straight to your Kroger cart', 'Priority support, answered by the founder'].map((li) => (
                   <li key={li} className="flex items-start gap-2"><span style={{ color: GREEN }}>✓</span>{li}</li>
                 ))}
               </ul>
