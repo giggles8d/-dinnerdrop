@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
+import { createClient } from '@/lib/supabase'
+import { TRIAL_PREDICTED_VALUE, isCheckoutSessionId, regEventId, trialEventId } from '@/lib/meta-events'
 
 declare global {
   interface Window {
@@ -9,37 +11,49 @@ declare global {
     pintrk?: (...args: unknown[]) => void
     rdt?: (...args: unknown[]) => void
     __ddConversionFired?: boolean
+    __ddTrialFired?: boolean
+    __ddAttachSent?: boolean
   }
 }
 
 /**
- * Fires signup-completion conversion events across all 4 ad platforms.
+ * Conversion events for the first page after an account is created, and for the return from Stripe checkout.
+ * Mounted by /dashboard?new=1, /favorites?new=1, /subscribe?new=1 (with onceKey) and /dashboard?subscribed=true.
  *
- * Mount this on /dashboard when ?subscribed=true is present (Stripe success_url).
- * Idempotent — guards against double-fire on remount via window.__ddConversionFired.
+ * Sign-up (new=1): Google "sign_up" + Ads conversion, Meta CompleteRegistration, Pinterest "lead",
+ * Reddit "SignUp". Once per browser (onceKey). No PII is sent from the browser.
  *
- * Each platform consumes the canonical "sign_up" / "CompleteRegistration" / "lead" /
- * "SignUp" event names. In each ad dashboard, configure the relevant conversion
- * action to listen for these event names:
- *
- *   - Google Ads     → gtag event "sign_up"            (configure in Ads > Goals)
- *   - Meta Ads       → fbq StandardEvent CompleteRegistration (auto-detected)
- *   - Pinterest Ads  → pintrk EventName "lead"         (auto-detected)
- *   - Reddit Ads     → rdt Track "SignUp"              (configure conversion to use)
- *
- * No PII is sent — just the event ping. Conversion value is set to $54 (the
- * lifetime equivalent of 6 months × $9/mo) so the platforms can optimize toward
- * higher-LTV signups.
+ * Nov 22 2026 review (Sarah approved):
+ *  - Trial (subscribed=true is detected here, whatever props the page passes): fires StartTrial instead of a
+ *    second $54 CompleteRegistration, once per browser. Value = predicted value of one Family month ($4.99),
+ *    since no money is charged at trial start. Google gets "start_trial" with no Ads conversion, so a trial is
+ *    no longer counted as a second sign-up. Pinterest/Reddit get a custom StartTrial event.
+ *  - Meta events carry an eventID shared with the server (lib/meta-capi): CompleteRegistration uses
+ *    reg_<user id> and is relayed via /api/meta/event; StartTrial uses trial_<checkout session id>, which the
+ *    Stripe webhook also sends. Meta counts each pair once.
+ *  - Every first page also saves the sign-up source (POST /api/attribution/attach), not only the dashboard.
  */
 export default function ConversionTracker({ value = 54, currency = 'USD', onceKey }: { value?: number; currency?: string; onceKey?: string }) {
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (window.__ddConversionFired) return
-    // onceKey: fire at most once per browser (free signups land on /dashboard?new=1, which can be reloaded).
-    if (onceKey) {
-      try { if (localStorage.getItem(onceKey)) return } catch { /* storage blocked: fire anyway */ }
+    if (/DinnerDropApp/.test(navigator.userAgent)) return // no ad tracking inside the native app
+
+    // Save how this family found us (dd_src cookie from middleware). Idempotent server-side; once per page load.
+    if (!window.__ddAttachSent && document.cookie.includes('dd_src=')) {
+      window.__ddAttachSent = true
+      fetch('/api/attribution/attach', { method: 'POST' }).catch(() => {})
     }
-    window.__ddConversionFired = true
+
+    const params = new URLSearchParams(window.location.search)
+    const trial = params.get('subscribed') === 'true'
+    const key = trial ? 'dd_trial_conv' : onceKey
+    if (trial ? window.__ddTrialFired : window.__ddConversionFired) return
+    // Fire at most once per browser (these pages can be reloaded).
+    if (key) {
+      try { if (localStorage.getItem(key)) return } catch { /* storage blocked: fire anyway */ }
+    }
+    if (trial) window.__ddTrialFired = true
+    else window.__ddConversionFired = true
 
     const safeFire = (fn: (() => void), label: string) => {
       try { fn(); return true } catch (err) {
@@ -49,6 +63,29 @@ export default function ConversionTracker({ value = 54, currency = 'USD', onceKe
       }
     }
 
+    let eventId: string | undefined
+    const sid = params.get('session_id')
+    if (trial && isCheckoutSessionId(sid)) eventId = trialEventId(sid)
+    const ev = trial
+      ? { amount: TRIAL_PREDICTED_VALUE, cur: 'USD' }
+      : { amount: value, cur: currency }
+
+    // Sign-up: the Meta event id is reg_<account id>, the same id /api/meta/event sends to the Conversions API.
+    // getSession() reads the local session (no network). The relay runs even when the pixel is blocked.
+    let idLookupDone = trial || !onceKey
+    if (!idLookupDone) {
+      createClient().auth.getSession().then(({ data: { session } }) => {
+        const uid = session?.user?.id
+        if (uid) {
+          eventId = regEventId(uid)
+          fetch('/api/meta/event', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ event: 'CompleteRegistration', url: window.location.href }),
+          }).catch(() => {})
+        }
+      }).catch(() => {}).finally(() => { idLookupDone = true })
+    }
+
     // The ad tags load after the page (next/script), so on a fast dashboard render gtag/fbq can still be
     // undefined here. Retry each platform every 500 ms for up to 15 s and fire each one exactly once when it
     // appears; only mark the browser as done once something actually fired (2026-10-28: Google/Meta were
@@ -56,26 +93,41 @@ export default function ConversionTracker({ value = 54, currency = 'USD', onceKe
     const fired = { google: false, meta: false, pinterest: false, reddit: false }
     const attempt = () => {
       if (!fired.google && typeof window.gtag === 'function') {
-        // GA4 "sign_up" + the Sign-up conversion action (AW-18170234265/Rv_gCJLep7YcEJmLn9hD, Count=One).
         fired.google = safeFire(() => {
-          window.gtag!('event', 'sign_up', { method: 'beta100', value, currency })
-          window.gtag!('event', 'conversion', { send_to: 'AW-18170234265/Rv_gCJLep7YcEJmLn9hD', value, currency })
+          if (trial) {
+            // Not a sign-up: no Ads sign-up conversion. Import "start_trial" in Google Ads > Goals if wanted.
+            window.gtag!('event', 'start_trial', { value: ev.amount, currency: ev.cur })
+          } else {
+            // GA4 "sign_up" + the Sign-up conversion action (AW-18170234265/Rv_gCJLep7YcEJmLn9hD, Count=One).
+            window.gtag!('event', 'sign_up', { method: 'beta100', value: ev.amount, currency: ev.cur })
+            window.gtag!('event', 'conversion', { send_to: 'AW-18170234265/Rv_gCJLep7YcEJmLn9hD', value: ev.amount, currency: ev.cur })
+          }
         }, 'Google Ads')
       }
-      if (!fired.meta && typeof window.fbq === 'function') {
-        fired.meta = safeFire(() => window.fbq!('track', 'CompleteRegistration', { value, currency, content_name: 'DinnerDrop Signup' }), 'Meta Pixel')
+      // Meta waits for the event id when one is still being looked up (sign-up path).
+      if (!fired.meta && typeof window.fbq === 'function' && idLookupDone) {
+        fired.meta = safeFire(() => {
+          const opts = eventId ? { eventID: eventId } : undefined
+          if (trial) window.fbq!('track', 'StartTrial', { value: ev.amount, currency: ev.cur, predicted_ltv: ev.amount }, opts)
+          else window.fbq!('track', 'CompleteRegistration', { value: ev.amount, currency: ev.cur, content_name: 'DinnerDrop Signup' }, opts)
+        }, 'Meta Pixel')
       }
       if (!fired.pinterest && typeof window.pintrk === 'function') {
-        fired.pinterest = safeFire(() => window.pintrk!('track', 'lead', { value, currency, lead_type: 'signup' }), 'Pinterest Tag')
+        fired.pinterest = safeFire(() => trial
+          ? window.pintrk!('track', 'custom', { value: ev.amount, currency: ev.cur, event_name: 'start_trial' })
+          : window.pintrk!('track', 'lead', { value: ev.amount, currency: ev.cur, lead_type: 'signup' }), 'Pinterest Tag')
       }
       if (!fired.reddit && typeof window.rdt === 'function') {
-        fired.reddit = safeFire(() => window.rdt!('track', 'SignUp', { value, currency }), 'Reddit Pixel')
+        fired.reddit = safeFire(() => trial
+          ? window.rdt!('track', 'Custom', { customEventName: 'StartTrial', value: ev.amount, currency: ev.cur })
+          : window.rdt!('track', 'SignUp', { value: ev.amount, currency: ev.cur }), 'Reddit Pixel')
       }
-      if (onceKey && Object.values(fired).some(Boolean)) {
-        try { localStorage.setItem(onceKey, String(Date.now())) } catch { /* ignore */ }
+      if (key && Object.values(fired).some(Boolean)) {
+        try { localStorage.setItem(key, String(Date.now())) } catch { /* ignore */ }
       }
       return fired.google && fired.meta
     }
+
     if (attempt()) return
     let tries = 0
     const timer = window.setInterval(() => {

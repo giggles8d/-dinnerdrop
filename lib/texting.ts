@@ -27,6 +27,8 @@ import { buildFamilyRecipes, describeDinnerFromPhotos, saveFamilyRecipes } from 
 import { leaderLabel, getDraft, setDraft, clearDraft, draftRoundIds, dueDrafts, parseLeaderCommand, getAsk, putAsk, openAsks, askIsLive, askSummary, askAck, askText, ASK_WINDOW_MIN, type LeaderCommand, type FamilyAsk } from '@/lib/family-ask'
 import { reorderAsked, reorderCartReply } from '@/lib/reorder'
 import { sendFamilyText } from '@/lib/send-window'
+// Nov 22 2026 review: texts link to the no-sign-in list, not the signed-in /grocery-list page.
+import { listUrl } from '@/lib/list-link'
 import { keepInBudget } from '@/lib/budget'
 import { needsConfirmation, activeNeeds, applyNeeds, NEEDS_TIMING_ASK, type MemberNeed } from '@/lib/member-needs'
 
@@ -1579,7 +1581,7 @@ export async function finalizeRound(admin: SupabaseClient, round: VoteRound, ctx
   const head = ctx.everyone ? `DinnerDrop: everyone's voted${who ? ` (${who})` : ''}.`
     : who ? `DinnerDrop: voting closed — heard from ${who}.`
     : `DinnerDrop: no votes came in, so I kept the top picks.`
-  const body = `${head} The week is set:\n${lines.join('\n')}\n\nWant a change? Reply SWAP 2 FOR tacos. Next: add anything else you need to the list, then approve the order → ${APP_URL}/grocery-list`
+  const body = `${head} The week is set:\n${lines.join('\n')}\n\nWant a change? Reply SWAP 2 FOR tacos. Next: add anything else you need to the list, then approve the order → ${listUrl(owner.id)}`
   const to = await ownerPhone(admin, owner)
   if (to) await sendFamilyText(admin, { householdId: round.household_id, to, body, intent: 'vote_complete' })
 }

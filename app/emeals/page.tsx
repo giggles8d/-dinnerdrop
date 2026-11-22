@@ -3,9 +3,9 @@ import Link from 'next/link'
 import PublicHeader from '@/components/site/PublicHeader'
 import EmealsImportForm from './EmealsImportForm'
 
-const title = 'Leaving eMeals? Plan dinners free, plus 3 months of Family with code EMEALS'
+const title = 'Leaving eMeals? Plan your family dinners free with DinnerDrop'
 const description =
-  'Switching from eMeals? Type the dinners your family loved and DinnerDrop builds its own versions, plans your week and loads your Instacart cart. Free, no card. Code EMEALS adds 3 months of Family.'
+  'Switching from eMeals? Type the dinners your family loved and DinnerDrop builds its own versions, plans your week and fills your Instacart or Walmart cart. Free, no card. Family is free for 14 days.'
 
 export const metadata: Metadata = {
   title,
@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 
 const GREEN = '#1a5c38'
 const GOLD = '#e8a838'
-const SIGNUP = '/signup?redirect=%2Ffavorites&utm_source=emeals&code=EMEALS'
+// Code EMEALS (90 days) was dropped from this page: no new stacking offers (Nov 22 2026 review, Sarah approved).
+const SIGNUP = '/signup?redirect=%2Ffavorites&utm_source=emeals'
 
 export default function EmealsSwitchPage() {
   return (
@@ -31,12 +32,12 @@ export default function EmealsSwitchPage() {
           Leaving eMeals? <span style={{ color: GOLD }}>Plan free, forever.</span>
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed mb-4">
-          DinnerDrop plans five dinners around your family, builds one grocery list, and opens it in your Instacart cart in one tap. Planning and the cart are free with no card, and they stay free.
+          DinnerDrop plans five dinners around your family, builds one grocery list, and puts it in your Instacart or Walmart cart in one tap. Planning and the cart are free with no card, and they stay free.
         </p>
         <div className="rounded-2xl p-5 mb-8 border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD }}>
-          <p className="font-bold" style={{ color: GREEN }}>Code EMEALS: 3 months of Family free</p>
+          <p className="font-bold" style={{ color: GREEN }}>Your first 14 days of Family are free, no card</p>
           <p className="text-sm text-gray-700 mt-1">
-            It&apos;s applied for you when you sign up from this page. Family adds family voting by text, per-person tastes and the Kroger cart push. No card, and nothing bills when the 3 months end. After that it&apos;s $4.99 a month or $39 a year if you want to keep it.
+            Every new family gets them when you sign up. Family adds family voting by text, per-person tastes and the Kroger cart push. Nothing bills when the 14 days end; you go back to the free plan. To keep Family, add a card: $4.99 a month or $39 a year.
           </p>
         </div>
 
@@ -68,8 +69,8 @@ export default function EmealsSwitchPage() {
           <h2 className="text-2xl font-bold mb-4" style={{ color: GREEN }}>Honest differences</h2>
           <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
             <li><strong className="text-gray-800">eMeals has a bigger library.</strong> It lists 25,000+ recipes; DinnerDrop has 1,100+ and adds more every night. Any dinner you want can go in by name.</li>
-            <li><strong className="text-gray-800">eMeals connects to Walmart.</strong> DinnerDrop sends your list to Instacart (any store on Instacart) or straight into a Kroger cart. Walmart isn&apos;t supported yet.</li>
-            <li><strong className="text-gray-800">eMeals has native Android and iPhone apps.</strong> DinnerDrop works in any phone browser and saves to your home screen. An iPhone app is on the way.</li>
+            <li><strong className="text-gray-800">Both work with Walmart.</strong> DinnerDrop fills a Walmart or Instacart cart for free, and a Kroger cart on Family. eMeals also lists Amazon Fresh, Albertsons, Safeway, H-E-B and Shipt.</li>
+            <li><strong className="text-gray-800">eMeals has Android and iPhone apps.</strong> DinnerDrop has an iPhone app and works in any phone browser. No Android app yet.</li>
             <li><strong className="text-gray-800">Already paid for an eMeals year?</strong> Use both until it runs out. Turn off eMeals&apos; auto-renew in your eMeals account settings so you decide later.</li>
           </ul>
           <p className="text-sm mt-4"><Link href="/vs/emeals" className="underline font-medium" style={{ color: GREEN }}>See the full side-by-side comparison →</Link></p>
@@ -77,13 +78,13 @@ export default function EmealsSwitchPage() {
 
         <section className="mt-14 text-center">
           <Link href={SIGNUP} className="inline-block px-10 py-4 rounded-xl text-white font-bold text-lg shadow-sm hover:opacity-90" style={{ backgroundColor: GREEN }}>
-            Start free with code EMEALS &rarr;
+            Start free, no card &rarr;
           </Link>
           <p className="text-sm text-gray-600 mt-3">Two minutes to set up. Your first week of dinners is ready right away.</p>
         </section>
 
         <p className="text-[11px] text-gray-500 mt-12">
-          eMeals details from eMeals&apos; website and checkout page on October 31, 2026; prices change and eMeals sometimes runs promotions. Code EMEALS: 90 days of Family for new or existing DinnerDrop accounts, one code per account, redeem by March 31, 2027.
+          eMeals details checked on eMeals&apos; website, checkout page and App Store listing on November 22, 2026; prices change and eMeals sometimes runs promotions.
           eMeals is a trademark of eMeals, Inc. DinnerDrop is not affiliated with or endorsed by eMeals.
         </p>
       </main>

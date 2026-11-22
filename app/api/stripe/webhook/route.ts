@@ -6,6 +6,8 @@ import { render } from '@react-email/render'
 import WelcomeBeta from '@/emails/WelcomeBeta'
 import PaymentFailed from '@/emails/PaymentFailed'
 import { FAMILY_TRIAL_DAYS } from '@/lib/stripe'
+// Meta Conversions API sends (Nov 22 2026 review, Sarah approved). Both never throw and skip without META_CAPI_TOKEN.
+import { metaPurchaseFromInvoice, metaStartTrialFromCheckout } from '@/lib/meta-stripe'
 
 function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -165,6 +167,14 @@ export async function POST(request: NextRequest) {
           console.log('RESEND_API_KEY not set — skipping emails')
         }
       }
+      // Meta StartTrial, event_id trial_<session id> shared with the browser on /dashboard?subscribed=true.
+      await metaStartTrialFromCheckout(stripe, supabase, session, event.created)
+      break
+    }
+
+    case 'invoice.paid': {
+      // Meta Purchase (every real payment) and Subscribe (first paid invoice of a subscription), event_id = invoice id.
+      await metaPurchaseFromInvoice(stripe, supabase, event.data.object as Stripe.Invoice, event.created)
       break
     }
 

@@ -53,7 +53,7 @@ export default function MealimePage() {
           Mealime has closed. <span style={{ color: GOLD }}>Your dinners don&apos;t have to go with it.</span>
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed mb-8">
-          Albertsons shut Mealime down on October 21 and moved its recipes into its own Meals Hub, with no way to export your plans, favorites, or lists. DinnerDrop does the part you relied on &mdash; pick dinners, get one combined grocery list &mdash; and then opens that list in your Instacart cart in one tap, at any store. It&apos;s free, with no card.
+          Albertsons shut Mealime down on October 21 and moved its recipes into its own Meals Hub, with no way to export your plans, favorites, or lists. DinnerDrop does the part you relied on &mdash; pick dinners, get one combined grocery list &mdash; and then puts that list in your Instacart or Walmart cart in one tap. It&apos;s free, with no card.
         </p>
 
         <MealimeImportForm />
@@ -64,9 +64,9 @@ export default function MealimePage() {
             {[
               { t: 'Your favorites', d: 'Type the names of the dinners your family actually eats. We rebuild each one as a full recipe for your family size and keep it in your rotation.' },
               { t: 'One combined grocery list', d: 'Every plan becomes one deduplicated list, organized by store section, the way Mealime did it.' },
-              { t: 'The cart, filled for you', d: 'One tap opens the whole list in Instacart with every item matched. You pick the store, glance, add to cart, and check out at Instacart’s prices — we add nothing.' },
+              { t: 'The cart, filled for you', d: 'One tap opens the whole list in Instacart (you pick the store) or fills your Walmart cart. Glance at it and check out at the store’s prices. We add nothing.' },
               { t: 'Plans built around your family', d: 'Family size, weekly budget, cook time, and dietary needs shape every week. Swap any dinner in one tap; it learns what you keep.' },
-              { t: 'Free, and it stays free', d: 'Planning and the Instacart cart cost nothing and never will. Instacart pays us a small commission when you shop, at no extra cost to you.' },
+              { t: 'Free, and it stays free', d: 'Planning and the Instacart and Walmart carts cost nothing and never will. Instacart and Walmart may pay us a small commission when you shop, at no extra cost to you.' },
               { t: 'Your data is yours', d: 'Ask any time and we send you a copy of your plans, favorites, and lists. No lock-in.' },
             ].map((b) => (
               <div key={b.t} className="p-5 rounded-2xl border bg-white" style={{ borderColor: '#e8e8e8' }}>
@@ -81,8 +81,9 @@ export default function MealimePage() {
           <h2 className="text-2xl font-bold mb-4" style={{ color: GREEN }}>Honest differences</h2>
           <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
             <li><strong className="text-gray-800">Mealime had a browseable recipe library.</strong> DinnerDrop has one too — every dinner it has planned, with real photos, plus any recipe you add by link, text or photo — and it writes the week for you from it. If you want a specific dinner, add it to your favorites and it will show up.</li>
-            <li><strong className="text-gray-800">Mealime shopped through delivery partners.</strong> DinnerDrop fills your Instacart cart directly (and, on the Family plan, your Kroger cart). In-store shoppers get the same list on their phone.</li>
-            <li><strong className="text-gray-800">Mealime Pro was a paid upgrade.</strong> DinnerDrop&apos;s planning and cart are free. The optional Family plan is $4.99/month or $39/year after a 14-day trial, for the household features (the week&apos;s dinner ideas texted to everyone, who reply with the numbers they want; a list anyone can text an item onto; a profile for each person), text reminders, the Kroger cart push, and priority support.</li>
+            <li><strong className="text-gray-800">Mealime shopped through delivery partners.</strong> DinnerDrop fills your Instacart or Walmart cart directly (and, on the Family plan, your Kroger cart). In-store shoppers get the same list on their phone.</li>
+            <li><strong className="text-gray-800">Meals Hub is free too.</strong> Mealime&apos;s recipes moved to Albertsons&apos; Meals Hub, free in Albertsons-family store apps and websites (Safeway, Albertsons, Vons, Jewel-Osco and others). DinnerDrop is for families who want the week planned for them and the cart filled at any store on Instacart, or at Walmart.</li>
+            <li><strong className="text-gray-800">Mealime Pro was a paid upgrade.</strong> DinnerDrop&apos;s planning and cart are free. The optional Family plan is free for your first 14 days with no card, then $4.99/month or $39/year if you keep it. It covers the household features (the week&apos;s dinner ideas texted to everyone, who reply with the numbers they want; a list anyone can text an item onto; a profile for each person), text reminders, the Kroger cart push, and priority support.</li>
           </ul>
         </section>
 
@@ -92,7 +93,7 @@ export default function MealimePage() {
             className="inline-block px-10 py-4 rounded-xl text-white font-bold text-lg shadow-sm hover:opacity-90"
             style={{ backgroundColor: GREEN }}
           >
-            Start free &mdash; no card needed &rarr;
+            Start free, no card needed &rarr;
           </Link>
           <p className="text-sm text-gray-600 mt-3">Two minutes to set up. Your first week of dinners is ready right away.</p>
         </section>

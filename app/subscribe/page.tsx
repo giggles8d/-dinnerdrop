@@ -97,7 +97,7 @@ function SubscribeContent() {
               Get the whole<br />household in on it.
             </h1>
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-              Planning and your Instacart cart stay free. Family adds everything that makes dinner a shared job instead of yours alone. Try it free for 14 days.
+              Planning and your Instacart or Walmart cart stay free. Family makes dinner a shared job instead of yours alone. Every new account gets Family free for 14 days with no card. Add a card here only to keep it after that.
             </p>
 
             <div className="space-y-5">
@@ -134,7 +134,7 @@ function SubscribeContent() {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground text-sm">Cancel in one tap</p>
-                  <p className="text-sm text-muted-foreground mt-0.5">From your Account page. No calls, no hoops. We email you three days before any charge.</p>
+                  <p className="text-sm text-muted-foreground mt-0.5">From your Account page. No calls, no hoops. We email you 3 days before your free Family days end.</p>
                 </div>
               </div>
             </div>
@@ -176,7 +176,7 @@ function SubscribeContent() {
                   )}
                 </div>
                 <div className="inline-block bg-secondary text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 mt-2">
-                  14-day free trial &mdash; $0 today
+                  First 14 days free &middot; $0 today
                 </div>
               </div>
 
@@ -204,7 +204,7 @@ function SubscribeContent() {
                 disabled={loading}
                 className="w-full py-4 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-sm"
               >
-                {loading ? 'Opening secure checkout...' : 'Start my 14-day free trial →'}
+                {loading ? 'Opening secure checkout...' : 'Add a card to keep Family →'}
               </button>
 
               {error && (
@@ -212,7 +212,7 @@ function SubscribeContent() {
               )}
 
               <p className="text-sm text-muted-foreground text-center mt-4 leading-snug">
-                Card required. $0 today. First charge of {interval === 'monthly' ? '$4.99' : '$39'} on {firstCharge} unless you cancel. We email you three days before.
+                A card is needed only to keep Family after your free days. $0 today. First charge of {interval === 'monthly' ? '$4.99' : '$39'} on {firstCharge} unless you cancel. We email you 3 days before your free Family days end.
               </p>
 
               <p className="text-xs text-muted-foreground text-center mt-4">

@@ -15,7 +15,7 @@ const FAQ: Array<[string, string]> = [
   ['How do I change a dinner?', 'On your dashboard tap any dinner and choose Swap this meal, or heart dinners in the Recipe library so they rotate in. Mark a dinner cooked to fade it off the list.'],
   ['How do I change servings, allergies or diets?', 'Servings: the − / + on any recipe. Allergies, dislikes and each person’s safe foods: Settings → Household. Diets (vegetarian, gluten-free, low-carb, paleo…): Settings → Food.'],
   ['How does family texting work?', 'With Family, DinnerDrop texts the week’s dinner options to everyone you add; they reply with numbers and the top picks become the week. Anyone can text "ADD milk" to put things on the list.'],
-  ['Billing, trial and cancelling', 'Free is free forever. Family is $4.99/month or $39/year after a 14-day trial, and you can cancel in one tap from Account. Nothing is charged for your groceries by DinnerDrop; you pay the store on Instacart or Kroger.'],
+  ['Billing, trial and cancelling', 'The free plan is free forever. Every new family gets 14 days of Family free, no card. To keep Family after that, add a card: $4.99 a month or $39 a year. We email you 3 days before your free Family days end, and you can cancel any time from Account. DinnerDrop never charges for your groceries; you pay the store on Instacart, Walmart or Kroger.'],
   ['Delete my account', 'Account → Delete account removes your plans, lists and profile. Or email sarah@dinnerdrop.app and we’ll do it.'],
 ]
 

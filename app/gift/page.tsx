@@ -3,7 +3,7 @@ import PublicHeader from '@/components/site/PublicHeader'
 import GiftForm from './GiftForm'
 
 const title = 'Give the Gift of Dinner, Handled — DinnerDrop Gift Subscriptions'
-const description = 'Give a busy family months of planned weeknight dinners: 5 dinners a week for their family and budget, one grocery list, one tap to Instacart.'
+const description = 'Give a busy family months of planned weeknight dinners: 5 dinners a week for their family and budget, one grocery list, one tap to Instacart or Walmart.'
 
 export const metadata: Metadata = {
   title, description,
@@ -17,12 +17,12 @@ export default function GiftPage({ searchParams }: { searchParams: { canceled?: 
     <div className="min-h-screen bg-background">
       <PublicHeader active="gift" />
       <main className="container mx-auto px-4 py-12 max-w-3xl">
-        <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Gift DinnerDrop 🎁</p>
+        <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-2">Gift DinnerDrop</p>
         <h1 className="text-3xl sm:text-5xl font-heading font-bold text-foreground leading-tight mb-4">Give a family their weeknights back</h1>
         <p className="text-muted-foreground mb-8 max-w-2xl">
           For the new parents, the friend who just started back at work, or the family that&apos;s always asking &ldquo;what&apos;s for dinner?&rdquo;
-          DinnerDrop Family plans 5 dinners a week for their family and budget, builds one grocery list, and sends it to their Instacart cart in one tap.
-          It starts when they sign up — no card needed on their end, nothing to cancel.
+          DinnerDrop Family plans 5 dinners a week for their family and budget, builds one grocery list, and sends it to their Instacart or Walmart cart in one tap. We don&apos;t deliver food; they shop as usual.
+          It starts when they sign up. No card needed on their end, nothing to cancel.
         </p>
         {searchParams.canceled && <p className="mb-6 text-sm rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5 text-amber-900">Checkout was canceled — nothing was charged. Your details are still below.</p>}
         <GiftForm />
@@ -43,7 +43,7 @@ export default function GiftPage({ searchParams }: { searchParams: { canceled?: 
           </div>
           <div>
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">What&apos;s included</h2>
-            <p>Every week, DinnerDrop plans five weeknight dinners around their household: how many people, what they like, what they won&apos;t touch, allergies, cook time and a weekly budget. It merges the ingredients into one grocery list and sends that list to their Instacart cart in a single tap, or straight into a Kroger cart. The Family plan adds per-person preferences, texting the week&apos;s options to the family and letting everyone vote, reminders, cook mode and a printable fridge sheet.</p>
+            <p>Every week, DinnerDrop plans five weeknight dinners around their household: how many people, what they like, what they won&apos;t touch, allergies, cook time and a weekly budget. It merges the ingredients into one grocery list and sends that list to their Instacart or Walmart cart in a single tap, or straight into a Kroger cart. The Family plan adds per-person preferences, texting the week&apos;s options to the family and letting everyone vote, reminders, cook mode and a printable fridge sheet.</p>
           </div>
           <div>
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">How gifting works</h2>
@@ -55,8 +55,8 @@ export default function GiftPage({ searchParams }: { searchParams: { canceled?: 
           </div>
           <div>
             <h2 className="text-xl font-heading font-bold text-foreground mb-2">Common questions</h2>
-            <p className="mb-2"><span className="font-semibold text-foreground">Does the gift cover groceries?</span> No. DinnerDrop plans the week and fills the cart; they pay the store on Instacart or Kroger as usual.</p>
-            <p className="mb-2"><span className="font-semibold text-foreground">Can I gift someone outside the US?</span> Instacart and Kroger are US services, so the grocery handoff works in the US only. The planner itself works anywhere.</p>
+            <p className="mb-2"><span className="font-semibold text-foreground">Does the gift cover groceries?</span> No. DinnerDrop plans the week and fills the cart; they pay the store on Instacart, Walmart or Kroger as usual.</p>
+            <p className="mb-2"><span className="font-semibold text-foreground">Can I gift someone outside the US?</span> Instacart, Walmart and Kroger are US services, so the grocery handoff works in the US only. The planner itself works anywhere.</p>
             <p><span className="font-semibold text-foreground">Something go wrong?</span> Write to <a href="mailto:sarah@dinnerdrop.app" className="underline">sarah@dinnerdrop.app</a> — Sarah, the founder, reads every message.</p>
           </div>
         </section>

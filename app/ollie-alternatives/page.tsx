@@ -4,6 +4,8 @@ import PublicHeader from '@/components/site/PublicHeader'
 
 // Nov 6 2026: Ollie (and Ollie for Meals) shut down today. Honest comparison for families looking for a replacement.
 // Competitor facts come from the linked pages; re-check prices before editing.
+// Nov 22 2026 review (Sarah approved): Mealime closed Oct 21 2026, so its row was replaced with Samsung Food; eMeals,
+// Plan to Eat and Samsung Food re-checked on their own sites that day; code OLLIE (90 days) dropped (no stacking offers).
 
 const title = 'Ollie alternatives for family meal planning (2026): 7 apps compared'
 const description =
@@ -20,23 +22,23 @@ export const metadata: Metadata = {
 
 const GREEN = '#1a5c38'
 const GOLD = '#e8a838'
-const SIGNUP = '/signup?redirect=%2Ffavorites&utm_source=ollie_alternatives&code=OLLIE'
+const SIGNUP = '/signup?redirect=%2Ffavorites&utm_source=ollie_alternatives'
 
 type Row = { name: string; ours?: boolean; best: string; grocery: string; texting: string; price: string; src?: { label: string; href: string } }
 
 const ROWS: Row[] = [
   {
     name: 'DinnerDrop', ours: true,
-    best: 'Families who want the week planned and the cart filled',
-    grocery: 'One tap to Instacart (any store on it), a Walmart cart link, or a Kroger cart',
+    best: 'Families who want the week planned, voted on by text, and the cart filled',
+    grocery: 'One tap to Instacart (any store on it) or a Walmart cart; Kroger cart on Family',
     texting: 'Yes: family members text a number to vote on dinners and add items. No app needed',
-    price: 'Planning and the Instacart cart are free. Family is free for 14 days with no card, then $4.99/month or $39/year',
+    price: 'Planning and the Instacart and Walmart carts are free. Family is free for 14 days with no card, then $4.99/month or $39/year if you keep it',
   },
   {
     name: 'eMeals', best: 'Ready-made weekly menus by diet',
     grocery: 'Sends the list to Walmart, Amazon, Kroger or Instacart', texting: 'No',
-    price: '14-day free trial, from $4.99/month on a 12-month plan',
-    src: { label: 'Carly comparison', href: 'https://www.usecarly.com/blog/ollie-meal-planner-alternatives/' },
+    price: '14-day free trial (card required), then $59.99/year (shown as $4.99/month) or $37.50 every 3 months',
+    src: { label: 'eMeals', href: 'https://emeals.com/' },
   },
   {
     name: 'Cozi Max', best: 'A shared family calendar with meal planning added',
@@ -46,15 +48,15 @@ const ROWS: Row[] = [
   },
   {
     name: 'Plan to Eat', best: 'Families with their own saved recipes',
-    grocery: 'Shopping lists built from your recipes, with pantry tracking', texting: 'No',
-    price: '14-day trial, then $5.95/month or $49/year',
-    src: { label: 'Fortune', href: 'https://fortune.com/article/best-meal-planning-apps/' },
+    grocery: 'Shopping lists built from your recipes; can send the list to a grocery service, where you pick the products', texting: 'No',
+    price: '14-day trial with no card, then $5.95/month or $49/year',
+    src: { label: 'Plan to Eat', href: 'https://www.plantoeat.com/pricing/' },
   },
   {
-    name: 'Mealime', best: 'Diet and allergy filters',
-    grocery: 'A grocery list from the plan', texting: 'No',
-    price: 'Free; Pro is $2.99/month',
-    src: { label: 'Fortune', href: 'https://fortune.com/article/best-meal-planning-apps/' },
+    name: 'Samsung Food', best: 'Saving recipes from any site and planning the week yourself',
+    grocery: 'Shopping lists; online grocery ordering in select countries', texting: 'No',
+    price: 'Free; Food+ is $6.99/month or $59.99/year after a 7-day trial',
+    src: { label: 'Samsung Food', href: 'https://samsungfood.com/food-plus/' },
   },
   {
     name: 'Carly', best: 'Dinners planned around your calendar, by text',
@@ -87,7 +89,7 @@ export default function OllieAlternativesPage() {
       <PublicHeader />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main className="container mx-auto px-4 py-10 sm:py-16 max-w-4xl">
-        <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: GOLD }}>Updated November 6, 2026</p>
+        <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: GOLD }}>Updated November 22, 2026</p>
         <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-4" style={{ color: GREEN }}>
           The best Ollie alternatives for family meal planning
         </h1>
@@ -129,18 +131,19 @@ export default function OllieAlternativesPage() {
 
         <section className="mt-12 space-y-6 text-gray-700 leading-relaxed">
           <h2 className="text-2xl font-bold" style={{ color: GREEN }}>How to choose</h2>
-          <p><strong>You want the week planned and the cart filled:</strong> DinnerDrop or eMeals. DinnerDrop plans around each person&apos;s tastes and allergies and sends the list to Instacart in one tap; eMeals gives you set menus by diet and works with more grocers.</p>
+          <p><strong>You want the week planned and the cart filled:</strong> DinnerDrop or eMeals. DinnerDrop plans around each person&apos;s tastes and allergies and sends the list to Instacart or Walmart in one tap; eMeals gives you set menus by diet and works with more grocers.</p>
           <p><strong>Your family used to text Ollie:</strong> DinnerDrop is the one app here built for everyone in the house to text one number to vote on dinners and add to the shared list. Carly texts the person who set it up.</p>
           <p><strong>You mostly need a family calendar:</strong> Cozi Max puts meals next to everyone&apos;s schedule.</p>
-          <p><strong>You cook from your own recipes:</strong> Plan to Eat. <strong>You need strict diet filters on a budget:</strong> Mealime.</p>
+          <p><strong>You cook from your own recipes:</strong> Plan to Eat. <strong>You want a free recipe box:</strong> Samsung Food.</p>
+          <p><strong>You used Mealime:</strong> Mealime closed on October 21, 2026. Its recipes moved to Meals Hub, which is free in Albertsons-family store apps and websites.</p>
         </section>
 
         <section className="mt-12 rounded-2xl p-6 border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD }}>
           <h2 className="text-xl font-bold mb-2" style={{ color: GREEN }}>Moving from Ollie to DinnerDrop</h2>
-          <p className="text-gray-700 mb-4">Paste your Ollie export, or just the dinners your family liked, and your first week is planned around them. Code OLLIE gives you 3 months of Family free, no card.</p>
+          <p className="text-gray-700 mb-4">Paste your Ollie export, or just the dinners your family liked, and your first week is planned around them. Your first 14 days of Family are free, no card.</p>
           <div className="flex flex-wrap gap-3">
             <Link href="/ollie" className="inline-block px-6 py-3 rounded-xl font-bold border" style={{ borderColor: GREEN, color: GREEN }}>Import my Ollie dinners</Link>
-            <Link href={SIGNUP} className="inline-block px-6 py-3 rounded-xl text-white font-bold" style={{ backgroundColor: GREEN }}>Start free with code OLLIE &rarr;</Link>
+            <Link href={SIGNUP} className="inline-block px-6 py-3 rounded-xl text-white font-bold" style={{ backgroundColor: GREEN }}>Start free &rarr;</Link>
           </div>
         </section>
 
@@ -158,7 +161,7 @@ export default function OllieAlternativesPage() {
 
         <p className="text-[11px] text-gray-500 mt-12">
           Shutdown details from Ollie&apos;s announcement of October 30, 2026 (<a className="underline" href="https://runtimewire.com/article/ollie-shuts-down-november-6th-eight-weeks-after-7-5m-seed" rel="nofollow noopener">RuntimeWire</a>, <a className="underline" href="https://creatorstoolbox.com/blog/ollie-shuts-down-on-november-6" rel="nofollow noopener">Creators Toolbox</a>).
-          Ollie and the other app names are trademarks of their owners. DinnerDrop is not affiliated with or endorsed by Ollie.
+          eMeals, Plan to Eat and Samsung Food details checked on their own sites on November 22, 2026; other apps&apos; details come from the linked sources. Ollie and the other app names are trademarks of their owners. DinnerDrop is not affiliated with or endorsed by Ollie.
         </p>
       </main>
     </div>

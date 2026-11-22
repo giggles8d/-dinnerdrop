@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { isNativeApp, nativePlatform } from '@/lib/native'
 import EmailCodeSignIn from '@/components/EmailCodeSignIn'
-import CartOfferBanner from '@/components/CartOfferBanner'
 import { emailProblem } from '@/lib/email-check'
 import { rememberPickedStyle } from '@/lib/picked-style'
 
@@ -152,14 +151,13 @@ function SignupForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
-        {!toTrial && <CartOfferBanner compact />}
          <div className="text-center">
           <h1 className="text-3xl font-heading font-bold text-foreground">
-            {toTrial ? 'Start your 14-day Family trial' : 'Create your free account'}
+            {toTrial ? 'Keep Family after your free 14 days' : 'Create your free account'}
           </h1>
           <p className="mt-2 text-muted-foreground">
             {toTrial
-              ? 'Step 1 of 2: your email. Step 2: add a card at secure checkout — $0 today, $4.99/month after 14 days unless you cancel.'
+              ? 'Step 1 of 2: your email. Step 2: add a card at secure checkout. Your first 14 days of Family are free either way; the card keeps Family after that. $0 today, then $4.99/month unless you cancel.'
               : 'Just your email. No password, no card. Next, a few quick taps (about a minute) so your week fits your family.'}
           </p>
         </div>
@@ -200,8 +198,8 @@ function SignupForm() {
           </button>
           <p className="text-xs text-center text-muted-foreground">
             {toTrial
-              ? 'No password to remember. Nothing charged for 14 days. Cancel anytime from Account.'
-              : 'Free forever for planning and your Instacart or Walmart cart. No password — you\'re in instantly.'}
+              ? 'No password to remember. Nothing charged for 14 days, and we email you 3 days before your free Family days end. Cancel anytime from Account.'
+              : 'Free forever for planning and your Instacart or Walmart cart. Family texting is free for your first 14 days, no card. No password: you\'re in instantly.'}
           </p>
         </form>
       {/* Google sign-in is hidden until the Google provider is switched on in Supabase: it has never been on, and every tap ended in "provider is not enabled" (~12 a day, site review Nov 8 2026). Set NEXT_PUBLIC_GOOGLE_SIGNIN=on to show it. */}

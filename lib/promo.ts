@@ -1,12 +1,25 @@
 /**
  * Promo codes → Family days with no card (profiles.family_until). Server-only.
  *   redeemPromo(admin, userId, code)  → { ok, until, days, label } | { ok:false, reason }
- * One code per account; days stack on top of any Family time already granted.
+ * One code per account.
+ *
+ * Nov 22 2026 review, Sarah approved ("14 days of Family free for everyone, then ask for a card; no new 90-day
+ * stacking offers"):
+ *  - A code that gives more than PROMO_MAX_DAYS (14) is closed to NEW redemptions. It answers 'expired', so /start
+ *    shows no promo banner and Settings says the code has ended. On Nov 22 that is every live code: EMEALS, OLLIE,
+ *    MAPLE, MEALIME, FRUIT, NURSE, THANKYOU, WELCOMEBACK (90 days each), FRIENDS and FULLTABLE (730 days each).
+ *  - A code of 14 days or less still works, and no longer stacks: it sets Family to at least that many days from
+ *    today, never past it, and never shortens Family a family already has.
+ *  - Nothing in promo_codes or promo_redemptions changes, and families who already redeemed a code keep their days.
+ *  - PROMO_EXEMPT is for a code Sarah decides should keep its full length (for example FRIENDS, for her own friends
+ *    and family). Empty by default; adding a code is a reviewed code change.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { PROMO_MAX_DAYS } from '@/lib/offer-policy'
 
 export const PROMO_RE = /^[A-Z0-9]{3,20}$/
 export const PROMO_COOKIE = 'dd_promo'
+const PROMO_EXEMPT: ReadonlySet<string> = new Set<string>([])
 
 export interface PromoRow { code: string; label: string; family_days: number; max_redemptions: number | null; redeemed: number; expires_at: string | null; active: boolean }
 
@@ -21,9 +34,15 @@ export async function lookupPromo(admin: SupabaseClient, raw: string): Promise<P
   return (data as PromoRow | null) ?? null
 }
 
+/** True when a code gives more free Family than the 14-day rule allows (and Sarah hasn't exempted it). */
+export function promoTooLong(p: Pick<PromoRow, 'code' | 'family_days'>): boolean {
+  return p.family_days > PROMO_MAX_DAYS && !PROMO_EXEMPT.has(p.code)
+}
+
 export function promoState(p: PromoRow | null): 'ok' | 'invalid' | 'expired' | 'exhausted' {
   if (!p || !p.active) return 'invalid'
   if (p.expires_at && new Date(p.expires_at) < new Date()) return 'expired'
+  if (promoTooLong(p)) return 'expired'
   if (p.max_redemptions != null && p.redeemed >= p.max_redemptions) return 'exhausted'
   return 'ok'
 }
@@ -39,14 +58,19 @@ export async function redeemPromo(admin: SupabaseClient, userId: string, raw: st
   const { data: prof } = await admin.from('profiles').select('subscription_status, family_until').eq('id', userId).single()
   if (prof?.subscription_status === 'active') return { ok: false, reason: 'has_subscription' }
 
-  const base = prof?.family_until && new Date(prof.family_until) > new Date() ? new Date(prof.family_until) : new Date()
-  const until = new Date(base.getTime() + promo.family_days * 86400000).toISOString().slice(0, 10)
+  // No stacking (Nov 22 2026): Family runs to the later of what they have now and today + the code's days.
+  const now = Date.now()
+  const current = prof?.family_until ? new Date(prof.family_until).getTime() : 0
+  const exempt = PROMO_EXEMPT.has(promo.code)
+  const target = exempt ? Math.max(current, now) + promo.family_days * 86400000 : now + promo.family_days * 86400000
+  const untilMs = Math.max(current, target)
+  const until = new Date(untilMs).toISOString().slice(0, 10)
 
   const { error } = await admin.from('promo_redemptions').insert({ user_id: userId, code: promo.code, family_until: until })
   if (error) return { ok: false, reason: 'already_redeemed' }
-  await admin.from('profiles').update({ family_until: until }).eq('id', userId)
+  if (untilMs > current) await admin.from('profiles').update({ family_until: until }).eq('id', userId)
   await admin.from('promo_codes').update({ redeemed: promo.redeemed + 1 }).eq('code', promo.code)
-  return { ok: true, until, days: promo.family_days, label: promo.label, code: promo.code }
+  return { ok: true, until, days: Math.max(0, Math.round((untilMs - Math.max(current, now)) / 86400000)), label: promo.label, code: promo.code }
 }
 
 export function untilLabel(until: string): string {

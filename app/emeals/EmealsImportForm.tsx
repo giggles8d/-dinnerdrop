@@ -12,7 +12,7 @@ export default function EmealsImportForm() {
 
   function handleContinue() {
     try { localStorage.setItem('dd_import_names', names) } catch { /* storage unavailable */ }
-    window.location.href = '/signup?redirect=%2Ffavorites&utm_source=emeals&utm_medium=import&code=EMEALS'
+    window.location.href = '/signup?redirect=%2Ffavorites&utm_source=emeals&utm_medium=import'
   }
 
   return (

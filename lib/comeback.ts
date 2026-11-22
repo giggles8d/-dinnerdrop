@@ -15,6 +15,8 @@ export const COMEBACK = 'comeback-2026-10'
 const RELAUNCH = '2026-10-16T00:00:00Z'
 const FAMILY_YEAR_END = 'October 18, 2027'
 export const WELCOME_CODE = 'WELCOMEBACK'
+/** New comeback emails are off (Nov 22 2026 review). Rewards already promised still go out. */
+const COMEBACK_NEW_SENDS_ON: boolean = false
 const APP = 'https://www.dinnerdrop.app'
 const FROM = 'Sarah from DinnerDrop <sarah@dinnerdrop.app>'
 const INTERNAL = /(@dinnerdrop\.app$|^setzl1979(\+[^@]*)?@gmail\.com$)/i
@@ -128,8 +130,10 @@ export async function runComeback(admin: SupabaseClient, now = new Date(), opts:
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
   const resend = new Resend(process.env.RESEND_API_KEY)
 
-  // 1) Send to anyone not yet sent.
-  const recs = await comebackRecipients(admin)
+  // 1) Send to anyone not yet sent. OFF in code (Nov 22 2026 review, Sarah approved "no new 90-day stacking
+  // offers"): this email promises code WELCOMEBACK (3 months) and a 3-month gift for a friend, and WELCOMEBACK
+  // no longer redeems. Families already emailed (step 2) still get the reward they were promised.
+  const recs = COMEBACK_NEW_SENDS_ON ? await comebackRecipients(admin) : []
   const { data: done } = await admin.from('campaign_sends').select('email').eq('campaign', COMEBACK)
   const sentSet = new Set((done ?? []).map((d) => String(d.email).toLowerCase()))
   const deadline = deadlineFor(now)

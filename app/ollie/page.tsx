@@ -5,7 +5,7 @@ import OllieImportForm from './OllieImportForm'
 
 const title = 'Ollie closed Nov 6 — keep your family dinners going with DinnerDrop (free)'
 const description =
-  'Ollie shut down on November 6, 2026. Type the dinners your family loved and DinnerDrop plans your week around them, builds one grocery list and loads your Instacart cart. Free, no card. Code OLLIE adds 3 months of Family.'
+  'Ollie shut down on November 6, 2026. Type the dinners your family loved and DinnerDrop plans your week around them, builds one grocery list and fills your Instacart or Walmart cart. Free, no card. Family is free for 14 days.'
 
 export const metadata: Metadata = {
   title,
@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 
 const GREEN = '#1a5c38'
 const GOLD = '#e8a838'
-const SIGNUP = '/signup?redirect=%2Ffavorites&utm_source=ollie&code=OLLIE'
+// Code OLLIE (90 days) was dropped from this page: no new stacking offers (Nov 22 2026 review, Sarah approved).
+const SIGNUP = '/signup?redirect=%2Ffavorites&utm_source=ollie'
 
 export default function OllieSwitchPage() {
   return (
@@ -31,12 +32,12 @@ export default function OllieSwitchPage() {
           Ollie closed November 6. <span style={{ color: GOLD }}>Dinner doesn&apos;t have to stop.</span>
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed mb-4">
-          Ollie announced on October 30 that it would shut down on November 6, and it has now closed. DinnerDrop does the part families relied on: five dinners planned around your family, one grocery list, and the whole list in your Instacart cart in one tap. It&apos;s free with no card, on the web and your phone.
+          Ollie announced on October 30 that it would shut down on November 6, and it has now closed. DinnerDrop does the part families relied on: five dinners planned around your family, one grocery list, and the whole list in your Instacart or Walmart cart in one tap. It&apos;s free with no card, on the web and the iPhone app.
         </p>
         <div className="rounded-2xl p-5 mb-8 border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD }}>
-          <p className="font-bold" style={{ color: GREEN }}>Code OLLIE: 3 months of Family free</p>
+          <p className="font-bold" style={{ color: GREEN }}>Your first 14 days of Family are free, no card</p>
           <p className="text-sm text-gray-700 mt-1">
-            It&apos;s applied for you when you sign up from this page. Family adds a profile for each person, the week&apos;s dinner ideas texted to everyone to vote on, tastes learned per person, and the Kroger cart push. No card, and nothing bills when the 3 months end.
+            Every new family gets them when you sign up. Family adds a profile for each person, the week&apos;s dinner ideas texted to everyone to vote on, tastes learned per person, and the Kroger cart push. Nothing bills when the 14 days end; you go back to the free plan.
           </p>
         </div>
 
@@ -52,7 +53,7 @@ export default function OllieSwitchPage() {
               { t: 'Everyone’s needs, remembered', d: 'A profile for each person: allergies, dislikes, safe foods and age. Set it once; every week follows it.' },
               { t: 'Plans that fit your week', d: 'Pick how many dinners, a time limit for busy nights, a leftovers night, and a weekly mix (say, 2 chicken, 1 beef, 1 fish).' },
               { t: 'Snap the fridge', d: 'Take a photo of the fridge and get dinners you can make tonight with what’s in it.' },
-              { t: 'One list, one tap', d: 'Every plan becomes one grocery list sorted by aisle, and opens in your Instacart cart at any store on Instacart. Kroger cart on Family.' },
+              { t: 'One list, one tap', d: 'Every plan becomes one grocery list sorted by aisle, and goes to your Walmart cart or your Instacart cart at any store on Instacart. Kroger cart on Family.' },
               { t: 'Real recipes, real photos', d: '1,100+ family dinners with nutrition on every one, plus any recipe you add by link, text or photo.' },
               { t: 'Your data is yours', d: 'Ask any time and we send you a copy of your plans, favorites and lists.' },
             ].map((b) => (
@@ -68,21 +69,21 @@ export default function OllieSwitchPage() {
           <h2 className="text-2xl font-bold mb-4" style={{ color: GREEN }}>Honest differences</h2>
           <ul className="space-y-3 text-sm text-gray-600 leading-relaxed">
             <li><strong className="text-gray-800">Ollie was a chat-first app.</strong> DinnerDrop plans the week for you and you swap any dinner in one tap. On the Family plan, the family can text the DinnerDrop number to vote, add to the list, or suggest a dinner.</li>
-            <li><strong className="text-gray-800">Ollie had native iPhone and Android apps.</strong> DinnerDrop works in any phone browser and saves to your home screen. An iPhone app is on the way.</li>
+            <li><strong className="text-gray-800">Ollie had iPhone and Android apps.</strong> DinnerDrop has an iPhone app and works in any phone browser. Android is browser-only for now.</li>
             <li><strong className="text-gray-800">Ollie connected to Walmart and Amazon Fresh.</strong> DinnerDrop sends your list to Instacart (any store on it), a Walmart cart, or straight into a Kroger cart. Amazon Fresh isn&apos;t supported yet.</li>
-            <li><strong className="text-gray-800">Pricing.</strong> Planning and the Instacart cart are free, always. Family is $4.99 a month or $39 a year if you keep it after your free months.</li>
+            <li><strong className="text-gray-800">Pricing.</strong> Planning and the Instacart and Walmart carts are free, always. Family is free for your first 14 days with no card, then $4.99 a month or $39 a year if you keep it.</li>
           </ul>
         </section>
 
         <section className="mt-14 text-center">
           <Link href={SIGNUP} className="inline-block px-10 py-4 rounded-xl text-white font-bold text-lg shadow-sm hover:opacity-90" style={{ backgroundColor: GREEN }}>
-            Start free with code OLLIE &rarr;
+            Start free &rarr;
           </Link>
           <p className="text-sm text-gray-600 mt-3">Two minutes to set up. Your first week of dinners is ready right away.</p>
         </section>
 
         <p className="text-[11px] text-gray-500 mt-12">
-          Shutdown date from Ollie&apos;s announcement of October 30, 2026 (<a className="underline" href="https://techcrunch.com/2026/10/30/ollie-a-privacy-focused-ai-assistant-is-shutting-down/" rel="nofollow noopener">TechCrunch</a>). Code OLLIE: 90 days of Family for new or existing DinnerDrop accounts, one code per account, redeem by March 31, 2027.
+          Shutdown date from Ollie&apos;s announcement of October 30, 2026 (<a className="underline" href="https://techcrunch.com/2026/10/30/ollie-a-privacy-focused-ai-assistant-is-shutting-down/" rel="nofollow noopener">TechCrunch</a>).
           Ollie is a trademark of its owner. DinnerDrop is not affiliated with or endorsed by Ollie.
         </p>
       </main>

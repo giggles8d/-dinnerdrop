@@ -4,6 +4,7 @@ import { creditReferrals } from '@/lib/referrals'
 import { runOrderFollowups } from '@/lib/order-followup'
 import { runWeeklyReport } from '@/lib/weekly-report'
 import { sendCartOfferReminders } from '@/lib/cart-offer'
+import { runTrialEndingEmails } from '@/lib/trial-ending'
 
 export const maxDuration = 300
 
@@ -34,6 +35,9 @@ export async function GET(request: NextRequest) {
   // Reminders/auto-plans + texting day: their own function and 300 s, started now, awaited at the end.
   const remindersRun = fetch(`${base}/api/cron/reminders`, { headers, cache: 'no-store' }).then((r) => r.json()).catch((e) => ({ error: String(e) }))
 
+  // 3-days-before emails (Nov 22 2026 review, Sarah approved): free Family days ending + Stripe trial charge
+  // reminder. Small and time-sensitive, so it runs first.
+  try { out.trialEnding = await runTrialEndingEmails(admin, now) } catch (e) { out.trialEnding = { error: String(e) } }
   try { out.cartOfferReminder = await sendCartOfferReminders(admin, now) } catch (e) { out.cartOfferReminder = { error: String(e) } }
   try { out.orderFollowups = await runOrderFollowups(admin, now) } catch (e) { out.orderFollowups = { error: String(e) } }
   try { out.referrals = await creditReferrals(admin) } catch (e) { out.referrals = { error: String(e) } }

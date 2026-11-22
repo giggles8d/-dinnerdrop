@@ -7,22 +7,31 @@ interface ActivateDay3Props {
   firstName?: string
   unsubscribeUrl?: string
   shopUrl?: string
+  /** The no-sign-in list (/list), the main button for in-store families. */
+  listUrl?: string
+  inStore?: boolean
   dinners?: string[]
 }
 
-// Activation email #2 — sent 3 days after signup to families who haven't sent a list yet.
-// Angle (Nov 21 2026 review): swap a dinner, then send — these families haven't shopped yet, so the cart comes
-// first; family texting (Oct 31 angle) moves to a short P.S.
+// Activation email #2 — sent 3 days after signup to every family that hasn't sent a list yet (since Nov 22 2026,
+// also the ones who opened a recipe or the list: they are the ones closest to sending).
+// Nov 22 2026 review, Part 6 fix 1 (Sarah approved): the main button is the one-tap send, no sign-in. "Swap a dinner"
+// (a sign-in page) is a small link under it. The texting P.S. is gone: one job per email.
+const SWAP = 'https://www.dinnerdrop.app/dashboard?utm_source=email&utm_medium=activation&utm_campaign=day3-swap'
+
 export default function ActivateDay3({
   firstName = 'there',
   unsubscribeUrl = 'https://www.dinnerdrop.app/unsubscribe',
   shopUrl,
+  listUrl,
+  inStore = false,
   dinners = [],
 }: ActivateDay3Props) {
+  const mainHref = inStore ? (listUrl ?? shopUrl ?? SWAP) : (shopUrl ?? listUrl ?? SWAP)
   return (
     <Html>
       <Head />
-      <Preview>Then the whole list goes to Instacart or Walmart in one tap.</Preview>
+      <Preview>{inStore ? 'It’s sorted by aisle. Open it on your phone in the store, no sign-in.' : 'One tap puts it in your Instacart cart. You see the total and check out there.'}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
@@ -31,34 +40,35 @@ export default function ActivateDay3({
           <Section style={body}>
             <Text style={paragraph}>Hi {firstName},</Text>
             <Text style={paragraph}>
-              Your dinners for the week are still planned{dinners.length ? ':' : '.'}
+              Your dinners for this week are planned{dinners.length ? ':' : '.'}
             </Text>
             {dinners.length > 0 && (
               <Text style={{ ...paragraph, margin: '0 0 16px 8px' }}>
                 {dinners.slice(0, 7).map((d, i) => <React.Fragment key={i}>• {d}<br /></React.Fragment>)}
               </Text>
             )}
-            <Text style={paragraph}>
-              Not feeling one of them? Swap it in one tap for something your family will actually eat. Then the whole
-              grocery list goes to your Instacart or Walmart cart, every item matched.
-            </Text>
-            <Section style={ctaSection}>
-              <Button style={button} href="https://www.dinnerdrop.app/dashboard?utm_source=email&utm_medium=activation&utm_campaign=day3-swap">
-                Swap a dinner →
-              </Button>
-            </Section>
-            {shopUrl && (
-              <Text style={{ ...paragraph, textAlign: 'center' as const }}>
-                Happy with them? <Link href={shopUrl} style={{ color: '#1a5c38', fontWeight: 700 }}>Send my groceries to Instacart →</Link>
+            {inStore ? (
+              <Text style={paragraph}>
+                The grocery list is built and sorted by aisle. Tap below to open it on your phone in the store and check
+                items off as you go. No sign-in needed. Want a different dinner first? Swap it and the list updates.
+              </Text>
+            ) : (
+              <Text style={paragraph}>
+                The grocery list is built. Tap below and it goes into your Instacart cart. You see the total, remove
+                anything you have, and check out there. Want a different dinner first? Swap it and the list updates.
               </Text>
             )}
-            <Text style={paragraph}>
-              <em>P.S. Want the family to pick? Add their numbers and DinnerDrop texts everyone the dinner ideas to vote on,
-              and anyone can text &ldquo;ADD milk&rdquo; to the list. <Link href="https://www.dinnerdrop.app/dashboard?texting=1&utm_source=email&utm_medium=activation&utm_campaign=day3-texting" style={{ color: '#1a5c38' }}>Set it up in a minute</Link>.</em>
-            </Text>
+            <Section style={ctaSection}>
+              <Button style={button} href={mainHref}>
+                {inStore ? 'Open my grocery list' : 'Send my groceries to Instacart'}
+              </Button>
+              <Text style={{ ...paragraph, textAlign: 'center' as const, marginTop: '10px' }}>
+                <Link href={SWAP} style={{ color: '#1a5c38', textDecoration: 'underline' }}>Swap a dinner first</Link>
+              </Text>
+            </Section>
             <Hr style={hr} />
             <Text style={paragraph}>
-              Questions? Reply to this email — I read every one.
+              Stuck on anything? Reply here. It goes to my inbox and I answer myself.
             </Text>
             <Text style={paragraph}>— Sarah, founder of DinnerDrop</Text>
           </Section>

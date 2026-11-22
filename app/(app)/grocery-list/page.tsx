@@ -25,6 +25,7 @@ import LastCallCard from '@/components/LastCallCard'
 import type { StorePref } from '@/lib/compare'
 import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
+import InStoreSend from '@/components/InStoreSend'
 import WalmartButton from '@/components/WalmartButton'
 import WalmartPicks from '@/components/WalmartPicks'
 import InAppBrowserNotice from '@/components/InAppBrowserNotice'
@@ -541,12 +542,21 @@ export default function GroceryListPage() {
           <div className="mb-6 rounded-xl border border-accent/50 bg-accent/10 p-4 print:hidden">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <p className="text-sm text-foreground">
-                <span className="font-semibold">Sent to {pendingSend.store?.replace(/^Instacart · /, '') || 'the store'} {new Date(pendingSend.at).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}.</span>
-                {' '}Did the order go through? Your items stay on the list until you say so.
+                {pendingSend.store === 'In store' ? (
+                  <>
+                    <span className="font-semibold">List sent to your phone {new Date(pendingSend.at).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}.</span>
+                    {' '}Done shopping? Clear what you bought. Your items stay on the list until you say so.
+                  </>
+                ) : (
+                  <>
+                    <span className="font-semibold">Sent to {pendingSend.store?.replace(/^Instacart · /, '') || 'the store'} {new Date(pendingSend.at).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })}.</span>
+                    {' '}Did the order go through? Your items stay on the list until you say so.
+                  </>
+                )}
               </p>
               <div className="flex gap-2">
-                <button onClick={confirmOrdered} className="px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs font-semibold">Yes — clear them</button>
-                <button onClick={keepShopping} className="px-3 py-1.5 rounded-md border border-border bg-background text-xs font-semibold">Not yet, keep the list</button>
+                <button onClick={confirmOrdered} className="min-h-[44px] px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs font-semibold">{pendingSend.store === 'In store' ? 'Yes, clear them' : 'Yes — clear them'}</button>
+                <button onClick={keepShopping} className="min-h-[44px] px-3 py-1.5 rounded-md border border-border bg-background text-xs font-semibold">{pendingSend.store === 'In store' ? 'Not yet' : 'Not yet, keep the list'}</button>
               </div>
             </div>
           </div>
@@ -578,8 +588,20 @@ export default function GroceryListPage() {
           </div>
         )}
 
-        {/* Send first: the whole point of this page is getting the list into a cart. */}
-        {shoppableCount > 0 && !listSentHere && (
+        {/* Send first: the whole point of this page is getting the list into a cart, or onto the phone of a family
+            who shops in the store (Nov 22 2026 review, Sarah approved: a list sent for the store counts as a send). */}
+        {shoppableCount > 0 && !listSentHere && inStore && (
+          <div ref={heroRef} className="mb-4 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5 print:hidden">
+            {justPicked && <p className="text-xs font-semibold text-primary mb-1">✓ Your dinners are set. One step left.</p>}
+            <p className="font-heading font-bold text-2xl text-foreground">{shoppableCount} items{storeEst > 0 ? ` · about $${Math.round(storeEst)}` : ''}</p>
+            <p className="text-sm text-muted-foreground mt-1">Your list for the store, sorted by aisle.</p>
+            <div className="mt-4">
+              <InStoreSend estTotal={storeEst} weekStart={weekStart ?? undefined} variant="primary" />
+            </div>
+            <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-2 min-h-[44px] text-sm text-muted-foreground underline">or order online: Instacart · Walmart · Kroger ↓</button>
+          </div>
+        )}
+        {shoppableCount > 0 && !listSentHere && !inStore && (
           <div ref={heroRef} className="mb-4 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5 print:hidden">
             {justPicked && <p className="text-xs font-semibold text-primary mb-1">✓ Your dinners are set. One step left.</p>}
             <p className="font-heading font-bold text-2xl text-foreground">{shoppableCount} items{storeEst > 0 ? ` · about $${Math.round(storeEst)}` : ''}</p>
@@ -594,7 +616,8 @@ export default function GroceryListPage() {
                 <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={() => { setListSentHere(true); afterSent() }} familyStores={myStores.map((s) => s.name)} />
               )}
             </div>
-            <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-3 text-sm text-muted-foreground underline">or Walmart · Kroger ↓</button>
+            {!splitLists && <InStoreSend estTotal={storeEst} weekStart={weekStart ?? undefined} variant="secondary" />}
+            <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-1 min-h-[44px] text-sm text-muted-foreground underline">or Walmart · Kroger ↓</button>
           </div>
         )}
 
@@ -760,7 +783,9 @@ export default function GroceryListPage() {
                 <p className="text-sm font-semibold text-foreground truncate">{shoppableCount} items<span className="hidden sm:inline"> ready</span>{storeEst > 0 ? ` · ~$${Math.round(storeEst)}` : ''}</p>
                 <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="text-xs text-muted-foreground hover:text-foreground underline">More ways to send ↓</button>
               </div>
-              {splitLists && splitStores ? (
+              {inStore ? (
+                <InStoreSend estTotal={storeEst} weekStart={weekStart ?? undefined} variant="compact" />
+              ) : splitLists && splitStores ? (
                 <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="px-5 py-2.5 rounded-full bg-[#003D29] text-[#FAF1E5] font-semibold text-sm">Send to your cart ↓</button>
               ) : (
                 <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={afterSent} compact />
@@ -770,7 +795,7 @@ export default function GroceryListPage() {
         )}
 
         <div ref={sendRef} className="mt-6 print:hidden">
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">Send to your cart</p>
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase mb-3">{inStore ? 'Or order online' : 'Send to your cart'}</p>
           <div className="space-y-4">
             {splitLists && splitStores ? (
               <div className="space-y-3">
