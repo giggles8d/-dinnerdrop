@@ -12,6 +12,30 @@ const normalizeName = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g
 
 type Lite = Pick<Meal, 'name'> & { cuisine?: string | null; tags?: string[] | null }
 
+// Nov 23 2026: a $75 family got "Veggie Egg Fried Rice" on Monday and "Vegetable Fried Rice with Egg" on Saturday —
+// two library entries for the same dinner. Two names are the same dinner when their content words match once filler
+// words are dropped ("easy", "with", "style"…) and veggie/vegetable, egg/eggs… are read as one word; a shorter name that
+// sits whole inside a longer one ("Beef Stew" / "Slow Cooker Beef Stew") counts too.
+const FILLER = new Set(['a', 'an', 'the', 'and', 'with', 'of', 'in', 'on', 'for', 'easy', 'quick', 'simple', 'classic', 'homemade', 'best', 'style', 'favorite', 'weeknight', 'minute', 'skillet', 'pan', 'pot', 'one', 'sheet', 'instant', 'slow', 'cooker', 'air', 'fryer', 'stovetop', 'oven', 'crispy', 'creamy', 'cheesy', 'loaded', 'healthy', 'light'])
+const SYNONYM: Record<string, string> = { veggie: 'vegetable', veggies: 'vegetable', vegetables: 'vegetable', eggs: 'egg', noodles: 'noodle', tacos: 'taco', chops: 'chop', thighs: 'thigh', breasts: 'breast', wings: 'wing', meatballs: 'meatball', beans: 'bean', peppers: 'pepper', potatoes: 'potato', tomatoes: 'tomato', carrots: 'carrot', bowls: 'bowl', wraps: 'wrap', burgers: 'burger', bites: 'bite', patties: 'patty', sandwiches: 'sandwich', nuggets: 'nugget', tenders: 'tender', sliders: 'slider', shrimps: 'shrimp', fajitas: 'fajita', quesadillas: 'quesadilla', enchiladas: 'enchilada', calzones: 'calzone', nachos: 'nacho', tortillas: 'tortilla', pierogies: 'pierogi', dumplings: 'dumpling' }
+function dishWords(name: string): Set<string> {
+  const out = new Set<string>()
+  for (const w of normalizeName(name).split(' ')) {
+    if (!w || FILLER.has(w)) continue
+    out.add(SYNONYM[w] ?? w)
+  }
+  return out
+}
+
+/** The same dinner under two names ("Veggie Egg Fried Rice" / "Vegetable Fried Rice with Egg", "Beef Stew" / "Slow Cooker Beef Stew"). */
+export function sameDinner(a: string, b: string): boolean {
+  if (normalizeName(a) === normalizeName(b)) return true
+  const wa = dishWords(a), wb = dishWords(b)
+  const [small, big] = wa.size <= wb.size ? [wa, wb] : [wb, wa]
+  if (small.size < 2) return false
+  return Array.from(small).every((w) => big.has(w))
+}
+
 const TYPES: Array<[string, RegExp]> = [
   ['taco', /\b(tacos?|tostadas?|fajitas?|quesadillas?|burritos?|nachos|enchiladas?|chimichangas?|flautas?|taquitos?|tortas?|tamales?|carnitas|al pastor|gorditas?|sopes?|chalupas?|tinga)\b/],
   ['pasta', /\b(pasta|spaghetti|penne|rigatoni|ziti|lasagna|fettuccine|linguine|alfredo|mac|mac and cheese|macaroni|tortellini|ravioli|gnocchi|noodle bake|carbonara|orzo)\b/],
@@ -63,8 +87,7 @@ export function varietyLimits(count: number): VarietyLimits {
 
 /** Would adding `m` to `chosen` break the variety rules? */
 export function varietyOk(m: Lite, chosen: Lite[], lim: VarietyLimits): boolean {
-  const name = normalizeName(m.name)
-  if (chosen.some((c) => normalizeName(c.name) === name)) return false
+  if (chosen.some((c) => sameDinner(c.name, m.name))) return false
   const t = dishType(m)
   if (t) {
     const same = chosen.filter((c) => dishType(c) === t).length
@@ -86,7 +109,7 @@ export function pickVaried<T extends Lite>(pool: T[], n: number, seed: Lite[], l
   }
   for (const m of pool) {
     if (out.length >= n) break
-    if (!out.includes(m) && !seed.some((s) => normalizeName(s.name) === normalizeName(m.name))) out.push(m)
+    if (!out.includes(m) && ![...seed, ...out].some((s) => sameDinner(s.name, m.name))) out.push(m)
   }
   return out
 }

@@ -102,8 +102,19 @@ async function optedInPhones(admin: SupabaseClient, householdId: string | null):
     .map((m) => ({ name: m.name, phone: m.phone as string, role: m.role }))
 }
 
-async function textAdults(admin: SupabaseClient, p: ProfileRow, settings: Settings, body: string, intent: string, opts: { at?: string; sameDayOnly?: boolean } = {}) {
+/** The family's text vote for this week is still open: the vote result will set the week and text them. */
+async function voteOpenFor(admin: SupabaseClient, p: ProfileRow, weekStart: string): Promise<boolean> {
+  if (!p.household_id) return false
+  const { data } = await admin.from('vote_rounds').select('id').eq('household_id', p.household_id).eq('week_start', weekStart).eq('status', 'open').limit(1)
+  return !!data?.length
+}
+
+async function textAdults(admin: SupabaseClient, p: ProfileRow, settings: Settings, body: string, intent: string, opts: { at?: string; sameDayOnly?: boolean; weekStart?: string } = {}) {
   if (!smsConfigured() || !settings.texting.enabled || !p.household_id) return
+  // Nov 23 2026: a family whose vote was still open got "your dinner choices are ready, pick the ones you want" and
+  // "no votes came in, the week is set" in the same minute — the plan-day catch-up planned the week at 7:00 and the
+  // vote closed at 7:05. While the vote for that week is open, the vote result is the only plan text they get.
+  if (opts.weekStart && (intent === 'plan_ready' || intent === REORDER_ASK) && (await voteOpenFor(admin, p, opts.weekStart))) return
   const adults = await optedInPhones(admin, p.household_id)
   // Held until the family's texting hours, or the reminder's own time (lib/send-window).
   for (const a of adults) await sendFamilyText(admin, { householdId: p.household_id, to: a.phone, body, intent }, opts)
@@ -154,12 +165,12 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
           if (meals) {
             report.autoPlans++
             if (!wantsSms(settings.schedule.reminders.planReady) && settings.schedule.reminders.planReady !== 'off' && await reorderByText(admin, p, settings, family)) {
-              await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
+              await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK, { weekStart: voteTrip.key })
             } else if (wantsSms(settings.schedule.reminders.planReady) && family) {
               // Ordered before → the one-tap reorder text (lib/reorder): YES gets the Instacart cart link.
-              if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
-              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
-              else await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned:\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\n${planTextLinks(p, settings)}`, 'plan_ready')
+              if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready', { weekStart: voteTrip.key })
+              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK, { weekStart: voteTrip.key })
+              else await textAdults(admin, p, settings, `DinnerDrop: dinners for your next trip are planned:\n${meals.map((m) => `${m.day}: ${m.name}`).join('\n')}\n${planTextLinks(p, settings)}`, 'plan_ready', { weekStart: voteTrip.key })
             }
             // The Sunday Drop v3 is this family's week email now (one email, not two); the plain plan email only
             // when the Drop isn't live or already went out in the last 5 days (a second shopping trip that week).
@@ -212,11 +223,11 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
               await logFollowup(admin, p.id, 'plan_ready')
             }
             if (!wantsSms(settings.schedule.reminders.planReady) && settings.schedule.reminders.planReady !== 'off' && await reorderByText(admin, p, settings, family)) {
-              await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
+              await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK, { weekStart: target })
             } else if (wantsSms(settings.schedule.reminders.planReady) && family) {
-              if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready')
-              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK)
-              else await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned:\n${names.join('\n')}\n${planTextLinks(p, settings)}`, 'plan_ready')
+              if (settings.plan.pickMyOwn) await textAdults(admin, p, settings, `DinnerDrop: your dinner choices for the week are ready. Pick the ones you want: ${APP}/dashboard`, 'plan_ready', { weekStart: target })
+              else if (await hasOrdered(admin, p.id)) await textAdults(admin, p, settings, reorderText(meals, p.id), REORDER_ASK, { weekStart: target })
+              else await textAdults(admin, p, settings, `DinnerDrop: this week's dinners are planned:\n${names.join('\n')}\n${planTextLinks(p, settings)}`, 'plan_ready', { weekStart: target })
             }
           }
         }
