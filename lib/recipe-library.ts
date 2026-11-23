@@ -10,6 +10,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
+import { dislikeWords, dislikeHits } from '@/lib/dislikes'
 import { mergeDiets } from '@/lib/diets'
 import type { Meal } from '@/types'
 import { ensurePortions, scaleMeal } from '@/lib/portions'
@@ -245,7 +246,10 @@ export async function pickLibraryRecipes(
   type Lite = Pick<RecipeRow, 'id' | 'normalized_name' | 'name' | 'cuisine' | 'protein' | 'ingredients' | 'kept_count' | 'skipped_count' | 'image_url' | 'nutrition' | 'tags'>
   const quota = opts.quota && Object.values(opts.quota).some((n) => n > 0) ? opts.quota : null
   const excludeNorm = new Set(opts.excludeNames.map(normalizeName))
-  const words = opts.excludeWords.map((w) => w.toLowerCase().trim()).filter(Boolean)
+  // Setup words are read as the family means them (lib/dislikes): "Seafood" keeps out shrimp and tilapia, "Spicy food"
+  // keeps out blackened and cajun, "Pork" keeps out ham and bacon. Nov 22 2026: eight no-vote weeks had seafood for
+  // families whose setup said "Seafood", because this looked for the literal word.
+  const avoidWords = dislikeWords(opts.excludeWords)
   const cuisines = (opts.cuisines ?? []).map((c) => c.toLowerCase()).filter((c) => c && c !== 'mixed')
   const allergyList = (opts.allergies ?? []).filter((a) => a && a.trim())
   const pool = ((data ?? []) as Lite[]).filter((r) => {
@@ -255,7 +259,7 @@ export async function pickLibraryRecipes(
     if (opts.maxCalories && r.nutrition?.calories && r.nutrition.calories > opts.maxCalories) return false
     if (cuisines.length && r.cuisine && !cuisines.includes(r.cuisine.toLowerCase())) return false
     const hay = `${r.name} ${(r.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
-    if (words.some((w) => hay.includes(w))) return false
+    if (avoidWords.length && dislikeHits(avoidWords, hay).length) return false
     if (!allowSoyMains && SOY_MAINS.test(hay)) return false
     if (!allowLowCarbSwaps && LOW_CARB_SWAPS.test(hay)) return false
     if (allergyList.length && allergyConflicts(r.ingredients ?? [], [{ name: '', allergies: allergyList }], r.name).length) return false

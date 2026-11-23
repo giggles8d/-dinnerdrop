@@ -6,7 +6,7 @@ import { mayActFor } from '@/lib/route-auth'
 import { selectedStyles } from '@/lib/styles'
 import { cleanNutrition } from '@/lib/nutrition-shared'
 import { allergyConflicts } from '@/lib/allergens'
-import { dislikeWords, dislikeHits } from '@/lib/dislikes'
+import { dislikeWords, dislikeHits, avoidsAny } from '@/lib/dislikes'
 import { createClient } from '@supabase/supabase-js'
 import { mergeSettings, cookTimeFor, WEEKDAY_LABEL, tripsConfig, type Settings, type Weekday } from '@/lib/settings'
 import { isClassic, resolveTrips, shoppingTrip, tripByKey } from '@/lib/trips'
@@ -587,11 +587,13 @@ Use "day" values "1" through "${generateCount}" as unique identifiers.`
     try { planData = parseClaudeJSON<GeneratePlanResponse>(text) } catch { console.error('Failed to parse Claude response:', text.slice(-200)) }
     if (!planData) return Response.json({ error: 'AI returned an unexpected format. Please try again.' }, { status: 500 })
 
-    // Safety net on hard exclusions (allergies / never list): drop any option that slipped through.
-    const excl = [...settings.food.neverIngredients, ...settings.food.avoidProteins].map((w) => w.toLowerCase()) // allergies: checked by allergen below
+    // Safety net on hard exclusions (allergies / never list): drop any option that slipped through. The never list and
+    // proteins to avoid are read as the family means them (lib/dislikes: "Pork" covers ham and bacon, "Fish" covers
+    // tilapia) — Nov 22 2026: a mom whose setup says no pork got ham steaks and her partner, no beef, a cheesesteak.
+    const excl = [...settings.food.neverIngredients, ...settings.food.avoidProteins] // allergies: checked by allergen below
     let generated = (planData.meals ?? []).filter((m) => {
       const hay = `${m.name} ${(m.ingredients ?? []).map((i) => i.name).join(' ')}`.toLowerCase()
-      if (excl.some((w) => w && hay.includes(w))) return false
+      if (avoidsAny(excl, hay)) return false
       if (breaksHouseRules(m)) return false
       if (settings.food.maxCalories && m.nutrition?.calories && m.nutrition.calories > settings.food.maxCalories * 1.1) return false
       return !allergyConflicts(m.ingredients ?? [], allergyPeople, m.name).length

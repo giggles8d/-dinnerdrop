@@ -4,6 +4,8 @@
  * while look-alikes don't (coconut milk, eggplant, nutmeg, butternut squash, tamari, "gluten-free …", "dairy-free …").
  * Brands vary, so the UI always says to check labels.
  */
+import { dislikeWords, dislikeHits } from '@/lib/dislikes'
+
 export type AllergenKey = 'milk' | 'egg' | 'fish' | 'shellfish' | 'treenut' | 'peanut' | 'wheat' | 'soy' | 'sesame'
 
 export const ALLERGENS: Array<{ key: AllergenKey; label: string; short: string }> = [
@@ -113,9 +115,12 @@ export function allergyConflicts(ingredients: Array<{ name: string }>, people: A
       let items: string[] = []
       if (t.keys.length) items = found.filter((f) => t.keys.includes(f.key)).flatMap((f) => f.items)
       else if (t.word && t.word.length > 2) {
-        const w = t.word
-        items = (ingredients ?? []).map((i) => i.name).filter((n) => n.toLowerCase().includes(w))
-        if (!items.length && dinnerName.toLowerCase().includes(w)) items = [dinnerName]
+        // Not one of the 9: a plain word, read the way the family means it (lib/dislikes — "pork" covers ham and
+        // bacon, "beef" covers steak; Nov 22 2026: a no-pork mom got ham steaks, a no-beef partner a cheesesteak).
+        const words = dislikeWords([t.word])
+        const hit = (text: string) => (words.length ? dislikeHits(words, text).length > 0 : text.toLowerCase().includes(t.word as string))
+        items = (ingredients ?? []).map((i) => i.name).filter((n) => hit(n))
+        if (!items.length && hit(dinnerName)) items = [dinnerName]
       }
       if (!items.length) continue
       const key = raw.toLowerCase().trim()
