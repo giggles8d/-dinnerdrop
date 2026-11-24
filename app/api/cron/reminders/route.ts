@@ -6,6 +6,11 @@ import { runShopDayNudges } from '@/lib/shop-day'
 
 export const maxDuration = 300
 export const dynamic = 'force-dynamic'
+// Nov 23 2026: in a GET-only route handler, Next 14 keeps caching fetch() responses even with force-dynamic (the
+// request isn't proxied, so nothing marks the route dynamic and the Supabase reads get "auto cache" for a year).
+// Since this route split off on Nov 15, tonight's-dinner and shop-day texts read the plan that was current on
+// their first run (Sarah's house got "Meatloaf" from the Nov 9 week on Nov 23). force-no-store turns that off.
+export const fetchCache = 'force-no-store'
 
 /**
  * Reminders + automatic weekly plans, then the family texting day (vote day needs this morning's plans),

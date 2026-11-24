@@ -8,6 +8,8 @@ import { runWeekend } from '@/lib/weekend-campaign'
 import { runFamilyExtend } from '@/lib/family-extend'
 
 export const dynamic = 'force-dynamic'
+// GET-only route: force-dynamic alone leaves Next 14's fetch cache on (reads come back stale, see app/api/cron/reminders).
+export const fetchCache = 'force-no-store'
 export const maxDuration = 300
 
 /** Email campaigns (called by the daily cron). Each campaign only sends once it's approved in app_kv. */

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
+// GET-only route: force-dynamic alone leaves Next 14's fetch cache on (reads come back stale, see app/api/cron/reminders).
+export const fetchCache = 'force-no-store'
 
 /**
  * GET /api/go/takeout?a=doordash|ubereats|grubhub — the "order it" links in the takeout summary text.

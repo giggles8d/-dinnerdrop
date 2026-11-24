@@ -4,6 +4,8 @@ import { fillRecipeNutrition } from '@/lib/nutrition'
 import { retagLibraryDiets } from '@/lib/diets'
 
 export const dynamic = 'force-dynamic'
+// GET-only route: force-dynamic alone leaves Next 14's fetch cache on (reads come back stale, see app/api/cron/reminders).
+export const fetchCache = 'force-no-store'
 export const maxDuration = 300
 
 // Started by the daily cron (its own function and time budget): fills carbs, fat, fiber, sugar and sodium

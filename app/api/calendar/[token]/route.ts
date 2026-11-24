@@ -4,6 +4,8 @@ import { WEEKDAYS, WEEKDAY_LABEL } from '@/lib/settings'
 import type { Meal } from '@/types'
 
 export const dynamic = 'force-dynamic'
+// GET-only route: force-dynamic alone leaves Next 14's fetch cache on (reads come back stale, see app/api/cron/reminders).
+export const fetchCache = 'force-no-store'
 
 /**
  * Private iCal feed: /api/calendar/<token>.ics

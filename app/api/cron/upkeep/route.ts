@@ -7,6 +7,8 @@ import { reconcileGifts } from '@/lib/gifts'
 
 export const maxDuration = 300
 export const dynamic = 'force-dynamic'
+// GET-only route: force-dynamic alone leaves Next 14's fetch cache on (reads come back stale, see app/api/cron/reminders).
+export const fetchCache = 'force-no-store'
 
 /**
  * Daily upkeep, started by /api/cron/daily so it gets its own 300 s budget (Nov 8 2026: the one daily function ran

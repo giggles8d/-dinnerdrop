@@ -4,6 +4,8 @@ import { growLibrary } from '@/lib/library-grower'
 import { growCore } from '@/lib/core-grow'
 
 export const dynamic = 'force-dynamic'
+// GET-only route: force-dynamic alone leaves Next 14's fetch cache on (reads come back stale, see app/api/cron/reminders).
+export const fetchCache = 'force-no-store'
 export const maxDuration = 300
 
 // Nightly (vercel.json, 3am ET): add ~20 checked, original recipes to the library,

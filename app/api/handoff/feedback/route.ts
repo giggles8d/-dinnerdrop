@@ -4,6 +4,8 @@ import { FEEDBACK_ANSWERS, feedbackSigOk, type FeedbackAnswer } from '@/lib/orde
 import { receiptUrl } from '@/lib/followup'
 
 export const dynamic = 'force-dynamic'
+// GET-only route: force-dynamic alone leaves Next 14's fetch cache on (reads come back stale, see app/api/cron/reminders).
+export const fetchCache = 'force-no-store'
 
 /** One-tap answer from the day-after-order email. Records it, then shows the matching next step. */
 export async function GET(request: NextRequest) {
