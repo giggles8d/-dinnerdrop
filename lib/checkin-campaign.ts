@@ -8,7 +8,7 @@
  * (they're still in the day 1/3/7 activation emails).
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 
 export const CHECKIN = 'checkin-2026-11'
 const APP = 'https://www.dinnerdrop.app'
@@ -86,7 +86,7 @@ export async function runCheckin(admin: SupabaseClient, now = new Date(), opts: 
   const todayET = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
   if (todayET < v.sendOn) return { ...report, status: `waiting for ${v.sendOn}` }
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
 
   const recs = await checkinRecipients(admin, now)
   const { data: done } = await admin.from('campaign_sends').select('email').eq('campaign', CHECKIN)

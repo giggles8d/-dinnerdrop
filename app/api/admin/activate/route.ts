@@ -1,7 +1,7 @@
 import React from 'react'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { render } from '@react-email/render'
 import ActivateDay1 from '@/emails/ActivateDay1'
 import { buildFirstPlan } from '@/lib/first-plan'
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
   const userIds: string[] = Array.isArray(body.userIds) ? body.userIds.slice(0, 50) : []
   const sendEmail = body.sendEmail === true
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-  const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
+  const resend = process.env.RESEND_API_KEY ? new SafeResend(process.env.RESEND_API_KEY) : null
   const results: Array<Record<string, unknown>> = []
 
   for (const id of userIds) {

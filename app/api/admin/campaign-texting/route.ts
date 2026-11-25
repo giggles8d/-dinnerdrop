@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { runTexting, textingHtml, textingText, TEXTING_SUBJECT, TEXTING } from '@/lib/texting-campaign'
 import { textingUrl } from '@/lib/followup'
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     const link = textingUrl(me.id, `${TEXTING}-test`)
     const unsub = `https://www.dinnerdrop.app/unsubscribe?uid=${me.id}`
     const first = me.full_name ? String(me.full_name).split(' ')[0] : undefined
-    const { error } = await new Resend(process.env.RESEND_API_KEY).emails.send({ from: 'Sarah from DinnerDrop <sarah@dinnerdrop.app>', to: me.email, subject: `[Test] ${TEXTING_SUBJECT}`, html: textingHtml(first, link, unsub), text: textingText(first, link, unsub) })
+    const { error } = await new SafeResend(process.env.RESEND_API_KEY, 'admin').emails.send({ from: 'Sarah from DinnerDrop <sarah@dinnerdrop.app>', to: me.email, subject: `[Test] ${TEXTING_SUBJECT}`, html: textingHtml(first, link, unsub), text: textingText(first, link, unsub) })
     return NextResponse.json({ ok: !error, test: true, error: error?.message })
   }
   const report = await runTexting(admin, new Date(), { budgetMs: 270000 })

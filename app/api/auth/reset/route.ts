@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 
 /**
  * POST { email } — emails a password-reset link that works in ANY browser.
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   const origin = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') || 'https://www.dinnerdrop.app'
   const link = `${origin}/reset-password?token_hash=${encodeURIComponent(hash)}&type=recovery`
   if (!process.env.RESEND_API_KEY) return NextResponse.json({ error: 'Email is not configured.' }, { status: 500 })
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY, 'direct')
   const { error: sendErr } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',
     to: email,

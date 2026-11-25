@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { GIFT_PLAN_OPTIONS } from './plans'
+import EmailTypoHint, { useEmailTypo } from '@/components/EmailTypoHint'
 
 export default function GiftForm() {
   const [plan, setPlan] = useState<'3' | '6' | '12'>('3')
@@ -13,11 +14,16 @@ export default function GiftForm() {
   const maxDate = ymd(new Date(Date.now() + 365 * 86400000))
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
+  // One-tap email typo fix for both addresses (Nov 25 2026): a gift to @gmil.com never arrives.
+  const theirTypo = useEmailTypo(f.recipientEmail, (v) => setF((x) => ({ ...x, recipientEmail: v })), 'gift_to')
+  const yourTypo = useEmailTypo(f.buyerEmail, (v) => setF((x) => ({ ...x, buyerEmail: v })), 'gift_from')
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setF((x) => ({ ...x, [k]: e.target.value }))
 
   async function go(e: React.FormEvent) {
     e.preventDefault()
     setErr('')
+    const heldTheirs = theirTypo.holdSubmit()
+    if (yourTypo.holdSubmit() || heldTheirs) return
     if (f.recipientEmail && deliver === 'date' && !deliverOn) { setErr('Pick the day they should get it.'); return }
     setBusy(true)
     try {
@@ -47,9 +53,9 @@ export default function GiftForm() {
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         <label className="text-sm space-y-1"><span className="font-medium text-foreground">Their name</span><input className={input} value={f.recipientName} onChange={set('recipientName')} placeholder="The Garcia family" maxLength={80} required /></label>
-        <label className="text-sm space-y-1"><span className="font-medium text-foreground">Their email <span className="text-muted-foreground font-normal">(optional)</span></span><input className={input} type="email" value={f.recipientEmail} onChange={set('recipientEmail')} placeholder="maria@example.com" maxLength={200} /></label>
+        <label className="text-sm space-y-1"><span className="font-medium text-foreground">Their email <span className="text-muted-foreground font-normal">(optional)</span></span><input className={input} type="email" value={f.recipientEmail} onChange={set('recipientEmail')} placeholder="maria@example.com" maxLength={200} /><EmailTypoHint hint={theirTypo} /></label>
         <label className="text-sm space-y-1"><span className="font-medium text-foreground">Your name</span><input className={input} value={f.buyerName} onChange={set('buyerName')} placeholder="Aunt Jen" maxLength={80} required /></label>
-        <label className="text-sm space-y-1"><span className="font-medium text-foreground">Your email <span className="text-muted-foreground font-normal">(for your receipt and the code)</span></span><input className={input} type="email" value={f.buyerEmail} onChange={set('buyerEmail')} placeholder="you@example.com" maxLength={200} required /></label>
+        <label className="text-sm space-y-1"><span className="font-medium text-foreground">Your email <span className="text-muted-foreground font-normal">(for your receipt and the code)</span></span><input className={input} type="email" value={f.buyerEmail} onChange={set('buyerEmail')} placeholder="you@example.com" maxLength={200} required /><EmailTypoHint hint={yourTypo} /></label>
       </div>
       <label className="block text-sm space-y-1"><span className="font-medium text-foreground">A note <span className="text-muted-foreground font-normal">(optional)</span></span><textarea className={input} rows={3} value={f.message} onChange={set('message')} maxLength={300} placeholder="Congrats on the new baby — dinner's handled! ❤️" /></label>
       {f.recipientEmail && (

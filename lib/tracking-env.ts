@@ -11,6 +11,9 @@
  *   - A test account is a @dinnerdrop.app address or a profile whose settings has "isTest": true. Mark one with:
  *       update profiles set settings = settings || '{"isTest": true}' where id = '<user id>';
  *     (A settings key, not a new column, so no migration is needed.)
+ *   - New test accounts (Sarah, Nov 25 2026): sign up as sarah+test-<name>@dinnerdrop.app (Google Workspace delivers
+ *     + addresses to Sarah's inbox, so nothing bounces) and set settings.isTest = true right after. Never invent other
+ *     @dinnerdrop.app addresses: they aren't mailboxes. Test accounts get no automated email (lib/email-guard).
  *
  * Safe to import from client and server code: no Node APIs.
  */

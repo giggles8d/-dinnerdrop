@@ -1,5 +1,5 @@
 import React from 'react'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { cookies } from 'next/headers'
@@ -91,7 +91,7 @@ async function handleTest(request: NextRequest) {
   if (!auth.ok) return NextResponse.json({ error: 'Unauthorized', detail: auth.reason }, { status: 401 })
   if (!process.env.RESEND_API_KEY) return NextResponse.json({ error: 'RESEND_API_KEY not configured' }, { status: 500 })
 
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const from = process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>'
   const variants: Array<{ kind: 'founding' | 'returning' | 'waitlist'; props: Record<string, unknown> }> = [
     { kind: 'founding', props: { firstName: 'Sarah', isFoundingMember: true, ctaUrl: CTA_ACCOUNT } },
@@ -194,7 +194,7 @@ async function handle(request: NextRequest, dryRun: boolean) {
     })
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const from = process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>'
   const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
   const sent: string[] = []

@@ -1,6 +1,6 @@
 import { fromAddress } from '@/lib/notify'
 import React from 'react'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { NextRequest, NextResponse } from 'next/server'
 import { render } from '@react-email/render'
 import ActivateDay1 from '@/emails/ActivateDay1'
@@ -9,7 +9,7 @@ import ActivateDay3 from '@/emails/ActivateDay3'
 import ActivateDay7 from '@/emails/ActivateDay7'
 import { createClient } from '@supabase/supabase-js'
 
-function getResend() { return new Resend(process.env.RESEND_API_KEY) }
+function getResend() { return new SafeResend(process.env.RESEND_API_KEY) }
 
 type EmailNumber = 1 | 2 | 3
 

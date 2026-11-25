@@ -6,7 +6,7 @@
  * /api/admin/app-launch-send (one call sends what fits in its time budget; call again until left = 0).
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 
 export const APP_LAUNCH = 'app-store-launch-2026-11-14'
 export const APP_STORE_URL = 'https://apps.apple.com/app/id6824634810'
@@ -100,7 +100,7 @@ export async function runAppLaunch(admin: SupabaseClient, opts: { budgetMs?: num
   const started = Date.now()
   const budget = opts.budgetMs ?? 240000
   if (!process.env.RESEND_API_KEY) return { status: 'no RESEND_API_KEY', sent: 0, failed: 0, left: 0 }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const send = (r: Rec) => resend.emails.send({
     from: FROM, reply_to: 'sarah@dinnerdrop.app', to: r.email, subject: APP_LAUNCH_SUBJECT,
     html: appLaunchHtml(r), text: appLaunchText(r),

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 
 /**
  * POST { email, create? } — emails a 6-digit sign-in code.
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
   if (error || !code) return NextResponse.json({ error: error?.message || 'Could not create a code. Try again.' }, { status: 500 })
 
   if (!process.env.RESEND_API_KEY) return NextResponse.json({ error: 'Email is not configured.' }, { status: 500 })
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY, 'direct')
   const spaced = code.split('').join(' ')
   const { error: sendErr } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',

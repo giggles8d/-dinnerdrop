@@ -1,5 +1,5 @@
 import React from 'react'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { render } from '@react-email/render'
@@ -76,7 +76,7 @@ export async function GET(request: NextRequest) {
 
   if (url.searchParams.get('test') === '1') {
     if (!process.env.RESEND_API_KEY) return NextResponse.json({ error: 'RESEND_API_KEY not configured' }, { status: 500 })
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = new SafeResend(process.env.RESEND_API_KEY)
     const html = await render(React.createElement(FoundingRelaunch, { firstName: 'Sarah', stores }))
     const { data, error } = await resend.emails.send({ from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>', to: ADMIN_EMAIL, reply_to: ADMIN_EMAIL, subject: '[TEST] Same list, five stores — DinnerDrop now tells you which one to pick', html })
     if (error) return NextResponse.json({ error }, { status: 500 })
@@ -113,7 +113,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (!process.env.RESEND_API_KEY) return NextResponse.json({ error: 'RESEND_API_KEY not configured' }, { status: 500 })
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const from = process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>'
   const sent: string[] = []; const failed: Array<{ email: string; error: string }> = []
   const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))

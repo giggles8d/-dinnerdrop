@@ -10,7 +10,7 @@
  * /api/email/send-trial is left as it was for anything else that calls it.
  */
 import React from 'react'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { render } from '@react-email/render'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import ActivateDay1 from '@/emails/ActivateDay1'
@@ -79,7 +79,7 @@ export async function sendActivationEmail(admin: SupabaseClient, opts: { userId:
     inStore,
     dinners,
   }))
-  const send = () => new Resend(process.env.RESEND_API_KEY).emails.send({
+  const send = () => new SafeResend(process.env.RESEND_API_KEY).emails.send({
     from: fromAddress(),
     to,
     reply_to: REPLY_TO,

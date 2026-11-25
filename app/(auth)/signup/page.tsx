@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { isNativeApp, nativePlatform } from '@/lib/native'
 import EmailCodeSignIn from '@/components/EmailCodeSignIn'
 import { emailProblem } from '@/lib/email-check'
+import EmailTypoHint, { useEmailTypo } from '@/components/EmailTypoHint'
 import { rememberPickedStyle } from '@/lib/picked-style'
 
 function SignupForm() {
@@ -17,6 +18,8 @@ function SignupForm() {
   const [loading, setLoading] = useState(false)
   const [magicSent, setMagicSent] = useState(false)
   const [codeSent, setCodeSent] = useState(false)
+  // One-tap "Did you mean …@gmail.com?" (Nov 25 2026: @gmil.com, @g.com, @iicloud.com sign-ups bounced).
+  const typo = useEmailTypo(email, setEmail, 'signup')
   const searchParams = useSearchParams()
   const nextUrl = searchParams.get('redirect') || null
   // From a plan-style landing page (/dinners/…): pre-pick that style in the setup walkthrough.
@@ -46,7 +49,9 @@ function SignupForm() {
 
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault()
-    const problem = emailProblem(email)
+    if (typo.holdSubmit()) { setError(''); return }
+    // Problems we can't fix in one tap (no ending, odd ending) keep the Nov 8 text warning.
+    const problem = typo.suggestion ? null : emailProblem(email)
     if (problem && warnedFor !== email.trim().toLowerCase()) {
       setWarnedFor(email.trim().toLowerCase())
       setError(`${problem} Fix it above, or tap the button again if it's right.`)
@@ -187,9 +192,11 @@ function SignupForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoFocus
+              aria-describedby={typo.visible ? 'email-typo' : undefined}
               className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
               placeholder="you@example.com"
             />
+            <div id="email-typo"><EmailTypoHint hint={typo} /></div>
           </div>
 
           <button

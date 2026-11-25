@@ -15,7 +15,7 @@
  * now get the 3-days-before email instead (lib/trial-ending.ts) and an ask to add a card.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { textingUrl } from '@/lib/followup'
 
 export const FAMILY_EXTEND = 'family-extend'
@@ -138,7 +138,7 @@ export async function runFamilyExtend(admin: SupabaseClient, now = new Date(), o
   const report = { status: cfg.status ?? 'not approved', through: cfg.through ?? null, extended: 0, thanks: 0, try: 0, failed: 0 }
   if (cfg.status !== 'approved' || !cfg.through) return report
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const recs = await extendCandidates(admin, now, cfg.through)
   const { data: done } = await admin.from('campaign_sends').select('user_id, variant').eq('campaign', FAMILY_EXTEND).in('user_id', recs.map((r) => r.id).concat(['00000000-0000-0000-0000-000000000000']))
   const seen = new Set((done ?? []).map((d) => `${d.user_id}:${String(d.variant).split('|')[1]}`))
