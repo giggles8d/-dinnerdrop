@@ -1,5 +1,6 @@
 'use client'
 
+import { BF_SALE, blackFridayOpen } from '@/lib/bf-sale'
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -41,7 +42,7 @@ function SubscribeContent() {
       return
     }
     if (coupon) setCouponCode(coupon)
-    if (searchParams.get('plan') === 'yearly') setInterval('yearly')
+    if (searchParams.get('plan') === 'yearly' || (blackFridayOpen() && searchParams.get('plan') !== 'monthly')) setInterval('yearly')
   }, [searchParams])
 
   // /start → /signup → /subscribe?auto=1: the user already chose "Try Family free",
@@ -81,7 +82,8 @@ function SubscribeContent() {
   const plan = trialPlan(familyUntil)
   const firstCharge = plan.firstCharge.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
   const chargeNow = plan.trialEnd === null
-  const price = interval === 'monthly' ? '$4.99' : '$39'
+  const bf = blackFridayOpen()
+  const price = interval === 'monthly' ? '$4.99' : bf ? BF_SALE.yearlyPrice : '$39'
 
   return (
     <div className="min-h-screen bg-background">
@@ -175,7 +177,7 @@ function SubscribeContent() {
                   onClick={() => setInterval('yearly')}
                   className={`flex-1 py-2 rounded-lg transition-colors ${interval === 'yearly' ? 'bg-white text-primary shadow-sm' : 'text-muted-foreground'}`}
                 >
-                  Yearly <span className="text-xs font-bold text-accent-foreground bg-accent px-1.5 py-0.5 rounded ml-1">save 35%</span>
+                  Yearly <span className="text-xs font-bold text-accent-foreground bg-accent px-1.5 py-0.5 rounded ml-1">{blackFridayOpen() ? '50% off' : 'save 35%'}</span>
                 </button>
               </div>
 
@@ -187,10 +189,22 @@ function SubscribeContent() {
                       <span className="text-muted-foreground text-lg">/month</span>
                     </>
                   ) : (
+                    bf ? (
+                      <span className="flex flex-col">
+                        <span className="flex items-baseline gap-2">
+                          <span className="text-5xl font-heading font-bold text-foreground">{BF_SALE.yearlyPrice}</span>
+                          <span className="text-muted-foreground text-lg">first year</span>
+                          <span className="text-muted-foreground line-through">$39</span>
+                        </span>
+                        <span className="text-xs font-semibold text-accent-foreground bg-accent rounded px-2 py-1 mt-2 self-start">Black Friday: 50% off until {BF_SALE.deadlineLabel}</span>
+                        <span className="text-xs text-muted-foreground mt-1">Then $39/year. Cancel anytime.</span>
+                      </span>
+                    ) : (
                     <>
                       <span className="text-5xl font-heading font-bold text-foreground">$39</span>
                       <span className="text-muted-foreground text-lg">/year</span>
                     </>
+                    )
                   )}
                 </div>
                 <div className="inline-block bg-secondary text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 mt-2">

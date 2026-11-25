@@ -57,3 +57,29 @@ export async function getFamilyPriceId(client: Stripe, interval: FamilyInterval)
   })
   return price.id
 }
+
+/**
+ * Black Friday 2026 coupon (50% off the first yearly charge), created once in whichever Stripe account the site's key
+ * belongs to (the live account isn't reachable from Cowork's Stripe connector). Stops working after the sale deadline.
+ */
+export async function getBlackFridayCouponId(client: Stripe): Promise<string> {
+  const { BF_SALE } = await import('./bf-sale')
+  try {
+    const c = await client.coupons.retrieve(BF_SALE.couponId)
+    if (c && c.valid) return c.id
+    if (c) throw new Error('Black Friday coupon is no longer valid')
+  } catch { /* not created yet */ }
+  const c = await client.coupons.create({
+    id: BF_SALE.couponId,
+    name: 'Black Friday: 50% off your first year',
+    percent_off: BF_SALE.percentOff,
+    // 'repeating' for 12 months, not 'once': with a free trial the first invoice is $0, and the discount must still
+    // cover the first paid yearly charge (day 15). The renewal a year later is past the 12 months, so it's full price.
+    duration: 'repeating',
+    duration_in_months: 12,
+    redeem_by: Math.floor(new Date(BF_SALE.endsAt).getTime() / 1000) + 3600,
+    metadata: { sale: BF_SALE.id },
+  })
+  return c.id
+}
+

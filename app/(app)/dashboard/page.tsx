@@ -1,5 +1,6 @@
 'use client'
 
+import BlackFridayBanner from '@/components/BlackFridayBanner'
 import WeekHeadcount from '@/components/WeekHeadcount'
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -674,6 +675,7 @@ function DashboardContent() {
         {hasGenerated && meals.length > 0 && !loading && <TextingNudge forceOpen={searchParams.get('texting') === '1'} />}
         {hasGenerated && meals.length > 0 && !loading && <DinnerReminders meals={meals} />}
         <EngagementTracker page="dashboard" ready={hasGenerated && meals.length > 0 && !loading} />
+        <BlackFridayBanner page="dashboard" />
 
         {/* Past due payment banner */}
         {subscriptionStatus === 'past_due' && (
