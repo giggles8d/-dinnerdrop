@@ -190,7 +190,6 @@ function SignupForm() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              onBlur={typo.onBlur}
               required
               autoFocus
               aria-describedby={typo.visible ? 'email-typo' : undefined}

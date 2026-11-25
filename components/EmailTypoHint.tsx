@@ -4,7 +4,8 @@
  * "Did you mean name@gmail.com? [Use this]" under an email field. (Sarah, Nov 25 2026; lib/email-typo)
  *
  * Never blocks: the first submit with a likely typo pauses once so the suggestion can be seen; the next submit goes
- * through with whatever they typed. Accepting is tracked as cta_tap meta.id 'email_typo_fix' (domains only).
+ * through with whatever they typed. It appears only on submit, never on leaving the field: a hint that pops in as
+ * the field loses focus pushes the button down mid-tap, so the tap misses (or lands on "Use this"). Accepting is tracked as cta_tap meta.id 'email_typo_fix' (domains only).
  */
 import { useRef, useState } from 'react'
 import { emailDomain, suggestEmail } from '@/lib/email-typo'
@@ -21,7 +22,6 @@ export function useEmailTypo(email: string, setEmail: (v: string) => void, page:
   return {
     suggestion,
     visible: !!suggestion && shown,
-    onBlur: () => { if (suggestion) setShown(true) },
     /** Call first thing in submit. True = stop this one submit so they can see the suggestion (once per address). */
     holdSubmit: (): boolean => {
       if (!suggestion || paused.current === typed) return false
