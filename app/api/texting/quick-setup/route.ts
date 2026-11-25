@@ -40,10 +40,18 @@ export async function GET() {
   // Nov 7 2026: also shown to planners who gave us their own number but no family yet (most of them) —
   // until then the card only showed when nobody had a number, so they never got asked.
   const show = (plans ?? 0) > 0 && (phones ?? 0) === 0
+  // The grocery list's one-time "Add your family by text" card after the first send (Nov 25 2026, review #6).
+  const [{ data: firstSend }, { count: cardSeen }] = await Promise.all([
+    admin.from('grocery_handoffs').select('created_at').eq('user_id', profile.id).order('created_at', { ascending: true }).limit(1).maybeSingle(),
+    admin.from('activation_events').select('id', { count: 'exact', head: true }).eq('user_id', profile.id).eq('step', 'list_cta_seen').eq('meta->>id', 'family_text_card'),
+  ])
   return NextResponse.json({
     show, family: isFamilyProfile(profile), hasOwnerPhone: !!settings.texting.ownerPhone || (ownRow ?? 0) > 0,
     // CartTextOffer (Nov 15 2026): ask for a number right after the first cart.
     sentCart: (carts ?? 0) > 0,
+    noFamilyPhones: (phones ?? 0) === 0,
+    firstSentAt: (firstSend?.created_at as string | undefined) ?? null,
+    familyCardSeen: (cardSeen ?? 0) > 0,
     // Nov 9 2026: family members join themselves from a shared link instead of the planner typing their numbers.
     joinUrl: profile.referral_code ? `${APP_URL}/go/family/${profile.referral_code}` : null,
   })

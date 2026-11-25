@@ -11,6 +11,11 @@
  * (never to unsubscribed addresses). At most one per family per week, logged as activation_events
  * 'followup_sent' { kind: 'shop_day' } so a rerun the same day sends nothing.
  *
+ * Default shop day (Sarah, Nov 25 2026, week-two review #5): a family that never answered the shop question but has
+ * sent a list at least once gets a shop day = the weekday of their first send, in their time zone. Never-sent families
+ * stay out (and the Nov 22 quiet rule, lib/engagement, still applies to everyone). "It varies" is an answer: those
+ * families stay out too. These nudges log meta.defaultDay = true, and the email says why that day and how to change it.
+ *
  * Call runShopDayNudges(admin, now) once a day from the daily cron, after runDailyReminders (so a Saturday plan
  * day's new week and its plan-ready email exist first).
  */
@@ -40,9 +45,10 @@ interface Row {
   is_beta_member: boolean | null
   family_until: string | null
   email_unsubscribed: boolean | null
+  created_at?: string | null
 }
 
-export interface ShopDayReport { checked: number; due: number; texted: number; emailed: number; skipped: Record<string, number>; errors: string[] }
+export interface ShopDayReport { checked: number; due: number; texted: number; emailed: number; defaultDay: number; skipped: Record<string, number>; errors: string[] }
 
 /** The family answered "how do you shop" and gave a day (not "it varies"). */
 export function shopDayOf(s: Settings): Weekday | null {
@@ -51,13 +57,25 @@ export function shopDayOf(s: Settings): Weekday | null {
   return s.schedule.reminders.shopBy.day
 }
 
+/**
+ * No answered shop day, but they've sent a list: the weekday of their first send, where they live. Null when they
+ * answered the shop question (a day, or "it varies") or never sent.
+ */
+export function defaultShopDay(s: Settings, firstSendAt: string | null | undefined, timezone: string | null | undefined): Weekday | null {
+  const asked = (s as unknown as { shopping?: { askedAt?: string } }).shopping
+  if (asked?.askedAt || !firstSendAt) return null
+  const t = new Date(firstSendAt)
+  if (Number.isNaN(t.getTime())) return null
+  return localNow(timezone || 'America/New_York', t).weekday as Weekday
+}
+
 function addDays(date: string, n: number): string {
   const [y, m, d] = date.split('-').map(Number)
   return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10)
 }
 
 export async function runShopDayNudges(admin: SupabaseClient, now: Date = new Date(), opts: { budgetMs?: number; dryRun?: boolean } = {}): Promise<ShopDayReport> {
-  const report: ShopDayReport = { checked: 0, due: 0, texted: 0, emailed: 0, skipped: {}, errors: [] }
+  const report: ShopDayReport = { checked: 0, due: 0, texted: 0, emailed: 0, defaultDay: 0, skipped: {}, errors: [] }
   const skip = (why: string) => { report.skipped[why] = (report.skipped[why] ?? 0) + 1 }
   const started = Date.now()
   const budget = opts.budgetMs ?? 120_000
@@ -74,15 +92,33 @@ export async function runShopDayNudges(admin: SupabaseClient, now: Date = new Da
     .limit(5000)
   if (error) { report.errors.push(error.message); return report }
 
-  for (const p of (rows ?? []) as Row[]) {
+  // Plus families who never answered but have sent at least once (default shop day, review #5).
+  const firstSend = new Map<string, string>()
+  {
+    const { data: hs } = await admin.from('grocery_handoffs').select('user_id, created_at').order('created_at', { ascending: true }).limit(20000)
+    for (const h of (hs ?? []) as Array<{ user_id: string; created_at: string }>) if (!firstSend.has(h.user_id)) firstSend.set(h.user_id, h.created_at)
+  }
+  const answered = new Set(((rows ?? []) as Row[]).map((r) => r.id))
+  const extraIds = Array.from(firstSend.keys()).filter((id) => !answered.has(id))
+  const all = [...((rows ?? []) as Row[])]
+  for (let i = 0; i < extraIds.length; i += 200) {
+    const { data } = await admin.from('profiles')
+      .select('id, email, full_name, timezone, settings, household_id, subscription_status, is_beta_member, family_until, email_unsubscribed, created_at')
+      .in('id', extraIds.slice(i, i + 200))
+    all.push(...((data ?? []) as Row[]))
+  }
+
+  for (const p of all) {
     if (Date.now() - started > budget) { report.errors.push('time budget reached; the rest wait for tomorrow'); break }
     report.checked++
     try {
       if (p.email && INTERNAL.test(p.email)) { skip('internal'); continue }
       if (sarahHousehold && p.household_id === sarahHousehold) { skip('internal'); continue }
       const settings = mergeSettings(p.settings)
-      const day = shopDayOf(settings)
+      const answeredDay = shopDayOf(settings)
+      const day = answeredDay ?? defaultShopDay(settings, firstSend.get(p.id), p.timezone)
       if (!day) { skip('no_day'); continue }
+      const isDefaultDay = !answeredDay
       const local = localNow(p.timezone || 'America/New_York', now)
       if (local.weekday !== day) continue
       // A family that turned on the shop reminder in Settings already gets one that day, at their own time (lib/reminders).
@@ -105,6 +141,7 @@ export async function runShopDayNudges(admin: SupabaseClient, now: Date = new Da
       const list = await loadSharedList(admin, p.id)
       if (!list || !list.lines.length) { skip('nothing_to_buy'); continue }
       report.due++
+      if (isDefaultDay) report.defaultDay++
 
       const inStore = shopsInStore(settings)
       const n = list.dinners.length
@@ -151,13 +188,15 @@ export async function runShopDayNudges(admin: SupabaseClient, now: Date = new Da
           if (recentPlan || dropRow?.length) { skip('first_send_one_email'); continue }
         }
         const today = WEEKDAY_LABEL[day]
+        // Default shop day: say why this day, and where to change it (review #5).
+        const why = isDefaultDay ? `<p style="font-size:13px;color:#5b6660">We picked ${today} because that's the day you sent your first list. <a href="https://www.dinnerdrop.app/settings" style="color:#5b6660">Change your shop day</a>.</p>` : ''
         const subject = inStore ? `Your grocery list for ${today}` : `${today} is shop day: your list for ${list.dinners[0] ?? 'the week'}${n > 1 ? ` and ${n - 1} more` : ''}`
         const html = inStore
           ? emailShell(`Your list for the store${first ? `, ${first}` : ''}`,
-            `<p>It's ${today}, your shop day. Here's everything for your ${dinners}. Open it on your phone in the store and check items off as you go. No sign-in needed.</p>${listHtml(list.lines)}`,
+            `<p>It's ${today}, your shop day. Here's everything for your ${dinners}. Open it on your phone in the store and check items off as you go. No sign-in needed.</p>${listHtml(list.lines)}${why}`,
             { label: 'Open my list', href: list_ })
           : emailShell(`It's shop day${first ? `, ${first}` : ''}`,
-            `<p>Your ${dinners} are planned: ${list.dinners.slice(0, 7).join(', ')}.</p><p>Tap below and every ingredient goes into your Instacart cart. You see the total and check out there.</p><p>Shopping in person instead? <a href="${list_}" style="color:#1a5c38;font-weight:600">Open your list on your phone</a>, no sign-in needed.</p>`,
+            `<p>Your ${dinners} are planned: ${list.dinners.slice(0, 7).join(', ')}.</p><p>Tap below and every ingredient goes into your Instacart cart. You see the total and check out there.</p><p>Shopping in person instead? <a href="${list_}" style="color:#1a5c38;font-weight:600">Open your list on your phone</a>, no sign-in needed.</p>${why}`,
             { label: 'Send my groceries to Instacart', href: cart })
         if (opts.dryRun) channel = 'email'
         else {
@@ -170,7 +209,7 @@ export async function runShopDayNudges(admin: SupabaseClient, now: Date = new Da
       if (!channel) continue
       if (channel === 'sms') report.texted++
       else report.emailed++
-      if (!opts.dryRun) await admin.from('activation_events').insert({ user_id: p.id, step: 'followup_sent', meta: { kind: KIND, channel, mode: inStore ? 'instore' : 'online' } })
+      if (!opts.dryRun) await admin.from('activation_events').insert({ user_id: p.id, step: 'followup_sent', meta: { kind: KIND, channel, mode: inStore ? 'instore' : 'online', ...(isDefaultDay ? { defaultDay: true } : {}) } })
       if (channel === 'email') await new Promise((r) => setTimeout(r, 150))   // Resend: 10 requests a second, shared
     } catch (e) {
       report.errors.push(`${p.id}: ${e instanceof Error ? e.message : String(e)}`)

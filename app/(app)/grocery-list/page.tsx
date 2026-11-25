@@ -26,6 +26,7 @@ import type { StorePref } from '@/lib/compare'
 import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
 import InStoreSend from '@/components/InStoreSend'
+import FamilyTextCard from '@/components/FamilyTextCard'
 import WalmartButton from '@/components/WalmartButton'
 import WalmartPicks from '@/components/WalmartPicks'
 import InAppBrowserNotice from '@/components/InAppBrowserNotice'
@@ -54,6 +55,8 @@ function weekdayOfKey(date: string): (typeof WEEKDAY_KEYS)[number] {
 export default function GroceryListPage() {
   const [justPicked, setJustPicked] = useState(false)
   const [listSentHere, setListSentHere] = useState(false)
+  // Bumped after a send so the one-time family-text card can appear right away (review #6, Nov 25 2026).
+  const [sendBump, setSendBump] = useState(0)
   useEffect(() => { try { setJustPicked(new URLSearchParams(window.location.search).get('picked') === '1') } catch { /* ignore */ } }, [])
   const supabase = useMemo(() => createClient(), [])
   const [userId, setUserId] = useState<string | null>(null)
@@ -430,7 +433,7 @@ export default function GroceryListPage() {
     await supabase.from('list_items').update({ ordered_at: null }).in('id', ids)
     if (userId && weekStart) await loadItems(userId, weekStart)
   }
-  const afterSent = () => { if (userId && weekStart) setTimeout(() => { loadItems(userId, weekStart); load() }, 1500) }
+  const afterSent = () => { if (userId && weekStart) setTimeout(() => { loadItems(userId, weekStart); load(); setSendBump((n) => n + 1) }, 1500) }
   /** The order went through: the lines that were on the list when it was sent come off; later adds stay. */
   async function confirmOrdered() {
     if (!pendingSend || !userId) return
@@ -672,6 +675,8 @@ export default function GroceryListPage() {
 
         {/* Send first: the whole point of this page is getting the list into a cart, or onto the phone of a family
             who shops in the store (Nov 22 2026 review, Sarah approved: a list sent for the store counts as a send). */}
+        <FamilyTextCard refreshKey={sendBump} />
+
         {shoppableCount > 0 && !listSentHere && inStore && (
           <div ref={heroRef} className="mb-4 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5 print:hidden">
             {justPicked && <p className="text-xs font-semibold text-primary mb-1">✓ Your dinners are set. One step left.</p>}
