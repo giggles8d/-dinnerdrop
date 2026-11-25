@@ -56,6 +56,7 @@ const UNIT_ALIAS: Record<string, string> = {
   cups: 'cup', cloves: 'clove', cans: 'can', jars: 'jar', packages: 'package', bunches: 'bunch', heads: 'head',
   slices: 'slice', sprigs: 'sprig', stalks: 'stalk', sticks: 'stick', bags: 'bag', boxes: 'box', bottles: 'bottle',
   each: 'count', whole: 'count', counts: 'count', pieces: 'piece', large: 'count', medium: 'count', small: 'count',
+  pints: 'pint', quarts: 'quart', pinches: 'pinch', dashes: 'dash',
 }
 const TSP: Record<string, number> = { tsp: 1, tbsp: 3, cup: 48 }
 
@@ -76,6 +77,48 @@ function isItemUnit(unit: string, name: string): boolean {
   if (!u || u === 'count' || STORE_UNITS.has(u) || u in TSP || u in OZ) return false
   return ITEM_NOUNS.has(u) || name.toLowerCase().split(/[^a-z]+/).some((w) => w && singular(w) === u)
 }
+/*
+ * Pantry trace amounts (Sarah, Nov 25 2026): "1 pinch salt", pepper "to taste", oil "for drizzling", water, a dash of
+ * a common spice. They were their own lines and each sent another jar to the store. Now they come off the cart: a
+ * line flagged `pantry` starts as "have it" under "You probably have" (still tappable). If the week also needs a real
+ * amount of the same thing ("1 tsp salt"), the trace folds into that line. Other "optional"/"garnish" items (fresh
+ * parsley, sour cream) stay normal lines: those are things people buy.
+ */
+const TRACE_AMOUNT = /\b(pinch(es)?|dash(es)?|to taste|as needed|for garnish|garnish|optional|drizzle|drizzling|splash|for serving|for frying|a little)\b/i
+const PANTRY_BASIC = new RegExp('^(?:' + [
+  '(?:kosher |sea |table |fine |coarse )?salt(?: and (?:black )?pepper)?',
+  '(?:freshly ground |fresh ground |ground |cracked )?(?:black |white )?pepper(?:corns)?',
+  '(?:extra virgin |extra-virgin )?(?:olive|vegetable|canola|avocado|cooking|neutral|sesame|sunflower)? ?oil',
+  'cooking spray|nonstick spray|non-stick spray',
+  '(?:warm |cold |hot |ice |boiling |lukewarm )?water',
+  // Spices: always from the jar.
+  '(?:ground |smoked |sweet |hot )?(?:cumin|paprika|chili powder|garlic powder|onion powder|cinnamon|nutmeg|cayenne(?: pepper)?|red pepper flakes|crushed red pepper(?: flakes)?|italian seasoning|parsley flakes|bay leaf|bay leaves|turmeric|allspice|ground cloves|mustard powder|garlic salt|seasoning salt|seasoned salt|lemon pepper(?: seasoning)?)',
+  // Herbs only when dried or ground: "basil, for garnish" or "fresh thyme" is bought fresh.
+  '(?:dried|ground) (?:oregano|thyme|basil|rosemary|parsley|dill|sage|ginger|marjoram)',
+].join('|') + ')$', 'i')
+/** "Salt and pepper, to taste (optional)" → "salt and pepper". */
+const basicName = (name: string) => name.toLowerCase().replace(/\([^)]*\)/g, ' ').split(',')[0]
+  .replace(TRACE_AMOUNT, ' ').replace(/\b(for|of|and more|plus more|or more)\s*$/, '').replace(/\s+/g, ' ').trim()
+function isPantryTrace(name: string, quantity: unknown, unit: string): boolean {
+  const base = basicName(name)
+  if (!PANTRY_BASIC.test(base)) return false
+  if (/^(?:warm |cold |hot |ice |boiling |lukewarm )?water$/.test(base)) return true   // water never goes to a store
+  const amount = `${String(quantity ?? '')} ${unit} ${name}`
+  return TRACE_AMOUNT.test(amount) || parseQuantity(quantity as string) == null
+}
+
+/*
+ * The same thing in cups and by the piece (Sarah, Nov 25 2026): "3/4 cup onion" next to "3 count onion", basil by the
+ * cup and by the bunch, cherry tomatoes by the cup and by the pint. A small table converts the cups to the buying unit
+ * so they become one line. `lone` also converts a cups-only line (you buy onions, not cups of onion); basil doesn't,
+ * since a teaspoon of basil is usually dried. Anything not in the table keeps two lines.
+ */
+const TO_BUYING_UNIT: Array<{ test: (key: string) => boolean; unit: string; cupsPer: number; lone: boolean }> = [
+  { test: (k) => /(^| )onions?$/.test(k) && !/green|spring|powder|flake|soup/.test(k), unit: 'count', cupsPer: 1, lone: true },  // 1 medium onion ≈ 1 cup chopped
+  { test: (k) => /(^| )basil$/.test(k) && !/dried/.test(k), unit: 'bunch', cupsPer: 1, lone: false },                          // 1 bunch ≈ 1 cup leaves
+  { test: (k) => /(cherry|grape) tomato(es)?$/.test(k), unit: 'pint', cupsPer: 2, lone: true },                                 // 1 pint ≈ 2 cups
+]
+
 const EACH = /^([a-z]+)\s*\(\s*([\d./ ]+)\s*(oz|ounces?|lbs?|pounds?)\s+each\s*\)$/i
 const OZ: Record<string, number> = { oz: 1, lb: 16 }
 
@@ -119,6 +162,7 @@ export function prebuiltList(meals: MealLike[], prepped: boolean): Record<string
 export function buildGroceryList(meals: MealLike[], opts: { prepped?: boolean } = {}): Record<GroceryCategory, GroceryItem[]> {
   type Line = { name: string; fam: string; unit: string; base: number | null; raw: string; category: GroceryCategory; searchTerm: string }
   const lines: Line[] = []
+  const traces: Array<{ name: string; quantity: string; unit: string; searchTerm: string }> = []
   for (const ing of weekIngredients(meals, !!opts.prepped)) {
     let name = String(ing?.name ?? '').trim()
     if (!name) continue
@@ -137,6 +181,12 @@ export function buildGroceryList(meals: MealLike[], opts: { prepped?: boolean } 
       name = name.replace(/\s*\bcloves?$/i, '').trim()
       unit = 'clove'
     }
+    if (isPantryTrace(name, ing.quantity, unit)) {
+      if (!traces.some((t) => sameItem(t.name, name))) {
+        traces.push({ name, quantity: String(ing.quantity ?? '').trim(), unit: unitOf(ing.unit), searchTerm: String(ing.searchTerm ?? '').trim() || basicName(name) })
+      }
+      continue
+    }
     const fam = family(unit)
     const base = n == null ? null : fam === 'vol' ? n * TSP[unit] : fam === 'wt' ? n * OZ[unit] : n
     const same = lines.find((l) => l.fam === fam && sameItem(l.name, name))
@@ -151,8 +201,28 @@ export function buildGroceryList(meals: MealLike[], opts: { prepped?: boolean } 
       searchTerm: String(ing.searchTerm ?? '').trim() || name,
     })
   }
+  // Cups of onion / basil / cherry tomatoes → the buying unit, merged into that line when there is one.
+  const dropped = new Set<Line>()
+  for (const v of lines) {
+    if (v.fam !== 'vol' || v.base == null) continue
+    const rule = TO_BUYING_UNIT.find((r) => r.test(ingredientKey(v.name)))
+    if (!rule) continue
+    const pieces = v.base / TSP.cup / rule.cupsPer
+    const target = lines.find((l) => l !== v && !dropped.has(l) && l.unit === rule.unit && l.base != null && sameItem(l.name, v.name))
+    if (target) {
+      // The table is approximate (a medium onion gives a bit over a cup), so a quarter or less on top of whole ones is
+      // absorbed: 4 onions + 4 tbsp onion stays 4, not 5; 1 bunch basil + 4 tbsp stays 1 bunch.
+      const had = target.base ?? 0
+      let total = had + pieces
+      if (had > 0 && Number.isInteger(had) && total - Math.floor(total) <= 0.25 + 1e-9) total = Math.floor(total)
+      target.base = total
+      dropped.add(v)
+    }
+    else if (rule.lone) { v.fam = family(rule.unit); v.unit = rule.unit; v.base = pieces }
+  }
+  const kept = lines.filter((l) => !dropped.has(l))
   const out = Object.fromEntries(CATEGORY_ORDER.map((c) => [c, [] as GroceryItem[]])) as Record<GroceryCategory, GroceryItem[]>
-  for (const l of lines) {
+  for (const l of kept) {
     let quantity: string, unit: string
     if (l.base == null) { quantity = l.raw || '1'; unit = l.unit }
     else {
@@ -161,6 +231,12 @@ export function buildGroceryList(meals: MealLike[], opts: { prepped?: boolean } 
       quantity = formatQuantity(best.n, best.unit)
     }
     out[l.category].push({ name: l.name, quantity, unit, category: l.category, searchTerm: l.searchTerm })
+  }
+  // Pantry traces: off the cart, unless the week already buys a real amount of it (then that line covers it).
+  for (const t of traces) {
+    if (kept.some((l) => sameItem(l.name, t.name) || sameItem(l.name, basicName(t.name)))) continue
+    const quantity = parseQuantity(t.quantity) == null ? '' : t.quantity
+    out['Pantry & Dry Goods'].push({ name: basicName(t.name) || t.name, quantity, unit: quantity ? t.unit : '', category: 'Pantry & Dry Goods', searchTerm: t.searchTerm, pantry: true })
   }
   return out
 }

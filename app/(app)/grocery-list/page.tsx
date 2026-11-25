@@ -92,6 +92,8 @@ export default function GroceryListPage() {
   const [actualDraft, setActualDraft] = useState('')
   const [actualSaved, setActualSaved] = useState<string | null>(null)
   const [staples, setStaples] = useState<Staple[]>([])
+  // Plan lines the code-built list flagged as pantry trace amounts (lib/list-build); empty for AI lists.
+  const [probablyHaveNames, setProbablyHaveNames] = useState<Set<string>>(new Set())
   const [totalCost, setTotalCost] = useState(0)
   const [budget, setBudget] = useState<number>(0)
   const [loading, setLoading] = useState(true)
@@ -292,6 +294,8 @@ export default function GroceryListPage() {
         return
       }
     }
+
+    setProbablyHaveNames(new Set(Object.values(planList ?? {}).flat().filter((i) => (i as GroceryItem).pantry).map((i) => normalizeItemName((i as GroceryItem).name))))
 
     // 2. Materialize rows for this week if the plan is newer than the rows we have.
     const [{ data: existing }, { data: pantryItems }, { data: stapleRows }] = await rowsQ
@@ -730,6 +734,7 @@ export default function GroceryListPage() {
           onMoveStore={split && splitStores ? (i) => setSplit((m) => ({ ...(m ?? {}), [i.id]: (m?.[i.id] ?? splitStores[0]) === splitStores[0] ? splitStores[1] : splitStores[0] })) : undefined}
           onToggleChecked={toggleChecked}
           onToggleHave={toggleHave}
+          probablyHave={probablyHaveNames.size ? (i) => i.source === 'plan' && probablyHaveNames.has(normalizeItemName(i.name)) : undefined}
           onRemove={removeItem}
           onChangeQuantity={changeQuantity}
           onAdd={(name, category) => addItem(name, category)}

@@ -34,7 +34,35 @@ eq('different unit families never merge (garlic cloves vs garlic powder)',
 eq('counts round up to whole',
   lines(buildGroceryList([meal(ing('lemon', '1/2', 'count', 'Produce')), meal(ing('lemon', '1', 'count', 'Produce'))])),
   ['2 count lemon'])
-eq('no amount keeps the text', lines(buildGroceryList([meal(ing('salt', 'to taste', ''))])), ['to taste  salt'])
+eq('no amount keeps the text (not a pantry basic)', lines(buildGroceryList([meal(ing('fresh parsley', 'for garnish', '', 'Produce'))])), ['for garnish  fresh parsley'])
+const pantryLines = (list) => Object.values(list).flat().filter((x) => x.pantry).map((x) => `${x.quantity} ${x.unit} ${x.name}`.trim())
+const buyLines = (list) => Object.values(list).flat().filter((x) => !x.pantry).map((x) => `${x.quantity} ${x.unit} ${x.name}`)
+{
+  const l = buildGroceryList([meal(ing('salt', '1', 'pinch'), ing('black pepper', 'to taste', ''), ing('olive oil', '', 'drizzle'), ing('water', '2', 'cups'), ing('ground cumin', '1', 'dash'), ing('salt and pepper, to taste', '', ''))])
+  eq('trace amounts of salt, pepper, oil, water, spices are pantry lines', pantryLines(l), ['1 pinch salt', 'black pepper', 'olive oil', '2 cup water', '1 dash ground cumin', 'salt and pepper'])
+  eq('trace amounts add nothing to the cart', buyLines(l), [])
+}
+eq('a trace folds into a real amount of the same thing',
+  [buyLines(buildGroceryList([meal(ing('salt', '1', 'tsp')), meal(ing('salt', '1', 'pinch'), ing('kosher salt', 'to taste', ''))]))[0], pantryLines(buildGroceryList([meal(ing('salt', '1', 'tsp')), meal(ing('salt', '1', 'pinch'))]))],
+  ['1 tsp salt', []])
+eq('bought things marked optional or garnish stay normal lines (fresh herbs, sour cream, bare basil)',
+  pantryLines(buildGroceryList([meal(ing('fresh thyme', '1', 'sprig', 'Produce'), ing('sour cream', 'optional', '', 'Dairy & Eggs'), ing('basil', '', 'for garnish', 'Produce'))])),
+  [])
+eq('cups of onion merge into the counted onions (1 medium ≈ 1 cup)',
+  lines(buildGroceryList([meal(ing('onion', '3', 'count', 'Produce')), meal(ing('onion', '3/4', 'cup', 'Produce'), ing('yellow onion', '4', 'tbsp', 'Produce'))])),
+  ['4 count onion'])
+eq('a cups-only onion line becomes onions to buy; red onion and green onion stay their own',
+  lines(buildGroceryList([meal(ing('onion', '1 1/2', 'cups', 'Produce'), ing('red onion', '1', 'count', 'Produce'), ing('green onions', '1/2', 'cup', 'Produce'))])),
+  ['2 count onion', '1 count red onion', '1/2 cup green onions'])
+eq('basil cups merge into the bunch; cherry tomato cups into pints (1 pint ≈ 2 cups)',
+  lines(buildGroceryList([meal(ing('fresh basil', '1', 'bunch', 'Produce'), ing('cherry tomatoes', '1', 'pint', 'Produce')), meal(ing('fresh basil', '4', 'tbsp', 'Produce'), ing('cherry tomatoes', '1', 'cup', 'Produce'))])),
+  ['1 bunch fresh basil', '2 pint cherry tomatoes'])
+eq('a quarter or less on top of whole ones is absorbed (4 onions + 4 tbsp onion = 4); more rounds up',
+  [lines(buildGroceryList([meal(ing('onion', '4', 'count', 'Produce')), meal(ing('onion', '4', 'tbsp', 'Produce'))])), lines(buildGroceryList([meal(ing('onion', '4', 'count', 'Produce')), meal(ing('onion', '1/2', 'cup', 'Produce'))]))],
+  [['4 count onion'], ['5 count onion']])
+eq('basil by the cup alone stays as it is (could be dried); no table entry keeps two lines',
+  lines(buildGroceryList([meal(ing('basil', '1/4', 'cup', 'Produce'), ing('carrots', '2', 'count', 'Produce')), meal(ing('carrots', '1', 'cup', 'Produce'))])),
+  ['4 tbsp basil', '2 count carrots', '1 cup carrots'])
 eq('missing section is guessed, search term defaults to the name',
   Object.values(buildGroceryList([meal({ name: 'milk', quantity: '1', unit: 'gallon' })])).flat()[0].searchTerm, 'milk')
 eq('a unit that names the item counts and merges ("3 avocados" avocado, "2 lime" lime, "3 peppers" bell peppers)',
