@@ -18,7 +18,7 @@ export async function weeklyCheckoutNumbers(db: SupabaseClient, now = new Date()
   const [{ data: hs }, { data: rc }, { data: profs }, { count: signups }] = await Promise.all([
     db.from('grocery_handoffs').select('id, user_id, store, est_total, actual_total, feedback, created_at').gte('created_at', since),
     db.from('receipts').select('user_id, handoff_id, total, created_at').gte('created_at', since),
-    db.from('profiles').select('id, email, created_at, signup_source, settings'),
+    db.from('profiles').select('id, email, created_at, signup_source, settings, household_id'),
     db.from('profiles').select('id', { count: 'exact', head: true }).gte('created_at', since),
   ])
   // Internal addresses, plus any profile flagged settings.isTest (lib/tracking-env, Sarah Nov 25 2026).
@@ -76,10 +76,34 @@ export async function weeklyCheckoutNumbers(db: SupabaseClient, now = new Date()
     return { families, any, cart, store }
   }
   const { count: listOpens } = await db.from('activation_events').select('id', { count: 'exact', head: true }).eq('step', 'list_link_open').gte('created_at', since)
+  // Tripwire (Sarah, Nov 25 2026, week-two fixes): email unsubscribes (families) and text STOP replies (households)
+  // per week, last 4 weeks, so new nudges (default shop day, the family-text card) can't quietly raise opt-outs.
+  // Flagged when last week is at least 5 and more than 1.5x the average of the 3 weeks before.
+  const from4 = new Date(now.getTime() - 28 * 86400000).toISOString()
+  const internalHouseholds = new Set((profs ?? []).filter((p) => internal.has(p.id) && p.household_id).map((p) => p.household_id as string))
+  const [{ data: unsubs }, { data: stops }] = await Promise.all([
+    db.from('activation_events').select('user_id, created_at').eq('step', 'email_unsubscribe').gte('created_at', from4).limit(10000),
+    db.from('sms_messages').select('household_id, created_at').eq('direction', 'in').eq('intent', 'stop').gte('created_at', from4).limit(10000),
+  ])
+  const perWeek = (rows: Array<{ created_at: string; who: string | null }>) => {
+    const weeks = [0, 1, 2, 3].map(() => new Set<string>())
+    for (const r of rows) {
+      const wk = Math.floor((now.getTime() - Date.parse(r.created_at)) / (7 * 86400000))
+      if (wk >= 0 && wk < 4) weeks[wk].add(r.who ?? r.created_at)
+    }
+    const counts = weeks.map((x) => x.size)
+    const before = (counts[1] + counts[2] + counts[3]) / 3
+    return { counts, tripped: counts[0] >= 5 && counts[0] > 1.5 * before }
+  }
+  const optOuts = {
+    unsub: perWeek((unsubs ?? []).filter((r) => !internal.has(r.user_id)).map((r) => ({ created_at: r.created_at, who: r.user_id }))),
+    stop: perWeek((stops ?? []).filter((r) => !internalHouseholds.has(r.household_id)).map((r) => ({ created_at: r.created_at, who: r.household_id }))),
+  }
   return {
     weekTwo: repeat(8, 14),
     weekTwo4w: repeat(8, 35),
     listOpens: listOpens ?? 0,
+    optOuts,
     sources,
     signups: signups ?? 0,
     sends: handoffs.length,
@@ -100,7 +124,11 @@ export async function runWeeklyReport(db: SupabaseClient, now = new Date()) {
   const n = await weeklyCheckoutNumbers(db, now)
   const pct = n.families ? Math.round((n.confirmed / n.families) * 100) : 0
   const row = (k: string, v: string | number) => `<tr><td style="padding:4px 12px 4px 0;color:#5b6660">${k}</td><td style="padding:4px 0;font-weight:600">${v}</td></tr>`
-  const body = `<table style="border-collapse:collapse;font-size:15px">
+  const trend = (o: { counts: number[]; tripped: boolean }) => `${o.counts[0]} last week (weeks before: ${o.counts[1]} · ${o.counts[2]} · ${o.counts[3]})${o.tripped ? ' ⚠ up sharply' : ''}`
+  const tripped = n.optOuts.unsub.tripped || n.optOuts.stop.tripped
+  const body = `${tripped ? '<p style="background:#fdecea;border:1px solid #f5c2c0;border-radius:8px;padding:10px 12px;font-weight:600">⚠ Opt-outs jumped last week. Check what went out (shop-day nudges, the family-text card, campaigns) before sending more.</p>' : ''}<table style="border-collapse:collapse;font-size:15px">
+${row('Email unsubscribes', trend(n.optOuts.unsub))}
+${row('Text STOP replies', trend(n.optOuts.stop))}
 ${row('New signups', n.signups)}
 ${row('Came back for week two', `${n.weekTwo.any} of ${n.weekTwo.families} families whose first send was 8–14 days ago (cart ${n.weekTwo.cart} · store list ${n.weekTwo.store})`)}
 ${row('Week two, last 4 weeks', `${n.weekTwo4w.any} of ${n.weekTwo4w.families} families`)}
@@ -118,6 +146,6 @@ ${Object.keys(n.sources).length ? `<h3 style="font-size:15px;margin:18px 0 6px">
 <p style="margin-top:14px">"Confirmed" means the family answered the follow-up email (anything but "not yet"), uploaded a receipt, or told us their total. Paid Instacart orders show up in Impact 1–2 days after delivery — compare its action count with the ${n.families} families above.</p>
 <p style="font-size:12px;color:#8a8577">Your own test accounts are left out. Last 7 days.</p>`
   const html = emailShell(`Checkout report: ${n.confirmed} of ${n.families} families confirmed`, body, { label: 'Open Impact', href: 'https://app.impact.com/' })
-  const r = await sendEmail(REPORT_TO, `DinnerDrop weekly checkout report: ${n.confirmed}/${n.families} families confirmed`, html, { kind: 'admin' })
+  const r = await sendEmail(REPORT_TO, `${tripped ? '⚠ Opt-outs up · ' : ''}DinnerDrop weekly checkout report: ${n.confirmed}/${n.families} families confirmed`, html, { kind: 'admin' })
   return { sent: r.ok, ...n }
 }
