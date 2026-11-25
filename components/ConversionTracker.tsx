@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { createClient } from '@/lib/supabase'
 import { TRIAL_PREDICTED_VALUE, isCheckoutSessionId, regEventId, trialEventId } from '@/lib/meta-events'
+import { adsAllowedInBrowser, markTestBrowser } from '@/lib/tracking-env'
 
 declare global {
   interface Window {
@@ -44,6 +45,9 @@ export default function ConversionTracker({ value = 54, currency = 'USD', onceKe
       fetch('/api/attribution/attach', { method: 'POST' }).catch(() => {})
     }
 
+    // Ad events only where the ad tags load: www.dinnerdrop.app, not a dd_test=1 browser (Sarah, Nov 25 2026).
+    if (!adsAllowedInBrowser()) return
+
     const params = new URLSearchParams(window.location.search)
     const trial = params.get('subscribed') === 'true'
     // trial=0: the family's free days were already over, so checkout charged right away (no trial). That is a
@@ -76,17 +80,21 @@ export default function ConversionTracker({ value = 54, currency = 'USD', onceKe
 
     // Sign-up: the Meta event id is reg_<account id>, the same id /api/meta/event sends to the Conversions API.
     // getSession() reads the local session (no network). The relay runs even when the pixel is blocked.
+    // The relay also answers { test: true } for a test account; then nothing fires and this browser is marked
+    // dd_test=1, so later pages load no ad tags (Sarah, Nov 25 2026). Every platform waits for that answer.
     let idLookupDone = trial || !onceKey
+    let isTest = false
     if (!idLookupDone) {
       createClient().auth.getSession().then(({ data: { session } }) => {
         const uid = session?.user?.id
-        if (uid) {
-          eventId = regEventId(uid)
-          fetch('/api/meta/event', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ event: 'CompleteRegistration', url: window.location.href }),
-          }).catch(() => {})
-        }
+        if (!uid) return
+        eventId = regEventId(uid)
+        return fetch('/api/meta/event', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: 'CompleteRegistration', url: window.location.href }),
+        }).then((r) => r.json()).then((j: { test?: boolean }) => {
+          if (j?.test) { isTest = true; markTestBrowser() }
+        })
       }).catch(() => {}).finally(() => { idLookupDone = true })
     }
 
@@ -96,6 +104,8 @@ export default function ConversionTracker({ value = 54, currency = 'USD', onceKe
     // missing most signups because the old version gave up on the first try and still marked itself done).
     const fired = { google: false, meta: false, pinterest: false, reddit: false }
     const attempt = () => {
+      if (!idLookupDone) return false
+      if (isTest) return true // test account: fire nothing, stop retrying
       if (!fired.google && typeof window.gtag === 'function') {
         fired.google = safeFire(() => {
           if (trial) {

@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { browserContext, isNativeAppUA, metaCapiEnabled, sendMetaEvent } from '@/lib/meta-capi'
 import { RELAY_EVENTS, isClientEventId, regEventId, type RelayEvent } from '@/lib/meta-events'
+import { PROD_HOST, TEST_COOKIE, isTestProfile } from '@/lib/tracking-env'
 
 /**
  * POST — browser-to-server relay for Meta Conversions API. (Nov 22 2026 review, Sarah approved)
@@ -16,12 +17,13 @@ import { RELAY_EVENTS, isClientEventId, regEventId, type RelayEvent } from '@/li
  *     (reg_<uid>), so repeats are deduplicated by Meta;
  *   - AddToCart / CartSentRepeat: the user must have a grocery_handoffs row written in the last 15 minutes.
  *     AddToCart (first send) only when that is the user's only send; later sends are CartSentRepeat.
+ *   - nothing for test accounts (lib/tracking-env): answers { test: true } and sets the dd_test cookie;
+ *   - only from the production deployment on www.dinnerdrop.app (Sarah, Nov 25 2026).
  * Body: { event, eventId?, url?, store?, value? }. Always answers 200 { ok, sent } except for bad input / auth.
  */
 const SITE = /(^|\.)dinnerdrop\.app$/
 
 export async function POST(req: NextRequest) {
-  if (!metaCapiEnabled()) return NextResponse.json({ ok: true, sent: false })
   if (isNativeAppUA(req.headers.get('user-agent'))) return NextResponse.json({ ok: true, sent: false })
 
   const body = (await req.json().catch(() => null)) as Record<string, unknown> | null
@@ -31,6 +33,18 @@ export async function POST(req: NextRequest) {
   const auth = createServerSupabaseClient()
   const { data: { user } } = await auth.auth.getUser()
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+
+  // Test accounts (Sarah, Nov 25 2026): send nothing, and tell this browser to stop loading ad tags
+  // (dd_test=1, read by the tag scripts in app/layout.tsx). Checked before the token so it works even with no token.
+  const { data: me } = await admin.from('profiles').select('created_at, settings').eq('id', user.id).maybeSingle()
+  if (isTestProfile({ email: user.email, settings: me?.settings })) {
+    const res = NextResponse.json({ ok: true, sent: false, test: true })
+    res.cookies.set(TEST_COOKIE, '1', { maxAge: 31536000, path: '/', sameSite: 'lax', secure: true })
+    return res
+  }
+  // Production deployment on www.dinnerdrop.app only (metaCapiEnabled also checks VERCEL_ENV).
+  if (!metaCapiEnabled() || req.nextUrl.host !== PROD_HOST) return NextResponse.json({ ok: true, sent: false })
 
   // event_source_url: the page the event happened on, only if it is one of ours.
   let sourceUrl = `${req.nextUrl.origin}/dashboard`
@@ -44,10 +58,8 @@ export async function POST(req: NextRequest) {
 
   const ctx = browserContext(req.headers, req.cookies)
   const userData = { email: user.email, externalId: user.id, ...ctx }
-  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 
   if (event === 'CompleteRegistration') {
-    const { data: me } = await admin.from('profiles').select('created_at').eq('id', user.id).maybeSingle()
     const createdAt = new Date(me?.created_at ?? user.created_at).getTime()
     if (!(Date.now() - createdAt < 3 * 86400000)) return NextResponse.json({ ok: true, sent: false })
     const sent = await sendMetaEvent({

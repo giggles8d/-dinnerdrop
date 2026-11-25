@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import PwaRegister from "@/components/PwaRegister";
 import { SOCIAL } from "@/lib/social";
+import { ADS_ALLOWED_JS } from "@/lib/tracking-env";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -109,10 +110,10 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         {/* Google Ads Tag */}
-        {/* Ad tags never load inside the native app (no cross-app tracking → no ATT prompt needed). */}
+        {/* Ad tags load only on www.dinnerdrop.app: never on previews or localhost, never inside the native app (no ATT prompt), never in a dd_test=1 browser. See lib/tracking-env.ts (Sarah, Nov 25 2026). */}
         <Script id="google-ads-tag" strategy="afterInteractive">
           {`
-            if(!/DinnerDropApp/.test(navigator.userAgent)){
+            if(${ADS_ALLOWED_JS}){
             var g=document.createElement('script');g.async=true;g.src='https://www.googletagmanager.com/gtag/js?id=AW-18170234265';document.head.appendChild(g);
             window.dataLayer = window.dataLayer || [];
             window.gtag = function(){dataLayer.push(arguments);};
@@ -124,7 +125,7 @@ export default function RootLayout({
         {/* Meta Pixel */}
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
-            if(!/DinnerDropApp/.test(navigator.userAgent)){
+            if(${ADS_ALLOWED_JS}){
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -141,7 +142,7 @@ export default function RootLayout({
         {/* Pinterest Tag */}
         <Script id="pinterest-tag" strategy="afterInteractive">
           {`
-            if(!/DinnerDropApp/.test(navigator.userAgent)){
+            if(${ADS_ALLOWED_JS}){
             !function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
             n=window.pintrk;n.queue=[],n.version="3.0";var t=document.createElement("script");t.async=!0,t.src=e;var
             r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
@@ -153,7 +154,7 @@ export default function RootLayout({
         {/* Reddit Pixel */}
         <Script id="reddit-pixel" strategy="afterInteractive">
           {`
-            if(!/DinnerDropApp/.test(navigator.userAgent)){
+            if(${ADS_ALLOWED_JS}){
             !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
             rdt('init','a2_j0xlhb9uvlwt');
             rdt('track','PageVisit');
