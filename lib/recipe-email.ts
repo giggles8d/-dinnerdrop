@@ -3,7 +3,7 @@ import { fromAddress } from '@/lib/notify'
  * "Your recipes for the week" — sent once per plan, right after the family sends the list to
  * Instacart or Kroger (or on demand from the grocery list page). One printable PDF per dinner.
  */
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Meal } from '@/types'
 import { recipePdf, recipeFileName } from '@/lib/recipe-pdf'
@@ -46,7 +46,7 @@ export async function sendWeekRecipes(admin: SupabaseClient, userId: string, opt
     <div style="background:#f9fafb;padding:16px 28px;border-top:1px solid #e5e7eb;font-size:12px;color:#9ca3af">You get this because your family&rsquo;s grocery list was sent to a store from DinnerDrop. <a href="https://www.dinnerdrop.app/settings" style="color:#6b7280">Settings</a></div>
   </div></body></html>`
 
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const { data, error } = await resend.emails.send({
     from: fromAddress(),
     to: prof.email as string,

@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
   if (!cartOfferLive()) return NextResponse.json({ error: 'The offer has ended.' }, { status: 400 })
   const b = await req.json().catch(() => ({})) as { send?: boolean; testTo?: string }
   if (b.testTo) {
-    const r = await sendEmail(String(b.testTo), SUBJECT, emailHtml(), { text: TEXT })
+    const r = await sendEmail(String(b.testTo), SUBJECT, emailHtml(), { text: TEXT, kind: 'admin' })
     return NextResponse.json({ test: r.ok })
   }
   if (b.send !== true) return NextResponse.json({ error: 'Pass {send:true}' }, { status: 400 })

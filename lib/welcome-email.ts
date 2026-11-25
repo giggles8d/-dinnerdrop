@@ -6,7 +6,7 @@
  * Run from the 2-minute texting poll, next to the sign-up alerts.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { cartOfferLive } from '@/lib/cart-offer'
 
 const APP = 'https://www.dinnerdrop.app'
@@ -63,7 +63,7 @@ export async function sendWelcomeEmails(admin: SupabaseClient, now = new Date())
     .gte('created_at', new Date(now.getTime() - 12 * 3600000).toISOString()).limit(50)
   const todo = (profs ?? []).filter((p) => p.email && !p.email_unsubscribed && !SKIP.test(String(p.email)) && String(p.email).toLowerCase() !== 'setzl1979@gmail.com')
   if (!todo.length) return { sent: 0 }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   let sent = 0
   for (const p of todo) {
     const { error: claimErr } = await admin.from('app_kv').insert({ key: `welcome:${p.id}`, value: { at: now.toISOString() }, updated_at: now.toISOString() })
@@ -92,6 +92,6 @@ export async function sendWelcomeEmails(admin: SupabaseClient, now = new Date())
 export async function sendWelcomeTest(to: string, name = 'Jen'): Promise<{ ok: boolean; id?: string; error?: string }> {
   if (!process.env.RESEND_API_KEY) return { ok: false, error: 'RESEND_API_KEY missing' }
   const m = welcomeEmail(name, null)
-  const { data, error } = await new Resend(process.env.RESEND_API_KEY).emails.send({ from: FROM, to, subject: `[Test] ${m.subject}`, html: m.html, text: m.text, reply_to: 'sarah@dinnerdrop.app' })
+  const { data, error } = await new SafeResend(process.env.RESEND_API_KEY, 'admin').emails.send({ from: FROM, to, subject: `[Test] ${m.subject}`, html: m.html, text: m.text, reply_to: 'sarah@dinnerdrop.app' })
   return error ? { ok: false, error: String((error as { message?: string }).message ?? error) } : { ok: true, id: data?.id }
 }

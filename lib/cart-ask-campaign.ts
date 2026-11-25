@@ -9,7 +9,7 @@
  * haven't sent another cart since (3+ days after the first); sent 9 AM–7 PM ET; no longer switches itself off.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 
 export const CART_ASK = 'cartask-2026-11'
 const APP = 'https://www.dinnerdrop.app'
@@ -99,7 +99,7 @@ export async function runCartAsk(admin: SupabaseClient, now = new Date(), opts: 
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
   const hourET = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', hourCycle: 'h23' }).format(now))
   if (hourET < 9 || hourET >= 19) return { ...report, status: 'outside 9 AM–7 PM ET' }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const recs = await cartAskRecipients(admin)
   const { data: done } = await admin.from('campaign_sends').select('email').eq('campaign', CART_ASK)
   const sentSet = new Set((done ?? []).map((d) => String(d.email).toLowerCase()))

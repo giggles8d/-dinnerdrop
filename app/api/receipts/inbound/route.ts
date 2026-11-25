@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { resolvePlanOwner } from '@/lib/household'
 import { bareEmail, fetchReceivedEmail, looksLikeReceipt, parseReceipt, receiptEmailAllowed, receiptText, reconcileReceipt, verifyResendSignature, type ReconcileResult } from '@/lib/receipts'
 
@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
 async function reply(to: string, subject: string, html: string): Promise<void> {
   if (!process.env.RESEND_API_KEY) return
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = new SafeResend(process.env.RESEND_API_KEY, 'direct')
     await resend.emails.send({ from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>', to, subject, html: `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5;color:#1a1a1a">${html}<p style="color:#888;font-size:12px">DinnerDrop</p></div>` })
   } catch (e) { console.error('[receipts] reply failed:', e) }
 }

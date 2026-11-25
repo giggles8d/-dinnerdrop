@@ -5,7 +5,7 @@
  */
 import { emailImageUrl } from './email-image'
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { collectionBySlug } from '@/lib/collections'
 
 export const THANKSGIVING = 'thanksgiving-2026'
@@ -96,7 +96,7 @@ export async function runThanksgiving(admin: SupabaseClient, now = new Date(), o
   if (v.status !== 'approved') return report
   if (v.sendOn && etDate(now) < v.sendOn) return { ...report, status: `waiting for ${v.sendOn}` }
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const featured = await thanksgivingFeatured(admin)
   const c = collectionBySlug('thanksgiving')
   const { data: all } = await admin.from('recipes').select('name, tags, cuisine').eq('is_public', true).limit(5000)

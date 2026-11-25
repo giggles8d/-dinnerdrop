@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 
   const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   const html = `<!doctype html><html><body style="margin:0;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#1f2a24;font-size:15px;line-height:1.55"><div style="max-width:560px;padding:16px">${body.split(/\n{2,}/).map((p) => `<p style="margin:0 0 14px">${esc(p).replace(/\n/g, '<br>')}</p>`).join('')}</div></body></html>`
-  const sent = await sendEmail(email, subject, html, { replyTo: REPLY_TO, text: body })
+  const sent = await sendEmail(email, subject, html, { replyTo: REPLY_TO, text: body, kind: 'direct' })
   if (!sent.ok) return NextResponse.json({ error: sent.error ?? 'send failed' }, { status: 502 })
   try {
     const { data } = await admin.from('app_kv').select('value').eq('key', 'outreach_log').maybeSingle()

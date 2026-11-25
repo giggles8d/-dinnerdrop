@@ -61,5 +61,41 @@ export function track(step: ActivationStep, meta?: Record<string, unknown>, opts
   try {
     if (opts.beacon && navigator.sendBeacon) { navigator.sendBeacon('/api/track', new Blob([body], { type: 'application/json' })); return }
   } catch { /* fall through */ }
-  fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {})
+  fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true })
+    .then((r) => { if (r.ok) flushPending() })
+    .catch(() => {})
+}
+
+/**
+ * Client helper for a step that happens before sign-up (e.g. the email typo fix on /signup, Nov 25 2026): /api/track
+ * needs a signed-in user, so the event waits in this browser and goes out with the first event that succeeds after
+ * sign-in.
+ */
+const PENDING_KEY = 'dd_track_pending'
+export function trackAfterSignIn(step: ActivationStep, meta?: Record<string, unknown>): void {
+  if (typeof window === 'undefined') return
+  const body = JSON.stringify({ step, meta: meta ?? {} })
+  // Signed in already (e.g. a gift bought from the app): it goes out now. Not signed in (401): keep it for later.
+  fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true })
+    .then((r) => {
+      if (r.status !== 401) return
+      try {
+        const list = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]') as string[]
+        list.push(body)
+        localStorage.setItem(PENDING_KEY, JSON.stringify(list.slice(-5)))
+      } catch { /* private mode: drop it */ }
+    })
+    .catch(() => {})
+}
+
+function flushPending(): void {
+  let list: string[] = []
+  try {
+    list = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]')
+    if (!list.length) return
+    localStorage.removeItem(PENDING_KEY)
+  } catch { return }
+  for (const body of list) {
+    fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {})
+  }
 }

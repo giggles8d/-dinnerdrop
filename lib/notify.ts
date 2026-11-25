@@ -3,7 +3,7 @@
  * Both are no-ops that log when their env vars are missing, so crons never crash
  * on a half-configured environment.
  */
-import { Resend } from 'resend'
+import { SafeResend, type EmailKind } from '@/lib/email-guard'
 
 const APP = 'https://www.dinnerdrop.app'
 
@@ -35,7 +35,7 @@ export function fromAddress(): string {
  * Gmail and Yahoo require of bulk senders) and a personal footer unsubscribe link (the generic /unsubscribe
  * link couldn't tell who was asking). Nov 6 2026.
  */
-export async function sendEmail(to: string, subject: string, html: string, opts: { replyTo?: string; text?: string } = {}): Promise<{ ok: boolean; id?: string; error?: string }> {
+export async function sendEmail(to: string, subject: string, html: string, opts: { replyTo?: string; text?: string; kind?: EmailKind } = {}): Promise<{ ok: boolean; id?: string; error?: string }> {
   if (!process.env.RESEND_API_KEY) {
     console.log('[notify] RESEND_API_KEY missing — would email', to, subject)
     return { ok: false, error: 'RESEND_API_KEY not configured' }
@@ -52,7 +52,8 @@ export async function sendEmail(to: string, subject: string, html: string, opts:
   const body = pageUrl ? html.split(`href="${APP}/unsubscribe"`).join(`href="${pageUrl}"`) : html
   const text = opts.text && pageUrl ? opts.text.split(`${APP}/unsubscribe`).join(pageUrl) : opts.text
 
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  // Test accounts never get automated email (lib/email-guard); kind 'direct'/'admin' for replies and notes to Sarah.
+  const resend = new SafeResend(process.env.RESEND_API_KEY, opts.kind ?? 'family')
   const { data, error } = await resend.emails.send({
     from: fromAddress(),
     to,

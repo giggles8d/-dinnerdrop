@@ -8,7 +8,7 @@
  * signed up 7+ days ago (newer families are still in the day 1/3/7 emails), minus internal and unsubscribed.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { isFamilyProfile } from '@/lib/access'
 import { textingUrl } from '@/lib/followup'
 
@@ -78,7 +78,7 @@ export async function runTexting(admin: SupabaseClient, now = new Date(), opts: 
   const todayET = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
   if (todayET < v.sendOn) return { ...report, status: `waiting for ${v.sendOn}` }
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const recs = await textingRecipients(admin, now)
   const { data: done } = await admin.from('campaign_sends').select('email').eq('campaign', TEXTING)
   const sentSet = new Set((done ?? []).map((d) => String(d.email).toLowerCase()))

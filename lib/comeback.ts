@@ -8,7 +8,7 @@
  * then checks rewards every day for 8 days after each send.
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import { giftLink } from '@/lib/gifts'
 
 export const COMEBACK = 'comeback-2026-10'
@@ -128,7 +128,7 @@ export async function runComeback(admin: SupabaseClient, now = new Date(), opts:
   const report = { status: status ?? 'not approved', sent: 0, failed: 0, rewarded: 0 }
   if (status !== 'approved') return report
   if (!process.env.RESEND_API_KEY) return { ...report, status: 'no RESEND_API_KEY' }
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
 
   // 1) Send to anyone not yet sent. OFF in code (Nov 22 2026 review, Sarah approved "no new 90-day stacking
   // offers"): this email promises code WELCOMEBACK (3 months) and a 3-month gift for a friend, and WELCOMEBACK

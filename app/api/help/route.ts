@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 
 export const dynamic = 'force-dynamic'
 const TO = 'sarah@dinnerdrop.app'
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     context = `Account: ${email}\nFamily of ${p?.family_size ?? '?'} · plan ${p?.subscription_status ?? '?'}${p?.is_beta_member ? ' · founding' : ''}${p?.family_until ? ` · Family until ${p.family_until}` : ''} · diets ${(p?.dietary_needs ?? []).join(', ') || 'none'} · joined ${String(p?.created_at ?? '').slice(0, 10)}\nRecent store sends: ${(h ?? []).map((x) => `${String(x.created_at).slice(0, 10)} ${x.store}${x.feedback ? ` (${x.feedback})` : ''}`).join('; ') || 'none'}\nPage: ${String(body.page ?? '')}`
   } else context = `Not signed in. Page: ${String(body.page ?? '')}`
   await admin.from('help_messages').insert({ user_id: user?.id ?? null, email, message, page: String(body.page ?? '').slice(0, 200) })
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY, 'admin')
   const esc = (s: string) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] as string))
   const { error } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL || 'DinnerDrop <info@dinnerdrop.app>',

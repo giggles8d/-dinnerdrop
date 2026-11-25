@@ -20,7 +20,7 @@
 import React from 'react'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { render } from '@react-email/render'
-import { Resend } from 'resend'
+import { SafeResend } from '@/lib/email-guard'
 import SundayDrop, { type DropProps } from '@/emails/SundayDrop'
 import { mergeSettings, type Settings } from '@/lib/settings'
 import { pickLibraryRecipes } from '@/lib/recipe-library'
@@ -323,7 +323,7 @@ async function sendBuilt(to: string, b: BuiltDrop, unsubUid: string | null, subj
   if (!process.env.RESEND_API_KEY) return { ok: false, error: 'no RESEND_API_KEY' }
   const html = b.plain ? plainWeekHtml(b.plain) : await render(React.createElement(SundayDrop, b.props))
   const text = b.plain ? plainWeekText(b.plain) : await render(React.createElement(SundayDrop, b.props), { plainText: true })
-  const resend = new Resend(process.env.RESEND_API_KEY)
+  const resend = new SafeResend(process.env.RESEND_API_KEY)
   const { error } = await resend.emails.send({
     from: FROM,
     to,

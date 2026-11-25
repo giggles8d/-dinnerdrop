@@ -118,6 +118,6 @@ ${Object.keys(n.sources).length ? `<h3 style="font-size:15px;margin:18px 0 6px">
 <p style="margin-top:14px">"Confirmed" means the family answered the follow-up email (anything but "not yet"), uploaded a receipt, or told us their total. Paid Instacart orders show up in Impact 1–2 days after delivery — compare its action count with the ${n.families} families above.</p>
 <p style="font-size:12px;color:#8a8577">Your own test accounts are left out. Last 7 days.</p>`
   const html = emailShell(`Checkout report: ${n.confirmed} of ${n.families} families confirmed`, body, { label: 'Open Impact', href: 'https://app.impact.com/' })
-  const r = await sendEmail(REPORT_TO, `DinnerDrop weekly checkout report: ${n.confirmed}/${n.families} families confirmed`, html)
+  const r = await sendEmail(REPORT_TO, `DinnerDrop weekly checkout report: ${n.confirmed}/${n.families} families confirmed`, html, { kind: 'admin' })
   return { sent: r.ok, ...n }
 }
