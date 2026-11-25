@@ -4,9 +4,9 @@ import { WEEKEND_OFFER, weekendOfferOpen } from '@/lib/weekend-offer-config'
 import ReceiptRewardBanner from '@/components/ReceiptRewardBanner'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
-import { Copy, Printer, Share2, Check } from 'lucide-react'
+import { Copy, Printer, Share2, Check, Eraser } from 'lucide-react'
 import { isNativeApp, nativePrefGet, nativePrefRemove, nativePrefSet, nativeShare, tapHaptic } from '@/lib/native'
-import { trackOnce } from '@/lib/activation'
+import { trackOnce, track } from '@/lib/activation'
 import EngagementTracker from '@/components/EngagementTracker'
 import { createClient } from '@/lib/supabase'
 import GroceryList, { formatQuantity } from '@/components/GroceryList'
@@ -82,6 +82,11 @@ export default function GroceryListPage() {
   const [neverSent, setNeverSent] = useState(false)
   const [offerStatus, setOfferStatus] = useState<string | null>(null)
   const [pendingSend, setPendingSend] = useState<{ id: string; at: string; store: string | null } | null>(null)
+  // Always-there "Clear list" with an in-page confirm + Undo (Sarah, Nov 25 2026: the sent-order banner
+  // only showed for 3 days on the week that was sent, so she couldn't clear a list she'd already shopped).
+  const [clearAsk, setClearAsk] = useState(false)
+  const [clearing, setClearing] = useState(false)
+  const [lastCleared, setLastCleared] = useState<string[] | null>(null)
   const [actualDraft, setActualDraft] = useState('')
   const [actualSaved, setActualSaved] = useState<string | null>(null)
   const [staples, setStaples] = useState<Staple[]>([])
@@ -420,6 +425,27 @@ export default function GroceryListPage() {
     setPendingSend(null)
     if (weekStart) await loadItems(userId, weekStart)
   }
+  /** Clear every line on this week's list (they move to history as bought); Undo puts them back. */
+  async function clearList() {
+    if (!userId || !weekStart || clearing) return
+    const ids = items.map((i) => i.id)
+    if (!ids.length) { setClearAsk(false); return }
+    setClearing(true)
+    const { error } = await supabase.from('list_items').update({ ordered_at: new Date().toISOString() }).in('id', ids)
+    setClearing(false)
+    setClearAsk(false)
+    if (error) return
+    if (pendingSend) { try { localStorage.setItem(`dd.send.${pendingSend.id}`, 'done') } catch { /* ignore */ } setPendingSend(null) }
+    setLastCleared(ids)
+    track('cta_tap', { id: 'clear_list', page: 'grocery-list', n: ids.length })
+    await loadItems(userId, weekStart)
+  }
+  async function undoClear() {
+    if (!lastCleared) return
+    const ids = lastCleared
+    setLastCleared(null)
+    await putBack(ids)
+  }
   function keepShopping() {
     if (!pendingSend) return
     try { localStorage.setItem(`dd.send.${pendingSend.id}`, 'keep') } catch { /* ignore */ }
@@ -533,8 +559,28 @@ export default function GroceryListPage() {
             <button onClick={copyList} title="Copy" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted">{copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}</button>
             <button onClick={shareList} title="Share" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted"><Share2 className="w-4 h-4" /></button>
             <button onClick={() => window.print()} title="Print" className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-muted"><Printer className="w-4 h-4" /></button>
+            {items.length > 0 && (
+              <button onClick={() => { setClearAsk(true); setLastCleared(null) }} title="Clear list" className="flex items-center gap-1 px-2.5 py-2 rounded-lg border border-border text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted"><Eraser className="w-4 h-4" />Clear</button>
+            )}
           </div>
         </div>
+
+        {clearAsk && items.length > 0 && (
+          <div role="dialog" aria-label="Clear the list" className="mb-6 rounded-xl border-2 border-destructive/40 bg-destructive/5 p-4 print:hidden">
+            <p className="text-sm font-semibold text-foreground">Clear all {items.length} items from this list?</p>
+            <p className="text-sm text-muted-foreground mt-1">Use this after you&apos;ve shopped. Everything comes off this week&apos;s list. Your dinners stay planned, and you can undo right after.</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button onClick={clearList} disabled={clearing} className="min-h-[44px] px-4 py-2 rounded-md bg-destructive text-destructive-foreground text-sm font-semibold disabled:opacity-60">{clearing ? 'Clearing…' : 'Yes, clear the list'}</button>
+              <button onClick={() => setClearAsk(false)} className="min-h-[44px] px-4 py-2 rounded-md border border-border bg-background text-sm font-semibold">Cancel</button>
+            </div>
+          </div>
+        )}
+        {lastCleared && (
+          <div role="status" className="mb-6 rounded-xl border border-primary/30 bg-primary/5 p-4 flex flex-wrap items-center justify-between gap-3 print:hidden">
+            <p className="text-sm text-foreground"><span className="font-semibold">List cleared.</span> {lastCleared.length} items moved off.</p>
+            <button onClick={undoClear} className="min-h-[44px] px-4 py-2 rounded-md border border-border bg-background text-sm font-semibold">Undo</button>
+          </div>
+        )}
 
         {/* Inside Facebook/Instagram's browser, Instacart sign-in can fail: offer Safari/Chrome first. */}
         <div className="print:hidden"><InAppBrowserNotice /></div>
