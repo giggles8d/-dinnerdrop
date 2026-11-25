@@ -5,7 +5,7 @@
 import { keepInBudget } from '@/lib/budget'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { mergeSettings, type Settings } from '@/lib/settings'
-import { prebuiltList as listFor } from '@/lib/list-build'
+import { listBuilderMode, prebuiltList as listFor } from '@/lib/list-build'
 import { assignNights, type PlanShape } from '@/lib/plan'
 import type { Meal } from '@/types'
 import { pickVaried, varietyLimits } from '@/lib/variety'
@@ -89,8 +89,10 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
   // picks got a second, auto-made week on top of them Sunday morning).
   const { data: already } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', weekStart).limit(1)
   if (already?.length) return null
-  // The grocery list is built with the week (lib/list-build, no AI) so the list page opens ready (Nov 25 2026).
-  await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: listFor(chosen, !!settings.food.prepped), total_estimated_cost: total })
+  // With app_kv list_builder = 'code', the grocery list is built with the week (lib/list-build, no AI) so the list
+  // page opens ready (Nov 25 2026). 'ai' (the default): an empty list, built by /api/generate-list as before.
+  const groceryList = (await listBuilderMode(admin)) === 'code' ? listFor(chosen, !!settings.food.prepped) : {}
+  await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: groceryList, total_estimated_cost: total })
   if (draft) await admin.from('menu_drafts').update({ status: 'sent', sent_at: new Date().toISOString() }).eq('id', draft.id)
   return chosen
 }
@@ -125,13 +127,15 @@ export async function generateCandidates(admin: SupabaseClient, p: AutoPlanProfi
 export async function savePlan(admin: SupabaseClient, userId: string, weekStart: string, meals: Meal[], shape: PlanShape): Promise<Meal[]> {
   const chosen = assignNights(meals, shape)
   const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
-  const [{ data: existing }, { data: prof }] = await Promise.all([
-    admin.from('meal_plans').select('id').eq('user_id', userId).eq('week_start', weekStart).order('created_at', { ascending: false }).limit(1),
-    admin.from('profiles').select('settings').eq('id', userId).maybeSingle(),
-  ])
-  // Built with the week (lib/list-build, no AI) so the grocery list opens ready: the first week, the starter week
-  // and every saved vote land on a list that's already there (Nov 25 2026).
-  const groceryList = listFor(chosen, !!mergeSettings(prof?.settings).food.prepped)
+  const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', userId).eq('week_start', weekStart).order('created_at', { ascending: false }).limit(1)
+  // With app_kv list_builder = 'code': built with the week (lib/list-build, no AI) so the grocery list opens ready:
+  // the first week, the starter week and every saved vote land on a list that's already there (Nov 25 2026).
+  // 'ai' (the default): an empty list, as before.
+  let groceryList: Record<string, unknown> = {}
+  if ((await listBuilderMode(admin)) === 'code') {
+    const { data: prof } = await admin.from('profiles').select('settings').eq('id', userId).maybeSingle()
+    groceryList = listFor(chosen, !!mergeSettings(prof?.settings).food.prepped)
+  }
   if (existing?.[0]) {
     await admin.from('meal_plans').update({ meals: chosen, grocery_list: groceryList, total_estimated_cost: total, created_at: new Date().toISOString() }).eq('id', existing[0].id)
   } else {

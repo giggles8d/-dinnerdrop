@@ -13,9 +13,10 @@
  *   - amounts a shopper can buy (lib/portions formatQuantity: quarters of a lb or cup, whole ounces and counts);
  *   - singular units ("lb", "cup", "clove"), store sections in shopping order, a clean search term.
  * `needsAi` says when a week's ingredients are too unstructured for this (rare: free-text imports); the route then
- * falls back to the AI list. Client-safe: no Node APIs.
+ * falls back to the AI list. Used only when app_kv list_builder = 'code' (listBuilderMode, below).
  */
 import type { GroceryCategory, GroceryItem, Ingredient, Meal } from '@/types'
+import type { SupabaseClient } from '@supabase/supabase-js'
 import { formatQuantity, parseQuantity } from '@/lib/portions'
 import { preppedIngredients } from '@/lib/prepped'
 import { withShortcut } from '@/lib/shortcuts'
@@ -130,4 +131,27 @@ export function buildGroceryList(meals: MealLike[], opts: { prepped?: boolean } 
     out[l.category].push({ name: l.name, quantity, unit, category: l.category, searchTerm: l.searchTerm })
   }
   return out
+}
+
+/**
+ * Kill switch (Sarah, Nov 25 2026): app_kv key 'list_builder' = 'code' | 'ai'. Missing or anything else = 'ai',
+ * which is exactly the old behavior (plans save with an empty list; /api/generate-list asks the AI). Flip it with:
+ *   insert into app_kv (key, value, updated_at) values ('list_builder', '"code"', now())
+ *     on conflict (key) do update set value = excluded.value, updated_at = now();
+ * Back to AI: the same with '"ai"'. New weeks follow within 30 s, no redeploy. A list already built in code stays on
+ * its plan: to rebuild one family's list with AI, clear it (update meal_plans set grocery_list = '{}' where
+ * id = '<plan id>') and their list page builds it again on the next visit. Server only (reads app_kv).
+ */
+export type ListBuilder = 'code' | 'ai'
+let builderCache: { at: number; mode: ListBuilder } | null = null
+export async function listBuilderMode(admin: SupabaseClient): Promise<ListBuilder> {
+  if (builderCache && Date.now() - builderCache.at < 30_000) return builderCache.mode
+  let mode: ListBuilder = 'ai'
+  try {
+    const { data } = await admin.from('app_kv').select('value').eq('key', 'list_builder').maybeSingle()
+    const v = data?.value as unknown
+    if (v === 'code' || (!!v && typeof v === 'object' && (v as { mode?: unknown }).mode === 'code')) mode = 'code'
+  } catch { /* the default stays 'ai' */ }
+  builderCache = { at: Date.now(), mode }
+  return mode
 }
