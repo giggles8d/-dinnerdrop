@@ -37,6 +37,21 @@ eq('counts round up to whole',
 eq('no amount keeps the text', lines(buildGroceryList([meal(ing('salt', 'to taste', ''))])), ['to taste  salt'])
 eq('missing section is guessed, search term defaults to the name',
   Object.values(buildGroceryList([meal({ name: 'milk', quantity: '1', unit: 'gallon' })])).flat()[0].searchTerm, 'milk')
+eq('a unit that names the item counts and merges ("3 avocados" avocado, "2 lime" lime, "3 peppers" bell peppers)',
+  lines(buildGroceryList([meal(ing('avocados', '5', 'count', 'Produce'), ing('lime', '2', 'count', 'Produce'), ing('bell peppers', '3', 'count', 'Produce')), meal(ing('avocado', '3', 'avocados', 'Produce'), ing('lime', '2', 'lime', 'Produce'), ing('bell peppers', '3', 'peppers', 'Produce'), ing('onion', '2', 'onion', 'Produce'))])),
+  ['8 count avocados', '4 count lime', '6 count bell peppers', '2 count onion'])
+eq('fillets (6 oz each) become a weight and add to the same item by weight',
+  lines(buildGroceryList([meal(ing('salmon', '2', 'fillets (6 oz each)', 'Meat & Seafood'), ing('strip steak', '12', 'oz', 'Meat & Seafood')), meal(ing('strip steak', '2', 'steaks (6 oz each)', 'Meat & Seafood'))])),
+  ['12 oz salmon', '1 1/2 lb strip steak'])
+eq('a bare whole-item noun unit counts (2 fillets halibut)',
+  lines(buildGroceryList([meal(ing('halibut', '2', 'fillets', 'Meat & Seafood'))])),
+  ['2 count halibut'])
+eq('counted garlic cloves merge with garlic by the clove',
+  lines(buildGroceryList([meal(ing('garlic', '3', 'cloves', 'Produce')), meal(ing('garlic cloves', '2', 'count', 'Produce')), meal(ing('garlic clove', '1', '', 'Produce'), ing('garlic cloves', '2', 'cloves', 'Produce'))])),
+  ['8 clove garlic'])
+eq('real store units are untouched (head of lettuce, can of beans, bunch of cilantro)',
+  lines(buildGroceryList([meal(ing('lettuce', '1', 'head', 'Produce'), ing('black beans', '2', 'cans'), ing('cilantro', '1', 'bunch', 'Produce'))])),
+  ['1 head lettuce', '1 bunch cilantro', '2 can black beans'])
 eq('needsAi: structured week', needsAi([ing('a', '1', 'cup'), ing('b', '2', 'lb')]), false)
 eq('needsAi: free-text week', needsAi([{ name: 'some chicken' }, { name: 'veg' }, ing('rice', '1', 'cup')]), true)
 eq('prebuiltList: free-text week returns {} (page falls back to AI)', prebuiltList([meal({ name: 'stuff' }, { name: 'things' })], false), {})

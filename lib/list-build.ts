@@ -58,6 +58,25 @@ const UNIT_ALIAS: Record<string, string> = {
   each: 'count', whole: 'count', counts: 'count', pieces: 'piece', large: 'count', medium: 'count', small: 'count',
 }
 const TSP: Record<string, number> = { tsp: 1, tbsp: 3, cup: 48 }
+
+/*
+ * Units that are really the item itself (11-week check, Nov 25 2026): recipes store "3 peppers" bell peppers,
+ * "2 onion" onion, "3 avocados" avocado, "2 fillets (6 oz each)" salmon. Kept as their own unit they made a second
+ * line next to the counted one ("5 count avocados" + "3 avocados avocado") and went to Instacart as 1 package.
+ * Now a unit that names the item (or a whole-item noun like fillet) counts, and "(6 oz each)" becomes a weight.
+ * Real store units (can, head, bunch, clove…) are never touched.
+ */
+const STORE_UNITS = new Set(['can', 'jar', 'package', 'bag', 'box', 'bottle', 'bunch', 'head', 'slice', 'sprig', 'stalk', 'stick',
+  'clove', 'piece', 'pint', 'quart', 'gallon', 'container', 'carton', 'loaf', 'block', 'dozen', 'pinch', 'dash', 'leaf', 'ear', 'strip', 'link', 'sheet'])
+const ITEM_NOUNS = new Set(['fillet', 'filet', 'breast', 'thigh', 'drumstick', 'chop', 'steak', 'pepper', 'onion', 'avocado', 'lime', 'lemon',
+  'potato', 'tomato', 'egg', 'apple', 'banana', 'orange', 'zucchini', 'cucumber', 'carrot', 'shallot', 'jalapeno', 'tortilla', 'bun', 'roll'])
+const singular = (w: string) => w.toLowerCase().replace(/(o|ch|sh|x)es$/, '$1').replace(/ies$/, 'y').replace(/s$/, '')
+function isItemUnit(unit: string, name: string): boolean {
+  const u = singular(unit)
+  if (!u || u === 'count' || STORE_UNITS.has(u) || u in TSP || u in OZ) return false
+  return ITEM_NOUNS.has(u) || name.toLowerCase().split(/[^a-z]+/).some((w) => w && singular(w) === u)
+}
+const EACH = /^([a-z]+)\s*\(\s*([\d./ ]+)\s*(oz|ounces?|lbs?|pounds?)\s+each\s*\)$/i
 const OZ: Record<string, number> = { oz: 1, lb: 16 }
 
 function unitOf(u: string | null | undefined): string {
@@ -101,11 +120,24 @@ export function buildGroceryList(meals: MealLike[], opts: { prepped?: boolean } 
   type Line = { name: string; fam: string; unit: string; base: number | null; raw: string; category: GroceryCategory; searchTerm: string }
   const lines: Line[] = []
   for (const ing of weekIngredients(meals, !!opts.prepped)) {
-    const name = String(ing?.name ?? '').trim()
+    let name = String(ing?.name ?? '').trim()
     if (!name) continue
-    const unit = unitOf(ing.unit)
+    let n = parseQuantity(ing.quantity)
+    let rawUnit = String(ing.unit ?? '').trim()
+    // "2 fillets (6 oz each)" → 12 oz, so it adds up with the same fish or steak given by weight.
+    const each = EACH.exec(rawUnit)
+    const per = each ? parseQuantity(each[2]) : null
+    if (each && n != null && per != null) { n = n * per; rawUnit = each[3] }
+    let unit = unitOf(rawUnit)
+    // "3 peppers" bell peppers, "2 lime" lime: the unit is the item, so it's a count.
+    if (isItemUnit(unit, name)) unit = 'count'
+    // "garlic cloves" (counted, or "2 clove garlic cloves"): the same as garlic by the clove (it made a second
+    // garlic line in 5 of 11 weeks).
+    if (/\bcloves?$/i.test(name) && (unit === 'count' || unit === '' || unit === 'clove') && name.replace(/\s*\bcloves?$/i, '').trim()) {
+      name = name.replace(/\s*\bcloves?$/i, '').trim()
+      unit = 'clove'
+    }
     const fam = family(unit)
-    const n = parseQuantity(ing.quantity)
     const base = n == null ? null : fam === 'vol' ? n * TSP[unit] : fam === 'wt' ? n * OZ[unit] : n
     const same = lines.find((l) => l.fam === fam && sameItem(l.name, name))
     if (same) {
