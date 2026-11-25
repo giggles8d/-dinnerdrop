@@ -82,6 +82,8 @@ export default function GroceryListPage() {
   const [neverSent, setNeverSent] = useState(false)
   const [offerStatus, setOfferStatus] = useState<string | null>(null)
   const [pendingSend, setPendingSend] = useState<{ id: string; at: string; store: string | null } | null>(null)
+  // The store of the family's most recent send (any age), to put Walmart on top for Walmart families (Nov 25 2026).
+  const [lastStore, setLastStore] = useState<string | null>(null)
   // Always-there "Clear list" with an in-page confirm + Undo (Sarah, Nov 25 2026: the sent-order banner
   // only showed for 3 days on the week that was sent, so she couldn't clear a list she'd already shopped).
   const [clearAsk, setClearAsk] = useState(false)
@@ -176,6 +178,7 @@ export default function GroceryListPage() {
       .then(({ data: hs }) => {
         const h = hs?.[0]
         setNeverSent(!h)
+        setLastStore(h?.store ?? null)
         if (h && h.actual_total == null && Date.now() - new Date(h.created_at).getTime() < 5 * 86400000) setAskActual({ id: h.id, est: h.est_total == null ? null : Number(h.est_total) })
         let dismissed = false
         try { dismissed = !!h && localStorage.getItem(`dd.send.${h.id}`) === 'keep' } catch { /* ignore */ }
@@ -493,6 +496,9 @@ export default function GroceryListPage() {
     return { [a]: pick(a), [b]: pick(b) } as Record<string, ReturnType<typeof shoppableItems>>
   }, [split, splitStores, items])
   const shoppableCount = Object.values(shoppable).reduce((n, arr) => n + arr.length, 0)
+  // Walmart families: last send went to Walmart, or Walmart is one of their stores (Settings → Stores). Setup's shop
+  // screen only asks online vs in store, so it can't tell Walmart from Instacart. Kroger stays where it was.
+  const walmartFirst = lastStore === 'Walmart' || myStores.some((s) => /walmart/i.test(s.name))
   const haveCount = items.filter((i) => i.have).length
 
   async function handleKrogerCart() {
@@ -649,10 +655,17 @@ export default function GroceryListPage() {
             <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-2 min-h-[44px] text-sm text-muted-foreground underline">or order online: Instacart · Walmart · Kroger ↓</button>
           </div>
         )}
+        {/* Send feel v1 (Sarah, Nov 25 2026): 93 of 149 families who saw the Instacart button sent nowhere. The item
+            count stays big; the dollar estimate is body size and says it's typical prices; the button reads as saving a
+            list (nothing is bought until checkout); "Text me this list" is a full option; families who shop at Walmart
+            (last send was Walmart, or Walmart in their stores) get the Walmart button on top. lib/send-variant tags the events. */}
         {shoppableCount > 0 && !listSentHere && !inStore && (
           <div ref={heroRef} className="mb-4 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5 print:hidden">
             {justPicked && <p className="text-xs font-semibold text-primary mb-1">✓ Your dinners are set. One step left.</p>}
-            <p className="font-heading font-bold text-2xl text-foreground">{shoppableCount} items{storeEst > 0 ? ` · about $${Math.round(storeEst)}` : ''}</p>
+            <p className="text-foreground">
+              <span className="font-heading font-bold text-2xl">{shoppableCount} items</span>
+              {storeEst > 0 && <span className="text-base text-muted-foreground"> · about ${Math.round(storeEst)} at typical prices</span>}
+            </p>
             <p className="text-sm text-muted-foreground mt-1">Amounts are matched to store package sizes, so your cart fills in ready to check out.</p>
             {neverSent && !isPartner && weekendOfferOpen() && offerStatus !== 'active' && offerStatus !== 'trialing' && (
               <p className="mt-2 text-sm font-semibold text-foreground">🦃 Send this list to Instacart by Sunday 11:59 PM and get {WEEKEND_OFFER.label}. No card.</p>
@@ -660,12 +673,14 @@ export default function GroceryListPage() {
             <div className="mt-4">
               {splitLists && splitStores ? (
                 <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="w-full sm:w-auto px-8 py-3 rounded-full bg-[#003D29] text-[#FAF1E5] font-semibold">Send to your carts ↓</button>
+              ) : walmartFirst ? (
+                <WalmartButton groceryList={shoppable} weekStart={weekStart ?? undefined} onSent={() => { setListSentHere(true); afterSent() }} primary />
               ) : (
                 <InstacartButton groceryList={shoppable} estTotal={storeEst} weekStart={weekStart ?? undefined} onSent={() => { setListSentHere(true); afterSent() }} familyStores={myStores.map((s) => s.name)} />
               )}
             </div>
             {!splitLists && <InStoreSend estTotal={storeEst} weekStart={weekStart ?? undefined} variant="secondary" />}
-            <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-1 min-h-[44px] text-sm text-muted-foreground underline">or Walmart · Kroger ↓</button>
+            <button onClick={() => sendRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="mt-1 min-h-[44px] text-sm text-muted-foreground underline">{walmartFirst && !splitLists ? 'or Instacart · Kroger ↓' : 'or Walmart · Kroger ↓'}</button>
           </div>
         )}
 

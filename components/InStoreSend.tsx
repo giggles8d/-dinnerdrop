@@ -5,13 +5,14 @@ import { MessageSquare, Mail, Check } from 'lucide-react'
 import { track } from '@/lib/activation'
 import { fireCartSent } from '@/lib/cart-conversion'
 import { tapHaptic } from '@/lib/native'
+import { SEND_VARIANT } from '@/lib/send-variant'
 
 /**
  * "Text me this list" / "Email me this list" (Nov 22 2026 review, Sarah approved). The send for families who shop
  * in the store: a text when they have a verified number with texting on, else an email, with a link that opens the
  * list on their phone with no sign-in (/list). The server records it as a send (grocery_handoffs 'In store').
  *   variant 'primary'   → the main action on the list for in-store families
- *   variant 'secondary' → a quiet text button under the Instacart button for everyone else
+ *   variant 'secondary' → an outlined button under the store button for everyone else (a full option since Nov 25 2026)
  *   variant 'compact'   → the pinned bottom bar
  */
 type Route = { channel: 'sms' | 'email' | null; hint: string }
@@ -37,7 +38,7 @@ export default function InStoreSend({ estTotal, weekStart, onSent, variant = 'pr
     tapHaptic()
     setState('sending')
     setError(null)
-    track('cta_tap', { id: `instore_send_${variant}`, channel: route?.channel })
+    track('cta_tap', { id: `instore_send_${variant}`, channel: route?.channel, variant: SEND_VARIANT })
     try {
       const r = await fetch('/api/send-list', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ estTotal, weekStart }) })
       const j = await r.json().catch(() => ({})) as { error?: string; duplicate?: boolean }
@@ -60,10 +61,14 @@ export default function InStoreSend({ estTotal, weekStart, onSent, variant = 'pr
         {state === 'sent' ? (
           <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary" role="status"><Check className="w-4 h-4" aria-hidden="true" />{sentText}</p>
         ) : (
-          <button type="button" onClick={send} disabled={state === 'sending'} className={`inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-primary underline underline-offset-4 disabled:opacity-60 ${press}`}>
-            <Icon className="w-4 h-4" aria-hidden="true" />
-            {state === 'sending' ? 'Sending…' : `Shopping in the store? ${label}`}
-          </button>
+          // A full option, not a fallback link (Sarah, Nov 25 2026, send_feel_v1): an in-store list counts as a send.
+          <>
+            <button type="button" onClick={send} disabled={state === 'sending'} className={`inline-flex min-h-[46px] items-center justify-center gap-2 px-5 rounded-full border-2 border-primary bg-white text-sm font-semibold text-primary disabled:opacity-60 ${press}`}>
+              <Icon className="w-4 h-4" aria-hidden="true" />
+              {state === 'sending' ? 'Sending…' : label}
+            </button>
+            <p className="text-[11px] text-muted-foreground mt-1">For the store: check items off on your phone as you shop.</p>
+          </>
         )}
         {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
       </div>
