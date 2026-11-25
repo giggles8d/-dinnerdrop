@@ -5,6 +5,7 @@ import { openExternal, tapHaptic } from '@/lib/native'
 import { track } from '@/lib/activation'
 import { fireCartSent } from '@/lib/cart-conversion'
 import { SEND_VARIANT } from '@/lib/send-variant'
+import InAppBrowserNotice, { inAppBrowserName } from '@/components/InAppBrowserNotice'
 import type { GroceryCategory, GroceryItem } from '@/types'
 
 interface InstacartButtonProps {
@@ -44,12 +45,15 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
   const limitedName = limited[0]?.replace(/\b\w/g, (c) => c.toUpperCase())
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  // Inside Facebook/Instagram's browser, when the Instacart tab was blocked: the notice, with the link to try here.
+  const [iabLink, setIabLink] = useState<string | null>(null)
 
   async function handleSendToInstacart() {
     tapHaptic()
     const tappedAt = Date.now()
     setLoading(true)
     setError(null)
+    setIabLink(null)
 
     try {
       const res = await fetch('/api/instacart', {
@@ -77,6 +81,9 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
         // Measure how often the browser blocks the Instacart tab (Nov 21 2026): meta.ms = tap-to-open wait.
         track('cta_tap', { id: how === 'blocked' ? 'instacart_tab_blocked' : 'instacart_tab_opened', how, ms: Date.now() - tappedAt, variant: SEND_VARIANT }, { beacon: how === 'blocked' })
         fireCartSent(store ? `Instacart · ${store}` : 'Instacart', estTotal)
+        // Blocked inside an app's built-in browser (Nov 25 2026): explain and offer Safari/Chrome, or Instacart here.
+        // onSent waits for their choice, so the button and this notice stay on screen.
+        if (how === 'blocked' && inAppBrowserName(navigator.userAgent || '')) { setIabLink(data.link); return }
         onSent?.()
         // Blocked: open Instacart in this tab instead, so the tap still gets them there. Only runs when the new tab failed.
         if (how === 'blocked') window.location.href = data.link
@@ -122,6 +129,13 @@ export default function InstacartButton({ groceryList, estTotal, weekStart, stor
             {limitedName} carries fewer brands, so Instacart swaps more items (e.g. queso fresco for cotija). Check anything marked <b>Close Match</b> and tap <b>Show alternatives</b> before checkout.
           </p>
         </details>
+      )}
+
+      {iabLink && (
+        // In the pinned bar there's no room under the button: the notice floats just above the bar.
+        <div className={compact ? 'fixed inset-x-3 bottom-24 z-50 mx-auto max-w-2xl shadow-xl rounded-xl' : ''}>
+          <InAppBrowserNotice instacartLink={iabLink} onContinue={() => onSent?.()} />
+        </div>
       )}
 
       {error && (
