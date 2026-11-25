@@ -86,6 +86,8 @@ function DashboardContent() {
   // Answers from the first-visit setup, shown back once the first week is on screen.
   const [firstAnswers, setFirstAnswers] = useState<QuickSetupAnswers | null>(null)
   const autoGenFired = useRef(false)
+  // True while this visit is building the family's very first week (instantFirstPlan and its AI fallback).
+  const firstPlanFlow = useRef(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
@@ -262,24 +264,37 @@ function DashboardContent() {
   }, [])
 
   /** Never ordered (Sarah, Nov 9 2026): open as "pick your week" from 12–15 dinners, their current week pre-checked. */
-  function offerOptions(options: Meal[], current: Meal[], source: string) {
-    if (options.length < 12 || !current.length) return
+  function offerOptions(options: Meal[], current: Meal[], source: string): boolean {
+    if (options.length < 12 || !current.length) return false
     const n = current.length
     const nights = current.map((m) => String(m.day ?? '').slice(0, 3).toLowerCase()).filter((d) => ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].includes(d)) as PlanShape['cookDays']
     setPendingMeals(options)
     setSelectedIds(new Set(options.slice(0, n).map((m) => m.day)))
     setPlanShape((s) => ({ ...s, dinnersPerWeek: n, cookDays: nights.length === n ? nights : s.cookDays }))
     track('first_week_options', { options: options.length, picks: n, source })
+    return true
+  }
+
+  /**
+   * After the family's first week, go straight to the grocery list (Sarah, Nov 25 2026: competitor review action 3).
+   * Picking from options already did this (Nov 10); families who got a week with no options stayed on the dashboard
+   * and had to find "Build my grocery list": of 131 such families since Nov 10, 2 opened the list and none sent.
+   */
+  function firstPlanToList() {
+    firstPlanFlow.current = false
+    track('picked_to_list', { source: 'first_plan' })
+    router.push('/grocery-list?picked=1')
   }
 
   async function instantFirstPlan() {
+    firstPlanFlow.current = true
     setLoading(true)
     try {
       const res = await fetch('/api/first-plan', { method: 'POST' })
       const r = await res.json().catch(() => null) as { ok?: boolean; meals?: Meal[]; totalCost?: number; options?: Meal[]; pickCount?: number } | null
       if (r?.ok && r.meals?.length) {
         // 12–15 dinners to choose from, with the starter week pre-picked (the saved week stays as a fallback).
-        if (r.options) offerOptions(r.options, r.meals, 'first')
+        const offered = r.options ? offerOptions(r.options, r.meals, 'first') : false
         setMeals(r.meals)
         setListSent(false)
         setTotalCost(r.totalCost ?? r.meals.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0))
@@ -288,6 +303,9 @@ function DashboardContent() {
         setPlanCount(1)
         localStorage.setItem('current-meals', JSON.stringify(r.meals))
         setLoading(false)
+        // The week is already saved; with nothing to pick, the next step is the list. (Not on the gift-card start
+        // screen, which has its own next step.)
+        if (!offered && !giftStart) firstPlanToList()
         return
       }
     } catch {
@@ -581,7 +599,9 @@ function DashboardContent() {
       const fromOptions = pendingMeals[0]?.day === 'O1'
       setPendingMeals([])
       setSelectedIds(new Set())
-      if (fromOptions) { track('picked_to_list', { dinners: confirmed.length }); router.push('/grocery-list?picked=1') }
+      if (fromOptions) { firstPlanFlow.current = false; track('picked_to_list', { dinners: confirmed.length }); router.push('/grocery-list?picked=1') }
+      // First week built by the AI fallback (confirmed here, not from options): also straight to the list (Nov 25 2026).
+      else if (firstPlanFlow.current) firstPlanToList()
     } catch (error) {
       console.error('Error confirming plan:', error)
       setGenerateError('Something went wrong saving your plan. Please try again.')

@@ -23,6 +23,12 @@ import { budgetOptions, defaultBudget } from '@/lib/budget-math'
  * Screen 8 (Nov 22 2026 review, Sarah approved): setup never asked how or when a family shops, so the only send was
  * "fill an online cart right now". The answer picks the main action on the grocery list (cart vs "Text me this
  * list") and the shop-day morning nudge (lib/shop-day). Both answers start filled in; nothing is required.
+ *
+ * Shop screen first (Sarah, Nov 25 2026: competitor review action 2). eMeals asks how and where you shop before
+ * anything else; here it was screen 8 of 9, and families who tapped "Show me my dinners now" earlier never answered,
+ * so they got no shop day and the default store. The screens keep their numbers (`screen`, also the
+ * walkthrough_step event id, so old and new data compare); ORDER only changes the order they're shown in (`step` is
+ * the position). The shop answer is saved once the family taps a choice or presses Next on it, not on a skip.
  */
 
 type Role = 'adult' | 'kid'
@@ -31,7 +37,10 @@ type ShopHow = 'online' | 'store'
 type ShopDay = Weekday | 'varies'
 
 const STEPS = 9
-const SHOP_STEP = 7
+const SHOP_SCREEN = 7
+// Screen shown at each position: shop first, then goal, table, styles, likes, mix, week, budget, texting, summary.
+const ORDER = [SHOP_SCREEN, 0, 1, 2, 3, 4, 5, 6, 8, STEPS] as const
+const DRAFT_VERSION = 2 // drafts saved before the reorder stored a position in the old order; don't restore those
 // Sunday first: the order families think about the week in.
 const SHOP_DAYS: Weekday[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 const SHOP_HOW: Array<{ key: ShopHow; label: string; blurb: string }> = [
@@ -82,7 +91,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   const [styles, setStyles] = useState<string[]>([])
   // A style picked on a landing page before sign-up (lib/picked-style) starts out selected.
   // Which screen each family reaches, so we can see where the first visit loses people (Nov 21 2026).
-  useEffect(() => { if (!demo) trackOnce('walkthrough_step', { id: String(step) }) }, [demo, step])
+  useEffect(() => { if (!demo) trackOnce('walkthrough_step', { id: String(ORDER[step]), pos: step }) }, [demo, step])
   useEffect(() => { if (demo) return; const k = takePickedStyle(); if (k) setStyles((xs) => (xs.length ? xs : [k])) }, [demo])
   const [diets, setDiets] = useState<string[]>([])
   const [mix, setMix] = useState<Partial<Record<MixKey, number>> | null>(null)
@@ -99,7 +108,10 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   const [voteDay, setVoteDay] = useState<Weekday>('sat')
   const [shopHow, setShopHow] = useState<ShopHow>('online')
   const [shopDay, setShopDay] = useState<ShopDay>('sun')
+  // True once the family answered the shop screen (tapped a choice or pressed Next there). Only then is it saved.
+  const [shopAnswered, setShopAnswered] = useState(false)
   const [saving, setSaving] = useState(false)
+  const screen = ORDER[Math.min(Math.max(step, 0), STEPS)]
 
   const named = people.map((p, i) => ({ ...p, i })).filter((p) => p.name.trim())
   const familySize = Math.max(people.length, 1)
@@ -115,7 +127,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   // Each screen starts at its top (a long screen used to leave the next one scrolled halfway down).
   const topRef = useRef<HTMLDivElement>(null)
   const toTop = () => setTimeout(() => topRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0)
-  const next = () => { setStep((s) => Math.min(s + 1, STEPS)); toTop() }
+  const next = () => { if (screen === SHOP_SCREEN) setShopAnswered(true); setStep((s) => Math.min(s + 1, STEPS)); toTop() }
   const back = () => { setStep((s) => Math.max(s - 1, 0)); toTop() }
   const [allergyOpen, setAllergyOpen] = useState(false)
 
@@ -130,7 +142,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
       if (!raw) return
       const d = JSON.parse(raw) as Record<string, unknown>
       if (!d || Date.now() - Number(d.at || 0) > 14 * 86400000) return
-      if (typeof d.step === 'number') setStep(Math.min(Math.max(d.step, 0), STEPS))
+      if (typeof d.step === 'number' && d.v === DRAFT_VERSION) setStep(Math.min(Math.max(d.step, 0), STEPS))
+      if (d.shopAnswered === true) setShopAnswered(true)
       if (d.goal !== undefined) setGoal(d.goal as Goal | null)
       if (Array.isArray(d.people) && d.people.length) setPeople(d.people as Person[])
       if (Array.isArray(d.styles)) setStyles(d.styles as string[])
@@ -153,9 +166,9 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   useEffect(() => {
     if (demo || !restored.current) return
     try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify({ at: Date.now(), step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay, shopHow, shopDay }))
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ v: DRAFT_VERSION, at: Date.now(), step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay, shopHow, shopDay, shopAnswered }))
     } catch { /* ignore */ }
-  }, [demo, step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay, shopHow, shopDay])
+  }, [demo, step, goal, people, styles, diets, mix, every, nights, busy, sunday, sundayTimes, extraMonday, sundayIdeas, pickedBudget, storeBrands, voteDay, shopHow, shopDay, shopAnswered])
 
   async function save() {
     setSaving(true)
@@ -173,14 +186,14 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
             mix, mixEvery: every, cookDays: nights, busyMinutes: busy,
             sunday: { on: sunday, times: sundayTimes, options: sundayIdeas, extraForMonday: extraMonday },
             storeBrands, voteDay,
-            // Only once they've seen the shop screen: a family who left earlier never answered it.
-            ...(step >= SHOP_STEP ? { shop: { how: shopHow, day: shopDay } } : {}),
+            // Only if they answered the shop screen: a family who skipped past it never told us.
+            ...(shopAnswered ? { shop: { how: shopHow, day: shopDay } } : {}),
           }),
         })
       } catch {
         // Never block the first plan on a profile write; defaults still work.
       }
-      trackOnce('quick_setup_done', { walkthrough: true, step })
+      trackOnce('quick_setup_done', { walkthrough: true, step: screen, pos: step, shopAnswered })
     }
     onDone(answers)
   }
@@ -209,19 +222,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         <span className="text-xs text-muted-foreground w-12 text-right">{step < STEPS ? `${step + 1} of ${STEPS}` : 'Done'}</span>
       </div>
 
-      {step === 0 && (
+      {screen === 0 && (
         <div>
-          <div className="mb-5">
-            <div className="grid grid-cols-3 gap-2">
-              {PREVIEW.map((d) => (
-                <div key={d.name} className="overflow-hidden rounded-xl bg-muted">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={d.img} alt={d.name} loading="eager" className="block w-full aspect-[4/3] object-cover" />
-                </div>
-              ))}
-            </div>
-            <p className="mt-2 text-xs text-muted-foreground">Your week will look like this: 5 dinners and one grocery list, ready to send to your store. A few quick taps so it fits your family.</p>
-          </div>
           {head('What would make dinner easier?', 'Pick the one that sounds most like your house.')}
           <div className="grid gap-2 mt-5">
             {GOALS.map((g) => (
@@ -236,7 +238,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === 1 && (
+      {screen === 1 && (
         <div>
           {head('Who’s at the table?', 'Portions and the grocery list are sized to your table. Names let everyone vote by text and keep their own no-list.')}
           <div className="mt-5 space-y-2">
@@ -264,7 +266,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === 2 && (
+      {screen === 2 && (
         <div>
           {head('Your style', 'Pick up to 3. Your first pick counts most.')}
           <div className="flex flex-wrap gap-2 mt-5">
@@ -281,7 +283,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === 3 && (
+      {screen === 3 && (
         <div>
           {head('Likes and no-thanks', 'Tap for each person. This keeps dinners they won’t eat off the plan.')}
           {(() => {
@@ -315,7 +317,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === 4 && (
+      {screen === 4 && (
         <div>
           {head('Your weekly mix', 'How many dinners of each kind, and how often. Or leave it to us.')}
           <div className="flex flex-wrap gap-2 mt-5">
@@ -356,7 +358,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === 5 && (
+      {screen === 5 && (
         <div>
           {head('Your week', 'Which nights you cook, how long you have, and Sunday dinner.')}
           <Label>Nights you cook</Label>
@@ -385,7 +387,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === 6 && (
+      {screen === 6 && (
         <div>
           {head('Budget', 'Every week is built to fit it.')}
           <Label>What is your weekly food budget?</Label>
@@ -400,12 +402,24 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === SHOP_STEP && (
+      {screen === SHOP_SCREEN && (
         <div>
+          {/* First screen since Nov 25 2026, so it carries the "what you're setting up" photos the goal screen had. */}
+          <div className="mb-5">
+            <div className="grid grid-cols-3 gap-2">
+              {PREVIEW.map((d) => (
+                <div key={d.name} className="overflow-hidden rounded-xl bg-muted">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={d.img} alt={d.name} loading="eager" className="block w-full aspect-[4/3] object-cover" />
+                </div>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">Your week will look like this: 5 dinners and one grocery list, ready to send to your store. A few quick taps so it fits your family.</p>
+          </div>
           {head('How do you shop?', 'So your list reaches you the right way, on the right day.')}
           <div role="radiogroup" aria-label="How you get groceries" className="grid gap-2 mt-5">
             {SHOP_HOW.map((o) => (
-              <button key={o.key} type="button" role="radio" aria-checked={shopHow === o.key} onClick={() => setShopHow(o.key)}
+              <button key={o.key} type="button" role="radio" aria-checked={shopHow === o.key} onClick={() => { setShopHow(o.key); setShopAnswered(true) }}
                 className={`w-full min-h-[44px] text-left px-4 py-3.5 rounded-2xl border-2 text-sm transition-colors touch-manipulation ${shopHow === o.key ? 'bg-primary text-primary-foreground border-primary' : 'bg-white border-gray-200 hover:border-primary/60'}`}>
                 <span className="font-semibold">{shopHow === o.key ? '✓ ' : ''}{o.label}</span>
                 <span className={`block text-xs mt-0.5 ${shopHow === o.key ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{o.blurb}</span>
@@ -414,8 +428,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
           </div>
           <Label>Usually on</Label>
           <div role="group" aria-label="Day you usually shop" className="flex flex-wrap gap-2">
-            {SHOP_DAYS.map((d) => <Pick key={d} on={shopDay === d} onClick={() => setShopDay(d)}>{WEEKDAY_LABEL[d].slice(0, 3)}</Pick>)}
-            <Pick on={shopDay === 'varies'} onClick={() => setShopDay('varies')}>It varies</Pick>
+            {SHOP_DAYS.map((d) => <Pick key={d} on={shopDay === d} onClick={() => { setShopDay(d); setShopAnswered(true) }}>{WEEKDAY_LABEL[d].slice(0, 3)}</Pick>)}
+            <Pick on={shopDay === 'varies'} onClick={() => { setShopDay('varies'); setShopAnswered(true) }}>It varies</Pick>
           </div>
           <p className="text-xs mt-2 text-primary font-medium">
             {shopDay === 'varies'
@@ -426,7 +440,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === 8 && (
+      {screen === 8 && (
         <div>
           {head('Let the family vote', 'Everyone gets the dinner ideas by text, replies with numbers, and anyone can text ADD milk to put it on the list. All optional. After setup you can also send them a link to join themselves.')}
           <div className="mt-5 space-y-2">
@@ -444,7 +458,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         </div>
       )}
 
-      {step === STEPS && (
+      {screen === STEPS && (
         <div>
           <div className="text-3xl">🎉</div>
           {head('Here’s what we’ll plan around', shopHow === 'store'

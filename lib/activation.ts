@@ -8,7 +8,7 @@ export const ACTIVATION_STEPS = [
   'dashboard_view',      // opened the dashboard (once per browser session)
   'first_plan_saved',    // first week saved for them (meta.source: library | ai)
   'first_plan_failed',
-  'picked_to_list',      // confirmed their picks, sent to the list page (Nov 10 2026)
+  'picked_to_list',      // sent to the list page after picks (Nov 10 2026); meta.source 'first_plan' = straight after the first week (Nov 25 2026)
   'pantry_check_used',   // kept pantry staples off the cart (components/PantryCheck, Nov 10 2026)
   'first_week_options',  // first week shown as 12–15 dinners to pick from (Nov 9 2026)   // instant plan couldn't be built; fell back to AI generation
   'starter_week_built',  // left before setup; we built a week from their sign-up answers (lib/starter-week)
@@ -26,7 +26,7 @@ export const ACTIVATION_STEPS = [
   'page_closed',         // page unloaded (meta.page, meta.t, meta.scroll, meta.hidden: was it backgrounded first)
   'cta_tap',             // tapped a tracked button (meta.id)
   'plan_error',          // plan generation failed in the browser (meta.message)
-  'walkthrough_step',    // reached a first-visit setup screen (meta.id = screen number, 0-based) — shows where families quit (Nov 21 2026)
+  'walkthrough_step',    // reached a first-visit setup screen (meta.id = screen number, 0-based; meta.pos = position shown, since the Nov 25 2026 reorder put screen 7 first) — shows where families quit (Nov 21 2026)
   'app_open',            // opened inside the native iPhone/Android app (meta.platform, meta.page), once per session (Nov 14 2026)
   'list_link_open',      // opened the no-sign-in /list link (app/list), not a send; deduped per 6 hours (Nov 22 2026, Sarah approved)
   'list_item_checked',   // ticked a line off on the /list page while shopping; once per 12 hours (Nov 22 2026)
