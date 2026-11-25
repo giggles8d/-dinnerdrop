@@ -186,11 +186,21 @@ export default function GroceryListPage() {
         else setPendingSend(null)
       })
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('subscription_status, is_beta_member, family_until, household_id, settings, weekly_budget, family_size')
-      .eq('id', uid)
-      .single()
+    // Profile and the newest plan together, not one after the other (first-list speed, Nov 25 2026).
+    const [{ data: profile }, latest] = await Promise.all([
+      supabase
+        .from('profiles')
+        .select('subscription_status, is_beta_member, family_until, household_id, settings, weekly_budget, family_size')
+        .eq('id', uid)
+        .single(),
+      supabase
+        .from('meal_plans')
+        .select('*')
+        .eq('user_id', uid)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single(),
+    ])
 
     const settings = mergeSettings(profile?.settings)
 
@@ -201,24 +211,18 @@ export default function GroceryListPage() {
     setStockUpOn(settings.deals.stockUp)
     setKrogerLoc({ id: settings.stores.krogerLocationId, name: settings.stores.krogerLocationName })
     if (profile) {
-      // Kroger: ask the server (tokens never come to the page; an expired 30-min token still counts while it can be refreshed).
-      const kroger = await fetch('/api/kroger/status', { cache: 'no-store' }).then((r) => r.json()).catch(() => ({ connected: false })) as { connected?: boolean }
-      setKrogerConnected(!!kroger.connected)
       const status = profile.subscription_status
       const familyUntil = profile.family_until ? new Date(profile.family_until) > new Date() : false
-      setIsFamily(status === 'active' || status === 'trialing' || status === 'past_due' || !!profile.is_beta_member || familyUntil || !!kroger.connected)
+      setIsFamily(status === 'active' || status === 'trialing' || status === 'past_due' || !!profile.is_beta_member || familyUntil)
+      // Kroger: ask the server (tokens never come to the page; an expired 30-min token still counts while it can be refreshed).
+      // In the background now: the list no longer waits on it (Nov 25 2026). A connected Kroger account also counts as Family.
+      fetch('/api/kroger/status', { cache: 'no-store' }).then((r) => r.json()).catch(() => ({ connected: false }))
+        .then((k: { connected?: boolean }) => { setKrogerConnected(!!k.connected); if (k.connected) setIsFamily(true) })
       setOfferStatus(status ?? null)
       setHouseholdId(profile.household_id ?? null)
       setBudget(Number(String(profile.weekly_budget ?? '').replace(/[^0-9.]/g, '')) || 0)
     }
 
-    const latest = await supabase
-      .from('meal_plans')
-      .select('*')
-      .eq('user_id', uid)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single()
     let plan = latest.data
 
     // Shopping trips: pick this trip's plan (tab) instead of simply the newest plan.
@@ -264,6 +268,14 @@ export default function GroceryListPage() {
     // 1. Make sure the plan has a deduplicated list (generated once per plan).
     let planList: GroceryListData | null = plan.grocery_list && Object.keys(plan.grocery_list).length > 0 ? plan.grocery_list : null
     const rebuilt = !planList // the plan changed (swap, added dinner, servings) and its list was just rebuilt
+    // This week's rows, pantry and staples load while the list is (re)built, not after it (Nov 25 2026). The list
+    // itself is still built by /api/generate-list (AI, ~12 s) the first time; a no-AI builder waits on branch
+    // perf/first-list-fast (Sarah chose to keep the AI list for now).
+    const rowsQ = Promise.all([
+      supabase.from('list_items').select('id, source, created_at, ordered_at, name, have, quantity, unit').eq('user_id', uid).eq('week_start', ws),
+      supabase.from('pantry_items').select('name').eq('user_id', uid),
+      supabase.from('staples').select('*').eq('user_id', uid).order('created_at'),
+    ])
     if (!planList) {
       try {
         const res = await fetch('/api/generate-list', {
@@ -282,11 +294,7 @@ export default function GroceryListPage() {
     }
 
     // 2. Materialize rows for this week if the plan is newer than the rows we have.
-    const [{ data: existing }, { data: pantryItems }, { data: stapleRows }] = await Promise.all([
-      supabase.from('list_items').select('id, source, created_at, ordered_at, name, have, quantity, unit').eq('user_id', uid).eq('week_start', ws),
-      supabase.from('pantry_items').select('name').eq('user_id', uid),
-      supabase.from('staples').select('*').eq('user_id', uid).order('created_at'),
-    ])
+    const [{ data: existing }, { data: pantryItems }, { data: stapleRows }] = await rowsQ
     setStaples((stapleRows as Staple[]) ?? [])
     const planRows = (existing ?? []).filter((r) => r.source === 'plan')
     const newestPlanRow = planRows.reduce((m, r) => (r.created_at > m ? r.created_at : m), '')
@@ -509,12 +517,28 @@ export default function GroceryListPage() {
   }
 
   /* ---------- states ---------- */
+  // Never a blank spinner (Nov 25 2026): the week's dinners show as soon as the plan loads, with the list's place
+  // held by placeholder rows, so a family landing here from setup sees their week while the list fills in.
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-3">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-muted-foreground">Building your grocery list...</p>
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8 max-w-4xl" aria-busy="true">
+          <p className="text-xs font-semibold tracking-widest text-primary uppercase">Grocery list</p>
+          <h1 className="text-4xl font-heading font-bold text-foreground mt-1">Your groceries are on the way</h1>
+          {planMeals.length > 0 && (
+            <div className="mt-5 rounded-2xl border border-border bg-white p-4">
+              <p className="text-sm font-semibold text-foreground">Your {planMeals.length} dinners</p>
+              <ul className="mt-2 space-y-1">
+                {planMeals.map((m, i) => <li key={`${m.day}-${i}`} className="text-sm text-muted-foreground">? {m.name}</li>)}
+              </ul>
+            </div>
+          )}
+          <div className="mt-5 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5">
+            <p className="font-semibold text-foreground" role="status">Building your list?</p>
+            <div className="mt-3 space-y-2" aria-hidden="true">
+              {[0, 1, 2, 3, 4].map((i) => <div key={i} className="h-4 rounded bg-primary/10 animate-pulse" style={{ width: `${88 - i * 9}%` }} />)}
+            </div>
+          </div>
         </div>
       </div>
     )
