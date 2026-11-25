@@ -30,12 +30,14 @@ export default async function LandingPage() {
             <Link href="/cookware" className="hidden sm:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Cookware</Link>
             <Link href="/gift" className="hidden md:block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Gift</Link>
             <Link href="/start" className="hidden md:block px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors" style={{borderColor:'#e8a838',color:'#1a5c38'}}>Pricing</Link>
-            <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
+            <Link href="/login" className="inline-flex min-h-[44px] items-center px-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Sign in</Link>
             <Link href="/signup" className="px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">Start free</Link>
           </div>
         </div>
       </header>
 
+      {/* <main> landmark for screen readers (Nov 25 2026 review); no visual change. */}
+      <main>
       {/* Hero — photography-led */}
       <section className="relative overflow-hidden" style={{backgroundColor:'#FBF8F1'}}>
         <div className="container mx-auto px-4 max-w-6xl">
@@ -303,6 +305,7 @@ export default async function LandingPage() {
           </Link>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="border-t border-border bg-white">

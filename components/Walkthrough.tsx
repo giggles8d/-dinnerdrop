@@ -92,7 +92,8 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
   // A style picked on a landing page before sign-up (lib/picked-style) starts out selected.
   // Which screen each family reaches, so we can see where the first visit loses people (Nov 21 2026).
   useEffect(() => { if (!demo) trackOnce('walkthrough_step', { id: String(ORDER[step]), pos: step }) }, [demo, step])
-  useEffect(() => { if (demo) return; const k = takePickedStyle(); if (k) setStyles((xs) => (xs.length ? xs : [k])) }, [demo])
+  // "Gluten-free" shows once, as a diet (Nov 25 2026): a gluten-free style picked on a landing page becomes the diet.
+  useEffect(() => { if (demo) return; const k = takePickedStyle(); if (k === 'glutenfree') setDiets((xs) => (xs.includes('Gluten-free') ? xs : [...xs, 'Gluten-free'])); else if (k) setStyles((xs) => (xs.length ? xs : [k])) }, [demo])
   const [diets, setDiets] = useState<string[]>([])
   const [mix, setMix] = useState<Partial<Record<MixKey, number>> | null>(null)
   const [every, setEvery] = useState<Partial<Record<MixKey, 1 | 2 | 4>>>({})
@@ -200,9 +201,10 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
 
   // Pinned to the bottom of the screen so Next is always reachable on long screens; the way out is a real button.
   const nextBtn = (label = 'Next →') => (
-    <div className="sticky bottom-0 z-10 -mx-5 sm:-mx-7 mt-6 px-5 sm:px-7 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-[#f3f7f4]/95 backdrop-blur border-t border-primary/10 flex flex-col sm:flex-row sm:items-center gap-2">
+    // Shorter on phones (Nov 25 2026): the skip is a text button, so the pinned bar covers ~60px less of each screen.
+    <div className="sticky bottom-0 z-10 -mx-5 sm:-mx-7 mt-6 px-5 sm:px-7 pt-2.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-[#f3f7f4]/95 backdrop-blur border-t border-primary/10 flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3">
       <button type="button" onClick={next} className="w-full sm:w-auto px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-sm">{label}</button>
-      <button type="button" onClick={save} disabled={saving} className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-primary/30 bg-white text-sm font-semibold text-primary hover:bg-primary/5 disabled:opacity-40">{saving ? 'Building your week…' : 'Show me my dinners now'}</button>
+      <button type="button" onClick={save} disabled={saving} className="w-full sm:w-auto min-h-[44px] px-4 text-sm font-semibold text-primary underline underline-offset-4 hover:text-primary/80 disabled:opacity-40">{saving ? 'Building your week…' : 'Show me my dinners now'}</button>
     </div>
   )
   const head = (title: string, sub: string) => (
@@ -216,7 +218,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
     <div ref={topRef} className="mb-8 p-5 sm:p-7 rounded-2xl border border-primary/20 bg-primary/5 scroll-mt-4">
       <div className="flex items-center justify-between mb-4">
         <button type="button" onClick={back} disabled={step === 0} aria-label="Back" className="w-11 h-11 -ml-3 inline-flex items-center justify-center rounded-full text-muted-foreground hover:bg-muted disabled:opacity-0"><ArrowLeft className="w-5 h-5" /></button>
-        <div className="flex items-center gap-1.5" aria-label={`Step ${Math.min(step + 1, STEPS)} of ${STEPS}`}>
+        <div className="flex items-center gap-1.5" role="progressbar" aria-label="Setup progress" aria-valuemin={1} aria-valuemax={STEPS} aria-valuenow={Math.min(step + 1, STEPS)} aria-valuetext={`Step ${Math.min(step + 1, STEPS)} of ${STEPS}`}>
           {Array.from({ length: STEPS }).map((_, i) => <span key={i} className={`h-1.5 rounded-full transition-all ${i <= step ? 'bg-primary w-5' : 'bg-primary/20 w-2.5'}`} />)}
         </div>
         <span className="text-xs text-muted-foreground w-12 text-right">{step < STEPS ? `${step + 1} of ${STEPS}` : 'Done'}</span>
@@ -252,7 +254,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
               </div>
             ))}
           </div>
-          {people.length < 10 && <button type="button" onClick={() => setPeople((xs) => [...xs, { name: '', role: 'kid', likes: [], dislikes: [], allergies: [], phone: '' }])} className="mt-2 text-sm font-semibold text-primary">+ Add someone</button>}
+          {people.length < 10 && <button type="button" onClick={() => setPeople((xs) => [...xs, { name: '', role: 'kid', likes: [], dislikes: [], allergies: [], phone: '' }])} className="mt-1 inline-flex min-h-[44px] items-center text-sm font-semibold text-primary">+ Add someone</button>}
           <p className="text-xs mt-2 text-primary font-medium">✓ {familySize} {familySize === 1 ? 'person' : 'people'} at dinner</p>
           {/* Nov 9 2026: the number was only asked on screen 8, and 7 in 10 never gave one. Ask here, for the parent's own benefit. */}
           <div className="mt-5 bg-primary/5 border border-primary/20 rounded-xl px-3 py-3">
@@ -270,7 +272,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
         <div>
           {head('Your style', 'Pick up to 3. Your first pick counts most.')}
           <div className="flex flex-wrap gap-2 mt-5">
-            {FOOD_STYLES.map((s) => {
+            {FOOD_STYLES.filter((s) => s.key !== 'glutenfree').map((s) => {
               const rank = styles.indexOf(s.key)
               const full = rank < 0 && styles.length >= 3
               return <Pick key={s.key} on={rank >= 0} onClick={() => { if (!full) setStyles((xs) => toggle(xs, s.key)) }}>{rank >= 0 ? `${rank + 1} · ` : ''}{s.emoji} {s.name}</Pick>
@@ -285,7 +287,7 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
 
       {screen === 3 && (
         <div>
-          {head('Likes and no-thanks', 'Tap for each person. This keeps dinners they won’t eat off the plan.')}
+          {head('Likes and no-thanks', named.length > 1 ? 'Tap a name, then pick for that person. This keeps dinners they won’t eat off the plan.' : 'Pick for the whole table. This keeps dinners nobody will eat off the plan.')}
           {(() => {
             const list = named.length ? named : [{ ...people[0], i: 0, name: 'Everyone' }]
             const cur = list.find((p) => p.i === who) ?? list[0]
@@ -389,7 +391,10 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
 
       {screen === 6 && (
         <div>
-          {head('Budget', 'Every week is built to fit it.')}
+          {/* The preselected choice follows table size and cook nights (lib/budget-math). Kept, not lowered (Nov 25 2026):
+              a 2-person test list came to $179-$191 with staples, so a lower default would show the list over budget
+              at the moment of sending. The line below says it's a starting point. */}
+          {head('Budget', 'We picked a starting point from your table size and cook nights. Change it if your week costs less or more.')}
           <Label>What is your weekly food budget?</Label>
           <div className="flex flex-wrap gap-2">{budgets.map((b) => <Pick key={b} on={budget === b} onClick={() => setBudget(b)}>{b}</Pick>)}</div>
           <p className="text-xs text-muted-foreground mt-2">About ${perDinner}{budget.endsWith('+') ? '+' : ''} per dinner for {familySize} {familySize === 1 ? 'person' : 'people'}. Choices start at what {dinners} dinner{dinners === 1 ? '' : 's'} for {familySize} really cost{dinners === 1 ? 's' : ''} through Instacart.</p>
@@ -443,18 +448,22 @@ export default function Walkthrough({ onDone, demo = false, initialStep = 0 }: {
       {screen === 8 && (
         <div>
           {head('Let the family vote', 'Everyone gets the dinner ideas by text, replies with numbers, and anyone can text ADD milk to put it on the list. All optional. After setup you can also send them a link to join themselves.')}
+          {/* Your own number is asked once, on "Who's at the table" (Nov 25 2026); here only the rest of the family. */}
           <div className="mt-5 space-y-2">
-            {people.map((p, i) => (p.name.trim() || i === 0) && (
+            {people.map((p, i) => i > 0 && p.name.trim() && (
               <div key={i} className="flex items-center gap-3 bg-white border rounded-xl px-3 py-2">
-                <span className="text-sm font-semibold w-24 truncate">{p.name.trim() || 'You'}</span>
-                <input value={p.phone} onChange={(e) => setPerson(i, { phone: e.target.value })} inputMode="tel" autoComplete={i === 0 ? 'tel' : 'off'} placeholder="(555) 555-1234" className="flex-1 min-w-0 px-2 py-1.5 text-base rounded-md border border-input bg-background" />
+                <label htmlFor={`wt-phone-${i}`} className="text-sm font-semibold w-24 truncate">{p.name.trim()}</label>
+                <input id={`wt-phone-${i}`} value={p.phone} onChange={(e) => setPerson(i, { phone: e.target.value })} inputMode="tel" autoComplete="off" placeholder="(555) 555-1234" className="flex-1 min-w-0 px-2 py-1.5 text-base rounded-md border border-input bg-background" />
               </div>
             ))}
+            {!people.some((p, i) => i > 0 && p.name.trim()) && (
+              <p className="text-sm text-muted-foreground">Add names on &ldquo;Who&rsquo;s at the table?&rdquo; to invite them here, or send them a join link from Settings later.</p>
+            )}
           </div>
           <Label>Vote day</Label>
           <div className="flex flex-wrap gap-2">{VOTE_DAYS.map((d) => <Pick key={d} on={voteDay === d} onClick={() => setVoteDay(d)}>{WEEKDAY_LABEL[d]}</Pick>)}</div>
           <p className="text-[11px] text-muted-foreground mt-3">Each family member gets one text asking to join. Msg & data rates may apply. Reply STOP anytime.</p>
-          {nextBtn('Almost done →')}
+          {nextBtn('Last step →')}
         </div>
       )}
 

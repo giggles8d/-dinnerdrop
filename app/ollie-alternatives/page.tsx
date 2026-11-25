@@ -36,7 +36,8 @@ const ROWS: Row[] = [
   },
   {
     name: 'eMeals', best: 'Ready-made weekly menus by diet',
-    grocery: 'Sends the list to Walmart, Amazon, Kroger or Instacart', texting: 'No',
+    // Same 7 grocers as /vs/emeals (checked on eMeals' pages Nov 25 2026).
+    grocery: 'Sends the list to Walmart, Kroger, Instacart, Amazon Fresh, Albertsons/Safeway, H-E-B or Shipt', texting: 'No',
     price: '14-day free trial (card required), then $59.99/year (shown as $4.99/month) or $37.50 every 3 months',
     src: { label: 'eMeals', href: 'https://emeals.com/' },
   },

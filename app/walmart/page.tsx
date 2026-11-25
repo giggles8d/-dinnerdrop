@@ -43,9 +43,9 @@ export default function WalmartPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 my-14 text-left">
           {[
-            { step: '1', title: 'Four taps about your family', desc: 'How many are eating, what you want to spend, anything to avoid. Under a minute.' },
+            { step: '1', title: 'A few taps about your family', desc: 'How you shop, how many are eating, what you want to spend, anything to avoid. Skip ahead any time.' },
             { step: '2', title: 'Five dinners and one list', desc: 'Weeknight dinners your family will eat, with every ingredient on one deduplicated grocery list.' },
-            { step: '3', title: 'Tap “Shop at Walmart”', desc: 'Each line is matched to a Walmart product with its price. Swap anything you like, then one tap fills your Walmart cart.' },
+            { step: '3', title: 'Tap “Send to Walmart cart”', desc: 'Each line is matched to a Walmart product. One tap fills your Walmart cart, or review and swap items first. You check prices before you pay.' },
           ].map((s) => (
             <div key={s.step} className="p-5 rounded-2xl border bg-white" style={{ borderColor: '#e8e8e8' }}>
               <div className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white mb-3" style={{ backgroundColor: GREEN }}>{s.step}</div>

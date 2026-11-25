@@ -625,7 +625,7 @@ function DashboardContent() {
   const showListBar = hasGenerated && meals.length > 0 && !isPickingMeals && !loading && listSent === false
 
   return (
-    <div className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background">
       {/* Fire ad-platform conversion pings on successful Stripe return */}
       {searchParams.get('subscribed') === 'true' && <ConversionTracker />}
       {/* Free signups (no card) are the main conversion now — count them on every ad platform, once per browser. */}
@@ -1006,6 +1006,6 @@ function DashboardContent() {
           </>
         )}
       </div>
-    </div>
+    </main>
   )
 }

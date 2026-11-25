@@ -113,7 +113,7 @@ export default function StartPage() {
       <main className="container mx-auto px-4 py-8 sm:py-20 max-w-3xl text-center">
         <div className="flex flex-wrap items-center justify-center gap-2 mb-4 sm:mb-6">
           <PoweredByInstacart />
-          {/* 519 accounts were created Oct 23 - Nov 21 2026 alone (read-only count, Nov 22 review), so "over 500" is a true floor. */}
+          {/* "Over 700" checked Nov 25 2026: 800 profiles, 8 of them internal @dinnerdrop.app test accounts (read-only count). */}
           <span className="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full border" style={{ backgroundColor: '#fef9ee', borderColor: GOLD, color: GREEN }}>
             <span className="w-1.5 h-1.5 rounded-full inline-block flex-shrink-0" style={{ backgroundColor: GOLD }} />
             Over 700 families have signed up for DinnerDrop

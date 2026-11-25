@@ -10,10 +10,11 @@ const ICONS: Record<string, string> = {
 /** Small icon links to DinnerDrop's social accounts, for the public footers. */
 export default function SocialLinks({ className = '' }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    // 44px tap targets around the 18px icons (Nov 25 2026 review); the icons look the same.
+    <div className={`flex items-center gap-1 ${className}`}>
       {SOCIAL.map((s) => (
         <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`DinnerDrop on ${s.name}`} title={s.name}
-          className="text-muted-foreground hover:text-foreground transition-colors">
+          className="inline-flex w-11 h-11 items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d={ICONS[s.name]} /></svg>
         </a>
       ))}

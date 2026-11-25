@@ -5,13 +5,15 @@ import { useEffect, useMemo, useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import { Heart, UtensilsCrossed, ShoppingCart, Package, Clock, User, Settings2, BookOpen, ChefHat, LifeBuoy, Refrigerator, Tag, MessageSquare } from 'lucide-react'
 
+// Grocery List second (Nov 25 2026): on a phone only the first ~5 icons fit before the strip scrolls, and the list
+// is where a family sends. It used to be 6th, half cut off at the screen edge.
 const links = [
   { href: '/dashboard', label: 'Meals', icon: UtensilsCrossed },
+  { href: '/grocery-list', label: 'Grocery List', icon: ShoppingCart },
   { href: '/recipes', label: 'Recipes', icon: BookOpen },
   { href: '/cookware', label: 'Cookware', icon: ChefHat },
   { href: '/favorites', label: 'Favorites', icon: Heart },
   { href: '/tonight', label: 'Tonight', icon: Refrigerator },
-  { href: '/grocery-list', label: 'Grocery List', icon: ShoppingCart },
   { href: '/deals', label: 'Deals', icon: Tag },
   { href: '/pantry', label: 'Pantry', icon: Package },
   { href: '/history', label: 'History', icon: Clock },
@@ -55,19 +57,23 @@ export default function Nav() {
 
   return (
     <nav className="border-b border-border bg-white print:hidden">
-      <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between h-16">
-        <Link href="/dashboard" className="flex items-center gap-2">
+      {/* Nov 25 2026: the 13 icon links were 568px wide on a 390px phone, so every signed-in page was 704px wide.
+          Phones then let the page slide sideways and pinned "sticky"/fixed bottom bars (setup's Next, the list bar)
+          to an off-screen edge. The icon strip now scrolls sideways inside itself; the page stays phone-width. */}
+      <div className="container mx-auto px-4 max-w-6xl flex items-center justify-between gap-3 h-16">
+        <Link href="/dashboard" className="flex shrink-0 items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-accent mt-0.5" />
           <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
         </Link>
-        <div className="flex items-center gap-1 nav-links">
+        <div className="flex min-w-0 items-center gap-1 nav-links overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {links.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href
             return (
               <Link
                 key={href}
                 href={href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                aria-label={label}
+                className={`flex shrink-0 items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-secondary text-primary'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted'

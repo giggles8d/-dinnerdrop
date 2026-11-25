@@ -15,7 +15,7 @@
     --secondary: 138 20% 94%;
     --secondary-foreground: 150 30% 12%;
     --muted: 138 15% 95%;
-    --muted-foreground: 140 12% 42%;
+    --muted-foreground: 142 12% 39%; /* #587161: 4.5:1+ on the light tints (was 140 12% 42%, #5e7867 at 4.46:1). Nov 25 2026 */
     --accent: 38 78% 56%;
     --accent-foreground: 150 30% 12%;
     --destructive: 0 84% 60%;

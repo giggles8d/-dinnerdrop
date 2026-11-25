@@ -139,8 +139,9 @@ export default function RootLayout({
             }
           `}
         </Script>
-        {/* Pinterest Tag */}
-        <Script id="pinterest-tag" strategy="afterInteractive">
+        {/* Pinterest Tag. lazyOnload (Sarah, Nov 25 2026): Pinterest and Reddit load once the page is idle, so they no
+            longer compete with the first taps on /start; Meta and Google stay afterInteractive (they drive ad conversions). */}
+        <Script id="pinterest-tag" strategy="lazyOnload">
           {`
             if(${ADS_ALLOWED_JS}){
             !function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
@@ -152,7 +153,7 @@ export default function RootLayout({
           `}
         </Script>
         {/* Reddit Pixel */}
-        <Script id="reddit-pixel" strategy="afterInteractive">
+        <Script id="reddit-pixel" strategy="lazyOnload">
           {`
             if(${ADS_ALLOWED_JS}){
             !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
