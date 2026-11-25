@@ -5,13 +5,15 @@ import { useEffect, useMemo, useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import { Heart, UtensilsCrossed, ShoppingCart, Package, Clock, User, Settings2, BookOpen, ChefHat, LifeBuoy, Refrigerator, Tag, MessageSquare } from 'lucide-react'
 
+// Grocery List second (Nov 25 2026): on a phone only the first ~5 icons fit before the strip scrolls, and the list
+// is where a family sends. It used to be 6th, half cut off at the screen edge.
 const links = [
   { href: '/dashboard', label: 'Meals', icon: UtensilsCrossed },
+  { href: '/grocery-list', label: 'Grocery List', icon: ShoppingCart },
   { href: '/recipes', label: 'Recipes', icon: BookOpen },
   { href: '/cookware', label: 'Cookware', icon: ChefHat },
   { href: '/favorites', label: 'Favorites', icon: Heart },
   { href: '/tonight', label: 'Tonight', icon: Refrigerator },
-  { href: '/grocery-list', label: 'Grocery List', icon: ShoppingCart },
   { href: '/deals', label: 'Deals', icon: Tag },
   { href: '/pantry', label: 'Pantry', icon: Package },
   { href: '/history', label: 'History', icon: Clock },
