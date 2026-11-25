@@ -17,7 +17,7 @@
 1. **The market moved this fall.** Ollie shut down Nov 6 and Mealime Oct 21. Instacart (Clementine, Sep 9), Walmart (Sparky meal features, Oct 30) and Kroger (AI assistant, Jul 28) now plan meals for free inside their own carts. A planner that only hands a list to a store is now competing with the store itself.
 2. **DinnerDrop still wins on the page.** In a SIMULATED 8-person panel it averaged 6.8 against eMeals 4.8, Plan to Eat 4.7 and Samsung Food 3.7. It is also faster on phones than most rivals. Trust is still its weakest score.
 3. **The gap is in the first five minutes and in week two.** Most "ideas already raised" are built: shared-ingredient dinners, "Repeat last week", favorites, a partner invite, a weekly plan email, a Walmart cart. Several sit where a new family never meets them.
-4. **Biggest week-one lesson:** the retailers' planners end at a cart that is already signed in. DinnerDrop's ends at an Instacart button that 90 families saw and none tapped (Nov 22 data). Find out why first. eMeals also asks how and where you shop before anything else; DinnerDrop asks on screen 8 of 9, and families who skip ahead never answer.
+4. **Biggest week-one lesson:** the retailers' planners end at a cart that is already signed in. DinnerDrop's ends at store buttons: since Nov 1, 149 families saw the Instacart button and 93 of them (62%) sent nowhere. Find out why first. (Corrected Nov 25: an earlier draft said none tapped; see section 11.) eMeals also asks how and where you shop before anything else; DinnerDrop asks on screen 8 of 9, and families who skip ahead never answer.
 5. **Biggest week-two lesson:** the weekly message has to reach every family who has sent once, on their own day. DinnerDrop's Saturday email already has a one-tap cart, but the shop-day message only reaches families who answered the shop screen.
 6. **Trust gap:** the DinnerDrop iPhone app has 0 ratings. Rivals show 4.6 to 4.9 stars from thousands. Nothing in the app asks for a rating.
 7. **Safety gap found while testing:** the Meta pixel and the server-side Meta events fire on Vercel previews too. A test signup on a preview would count as a real signup.
@@ -70,7 +70,7 @@ Impact = expected effect on week-one (W1) or week-two (W2) sends. It is a judgme
 | # | What they do better | Evidence | Do we have it? | Effort | Impact |
 |---|---|---|---|---|---|
 | 1 | **Ask how and where you shop first.** eMeals' quiz asks "How do you prefer to shop?" and "Where do you grocery shop?" before the account screen, then tells in-store shoppers pickup saves "2 hours per week". | [emeals-signup-7-390](competitor-screens/emeals-signup-7-390.png), [emeals-signup-8-390](competitor-screens/emeals-signup-8-390.png) | Partly. The question is screen 8 of 9 (`components/Walkthrough.tsx` L403-427). Families who skip ahead keep the default store and get no shop day (`lib/settings.ts` L189; `lib/shop-day.ts` L47-51). Real skip rates are in the `walkthrough_step` events since Nov 21. | S | W1 high |
-| 2 | **"Order my usuals" in one tap.** Clementine "order my usuals"; Sparky "restocks your go-tos"; Plan to Eat "Save as a Menu" and swap a week forward. | [TechCrunch](https://techcrunch.com/2026/09/09/instacart-launches-an-ai-grocery-shopping-assistant-called-clementine/), [walmart.com/cp/sparky](https://www.walmart.com/cp/sparky/5291783), Plan to Eat help pages | Mostly. The Saturday email has a one-tap cart for the new week ("Send my groceries to Instacart", `lib/plan-ready-email.ts` L44), and so does the reorder text (`lib/reorder.ts`). "Repeat last week" itself is dashboard-only (`dashboard/page.tsx` L816-825). 0 of 25 week-one senders used the existing links, so the gap is elsewhere. | S | W2 low until action 1 is done |
+| 2 | **"Order my usuals" in one tap.** Clementine "order my usuals"; Sparky "restocks your go-tos"; Plan to Eat "Save as a Menu" and swap a week forward. | [TechCrunch](https://techcrunch.com/2026/09/09/instacart-launches-an-ai-grocery-shopping-assistant-called-clementine/), [walmart.com/cp/sparky](https://www.walmart.com/cp/sparky/5291783), Plan to Eat help pages | Mostly. The Saturday email has a one-tap cart for the new week ("Send my groceries to Instacart", `lib/plan-ready-email.ts` L44), and so does the reorder text (`lib/reorder.ts`). "Repeat last week" itself is dashboard-only (`dashboard/page.tsx` L816-825). Of the 25 families who sent in their first two weeks (Oct 23-Nov 8 signups), 23 got the plan-ready email and 0 used its one-tap cart (1 used a day-1 email one-tap). So the gap is elsewhere. | S | W2 low until action 1 is done |
 | 3 | **A weekly drop on a day the family picked.** eMeals posts new menus every Wednesday and emails them on your chosen day. $5 Meal Plan and Cozi email weekly. | support.emeals.com; [5dollarmealplan.com/join-mh-short](https://5dollarmealplan.com/join-mh-short/); [cozi.com](https://cozi.com/?p=38728) | Mostly. Plan-ready email is on (`lib/reminders.ts` L182-224). The shop-day nudge only reaches families who answered the shop screen (`lib/shop-day.ts` L46-51). Sunday Drop waits on `app_kv`. | S | W2 med-high |
 | 4 | **Show value before asking for anything.** Samsung Food shows a sample week and a link-to-list tool with no account. eMeals runs its whole quiz before the account. Kroger plans a week from one sentence. | [samsungfood-home-390](competitor-screens/samsungfood-home-390.png), [emeals-signup-1-390](competitor-screens/emeals-signup-1-390.png), [ClickOnDetroit](https://www.clickondetroit.com/live-in-the-d/2026/08/25/krogers-new-ai-shopping-assistant-helps-ease-the-back-to-school-rush/) | No, but the parts exist. A no-account demo of setup runs at `/preview/onboarding` (`Walkthrough` `demo` prop), and answers already persist in the browser for 14 days (`Walkthrough.tsx` L122-158). | M | W1 high (needs a test) |
 | 5 | **Star ratings everywhere.** 4.6-4.9 from 6K to 404K ratings on every rival homepage and listing. | Ratings table, [reviews section](#5-what-customers-say) | **No.** iOS app: 0 ratings (Apple lookup, id 6824634810). No review prompt in code (no `requestReview` anywhere). | S | W1 med (trust) |
@@ -116,17 +116,17 @@ From about 300 recent app reviews and 15 Trustpilot reviews (Reddit was blocked)
 
 Ranked by expected effect on first and second-week sends. The adversarial review (section 9) changed this list: it found that the weekly one-tap cart already exists and added actions 1 and 3. Effort: S = under a day, M = a few days.
 
-### 1. Find out why nobody taps the Instacart button (S, week one)
-In the Nov 22 data, 107 families opened their list and 90 of them saw the Instacart button. None tapped it. That is the sharpest leak, and the retailers' own planners have no such step: their cart is already signed in. Walk the hand-off on a real phone from a fresh account: what Instacart shows (sign-in wall, store picker, prices), and how long it takes. Then check the existing click and follow-up events (`followup_shop` by kind) to see where families stop. Fix what that shows before building anything else on the send.
-Files: `components/InstacartButton.tsx`, `app/api/instacart/route.ts`, `app/api/go/shop/route.ts`, `lib/followup.ts`.
-**Sarah: spend one session diagnosing the zero-tap Instacart button before other send changes? (yes/no)**
+### 1. Find out why most families who see the store buttons don't send (S, week one)
+Corrected Nov 25 (section 11). Since Nov 1, 149 families saw the Instacart button on the grocery list. 39 tapped it (26%), 26 tapped Walmart, and 56 sent to some store (38%). **93 of 149 (62%) sent nowhere.** Counted against the 284 families who saw any list button (mostly the dashboard's "shop my list" bar), 245 (86%) never tapped Instacart. The retailers' own planners have no such step: their cart is already signed in. Walk the hand-off on a real phone from a fresh account: what Instacart and Walmart show (sign-in wall, store picker, prices) and how long it takes. Then compare tappers who sent with the 93 who didn't: time on the list, list total vs budget, store mode.
+Files: `components/InstacartButton.tsx`, `components/WalmartButton.tsx`, `app/api/instacart/route.ts`, `components/EngagementTracker.tsx`.
+**Sarah: spend one session on why 62% of families who reach the store buttons don't send, before other send changes? (yes/no)**
 
 ### 2. Shorter setup, with "How do you shop, and where?" first (S, week one)
 eMeals asks how and where you shop before anything else. DinnerDrop asks on screen 8 of 9 (`components/Walkthrough.tsx` L403-427). A family that skips ahead never answers it: the store stays at the default 'instacart' (`lib/settings.ts` L189) and no shop day is saved, so the shop-day message never reaches them (`lib/shop-day.ts` L47-51, L69-73). Move the shop screen to first. Fold in the rough spots: phone asked on screens 2 and 9 (ask once); "Gluten-free" twice; "everyone" chips running under the footer; the unclear "Your weekly mix" screen; "Almost done" on the last screen; the $150 default budget that surprised both testers; grey text at 4.46:1 (`#5e7867` to `#587161` passes 4.5:1). Before and after, read the real `walkthrough_step` and `quick_setup_done` events (recorded since Nov 21) to see where families skip.
 **Sarah: move the shop question to the first setup screen and make these fixes? (yes/no)**
 
 ### 3. After the first plan, land on the grocery list (S, week one)
-350 of 519 families never opened their list (Nov 22). Families who pick from options go straight to the list (`app/(app)/dashboard/page.tsx` L584). Families who skip setup or get the starter week land on the dashboard and must find "Build my grocery list" (L962-968). Send everyone to the list with the store button on top. Instacart, Walmart and Kroger all end their planning at a filled cart.
+350 of 519 families never opened their list (Nov 22, VERIFIED). Since Nov 1, 284 families saw a list button, mostly the dashboard's "shop my list" bar, but only 149 reached the Instacart button on the list page. Families who pick from options go straight to the list (`app/(app)/dashboard/page.tsx` L584). Families who skip setup or get the starter week land on the dashboard and must find "Build my grocery list" (L962-968). Send everyone to the list with the store button on top. Instacart, Walmart and Kroger all end their planning at a filled cart.
 **Sarah: send every family straight to the grocery list after their first plan? (yes/no)**
 
 ### 4. Test "plan first, email second" on /start (M, week one)
@@ -134,7 +134,7 @@ Run setup on /start with no account, show the family's 5 dinners and list, then 
 **Sarah: build a 50/50 test of setup before email? (yes/no)**
 
 ### 5. A weekly shop-day message for families who have sent once (S, week two)
-eMeals emails each user's menu on a day the user picks; $5 Meal Plan and Cozi send a weekly email. DinnerDrop's Saturday plan-ready email already carries a one-tap cart ("Send my groceries to Instacart", `lib/plan-ready-email.ts` L44), and so does the reorder text (`lib/reorder.ts`). But the shop-day message only reaches families who answered the shop screen. For families who have sent at least once and have no shop day, use the weekday of that send. Leave never-sent families under the Nov 22 fatigue rule. Watch STOP replies and unsubscribes (texting STOP was 11% before).
+eMeals emails each user's menu on a day the user picks; $5 Meal Plan and Cozi send a weekly email. DinnerDrop's Saturday plan-ready email already carries a one-tap cart ("Send my groceries to Instacart", `lib/plan-ready-email.ts` L44), and so does the reorder text (`lib/reorder.ts`). But the shop-day message only reaches families who answered the shop screen. For families who have sent at least once and have no shop day, use the weekday of that send. Leave never-sent families under the Nov 22 fatigue rule. Watch STOP replies and unsubscribes (18 of 151 texted households, 12%, replied STOP before Nov 22).
 **Sarah: give families who have sent a default shop day from their first send? (yes/no)**
 
 ### 6. After the first send, invite the family to join by text (S, week two)
@@ -159,7 +159,7 @@ The app has 0 ratings; rivals show 4.6-4.9. Nothing in the code asks for one. As
 **Sarah: add a one-time rating prompt in the iPhone app after the first send? (yes/no)**
 
 ### Below the top 10
-- A "same dinners as last week" choice in the Saturday email. The one-tap cart is already there; only the repeat option is missing. Do it after action 1 explains why no one taps.
+- A "same dinners as last week" choice in the Saturday email. The one-tap cart is already there; only the repeat option is missing. Do it after action 1 explains why most families who see the buttons don't send.
 - Phone push for the weekly plan in the iPhone app (M, week two, iPhone only).
 - Publish the Android app (M; needs a 14-day, 12-tester closed test first; impact unclear).
 - `llms.txt`, a 308 redirect from dinnerdrop.app to www, /instacart and /kroger pages, and pitches to the roundups AI answers cite (S-M; brings visitors, doesn't change sends).
@@ -199,7 +199,7 @@ Seated: Claude Hopkins, Alex Hormozi, April Dunford, and Rory Sutherland as the 
 
 **Where they disagree.** Hormozi wants setup shorter; Sutherland thinks finishing setup builds intent. The data can settle it: compare send rates for families who finished setup vs those who skipped, from `activation_events`. Hopkins and Dunford split on tactics vs positioning; the plan does both, small tests first.
 
-**Chair's ranking:** actions 1 to 3 first (small, aimed straight at the first send), then 9 so 4 can be tested cleanly, then 5 and 6 for week two. Tripwire: if STOP replies or unsubscribes rise after action 5, pull it back (texting STOP was 11% before).
+**Chair's ranking:** actions 1 to 3 first (small, aimed straight at the first send), then 9 so 4 can be tested cleanly, then 5 and 6 for week two. Tripwire: if STOP replies or unsubscribes rise after action 5, pull it back (18 of 151 texted households, 12%, replied STOP before Nov 22).
 
 
 ## 9. Adversarial review
@@ -207,10 +207,10 @@ Seated: Claude Hopkins, Alex Hormozi, April Dunford, and Rory Sutherland as the 
 Codex couldn't run: the account rejected both its default model and gpt-5.4-mini. A separate Claude reviewer, which hadn't seen my reasoning, checked the draft top 15 against the code and argued against each finding. It changed the ranking.
 
 What it caught (all re-checked in code before changing the report):
-- **A wrong finding.** The draft said no email or text offers a one-tap reorder. The Saturday plan-ready email has "Send my groceries to Instacart" (`lib/plan-ready-email.ts` L44, wired in `lib/reminders.ts` L211). The reorder text and Sunday Drop have one too, and commit d32a9d4 (Nov 22) widened the reorder text. 0 of 25 week-one senders used these links, so adding another link won't fix week two. Dropped from the top 10.
+- **A wrong finding.** The draft said no email or text offers a one-tap reorder. The Saturday plan-ready email has "Send my groceries to Instacart" (`lib/plan-ready-email.ts` L44, wired in `lib/reminders.ts` L211). The reorder text and Sunday Drop have one too, and commit d32a9d4 (Nov 22) widened the reorder text. Of 25 week-one senders, 23 got the plan-ready email and none used its one-tap cart; 1 used a day-1 email one-tap. Adding another link won't fix week two. Dropped from the top 10.
 - **A wrong detail.** Families who skip setup don't get "I order online" saved. Nothing is saved: the store stays at the default and no shop day exists, so the shop-day message never reaches them (`lib/settings.ts` L189, `lib/shop-day.ts` L47-51, L69-73).
 - **A risk in the shop-day idea.** Applying a default shop day to everyone would undo the Nov 22 fatigue rule for never-sent families. It's now limited to families who have sent once (action 5).
-- **Two missing findings.** The zero-tap Instacart button (action 1), and families landing on the dashboard instead of the list after their first plan (action 3, `dashboard/page.tsx` L962-968).
+- **Two missing findings.** Families who see the store buttons and don't send (action 1; the reviewer repeated the Nov 22 "none tapped" figure, corrected in section 11), and families landing on the dashboard instead of the list after their first plan (action 3, `dashboard/page.tsx` L962-968).
 - **Use real data before simulated data.** `walkthrough_step` and `quick_setup_done` events (since Nov 21) show real setup skips. The draft leaned on the SIMULATED "5 of 8".
 - **Dropped from the top 10:** retailer AI planners (a strategy point, kept in sections 2 and 4), Android (impact unclear), AI search (brings visitors, doesn't change sends).
 - **Small corrections:** /start has 3 angle variants plus a default; "519 signups" in the code comment is a 30-day subset, not a contradiction of "700 families". The Conversions API token may not be set anywhere yet (an open item from Nov 22), so server events may not fire on any host today.
@@ -225,6 +225,114 @@ What it caught (all re-checked in code before changing the report):
 - **Our own ads already reach rival names.** The Google account gets small traffic on "emeals walmart", "emeals" and "ollie" terms (read-only check). The /ollie page already says Ollie closed.
 
 
+## 11. Data check (Nov 25): Nov 22 numbers re-run on live data
+
+Sarah's live numbers since Nov 1 (284 saw a list button, 39 tapped Instacart, 43 sent to Instacart, 59 sent to a store) reproduce exactly. All queries below are read-only, on project znxuxkqmmulnhkuwlshr.
+
+### Why "90 saw the button, none tapped" was wrong
+
+It came from Nov 22 review query Q4 (`REVIEW-2026-11-22.md` L598-615):
+
+```sql
+with c as (select id from public.profiles where created_at >= '2026-10-23' and created_at < '2026-11-22'),
+s as (select distinct user_id from public.grocery_handoffs where user_id in (select id from c)),
+lv as (select distinct user_id from public.activation_events where step='grocery_list_view' and user_id in (select id from c)),
+e as (select * from public.activation_events where user_id in (select id from c))
+select 'B list_view_no_send: instacart tap', count(distinct user_id) from e
+where step='cta_tap' and meta->>'id' like 'instacart%'
+  and user_id in (select user_id from lv) and user_id not in (select user_id from s);
+```
+
+The last line keeps only families with no `grocery_handoffs` row. Tapping the Instacart button writes that row (`app/api/instacart/route.ts` L49). So every family who tapped was removed before the count, and the answer could only be 0. Without that filter, the same Nov 22 cohort shows 141 families who saw the button on the list page and 36 who tapped it (26%).
+
+### Each number, re-checked
+
+| Claim in this report | Status | Live result | Query |
+|---|---|---|---|
+| 90 of 107 non-senders saw the Instacart button; none tapped | **CORRECTED** | The 90 and 107 are right, but "none tapped" is true by construction. Nov 22 cohort: 141 saw the button on the list, 36 tapped (26%). Since Nov 1: 149 saw it, 39 tapped Instacart (26%), 26 tapped Walmart, 56 sent somewhere (38%), 93 sent nowhere (62%). | B and G below |
+| "284 saw the button" (Sarah, since Nov 1) | VERIFIED, with a note | 284 saw any tracked list button. By button: 272 the dashboard "shop my list" bar, 129 "build list", 25 "pick bar", 149 the Instacart button on the list page. 39/284 = 14% tap; 39/149 = 26%. | H below |
+| 43 sent to Instacart, 59 to any store since Nov 1 | VERIFIED | 43 Instacart; 59 to a store; 61 counting 2 "In store" texted lists. Walmart is 22 of them. | A and F below |
+| 350 of 519 never opened the list | VERIFIED | 519 signups Oct 23-Nov 21, 169 opened the list, 350 didn't, 64 sent. | B below |
+| 0 of 25 week-one senders used the email one-tap | **CORRECTED** | Oct 23-Nov 8 signups: 198, 25 sent, 0 sent in both week 1 and week 2. 23 of the 25 got the plan-ready email; 0 used its one-tap; 1 used a day-1 email one-tap. | C and D below |
+| Texting STOP 11% (17 of 151) | **CORRECTED** (small) | 18 of 151 texted households replied STOP before Nov 22 (12%); all time 18 of 162. | E below |
+| Nov 22 panel note: Ollie still sells meal planning by text | **CORRECTED** (web, not data) | Ollie closed Nov 6. | ollie.ai/farewell |
+| Panel scores (6.8 vs 4.8, 6 of 8 picks, 5 of 8 skipped) | SIMULATED | Not data; no query applies. Use `walkthrough_step` events for real skip rates. | n/a |
+
+### Queries
+
+```sql
+-- A: Sarah's numbers, since Nov 1
+with seen as (select distinct user_id from public.activation_events where step='list_cta_seen' and created_at >= '2026-11-01'),
+tap as (select distinct user_id from public.activation_events where step='cta_tap' and meta->>'id' in ('instacart_button','instacart_tab_opened') and created_at >= '2026-11-01'),
+ic as (select distinct user_id from public.grocery_handoffs where created_at >= '2026-11-01' and store ilike 'instacart%'),
+anyh as (select distinct user_id from public.grocery_handoffs where created_at >= '2026-11-01')
+select (select count(*) from seen) list_cta_seen, (select count(*) from tap) instacart_tap,
+ (select count(*) from ic) sent_instacart, (select count(*) from anyh) sent_any;
+-- 284, 39, 43, 61
+
+-- B: Nov 22 cohort, with and without the "never sent" filter
+with c as (select id from public.profiles where created_at >= '2026-10-23' and created_at < '2026-11-22'),
+s as (select distinct user_id from public.grocery_handoffs where user_id in (select id from c)),
+lv as (select distinct user_id from public.activation_events where step='grocery_list_view' and user_id in (select id from c)),
+e as (select * from public.activation_events where user_id in (select id from c)),
+seen_list as (select distinct user_id from e where step='list_cta_seen' and meta->>'page'='grocery-list'),
+tapped as (select distinct user_id from e where step='cta_tap' and meta->>'id' like 'instacart%')
+select (select count(*) from lv) list_openers,
+ (select count(*) from lv where user_id not in (select user_id from s)) list_open_no_send,
+ (select count(*) from seen_list where user_id in (select user_id from lv) and user_id not in (select user_id from s)) saw_button_no_send,
+ (select count(*) from tapped where user_id in (select user_id from lv) and user_id not in (select user_id from s)) tapped_no_send,
+ (select count(*) from seen_list where user_id in (select user_id from lv)) all_saw_button,
+ (select count(*) from seen_list where user_id in (select user_id from lv) and user_id in (select user_id from tapped)) all_saw_and_tapped,
+ (select count(*) from c) signups, (select count(*) from c where id not in (select user_id from lv)) never_opened_list,
+ (select count(*) from s) senders;
+-- 169, 107, 90, 0, 141, 36, 519, 350, 64
+
+-- C: Oct 23-Nov 8 signups: senders, two-week senders, email one-tap use
+with c as (select id, created_at from public.profiles where created_at >= '2026-10-23' and created_at < '2026-11-09'),
+h as (select h.user_id, h.created_at, c.created_at su from public.grocery_handoffs h join c on c.id=h.user_id),
+senders as (select distinct user_id from h),
+wk as (select user_id, floor(extract(epoch from (created_at - su))/604800)::int w from h)
+select (select count(*) from c) signups, (select count(*) from senders) senders,
+ (select count(*) from (select user_id from wk group by user_id having bool_or(w=0) and bool_or(w=1)) x) sent_wk1_and_wk2,
+ (select count(distinct user_id) from public.activation_events where step='followup_shop' and user_id in (select user_id from senders)) used_email_one_tap,
+ (select count(distinct user_id) from public.activation_events where step='followup_shop' and meta->>'kind'='plan_ready' and user_id in (select user_id from senders)) used_plan_ready_one_tap;
+-- 198, 25, 0, 1, 0
+
+-- D: which follow-ups those 25 were sent
+with c as (select id from public.profiles where created_at >= '2026-10-23' and created_at < '2026-11-09'),
+senders as (select distinct h.user_id from public.grocery_handoffs h join c on c.id=h.user_id)
+select meta->>'kind' kind, count(distinct user_id) from public.activation_events
+where step='followup_sent' and user_id in (select user_id from senders) group by 1;
+-- plan_ready 23 (day1 also present); the one tap used was kind 'day1'
+
+-- E: texting STOP before Nov 22
+select (select count(distinct household_id) from public.sms_messages where direction='in' and intent='stop' and created_at < '2026-11-22') stop_households,
+ (select count(distinct household_id) from public.sms_messages where direction='out' and created_at < '2026-11-22') texted_households;
+-- 18, 151
+
+-- F: senders since Nov 1 by store
+select store, count(distinct user_id) from public.grocery_handoffs where created_at >= '2026-11-01' group by store;
+-- Instacart 42, Instacart · Aldi 2, Walmart 22, In store 2 (59 families excluding In store)
+
+-- G: since Nov 1, by page where a list button was seen
+with seen as (select user_id, meta->>'page' page from public.activation_events where step='list_cta_seen' and created_at >= '2026-11-01' group by 1,2),
+taps as (select user_id, meta->>'id' id from public.activation_events where step='cta_tap' and created_at >= '2026-11-01' group by 1,2),
+h as (select user_id, store from public.grocery_handoffs where created_at >= '2026-11-01' group by 1,2)
+select page, count(distinct s.user_id) saw,
+ count(distinct s.user_id) filter (where s.user_id in (select user_id from taps where id in ('instacart_button','instacart_tab_opened'))) tapped_instacart,
+ count(distinct s.user_id) filter (where s.user_id in (select user_id from taps where id like 'walmart%')) tapped_walmart,
+ count(distinct s.user_id) filter (where s.user_id in (select user_id from h)) sent_any,
+ count(distinct s.user_id) filter (where s.user_id not in (select user_id from h)) never_sent
+from seen s group by 1;
+-- dashboard 280 / 38 / 25 / 60 / 220; grocery-list 149 / 39 / 26 / 56 / 93
+
+-- H: which button each list_cta_seen was
+select meta->>'page', meta->>'id', count(distinct user_id) from public.activation_events
+where step='list_cta_seen' and created_at >= '2026-11-01' group by 1,2;
+-- dashboard shop_my_list_bar 272, build_list_button 129, pick_bar_confirm 25; grocery-list instacart_button 149
+```
+
+Caveat from the Nov 22 review still applies: `cta_tap` comes from a click listener and can miss taps; `grocery_handoffs` is written server-side and is reliable.
 ## SKILLS USED
 
 **Used (named in the prompt):**
