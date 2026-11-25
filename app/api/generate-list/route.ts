@@ -1,5 +1,6 @@
 import { generateWithClaude, parseClaudeJSON } from '@/lib/claude'
 import { mergeDuplicateLines } from '@/lib/list'
+import { buildGroceryList, needsAi } from '@/lib/list-build'
 import { mayActFor } from '@/lib/route-auth'
 import { createClient } from '@supabase/supabase-js'
 import type { GroceryCategory, GroceryItem, Ingredient } from '@/types'
@@ -53,6 +54,18 @@ export async function POST(request: Request) {
 
     if (allIngredients.length === 0) {
       return Response.json({ error: 'No ingredients found in meals' }, { status: 400 })
+    }
+
+    // Library dinners store every ingredient's amount, unit, section and search term, so the list is built in code
+    // (lib/list-build, ~5 ms) instead of a ~12 s AI call (Sarah, Nov 25 2026: first visit took 15 s on a phone).
+    // AI only when the week's ingredients are mostly free text (rare: some imported recipes).
+    if (!needsAi(allIngredients)) {
+      const built = mergeDuplicateLines(buildGroceryList(meals, { prepped: !!prepped }) as unknown as Record<string, GroceryItem[]>)
+      if (typeof planId === 'string' && planId) {
+        await supabase.from('meal_plans').update({ grocery_list: built }).eq('id', planId).eq('user_id', String(userId))
+          .then(({ error }) => { if (error) console.error('[generate-list] save failed', error) })
+      }
+      return Response.json(built)
     }
 
     const prompt = `You are a grocery list optimizer. Take this list of ingredients from ${meals.length} dinner recipes and:

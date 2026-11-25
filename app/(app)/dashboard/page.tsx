@@ -32,6 +32,7 @@ import ShareWeekButton from '@/components/ShareWeekButton'
 import { pickWithOverlap, overlapWith, sharedSummary } from '@/lib/overlap'
 import { varietyLimits, varietyOk } from '@/lib/variety'
 import { repeatPlan, lastWeekPlan, mondayISO } from '@/lib/repeat-plan'
+import { prebuiltList } from '@/lib/list-build'
 import { mergeSettings, tripsConfig } from '@/lib/settings'
 import { listRatio, storeFactor } from '@/lib/budget-math'
 import { isClassic, currentKey } from '@/lib/trips'
@@ -88,6 +89,8 @@ function DashboardContent() {
   const autoGenFired = useRef(false)
   // True while this visit is building the family's very first week (instantFirstPlan and its AI fallback).
   const firstPlanFlow = useRef(false)
+  // The family's "pre-cut shortcuts" setting, so a confirmed week saves with its grocery list built (Nov 25 2026).
+  const preppedRef = useRef(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
@@ -142,6 +145,7 @@ function DashboardContent() {
         && (profile.signup_source as { c?: string } | null)?.c === 'weekend-receipt'
       if (giftFast) setGiftStart(true)
       const tcfg = tripsConfig(mergeSettings(profile?.settings))
+      preppedRef.current = !!mergeSettings(profile?.settings).food.prepped
       { const st = mergeSettings(profile?.settings).stores; setPayFactor(listRatio(st) * storeFactor(st)); setInStoreMode(st.mode === 'instore') }
       const trips = !isClassic(tcfg)
       setTripMode(trips)
@@ -581,7 +585,9 @@ function DashboardContent() {
         user_id: user.id,
         week_start: tripKey ?? mondayISO(),
         meals: confirmed,
-        grocery_list: {},
+        // Built here from the dinners' stored ingredients (lib/list-build, no AI), so the list page opens ready
+        // instead of waiting on /api/generate-list (Nov 25 2026). {} if the week needs the AI list.
+        grocery_list: prebuiltList(confirmed, preppedRef.current),
         total_estimated_cost: confirmedCost,
       })
       // Their first "your week" text waits for their picks, so its numbers match what they chose.
