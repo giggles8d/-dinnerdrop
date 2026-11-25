@@ -16,14 +16,15 @@ import type Stripe from 'stripe'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { metaCapiEnabled, sendMetaEvent } from '@/lib/meta-capi'
 import { TRIAL_PREDICTED_VALUE, trialEventId } from '@/lib/meta-events'
+import { isTestProfile } from '@/lib/tracking-env'
 
 const APP_URL = () => process.env.NEXT_PUBLIC_APP_URL || 'https://www.dinnerdrop.app'
 const idOf = (x: string | { id: string } | null | undefined) => (typeof x === 'string' ? x : x?.id ?? null)
 
 async function profileFor(supabase: SupabaseClient, customerId: string | null) {
   if (!customerId) return null
-  const { data } = await supabase.from('profiles').select('id, email').eq('stripe_customer_id', customerId).maybeSingle()
-  return data as { id: string; email: string | null } | null
+  const { data } = await supabase.from('profiles').select('id, email, settings').eq('stripe_customer_id', customerId).maybeSingle()
+  return data as { id: string; email: string | null; settings: unknown } | null
 }
 
 /** Call from checkout.session.completed. */
@@ -37,6 +38,7 @@ export async function metaStartTrialFromCheckout(stripe: Stripe, supabase: Supab
     if (sub.status !== 'trialing') return
     const customerId = idOf(session.customer as string | Stripe.Customer | null)
     const prof = await profileFor(supabase, customerId)
+    if (isTestProfile(prof)) return // test accounts never reach Meta (Sarah, Nov 25 2026)
     const md = session.metadata ?? {}
     const ua = md.dd_ua || null
     await sendMetaEvent({
@@ -65,6 +67,7 @@ export async function metaPurchaseFromInvoice(stripe: Stripe, supabase: Supabase
     if (!(invoice.amount_paid > 0) || !invoice.id) return
     const customerId = idOf(invoice.customer as string | Stripe.Customer | null)
     const prof = await profileFor(supabase, customerId)
+    if (isTestProfile(prof)) return // test accounts never reach Meta (Sarah, Nov 25 2026)
     const details = invoice.parent?.subscription_details ?? null
     const subId = idOf(details?.subscription as string | Stripe.Subscription | null | undefined)
     const md = details?.metadata ?? {}

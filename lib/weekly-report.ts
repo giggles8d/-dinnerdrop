@@ -6,6 +6,7 @@
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { emailShell, sendEmail } from '@/lib/notify'
+import { isTestProfile } from '@/lib/tracking-env'
 
 const REPORT_TO = process.env.REPORT_EMAIL || 'sarah@dinnerdrop.app'
 const INTERNAL = /(@dinnerdrop\.app$|^setzl1979@gmail\.com$)/i
@@ -17,10 +18,11 @@ export async function weeklyCheckoutNumbers(db: SupabaseClient, now = new Date()
   const [{ data: hs }, { data: rc }, { data: profs }, { count: signups }] = await Promise.all([
     db.from('grocery_handoffs').select('id, user_id, store, est_total, actual_total, feedback, created_at').gte('created_at', since),
     db.from('receipts').select('user_id, handoff_id, total, created_at').gte('created_at', since),
-    db.from('profiles').select('id, email, created_at, signup_source'),
+    db.from('profiles').select('id, email, created_at, signup_source, settings'),
     db.from('profiles').select('id', { count: 'exact', head: true }).gte('created_at', since),
   ])
-  const internal = new Set((profs ?? []).filter((p) => INTERNAL.test(p.email ?? '')).map((p) => p.id))
+  // Internal addresses, plus any profile flagged settings.isTest (lib/tracking-env, Sarah Nov 25 2026).
+  const internal = new Set((profs ?? []).filter((p) => INTERNAL.test(p.email ?? '') || isTestProfile(p)).map((p) => p.id))
   const handoffs = ((hs ?? []) as Handoff[]).filter((h) => !internal.has(h.user_id))
   const receipts = (rc ?? []).filter((r) => !internal.has(r.user_id))
   const families = new Set(handoffs.map((h) => h.user_id))

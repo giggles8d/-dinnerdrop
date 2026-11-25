@@ -19,6 +19,7 @@
  * Server-only: imports node:crypto. Never import this from a client component.
  */
 import { createHash } from 'node:crypto'
+import { isProductionServer, isTestProfile } from '@/lib/tracking-env'
 
 const DEFAULT_PIXEL_ID = '2031808580404505'
 const DEFAULT_GRAPH_VERSION = 'v26.0'
@@ -51,9 +52,12 @@ export interface MetaEvent {
 const sha256 = (s: string) => createHash('sha256').update(s).digest('hex')
 const norm = (s: string | null | undefined) => (typeof s === 'string' ? s.trim().toLowerCase() : '')
 
-/** True when a token is configured, so callers can skip building payloads they would not send. */
+/**
+ * True when events may go out: a token is configured AND this is the production deployment. Previews and local
+ * dev never send to Meta, even with a token (Sarah, Nov 25 2026: a preview sign-up used to count as real).
+ */
 export function metaCapiEnabled(): boolean {
-  return Boolean(process.env.META_CAPI_TOKEN)
+  return Boolean(process.env.META_CAPI_TOKEN) && isProductionServer()
 }
 
 /**
@@ -62,7 +66,8 @@ export function metaCapiEnabled(): boolean {
  */
 export async function sendMetaEvent(ev: MetaEvent): Promise<boolean> {
   const token = process.env.META_CAPI_TOKEN
-  if (!token) return false
+  if (!token || !isProductionServer()) return false
+  if (isTestProfile({ email: ev.user.email })) return false // internal address; flagged profiles are checked by callers
   try {
     const pixelId = process.env.META_PIXEL_ID || DEFAULT_PIXEL_ID
     const version = process.env.META_GRAPH_VERSION || DEFAULT_GRAPH_VERSION

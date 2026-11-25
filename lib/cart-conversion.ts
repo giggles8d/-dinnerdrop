@@ -1,4 +1,5 @@
 import { newEventId } from '@/lib/meta-events'
+import { adsAllowedInBrowser } from '@/lib/tracking-env'
 
 /**
  * Tell the ad platforms a family sent its grocery list to a store (Nov 21 2026 review). Until now Meta only heard
@@ -20,8 +21,9 @@ type W = Window & { fbq?: (...a: unknown[]) => void; gtag?: (...a: unknown[]) =>
 export function fireCartSent(store: string, value?: number): void {
   if (typeof window === 'undefined') return
   const w = window as W
-  // No ad tracking inside the native app (ad tags never load there either).
-  if (/DinnerDropApp/.test(navigator.userAgent)) return
+  // Ad events only where the ad tags load: www.dinnerdrop.app, not the native app, not a dd_test=1 browser
+  // (lib/tracking-env, Sarah Nov 25 2026). The server relay checks again, including test accounts.
+  if (!adsAllowedInBrowser()) return
   let first = true
   try { first = !localStorage.getItem('dd_cart_conv'); localStorage.setItem('dd_cart_conv', String(Date.now())) } catch { /* storage blocked: treat as first */ }
   const v = Number(value) > 0 ? Math.round(Number(value)) : undefined
