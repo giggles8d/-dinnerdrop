@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 const FAQ: Array<[string, string]> = [
-  ['My items didn’t add to the Instacart cart', 'Open DinnerDrop in Safari or Chrome rather than inside Facebook or Instagram, then tap Shop ingredients. Instacart sign-in often fails inside those apps’ built-in browsers. If it still won’t add, send us a screenshot below.'],
+  ['My items didn’t add to the Instacart cart', 'Open DinnerDrop in Safari or Chrome rather than inside Facebook or Instagram, then tap Save my list to Instacart. Instacart sign-in often fails inside those apps’ built-in browsers. If it still won’t add, send us a screenshot below.'],
   ['Instacart swapped some items', 'Instacart picks the closest product at your store; limited-brand stores like Aldi swap more. On the Instacart page, tap "Show alternatives" on anything marked Close Match before checkout.'],
   ['How do I change a dinner?', 'On your dashboard tap any dinner and choose Swap this meal, or heart dinners in the Recipe library so they rotate in. Mark a dinner cooked to fade it off the list.'],
   ['How do I change servings, allergies or diets?', 'Servings: the − / + on any recipe. Allergies, dislikes and each person’s safe foods: Settings → Household. Diets (vegetarian, gluten-free, low-carb, paleo…): Settings → Food.'],

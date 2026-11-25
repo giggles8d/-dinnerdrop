@@ -27,9 +27,9 @@ import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
 import InStoreSend from '@/components/InStoreSend'
 import FamilyTextCard from '@/components/FamilyTextCard'
+import DoneShoppingPrompt from '@/components/DoneShoppingPrompt'
 import WalmartButton from '@/components/WalmartButton'
 import WalmartPicks from '@/components/WalmartPicks'
-import InAppBrowserNotice from '@/components/InAppBrowserNotice'
 import KrogerReview from '@/components/KrogerReview'
 import SidesCard from '@/components/SidesCard'
 import { mergeSettings, tripsConfig, WEEKDAY_LABEL } from '@/lib/settings'
@@ -83,6 +83,8 @@ export default function GroceryListPage() {
   // The last send to a store whose lines are still on the list: ask whether the order went through.
   // Thanksgiving first-list offer (lib/weekend-offer): shown on the send hero to families who haven't sent a list yet.
   const [neverSent, setNeverSent] = useState(false)
+  // When the newest send happened, so "Done shopping?" only asks families who sent nothing this week.
+  const [lastSendAt, setLastSendAt] = useState<string | null>(null)
   const [offerStatus, setOfferStatus] = useState<string | null>(null)
   const [pendingSend, setPendingSend] = useState<{ id: string; at: string; store: string | null } | null>(null)
   // The store of the family's most recent send (any age), to put Walmart on top for Walmart families (Nov 25 2026).
@@ -183,6 +185,7 @@ export default function GroceryListPage() {
       .then(({ data: hs }) => {
         const h = hs?.[0]
         setNeverSent(!h)
+        setLastSendAt(h?.created_at ?? null)
         setLastStore(h?.store ?? null)
         if (h && h.actual_total == null && Date.now() - new Date(h.created_at).getTime() < 5 * 86400000) setAskActual({ id: h.id, est: h.est_total == null ? null : Number(h.est_total) })
         let dismissed = false
@@ -619,8 +622,8 @@ export default function GroceryListPage() {
           </div>
         )}
 
-        {/* Inside Facebook/Instagram's browser, Instacart sign-in can fail: offer Safari/Chrome first. */}
-        <div className="print:hidden"><InAppBrowserNotice /></div>
+        {/* The Facebook/Instagram browser notice now shows under the Instacart button, only if its tab is blocked
+            (components/InAppBrowserNotice, Nov 25 2026). */}
         <EngagementTracker page="grocery-list" ready={!loading && items.length > 0} />
 
         {pendingSend && items.some((i) => !i.have && i.created_at <= pendingSend.at) && (
@@ -872,6 +875,24 @@ export default function GroceryListPage() {
           <ReceiptRewardBanner />
           <ReceiptUpload onDone={() => { setAskActual(null); load() }} />
         </div>
+
+        <DoneShoppingPrompt
+          uid={userId}
+          weekStart={weekStart}
+          items={items}
+          sentThisWeek={listSentHere || (!!lastSendAt && !!weekStart && lastSendAt.slice(0, 10) >= weekStart)}
+          estTotal={storeEst}
+          onClear={async (ids) => {
+            if (!userId || !weekStart || !ids.length) return
+            await supabase.from('list_items').update({ ordered_at: new Date().toISOString() }).in('id', ids)
+            await loadItems(userId, weekStart); load(); setSendBump((n) => n + 1)
+          }}
+          onUndo={async (ids) => {
+            if (!userId || !weekStart || !ids.length) return
+            await supabase.from('list_items').update({ ordered_at: null }).in('id', ids)
+            await loadItems(userId, weekStart); load()
+          }}
+        />
 
         {!sendInView && !heroInView && shoppableCount > 0 && (
           <div className="fixed bottom-2 sm:bottom-4 inset-x-0 z-40 px-3 sm:px-4 print:hidden native-raise">
