@@ -83,6 +83,11 @@ export async function autoPlan(admin: SupabaseClient, p: AutoPlanProfile, settin
   // Every week stays inside the family's budget at what they'll pay (lib/budget); swapped dinners are tagged.
   chosen = await keepInBudget(admin, p.id, chosen, p.weekly_budget, settings)
   const total = chosen.reduce((s, m) => s + (Number(m.estimatedCost) || 0), 0)
+  // Re-check just before saving: building the week can take a while, and a family may have picked their own
+  // dinners for it meanwhile. Never add a second plan to a week that has one (Sarah, Nov 25 2026: her Saturday
+  // picks got a second, auto-made week on top of them Sunday morning).
+  const { data: already } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', weekStart).limit(1)
+  if (already?.length) return null
   await admin.from('meal_plans').insert({ user_id: p.id, week_start: weekStart, meals: chosen, grocery_list: {}, total_estimated_cost: total })
   if (draft) await admin.from('menu_drafts').update({ status: 'sent', sent_at: new Date().toISOString() }).eq('id', draft.id)
   return chosen

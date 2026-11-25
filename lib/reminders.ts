@@ -194,7 +194,10 @@ export async function runDailyReminders(admin: SupabaseClient, now: Date = new D
           ? mondayOf(new Date(planNow.getTime() + 2 * 86400000 + (planningDay === 'sat' ? 86400000 : 0)))
           : mondayOf(planNow)
         const { data: existing } = await admin.from('meal_plans').select('id').eq('user_id', p.id).eq('week_start', target).limit(1)
-        if (!existing?.length) {
+        // A family who sent a cart in the last 24 hours already shopped for this week: don't plan over it (Nov 25 2026).
+        const { count: justShopped } = await admin.from('grocery_handoffs').select('id', { count: 'exact', head: true })
+          .eq('user_id', p.id).gte('created_at', new Date(now.getTime() - 86400000).toISOString())
+        if (!existing?.length && !justShopped) {
           const meals = await autoPlan(admin, p, settings, target)
           if (meals) {
             report.autoPlans++
