@@ -154,7 +154,8 @@ export function rowsFromPlanList(
         search_term: item.searchTerm ?? null,
         source: 'plan',
         added_by: null,
-        have: ctx.pantryNames.has(normalizeItemName(item.name)),
+        // Pantry trace amounts from the code-built list start as "have it" (Nov 25 2026); AI lists never set the flag.
+        have: ctx.pantryNames.has(normalizeItemName(item.name)) || item.pantry === true,
         checked: false,
       })
     }

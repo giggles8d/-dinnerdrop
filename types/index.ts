@@ -72,6 +72,9 @@ export interface GroceryItem {
   unit: string
   category: GroceryCategory
   searchTerm: string    // normalized term for Instacart API lookup
+  /** Code-built lists only (lib/list-build): a pantry trace amount ("1 pinch salt", oil "to taste"). The row starts
+   *  as "have it" and shows under "You probably have", so it stays off the cart unless the family taps it. */
+  pantry?: boolean
 }
 
 export interface Favorite {

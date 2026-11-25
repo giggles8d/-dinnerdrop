@@ -23,6 +23,8 @@ interface GroceryListProps {
   onMoveStore?: (item: ListItem) => void
   /** Tap ⓘ on a line: which of this week's dinners use it, and what to buy ("1 × 32 oz carton"). */
   detailFor?: (item: ListItem) => { usedIn: string[]; buy: string | null }
+  /** Pantry trace amounts ("1 pinch salt"): shown last under "You probably have" instead of in their aisle. */
+  probablyHave?: (item: ListItem) => boolean
 }
 
 const SOURCE_LABEL: Partial<Record<ListItem['source'], string>> = {
@@ -32,7 +34,7 @@ const SOURCE_LABEL: Partial<Record<ListItem['source'], string>> = {
 const WEIGHT_UNITS = new Set(['lb', 'lbs', 'pound', 'pounds', 'kg', 'oz', 'ounce', 'ounces'])
 function stepFor(unit: string | null): number { return WEIGHT_UNITS.has((unit ?? '').toLowerCase()) ? 0.5 : 1 }
 
-export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, onChangeQuantity, saleFor, storeFor, onMoveStore, detailFor }: GroceryListProps) {
+export default function GroceryList({ items, onToggleChecked, onToggleHave, onRemove, onAdd, onChangeQuantity, saleFor, storeFor, onMoveStore, detailFor, probablyHave }: GroceryListProps) {
   const [qtyEdit, setQtyEdit] = useState<string | null>(null)
   const [openInfo, setOpenInfo] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
@@ -46,37 +48,7 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
     try { await onAdd(name) } finally { setAdding(false); setDraft('') }
   }
 
-  return (
-    <div className="space-y-8">
-      <form onSubmit={submit} className="flex gap-2 print:hidden">
-        <input
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          placeholder="Add anything — 2 gallons milk, paper towels, snacks for the game…"
-          className="flex-1 rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-        />
-        <button type="submit" disabled={adding || !draft.trim()} className="inline-flex items-center gap-1 px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50">
-          <Plus className="w-4 h-4" /> Add
-        </button>
-      </form>
-
-      {CATEGORY_ORDER.map((category) => {
-        const rows = items.filter((i) => i.category === category)
-        if (!rows.length) return null
-        const need = rows.filter((r) => !r.have)
-        const done = need.filter((r) => r.checked).length
-        return (
-          // A printed list leaves off what they already have (customer idea, Nov 13 2026), so an all-"have it" aisle prints nothing.
-          <div key={category} className={need.length ? undefined : 'print:hidden'}>
-            <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-primary/20">
-              <div className="flex items-center gap-2">
-                <span className="text-base">{CATEGORY_EMOJI[category]}</span>
-                <h3 className="text-xs font-bold text-primary uppercase tracking-widest">{category}</h3>
-              </div>
-              {done > 0 && <span className="text-xs font-medium text-muted-foreground">{done}/{need.length}</span>}
-            </div>
-            <ul className="space-y-1">
-              {rows.map((item) => {
+  const renderRow = (item: ListItem) => {
                 const muted = item.checked || item.have
                 const info = openInfo === item.id && detailFor ? detailFor(item) : null
                 // Which dinners this line is for, shown under the name (Sarah, Nov 1: "so I know which meal each item is for").
@@ -148,11 +120,58 @@ export default function GroceryList({ items, onToggleChecked, onToggleHave, onRe
                   )}
                   </li>
                 )
-              })}
+  }
+
+  return (
+    <div className="space-y-8">
+      <form onSubmit={submit} className="flex gap-2 print:hidden">
+        <input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          placeholder="Add anything — 2 gallons milk, paper towels, snacks for the game…"
+          className="flex-1 rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+        />
+        <button type="submit" disabled={adding || !draft.trim()} className="inline-flex items-center gap-1 px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50">
+          <Plus className="w-4 h-4" /> Add
+        </button>
+      </form>
+
+      {CATEGORY_ORDER.map((category) => {
+        const rows = items.filter((i) => i.category === category && !probablyHave?.(i))
+        if (!rows.length) return null
+        const need = rows.filter((r) => !r.have)
+        const done = need.filter((r) => r.checked).length
+        return (
+          // A printed list leaves off what they already have (customer idea, Nov 13 2026), so an all-"have it" aisle prints nothing.
+          <div key={category} className={need.length ? undefined : 'print:hidden'}>
+            <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-primary/20">
+              <div className="flex items-center gap-2">
+                <span className="text-base">{CATEGORY_EMOJI[category]}</span>
+                <h3 className="text-xs font-bold text-primary uppercase tracking-widest">{category}</h3>
+              </div>
+              {done > 0 && <span className="text-xs font-medium text-muted-foreground">{done}/{need.length}</span>}
+            </div>
+            <ul className="space-y-1">
+              {rows.map(renderRow)}
             </ul>
           </div>
         )
       })}
+
+      {/* Pantry trace amounts (Nov 25 2026): off the cart unless tapped; "have?" puts one back on. */}
+      {(() => {
+        const pantry = probablyHave ? items.filter((i) => probablyHave(i)) : []
+        if (!pantry.length) return null
+        return (
+          <div className="print:hidden">
+            <div className="mb-2 pb-2 border-b border-border">
+              <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">You probably have</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">A pinch or a splash for this week&apos;s dinners. These stay off the cart; tap <em>have it</em> if you need to buy one.</p>
+            </div>
+            <ul className="space-y-1">{pantry.map(renderRow)}</ul>
+          </div>
+        )
+      })()}
     </div>
   )
 }
