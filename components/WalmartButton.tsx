@@ -133,7 +133,7 @@ export default function WalmartButton({ groceryList, weekStart, onSent, primary 
         {primary && <p className="text-sm text-foreground">You&apos;ll check prices and edit before you pay.</p>}
         <p className="text-[11px] text-muted-foreground">
           One tap fills your Walmart cart with every item, matched to store sizes. You check out on Walmart.com.{' '}
-          <button type="button" onClick={start} disabled={loading} className="underline underline-offset-2 hover:text-foreground">Review items first</button>
+          <button type="button" onClick={start} disabled={loading} className="inline-flex min-h-[44px] items-center underline underline-offset-2 hover:text-foreground">Review items first</button>
         </p>
         </>
       )}
