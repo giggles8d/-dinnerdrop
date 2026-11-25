@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
-import { getFamilyPriceId, type FamilyInterval } from '@/lib/stripe'
+import { getFamilyPriceId, getBlackFridayCouponId, type FamilyInterval } from '@/lib/stripe'
+import { blackFridayOpen } from '@/lib/bf-sale'
 import { trialPlan } from '@/lib/trial-date'
 import { browserContext } from '@/lib/meta-capi'
 
@@ -82,6 +83,11 @@ export async function POST(req: NextRequest) {
           metadata: { tier: 'family', interval, trial_basis: plan.basis, ...(dd_fbp ? { dd_fbp } : {}), ...(dd_fbc ? { dd_fbc } : {}) },
         },
         allow_promotion_codes: true,
+      }
+      // Black Friday 2026: yearly gets 50% off the first year automatically until Mon Nov 30 11:59 PM ET.
+      if (!couponCode && interval === 'yearly' && blackFridayOpen()) {
+        try { couponCode = await getBlackFridayCouponId(stripe) } catch (e) { console.error('[checkout] BF coupon', e) }
+        if (couponCode) (sessionParams.subscription_data as Record<string, unknown>).metadata = { ...((sessionParams.subscription_data as { metadata?: Record<string, string> }).metadata ?? {}), sale: 'bf-2026' }
       }
       if (couponCode) {
         sessionParams.discounts = [{ coupon: couponCode }]

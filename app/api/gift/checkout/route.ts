@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { giftSaleCents } from '@/lib/bf-sale'
 import Stripe from 'stripe'
 import { GIFT_PLANS, type GiftPlanId } from '@/lib/gifts'
 
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
         quantity: 1,
         price_data: {
           currency: 'usd',
-          unit_amount: plan.cents,
+          unit_amount: giftSaleCents(plan.cents),   // Black Friday 2026: 50% off until Mon Nov 30 11:59 PM ET
           product_data: { name: `DinnerDrop Family — ${plan.label} gift`, description: 'Weekly dinner plans, one grocery list, one tap to Instacart. Starts when they sign up; no card needed for them.' },
         },
       }],

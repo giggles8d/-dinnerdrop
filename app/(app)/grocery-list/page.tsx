@@ -29,6 +29,7 @@ import InStoreSend from '@/components/InStoreSend'
 import FamilyTextCard from '@/components/FamilyTextCard'
 import DoneShoppingPrompt from '@/components/DoneShoppingPrompt'
 import WalmartButton from '@/components/WalmartButton'
+import BlackFridayBanner from '@/components/BlackFridayBanner'
 import WalmartPicks from '@/components/WalmartPicks'
 import KrogerReview from '@/components/KrogerReview'
 import SidesCard from '@/components/SidesCard'
@@ -754,6 +755,8 @@ export default function GroceryListPage() {
 
         <div className="mt-6" />
         {/* Family vote, pantry check and sides sit under the list since Nov 15: send comes first. */}
+        {/* Below the list and send buttons, so it never competes with sending (Black Friday 2026). */}
+        <BlackFridayBanner page="grocery-list" />
         <LastCallCard onItems={load} />
         <PantryCheck rows={items} weekKey={weekStart ?? 'now'} onKeepOff={keepOff} />
         <SidesCard meals={planMeals} have={items.map((i) => i.name)} onAdd={(name, category, searchTerm, qty) => addItem(name, category, searchTerm, 'extra', qty)} />

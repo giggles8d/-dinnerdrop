@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { GIFT_PLAN_OPTIONS } from './plans'
+import { BF_SALE, blackFridayOpen } from '@/lib/bf-sale'
 import EmailTypoHint, { useEmailTypo } from '@/components/EmailTypoHint'
 
 export default function GiftForm() {
@@ -45,8 +46,12 @@ export default function GiftForm() {
             <button type="button" key={p.id} onClick={() => setPlan(p.id)} aria-pressed={plan === p.id}
               className={`rounded-xl border-2 p-4 text-left transition-colors ${plan === p.id ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/40'}`}>
               <p className="font-heading font-bold text-lg text-foreground">{p.label}</p>
-              <p className="text-2xl font-bold text-primary">{p.price}</p>
-              <p className="text-xs text-muted-foreground mt-1">{p.note}</p>
+              {blackFridayOpen() ? (
+                <p className="text-2xl font-bold text-primary">{p.sale} <span className="text-sm font-normal text-muted-foreground line-through">{p.price}</span></p>
+              ) : (
+                <p className="text-2xl font-bold text-primary">{p.price}</p>
+              )}
+              <p className="text-xs text-muted-foreground mt-1">{blackFridayOpen() ? `Black Friday: 50% off until ${BF_SALE.deadlineLabel}` : p.note}</p>
             </button>
           ))}
         </div>
@@ -71,7 +76,7 @@ export default function GiftForm() {
       )}
       {err && <p className="text-sm text-destructive">{err}</p>}
       <button type="submit" disabled={busy} className="w-full sm:w-auto px-8 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 shadow-sm">
-        {busy ? 'Opening checkout…' : `Continue to payment — ${GIFT_PLAN_OPTIONS.find((p) => p.id === plan)!.price}`}
+        {busy ? 'Opening checkout…' : `Continue to payment — ${(blackFridayOpen() ? GIFT_PLAN_OPTIONS.find((p) => p.id === plan)!.sale : GIFT_PLAN_OPTIONS.find((p) => p.id === plan)!.price)}`}
       </button>
       <p className="text-xs text-muted-foreground">Secure checkout by Stripe. One-time payment — no subscription for you or them.</p>
     </form>
