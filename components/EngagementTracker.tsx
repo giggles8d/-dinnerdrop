@@ -39,7 +39,8 @@ export default function EngagementTracker({ page, ready }: { page: 'dashboard' |
 
     // Tracked buttons entering the viewport, and taps on them.
     const io = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) { trackOnce('list_cta_seen', { page, id: (e.target as HTMLElement).dataset.track || 'cta', t: secs(start.current) }); io?.unobserve(e.target) }
+      // data-track-variant (optional) → meta.variant, to compare a button's versions (lib/send-variant, Nov 25 2026).
+      for (const e of entries) if (e.isIntersecting) { const el = e.target as HTMLElement; trackOnce('list_cta_seen', { page, id: el.dataset.track || 'cta', t: secs(start.current), ...(el.dataset.trackVariant ? { variant: el.dataset.trackVariant } : {}) }); io?.unobserve(e.target) }
     }, { threshold: 0.6 }) : null
     const observeAll = () => document.querySelectorAll<HTMLElement>('[data-track]').forEach((el) => io?.observe(el))
     observeAll()
@@ -47,7 +48,7 @@ export default function EngagementTracker({ page, ready }: { page: 'dashboard' |
     mo?.observe(document.body, { childList: true, subtree: true })
     const onTap = (ev: Event) => {
       const el = (ev.target as HTMLElement | null)?.closest<HTMLElement>('[data-track]')
-      if (el) track('cta_tap', { page, id: el.dataset.track || 'cta', t: secs(start.current), scroll: maxScroll.current })
+      if (el) track('cta_tap', { page, id: el.dataset.track || 'cta', t: secs(start.current), scroll: maxScroll.current, ...(el.dataset.trackVariant ? { variant: el.dataset.trackVariant } : {}) })
     }
     document.addEventListener('click', onTap, true)
 

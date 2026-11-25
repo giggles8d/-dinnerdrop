@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { X } from 'lucide-react'
 import { isNativeApp, openExternal, tapHaptic } from '@/lib/native'
 import { track } from '@/lib/activation'
+import { SEND_VARIANT } from '@/lib/send-variant'
 import type { GroceryCategory, GroceryItem } from '@/types'
 import type { WalmartMatch, WalmartProduct } from '@/lib/walmart'
 
@@ -12,6 +13,8 @@ interface Props {
   groceryList: Record<GroceryCategory, GroceryItem[]>
   weekStart?: string
   onSent?: () => void
+  /** The main send on the list (families who shop at Walmart): adds the "check prices before you pay" line. */
+  primary?: boolean
 }
 
 const BLUE = '#0071CE'
@@ -21,7 +24,7 @@ const YELLOW = '#FFC220'
  * "Shop at Walmart": match the list to real Walmart products, let the family review and swap,
  * then one tap adds everything to their Walmart cart (they check out on Walmart.com).
  */
-export default function WalmartButton({ groceryList, weekStart, onSent }: Props) {
+export default function WalmartButton({ groceryList, weekStart, onSent, primary }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [matches, setMatches] = useState<WalmartMatch[] | null>(null)
@@ -43,7 +46,7 @@ export default function WalmartButton({ groceryList, weekStart, onSent }: Props)
   /** Optional review: match, then show the swap sheet before anything goes to the cart. */
   async function start() {
     tapHaptic(); setLoading(true); setError(null)
-    track('cta_tap', { page: 'grocery-list', id: 'walmart_review' })
+    track('cta_tap', { page: 'grocery-list', id: 'walmart_review', variant: SEND_VARIANT, primary: !!primary })
     try {
       const m = await fetchMatches()
       if (!m) return
@@ -61,7 +64,7 @@ export default function WalmartButton({ groceryList, weekStart, onSent }: Props)
    */
   async function oneTap() {
     tapHaptic(); setLoading(true); setError(null); setDone(null)
-    track('cta_tap', { page: 'grocery-list', id: 'walmart_button' })
+    track('cta_tap', { page: 'grocery-list', id: 'walmart_button', variant: SEND_VARIANT, primary: !!primary })
     const win = isNativeApp() ? null : window.open('', '_blank')
     try { if (win) { win.opener = null; win.document.title = 'Walmart'; win.document.body.innerHTML = '<p style="font:16px -apple-system,sans-serif;padding:24px">Filling your Walmart cart…</p>' } } catch { /* cross-origin later */ }
     const fail = (msg: string) => { try { win?.close() } catch { /* ignore */ } setError(msg) }
@@ -126,10 +129,13 @@ export default function WalmartButton({ groceryList, weekStart, onSent }: Props)
           {done.missing.length > 0 && <span className="block text-amber-800 mt-0.5">Add these yourself (no close match): {done.missing.join(', ')}.</span>}
         </p>
       ) : !matches && !error && (
+        <>
+        {primary && <p className="text-sm text-foreground">You&apos;ll check prices and edit before you pay.</p>}
         <p className="text-[11px] text-muted-foreground">
           One tap fills your Walmart cart with every item, matched to store sizes. You check out on Walmart.com.{' '}
-          <button type="button" onClick={start} disabled={loading} className="underline underline-offset-2 hover:text-foreground">Review items first</button>
+          <button type="button" onClick={start} disabled={loading} className="inline-flex min-h-[44px] items-center underline underline-offset-2 hover:text-foreground">Review items first</button>
         </p>
+        </>
       )}
 
       {matches && (
