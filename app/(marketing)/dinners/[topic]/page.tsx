@@ -140,7 +140,7 @@ const TOPICS: Topic[] = [
     ],
     faq: [
       { q: 'How accurate is the estimate?', a: 'It is a recipe-level estimate at typical US grocery prices, shown before you shop. The Instacart cart shows your store’s real prices before you check out, and you can swap anything.' },
-      { q: 'Does it work with Walmart or Aldi?', a: 'The list works anywhere — in store, on your phone. The one-tap cart fills Instacart (which delivers from many chains) or, on the Family plan, Kroger.' },
+      { q: 'Does it work with Walmart or Aldi?', a: 'Yes. The one-tap cart fills your Walmart cart or Instacart (which delivers from many chains, including Aldi), free. On the Family plan it can also fill your Kroger cart. The list works in store too, on your phone.' },
     ],
   },
   {

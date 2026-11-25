@@ -139,7 +139,9 @@ export default function ConversionTracker({ value = 54, currency = 'USD', onceKe
       if (key && Object.values(fired).some(Boolean)) {
         try { localStorage.setItem(key, String(Date.now())) } catch { /* ignore */ }
       }
-      return fired.google && fired.meta
+      // Keep retrying (within the 15 s window below) until all four have fired: Pinterest and Reddit load lazily
+      // since Nov 25 2026, often after Google and Meta.
+      return fired.google && fired.meta && fired.pinterest && fired.reddit
     }
 
     if (attempt()) return

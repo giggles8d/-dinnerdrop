@@ -149,9 +149,14 @@ function SignupForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <main className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md space-y-8">
          <div className="text-center">
+          {/* Logo so a visitor from an ad knows where they are (Nov 25 2026 review). */}
+          <Link href="/" className="inline-flex min-h-[44px] items-center gap-2 mb-4" aria-label="DinnerDrop home">
+            <span className="w-2 h-2 rounded-full bg-accent" aria-hidden="true" />
+            <span className="font-heading font-bold text-xl text-primary">DinnerDrop</span>
+          </Link>
           <h1 className="text-3xl font-heading font-bold text-foreground">
             {toTrial ? 'Keep Family after your free 14 days' : 'Create your free account'}
           </h1>
@@ -176,6 +181,8 @@ function SignupForm() {
             <input
               id="email"
               type="email"
+              inputMode="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -234,7 +241,7 @@ function SignupForm() {
           </Link>
         </p>
       </div>
-    </div>
+    </main>
   )
 }
 
