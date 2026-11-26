@@ -318,6 +318,13 @@ function DashboardContent() {
 
   // Refresh subscription status when returning from Stripe
   useEffect(() => {
+    // Record the finished checkout once (Nov 26 2026, sale tracking; app/api/stripe/checkout-done checks it with Stripe).
+    const sid = searchParams.get('session_id')
+    if (searchParams.get('subscribed') === 'true' && sid) {
+      let seen = false
+      try { seen = sessionStorage.getItem(`dd_checkout_done_${sid}`) === '1'; sessionStorage.setItem(`dd_checkout_done_${sid}`, '1') } catch { /* ignore */ }
+      if (!seen) fetch('/api/stripe/checkout-done', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId: sid }) }).catch(() => {})
+    }
     if (searchParams.get('subscribed') === 'true') {
       const refresh = async () => {
         const { data: { session } } = await supabase.auth.getSession()

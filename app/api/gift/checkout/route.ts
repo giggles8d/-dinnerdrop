@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { giftSaleCents } from '@/lib/bf-sale'
+import { giftSaleCents, blackFridayOpen } from '@/lib/bf-sale'
+import { createClient } from '@supabase/supabase-js'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { trackStep } from '@/lib/activation'
 import Stripe from 'stripe'
 import { GIFT_PLANS, type GiftPlanId } from '@/lib/gifts'
 
@@ -51,6 +54,11 @@ export async function POST(req: NextRequest) {
       success_url: `${app}/gift/thanks?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${app}/gift?canceled=1`,
     })
+    // Gift checkout start (Nov 26 2026, sale tracking), when the buyer is signed in; paid gifts land in gift_cards.
+    try {
+      const { data: { user } } = await createServerSupabaseClient().auth.getUser()
+      if (user) await trackStep(createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!), user.id, 'checkout_start', { kind: 'gift', plan: planId, sale: blackFridayOpen() ? 'bf-2026' : '' })
+    } catch { /* tracking never blocks a gift */ }
     return NextResponse.json({ url: session.url })
   } catch (e) {
     console.error('[gift/checkout]', e)
