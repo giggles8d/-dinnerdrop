@@ -6,6 +6,7 @@ import { getFamilyPriceId, getBlackFridayCouponId, type FamilyInterval } from '@
 import { blackFridayOpen } from '@/lib/bf-sale'
 import { trialPlan } from '@/lib/trial-date'
 import { browserContext } from '@/lib/meta-capi'
+import { trackStep } from '@/lib/activation'
 
 // Use the Stripe SDK default API version (pinned to the account in the Stripe dashboard).
 // Previously hardcoded to a non-existent version which made every checkout fail.
@@ -96,6 +97,10 @@ export async function POST(req: NextRequest) {
     }
 
     const session = await stripe.checkout.sessions.create(sessionParams)
+    // Checkout start (Nov 26 2026, sale tracking): server side, so it can't be blocked or missed.
+    await trackStep(createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!), user.id, 'checkout_start', {
+      kind: 'family', interval, coupon: couponCode ?? '', sale: couponCode && couponCode.startsWith('BF2026') ? 'bf-2026' : '',
+    })
 
     return NextResponse.json({ url: session.url })
   } catch (error) {

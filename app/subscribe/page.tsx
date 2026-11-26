@@ -8,6 +8,7 @@ import { openExternal } from '@/lib/native'
 import ConversionTracker from '@/components/ConversionTracker'
 import { createClient } from '@/lib/supabase'
 import { trialPlan } from '@/lib/trial-date'
+import { trackOnce } from '@/lib/activation'
 import { ArrowLeft, Check, MessageSquareText, ShoppingCart, Users, CalendarClock } from 'lucide-react'
 
 type Interval = 'monthly' | 'yearly'
@@ -43,6 +44,12 @@ function SubscribeContent() {
     }
     if (coupon) setCouponCode(coupon)
     if (searchParams.get('plan') === 'yearly' || (blackFridayOpen() && searchParams.get('plan') !== 'monthly')) setInterval('yearly')
+    // Subscribe-page view (Nov 26 2026, sale tracking). Signed-in visitors only (/api/track needs a user).
+    trackOnce('subscribe_view', {
+      interval: searchParams.get('plan') === 'monthly' ? 'monthly' : (searchParams.get('plan') === 'yearly' || blackFridayOpen()) ? 'yearly' : 'monthly',
+      sale: blackFridayOpen() ? 'bf-2026' : '',
+      src: (searchParams.get('utm_content') || searchParams.get('utm_medium') || (searchParams.get('auto') ? 'auto' : '')).slice(0, 40),
+    })
   }, [searchParams])
 
   // /start → /signup → /subscribe?auto=1: the user already chose "Try Family free",

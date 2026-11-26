@@ -30,6 +30,10 @@ export const ACTIVATION_STEPS = [
   'app_open',            // opened inside the native iPhone/Android app (meta.platform, meta.page), once per session (Nov 14 2026)
   'list_link_open',      // opened the no-sign-in /list link (app/list), not a send; deduped per 6 hours (Nov 22 2026, Sarah approved)
   'list_item_checked',   // ticked a line off on the /list page while shopping; once per 12 hours (Nov 22 2026)
+  // Purchases (Sarah, Nov 26 2026, Black Friday sale tracking): nothing recorded these before.
+  'subscribe_view',      // opened /subscribe signed in, once per browser session (meta.interval, meta.sale, meta.src)
+  'checkout_start',      // a Stripe Checkout session was made, server side (meta.kind family | gift, interval/plan, sale, coupon)
+  'checkout_done',       // a finished Family checkout, recorded when Stripe sends them back (app/api/stripe/checkout-done)
 ] as const
 export type ActivationStep = (typeof ACTIVATION_STEPS)[number]
 
