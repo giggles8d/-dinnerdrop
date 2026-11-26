@@ -27,6 +27,7 @@ import { familyUsuals, type UsualItem } from '@/lib/aisle'
 import InstacartButton from '@/components/InstacartButton'
 import InStoreSend from '@/components/InStoreSend'
 import FamilyTextCard from '@/components/FamilyTextCard'
+import SummaryFirst from '@/components/SummaryFirst'
 import DoneShoppingPrompt from '@/components/DoneShoppingPrompt'
 import WalmartButton from '@/components/WalmartButton'
 import BlackFridayBanner from '@/components/BlackFridayBanner'
@@ -56,6 +57,11 @@ function weekdayOfKey(date: string): (typeof WEEKDAY_KEYS)[number] {
 export default function GroceryListPage() {
   const [justPicked, setJustPicked] = useState(false)
   const [listSentHere, setListSentHere] = useState(false)
+  // Summary-first test (lib/summary-test; off until Sarah turns it on Dec 7): the family's group, and whether this
+  // visit opened the full list.
+  const [summaryAb, setSummaryAb] = useState<'summary_a' | 'summary_b' | null>(null)
+  const [summaryOpen, setSummaryOpen] = useState(false)
+  useEffect(() => { fetch('/api/list-summary-test', { cache: 'no-store' }).then((r) => r.json()).then((j) => setSummaryAb(j.group ?? null)).catch(() => {}) }, [])
   // Bumped after a send so the one-time family-text card can appear right away (review #6, Nov 25 2026).
   const [sendBump, setSendBump] = useState(0)
   useEffect(() => { try { setJustPicked(new URLSearchParams(window.location.search).get('picked') === '1') } catch { /* ignore */ } }, [])
@@ -625,7 +631,7 @@ export default function GroceryListPage() {
 
         {/* The Facebook/Instagram browser notice now shows under the Instacart button, only if its tab is blocked
             (components/InAppBrowserNotice, Nov 25 2026). */}
-        <EngagementTracker page="grocery-list" ready={!loading && items.length > 0} />
+        <EngagementTracker page="grocery-list" ready={!loading && items.length > 0} ab={summaryAb} />
 
         {pendingSend && items.some((i) => !i.have && i.created_at <= pendingSend.at) && (
           <div className="mb-6 rounded-xl border border-accent/50 bg-accent/10 p-4 print:hidden">
@@ -734,6 +740,14 @@ export default function GroceryListPage() {
           </div>
         )}
 
+        {summaryAb === 'summary_b' && neverSent && !listSentHere && !summaryOpen && items.length > 0 ? (
+          <SummaryFirst
+            dinners={planMeals.map((m) => m.name)}
+            itemCount={items.filter((i) => !i.have).length}
+            probablyHave={items.filter((i) => i.have && i.source === 'plan' && probablyHaveNames.has(normalizeItemName(i.name))).length}
+            onExpand={() => setSummaryOpen(true)}
+          />
+        ) : (<>
         {shoppableCount > 0 && <p className="mb-2 text-sm text-muted-foreground print:hidden">Already have something? Tap <em>have?</em> on it and it stays off the cart.</p>}
 
         <GroceryList
@@ -752,6 +766,7 @@ export default function GroceryListPage() {
             buy: i.quantity ? toPackages({ name: i.name, quantity: i.quantity, unit: i.unit, searchTerm: i.search_term }).label.replace(/^1 × package$/, '') || null : null,
           })}
         />
+        </>)}
 
         <div className="mt-6" />
         {/* Family vote, pantry check and sides sit under the list since Nov 15: send comes first. */}
