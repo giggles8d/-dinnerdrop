@@ -1,0 +1,10 @@
+{"c1": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261126_174135_20da8f28-67d2-458d-bdad-de29d080b1c3.mp4",
+ "c2": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261126_174140_8c2bf44d-53c8-473e-b0c0-92842d473be7.mp4",
+ "c3": "https://d8j0ntlcm91z4.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/hf_20261126_174249_6ee2eab5-16c9-44da-880b-629d01921b1a.mp4",
+ "start_frames": ["4f2ac1df-4da6-4228-a020-af5722f21163", "7a764bad-7acd-455f-a9ae-a7684429e5d4", "937464a5-7730-4ddd-bdbc-c86f39eb20ea"],
+ "lines": {"c1": "Tomorrow this whole kitchen is leftovers. And nobody's eating turkey four nights in a row. Watch this.",
+           "c2": "I just snap the fridge... and it tells me what we can actually make from what's in there. (veo dropped 'I just')",
+           "c3": "Dinner from what we already had. The rest of the week goes to Instacart in one tap. Code's on the screen."},
+ "model": "veo3_1 high (credits 1201), all clips back in ~3 min",
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/b27f6942-7504-4b96-8aec-65f06c84f812.mp4",
+ "build": "python3 mom/build_mom.py mom/2026-11-26"}

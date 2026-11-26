@@ -1,0 +1,11 @@
+{
+ "element": "04f41778-2a13-4136-afa8-86af51c849d6 (DinnerDrop-NurseMom-v2)",
+ "voice": "Hallie preset 10274bf1-fb93-554f-b59f-d620a920fd36 (voice_change on every clip)",
+ "model": "veo3_1 high (credits 1201)",
+ "start_frames": {"c1-c3": "bcbdb3f5-0f9a-4a76-a1e8-7940ff63dfc7 (break room; take 98ea54f1 had a brand tab on the fleece)", "c4": "2cddd6f0-1205-4003-93be-5e76256bdb86 (table, four plates); homework-table frame 6aeec56f had a fleece tab + printed book cover, unused"},
+ "video_jobs": {"c1": "5c3bb34f-0c27-4dd5-8ff1-07fd3a1ebb01", "c2": "f83bbfe1-4077-408c-bc32-e9d2fc7c17ea", "c3": "546f3cd6-184f-48f6-b25b-a24cb6c7eb67", "c4": "4929823e-866b-440e-a362-c623efb7ce6a"},
+ "voice_changed": {"c1": "2125c050-8b52-4d12-bdee-c7a2b21d4bf8", "c2": "2761b25e-7497-42ad-aa2f-0c741cbf62fb", "c3": "0b8a848c-adb4-4f8a-bf11-81a70b39f998", "c4": "5e8a9695-7e89-485b-a113-54089bcd88e0"},
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/9351a6aa-2f03-4b0f-a73e-acee88ac9ac9.mp4",
+ "status": "SCHEDULED 2026-11-27 4:30 PM ET on TikTok, YouTube Shorts, Facebook Reels via Publer (by Claude, 11-26)",
+ "build": "python3 mom/build_mom.py mom/nurse/2026-11-27"
+}

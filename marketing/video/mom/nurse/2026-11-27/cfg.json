@@ -1,0 +1,13 @@
+{
+ "out": "2026-11-27_NurseMom_Ep7_BlackFridaySwap.mp4",
+ "ai_banner": false,
+ "end_ai_line": false,
+ "hook_text": ["ER nurse vs. Black Friday"],
+ "labels": {"c2.mp4": "Swapped for this week's sales"},
+ "app_over": {"c2.mp4": {"face": 2.6, "segs": [[54, 62, "Your week, planned"]]}, "c3.mp4": {"face": 1.6, "segs": [[110, 122, "One grocery list"], [136, 152, "To your cart, one tap"]]}},
+ "app_after": 0,
+ "app": [],
+ "cta_y": [1180, 1290],
+ "end_seconds": 1.8,
+ "end": ["Try it free, no card", "Code NURSE = 3 months of Family free", "dinnerdrop.app/go/nurse"]
+}
