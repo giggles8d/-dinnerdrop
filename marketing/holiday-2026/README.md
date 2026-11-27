@@ -8,7 +8,7 @@ Offer in every piece: every new family gets 14 days of Family free, no card. No 
 
 | Piece | Where it lives | State |
 |---|---|---|
-| Email | `email.html`, `email.txt`; Resend broadcast `afe0c9a5-e6c7-4db2-97f0-b9c09852a2e2` | Draft. NOT sent. Needs Sarah's yes. |
+| Email | `email.html`, `email.txt`; Resend broadcast `afe0c9a5-e6c7-4db2-97f0-b9c09852a2e2` | SENT Nov 27 ~10:43 AM ET to 740, after ChatGPT and Gemini both approved (round 2, 9.5/10 each). Unsubscribe sync: scheduled task `dinnerdrop-holiday-pin-check-nov27` (1:55 PM). |
 | Email test | Resend broadcast `8b0171cc-611e-41bf-abf6-17d0cdf713ff` | Sent to sarah@dinnerdrop.app only, delivered Nov 27 |
 | Pins (12) | Publer, DinnerDrop (Pinterest), label "Holiday push Nov 2026" | Scheduled Nov 27 to Dec 3 |
 | Shorts (5) | `../video/holiday-2026/` (scripts in each `cfg.json`); Publer, 7:30 PM slot | Scheduled Nov 27 to Dec 1 on YouTube, TikTok, Facebook |

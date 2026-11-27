@@ -57,14 +57,14 @@ for j, step in enumerate(C['steps']):
 f.append(txt('DinnerDrop', 44, 'white', 120, 0, APP_A, box=GREEN))
 fg = ("[0:v]scale=-2:1920,boxblur=30:3,crop=1080:1920,eq=brightness=-0.28[bg];"
       f"[3:v]scale=1080:810:force_original_aspect_ratio=increase,crop=1080:810,zoompan=z='min(zoom+0.0007,1.12)':d={int(T*30)+30}:s=1080x810:fps=30[ph];"
-      f"[bg][ph]overlay=0:260:shortest=0,trim=0:{APP_A:.3f},{','.join(f)},format=yuv420p[main]")
+      f"[bg][ph]overlay=0:260:shortest=0,trim=0:{APP_A:.3f},{','.join(f)},format=yuv420p,setsar=1[main]")
 cut = T - APP_A; s, e = 88, 97; sp = cut / (e - s); W = 760; H = int(1256 * W / 600)
 # Holiday push: the app cutaway says plainly that we don't deliver food (Sarah's rule for this push).
 app = (f"[1:v]trim={s}:{e},setpts=PTS-STARTPTS,setpts={sp:.4f}*PTS,crop=600:1256:0:48,scale={W}:{H},pad={W+12}:{H+12}:6:6:color=0xdddddd,fps=30[ph2];"
        f"color=c={CREAM}:s=1080x1920:r=30:d={cut:.3f}[cr];[cr][ph2]overlay=(W-w)/2:230:eof_action=pass,"
        f"drawtext=fontfile={FONT}:text='{esc(C.get('app_line1', 'We plan dinner + send your list.'))}':fontsize=50:fontcolor={GREEN}:x=(w-text_w)/2:y=70,"
        f"drawtext=fontfile={FONTM}:text='{esc(C.get('app_line2', 'We don’t deliver food.'))}':fontsize=42:fontcolor={GREEN}:x=(w-text_w)/2:y=142,"
-       f"trim=0:{cut:.3f},format=yuv420p[app]")
+       f"trim=0:{cut:.3f},format=yuv420p,setsar=1[app]")
 body = f'{D}/body.mp4'
 run(['ffmpeg','-y','-v','error','-loop','1','-i',f'{D}/photo.jpg','-i',APP,'-i',main,'-i',f'{D}/photo.jpg','-filter_complex',
      fg + ';' + app + ';[main][app]concat=n=2:v=1:a=0[v]','-map','[v]','-map','2:a','-t',f'{T:.3f}',
