@@ -7,6 +7,7 @@ Optional cfg (Nov 3 2026):
   "end_seconds": 1.8, "cta_y": [y1, y2]  -> end-card length; height of the code/url lines on the last clip
   "clip_end": {"c1.mp4": 7.9}    -> cut a clip at this time (use last word end + ~0.45 s from a transcript) when silencedetect misses room tone
   "end_ai_line": false            -> no AI line on the end card (Sarah, Nov 3: no on-screen AI label at all; disclosure lives in the caption)
+  "end_note": "We don't deliver food."  -> extra white line under the URL box on the end card (Offer rule, Nov 27 2026)
   "ai_banner": false            -> drop the bottom "AI-generated presenter" line on clips (the end card keeps its AI line)
   "hook_tag": "..."             -> small line under the hook text on c1
   "bubbles": {"c1.mp4": [["text", t, "in"|"out"], ...]}   -> text-message bubbles that pop in at t (s into that clip)
@@ -109,6 +110,7 @@ fx = (f"drawtext=fontfile={FONT}:text='{esc(C['end'][0])}':fontsize=80:fontcolor
       f"drawtext=fontfile={FONT}:text='{esc(C['end'][1])}':fontsize=52:fontcolor=white:x=(w-text_w)/2:y=930,"
       f"drawbox=x=90:y=1060:w=900:h=150:color={GOLD}:t=fill,"
       f"drawtext=fontfile={FONT}:text='{esc(C['end'][2])}':fontsize=66:fontcolor=0x1a1a1a:x=(w-text_w)/2:y=1100"
+      + (f",drawtext=fontfile={FONTM}:text='{esc(C['end_note'])}':fontsize=50:fontcolor=white:x=(w-text_w)/2:y=1260" if C.get('end_note') else '')
       + (f",drawtext=fontfile={FONTM}:text='AI-generated presenter · real app screens':fontsize=34:fontcolor=white:x=(w-text_w)/2:y=1300" if C.get('end_ai_line', True) else ''))
 ep = os.path.join(D, 'end.mp4')
 run(['ffmpeg','-y','-v','error','-f','lavfi','-i',f'color=c={GREEN}:s=1080x1920:d={C.get("end_seconds", 2.4)}:r=30,{fx},format=yuv420p,setsar=1',

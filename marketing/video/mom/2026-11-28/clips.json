@@ -1,0 +1,9 @@
+{"presenter": "DinnerDrop-Mom 43682e65-f5f6-4cb3-8ffa-c854db262259", "angle": "6 one menu for a picky eater AND a fish-hater", "location": "couch after bedtime (then kitchen counter, stove)",
+ "start_frames": ["4965260d-9155-429a-9983-adca50a56a6d", "3f232cbd-1c11-436a-bbe0-748db47d5118", "beb64261-387f-443e-90ed-bd85b3008d42"],
+ "video_jobs": {"c1": "4e1cea12-9558-4946-90db-6e64015f6686", "c2": "0c62a3fa-8546-4ba1-acd4-2301ee788490", "c3": "bc9bd85e-9481-49aa-9126-5e7120476ee9"},
+ "lines": {"c1": "Kids are finally asleep. One eats about five foods. One won't touch fish. And I still have to plan next week.",
+           "c2": "So I told it both. It planned one menu that works for both of them. No more cooking two dinners.",
+           "c3": "Five dinners, one grocery list, one tap to Instacart. Free for fourteen days, no card."},
+ "model": "veo3_1 high (credits 605), all clips back in ~3 min, clean first try",
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/942ad2f8-b1c6-4701-92c7-89c57b22bb77.mp4",
+ "build": "python3 mom/build_mom.py mom/2026-11-28"}

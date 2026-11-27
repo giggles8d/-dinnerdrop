@@ -1,0 +1,7 @@
+{"why": "Ep 7 v1 was pulled from Publer (Nov 27) because its c4 line and end card offered 'Code NURSE = 3 months'. v2 reuses v1's voice-changed c1-c3 and regenerates only c4 (offer rule: 14 days of Family free, no card; 'We don't deliver food' on the end card).",
+ "c1-c3": "voice_changed jobs 2125c050 / 2761b25e / 0b8a848c from mom/nurse/2026-11-27",
+ "c4": {"frame": "2cddd6f0-1205-4003-93be-5e76256bdb86", "veo3_1_high": "8521e296-796c-4082-8188-a6f88c79049c", "voice_changed": "b696fa9b-c3b8-460a-9298-0d168b59d23f",
+        "line": "That's my Black Friday haul. Try DinnerDrop free for fourteen days. No card."},
+ "final": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F5CX7FQgyc63KXE3gzU1BCzjOk/c59a3c1d-3d5f-4f9b-b3d6-b5a158464d3c.mp4",
+ "status": "SCHEDULED 2026-11-27 4:30 PM ET on TikTok, YouTube Shorts, Facebook Reels via Publer (by Claude, 11-27)",
+ "qa": "whisper medium hears the last word as 'cart' (Hallie voice); on-screen text reads 'No card.'"}

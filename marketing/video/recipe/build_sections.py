@@ -59,13 +59,16 @@ run(['ffmpeg','-y','-v','error','-loop','1','-i',os.path.join(D,'photo.jpg'),'-i
      '-c:v','libx264','-crf','20','-preset','medium','-c:a','aac','-b:a','160k','-ar','44100',body])
 endvo = os.path.join(D, 'endvo.wav')
 run(['ffmpeg','-y','-v','error','-i',secs[7],'-af','apad=pad_dur=1.4','-ar','44100','-ac','2',endvo]); ED = dur(endvo)
+# Offer rule (Sarah, Nov 27 2026): only '14 days of Family free, no card' + 'We don't deliver food.'
+EL = C.get('end_lines', ['14 days of Family free. No card.', "We don't deliver food. We plan it."])
 fx = (f"drawtext=fontfile={FONT}:text='DinnerDrop':fontsize=120:fontcolor={GOLD}:x=(w-text_w)/2:y=520,"
       f"drawtext=fontfile={FONT}:text='5 dinners. Your budget.':fontsize=70:fontcolor=white:x=(w-text_w)/2:y=720,"
       f"drawtext=fontfile={FONT}:text='Grocery list done for you.':fontsize=70:fontcolor=white:x=(w-text_w)/2:y=810,"
-      f"drawtext=fontfile={FONT}:text='Plan your week free':fontsize=64:fontcolor=white:x=(w-text_w)/2:y=1000,"
+      f"drawtext=fontfile={FONT}:text='{esc(EL[0])}':fontsize=58:fontcolor=white:x=(w-text_w)/2:y=1000,"
       f"drawbox=x=110:y=1120:w=860:h=150:color={GOLD}:t=fill,"
       f"drawtext=fontfile={FONT}:text='dinnerdrop.app':fontsize=76:fontcolor=0x1a1a1a:x=(w-text_w)/2:y=1150,"
-      f"drawtext=fontfile={FONTM}:text='Follow for a new dinner every day':fontsize=46:fontcolor=white:x=(w-text_w)/2:y=1360")
+      f"drawtext=fontfile={FONTM}:text='{esc(EL[1])}':fontsize=46:fontcolor=white:x=(w-text_w)/2:y=1330,"
+      f"drawtext=fontfile={FONTM}:text='Follow for a new dinner every day':fontsize=46:fontcolor=white:x=(w-text_w)/2:y=1410")
 end = os.path.join(D, 'end.mp4')
 run(['ffmpeg','-y','-v','error','-f','lavfi','-i',f'color=c={GREEN}:s=1080x1920:r=30:d={ED:.3f},{fx},format=yuv420p,setsar=1','-i',endvo,
      '-t',f'{ED:.3f}','-c:v','libx264','-crf','20','-c:a','aac','-b:a','160k','-ar','44100',end])
