@@ -24,7 +24,7 @@ import { walmartUrlsIn, resolveWalmartLink, type WalmartLink } from '@/lib/store
 import { cartUrl } from '@/lib/walmart'
 import type { Meal } from '@/types'
 import { buildFamilyRecipes, describeDinnerFromPhotos, saveFamilyRecipes } from '@/lib/family-recipes'
-import { leaderLabel, getDraft, setDraft, clearDraft, draftRoundIds, dueDrafts, parseLeaderCommand, getAsk, putAsk, openAsks, askIsLive, askSummary, askAck, askText, ASK_WINDOW_MIN, type LeaderCommand, type FamilyAsk } from '@/lib/family-ask'
+import { leaderLabel, getDraft, setDraft, clearDraft, draftRoundIds, dueDrafts, parseLeaderCommand, parseLeaderCommands, getAsk, putAsk, openAsks, askIsLive, askSummary, askAck, askText, ASK_WINDOW_MIN, type LeaderCommand, type FamilyAsk } from '@/lib/family-ask'
 import { reorderAsked, reorderCartReply } from '@/lib/reorder'
 import { sendFamilyText } from '@/lib/send-window'
 // Nov 22 2026 review: texts link to the no-sign-in list, not the signed-in /grocery-list page.
@@ -498,6 +498,18 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
       if (nm) {
         const nums = (t.match(/\d{1,2}/g) ?? []).map(Number).filter((n) => n >= 1 && n <= 14)
         if (nums.length) return { reply: await swapPlanDinners(admin, owner, nums), handled: true, member: m }
+      }
+    }
+    // Two or more edits on separate lines ("Remove 1\nSwap 3 for BBQ Salmon"): do each in order, one reply.
+    const cmds = parseLeaderCommands(body)
+    if (cmds) {
+      const replies: string[] = []
+      for (const c of cmds) { const r = await leaderCommand(admin, owner, m, c); if (r) replies.push(r) }
+      if (replies.length) {
+        // Swaps each show the whole week; keep the last one and put any problem lines in front of it.
+        const last = replies[replies.length - 1]
+        const notes = replies.slice(0, -1).filter((r) => !r.startsWith('Done ✨'))
+        return { reply: [...notes, last].join('\n'), handled: true, member: m }
       }
     }
     const cmd = parseLeaderCommand(body)
@@ -980,12 +992,15 @@ export async function smsContext(admin: SupabaseClient, memberId: string): Promi
   const since = new Date(Date.now() - 4 * 86400000).toISOString()
   const { data } = await admin.from('sms_messages').select('direction, body, intent, created_at').eq('member_id', memberId).gte('created_at', since).order('created_at', { ascending: false }).limit(14)
   const rows = (data ?? []) as Array<{ direction: string; body: string | null; intent: string | null; created_at?: string }>
-  const ask = rows.find((r) => r.direction === 'out' && (r.intent === 'again_request' || r.intent === 'vote_request'))
+  // Vote requests are logged as vote_request:<round id> (Faith, Nov 27 2026: with the round closed, her next text was read
+  // against Thursday's bring-back list because the vote wasn't seen as the last ask).
+  const isAsk = (r: { intent: string | null }) => r.intent === 'again_request' || r.intent === 'vote_request' || (r.intent ?? '').startsWith('vote_request:')
+  const ask = rows.find((r) => r.direction === 'out' && isAsk(r))
   const note = rows.find((r) => r.direction === 'out' && r.intent === 'owner_message')
   // The most recent numbered list this person saw: our MENU reply ("This week:\n1. Mon — Name") or a vote/again request.
-  const listIdx = rows.findIndex((r) => r.direction === 'out' && (r.intent === 'again_request' || r.intent === 'vote_request' || (r.body ?? '').startsWith('This week:') || (r.body ?? '').includes('. This week:\n')))
+  const listIdx = rows.findIndex((r) => r.direction === 'out' && (isAsk(r) || (r.body ?? '').startsWith('This week:') || (r.body ?? '').includes('. This week:\n')))
   const listRow = listIdx >= 0 ? rows[listIdx] : null
-  const isMenu = !!listRow && !(listRow.intent === 'again_request' || listRow.intent === 'vote_request')
+  const isMenu = !!listRow && !isAsk(listRow)
   const menuShown = isMenu ? (listRow!.body ?? '').split('\n').map((l) => l.match(/^\d+\.\s+(?:[A-Za-z]{3} — )?(.+)$/)?.[1]?.trim()).filter((x): x is string => !!x) : undefined
   const lastOut = rows.find((r) => r.direction === 'out')
   return {
@@ -1762,8 +1777,11 @@ async function leaderCommand(admin: SupabaseClient, owner: OwnerRow, m: MemberRo
     return `${what} The vote now:\n${pickLines(r.round.candidates)}\n\nReply SEND when it looks right.`
   }
   if (cmd.kind === 'swap') return swapPlanDinner(admin, owner, cmd.n, cmd.dish)
+  // "Remove 1" on a set week: that night keeps its place and gets another dinner that fits (the week text invites
+  // "SWAP 2"; before this, "remove" fell through to the AI parse and could land on a different list).
+  if (cmd.kind === 'drop') return swapPlanDinner(admin, owner, cmd.n, '')
   if (cmd.kind === 'send') return `There's no vote waiting for you to send.`
-  return null   // drop / add dinner outside a draft: let the normal handling take it
+  return null   // add dinner outside a draft: let the normal handling take it
 }
 
 /**

@@ -86,6 +86,23 @@ export function parseLeaderCommand(raw: string): LeaderCommand | null {
   return null
 }
 
+/**
+ * Several week edits in one text, one per line (or split by ";"): "Remove 1\nSwap 3 for BBQ Salmon" (Faith, Nov 27 2026
+ * — read as one message it matched nothing and the AI parse took "1" against Thursday's bring-back list). Only swap /
+ * drop / add-dinner lines count; any other line means it isn't a command list. Null unless there are at least two.
+ */
+export function parseLeaderCommands(raw: string): LeaderCommand[] | null {
+  const lines = raw.split(/\r?\n|;/).map((l) => l.trim()).filter(Boolean)
+  if (lines.length < 2) return null
+  const cmds: LeaderCommand[] = []
+  for (const line of lines) {
+    const c = parseLeaderCommand(line)
+    if (!c || (c.kind !== 'swap' && c.kind !== 'drop' && c.kind !== 'add_dinner')) return null
+    cmds.push(c)
+  }
+  return cmds
+}
+
 /* --------------------------- family questions --------------------------- */
 
 export interface FamilyAsk {
