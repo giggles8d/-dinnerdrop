@@ -1,0 +1,6 @@
+# Build leftovers and media stay out of git; finished videos are in CoworkOutputs\AppDev\DinnerDrop\ and on Publer.
+*.wav
+*.mp4
+*.jpg
+a.txt
+transcript.txt
