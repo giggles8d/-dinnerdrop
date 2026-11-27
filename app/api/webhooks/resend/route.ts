@@ -24,6 +24,8 @@ import { verifySvix, stopListFor, type ResendEvent } from '@/lib/resend-webhook'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
+const EMAIL_RE = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/
+
 let cachedSecret: { at: number; value: string } | null = null
 
 async function webhookSecret(admin: SupabaseClient): Promise<string | null> {
@@ -58,10 +60,14 @@ export async function POST(request: NextRequest) {
 
   let updated = 0
   for (const email of emails.slice(0, 50)) {
-    const { data: profs, error: readErr } = await admin.from('profiles').select('id, settings, email_unsubscribed').ilike('email', email)
+    if (!EMAIL_RE.test(email)) continue
+    // Case-insensitive but exact: escape LIKE wildcards so "a_b@x.com" can't also match "axb@x.com".
+    const exact = email.replace(/[\\%_]/g, (c) => '\\' + c)
+    const { data: profs, error: readErr } = await admin.from('profiles').select('id, email, settings, email_unsubscribed').ilike('email', exact)
     // A failed read must make Resend retry, or the opt-out is lost.
     if (readErr) return NextResponse.json({ error: 'Lookup failed' }, { status: 500 })
     for (const p of profs ?? []) {
+      if (String(p.email ?? '').toLowerCase().trim() !== email) continue
       const patch: Record<string, unknown> = { email_unsubscribed: true }
       if (why === 'bounced') {
         const settings = (p.settings && typeof p.settings === 'object' ? p.settings : {}) as Record<string, unknown>
