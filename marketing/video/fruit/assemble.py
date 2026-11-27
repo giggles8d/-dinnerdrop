@@ -135,7 +135,7 @@ def build(v):
         p = os.path.join(od, f'p{k}.mp4')
         base = "[0:v]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=30,setsar=1"
         chip = (f",drawtext=fontfile={FONT}:text='FOLLOW FOR EP {nxt}':fontsize=60:fontcolor=white:box=1:boxcolor=0xd62828:boxborderw=18:x=(w-text_w)/2:y=200"
-                f",drawtext=fontfile={FONT}:text='3 MONTHS FREE · CODE FRUIT':fontsize=50:fontcolor=0x1a1a1a:box=1:boxcolor={GOLD}:boxborderw=18:x=(w-text_w)/2:y=1560"
+                f",drawtext=fontfile={FONT}:text='14 DAYS OF FAMILY FREE · NO CARD':fontsize=50:fontcolor=0x1a1a1a:box=1:boxcolor={GOLD}:boxborderw=18:x=(w-text_w)/2:y=1560"
                 f",drawtext=fontfile={FONT}:text='dinnerdrop.app/go/fruit':fontsize=64:fontcolor=white:box=1:boxcolor={GREEN}:boxborderw=24:x=(w-text_w)/2:y=1690") if k == len(clips) - 1 else ''
         bfx = (f",drawtext=fontfile={FONT}:text='{esc(badge)}':fontsize=46:fontcolor=white:box=1:boxcolor=0xd62828:boxborderw=16"
                f":x=60:y=150") if badge else ''
@@ -170,7 +170,7 @@ def build(v):
         fx += f",drawtext=fontfile={FONT}:text='{esc(c)}':fontsize={72 if len(c) < 24 else 56}:fontcolor=white:x=(w-text_w)/2:y={y}"; y += 100
     y += 40
     fx += f",drawtext=fontfile={FONT}:text='Plan your week free':fontsize=70:fontcolor=white:x=(w-text_w)/2:y={y}"
-    fx += f",drawtext=fontfile={FONT}:text='Code FRUIT = 3 months of Family free':fontsize=50:fontcolor={GOLD}:x=(w-text_w)/2:y={y+95}"
+    fx += f",drawtext=fontfile={FONT}:text='14 days of Family free. No card.':fontsize=50:fontcolor={GOLD}:x=(w-text_w)/2:y={y+95}"
     fx += f",drawbox=x=90:y={y+200}:w=900:h=150:color={GOLD}:t=fill"
     fx += f",drawtext=fontfile={FONT}:text='dinnerdrop.app/go/fruit':fontsize=64:fontcolor=0x1a1a1a:x=(w-text_w)/2:y={y+242}"
     ep = os.path.join(od, 'end.mp4')
