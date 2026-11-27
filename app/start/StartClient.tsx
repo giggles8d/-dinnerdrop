@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Suspense, useEffect, useState, type ReactNode } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { promoLength } from '@/lib/promo-length'
 import StorePriceExample from '@/components/StorePriceExample'
 import { InstacartCarrot, PoweredByInstacart } from '@/components/InstacartMark'
 import FamilyTextingSection from '@/components/FamilyTextingSection'
@@ -35,8 +36,8 @@ function PromoBanner() {
     fetch(`/api/promo/check?code=${encodeURIComponent(code)}`).then((r) => r.json()).then((j) => { if (j?.ok) setPromo(j) }).catch(() => {})
   }, [code])
   if (!promo) return null
-  const months = Math.round(promo.days / 30)
-  const length = promo.days < 30 ? `${promo.days} days` : months >= 12 ? 'a year' : `${months} month${months === 1 ? '' : 's'}`
+  // Nov 27 2026: FRIENDS is 730 days, which must read "2 years", not "a year".
+  const length = promoLength(promo.days)
   return (
     <div className="mx-auto max-w-2xl mb-5 sm:mb-6 rounded-2xl border-2 px-5 py-4 text-left shadow-sm" style={{ borderColor: GOLD, backgroundColor: '#fff8e8' }}>
       <p className="text-sm font-bold" style={{ color: GREEN }}>{promo.label.startsWith('A gift') ? `${promo.label}: ${length} of the Family plan, no card needed.` : `Code ${promo.code} is on: ${length} of the Family plan free, no card needed.`}</p>

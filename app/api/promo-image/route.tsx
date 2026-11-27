@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { createClient } from '@supabase/supabase-js'
 import { lookupPromo, promoState } from '@/lib/promo'
+import { promoLength } from '@/lib/promo-length'
 
 export const runtime = 'nodejs'
 
@@ -13,8 +14,8 @@ export async function GET(req: Request) {
   const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
   const p = raw ? await lookupPromo(admin, raw) : null
   if (!p || promoState(p) !== 'ok') return new Response('Not found', { status: 404 })
-  const months = Math.round(p.family_days / 30)
-  const offer = months >= 1 ? `${months} month${months > 1 ? 's' : ''}` : `${p.family_days} days`
+  // Nov 27 2026: 730 days (FRIENDS) reads "2 years", not "24 months".
+  const offer = promoLength(p.family_days)
 
   const fontUrl = (w: number) => `https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/files/inter-latin-${w}-normal.woff`
   const [bold, medium] = await Promise.all([700, 500].map((w) => fetch(fontUrl(w), { next: { revalidate: 86400 } }).then((x) => (x.ok ? x.arrayBuffer() : null)).catch(() => null)))
