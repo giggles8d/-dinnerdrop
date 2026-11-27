@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { createClient } from '@supabase/supabase-js'
 import { lookupPromo, promoState } from '@/lib/promo'
+import { promoLength } from '@/lib/promo-length'
 import StartClient from './StartClient'
 
 /**
@@ -16,7 +17,8 @@ export async function generateMetadata({ searchParams }: { searchParams: Record<
     const p = await lookupPromo(admin, raw)
     if (!p || promoState(p) !== 'ok') return {}
     const months = Math.round(p.family_days / 30)
-    const offer = months >= 1 ? `${months} month${months > 1 ? 's' : ''}` : `${p.family_days} days`
+    // Nov 27 2026: 730 days (FRIENDS) reads "2 years" in the share title, not "24 months".
+    const offer = promoLength(p.family_days)
     const title = `${offer} of DinnerDrop Family, free`
     const description = 'Your week of family dinners planned in about two minutes, the family votes by text, and one tap sends the grocery list to Instacart. No card needed.'
     // Facebook's scraper would not read the generated image ("corrupted"), so the common 3-month offer uses a static file.
