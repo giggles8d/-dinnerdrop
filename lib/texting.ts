@@ -300,7 +300,9 @@ export function parseInbound(raw: string): Parsed {
     if (!/^\d[\d\s,and&]*$/.test(what)) return { kind: 'suggest', items: /^(meals?|dinners?|something|a meal|a dinner|ideas?|one|things?|food|)$/i.test(what) ? [] : splitDishes(what) }
   }
   if (new RegExp(`^(ALL ?GOOD|ALL|GOOD|KEEP ?ALL|LOOKS GOOD|👍|LGTM|FINE|ALL OF THEM)${end}`).test(u)) return { kind: 'allgood' }
-  if (new RegExp(`^(NONE|NO|NOPE|NAH|NONE OF THEM)${end}`).test(u)) return { kind: 'none' }
+  // "No thank you" / "No thanks" / "Not now" are a plain no too (Faith, Nov 27 2026: "No thank you" to a care text went to the
+  // AI step and got the bring-back help line).
+  if (new RegExp(`^(NONE|NO|NOPE|NAH|NONE OF THEM|NOT NOW|NO NEED)(,?\\s*(THANKS|THANK YOU|THX|TY))?${end}`).test(u)) return { kind: 'none' }
   if (new RegExp(`^(THANKS|THANK YOU|THANKS!|THX|TY|COOL|GREAT|AWESOME|❤️|🙏)( SO MUCH| YOU)?${end}`).test(u)) return { kind: 'thanks' }
   // "ORDER 317.97", "total 317.97", "it came to $317.97", "order was $317" — the planner recording the real bill.
   const order = t.match(/^(?:order|total|order total|bill|it came to|came to|cost|spent|paid)\s*(?:was|is|came to|:)?\s*\$?\s*(\d{1,4}(?:[.,]\d{2})?)\s*(?:(?:at|@|from)\s+)?([A-Za-z'&. ]{2,30})?\s*$/i)
@@ -737,7 +739,8 @@ export async function handleInbound(admin: SupabaseClient, from: string, body: s
         await admin.from('meal_votes').insert(rows)
       }
       if (parsed.kind === 'allgood') return { reply: `Got it — all ${meals.length} dinners kept. 🙌`, handled: true, member: m }
-      if (parsed.kind === 'none') return { reply: `Noted${hi ? `, ${hi}` : ''}.`, handled: true, member: m }
+      // With nothing asked, a "no" changes nothing — say so instead of a bare "Noted." (Faith, Nov 27 2026).
+      if (parsed.kind === 'none') return { reply: ctx.lastAsk === 'again' ? `Noted${hi ? `, ${hi}` : ''} — none to bring back.` : `Got it${hi ? `, ${hi}` : ''} 👍 — nothing changed.`, handled: true, member: m }
       if (parsed.kind === 'skip') {
         const names = parsed.numbers.map((n) => meals[n - 1]?.name).filter(Boolean)
         return { reply: names.length ? `Got it — you'd skip ${names.join(' and ')}. ${family} will see the votes.` : `I didn't catch which numbers. Reply like "2 4" to skip those dinners.`, handled: true, member: m }
@@ -987,6 +990,22 @@ function helpFor(mode: 'round' | 'again' | 'week', family: string): string {
 
 export interface SmsContext { askedDinner?: boolean; lastAsk: 'again' | 'vote' | null; lastAskBody?: string; askedNeedsTiming?: boolean; lastList?: 'menu' | 'vote' | null; menuShown?: string[]; ownerMessage?: string; history: Array<{ who: 'DinnerDrop' | 'Them'; body: string }> }
 
+const isAsk = (r: { intent: string | null }) => r.intent === 'again_request' || r.intent === 'vote_request' || (r.intent ?? '').startsWith('vote_request:')
+
+/**
+ * The question we last asked that is still open, from this person's texts newest first. A care text (intent
+ * admin_message) written by a person after the ask closes it: their next reply answers that text, not the old list
+ * (Faith, Nov 27 2026: "No thank you" to a care text was read against Thursday's bring-back list).
+ */
+export function liveAsk<T extends { direction: string; intent: string | null }>(rows: T[]): T | undefined {
+  for (const r of rows) {
+    if (r.direction !== 'out') continue
+    if (r.intent === 'admin_message') return undefined
+    if (isAsk(r)) return r
+  }
+  return undefined
+}
+
 /** The last few texts with this person (both ways) and the last question we asked them. */
 export async function smsContext(admin: SupabaseClient, memberId: string): Promise<SmsContext> {
   const since = new Date(Date.now() - 4 * 86400000).toISOString()
@@ -994,8 +1013,7 @@ export async function smsContext(admin: SupabaseClient, memberId: string): Promi
   const rows = (data ?? []) as Array<{ direction: string; body: string | null; intent: string | null; created_at?: string }>
   // Vote requests are logged as vote_request:<round id> (Faith, Nov 27 2026: with the round closed, her next text was read
   // against Thursday's bring-back list because the vote wasn't seen as the last ask).
-  const isAsk = (r: { intent: string | null }) => r.intent === 'again_request' || r.intent === 'vote_request' || (r.intent ?? '').startsWith('vote_request:')
-  const ask = rows.find((r) => r.direction === 'out' && isAsk(r))
+  const ask = liveAsk(rows)
   const note = rows.find((r) => r.direction === 'out' && r.intent === 'owner_message')
   // The most recent numbered list this person saw: our MENU reply ("This week:\n1. Mon — Name") or a vote/again request.
   const listIdx = rows.findIndex((r) => r.direction === 'out' && (isAsk(r) || (r.body ?? '').startsWith('This week:') || (r.body ?? '').includes('. This week:\n')))
